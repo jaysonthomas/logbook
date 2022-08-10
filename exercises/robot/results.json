@@ -1,0 +1,12 @@
+{
+    "tests": [
+        {
+            "name": "Test get_velocity implementation",
+            "score": 5,
+            "max_score": 5
+        }
+    ],
+    "leaderboard": [],
+    "execution_time": "0.00",
+    "score": 5
+}

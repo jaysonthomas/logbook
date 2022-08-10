@@ -1,0 +1,217 @@
+# -*- mode: python -*-
+# vi: set ft=python :
+
+# Copyright 2020-2022 Massachusetts Institute of Technology.
+# Licensed under the BSD 3-Clause License. See LICENSE.TXT for details.
+
+load("//htmlbook/tools/html:defs.bzl", "rt_html_test")
+load("//htmlbook/tools/jupyter:defs.bzl", "rt_ipynb_test")
+load("//htmlbook/tools/python:defs.bzl", "rt_py_test")
+load("//htmlbook/tools/tidy:def.bzl", "html_tidy_test")
+
+exports_files(
+    ["LICENSE.TXT"],
+    visibility = ["//visibility:public"],
+)
+
+exports_files(
+    ["setup.cfg"],
+    visibility = ["//:__subpackages__"],
+)
+
+filegroup(
+    name = "html",
+    srcs = glob([
+        "*.html",
+        "*.html.in",
+    ]),
+    visibility = ["//:__subpackages__"],
+)
+
+html_tidy_test(
+    name = "html_tidy",
+    srcs = [":html"],
+    config = ".tidy.config",
+)
+
+rt_html_test(
+    srcs = ["intro.html"],
+)
+
+rt_ipynb_test(
+    name = "intro",
+    srcs = ["intro.ipynb"],
+    deps = ["//manipulation"],
+)
+
+rt_html_test(
+    srcs = ["robot.html"],
+)
+
+rt_ipynb_test(
+    name = "robot",
+    srcs = ["robot.ipynb"],
+    deps = ["//manipulation"],
+)
+
+rt_html_test(
+    srcs = ["pick.html"],
+)
+
+rt_ipynb_test(
+    name = "pick",
+    srcs = ["pick.ipynb"],
+    deps = [
+      "//manipulation",
+      "//manipulation:scenarios",
+    ],
+)
+
+rt_html_test(
+    srcs = ["pose.html"],
+)
+
+rt_ipynb_test(
+    name = "pose",
+    srcs = ["pose.ipynb"],
+    data = ["//manipulation/models"],
+    tags = ["no-sandbox"],  # from vtk-test-tags() in drake
+    # Open3D 0.10 is not compatible with Python 3.9.
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    deps = [
+      "//manipulation",
+      "//manipulation:mustard_depth_camera_example",
+      "//manipulation:scenarios",
+    ],
+)
+
+rt_html_test(
+    srcs = ["clutter.html"],
+)
+
+rt_ipynb_test(
+    name = "clutter",
+    srcs = ["clutter.ipynb"],
+    data = ["//manipulation/models"],
+    tags = ["no-sandbox"],  # from vtk-test-tags() in drake
+    flaky = True,  # occasionally mbp will crash.
+    # Open3D 0.10 is not compatible with Python 3.9.
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    deps = [
+        "//manipulation",
+        "//manipulation:mustard_depth_camera_example",
+        "//manipulation:scenarios",
+        "//manipulation:open3d_utils",
+    ],
+)
+
+rt_html_test(
+    srcs = ["segmentation.html"],
+)
+
+# torchvision is trying to write to a temp directory.
+#rt_ipynb_test(
+#    name = "segmentation_inference",
+#    srcs = ["segmentation_inference.ipynb"],
+#    deps = ["//manipulation"],
+#    data = ["//data:clutter_maskrcnn_data"],
+#)
+
+rt_py_test(
+  name = "segmentation_data",
+    srcs = ["segmentation_data.py"],
+    data = ["//manipulation/models"],
+    args = ["--test"],
+    imports = [".."],
+    deps = [
+      "//manipulation",
+      "//manipulation:scenarios",
+    ],
+)
+
+rt_html_test(
+    srcs = ["force.html"],
+)
+
+rt_ipynb_test(
+    name = "force",
+    srcs = ["force.ipynb"],
+    tags = ["requires-network"], # For gurobi
+    data = ["//manipulation/models"],
+    deps = [
+      "//manipulation",
+      "//manipulation:scenarios",
+    ],
+)
+
+rt_html_test(
+    srcs = ["trajectories.html"],
+)
+
+rt_ipynb_test(
+    name = "trajectories",
+    srcs = ["trajectories.ipynb"],
+    data = ["//manipulation/models"],
+    deps = [
+      "//manipulation",
+      "//manipulation:scenarios",
+    ],
+)
+
+rt_html_test(
+    srcs = ["rl.html"],
+)
+
+rt_ipynb_test(
+    name = "rl",
+    srcs = ["rl.ipynb"],
+    data = ["//data:box_flipup_ppo_state_3.zip"],
+    deps = [
+      "//manipulation",
+      "//manipulation/envs:box_flipup",
+    ],
+)
+
+rt_py_test(
+  name = "rl_train_boxflipup",
+    srcs = ["rl_train_boxflipup.py"],
+    args = ["--test"],
+    imports = [".."],
+    deps = [
+      "//manipulation/envs:box_flipup",
+    ],
+)
+
+rt_html_test(
+    srcs = ["drake.html"],
+)
+
+rt_html_test(
+    srcs = ["misc.html"],
+)
+
+rt_html_test(
+    srcs = ["station.html"],
+)
+
+rt_ipynb_test(
+    name = "manipulation_station",
+    srcs = ["manipulation_station.ipynb"],
+    data = ["//manipulation/models"],
+    deps = [
+      "//manipulation",
+      "//manipulation:scenarios",
+    ],
+)
+
+filegroup(
+    name = "chapters",
+    srcs = ["chapters.json"],
+    visibility = ["//visibility:public"],
+)

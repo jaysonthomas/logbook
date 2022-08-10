@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 12 - Miscellaneous</title>
+    <meta name="Ch. 12 - Miscellaneous" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="http://manipulation.csail.mit.edu/misc.html" />
+
+    <script src="https://hypothes.is/embed.js" async></script>
+    <script type="text/javascript" src="chapters.js"></script>
+    <script type="text/javascript" src="htmlbook/book.js"></script>
+
+    <script src="htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="htmlbook/highlight/styles/default.css">
+    <script src="htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="htmlbook/book.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Robotic Manipulation</a></h1>
+    <p data-type="subtitle">Perception, Planning, and Control</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Russ Tedrake</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Russ Tedrake, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      <a href="misc.html">How to cite these notes, use annotations, and give feedback.</a><br/>
+    </p>
+  </header>
+</div>
+
+<p pdf="no"><b>Note:</b> These are working notes used for <a
+href="http://manipulation.csail.mit.edu/Fall2022/">a course being taught
+at MIT</a>. They will be updated throughout the Fall 2022 semester.  <!-- <a 
+href="https://www.youtube.com/channel/UChfUOAhz7ynELF-s_1LPpWg">Lecture  videos are available on YouTube</a>.--></p> 
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter" href=station.html>Previous Chapter</a></td>
+  <td style="width:33%;text-align:center;"><a href=index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter"></a></td>
+</tr></table>
+
+<script type="text/javascript">document.write(notebook_header('misc'))
+</script>
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter class="appendix" style="counter-reset: chapter 2"><h1>Miscellaneous</h1>
+
+<section id="cite"><h1>How to cite these notes</h1>
+
+  <p>Thank you for citing these notes in your work.  Please use the following
+    citation:</p>
+  
+  <pre><code class="language-bibtex">@book{manipulation,
+  title        = "Robotic Manipulation",
+  subtitle     = "Perception, Planning, and Control",
+  howpublished = "Course Notes for MIT 6.4210",
+  author       = "Tedrake, Russ",
+  year         = 2022,
+  url          = "http://manipulation.mit.edu",
+}</code></pre>
+
+</section>
+
+<section id="annotation"><h1>Annotation tool etiquette</h1>
+
+  <p>My primary goal for the annotation tool is to host a completely open
+  dialogue on the intellectual content of the text.  However, it has turned out
+  to serve an additional purpose: it's a convenient way to point out my
+  miscellaneous typos and grammatical blips.  The only problem is that if you
+  highlight a typo, and I fix it 10 minutes later, your highlight will persist
+  forevermore.  Ultimately this pollutes the annotation content.</p>
+
+  <div>There are two possible solutions: <ul><li>you can make a public editorial comment, but must promise to delete that comment once it has been addressed.</li><li>You can <a href="https://hypothes.is/groups/Gn2rm56b/editorial">join my "editorial" group</a> and post your editorial comments <a href="https://web.hypothes.is/help/annotating-with-groups/#how-to-add-annotations-to-a-group">using this group "scope"</a>.</li></ul>
+  Ideally, once I mark a comment as "done", I would appreciate it if you can delete that comment.
+  </div>
+
+  <p>
+  I highly value both the discussions and the corrections.  Please keep them coming, and thank you!
+  </p>
+
+</section>
+
+<section id="projects"><h1>Some great final projects</h1>
+
+  <p>Each semester students put together a final project using the tools from this class.  So many of them are fantastic!  Here is a small sample that captures some of the diversity.</p>
+
+  <p><b>Fall 2021:</b>
+    <ul>
+      <li><a href="https://www.youtube.com/playlist?list=PLkx8KyIQkMfUbHMSbSVTmCM63rICMdFNI">YouTube playlist</a> containing all projects that opted in.</li>
+      <li><a href="https://youtu.be/WzJJ4c6AqnE">Playing Piano with a Robotic Hand</a> by Seong Ho Yeon</li>
+      <li><a href="https://youtu.be/j5t2DlDHMoU">Table Cleaning through Task and Motion Planning with Force Control</a> by William Shen</li>
+      <li><a href="https://youtu.be/gNNZMLM_BrQ">RallyBot: Exploring Physics-Based Approaches to Robotic Table Tennis</a> by Dylan Zhou and Chaitanya Ravuri</li>
+      <li><a href="https://youtu.be/K5AZ-FLBamA">Robust Stacking of Convex Polytopes</a> by Richard Li and Gabriel Margolis</li>
+      <li><a href="https://youtu.be/dBZ0Sjx_Seo">Simulation of Discrete Lattice Robot Assemblies</a> by Miani Smith</li>
+      <li><a href="https://www.youtube.com/watch?v=szI8pAFz2Fo">Da Vinci Robot</a> by Maisy Lam and Jose A. Muguira</li>
+      <li><a href="https://youtu.be/P44_Z4UrmGA">Certifying Convex Decompositions of Free Configuration Space</a> by Alexandre Amice, Peter Werner, Annan Zhang</li>
+      <li><a href="https://youtu.be/SUmahiaY_b8">Robotic Arm Weightlifting via Trajectory Optimization</a> by Timur Garipov</li>
+      <li><a href="https://youtu.be/ttI-ixsw-D8">An Efficient Implementation of Pressure Field Models</a> by Vincent Huang, Franklyn Wang, Eric Zhang</li>
+      <li><a href="https://www.youtube.com/watch?v=BYsOT4MYqt0">Joint Perception and Manipulation System for Multi-Shape Peg-in-Hole Tasks</a> by Portia Gaitskell and Julia Wyatt</li>
+    </ul>
+  </p>
+
+  <p><b>Fall 2020:</b>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=J-Jzbjs54eg">Solving Simple
+      Tiling Puzzles with an End-to-End Robotic System</a> by Anubhav Guha</li>
+      <li><a href="https://www.youtube.com/watch?v=J_EAgIfc4fk">Throwing in
+      Drake</a> by Daniel Yang and Tony Wang</li>
+      <li><a href="https://www.youtube.com/watch?v=m5UnMWihWC4">Robot
+      Juggler</a> by Ryan Shubert and Matt Beveridge</li>
+      <li><a href="https://www.youtube.com/watch?v=hKZeZbBZNOk">A Geometric
+      Approach to Recycling Cans via Vision-Based Manipulation</a> by Susan Ni
+      and George Chen</li>
+      <li><a href="https://www.youtube.com/watch?v=oBXmbfLuNVU">Interactive
+      Perception: Scene Segmentation Through Physical Perturbation</a> by Lukas
+      Lao Beyer and John Keszler</li>
+      <li><a href="https://www.youtube.com/watch?v=zVGuJjeQrdI&t=373s">William
+      Shakebot</a> by Carson Smithbot and Clemente Ocejo</li>
+    </ul>
+  
+  </p>
+
+</section>
+
+<section id="feedback"><h1>Please give me feedback!</h1>
+
+  <p>I'm very interested in your feedback.  The annotation tool is one
+  mechanism, but you can also comment directly on the YouTube lectures, or even
+  add issues to the <a href="https://github.com/RussTedrake/manipulation">github
+  repo</a> that hosts these course notes.</p>
+
+  <p>I will also post a proper survey questionnaire here once the notes/course
+  has existed long enough for that to make sense.</p>
+
+</section>
+
+</chapter>
+<!-- EVERYTHING BELOW THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+
+<div id="references"></div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter" href=station.html>Previous Chapter</a></td>
+  <td style="width:33%;text-align:center;"><a href=index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter"></a></td>
+</tr></table>
+
+<div id="footer" pdf="no">
+  <hr>
+  <table style="width:100%;">
+    <tr><td><a href="https://accessibility.mit.edu/">Accessibility</a></td><td style="text-align:right">&copy; Russ
+      Tedrake, 2022</td></tr>
+  </table>
+</div>
+
+
+</body>
+</html>
