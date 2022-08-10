@@ -1,0 +1,6 @@
+[submodule "htmlbook"]
+	path = htmlbook
+	url = https://github.com/RussTedrake/htmlbook.git
+[submodule "manipulation-data"]
+	path = manipulation-data
+	url = https://github.com/RussTedrake/manipulation-data.git
