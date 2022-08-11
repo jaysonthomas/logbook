@@ -5,9 +5,8 @@
   <head>
     <title>Ch. 1 - Introduction</title>
     <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="http://manipulation.csail.mit.edu/intro.html" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/" />
 
-    <script src="https://hypothes.is/embed.js" async></script>
     <script type="text/javascript" src="chapters.js"></script>
     <script type="text/javascript" src="htmlbook/book.js"></script>
 
@@ -26,26 +25,21 @@
 
 <body onload="loadChapter('manipulation');">
 
+  <!-- The following division should be written on every page -->
 <div data-type="titlepage" pdf="no">
   <header>
-    <h1><a href="index.html" style="text-decoration:none;">Robotic Manipulation</a></h1>
-    <p data-type="subtitle">Perception, Planning, and Control</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Russ Tedrake</a></p>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
     <p style="font-size: 14px; text-align: right;"> 
-      &copy; Russ Tedrake, 2020-2022<br/>
+      &copy; Jayson Thomas, 2020-2022<br/>
       Last modified <span id="last_modified"></span>.</br>
       <script>
       var d = new Date(document.lastModified);
       document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-      <a href="misc.html">How to cite these notes, use annotations, and give feedback.</a><br/>
     </p>
   </header>
 </div>
-
-<p pdf="no"><b>Note:</b> These are working notes used for <a
-href="http://manipulation.csail.mit.edu/Fall2022/">a course being taught
-at MIT</a>. They will be updated throughout the Fall 2022 semester.  <!-- <a 
-href="https://www.youtube.com/channel/UChfUOAhz7ynELF-s_1LPpWg">Lecture  videos are available on YouTube</a>.--></p> 
 
 <table style="width:100%;" pdf="no"><tr style="width:100%">
   <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
@@ -57,12 +51,276 @@ href="https://www.youtube.com/channel/UChfUOAhz7ynELF-s_1LPpWg">Lecture  videos 
 </script>
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
+
+<section id="table_of_contents">
+  <h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#start">Manipulation - a start</a></li>
+    <ul>
+      <li><a href=intro.html#section1>Definition</a></li>
+      <li><a href=intro.html#section2>Challenges</a></li>
+      <li><a href=intro.html#section3>The big aim</a></li>
+      <li><a href=intro.html#section4>Manipulation vs locomotion</a></li>
+        <ul>
+          <li><a>Perception stand point</a></li>
+          <li><a>Feedback control perspective</a></li>
+        </ul>
+    </ul>
+  </ul>
+  </section>
+
+    <section id="start"><h1>Manipulation - a start</h1>
+  <p>
     
-  <p>It's worth taking time to appreciate just how amazingly well we are able to
-  perform tasks with our hands.  Tasks that often feel mundane to us -- loading
-  the dishwasher, chopping vegetables, folding laundry -- remain as incredibly
-  challenging tasks for robots and are at the very forefront of robotics
-  research.</p>
+    # 1. Manipulation - a start
+    
+    ## Definition
+    Agent's control of its environment through selective contact. Not just an enveloping grasp.
+    
+    ## Challenges
+    - Understanding self. Easy!
+    - Object Recognition - detect mugs.
+    - Understand the context of an object - Pose estimation. 
+    
+    Where is the handle pointed and where is the bottom side. 
+    
+    - Collision free grasping  
+    
+    Objects can be hard to get to.
+    - Occlusion   
+    
+    Sometimes we set things down and move away just to see if we had grabbed the right object in the first place.
+    - Getting the object in the right pose  
+    
+    Hand is too clunky and not very dexterous to do in hand orientation. We might need to set an object down and grab it again to get the right pose.
+    - Force control, motion planning
+    - Generalisation
+    
+    How do you get an understanding of a particular object to work for all objects of the same kind. There are different types of mugs. How do you know the handle can support your weight.
+    
+    ## The big aim
+    We want to close the gap between:  
+    - perception and control.
+    - constantly monitoring the environment and making feedback corrections. 
+    - higher level task reasoning/scene understanding problems in AI and low-level dynamics/feedback control (physics).
+    
+    
+    With Atlas, we see a door handle and go for touching it and hope that we did.
+    
+    ## Manipulation vs Locomotion  
+    ### Perception stand point  
+    What is being sensed? How do I define its state? And therefore how complex should the sensor be?  
+    
+    In locomotion, we evaluate the world only in a geometric way. The robot tries to reason about places it can step (can it support my weight); It knows a lot about its own body and the control system can be tuned for its own body.
+    
+    **NB**: In manipulation, we know less about the environment and we want to interact more with it. We use constant visual and tactile feedback. Compared to locomotion, manipulation has a much stronger connection with perception.
+    
+    ### Feedback control perspective  
+    What is being controlled? How do I define its state? How complex should the controller be?
+    
+    For atlas, the main job was to figure out the state of the robot; how do I regulate the state of the robot to achieve some task.
+    
+    In manipulation, I do have to move the state of the robot but that's easy. If I'm bolted to a table it's not a big deal. But i have to somehow control everything else in the world through my actuation and i only get to touch/contact. So the challenge here is to extend our thinking about feedback control through a contact mechanics interface out into the world. I can count the links on a robot, that’s easy. But, what is the state space of an onion as I’m chopping it? Do we keep track of every possible piece of onion. Everything I know about control melts down at this point. But it should be easy. It’s easy for humans.
+    
+    # 2. Anatomy of a Manipulation system
+    We start with our difference equation and use that as a glue to put all our pieces: 
+    - Sense 
+    - Update internal state - an estimation of what the state of the plant is.
+    - Control
+    - Update internal state - what should the state of the plant be if the action was taken exactly.
+    
+    ```plantuml
+    skinparam shadowing false
+    @startuml
+    
+    [*] --> Robot 
+    Robot #white --> Control : y[n]
+    Control #white --> Robot : u[n]
+    Control --> Control : x[n]
+    
+    Robot: \
+    The plant. Also includes the world through contact
+    Control: \
+    State estimator, filter
+    
+    @enduml
+    ```
+    ## The control block
+    It is the controller that we write. It could be another dynamical system with internal state. What's important is that if the robot and the control are described by difference equations then the dynamics of the whole diagram is just another difference equation. It can be derived perfectly and simulated and analyzed in the same way as we did those smaller systems. It gets richer and more complicated when you have these things operating at different rates but we have good theory for how to build up a lot of those different things.
+    
+    ### State estimation
+    The control block probably has a state estimation algorithm (typically NL observers) like a Kalman filter, because it is getting the raw sensor values (y). It need not estimate the full state. This becomes more so in manipulation – we can’t estimate the full state of my shirt for example.
+    
+    ```plantuml
+    skinparam shadowing false
+    @startuml
+    
+    [*] -r-> Kalman : <math>y[n]</math>
+    [*] -r-> Kalman : <math>u[n]</math>
+    
+    Kalman #white -r-> [*] : <math>\hat(x)[n] </math>\n\
+    state estimate
+    
+    @enduml
+    ```
+    
+    ### Pose estimation
+    This assumes that we’ve already detected the target object in the image.
+    
+    - **Simple NN is not good enough for M**  
+    
+    One way to estimate pose is to use a big CNN: `y[n]=g(u[n])`. If you’re doing a standard feed-forward neural network, then this is the simplest form of a dynamical system. g is some function. I don’t even have any state here. This is good for say finding cats in pictures. 
+    
+    In M, we need to gather more info – take multiple camera images from different angles to get a better understanding of the scene. I can’t just make all my decisions based on the current image that is coming out of the camera (which is what happens in the simplest case).
+    
+    That’s when people start using Recurrant NN (Deep perception, I think) which snaps perfectly into the dynamical systems view of the world where they are perfectly described by difference equations.
+    
+    - **Geometric approaches**  
+    
+    This involves creating point clouds from depth cameras.
+    ```plantuml
+    skinparam shadowing false
+    @startuml
+    
+    (*)-r->[State of the world] "Multiple depth cameras \nRGBD sensors" #white
+    -r->[RGBD images\n Camera poses] "Point cloud\n creator" #white
+    -r-> [3D point cloud \nreconstruction of the world] "Pose estimator" #white
+    -r->[Pose estimation \nof object](*)
+    
+    @enduml
+    ```
+    Geometric algorithms that we could use to detect pose:
+    - Point cloud registration
+    - Plane segmentation  
+    
+    These algorithms are more mature and can give guarantees about performance against outliers and noise rejection.
+    
+    ### Planning
+    It is important to think about how the planner is going to interact with the real world clock.
+    
+    ```plantuml
+    skinparam shadowing false
+    @startuml
+    
+    [*] -r-> MotionPlanner : <math>\hatx[n]</math>\n\
+    Sensors (state of \nthe world)
+    MotionPlanner #white -r-> ExecuteTrajectory : desired\n trajectory
+    
+    ExecuteTrajectory #white -r-> Plant : <math>u[n]</math>
+    Plant #white -l-> ExecuteTrajectory : \
+    <math>\hatx[n]</math>\n\
+    Feedback sensing
+    @enduml
+    ```
+    # 3. The language of dynamical systems i.e. difference equations
+    `#3`  
+    The good thing about having such a language is that fundamental questions in control systems theory or AI can be asked in a specific and clear manner. We're just asking different questions about the same set of difference equations. 
+    
+    It won’t matter if part of the system is a physics engine and the other half is a NN for instance.
+    
+    Simulation, planning, state estimation, stability analysis, system ID (Model learning), Learning, System verification are all based on this language. We just ask different questions.
+    
+    - Simulation  
+    Given `x0, u[.]`
+    `u` is a trajectory of control inputs
+    Then I need to compute `x[n]`, some future step.
+    This is just evolving my difference equations in time which is natural to do for linear systems but you can do it even if it’s a physics engine and a renderer.
+    
+    - Planning  
+    Given `x[0] + goal` or objective or a cost function
+    Compute some series of u and x that minimises my objective or attains my goal – `u[.],x[.]`
+    
+    - State estimation  
+    Given `y[0]` to `y[n]`, `u[0]` to `u[n]`, estimate `x[n+1]`	
+    
+    - System ID  
+    Given the data, `u[.],x[.]`, estimate `p`. Even if it’s a NN and we want to find the weights of `p`.
+    
+    This is the biggest reason to try to conceptualize clearly in the language of dynamical systems, the basic framework, and to build up our library of tools always connecting back to that framework. Then you know if you have a point cloud estimation algorithm, for example, if you throw it in this language we can still do system ID.
+    
+    ## General form of a state space difference equation
+    `#1`  
+    Writing it this way forces us to think about how our perception system as evolving in time. And that’s important in order to put things together in a beautiful way.
+    
+    `#1.1`  
+    Simplest example to simulate would be a linear system - given x\[0\], I can simply roll it forward. I can forecast far into the future because it is linear.
+    
+    I can answer questions about the stability of the system. There are only 2 things `a` can do:
+    
+    - It can either converge to 0; x[n] will go to 0 as n goes to infinity `#1.1.`
+    - Or diverge towards infinity
+    
+    This is our starting point. We’re going to complicate this and use its full form to build a whole framework for all the different systems and how they interact.
+    
+    ## Input/Output dynamical system  
+    The robot isn’t just evolving with time. The general form of the difference equation would now be: `#2`. This is what should come in mind whenever dynamical systems is mentioned.
+    
+    I can still simulate this. Given my current state and input, I can tell you what the next state is or how the state evolves. But, there is not always a direct connection between u and y. Whilst this is a long way off $`x[n+1] = ax[n]`$, the framework still holds.
+    
+    Many of the tools from systems theory still apply. We tend to attack these complex problems more numerically with simulations than with our pen and paper (i.e. closed form analysis). But the same fundamental questions should be asked. Sometimes the function is so complicated that it's hard to say something rigorous but we're going to walk that line whenever we can.
+    
+    ## Disturbance input
+    It is a random disturbance input. 
+    People in reinforcement learning will do domain randomization. They'll try to change the lighting conditions on the robot for example - I would bring that in through w. Robustness analysis for instance would be to try to find a u and an x that works well for all w or over some expected value of w. This is notation from robust control but it works for RL too.
+    
+    With drake, we want to be clear in our questions:
+    - What do we want to be robust to 
+    - What do we want to optimize  
+    
+    But, we pull them in through the same input (ITS).
+    
+    # 4. Drake
+    Drake uses difference equations in its backend. It has to support all the different possible permutations or variations of structured data that you want in `x, u, w and p`. We wrap this (the difference equations) up in a structure called context.
+    
+    ```
+    struct context {Vector x, vector u, w, p, n}
+    x[n+1] = f(context) 
+    n-time
+    ```
+    Drake puts emphasis on declaring your state in a specific way. This is better for debugging and analysis, because you end up asking more clear questions. 
+    
+    Often times in robotics, you have the controller, perception system and robot driver running on different threads (or different computers) talking over some network message passing interface. We could model that message passing as another system that has random delay and dropouts.
+    
+    Components inside Drake (There are tutorials for all):
+    - There’s the notion of assembling your systems in block diagrams and writing each of the systems out with their state, control, disturbance inputs etc. 
+    - There's a physics engine which is world-class for simulating contacts 
+    - When we get to motion planning, optimization and system identification (learning) we'll be putting to use some of the optimization tools which is the third big component inside drake.
+    
+    In the systems way of thinking, I can make some powerful abstractions and encapsulate my entire robot which is a physics engine, a sensor simulation for a camera and a low level controller into a diagram called the manipulation station. Its inputs could be position commands, feed forward torques or gripper commands. 
+    
+    Its outputs would be identical to real hardware outputs. We provide a few cheat output ports just for simulation. 
+    
+    But inside this system there's driver code or message passing to drivers; so you can take your big complicated perception control or whatever, train it up in simulation, put that into a physical robot and be running immediately.
+    
+    # 5. Course schedule
+    We can have an algebraic discussion of point clouds and Kalman filters.
+    
+    - Discuss robotics hardware and how to model them. 
+    - Basic pick and place with red cube assuming we know its pose
+        - Differential kinematics 
+        - Basic motion planning. 
+    - 3d geometric perception
+        - Pose estimation from depth for a single known object
+    - Bin picking  
+    We'll start programming some higher level behaviours.
+        - Complex scenes (many/diverse objects)
+        - Plan a collision-free grasp that's going to get a good contact with my environment. 
+    - Deep perception     
+    We will stop assuming that we know what objects are in the world and we'll have to detect objects when they happen. We'll have to segment the world into reasonable things for manipulation and build more interesting state representations of the world. 
+    - Different controllers  
+    Differential inverse kinematics, force control, impedance control.
+    - Trajectory tracking and motion planning that will allow our robots to do more dexterous things in those same kind of environments. 
+    - RL  
+    We'll then take some of the things that we've already done and we can do a little better with reinforcement learning. I want to compare and contrast those with the model based approaches. 
+    
+    # 6. Extra
+    ## Where does RL fit in?  
+    - Low level control; A controller interacts with contact forces and comes up with a policy.
+    - Model based techniques.
+    - High level task planning is harder to represent in RL.
+    - Book a flight example - never done before.
+    - How do we make better use of the data coming in; trial and error.
+    </p>
     
   <figure><span title="Artwork by Reed Alspach"><img style="width:24%" src="data/plate_pick_final_3.JPG"/>&nbsp;<img style="width:24%" src="data/plate_pick_final_4.JPG"/>&nbsp;<img style="width:24%" src="data/plate_pick_final_5.JPG"/>&nbsp;<img style="width:24%" src="data/plate_pick_final_6.JPG">  </span>
   </figure>
