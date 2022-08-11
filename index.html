@@ -18,7 +18,7 @@
     <script src="htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" type="text/css" href="htmlbook/book.css" />
+    <link rel="stylesheet" type="~/text/css" href="htmlbook/book.css" />
   </head>
 
 <body onload="forwardOldChapterLink(); customTags(); MathJax.typeset();">
@@ -47,218 +47,11 @@ href="https://www.youtube.com/channel/UChfUOAhz7ynELF-s_1LPpWg">Lecture  videos 
 <h1>Table of Contents</h1>
 <ul>
   <li><a href="#preface">Preface</a></li>
-  <li><a href="intro.html">Chapter 1: Introduction</a></li>
-  <ul>
-    <li><a href=intro.html#section1>Manipulation is more than pick-and-place</a></li>
-    <li><a href=intro.html#section2>Open-world manipulation</a></li>
-    <li><a href=intro.html#section3>Simulation</a></li>
-    <li><a href=intro.html#section4>These notes are interactive</a></li>
-    <li><a href=intro.html#section5>Model-based design and analysis</a></li>
-    <li><a href=intro.html#section6>Organization of these notes</a></li>
-    <li><a href=intro.html#section7>Exercises</a></li>
-  </ul>
-  <li><a href="robot.html">Chapter 2: Let's get you a robot</a></li>
-  <ul>
-    <li><a href=robot.html#section1>Arms</a></li>
-    <ul>
-      <li>Position-controlled robots</li>
-      <li>Torque-controlled robots</li>
-      <li>A proliferation of hardware</li>
-      <li>Simulating the Kuka iiwa</li>
-    </ul>
-    <li><a href=robot.html#section2>Hands</a></li>
-    <ul>
-      <li>Dexterous hands</li>
-      <li>Simple grippers</li>
-      <li>Soft/underactuated hands</li>
-      <li>Other end effectors</li>
-      <li>If you haven't seen it...</li>
-    </ul>
-    <li><a href=robot.html#section3>Sensors</a></li>
-    <li><a href=robot.html#section4>Putting it all together</a></li>
-    <li><a href=robot.html#section5>Exercises</a></li>
-  </ul>
-  <li><a href="pick.html">Chapter 3: Basic Pick and Place</a></li>
-  <ul>
-    <li><a href=pick.html#monogram>Monogram Notation</a></li>
-    <li><a href=pick.html#section2>Pick and place via spatial transforms</a></li>
-    <li><a href=pick.html#section3>Spatial Algebra</a></li>
-    <li><a href=pick.html#kinematics>Forward kinematics</a></li>
-    <ul>
-      <li>The kinematic tree</li>
-      <li>Forward kinematics for pick and place</li>
-    </ul>
-    <li><a href=pick.html#jacobian>Differential kinematics (Jacobians)</a></li>
-    <li><a href=pick.html#section6>Differential inverse kinematics</a></li>
-    <ul>
-      <li>The Jacobian pseudo-inverse</li>
-      <li>Invertibility of the Jacobian</li>
-    </ul>
-    <li><a href=pick.html#section7>Defining the grasp and pre-grasp poses</a></li>
-    <li><a href=pick.html#section8>A pick and place trajectory</a></li>
-    <li><a href=pick.html#section9>Putting it all together</a></li>
-    <li><a href=pick.html#diff_ik_w_constraints>Differential inverse kinematics with
-  constraints</a></li>
-    <ul>
-      <li>Pseudo-inverse as an optimization</li>
-      <li>Adding velocity constraints</li>
-      <li>Adding position and acceleration constraints</li>
-      <li>Joint centering</li>
-      <li>Alternative formulations</li>
-    </ul>
-    <li><a href=pick.html#section11>Exercises</a></li>
-  </ul>
-  <li><a href="pose.html">Chapter 4: Geometric Pose Estimation</a></li>
-  <ul>
-    <li><a href=pose.html#section1>Cameras and depth sensors</a></li>
-    <ul>
-      <li>Depth sensors</li>
-      <li>Simulation</li>
-    </ul>
-    <li><a href=pose.html#section2>Representations for geometry</a></li>
-    <li><a href=pose.html#section3>Point cloud registration with known correspondences</a></li>
-    <li><a href=pose.html#section4>Iterative Closest Point (ICP)</a></li>
-    <li><a href=pose.html#section5>Dealing with partial views and outliers</a></li>
-    <ul>
-      <li>Detecting outliers</li>
-      <li>Point cloud segmentation</li>
-      <li>Generalizing correspondence</li>
-      <li>Soft correspondences</li>
-      <li>Nonlinear optimization</li>
-      <li>Global optimization</li>
-    </ul>
-    <li><a href=pose.html#section6>Non-penetration and "free-space" constraints</a></li>
-    <ul>
-      <li>Free space constraints as non-penetration constraints</li>
-    </ul>
-    <li><a href=pose.html#section7>Tracking</a></li>
-    <li><a href=pose.html#section8>Putting it all together</a></li>
-    <li><a href=pose.html#section9>Looking ahead</a></li>
-    <li><a href=pose.html#exercises>Exercises</a></li>
-  </ul>
-  <li><a href="clutter.html">Chapter 5: Bin Picking</a></li>
-  <ul>
-    <li><a href=clutter.html#section1>Generating random cluttered scenes</a></li>
-    <ul>
-      <li>Falling things</li>
-      <li>Static equilibrium with frictional contact</li>
-    </ul>
-    <li><a href=clutter.html#section2>A few of the nuances of simulating contact</a></li>
-    <li><a href=clutter.html#section3>Grasp selection</a></li>
-    <ul>
-      <li>Point cloud pre-processing</li>
-      <li>Estimating normals and local curvature</li>
-      <li>Evaluating a candidate grasp</li>
-      <li>Generating grasp candidates</li>
-    </ul>
-    <li><a href=clutter.html#section4>The corner cases</a></li>
-    <li><a href=clutter.html#section5>Putting it all together</a></li>
-    <ul>
-      <li>A simple state machine</li>
-    </ul>
-    <li><a href=clutter.html#exercises>Exercises</a></li>
-  </ul>
-  <li><a href="segmentation.html">Chapter 6: Object detection and
-segmentation</a></li>
-  <ul>
-    <li><a href=segmentation.html#section1>Getting to big data</a></li>
-    <ul>
-      <li>Crowd-sourced annotation datasets</li>
-      <li>Segmenting new classes via fine tuning</li>
-      <li>Annotation tools for manipulation</li>
-      <li>Synthetic datasets</li>
-      <li>Self-supervised learning</li>
-    </ul>
-    <li><a href=segmentation.html#section2>Object detection and segmentation</a></li>
-    <li><a href=segmentation.html#section3>Putting it all together</a></li>
-    <li><a href=segmentation.html#section4>Exercises</a></li>
-  </ul>
-  <li><a href="force.html">Chapter 7: Force Control</a></li>
-  <ul>
-    <li><a href=force.html#section1>A simple model</a></li>
-    <ul>
-      <li>(Direct) force control</li>
-      <li>A force-based "flip-up" strategy</li>
-      <li>Indirect force control</li>
-      <li>A stiffness-control-based "flip-up" strategy</li>
-      <li>Hybrid position/force control</li>
-    </ul>
-    <li><a href=force.html#section2>Peg in hole</a></li>
-    <li><a href=force.html#section3>Manipulator control</a></li>
-    <ul>
-      <li>Joint stiffness control</li>
-      <li>Cartesian stiffness control</li>
-      <li>Some implementation details on the iiwa</li>
-    </ul>
-    <li><a href=force.html#section4>Putting it all together</a></li>
-    <li><a href=force.html#section5>Exercises</a></li>
-  </ul>
-  <li><a href="trajectories.html">Chapter 8: Motion Planning</a></li>
-  <ul>
-    <li><a href=trajectories.html#section1>Inverse Kinematics</a></li>
-    <ul>
-      <li>From end-effector pose to joint angles</li>
-      <li>IK as constrained optimization</li>
-      <li>Grasp planning as IK</li>
-    </ul>
-    <li><a href=trajectories.html#section2>Kinematic trajectory optimization</a></li>
-    <ul>
-      <li>Trajectory parameterizations</li>
-      <li>Optimization algorithms</li>
-    </ul>
-    <li><a href=trajectories.html#section3>Sampling-based motion planning</a></li>
-    <ul>
-      <li>Rapidly-exploring random trees (RRT)</li>
-      <li>The Probabilistic Roadmap (PRM)</li>
-      <li>Post-processing</li>
-    </ul>
-    <li><a href=trajectories.html#section4>Time-optimal path parameterizations</a></li>
-    <li><a href=trajectories.html#section5>Active areas of research</a></li>
-    <li><a href=trajectories.html#section6>Exercises</a></li>
-  </ul>
-  <li><a href="rl.html">Chapter 9: Reinforcement Learning</a></li>
-  <ul>
-    <li><a href=rl.html#section1>RL Software</a></li>
-    <li><a href=rl.html#section2>Policy-gradient methods</a></li>
-    <ul>
-      <li>Black-box optimization</li>
-      <li>Stochastic optimal control</li>
-      <li>Using gradients of the policy, but not the environment</li>
-      <li>REINFORCE, PPO, TRPO</li>
-      <li>Control for manipulation should be easy</li>
-    </ul>
-    <li><a href=rl.html#section3>Value-based methods</a></li>
-    <li><a href=rl.html#section4>Model-based RL</a></li>
-    <li><a href=rl.html#section5>Exercises</a></li>
-  </ul>
-<p style="margin-bottom: 0; text-decoration: underline;font-variant: small-caps;"><b>Appendix</b></p>
-  <li><a href="drake.html">Appendix A: Drake</a></li>
-  <ul>
-    <li><a href=drake.html#section1>Pydrake</a></li>
-    <li><a href=drake.html#notebooks>Online Jupyter Notebooks</a></li>
-    <ul>
-      <li>Running on Deepnote</li>
-      <li>Running on Google Colab</li>
-      <li>Enabling licensed solvers</li>
-    </ul>
-    <li><a href=drake.html#section3>Running on your own machine</a></li>
-    <li><a href=drake.html#section4>Getting help</a></li>
-  </ul>
-  <li><a href="station.html">Appendix B: Setting up your own "Manipulation Station"</a></li>
-  <ul>
-    <li><a href=station.html#section1>Message Passing</a></li>
-    <li><a href=station.html#section2>Kuka LBR iiwa + Schunk WSG Gripper</a></li>
-    <li><a href=station.html#section3>Intel Realsense D415 Depth Cameras</a></li>
-    <li><a href=station.html#section4>Miscellaneous hardware.</a></li>
-  </ul>
-  <li><a href="misc.html">Appendix C: Miscellaneous</a></li>
-  <ul>
-    <li><a href=misc.html#cite>How to cite these notes</a></li>
-    <li><a href=misc.html#annotation>Annotation tool etiquette</a></li>
-    <li><a href=misc.html#projects>Some great final projects</a></li>
-    <li><a href=misc.html#feedback>Please give me feedback!</a></li>
-  </ul>
-</ul>
+  <li><a href="pages/intro.html">1: Introduction</a></li>
+  <li><a href="pages/TODO.html">1: My todo list</a></li>
+  <li><a href="pages/interviewPrep.html">2: Interview Prep</a></li>
+  <li><a href="pages/projects/main.html">3: Projects</a></li>
+
 </section>
 
 
@@ -371,8 +164,8 @@ segmentation</a></li>
 <div id="footer">
 <hr/>
 <table style="width:100%;">
-  <tr><td><a href="https://accessibility.mit.edu/">Accessibility</a></td><td style="text-align:right">&copy; Russ
-    Tedrake, 2020-2022</td></tr>
+  <!-- <tr><td><a href="https://accessibility.mit.edu/">Accessibility</a></td><td style="text-align:right">&copy; Russ
+    Tedrake, 2020-2022</td></tr> -->
 </table>
 </div>
 
