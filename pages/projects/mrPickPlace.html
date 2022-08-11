@@ -48,31 +48,148 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<h1>Pick and place</h1>
+<chapter style="counter-reset: chapter 0"><h1>Pick and place</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
-    <li><a href="mrPickPlace.html">Pick and Place</a></li>
+    <li><a href="#2">Simulation</a></li>
+    <li><a href="#5">Reference trajecotry generation</a></li>
+    <li><a href="#3">Questions</a></li>
+    <li><a href="#4">Todo</a></li>
   </ul>
 </section>
 
 <section id="1"><h1>Overview</h1>
   <p>
-    Thses are the things I need to know for the role of a robotics software engineer.
+  </p>
+</section>
+
+<section id="2"><h1>Simulation</h1>
+    <p>
+        What is the state of the bot in the next time step, assuming we know the current state.
+    </p>
+    <p><i>Input</i>
+      <ul>
+        <li>Current <i>configuration</i> of the robot</li>
+            12-vector representing positions (angles) of
+            chassis (3, $x,y,\theta$),
+            arm joints (5) and wheels (4)
+        <li>Controls</li>
+            9-vector representing speeds of joints (5, $\dot{\theta}$) and wheels (4, $u$).
+        <li>Timestep $\Delta{t}$</li> 
+        <li>Max angular speed of joints and wheels</li>
+      </ul>
+    </p>
+    <p><i>Output</i>
+        <br>
+        12-vector representing the robot's configuration after $\Delta{t}$.
+    </p>
+    <p><i>Method</i>
+      <ul>
+        <li>A first order euler step is used for both wheels and joints.</li>
+        $newAngle = oldAngle + (speed * \Delta{t})$
+        <li>Chassis configuration is obtained via odometry.</li>
+      </ul>
+    </p>
+    <p><i>Tests</i>
+      <ul>
+        <li>Set the all the wheels to constant speed for $10*\Delta{t}$</li>
+        The bot should just move forward in whatever direction it's facing.
+        <li>Set max speed and repeat step 1 with a larger than max speed.</li>
+      </ul>
+    </p>
+</section>
+
+<section id="#5"><h1>Reference trajectory generation</h1>
+    <p><i>Timing</i>
+      <ul>
+        <li>Controller feedback loop</li>
+        The final animation will output a snapshot every $t_{anim}=$<i>0.01s</i> (<i>10ms</i>, <i>100Hz</i>).
+        <br>
+        The controller will run at a higher frequency, say <i>1kHz</i> ($t_{controller}=$<i>1ms</i>).
+        Therefore, the number of segments $k$, per $t_{anim}$ is $\frac{t_{anim}}{t_{controller}}$.
+        It is the number of motor feedback cycles we will have.
+        <br>
+        Total time to complete the task, $t_{total}=$ <i>30s</i>
+        <br>
+        Total number of sequential reference trajectories generated will be 
+        $N=\frac{t_{total}}{\frac{t_{anim}}{k}}=$ <i>30,000</i>
+
+        <li>Trajectory segment</li>
+        Ideally, the duration would be:
+        <ul>
+          <li>An integer multiple of $t_{anim}$</li>
+          <li>Not so short as to require unreasonable joint and wheel speeds</li>
+        </ul>
+      </ul>
+    </p>
+
+  <p><i>Input</i>
+    <br>
+    The following configurations:
     <ul>
-        <li>C++ basics - go through the notes. </li>
-        Implement A*
-        <li>ROS basics</li>
-        <li>Finish MR python arm simulation</li>
-        <li>Revise opencv gesture recognition</li>
-        <li>Revise particle filter</li>
-        <li>Overviews of deeplearning, RL, vision, grasp</li>
-        <li></li>
+      <li>Cube's initial and final desired (x2)</li>
+      <li>Ee's initial reference</li>
+      <li>Ee grasp relative to the cube</li>
+      <li>Ee standoff relative to the cube</li>
+      <li>Number of reference configurations per $t_{anim}$, $k$</li>
     </ul>
   </p>
-  </section>
 
+  <p><i>Output</i>
+    <ul>
+      <li>$N$ reference configurations</li>
+      Each configuration is a transformation matrix $T_{se}$ at that time instance 
+      (12 elements of the matrix) + the gripper state (0 or 1). There are 8 reference trajectory
+      segments that the configurations span over.
+      <li>A csv file with $N$ rows and 13 columns.</li>
+    </ul>
+  </p>
+
+  <p><i>Notes</i>
+    <br>
+    Gripper takes <i>0.625s</i> to open or close so the reference configurations involving 
+    opening/closing the gripper should keep ${e}$ stationary.
+  </p>
+
+  <p><i>Method</i>
+    <br>
+    <i>ScrewTrajectory</i> or <i>CartesianTrajectory</i> method is used to generate the 
+    configurations between waypoints.
+  </p>
+
+  <p><i>Tests</i>
+    <br>
+    Use scene 8 to test the function - reads in the csv file and animates it.
+  </p>
+
+</section>
+
+<section id="#3"><h1>Questions</h1>
+  <p><i>Simulation</i>        
+    <br>
+    I'm guessing the controls mentioned here is very different from the input torque applied.
+  </p>
+  <p><i>Reference trajectory generation</i>
+    <br>
+    Apart from a visual method, is there another way of testing a trajectory?
+  </p>
+</section>
+
+<section id="#4"><h1>Todo</h1>
+  <p><i>Simulation</i>
+    <ul>
+      <li>For the testing, move certain joints and check if the output is as expected.</li>
+      <li>Write a note on odometry in general and in particular what it means here.</li>
+    </ul>
+  </p>
+  <p><i>Reference trajecotry generation</i>
+    <ul>
+      <li>Can I plot the motion of the Ee 3d vector w.r.t. time in bokeh?</li>
+      <li>Define all the frames.</li>
+    </ul>
+  </p>
 </section>
 
 </body>
