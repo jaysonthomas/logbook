@@ -55,6 +55,9 @@
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">Simulation</a></li>
     <li><a href="#5">Reference trajecotry generation</a></li>
+    <li><a href="#6">Feedback control</a></li>
+    <li><a href="#7">Handling joint singularities</a></li>
+    <li><a href="#8">Putting it all together</a></li>
     <li><a href="#3">Questions</a></li>
     <li><a href="#4">Todo</a></li>
   </ul>
@@ -62,6 +65,37 @@
 
 <section id="1"><h1>Overview</h1>
   <p>
+    Generate a reference trajectory. The program then loops through the $N$ reference
+    configurations, $N-1$ times. For the $i^{th}$ iteration, the controller uses
+    $X_{d,i}$ and $X_{d,i+1}$ to calculate the feedforward twist $V_{d}$.
+  </p>
+  <p>
+    Each time through the loop:
+    <ul>
+      <li>Using feedback control, find the wheel and joint speeds (controls)</li>
+      <li>
+        Find the next configuration by passing the controls, current
+        configuration and the timestep to the simulation.
+      </li>
+      <li>Store every $k^{th}$ configuration for later animation.</li>
+      <li>Store every $k^{th}$ $X_{err}$ to plot the evolution of the error over time.</li>
+    </ul>
+  </p>
+  <p>
+    After the loop, write the $\frac{N}{k}$ configurations to a csv file.
+  </p>
+  <p>
+    The recommended physics engine for this task is <i>ODE</i>. Physics engines make approximations.
+    Simulation of bodies in contact is computationally intensive, and approximate solution 
+    methods could lead to unexpected behavior, like the block slipping in the grasp.
+    <a href="t.ly/b9NBr">Bullet</a> is another popular physics engine.
+  </p>
+  <p>
+    The initial and final configurations of the cube is given. Initial reference configuration of the ee is also
+    given. Choose an initial configuration of the youBot so that the end-effector has at 
+    least 30 degrees of orientation error and 0.2 m of position error. The controller will need to be designed
+    in such a way so as to drive all initial error to zero by the end of the first trajectory segment; otherwise, 
+    your grasp operation may fail.
   </p>
 </section>
 
@@ -101,7 +135,7 @@
     </p>
 </section>
 
-<section id="#5"><h1>Reference trajectory generation</h1>
+<section id="5"><h1>Reference trajectory generation</h1>
     <p><i>Timing</i>
       <ul>
         <li>Controller feedback loop</li>
@@ -166,30 +200,261 @@
 
 </section>
 
+<section id="6"><h1>Feedback control</h1>
+  <subsection><h1>Input</h1>
+    <ul>
+      <li>Current actual ee configuration</li>
+      <li>Current reference ee configuration</li>
+      <li>Ee reference configuration in the next timestep</li>
+      <li>PI gain matrices</li>
+      <li>Timestep $\Delta{t}$ between reference configurations</li>
+    </ul>
+  </subsection>
+
+  <subsection><h1>Output</h1>
+    The commanded ee twist $V$ expressed in ${e}$.
+  </subsection>
+
+  <subsection><h1>Method</h1>
+    <ul>
+      Find the following:
+      <p>
+        <li>Error twist</li>
+        $[V_{err}]=log(X^{-1}X_{d})$
+        <br>
+        $X$ is the current configuration of {e} w.r.t. {s}.
+        <br>
+        $X_{d}$ is the desired/reference configuration of {e} w.r.t. {s}.
+      </p>
+      
+      <p>
+        <li>Feedforward reference twist</li>
+        $[V_{d}] = \frac{1}{\Delta{t}}log(X^{-1}_{d} X_{d,next})$
+      </p>
+
+      <p>
+        <li>Commanded ee twist</li>
+        $V_{ee} = FF + P + I$
+        <br>
+        $V(t)=[Ad_{X^{-1}X_{d}}]V_{d}(t)+K_{p}X_{err}(t)+K_{i}\int_{0} ^{t}X_{err}dt$
+        <br>
+        $FF$ consists of the reference twist after mapping it
+        to the current frame of the ee.
+        <br>
+        The error twist is used in the P and I terms.
+      </p>
+      
+      <li>Commanded wheel and joint speeds</li>
+      $V_{ee}$ needs to be expressed in the wheel and joint space
+      using the pseudoinverse of the mobile manipulator jacobian.
+      <br>
+      $\begin{bmatrix}u\\\dot{\theta}\end{bmatrix} = J^{\dagger}_{e}(\theta)V$
+    </ul>
+  </subsection>
+
+  <subsection><h1>Tests</h1>
+    <ul>
+      <p>
+        <li>
+          Given current, desired and the next desired configurations, find
+          $V_{d}$, $[Ad_{X^{-1}X_{d}}]V_{d}$, $V_{ee}$, $V_{err}$, $J_{e}$ and $(u,\dot{\theta})$
+        </li>
+        <p>
+          Between$X_{d}$ to $X_{d,next}$, the orientation is the same; just the linear components change.
+          Keep one larger than the others and the velocity (the FF term) should reflect the same. 
+          There should be no angular velocity.
+        </p>
+        <p>
+          With $X_{err}$, correction only needs to be applied to the ee's orientation in the y direction.
+          And some translation error needs to applied which will lead to the bot moving with constant speed
+          in all wheels. This can be checked by confirming $(u,\dot{\theta})$.
+        </p>
+        <p>
+          These tests show how I can keep the tests simple by setting certain parameters of the bot, constant.
+        </p>
+      </p>
+    </ul>
+  </subsection>
+</section>
+
+<section id="7"><h1>Handling joint singularities</h1>
+  <subsection><h1>What are these singularities?</h1>
+    <p>
+      If the <i>6x9</i> jacobian matrix $J_{e}$ is singular or nearly singular
+      in a particular direction,
+      the pseudoinverse algorithm $J^{\dagger}_{e}$ will generate unreasonably large
+      entries which will lead to unacceptably large commanded joint speeds even if we 
+      ask for a small twist in that direction. The jacobian matrix is singular when its rank
+      drops below 6. This will only be seen in the joint space.
+    </p>
+    <p>
+      An option is to ignore commanded twist components (in $V_{ee}$) that the near-singularity
+      renders difficult to achieve. Set a tolerance; if a value is lower than the tolerance value
+      (so, the value is even closer to 0), then treat the component as 0. In any case, place
+      reasonable limits on the maximum joint/wheel speeds to mimic limitation of a real robot.
+    </p>
+    <p>
+      <i>Why does the robot arm always seem to approach a singularity at the start?</i>
+      <br>
+      The controller tends to make the robot arm approach a singularity (e.g. straighten out)
+      before the wheels move much to help move the ee. This has something to do with the
+      properties of the pseudoinverse; the way it extracts a single solution
+      ($x=A^{\dagger}b$ for the equation $Ax=b$) when there are many solutions for $x$.
+    </p>
+    <p>
+      Would things change if the wheels had a much larger radius?
+    </p>
+    <p>
+      Source for the following: <a href="rebrand.ly/l8bxnj1">this mit paper</a>.
+      <br>
+      A recurring problem in tracking target positions, 
+      is that when the target positions are too distant, the multibody's
+      arms stretch out to try to reach the target position. Once the multibody is
+      extended in this way, it usually is near a singularity (that is, the Jacobian
+      very sensitive to small changes in joint angles), and the multibody will often
+      shake or jitter, attempting unsuccessfully to reach the distant target.
+    </p>
+    <p>
+      At a singularity, the Jacobian matrix no longer has full row
+      rank, corresponding to the fact that there is a direction of movement of the
+      end effectors which is not achievable. If the configuration is exactly at a
+      singularity, then the pseudoinverse method will not attempt to move in an
+      impossible direction, and the pseudoinverse will be well-behaved. However,
+      if the configuration is close to a singularity, then the pseudoinverse method
+      will lead to very large changes in joint angles, even for small movements in
+      the target position.
+    </p>
+  </subsection>
+  
+  <subsection><h1>Choosing joint limits</h1>
+    <p>
+      Joint limits are needed to avoid self collisions and singularities.
+      For example, constraints can be added to joints 3 and 4 to always be
+      less than 0.2 radians. Thus the arm will avoid singularities occurring
+      when joints 3 or 4 are at the zero angle. Use the joint angle sliders to
+      approximately find the joint-angle combinations that avoid self-collisions [Scene 3].
+    </p>
+    <p>
+      But it should not be so conservative that the arm's workspace is overly constrained, 
+      preventing the robot from doing useful work.
+    </p>
+  </subsection>
+  
+  <subsection><h1>Code implementation</h1>
+    <p>
+      Write a function to return a list of joints that violate the limits 
+      given the robot arm's current configuration.
+    </p>
+    <p>
+      <ul>
+        <li>Initial configuration must satisfy joint limits.</li>
+        <li>
+          Each time ($u,\dot{\theta}$) is found, check the new
+          configuration (after $\Delta{t}$) does not violate the joint limits.
+        </li>
+        <p>
+          <li>If yes, recalculate the controls.</li>
+          <p>
+            Change each column of $J_{e}$ corresponding to an offending joint
+            to all zeros. The pseudoinverse solution will not request any motion from these joints.
+          </p>
+        </p>
+      </ul>
+    </p>
+  </subsection>
+
+</section>
+
+<section id="8"><h1>Putting it all together</h1>
+  <ul>
+    <li>Feedforward control test with no external errors</li>
+    <p>
+      Test the feedforward control works first. Choose the initial configuration of the robot 
+      that puts the end-effector exactly at the first reference configuration.
+      Set $K_{p}=K_{i}=0$. With zero disturbance, the bot should follow the trajectory perfectly.
+      There might be small numerical errors in the euler integration step which will
+      be fixed using the feedback controller.
+    </p>
+    <li>Test just the FF control with some initial error in {e} from the reference trajectory</li>
+    <li>Add a positive-definite diagonal proportional gain matrix $K_{p}$ while keeping the 
+      integral gains zero.</li>
+      <p>
+        Keep the gain values small initially, so as you increase the gains, 
+        you can see the corrective effect due to the proportional control.
+      </p>
+    <li>Best, overshoot, newTask directories</li>
+    <p>
+      The directory "best" should contain results using a well-tuned controller, 
+      either feedforward-plus-P or feedforward-plus-PI. 
+      The convergence exhibited by the controller does not necessarily have to be fast 
+      (in fact, it is more interesting if the convergence is not too fast, so the transient response 
+      is clearly visible), but the motion should be smooth, with no overshoot, and very little error 
+      by partway through trajectory segment 1. 
+    </p>
+    <p>
+      The directory "overshoot" should contain the results using a less-well-tuned controller, 
+      one that exhibits overshoot and a bit of oscillation. Nonetheless, the error should 
+      be eliminated before the end of trajectory segment 1. Your controller for "overshoot" 
+      will likely be feedforward-plus-PI or just PI. 
+    </p>
+    <p>
+      You can use any controller to solve the "newTask" task. The end configuration of the cube
+      will be different from the default.
+    </p>
+  </ul>
+</section>
+
 <section id="#3"><h1>Questions</h1>
-  <p><i>Simulation</i>        
-    <br>
-    I'm guessing the controls mentioned here is very different from the input torque applied.
-  </p>
-  <p><i>Reference trajectory generation</i>
-    <br>
-    Apart from a visual method, is there another way of testing a trajectory?
-  </p>
+  <subsection><h1>Simulation</h1>
+    <p>
+      I'm guessing the controls mentioned here is very different from the input torque applied.
+    </p>
+  </subsection>
+    
+  <subsection><h1>Reference trajectory generation</h1>
+    <p>
+      Apart from a visual method, is there another way of testing a trajectory?
+    </p>
+  </subsection>
+
+  <subsection><h1>Feedback control</h1>
+    <p>
+      For the feedforward term calculation, is the following the same:
+      <br>
+      $[Ad_{X^{-1}X_{d}}]V_{d}$ and $V_{current,dnext}$
+      <br>
+      If they are the same, then we're using the error in the FF term as well.
+    </p>
+  </subsection>
 </section>
 
 <section id="#4"><h1>Todo</h1>
-  <p><i>Simulation</i>
+  <subsection><h1>Simulation</h1>
     <ul>
       <li>For the testing, move certain joints and check if the output is as expected.</li>
       <li>Write a note on odometry in general and in particular what it means here.</li>
     </ul>
-  </p>
-  <p><i>Reference trajecotry generation</i>
+  </subsection>
+  
+  <subsection><h1>Reference trajecotry generation</h1>
     <ul>
       <li>Can I plot the motion of the Ee 3d vector w.r.t. time in bokeh?</li>
       <li>Define all the frames.</li>
     </ul>
-  </p>
+  </subsection>
+
+  <subsection><h1>Feedback control</h1>
+    <p>
+      With the tests for $X_{err}$, I need to confirm how it's possible to quickly tell
+      if the bot just needs to correct its orientation in the y direction.
+    </p>    
+  </subsection>
+
+  <subsection><h1>Handling joint singularities</h1>
+    <p>
+      Could run the code with and without joint limits in place.
+    </p>
+  </subsection>
 </section>
 
 </body>
