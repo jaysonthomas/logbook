@@ -7,3 +7,6 @@
 [submodule "data"]
 	path = data
 	url = https://github.com/RussTedrake/manipulation-data.git
+[submodule "slides"]
+	path = slides
+	url = git@github.com:jaysonthomas/slides.git
