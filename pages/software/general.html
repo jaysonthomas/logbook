@@ -56,6 +56,7 @@
     <li><a href="#2">Software downloads</a></li>
     <li><a href="#3">Latex</a></li>
     <li><a href="#4">Linux</a></li>
+    <li><a href="#5">Drake</a></li>
   </ul>
 </section>
 
@@ -92,6 +93,7 @@ libgtk2.0-dev libgtk-3-dev
 gnome-screenshot
 google-chrome-stable
 vlc
+simplescreenrecorder
 </code></pre>
   </subsection>
 
@@ -142,6 +144,26 @@ sudo apt-get install python3.8
       I found <a href="t.ly/xyaj">this</a> useful.
       Just find the best server and go for whatever is suggested.
     </p>
+  </subsection>
+</section>
+
+<section id="5"><h1>Drake</h1>
+  <subsection><h1>First installation attempt</h1>
+    On 04.07.22, I did the following:
+    <pre class="highlight">
+      <code>sudo apt-get install python3.10-venv
+python3 -m venv env
+env/bin/pip install --upgrade pip
+env/bin/pip install drake
+</code></pre>
+Got this error:
+<pre class="highlight">
+  <code>ERROR: Could not find a version that satisfies the requirement drake (from versions: none)
+ERROR: No matching distribution found for drake
+</code></pre>
+
+Pip version is <code>pip-22.1.2</code>.
+I followed the instructions shown in <a href="https://t.ly/ivJH">installation via pip</a>.
   </subsection>
 </section>
 </body>
