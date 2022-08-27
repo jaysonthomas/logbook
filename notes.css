@@ -1,0 +1,285 @@
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: white;
+  background-color: white;
+  width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: justify;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(153,51,51); /* mit red */
+}
+a:not(.image) {
+  color: rgb(153,51,51); /* mit red */
+}
+pre { margin-top: -5px; }
+b { color: rgb(153,51,51); /* mit red */ }
+i { color: rgb(153,51,51); /* mit red */ }
+em { color: rgb(153,51,51); /* mit red */ }
+code { color: rgb(153,51,51); /* mit red */ }
+
+[data-type="titlepage"] {
+  font-size: 22px;
+}
+[data-type="subtitle"] {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+  margin-top: 0px;
+}
+#bib h1:before {
+  content: "";
+}
+
+/* Custom tags */
+sidenote {
+  float: right; margin-right: -170px;
+  width: 150px; text-align: left;
+}
+todo {
+  display: none;
+}
+definition {
+  display: block;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: rgb(242,242,242); /* light gray */
+  margin: 10px;
+  padding: 5px;
+}
+theorem {
+  display: block;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: rgb(242,242,242); /* light gray */
+  margin: 10px;
+  padding: 5px;
+}
+example {
+  display: block;
+  border: 1px solid;
+  border-radius: 0px;
+  background-color: rgb(242,242,242); /* light gray */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+equation {
+  display: block;
+  border: 1px solid;
+  border-radius: 0px;
+  background-color: rgb(242,242,242); /* light gray */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+exercise {
+  display: block;
+  border-radius: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+figure {
+  text-align: center;
+  counter-increment: figure;
+}
+figcaption {
+  text-align: center;
+}
+[style-type="box"] {
+  display: block;
+  border: 1px solid;
+  border-radius: 0px;
+  background-color: rgb(242,242,242); /* light gray */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+[pdf="only"] {
+  display: none;
+}
+
+.bibtexnumber {
+  vertical-align: top;
+}
+
+.publisher {
+  font-style: italic;
+}
+
+/* h1 elements */
+[data-type="titlepage"] h1 {
+  font-variant: small-caps;
+  margin-bottom: 0px;
+}
+section > h1 { 
+  font-variant: small-caps;
+  font-size: large;
+}
+chapter section > h1 {
+  font-variant: small-caps;
+  font-size: large;
+}
+subsection > h1 {
+  font-variant: normal;
+  font-size: medium;
+}
+subsubsection > h1 {
+  display: inline;
+  font-size: medium;
+}
+definition > h1 {
+  display: inline;
+  font-size: 16px;
+  font-variant: normal;
+}
+theorem > h1 {
+  display: inline;
+  font-size: 16px;
+  font-variant: normal;
+}
+example > h1 {
+  display: block;
+  font-size: 16px;
+  font-variant: normal;
+  margin: 2px;
+}
+
+equation > h1 {
+  display: block;
+  font-size: 16px;
+  font-variant: normal;
+  margin: 2px;
+}
+
+exercise > h1 {
+  display: block;
+  font-size: 16px;
+  font-variant: normal;
+  margin: -10px;
+  margin-bottom: 10px;
+}
+
+/* Counters */
+chapter > h1 {
+  counter-increment:chapter;
+  counter-reset: sect1 example_counter equation_counter exercise_counter definition theorem algorithm figure;
+}
+chapter section {
+  counter-increment:sect1;
+  counter-reset:sect2;
+}
+subsection {
+  counter-increment:sect2;
+}
+definition {
+  counter-increment:definition;
+}
+theorem {
+  counter-increment:theorem;
+}
+example {
+  counter-increment:example_counter;
+}
+equation {
+  counter-increment:equation_counter;
+}
+exercise {
+  counter-increment:exercise_counter;
+}
+algorithm {
+  counter-increment:algorithm;
+}
+
+chapter > h1:before {
+  content: "Chapter " counter(chapter);
+  display: block;
+  font-variant: small-caps;
+}
+chapter section > h1:before {
+  content: counter(chapter) "." counter(sect1) " ";
+  display: inline;
+}
+subsection > h1:before {
+  content: counter(chapter) "." counter(sect1) "." counter(sect2) " ";
+}
+subsubsection > h1:before {
+  content: "";
+}
+definition > h1:before {
+  content: "Definition " counter(chapter) "." counter(definition) " (";
+}
+theorem > h1:before {
+  content: "Theorem " counter(chapter) "." counter(theorem) " - ";
+}
+definition > h1:after {
+  content: ")";
+}
+example > h1:before {
+  content: "Example " counter(chapter) "." counter(example_counter) " (";
+}
+equation > h1:before {
+  content: "Equation " counter(equation_counter) " (";
+}
+exercise > h1:before {
+  content: "Exercise " counter(chapter) "." counter(exercise_counter) " ";
+}
+algorithm > h1:before {
+  content: "Algorithm " counter(chapter) "." counter(algorithm) " (";
+}
+example > h1:after {
+  content: ")";
+}
+equation > h1:after {
+  content: ")";
+}
+algorithm > h1:after {
+  content: ")";
+}
+figcaption:before {
+  content: "Figure " counter(chapter) "." counter(figure) " - ";
+}
+
+/* Appendix versions */
+chapter.appendix > h1:before {
+  content: "Appendix " counter(chapter, upper-alpha);
+}
+chapter.appendix section > h1:before {
+  content: counter(chapter, upper-alpha) "." counter(sect1) ' ';
+  display: inline;
+}
+chapter.appendix subsection > h1:before {
+  content: counter(chapter, upper-alpha) "." counter(sect1) "." counter(sect2) " ";
+}
+chapter.appendix subsubsection > h1:before {
+  content: "";
+}
+chapter.appendix theorem > h1:before {
+  content: "Theorem " counter(chapter, upper-alpha) "." counter(theorem) " - ";
+}
+chapter.appendix example > h1:before {
+  content: "Example " counter(chapter, upper-alpha) "." counter(example_counter) " (";
+}
+
+/* I don't know the need for the following */
+chapter.appendix equation > h1:before {
+  content: "Equation " counter(chapter, upper-alpha) "." counter(equation_counter) " (";
+}
+chapter.appendix exercise > h1:before {
+  content: "Exercise " counter(chapter, upper-alpha) "." counter(exercise_counter) " ";
+}
+chapter.appendix algorithm > h1:before {
+  content: "Algorithm " counter(chapter, upper-alpha) "." counter(algorithm) " (";
+}
+chapter.appendix figcaption:before {
+  content: "Figure " counter(chapter, upper-alpha) "." counter(figure) " - ";
+}
+
+
+/* end counters*/

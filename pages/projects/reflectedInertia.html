@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../chapters.js"></script>
+    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+
+    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
+    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Reflected inertia</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+    <li><a href="#2">System Dynamics</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Reflected Inertia</h1>
+  <subsection><h1>Background knowledge</h1>
+    <ul>
+      <li>Physics</li>
+      <p>
+        <i>Dynamics</i> is the study of the effect that forces have
+        on the motion of objects. <i>Statics</i> is the study of forces in
+        the absence of changes in motion. 
+      </p>
+      <li>Control</li>
+      <p>
+        First order form of system dynamics: $\dot{x}=f(x,u)$ where $x$ is the
+        state vector, $u$ is the control input.
+      </p>
+      <li>Pendulum specific</li>
+      <p>
+        The simple pendulum is perhaps the simplest abstraction of a 'manipulator'.
+      </p>
+      <equation><h1>hekki</h1>
+        <p>
+        $$x=[q,\dot{q}]^T$$
+        <br>
+        $u=\tau$
+      </p>
+      </equation>
+    </ul>
+  </subsection>
+  <subsection><h1>Steps</h1>
+    <p>
+      We first write the system dynamics in a first-order form, $\dot{x}=f(x,u)$
+      where $x=[q,\dot{q}]^T$ is the state vector and $u=\tau$ is the input. What
+      we are interested in is $\dot{x}$. I think $\dot{q}$ is part of the 
+      state vector $x$ because we can calculate $\ddot{q}$ directly from $q$.
+    </p>
+
+  </subsection>
+</section>
+
+<section id="2"><h1>System dynamics</h1>
+
+</section>
+
+<section id="3"><h1>Notes</h1>
+  Direct-drive means the motor's movements are directly translated to the joint side.
+  There is no gearing or that the gear ratio is 1.
+</section>
+
+<section id="4"><h1>Todo</h1>
+  <ul>
+    <li>Go through brian douglas' introduction of 
+      <a href="https://t.ly/V62f">state space equations</a></li>
+      This is to understand why we include velocity in the state
+      vector for a first order state space equation because that
+      would involve calculating the acceleration.
+  </ul>
+</section>
+
+<section id="5"><h1>Questions</h1>
+  <ul>
+    <li>Dynamics equation of a simple pendulum with an attached gear and motor.</li>
+    Where do I get the equation from? What is the intuitive meaning behind it?
+
+    <li>Motor side vs joint side dynamics?</li>
+    <li>What happens in the direct-drive case?</li>
+    Apparently, stability in this scenario, can only be achieved if the PID
+    gains are high enough.
+
+    <li>Why is $sin\theta$ considered to induce non-linear behaviour?</li>
+    <li>
+      Intuitively, why does gravity have less of an effect on the system
+      when there are gears/motor involved?
+    </li>
+  </ul>
+</section>
+
+</body>
+</html>
+
