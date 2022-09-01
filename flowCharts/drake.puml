@@ -1,0 +1,21 @@
+@startuml
+
+simulator --> context
+manipulationStation --> context
+multibodyPlant --> context
+state simulator {
+    state diagram{
+        state manipulationStation {
+            state multibodyPlant {             
+            }
+        }
+
+        state meshcatVisualizer
+    }
+}
+
+state context {
+
+}
+
+@enduml

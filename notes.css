@@ -14,10 +14,11 @@ h1,h2,h3,h4,h5,h6 {
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(153,51,51); /* mit red */
 }
+h5:first-line { margin-top: -5px; line-height: 0;}
 a:not(.image) {
   color: rgb(153,51,51); /* mit red */
 }
-pre { margin-top: -5px; }
+pre:first-line { margin-top: -5px; line-height: 0;}
 b { color: rgb(153,51,51); /* mit red */ }
 i { color: rgb(153,51,51); /* mit red */ }
 em { color: rgb(153,51,51); /* mit red */ }
@@ -224,9 +225,6 @@ definition > h1:after {
 example > h1:before {
   content: "Example " counter(chapter) "." counter(example_counter) " (";
 }
-equation > h1:before {
-  content: "Equation " counter(equation_counter) " (";
-}
 exercise > h1:before {
   content: "Exercise " counter(chapter) "." counter(exercise_counter) " ";
 }
@@ -234,9 +232,6 @@ algorithm > h1:before {
   content: "Algorithm " counter(chapter) "." counter(algorithm) " (";
 }
 example > h1:after {
-  content: ")";
-}
-equation > h1:after {
   content: ")";
 }
 algorithm > h1:after {

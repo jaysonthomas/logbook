@@ -1,3 +1,35 @@
+<!-- <html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+
+    <pre>
+      <code class="bash">
+        #!/bin/bash
+
+        ###### CONFIG
+        ACCEPTED_HOSTS="/root/.hag_accepted.conf"
+        BE_VERBOSE=false
+        
+        if [ "$UID" -ne 0 ]
+        then
+         echo "Superuser rights required"
+         exit 2
+        fi
+        
+        genApacheConf(){
+         echo -e "# Host ${HOME_DIR}$1/$2 :"
+        }
+        
+        echo '"quoted"' | tr -d \" > text.txt
+      </code>
+    </pre>
+  </body>
+</html> -->
+
 <!DOCTYPE html>
 
 <html>
@@ -16,11 +48,13 @@
     </script>
     <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/stackoverflow-light.min.css">
+    <!-- <script src="../../htmlbook/highlight/highlight.pack.js"></script> http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+    <link rel="stylesheet" type="text/css" href="../htmlbook/book.css" />
+    
   </head>
 
 <body onload="loadChapter('manipulation');">
@@ -76,18 +110,16 @@
 
 <section id="2"><h1>Software downloads</h1>
   <subsection><h1>Snap installs</h1>
-<pre>
-<code class="bash">
-sudo snap install --classic code
+    <pre class="highlight">
+    <code>sudo snap install --classic code
 gimp
 </code></pre>
   </subsection>
 
   <subsection><h1>Apt-get installs</h1>
-<pre>
-<code class="bash">
-python3-pip
-python3.8 
+    <pre class="highlight">
+    <code>python3-pip
+python3.8
 python3.8-venv
 graphviz
 plantuml
@@ -102,18 +134,36 @@ simplescreenrecorder
   </subsection>
 
   <subsection><h1>Apt installs</h1>
-    <pre>
+    <pre class="highlight">
     <code>net-tools
 </code></pre>
   </subsection>
 
   <subsection><h1>Repositories</h1>
+    <pre><code class="bash">#!/bin/bash
+
+###### CONFIG
+ACCEPTED_HOSTS="/root/.hag_accepted.conf"
+BE_VERBOSE=false
+
+if [ "$UID" -ne 0 ]
+then
+  echo "Superuser rights required"
+  exit 2
+fi
+
+genApacheConf(){
+  echo -e "# Host ${HOME_DIR}$1/$2 :"
+}
+
+echo '"quoted"' | tr -d \" > text.txt</code>
+    </pre>
     To be able to download different versions of python. I couldn't install python3.8 otherwise. 
     There is a standard/default python version that is included in every version of 
     ubuntu - I only have access to that otherwise.
-<pre><code class="bash">
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update
+    <pre>
+    <code class="bash">sudo add-apt-repository ppa:deadsnakes/ppa
+if sudo apt update
 sudo apt-get install python3.8
 </code></pre>
   </subsection>
@@ -130,19 +180,19 @@ sudo apt-get install python3.8
   <subsection><h1>Useful tools</h1>
     <ul>
       <li>Find files</li>
-<pre><code class="bash">
-find . -name '*station*.ipynb'
+      <pre class="highlight">
+        <code>find . -name '*station*.ipynb'
 </code></pre>
       <li>Find software version</li>
-      <pre>
+      <pre class="highlight">
         <code>bazel --version
 </code></pre>
       <li>Find keywords</li>
-      <pre>
+      <pre class="highlight">
         <code>grep -r "file_name" /folder/path
 </code></pre>
       <li>Tar</li>
-      <pre>
+      <pre class="highlight">
         <code>tar -xf filename.tar.xz
 </code></pre>
     </ul>
@@ -160,14 +210,14 @@ find . -name '*station*.ipynb'
 <section id="5"><h1>Drake</h1>
   <subsection><h1>First installation attempt</h1>
     On 04.07.22, I did the following:
-    <pre>
+    <pre class="highlight">
       <code>sudo apt-get install python3.10-venv
 python3 -m venv env
 env/bin/pip install --upgrade pip
 env/bin/pip install drake
 </code></pre>
 Got this error:
-<pre>
+<pre class="highlight">
   <code>ERROR: Could not find a version that satisfies the requirement drake (from versions: none)
 ERROR: No matching distribution found for drake
 </code></pre>
@@ -177,13 +227,8 @@ I followed the instructions shown in <a href="https://t.ly/ivJH">installation vi
   </subsection>
 
   <subsection><h1>Second installation attempt</h1>
-    <ul>
-      <li>Pip installation of <code>manipulation</code></li>
-      I could have just installed drake via pip, but installing 
-      <code>manipulation</code> covers it and lots of other extra packages. 
-      I had to install wheel, upgrade pip and then install manipulation again.
-<pre><code class="bash">
-python3.8 -m venv env
+    <pre class="highlight">
+      <code class="language-bash">python3.8 -m venv env
 source env/bin/activate
 which python
 python3 --version
@@ -192,58 +237,43 @@ pip3 install manipulation
 python3 -m pip install --upgrade pip
 pip3 install wheel
 </code></pre>
-      There's a comment as follows, <a href="https://drake.mit.edu/pip.html#stable-releases">here</a>
-<pre><code class="language-plaintext">
-Drake publishes pre-compiled binaries as PyPI wheel packages.
-</code></pre>
-        
-      <li>Test if drake's been installed</li>
-<pre><code class="python">
-python3 -c 'import pydrake.all; print(pydrake.__file__)'
-Output: /home/jayson/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/__init__.py
-</code></pre>
-      
-      <li>Get graphs working</li>
-      I had to do the following outside of the virtual environment to get graphs working.
-<pre><code class="bash">
-sudo apt-get install graphviz
-</code></pre>
 
-      <li>Separate download of the <code>manipulation</code> repository</li>
-      I'm going directly to the source so I can stay up to date with the latest changes
-      to the pset files.
-<pre><code class="bash">
-cd ~/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/share/drake/tutorials/manipulation
-git clone https://github.com/RussTedrake/manipulation.git .
-</code></pre>
-    </ul>
+    I could have just installed drake via pip, but installing 
+    <code>manipulation</code> covers it and lots of other extra packages. 
+    I had to install wheel, upgrade pip and then install manipulation again.
+    
+    Test if drake's been installed:
+    ```
+    python3 -c 'import pydrake.all; print(pydrake.__file__)'
+    Output: /home/jayson/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/__init__.py
+    ```
+    There's a comment as follows, [here](https://drake.mit.edu/pip.html#stable-releases):
+    > Drake publishes pre-compiled binaries as PyPI wheel packages.
+    
+    Deactivate virtual environment.
+    ```
+    deactivate
+    ```
+    ## - Running drake tutorials locally
+    I run `python3 -m pydrake.tutorials`. I get:
+    >Serving notebooks from local directory: /home/jayson/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/share/drake/tutorials
+    
+    `index.ipynb` gets served at `http://localhost:8888/notebooks/index.ipynb#`
+    
+    ```
+    grep -r "index.ipynb" /folder/path
+    ```
+    I had to do the following outside of the virtual environment to get graphs working.
+    ```
+    sudo apt-get install graphviz
+    ```
+    ## - Separate download of manipulation repository
+    I'm going directly to the source so I can stay up to date with the latest changes.
+    ```
+    cd ~/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/share/drake/tutorials/manipulation
+    git clone https://github.com/RussTedrake/manipulation.git .
+    ```
   </subsection>
-
-  <subsection><h1>Temporary way of running Drake locally</h1>
-    <ul>
-      <li>Activate virtual environment</li>
-<pre><code class="python">
-source env/bin/activate
-</code></pre>
-      <li>Deactivate virtual environment</li>
-<pre><code class="python">
-deactivate
-</code></pre>
-
-      <li>Run drake tutorial locally</li>
-<pre><code>
-python3 -m pydrake.tutorials
-Output: Serving notebooks from local directory: /home/jayson/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/share/drake/tutorials
-</code></pre>
-      <code>index.ipynb</code> gets served at <code>http://localhost:8888/notebooks/index.ipynb#</code>.
-      <br><br>
-      <li>Finding <code>index.ipynb</code></li>
-<pre><code>
-grep -r "index.ipynb" /folder/path
-</code></pre>
-    </ul>
-  </subsection>
-
 </section>
 </body>
 </html>

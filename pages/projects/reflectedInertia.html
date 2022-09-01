@@ -52,86 +52,148 @@
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="#2">System Dynamics</a></li>
+    <li><a href="#2">Reflected Inertia</a></li>
+    <li><a href="#3">Differential IK optimisation</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Reflected Inertia</h1>
+<section id="2"><h1>Reflected Inertia</h1>
   <subsection><h1>Background knowledge</h1>
     <ul>
-      <li>Physics</li>
+      <li>Physics/The physical system</li>
       <p>
         <i>Dynamics</i> is the study of the effect that forces have
         on the motion of objects. <i>Statics</i> is the study of forces in
         the absence of changes in motion. 
+        <br>
+        Direct-drive means the motor's movements are directly translated to the joint side.
+        There is no gearing or that the gear ratio is 1.
       </p>
       <li>Control</li>
       <p>
         First order form of system dynamics: $\dot{x}=f(x,u)$ where $x$ is the
-        state vector, $u$ is the control input.
+        state vector, $u$ is the control input. There are various parameters like
+        $m$, $g$, $l$ involved in the equation.
       </p>
       <li>Pendulum specific</li>
       <p>
         The simple pendulum is perhaps the simplest abstraction of a 'manipulator'.
       </p>
-      <equation><h1>hekki</h1>
-        <p>
+      <equation><h1>Simple Pendulum</h1>
         $$x=[q,\dot{q}]^T$$
-        <br>
-        $u=\tau$
-      </p>
+        $$u=\tau$$
+        $$
+          \frac{d}{dt} \begin{bmatrix}q \\ \dot{q}\end{bmatrix}
+          = \begin{bmatrix}
+            \dot{q}\\
+            \frac{(\frac{-mglsin(q)}{N}+\tau)}
+            {(\frac{Iml^2}{N^2})N}
+            \end{bmatrix}
+        $$
+        Without a motor and gearbox, the rotor inertia of the motor $I_m$
+        as well as the gear ration $N$ is 1.      
       </equation>
     </ul>
   </subsection>
+  
   <subsection><h1>Steps</h1>
-    <p>
-      We first write the system dynamics in a first-order form, $\dot{x}=f(x,u)$
-      where $x=[q,\dot{q}]^T$ is the state vector and $u=\tau$ is the input. What
-      we are interested in is $\dot{x}$. I think $\dot{q}$ is part of the 
-      state vector $x$ because we can calculate $\ddot{q}$ directly from $q$.
-    </p>
+    <ul>
+      <li>Write the system dynamics with ideal input drive condition</li>
+      That is, $I_m == N == 1$.
+      <li>Include a motor and a gearbox into the system dynamics</li>
+      <li>Decide on values for the different parameters</li>
+      <li>Combine everything in drake</li>
+      <p>
+        Input to the plant (Pendulum with motor and gearbox)
+        is the drive torque. Output is the new orientation/angular speed of the pendulum.
+        The PID controller calculates the drive torque based on the 
+        difference (error) between the measured and desired state.
+        The logger logs all the states w.r.t. time (trajectory).
+      </p>
+      <li>Simulate the closed loop system</li>
+      Advance the system in time.
+    </ul>
+  </subsection>
 
+  <subsection><h1>Figures</h1>
+    <figure>
+      <img style="height:200px; width:70%"
+      src="../../figures/pendulum_with_motor.png"/>
+      <figcaption>
+        The physical system
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:200px; width:70%"
+      src="../../figures/system_diagram.png"/>
+      <figcaption>
+        Control system overview
+      </figcaption>
+    </figure>
+  </subsection>
+
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>Dynamics equation of a simple pendulum with an attached gear and motor.</li>
+      Where do I get the equation from? What is the intuitive meaning behind it?
+  
+      <li>Motor side vs joint side dynamics?</li>
+      <li>What happens in the direct-drive case?</li>
+      Apparently, stability in this scenario, can only be achieved if the PID
+      gains are high enough.
+      
+      <p>
+        <li>Why is $sin\theta$ considered to induce non-linear behaviour?</li>
+        <li>
+          Intuitively, why does gravity have less of an effect on the system
+          when there are gears/motor involved?
+        </li>
+      </p>
+      <li>Go through brian douglas' introduction of 
+        <a href="https://t.ly/V62f">state space equations</a></li>
+        This is to understand why we include velocity in the state
+        vector for a first order state space equation because that
+        would involve calculating the acceleration.
+      </li>
+      <li>What is in context?</li>
+    </ul>
   </subsection>
 </section>
 
-<section id="2"><h1>System dynamics</h1>
-
+<section id="3"><h1>Differential IK optimisation</h1>
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>What is a <code>LeafSystem</code> in drake?</li>
+      <li>Jacobian is a function of joint angles and gives out joint velocities?</li>
+      <li>What is a <code>ManipulationStation</code> in drake?</li>
+      <li><code>get_multibody_plant()</code>?</li>
+      <li>
+        Wrapping a <code>Simulator</code> around a built <code>DiagramBuilder</code>;
+        what does it do?
+      </li>
+      It's probably a class that is initialised with the DiagramBuilder.
+      <li>Is there a simple example for the simulator?</li>
+      <li><code>simulator.set_target_realtime_rate</code></li>
+      <p>
+        Is this the rate at which the system is changing or the rate at which
+        the controller is sensing and actuating? We need to be, ideally, 10 times
+        faster than the operation rate of the system.
+      </p>
+      <li>What are kinematic singularities?</li>
+      <li>
+        Why did the Jacobian-pseudoinverse get unreliable at the limits of the kinematic workspace.
+      </li>
+      <li>Intro to <a href="https://t.ly/q0G3">QP</a></li>
+      <li>A note on why a square is used for cost function optimisation</li>
+      <p>
+        <a href="https://t.ly/Bq5P">This link</a> is a good starting point.
+        It is the square of the absolute error that we're trying to minimise?
+        <a href="https://t.ly/p8R8">This google search</a> might also be relevant?
+      </p>
+    </ul>
+  </subsection>
 </section>
-
-<section id="3"><h1>Notes</h1>
-  Direct-drive means the motor's movements are directly translated to the joint side.
-  There is no gearing or that the gear ratio is 1.
-</section>
-
-<section id="4"><h1>Todo</h1>
-  <ul>
-    <li>Go through brian douglas' introduction of 
-      <a href="https://t.ly/V62f">state space equations</a></li>
-      This is to understand why we include velocity in the state
-      vector for a first order state space equation because that
-      would involve calculating the acceleration.
-  </ul>
-</section>
-
-<section id="5"><h1>Questions</h1>
-  <ul>
-    <li>Dynamics equation of a simple pendulum with an attached gear and motor.</li>
-    Where do I get the equation from? What is the intuitive meaning behind it?
-
-    <li>Motor side vs joint side dynamics?</li>
-    <li>What happens in the direct-drive case?</li>
-    Apparently, stability in this scenario, can only be achieved if the PID
-    gains are high enough.
-
-    <li>Why is $sin\theta$ considered to induce non-linear behaviour?</li>
-    <li>
-      Intuitively, why does gravity have less of an effect on the system
-      when there are gears/motor involved?
-    </li>
-  </ul>
-</section>
-
 </body>
 </html>
 
