@@ -162,6 +162,78 @@
 </section>
 
 <section id="3"><h1>Differential IK optimisation</h1>
+  <subsection><h1>Background knowledge</h1>
+    <p>
+      <i>Kinematics</i> is a branch of physics concerned with the geometrically possible 
+      movements of a body or a system of bodies without considering the forces and masses involved.
+      <i>Robot manipulator kinematics</i> deals with how the robot joints need to move, 
+      in a coordinate manner, to achieve the end-effector prescribed movement.
+    </p>
+
+    <p>
+      <i>Differential kinematics</i> relates the <i>velocities</i> of the manipulator components. 
+      The standard approach to differential kinematics is to relate joint 
+      and ee velocities through the Jacobian matrix, which allows the calculation of the ee 
+      velocities given the joint velocities (<i>direct differential kinematics</i>) or, 
+      to determine the joint velocities in order to move the end-effector with a 
+      prescribed speed (<i>inverse differential kinematics</i>).
+    </p>
+  </subsection>
+
+  <subsection><h1>Steps</h1>
+    <ul>
+      <li>Differential IK through inverse jacobian</li>
+      The aim is to find the desired joint velocities $v$ from the desired
+      spatial (end effector) velocities $V^G$.
+      $$v = [J^G(q)]^{\dagger} V^{G}$$
+      <p>
+        We use a <i>Moore-Penrose pseudoinverse</i> of the jacobian to achieve the
+        differential IK controller.
+      </p>  
+      <li>Velocity limits</li>
+      But the pseudoinverse method gets unreliable at the limits of the
+      kinematic workspace (i.e. under kinematic singularities). 
+      I think the Jacobian becomes singular and the pseudoinverse of it
+      generates very large values.
+      We turn this into an optimisation problem:
+      <eq id="eq1">
+        \begin{equation}\displaylines{  
+          \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+          s.t. \quad & |v|\leq v_{max}     
+        }\end{equation}
+      </eq>
+      <p>
+        I think the aim is to minimise the difference between the ee 
+        velocity that can actually be achieved and the desired target ee velocity. 
+        The absolute value is taken element wise, 
+        so the last constraint on the joint velocities is really saying 
+        "for all $i$, make sure none of the 
+        elements of $|v[i]|$ exceed $v_{max}[i]$. Such constraints are also 
+        called <i>Bounding Box constraints</i>.
+      </p>
+
+      <p>
+        <li>Position and acceleration limits</li>
+        in addition to doing joint velocity constraints, we can also put 
+        constraints on joint positions and accelerations through 
+        first-order Euler finite difference. Given $v_{now}$ and $q_{now}$:
+
+        <eq id="eq2">
+          \begin{equation}
+            \displaylines{  
+            \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+            s.t. \quad & |v|\leq v_{max} \\
+            \quad & q_{min} \leq q_{now} + h v \leq q_{max} \\
+            \quad & a_{min} \leq (v-v_{now})/h \leq a_{max}
+            }
+        \end{equation}
+      </eq>
+        
+        $h==dt$, the timestep.
+      </p>      
+    </ul>
+  </subsection>
+  
   <subsection><h1>Questions & todo</h1>
     <ul>
       <li>What is a <code>LeafSystem</code> in drake?</li>
@@ -191,6 +263,45 @@
         It is the square of the absolute error that we're trying to minimise?
         <a href="https://t.ly/p8R8">This google search</a> might also be relevant?
       </p>
+
+      <li>When to turn differential IK into an optimisation problem?</li>
+      Imagine following a trajectory in the ee space. At every instant, joint velocities
+      are calculated to achieve a desiredd ee velocity. How/when to detect a particular
+      ee velocity is not achievable because we've hit a kinematic singularity? Would the
+      pseudoinverse jacobian give joint velocities greater than the limits? If it does,
+      how do we then turn it into an optimisation problem to find the right joint velocities
+      that will come close enough to the desired ee velocity?
+
+      <li>What is the underscore 2 <a href="#eq1">here</a>?</li>
+      <li>
+        All of the constraints discussed above are formulated 
+        in the joint-space. But could we also end up with a 
+        linear constraint if we try to impose a constraint 
+        in the end-effector space?
+      </li>
+
+      <p>
+        <li>
+          Why pass <code>v</code> to 
+          <code>result.GetSolution(v)</code>?
+        </li>
+      </p>
+      <li>
+        To implement <a href="#eq2">(2)</a>, the code uses
+        the lower half of the $(6\times1)$ <code>v</code> matrix
+        which I assume is just angular velocity.
+      </li>
+
+      <p>
+        <li>I'd like to understand the integrator</li>
+<pre><code class="python">
+  integrator.GetMyContextFromRoot(simulator.get_mutable_context()).get_mutable_continuous_state_vector().SetFromVector(station.GetIiwaPosition(station_context))
+</code></pre>
+      </p>
+      <li>
+        Advance the simulator by just 1 timestep and see what the values
+        are for all the context variables.
+      </li>
     </ul>
   </subsection>
 </section>

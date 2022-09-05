@@ -57,6 +57,7 @@
     <li><a href="#3">Latex</a></li>
     <li><a href="#4">Linux</a></li>
     <li><a href="#5">Drake</a></li>
+    <li><a href="#6">Webpage</a></li>
   </ul>
 </section>
 
@@ -71,6 +72,21 @@
     <li><a href="t.ly/8MRnV">Good link</a> for quick reference</li>
     <li>Numbering equations</li>
     \begin{equation}\bh(\bq) = 0.\end{equation}
+    <p>
+      <li>Aligning parts of the equation and adding newlines</li>
+      \begin{equation}\displaylines{  
+        \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+        s.t. \quad & |v|\leq v_{max}     
+      }\end{equation}
+
+      <code>\quad</code> adds 4 spaces.
+      <br>
+      <code>&</code> aligns the centres of the left sides (to the ampersand symbol)
+      between themselves. Does the same to the right sides as well.
+      <br>
+      <code>\displaylines</code> takes into account <code>\\</code> to mean
+      'leave a new line'.
+    </p>    
   </ul>
 </section>
 
@@ -200,7 +216,7 @@ Drake publishes pre-compiled binaries as PyPI wheel packages.
       <li>Test if drake's been installed</li>
 <pre><code class="python">
 python3 -c 'import pydrake.all; print(pydrake.__file__)'
-Output: /home/jayson/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/__init__.py
+Output: /home/jayson/P/mitManipulation/env/lib/python3.8/site-packages/pydrake/__init__.py
 </code></pre>
       
       <li>Get graphs working</li>
@@ -244,6 +260,21 @@ grep -r "index.ipynb" /folder/path
     </ul>
   </subsection>
 
+</section>
+
+<section id="6"><h1>Webpage</h1>
+  <subsection><h1>Html</h1>
+    <ul>
+      <li>Linking to a specific sentence or equation in a page</li>
+      <pre><code class="xml">
+&lt;a id="eq1">Whatever is in between&lt;/a&gt;
+<br>
+Linking to the equation from elsewhere.
+&lt;a href="#eq1">The equation over here&lt;/a&gt;
+</code></pre>
+    </ul>
+
+  </subsection>
 </section>
 </body>
 </html>
