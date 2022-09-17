@@ -48,35 +48,59 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 3"><h1>Projects</h1>
+<chapter style="counter-reset: chapter 0"><h1>Drone control</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">1: Overview</a></li>
-    <li><a href="mrPickPlace.html">2: Pick and Place</a></li>
-    <li><a href="reflectedInertia.html">3: Reflected Inertia</a></li>
-    <li><a href="diy.html">4: Diy</a></li>
-    <li><a href="drone.html">5: Drone</a></li>
-    <li><a href="3dPyVisualisation.html">6: 3d python frame visualisation</a></li>
+    <li><a href="#1">Overview</a></li>
+    <li><a href="#2">Control</a></li>
+    <li><a href="#3">Musings</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Overview</h1>
-  <p>
-    Thses are the things I need to know for the role of a robotics software engineer.
-    <ul>
-        <li>C++ basics - go through the notes. </li>
-        Implement A*
-        <li>ROS basics</li>
-        <li>Finish MR python arm simulation</li>
-        <li>Revise opencv gesture recognition</li>
-        <li>Revise particle filter</li>
-        <li>Overviews of deeplearning, RL, vision, grasp</li>
-        <li></li>
-    </ul>
-  </p>
+<section id="2"><h1>Intro to control</h1>
+  If we lived in a perfect world, a model of the vehicle dynamics would be all we need. 
+  It will tell us how to design vehicle inputs [the motor turn rates] that result in a 
+  desired motion and the vehicle controls problem would be solved. In the real world, 
+  the control problem is all about managing the messiness of the real world, 
+  and making sure the vehicle achieves the task in spite of the sources 
+  that cause the error in achieving the target.
+
+  <subsection><h1>What causes the body to accelerate?</h1>
+    The only thing we directly control are the drone's rotor-rotation rates. 
+    This causes forces and moments on the drone which in turn cause 
+    translational and rotational accelerations.
+    <figure>
+      <img style="height:auto; width:70%"
+      src="../../figures/introToControl1.png"/>
+    </figure>
+
+    But for now, let's just focus on accelerations. 
+    So for our purposes, we have direct control over acceleration but not 
+    velocity or position. If we want to change those quantities, 
+    we have to do so through acceleration. 
+    We use the variable U to represent a thrust or torque control input to the drone.
+    <figure class="left">
+      <img style="height:auto; width:35%"
+      src="../../figures/IntroToControl2.png"/>
+    </figure>
+    <figure class="right">
+      <img style="height:auto; width:7%"
+      src="../../figures/IntroToControl3.png"/>
+    </figure>
+
+  </subsection>
 </section>
 
+<section id="3"><h1>Musings</h1>
+  <ul>
+    <li>
+      Discuss why input torque directly affects rotation rates.
+      Discuss why we mainly focus on torque affecting acceleration.
+    </li>
+    <li>Difference between integration and differentiation.</li>
+  </ul>
+</section>
 </body>
 </html>
 

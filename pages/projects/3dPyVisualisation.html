@@ -48,33 +48,44 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 3"><h1>Projects</h1>
+<chapter style="counter-reset: chapter 0"><h1>3d frame visualisation in python</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">1: Overview</a></li>
-    <li><a href="mrPickPlace.html">2: Pick and Place</a></li>
-    <li><a href="reflectedInertia.html">3: Reflected Inertia</a></li>
-    <li><a href="diy.html">4: Diy</a></li>
-    <li><a href="drone.html">5: Drone</a></li>
-    <li><a href="3dPyVisualisation.html">6: 3d python frame visualisation</a></li>
+    <li><a href="#1">Background knowledge</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Overview</h1>
-  <p>
-    Thses are the things I need to know for the role of a robotics software engineer.
-    <ul>
-        <li>C++ basics - go through the notes. </li>
-        Implement A*
-        <li>ROS basics</li>
-        <li>Finish MR python arm simulation</li>
-        <li>Revise opencv gesture recognition</li>
-        <li>Revise particle filter</li>
-        <li>Overviews of deeplearning, RL, vision, grasp</li>
-        <li></li>
-    </ul>
-  </p>
+<section><h1>Background knowledge</h1>
+  <a href="https://t.ly/ygR3">This</a> seems like a good starting point
+  using <code>matplotlib</code> and <code>pytransform3d</code>. Had to install the
+  latter library using pip. There are <a href="https://t.ly/KEkF">good resources</a> 
+  in google on it.
+
+  <ul>
+    <li>Transformation matrices</li>
+    Assume we know the three Euler angle values of frame 
+    B w.r.t. frame A and the translation $(tx, ty, tz)$ of the origin of 
+    frame B from frame A in the frame A coordinates. 
+    The transformation matrix for converting from the <i>frame of 
+    reference</i> B to A is given as $T_{AB}$.
+
+    <p>
+      <li>Multiplication order</li>
+      It's from right to left. The following equation takes a point $p_0$ from 
+      frame of reference D to frame of reference A. Note that a point in homogenous 
+      coordinates is represented as $[x, y, z, 1]$
+      $$T_{AB} = 
+      \begin{bmatrix}
+        R & t\\0 & 1
+      \end{bmatrix}$$
+
+      $$T_{AD} = T_{AB}T_{BC}T_{CD}$$
+      $$^AP_0 = T_{AD}^DP_0$$
+    </p>
+  </ul>
+
+
 </section>
 
 </body>

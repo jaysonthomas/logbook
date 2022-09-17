@@ -1,0 +1,17 @@
+@startuml
+
+class PseudoInverseController {
+  __init__()
+  CalcOutput()
+  
+}
+
+class IIWA_Painter {
+   __init__()
+   visualize_frame()
+   CreateDefaultContext()
+   get_X_WG()
+   paint()
+}
+
+@enduml

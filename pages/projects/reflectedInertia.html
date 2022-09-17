@@ -57,6 +57,7 @@
     <li><a href="#3">Differential IK optimisation</a></li>
     <li><a href="#4">Planar manipulator</a></li>
     <li><a href="#5">Rigid transforms</a></li>
+    <li><a href="#6">Robot painter</a></li>
   </ul>
 </section>
 
@@ -118,8 +119,21 @@
       </p>
     </p>
 
-  </ul>
+    <p>
+      <li>Robot painter</li>
+      We bring everything together in this part - spatial transformations and interpolation
+      between keyframes play a key role. But, under the hood, I'm sure a differential IK,
+      closed loop control is involved. It is also interesting to see how to visualise
+      different frames and play an animation in drake. It's good to see how to put together
+      a working application (composition of different subsystems) in drake.      
 
+      <p><b>Task</b><br>
+        Design the gripper of a robot arm to follow a circular trajectory about a given
+        center with its z axis always pointed towards the center of the trajectory.
+        Compute the key frames first, then interpolate the trajectory from the key frames.
+      </p>
+    </p>
+  </ul>
 </section>
 
 <section id="2"><h1>Reflected Inertia</h1>
@@ -427,6 +441,107 @@
         What is the difference between the 'expressed in' frame and 
         the 'w.r.t. frame'?
       </li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="6"><h1>Robot painter</h1>
+  <subsection><h1>Background knowledge</h1>
+    <ul>
+      <li>Right hand rule</li>
+      This convention is just in <a href="https://t.ly/qH3b">robotics</a> perhaps.
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Steps</h1>
+    <ul>
+      <li>Design and implement a circular trajectory for the Iiwa arm to follow</li>
+      <ul>
+        <li>Compute the key frames of the circular trajectory</li>
+        <li>Construct interpolated trajectory from the key frames</li>
+      </ul>
+      <li>Observe and reflect on the Differential IK controller</li>
+    </ul>
+  </subsection>
+
+  <subsection><h1>Key frames visualisation</h1>
+    <ul>
+      <p>
+        <li>How are the frames laid out?</li>
+        <figure>
+          <img style="height:90px; width:auto"
+          src="../../figures/8_robotPainterFrames.png"/>
+          <figcaption>
+            Given frames
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img style="height:100px; width:auto"
+          src="../../figures/9_gripperWrtWorldFrameDrake.png"/>
+          <figcaption>
+            Given frames in the drake environment
+          </figcaption>
+        </figure>
+
+        <code>painter.get_X_WG()</code> gives the current gripper frame. All frames
+        are specified w.r.t. the world frame. In drake, the length of 2 sqaures make up 
+        1 unit. The length of the world frame axes plotted in drake are 0.5 units long.
+        As can be seen in the image above, the trajectory-center-frame is roughly ~0.5 units 
+        in the x and z directions.
+        The transformation matrix of the trajectory center w.r.t. ${w}$ in {w} is
+        given as:
+        $\begin{bmatrix}
+          0 & 1 & 0 & {\sim}0.5\\ 
+          0 & 0 & -1 & {\sim}0\\
+          -1 & 0 & 0 & {\sim}0.5
+        \end{bmatrix}$ 
+      </p>
+
+      <p>
+        <li>What is the objective of the task?</li>
+        Given the world frame, the gripper frame and the frame at the 
+        center of the circular trajectory (both in/w.r.t. ${w}$); we need to
+        <ul>
+          <li>
+            Move the gripper frame to the start position on the trajectory.
+            The gripper frame is just above the center frame at the start and not 
+            perfectly aligned with it.
+          </li>
+          <li>
+            Then, rotate the gripper frame such that its z axis points towards the
+            center of the circle, its x axis is parallel to +y axis of {w}, its
+            y axis is parallel to -z axis of {w}.
+          </li>
+        </ul>
+      </p>
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>What is <code>traj.MakeDerivative()</code>?</li>
+      <li><code>builder.AddSystem(Integrator(7))</code>?</li>
+      <li><code>self.CreateDefaultContext()</code></li>
+      <li><code>self.diagram.Publish(context)</code></li>
+      
+      <p>
+        <li>
+          What does it mean to pass something to a class
+          in python when defining it.</li> 
+          Example: 
+          <code>class PseudoInverseController(LeafSystem):</code>
+      </p>
+      <li>
+        Buy wacom tablet and transfer the task drawing to the website.
+      </li>
+      <li>
+        <code>PiecewisePose.MakeLinear(times, key_frame_poses)</code>?
+        There might be an explanation of this in the lectures.
+      </li>
+      <li>Do the entire flowchart.</li>
+      <li>Make a video/gif of the robot painter</li>
+      <li>Place a few horizontal lines</li>
     </ul>
   </subsection>
 </section>
