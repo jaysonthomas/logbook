@@ -48,79 +48,50 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 1"><h1>Python</h1>
+<chapter style="counter-reset: chapter 0"><h1>Singular value decomposition</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">List</a></li>
-    <li><a href="#2">Python learning from Drake python api</a></li>
+    <li><a href="#1">Matrices</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>List</h1>
-  <subsection><h1>List of numpy arrays</h1>
-    The following is a list of 2 elements; each being a numpy array.
-    <pre class="highlight">
-      <code>temp = 
-[
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]]),
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]])
-]</code></pre>
-
-    <p>
-      I can then create an empty list and add this list to it.
-      Every time <code>append</code> is used, a new list is added
-      to the existing list as a new row.
-    </p>
-    <pre class="highlight">
-      <code>trajs = list()
-trajs.append(temp)
-trajs.append(temp)
-print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre>
-
-    <p>
-      {0} - Number of elements within the list 'trajs'. 
-      There are 2 lists.
-      <br>
-      {1} - Number of elements within the first element of 'trajs'. 
-      The first element of 'trajs' is a list containing 2 numpy arrays.
-      <br>
-      {2} - prints out the 1st numpy array.
-    </p>
-  </subsection>
-</section>
-
-<section id="2"><h1>Python learning from Drake python api</h1>
+<section id="1"><h1>Matrices</h1>
   <ul>
-    <li>Random number generator</li>
-    <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
-    into <code>RandomState</code> a bit more.
-<pre><code class="python">
-random_state = np.random.RandomState(seed)
-# Constructs a random number generator. And then we make the following call to actually
-# generate the random numbers <a href="https://t.ly/kbB4">ref</a>:
-random_state.rand(nrows, ncols)
-# Or generate a single number.
-random_state.rand()
-</code></pre>
+    <li>Orthogonal matrix</li>
+    <a href="https://t.ly/9OAj">Ref</a>. 
+    It is a square matrix in which all of the vectors that make up the matrix 
+    are orthonormal to each other.  This must hold in terms of all rows and all columns, i.e.
+    the transpose of an orthogonal matrix is itself an orthogonal matrix.
+    In terms of geometry, orthogonal means that two vectors are perpendicular to each other.
+    When the magnitude (length) of each vector is equal to 1, then they are said to 
+    be orthonormal.
 
-    <li>Array with evenly spaced elements</li>
-<pre><code class="python">
-np.arange(start, end, interval_between_each_element)
-</code></pre>
+    <p>
+      <li>Geometric representation of matrices</li>
+      Let's take a ($3\times1$) matrix. Each row represents the x,y,z components 
+      of a single 3d vector respectively.
+    </p>
 
-    <li>Stack arrays vertically</li>
-<pre><code class="python">
-outputArray = np.vstack(array1, array2)
-</code></pre>
+    <li>Determinant of a matrix</li>
+    <a href="https://t.ly/CGaq">Ref</a>.
+    It gives an idea of how a matrix (i.e. a set of related vectors; 2 if 2d, 3 if 3d)
+    is transformed in terms of:
+    <ul>
+      <li>Area (or volume if 3d)</li>
+      <li>Amount the area/volume is squished by</li>
+      The individual vectors slant. We can have the case where the area/volume remains
+      the same, but it isn't uniform throughout
+      <li>Orientation of the vectors</li>
+      A negative determinant means the area/volume has been flipped by $180^0$
+    </ul>
+    <equation><h1>Determinant calculation</h1>
+      In 2D (2d matrices), the determinant is calculated as follows:
+      $$\begin{bmatrix}a & b\\c & d\end{bmatrix} \rightarrow (a*d) - (b*c)$$
+      $a*d$ - represents how much the area is scaled by
+      <br>
+      $b*c$ - represents how much the area is squished by
+    </equation>
   </ul>
 </section>
 

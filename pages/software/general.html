@@ -154,8 +154,11 @@ find . -name '*station*.ipynb'
         <code>bazel --version
 </code></pre>
       <li>Find keywords</li>
-      <pre>
-        <code>grep -r "file_name" /folder/path
+      <a href="https://bit.ly/3QU5KIU">Good link</a>.
+<pre><code class="bash">
+grep -r "file_name" /folder/path
+grep -r --include \*.{h,cpp} "file_name" /folder/path
+grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
 </code></pre>
       <li>Tar</li>
       <pre>

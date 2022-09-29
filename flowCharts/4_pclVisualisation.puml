@@ -1,0 +1,20 @@
+@startuml
+
+!include https://raw.githubusercontent.com/ptrkcsk/one-dark-plantuml-theme/v1.0.0/theme.puml
+(*) -->[ply file] "Use open3d to read point cloud.\n\
+Use numpy to turn the points to an ~8000 row array\n\
+with 3 columns representing x,y,z coordinates."
+
+-right->[Array of 3d coords] "Represent the points w.r.t./in the world\n\
+frame using RigidTransform."
+
+-r->[Transformed points in\n{w}] "Convert the points back to the\n\
+Point cloud representation"
+
+-->[Point cloud] "Set various meshcat properties like Object\n\
+(the point cloud) and Transform (any further\n\
+transformations that need to be applied)"
+
+-->[Point cloud ready\nto be displayed](*)
+
+@enduml

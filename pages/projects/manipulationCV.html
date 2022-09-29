@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../chapters.js"></script>
+    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+
+    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
+    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Reflected inertia</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+    <li><a href="#2">Iterative closest point algorithm</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+ <ul>
+  <p>
+    <li>Iterative closest point algorithm</li>
+    The aim is to transform the model (red bunny pcl) that we have of an object to match what we 
+    see in the scene (blue bunny).
+    <figure>
+      <img style="height:auto; width:70%"
+      src="../../flowCharts/3_icp/3_icp.svg"/>
+    </figure>
+
+    The scene bunny has an extra X rotation of $30^0$ and is off by 0.1 units along all
+    3 axes. In the visualisation, the origin of {w} is not at (0,0,0).
+    <figure>
+      <img style="height:auto; width:50%"
+      src="../../figures/10_bunniesICP.png"/>
+    </figure>
+  </p>
+</ul>
+</section>
+
+<section id="2"><h1>Iterative closest point algorithm</h1>
+  <subsection><h1>Steps</h1>
+    <ul>
+      <p>
+        <li>
+          Visualisation of the point cloud of the red and blue bunnies.
+        </li>
+      </p>
+      <li>
+        Estimate point correspondences using closest point/nearest neighbour.
+        Skilearn's implementation that uses Ball-trees which are almost analogous
+        to k-d trees is used.
+      </li>
+      <p>
+        <li>
+          Given correspondences, optimise the transformation of the model 
+          pose to the actual scene pose using the least squares transform function.
+          In other words, find the optimal transform that registers the point clouds
+          of the model and the scene. First the problem will need to be written in the
+          form of an optimisation problem. Then, the least squares method needs to
+          be implemented.
+        </li>
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection><h1>Visualisation of point clouds</h1>
+    <figure>
+      <img style="height:auto; width:100%"
+      src="../../flowCharts/4_pclVisualisation/4_pclVisualisation.svg"/>
+    </figure>
+  </subsection>
+
+  <subsection><h1>Point cloud registration with known correspondences</h1>
+    <a href="https://t.ly/3Gdm">This</a> is a good link for an intuition on SVD.
+  </subsection>
+
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>
+        I don't understand the 'iterativeness' of the ICP algorithm.
+      </li>
+      <li>
+        Where are <code>RigidTransform()</code> and 
+        <code>PointCloud()</code> from <code>pydrake.all</code> defined?
+      </li>
+      <li>
+        Understand SVD intuitively.
+        <a href="https://t.ly/Yjod">Geeksforgeeks link</a>.
+        <a href="https://t.ly/uUWB">Youtube link</a>.
+      </li>
+
+      <p>
+        <li>
+          Within <code>least_squares_transform</code>, what does
+          <code>mean(axis=0)</code> mean?
+        </li>
+      </p>
+
+      <li>
+        I would like to know what the following outputs:
+<pre><code class="python">
+l = 1.0 + 0.5*np.sin(2.0*theta) + 0.4*random_state.rand(1, num_model_points)
+p_Om = np.vstack((l * np.sin(theta), l * np.cos(theta), 0 * l))  
+</code></pre>
+      </li>
+
+      <p>
+        <li>
+          When we want random numbers, why do we pick them from a normal distribution?
+          What is the difference between a normal and a uniform distribution? Pick a 
+          1000 random numbers from a normal vs uniform vs default distribution 
+          and plot the probability distribution function as in
+          <a href="https://t.ly/paOZ">this link</a> - any differences?
+        </li>
+      </p>
+
+      <li>
+        What do we mean by outliers in <code>MakeRandomObjectModelAndScenePoints</code>?
+        This might be explained in part 2 of geometric perception.
+      </li>
+    </ul>
+  </subsection>
+</section>
+
+
+
+</body>
+</html>
+

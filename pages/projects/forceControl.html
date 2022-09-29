@@ -48,79 +48,41 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 1"><h1>Python</h1>
+<chapter style="counter-reset: chapter 0"><h1>Robotic Manipulation: Force control</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">List</a></li>
-    <li><a href="#2">Python learning from Drake python api</a></li>
+    <li><a href="#1">Overview</a></li>
+
   </ul>
 </section>
 
-<section id="1"><h1>List</h1>
-  <subsection><h1>List of numpy arrays</h1>
-    The following is a list of 2 elements; each being a numpy array.
-    <pre class="highlight">
-      <code>temp = 
-[
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]]),
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]])
-]</code></pre>
+<section id="1"><h1>Overview</h1>
+  Where does force control fit in the manipulation pipeline:
+  <figure>
+    <img style="height:45px; width:auto" 
+    src="../../flowCharts/5_forceControl/5_forceControl.svg"></img>
+  </figure>
 
-    <p>
-      I can then create an empty list and add this list to it.
-      Every time <code>append</code> is used, a new list is added
-      to the existing list as a new row.
-    </p>
-    <pre class="highlight">
-      <code>trajs = list()
-trajs.append(temp)
-trajs.append(temp)
-print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre>
-
-    <p>
-      {0} - Number of elements within the list 'trajs'. 
-      There are 2 lists.
-      <br>
-      {1} - Number of elements within the first element of 'trajs'. 
-      The first element of 'trajs' is a list containing 2 numpy arrays.
-      <br>
-      {2} - prints out the 1st numpy array.
-    </p>
-  </subsection>
+  The first part of the pipeline is predominantly kinematic but there are forces involved 
+  when making a contact. <i>Nonprehensile manipulation</i> means 
+  'manipulation without grasping'. Strategies like
+  sliding and environmental contact is used when grasping. 
 </section>
 
-<section id="2"><h1>Python learning from Drake python api</h1>
+<section id="2"><h1>Questions & Todo</h1>
   <ul>
-    <li>Random number generator</li>
-    <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
-    into <code>RandomState</code> a bit more.
-<pre><code class="python">
-random_state = np.random.RandomState(seed)
-# Constructs a random number generator. And then we make the following call to actually
-# generate the random numbers <a href="https://t.ly/kbB4">ref</a>:
-random_state.rand(nrows, ncols)
-# Or generate a single number.
-random_state.rand()
-</code></pre>
+    <li>Contact jacobian</li>
+    Which pre-multiplies the contact forces? In the case of a point finger this Jacobian
+    is always the identity matrix.
+    <p>
+      <li>Quaternion floating base coordinates</li>
+    </p>
 
-    <li>Array with evenly spaced elements</li>
-<pre><code class="python">
-np.arange(start, end, interval_between_each_element)
-</code></pre>
-
-    <li>Stack arrays vertically</li>
-<pre><code class="python">
-outputArray = np.vstack(array1, array2)
-</code></pre>
+    <li>
+      In the simple model, does $mg$ have an effect on the object when moving in the
+      $x$ direction? It seems like it does from the equation in section 7.1.
+    </li>
   </ul>
 </section>
 

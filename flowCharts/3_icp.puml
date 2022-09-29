@@ -1,0 +1,11 @@
+@startuml
+
+!include https://raw.githubusercontent.com/ptrkcsk/one-dark-plantuml-theme/v1.0.0/theme.puml
+(*) -->[Model/Scene] "Estimate point correspondences\n\
+from nearest neighbours\n\
+k-d trees"
+-right->[Indices for matches\nbetween scene and model] "Least squares best fit transform\n\
+Point cloud registration"
+--> [Transformed model\nto scene] (*)
+
+@enduml

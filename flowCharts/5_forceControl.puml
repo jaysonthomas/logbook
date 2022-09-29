@@ -1,0 +1,9 @@
+@startuml
+
+!include https://raw.githubusercontent.com/ptrkcsk/one-dark-plantuml-theme/v1.0.0/theme.puml
+(*) -r-> "Perceive objects in scene"
+-r-> "Plan a grasp"
+-r-> "Move arm to grasp"
+-r-> "Force control"
+
+@enduml
