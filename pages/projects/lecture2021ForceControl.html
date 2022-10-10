@@ -53,60 +53,193 @@
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
-    <li><a href="#2">Task setup</a></li>
-    <li><a href="#3">Questions & Todo</a></li>
+    <li><a href="#2">Task setup - decisions to be made</a></li>
+    <li><a href="#3">System view</a></li>
+    <li><a href="#4">Creating the model</a></li>
+    <li><a href="#5">Test the interaction of forces using the model</a></li>
+    <li><a href="#8">Questions & Todo</a></li>
   </ul>
 </section>
 
 <section id="1"><h1>Overview</h1>
-  What do we want our core controller (the one running at the highest bandwidth
-  i.e. the tightest control loop at the lowest level) to be.
-  There are times where choosing to act like a force controller down at the lower level 
-  (to close a loop on a force sensor) can be a better choice than trying to act
-  like a position controller. Example, writing on a board.
-
-  <p>
-    Another good example of something that's native in forces: 
-    we want to push a book to the edge of a table. If you can rely on the assumption 
-    that the friction forces between the hand and the book is larger than the forces 
-    between the book and the table, then you need to put yourself in a regime where you're 
-    not pushing too hard such that the book sticks on the table but you're also not pushing 
-    too softly. We want to be in this nice regime where moving the hand moves the book on the 
-    table. 
-  </p>
-
-  <p>
-    We're first going to assume the EE is a point and that we can perfectly control it - 
-    the point finger approximation.
-    We'll take away the abstraction and add the robot back in later.
-    This abstraction means that we only come into contact with an object at one contact point.
-    We don't have to worry about the complicated geometry of a finger.
-    The finger is drawn as a sphere, but we'll think of it as a point. 
-  </p>
+  Our goal:
+  <ul>
+    <li>Come up with a strategy to flip up the box</li>
+    <li>Reason about the contact forces</li>
+    <li>Write a controller which means write some equations to be implemented as $u$</li>
+  </ul>
 </section>
 
-<section id="2"><h1>Task setup</h1>
-  We need to flip up a box with a point-finger approximation.
-  This is a task that can be described naturally in the language of forces. 
-  We'll model the forces between the box and the ground.  
-  We specify contact points (yellow) 
-  to make sure that when the simulation is run, the solver doesn't have to 
-  arbitrarily pick points (where it computes the forces) on the box. 
-  Those forces are going to have friction cones at the points which are a response to 
-  gravity pulling down on the object when it is at rest. 
+<section id="2"><h1>Task setup - decisions to be made</h1>
+  <ul>
+    <li>Choice of controller</li>
+    <p>
+    What do we want our core controller (the one running at the highest bandwidth
+    i.e. the tightest control loop at the lowest level) to be.
+    There are times where choosing to act like a force controller down at the lower level 
+    (to close a loop on a force sensor) can be a better choice than trying to act
+    like a position controller. Example, writing on a board.
+    </p>
+    <p>
+      Another good example of something that's native in forces: 
+      we want to push a book to the edge of a table. If you can rely on the assumption 
+      that the friction forces between the hand and the book is larger than the forces 
+      between the book and the table, then you need to put yourself in a regime where you're 
+      not pushing too hard such that the book sticks on the table but you're also not pushing 
+      too softly. We want to be in this nice regime where moving the hand moves the book on the 
+      table. 
+    </p>
 
+    <li>Decisions related to modeling</li>
+    <p>
+      We're first going to assume the EE is a point (the point finger approximation) 
+      and that we can perfectly control it.
+      This abstraction means that we only come into contact with an object at one contact point.
+      We don't have to worry about the complicated geometry of a finger.
+      The finger is drawn as a sphere, but we'll think of it as a point.
+      We'll take away the abstraction and add the robot back in later.
+    </p>
+    <p>
+      The flip-up task is one that can be described naturally in the language of forces. 
+      We'll model the forces between the box and the ground.  
+      We specify contact points (yellow) 
+      to make sure that when the simulation is run, the solver doesn't have to 
+      arbitrarily pick points (where it computes the forces) on the box. 
+      Those forces are going to have friction cones (at the points) which are a response to 
+      gravity pulling down on the object when it is at rest. 
+    </p>
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../figures/12_flipUpTask.png"/>
+      <figcaption>
+        Flip up task setup
+      </figcaption>
+    </figure>
+
+    Once the box is tilted up, we're going to have contact forces on the back corner.
+  </ul>
+</section>
+
+<section id="3"><h1>System view</h1>
   <figure>
     <img style="height:100px; width:auto"
-    src="../../figures/12_flipUpTask.png"/>
+    src="../../figures/manipulation/forceControl.svg"/>
     <figcaption>
-      Given frames
+      System view
     </figcaption>
   </figure>
 
-  Once the box is tilted up, we're going to have contact forces on the back corner.
+  In the systems view:
+  <ul>
+    <li>
+      I've got a plant with $u$ coming in. The model equations are inside the plant.
+    </li>
+    <li>
+      The force controller is going to take in $q$ and $\dot{q} potentially - 
+      position and velocity of the finger if we're only doing force control on the finger. 
+      But could also include that of the box. 
+      It could also take in a desired force. 
+    </li>
+  </ul>
+
+  <p>
+    What else could we hand to the force controller?
+    <ul>
+      <li>Use a force sensor and provide measured force</li>
+      A lot of robots trying to do force control type tasks, have an interesting arm 
+      but they put a force torque sensor at the wrist. So they're only touching 
+      the world and controlling forces through a specific force torque sensor. 
+
+      <p>
+        <li>Provide measured accelerations</li>
+        If you don't have a force torque sensor you can potentially do some 
+        of the same work by giving accelerations $\ddot{q}$. That's always a risky business 
+        because you expect to be able to measure joint angles and velocities but measuring
+        joint accelerations tends to give noisy signals unless they are measured
+        directly. The aim is to keep the noise low. 
+      </p>
+    </ul>
+  </p>
 </section>
 
-<section id="3"><h1>Questions & Todo</h1>
+<section id="4"><h1>Creating the model</h1>
+  The entire configuration space of the system, the $q$ vector has elements for both
+  <ul>
+    <li>The finger</li>
+    Modeled as a point so don't have to worry about rotation.
+    <li>The box</li>
+    It's pinned down - so modeled as a 2D planar joint.
+  </ul>
+
+  $$q=\begin{bmatrix}x_{f}\\z_{f}\\x_{box}\\z_{box}\\\theta_{box}\end{bmatrix}$$
+
+  The simulator implements the manipulator equation:
+  $$
+    M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu + \Sigma_iJ_i^T(q)f^{c_i}
+  $$
+  There are 2 systems contributing to the manipulator equation, that are only connected
+  through the contact forces. The mass matrix for instance would have entries for the 
+  finger and the box. But they don't have any coupling terms (i.e. the diagonal terms are 0). 
+  They're only coupled through the forces (3rd term RHS). If I'm not touching, 
+  just wiggling the finger around, it doesn't do anything to the box i.e. 
+  cause any accelerations on it.
+  $$
+    M(q) = \begin{bmatrix}
+      fingerTerm & 0 \\
+      0 & boxTerm 
+    \end{bmatrix}
+  $$
+
+  <subsection><h1>Equations for the finger</h1>
+    Let's write out the whole equation for the finger in the x coordinate:
+    $$\begin{equation}
+      m_f \ddot{x}_f = u_x + f^c_x
+    \end{equation}$$
+    The subscript f stands for finger. The force term isn't $f^{c_i}_x$ because
+    there's only 1 contact hence only 1 force along x.
+
+    We've chosen this scenario intentionally to be particularly simple. 
+    It is assumed that we have a perfect torque/force source on the finger $u_x$ to move it
+    [i.e. noise isn't modeled]. 
+    The above eq. is just the 1st row of the manipulator equation in the x coordinate 
+    i.e. the 2nd row considers the box. 
+    It just happens gravity doesn't have any affect on the finger in the x direction, 
+    so there's no contribution from the g term. It's a point mass, so there's no 
+    coriolis term and the Jacobian is the identity matrix. 
+    And of course, it leads us to just the free body F=ma equation.
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../figures/manipulation/4_forceControl.png"/>
+      <figcaption>
+        Free body diagram for the finger (pink) if it was only in contact with 
+        the box in the x or z directions
+      </figcaption>
+    </figure>
+
+    $$\begin{equation}
+    m_f \ddot{z}_f = u_z + f^c_z - m_{f}g
+    \end{equation}$$
+    $f$ is positive in the eqs. because of the way we've aligned our right-hand rule 
+    coordinate frame.
+  </subsection>
+</section>
+
+<section id="5"><h1>Test the interaction of forces using the model</h1>
+  Let's assume we're in the mode of applying accelerations via the finger but we're not 
+  going to measure the accelerations i.e. assume the finger is moving 
+  slowly and its accelerations are effectively zero; that any terms 
+  being contributed by the finger's inertial dynamics are small compared to the 
+  contact forces $f_{c}$ and the applied forces $u$. 
+  This idea is called making <i>quasi-static approximations</i> which we will
+  use to start because it's easier. Inertial terms (i.e. LHS of (1) and (2)) 
+  are small relative to the other 
+  terms to gravity,fc, u. Assume x=0, z=0. What really matters is the mass times 
+  acceleration. 
+</section>
+
+<section id="8"><h1>Questions & Todo</h1>
   <ul>
     <li>
       I would love to be super comfortable with the manipulator equation

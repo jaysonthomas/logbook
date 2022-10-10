@@ -7,20 +7,20 @@
     <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
     <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
-    <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+    <script type="text/javascript" src="../chapters.js"></script>
+    <script type="text/javascript" src="../htmlbook/book.js"></script>
 
-    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script src="../htmlbook/mathjax-config.js" defer></script> 
     <script type="text/javascript" id="MathJax-script" defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
 
-    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
-    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <link rel="stylesheet" href="../htmlbook/highlight/styles/default.css">
+    <script src="../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+    <link rel="stylesheet" type="text/css" href="../notes.css" />
   </head>
 
 <body onload="loadChapter('manipulation');">
@@ -43,32 +43,42 @@
 
 <table style="width:100%;" pdf="no"><tr style="width:100%">
   <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:center;"><a href=../index.html>Table of contents</a></td>
   <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 1"><h1>C</h1>
+<chapter style="counter-reset: chapter 3"><h1>DIY Projects</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">Typdef for function pointers</a></li>
+    <li><a href="#1">1: Hallway lighting</a></li>
+    <li><a href="#2">2: Todo</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Typdef for function pointers</h1>
+<section id="1"><h1>Hallway lighting</h1>
+  <figure>
+    <img style="height:auto; width:100%"
+    src="../figures/diy/1_hallwayLightSwitch.png"/>
+  </figure>
+</section>
 
-<pre class="C">
-<code>
-typedef void (*funcPointerTypeName)(int);
-funcPointerTypeName p = &funcName;
-p(5)    // Call the function
-</code></pre>
+<section id="2"><h1>Todo</h1>
+  <ul>
+    <li>
+      How to think of current flow loops?
+      Videos that might help: <a href="https://t.ly/zAad">ref1</a>, 
+      <a href="https://t.ly/cJ3r">ref2</a>.
+    </li>
 
-  This creates a type, named <code>funcPointerTypeName</code> 
-  for a pointer to a function that takes a single int argument and returns nothing.
-  <a href="https://t.ly/ZOY8">Ref1</a>, <a href="https://t.ly/Cwme">Ref2</a>.
+    <li>
+      What is neutral and earth? 
+      <a href="https://t.ly/U3Xz">Ref</a>.
+    </li>
+  </ul>
 </section>
 
 </body>
 </html>
+
