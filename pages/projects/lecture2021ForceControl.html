@@ -124,7 +124,7 @@
 <section id="3"><h1>System view</h1>
   <figure>
     <img style="height:100px; width:auto"
-    src="../../figures/manipulation/forceControl.svg"/>
+    src="../../figures/manipulation/5_forceControl_systemView.svg"/>
     <figcaption>
       System view
     </figcaption>
@@ -227,16 +227,72 @@
 </section>
 
 <section id="5"><h1>Test the interaction of forces using the model</h1>
-  Let's assume we're in the mode of applying accelerations via the finger but we're not 
-  going to measure the accelerations i.e. assume the finger is moving 
-  slowly and its accelerations are effectively zero; that any terms 
-  being contributed by the finger's inertial dynamics are small compared to the 
-  contact forces $f_{c}$ and the applied forces $u$. 
-  This idea is called making <i>quasi-static approximations</i> which we will
-  use to start because it's easier. Inertial terms (i.e. LHS of (1) and (2)) 
-  are small relative to the other 
-  terms to gravity,fc, u. Assume x=0, z=0. What really matters is the mass times 
-  acceleration. 
+  The goal of our force controller is to take a desired force in, 
+  command a $u$ to be applied to the robot's finger in order to achieve a desired force out
+  from it. Algebraically we can write this out and see if it makes sense.
+  <p>
+    Let's assume we're in the mode of applying accelerations via the finger. 
+    Let's also assume the finger is moving slowly and its accelerations are 
+    effectively zero ($\ddot{x}==0$, $\ddot{z}==0$).
+    Then any terms being contributed by the finger's inertial dynamics are small 
+    compared to the contact force $f_{c}$, the applied force $u$ and gravity. 
+    This idea is called making <i>quasi-static approximations</i> which we will
+    use to start because it's easier. 
+  </p>
+  <p>
+    Equations (1) and (2) would then be:
+    $$u_x = -f^c_x$$
+    $$u_z = -f^c_z + m_{f}g$$
+  </p>
+  <p>
+    With the quasi-static assumption, given our desired contact forces, the controller output
+    would be:
+    $$\begin{equation}
+    u_x = -f^{c_d}_x
+    \end{equation}$$
+    $$\begin{equation}
+    u_z = -f^{c_d}_z + m_{f}g
+    \end{equation}$$
+  </p>
+
+  <p>
+    The forces of contact are actually coming from the interaction forces. 
+    The physics engine is going to solve for some complicated relation to decide that.
+    Let's think about the case of a constant force that is 0 in the z direction and 
+    some positive constant greater than zero in the x direction:
+    $$
+      f^{c_d} = \begin{bmatrix}
+                  c>0 \\
+                  0
+                \end{bmatrix}
+    $$
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../figures/manipulation/6_forceControl_notYetInContact.png"/>
+      <figcaption>
+        Applying force through the finger when it's not yet in contact.
+      </figcaption>
+    </figure>
+
+    In many cases if we command a force and we're not actually making contact, 
+    our controller is unjustified. The above controller 
+    is expecting a reaction force, $f^{c}$. But it tends to do the right thing. 
+    It will drive the finger into contact; the finger will move in the direction
+    the force is being applied with some constant acceleration i.e. $m\ddot{x}=c$.
+    Once in contact, then using (3,4) in a controller
+    is a more reasonable attempt to try to regulate the contact force. 
+    This is a very important point - a hallmark of force control.
+  </p>
+  <p>
+    So, driving the finger to apply a force when there's no reaction force from a wall, 
+    tends to drive the finger into contact if it's close to contact. 
+    Walking robots are in (roughly) position control mode when swinging 
+    because we'd like to get our foot to a particular position. But when it's 
+    above the desired foot position, it goes into force control mode 
+    (for the step and stance - staying there). This is good because if the terrain 
+    is uneven, then the controller will still drive the robot's foot into the ground.
+  </p>
 </section>
 
 <section id="8"><h1>Questions & Todo</h1>
