@@ -56,7 +56,9 @@
     <li><a href="#2">Task setup - decisions to be made</a></li>
     <li><a href="#3">System view</a></li>
     <li><a href="#4">Creating the model</a></li>
-    <li><a href="#5">Test the interaction of forces using the model</a></li>
+    <li><a href="#5">Testing the interaction of forces using the model</a></li>
+    <li><a href="#6">Direct force control flip-up strategy</a></li>
+    <li><a href="#7">Indirect force control</a></li>
     <li><a href="#8">Questions & Todo</a></li>
   </ul>
 </section>
@@ -68,6 +70,20 @@
     <li>Reason about the contact forces</li>
     <li>Write a controller which means write some equations to be implemented as $u$</li>
   </ul>
+
+  Here we'll be reasoning about a single finger. But there are lots of details about 
+  how to derive the actual controller when it's the full robot. These details really 
+  matter like the difference between a sensor that's high bandwidth, super clean and 
+  implemented at a high frequency compared to something that's not is night and day. 
+
+  <p>
+    We can achieve direct force control using:
+    <ul>
+      <li>Force sensors at the wrist</li>
+      <li>Acceleration sensors</li>
+      <li>Making the quasi-static assumption</li>
+    </ul>
+  </p>
 </section>
 
 <section id="2"><h1>Task setup - decisions to be made</h1>
@@ -226,79 +242,237 @@
   </subsection>
 </section>
 
-<section id="5"><h1>Test the interaction of forces using the model</h1>
+<section id="5"><h1>Testing the interaction of forces using the model</h1>
   The goal of our force controller is to take a desired force in, 
   command a $u$ to be applied to the robot's finger in order to achieve a desired force out
   from it. Algebraically we can write this out and see if it makes sense.
-  <p>
-    Let's assume we're in the mode of applying accelerations via the finger. 
-    Let's also assume the finger is moving slowly and its accelerations are 
-    effectively zero ($\ddot{x}==0$, $\ddot{z}==0$).
-    Then any terms being contributed by the finger's inertial dynamics are small 
-    compared to the contact force $f_{c}$, the applied force $u$ and gravity. 
-    This idea is called making <i>quasi-static approximations</i> which we will
-    use to start because it's easier. 
-  </p>
-  <p>
-    Equations (1) and (2) would then be:
-    $$u_x = -f^c_x$$
-    $$u_z = -f^c_z + m_{f}g$$
-  </p>
-  <p>
-    With the quasi-static assumption, given our desired contact forces, the controller output
-    would be:
-    $$\begin{equation}
-    u_x = -f^{c_d}_x
-    \end{equation}$$
-    $$\begin{equation}
-    u_z = -f^{c_d}_z + m_{f}g
-    \end{equation}$$
-  </p>
+  
+  <subsection><h1>Quasi-static assumption</h1>
+    <p>
+      Let's assume we're in the mode of applying accelerations via the finger. 
+      Let's also assume the finger is moving slowly and its accelerations are 
+      effectively zero ($\ddot{x}==0$, $\ddot{z}==0$).
+      Then any terms being contributed by the finger's inertial dynamics are small 
+      compared to the contact force $f_{c}$, the applied force $u$ and gravity. 
+      This idea is called making <i>quasi-static approximations</i> which we will
+      use to start because it's easier. 
+    </p>
+    <p>
+      Equations (1) and (2) would then be:
+      $$u_x = -f^c_x$$
+      $$u_z = -f^c_z + m_{f}g$$
+    </p>
+    <p>
+      With the quasi-static assumption, given our desired contact forces, the controller output
+      would be:
+      $$\begin{equation}
+      u_x = -f^{c_d}_x
+      \end{equation}$$
+      $$\begin{equation}
+      u_z = -f^{c_d}_z + m_{f}g
+      \end{equation}$$
+    </p>
+  </subsection>
 
-  <p>
-    The forces of contact are actually coming from the interaction forces. 
-    The physics engine is going to solve for some complicated relation to decide that.
-    Let's think about the case of a constant force that is 0 in the z direction and 
-    some positive constant greater than zero in the x direction:
-    $$
-      f^{c_d} = \begin{bmatrix}
-                  c>0 \\
-                  0
-                \end{bmatrix}
-    $$
+  <subsection><h1>Applying a constant force via the finger</h1>
+    <p>
+      The forces of contact are actually coming from the interaction forces. 
+      The physics engine is going to solve for some complicated relation to decide that.
+      Let's think about the case of a constant force that is 0 in the z direction and 
+      some positive constant greater than zero in the x direction:
+      $$
+        f^{c_d} = \begin{bmatrix}
+                    c>0 \\
+                    0
+                  \end{bmatrix}
+      $$
 
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../figures/manipulation/6_forceControl_notYetInContact.png"/>
+        <figcaption>
+          Applying force through the finger when it's not yet in contact.
+        </figcaption>
+      </figure>
+
+      In many cases if we command a force and we're not actually making contact, 
+      our controller is unjustified. The above controller 
+      is expecting a reaction force, $f^{c}$. But it tends to do the right thing. 
+      It will drive the finger into contact; the finger will move in the direction
+      the force is being applied with some constant acceleration i.e. $m\ddot{x}=c$.
+      Once in contact, then using (3,4) in a controller
+      is a more reasonable attempt to try to regulate the contact force. 
+      This is a very important point - a hallmark of force control.
+    </p>
+    <p>
+      So, driving the finger to apply a force when there's no reaction force from a wall, 
+      tends to drive the finger into contact if it's close to contact. 
+      Walking robots are in (roughly) position control mode when swinging 
+      because we'd like to get our foot to a particular position. But when it's 
+      above the desired foot position, it goes into force control mode 
+      (for the step and stance - staying there). This is good because if the terrain 
+      is uneven, then the controller will still drive the robot's foot into the ground.
+    </p>
+  </subsection>
+
+  <subsection><h1>Varying the constant horizontal force</h1>
     <figure>
-      <img style="height:100px; width:auto"
-      src="../../figures/manipulation/6_forceControl_notYetInContact.png"/>
+      <img style="height:150px; width:auto"
+      src="../../figures/manipulation/7_forceControl_constantForce.png"/>
       <figcaption>
-        Applying force through the finger when it's not yet in contact.
+        Free body diagram of all the forces acting on the box/finger.
+      </figcaption>
+    </figure>
+    We know there is/are:
+    <ul>
+      <li>some amount of horizontal friction force</li>
+      <li>Normal forces that must match $m_{box}g$</li>
+    </ul>
+
+    If $c>0$, then the finger is going to accelerate into the box. 
+    If $c$ is very small, the finger is light and it wouldn't have had enough time 
+    to build up a lot of momentum, it could just get to the box and the box might just sit still. 
+    That's the lowest regime. The box might move a bit due to some momentum effect 
+    from the collision. 
+
+    <p>
+      If $c$ is 'very' large, the box is going to move until it slams into 
+      the wall and will then stop. $c$ would have to be above the friction threshold 
+      in this case. In the simulation, we could also have a regime where 
+      the impact's enough to start the box moving but the drag is enough to slowly cause 
+      it to decelerate to the point where the it comes to rest. 
+    </p>
+    <p>
+      When the applied force is small i.e. accelerating slowly, it takes a while 
+      in time to even make contact with the box. A plot, time vs x axis (distance) is made. 
+      The contact is always made at the same x-axis point. If you go a little faster, 
+      moves just a little bit more. It's still in the stiction regime. There's a regime 
+      where you hit it and it'll start sliding but it'll come to rest. 
+      And there's a regime where you just slam it into the back wall. Any bigger 
+      force and the box will collide with the wall with a bigger impact.
+    </p>
+    <p>
+      Are we assuming inelastic? We are not rigorously making that assumption. 
+      There is a bit of bouncing because of some plasticity. In the simulation, a time stepping 
+      method that allows a little bit of penetration and a soft contact model together 
+      allows some bouncing. But if the finger does bounce, it is just going to push right 
+      back in. 
+    </p>
+    <p>
+      The model described by (3,4) assumes the box is pushing up against the wall 
+      and it's not moving. Only when the box really isn't moving, are we going to get 
+      the force that we expect out. In this state, if we push more, we'll get more force back. 
+      That's only true at the limit when the box is pushed against the wall. But the 
+      controller we got out of a very simple derivation can still be used to regulate 
+      the force and do interesting things. 
+    </p>
+  </subsection>
+</section>
+
+<section id="6"><h1>Direct force control flip-up strategy</h1>
+  <subsection><h1>Case where fine control is not available</h1>
+    So, we want to flip up a box. I was originally going to shove it to the side and 
+    then flip it. But how do we flip it up in its current location. It's pretty subtle. 
+    To get the box into a regime where we're controlling the contact forces enough to 
+    flip it up, there needs to be a lot of friction i.e. the friction cone needs to be
+    bigger. The bigger friction cone allows us to have a bigger range of contact forces 
+    to tip the box up. Normally, we would use our 2nd hand to help out friction 
+    with a little bit of force on the opposite side of the box.
+  </subsection>
+
+  <subsection><h1>Case where fine control is possible</h1>
+    If we know the friction coefficient and the robot can regulate/apply the contact forces 
+    more accurately, then we can slide and tip the box.
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../figures/manipulation/8_forceControl_flipUp.png"/>
+      <figcaption>
+        Free body diagram of all the forces acting on the box/finger.
       </figcaption>
     </figure>
 
-    In many cases if we command a force and we're not actually making contact, 
-    our controller is unjustified. The above controller 
-    is expecting a reaction force, $f^{c}$. But it tends to do the right thing. 
-    It will drive the finger into contact; the finger will move in the direction
-    the force is being applied with some constant acceleration i.e. $m\ddot{x}=c$.
-    Once in contact, then using (3,4) in a controller
-    is a more reasonable attempt to try to regulate the contact force. 
-    This is a very important point - a hallmark of force control.
-  </p>
-  <p>
-    So, driving the finger to apply a force when there's no reaction force from a wall, 
-    tends to drive the finger into contact if it's close to contact. 
-    Walking robots are in (roughly) position control mode when swinging 
-    because we'd like to get our foot to a particular position. But when it's 
-    above the desired foot position, it goes into force control mode 
-    (for the step and stance - staying there). This is good because if the terrain 
-    is uneven, then the controller will still drive the robot's foot into the ground.
-  </p>
+    Ideally, the only force we want on the LHS of the box is friction. 
+    The finger will apply a force on the top RHS of the box.
+    We have a friction cone (2, on the top RHS) based on the normal forces of the finger
+    (it's equal and opposite force). 
+    We're only allowed to apply forces within friction cone 2 otherwise the finger will 
+    slip up the box (the box is a bit slippery). So the game becomes can you find a 
+    force that stays inside friction cone 2 so there's just enough force within
+    friction cone 1 to keep that point (LHS edge of the box) from slipping 
+    and will cause the box to rotate up. 
+  </subsection>
+
+  <subsection><h1>Controller implementation</h1>
+    Locally the flip-up strategy looks like a least squares problem and 
+    the friction cone constraint can be locally approximated as a linear constraint.
+    The whole derivation (a controller to flip the box up) is in the notes.
+
+    <p>
+      The controller we write is effectively thinking about a virtual angle. 
+      We can parameterize the orientation of the box however we like 
+      (here we do it w.r.t. some vertical). 
+      We can implement a small PID controller that applies a force 
+      (on RHS within friction cone 2). The desired virtual angle $\theta^{d}$
+      is some angle that goes from the initial angle up to the top. 
+      We try to follow this trajectory. The controller tracks $\theta^{d}$ with the 
+      torque applied at an angle $\theta$ in the new simplified coordinates 
+      (i.e. in terms of the virtual angle) being:
+      $$\tau_{theta} = k(\theta^{d} - \theta) + b(\dot{\theta}^{d}-\dot{\theta})$$
+      $\theta$ is the actual or the estimated angle.
+    </p>
+    
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../figures/manipulation/9_forceControl_VirtualAngle.png"/>
+      <figcaption>
+        The virtual angle in flipping up.
+      </figcaption>
+    </figure>      
+
+    The controller tries to attain the closest torque possible to the commanded torque,
+    subject to the friction cone constraints. So we try to follow the $\theta$ trajectory 
+    up to some friction limits. If we start making $\mu$ small in the exercise notebook,
+    at some point the controller won't be able to find a solution as the box will slip.
+    In that situation, even a zero force would violate something. 
+    This is all to do with the friction constraints.
+
+    <p>
+      The direction of the force applied by the finger would always want to be on 
+      the friction cone or certainly there's a solution that would always want to be on the 
+      friction cone. When it is on that friction cone, we are pushing both towards the 
+      bottom LHS corner and around the top RHS to tip the box over. So there's some limit 
+      based on the geometry (thresholds) of the friction cone at the LHS for which we 
+      can achieve some rate. The faster the finger turns the box up, 
+      at some point the box will slip.
+    </p>
+
+    The vertical component of the force that the finger applies on the RHS 
+    (to tip the box up) contributes to the forces (along with the upward normal force at LHS) 
+    fighting mg that is pulling downwards. So when we increase the force on the top RHS, 
+    this reduces the friction cone at the bottom LHS. All these are in the equations. 
+    These are all simple enough that the free body diagram is just completely written out. 
+    Just be mindful the friction cone at LHS changes.
+  </subsection>
+</section>
+
+<section id="7"><h1>Indirect force control</h1>
+  Commanding forces only is potentially a limiting view of the world. 
+  There's a class of models called <i>indirect force control</i> where we program 
+  the force with an indirect objective. 
+  One of the most powerful examples would be <i>stiffness control</i> - 
+  instead of saying the goal is to regulate the fictitious contact force, 
+  we say that if the little red circular finger was pushed on, the response would 
+  be like it was a spring.
 </section>
 
 <section id="8"><h1>Questions & Todo</h1>
   <ul>
     <li>
       I would love to be super comfortable with the manipulator equation
+    </li>
+    <li>
+      What does it mean for a friction cone to be bigger (wider?) as 
+      friction gets bigger?
     </li>
   </ul>
 </section>
