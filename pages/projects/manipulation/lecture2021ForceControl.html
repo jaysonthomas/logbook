@@ -7,20 +7,20 @@
     <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
     <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
-    <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
 
-    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
     <script type="text/javascript" id="MathJax-script" defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
 
-    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
-    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
   </head>
 
 <body onload="loadChapter('manipulation');">
@@ -43,7 +43,7 @@
 
 <table style="width:100%;" pdf="no"><tr style="width:100%">
   <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
   <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
 </tr></table>
 
@@ -59,7 +59,9 @@
     <li><a href="#5">Testing the interaction of forces using the model</a></li>
     <li><a href="#6">Direct force control flip-up strategy</a></li>
     <li><a href="#7">Indirect force control</a></li>
-    <li><a href="#8">Questions & Todo</a></li>
+    <li><a href="#8">Impedance control</a></li>
+    <li><a href="#9">Remote centered compliance</a></li>
+    <li><a href="#10">Questions & Todo</a></li>
   </ul>
 </section>
 
@@ -127,7 +129,7 @@
 
     <figure>
       <img style="height:100px; width:auto"
-      src="../../figures/12_flipUpTask.png"/>
+      src="../../../figures/12_flipUpTask.png"/>
       <figcaption>
         Flip up task setup
       </figcaption>
@@ -140,7 +142,7 @@
 <section id="3"><h1>System view</h1>
   <figure>
     <img style="height:100px; width:auto"
-    src="../../figures/manipulation/5_forceControl_systemView.svg"/>
+    src="../../../figures/manipulation/5_forceControl_systemView.svg"/>
     <figcaption>
       System view
     </figcaption>
@@ -227,7 +229,7 @@
 
     <figure>
       <img style="height:100px; width:auto"
-      src="../../figures/manipulation/4_forceControl.png"/>
+      src="../../../figures/manipulation/4_forceControl.png"/>
       <figcaption>
         Free body diagram for the finger (pink) if it was only in contact with 
         the box in the x or z directions
@@ -289,7 +291,7 @@
 
       <figure>
         <img style="height:100px; width:auto"
-        src="../../figures/manipulation/6_forceControl_notYetInContact.png"/>
+        src="../../../figures/manipulation/6_forceControl_notYetInContact.png"/>
         <figcaption>
           Applying force through the finger when it's not yet in contact.
         </figcaption>
@@ -318,7 +320,7 @@
   <subsection><h1>Varying the constant horizontal force</h1>
     <figure>
       <img style="height:150px; width:auto"
-      src="../../figures/manipulation/7_forceControl_constantForce.png"/>
+      src="../../../figures/manipulation/7_forceControl_constantForce.png"/>
       <figcaption>
         Free body diagram of all the forces acting on the box/finger.
       </figcaption>
@@ -385,7 +387,7 @@
     more accurately, then we can slide and tip the box.
     <figure>
       <img style="height:150px; width:auto"
-      src="../../figures/manipulation/8_forceControl_flipUp.png"/>
+      src="../../../figures/manipulation/8_forceControl_flipUp.png"/>
       <figcaption>
         Free body diagram of all the forces acting on the box/finger.
       </figcaption>
@@ -423,7 +425,7 @@
     
     <figure>
       <img style="height:150px; width:auto"
-      src="../../figures/manipulation/9_forceControl_VirtualAngle.png"/>
+      src="../../../figures/manipulation/9_forceControl_VirtualAngle.png"/>
       <figcaption>
         The virtual angle in flipping up.
       </figcaption>
@@ -459,13 +461,275 @@
   Commanding forces only is potentially a limiting view of the world. 
   There's a class of models called <i>indirect force control</i> where we program 
   the force with an indirect objective. 
-  One of the most powerful examples would be <i>stiffness control</i> - 
-  instead of saying the goal is to regulate the fictitious contact force, 
-  we say that if the little red circular finger was pushed on, the response would 
-  be like it was a spring.
+
+  <subsection><h1>Stiffness control</h1>
+    One of the most powerful examples would be <i>stiffness control</i> - 
+    instead of saying the goal is to regulate the contact force between the finger
+    and the box, we make the finger act like a spring. So, if the finger was pushed on, 
+    its response would be that of a spring.
+
+    <p>
+      The rest length of the spring is going to become the input to the control system. 
+      If we want the finger to come into contact with the box and then potentially 
+      move the box around, we can move the rest position of that spring into the box. 
+      If the rest length was inside the box it would be applying a force to the box. 
+      The force it would apply is proportional to how far into the box the rest length is. 
+      This is an indirect way to command a force but it turns out to be super useful.
+    </p>
+
+    We want the finger to look like a spring mass damper system - 
+    The equations will look like this:
+    $$\begin{equation}
+    m_f\begin{bmatrix}\ddot{x}_f \\ \ddot{z}_f\end{bmatrix}
+    +b\begin{bmatrix}\dot{x}_f \\ \dot{z}_f\end{bmatrix}
+    +k\begin{bmatrix}x_f-x^{d}_f \\ z_f-z^{d}_f\end{bmatrix}
+    = f^c
+    \end{equation}$$
+    $z^{d}_f$, $x^{d}_f$ - virtual positions or rest length; the input to the 
+    stiffness controller
+    <p>
+      Damping term: $b\begin{bmatrix}\dot{x}_f \\ \dot{z}_f\end{bmatrix}$,      
+      Stiffness term: $k\begin{bmatrix}x_f-x^{d}_f \\ z_f-z^{d}_f\end{bmatrix}$
+    </p>
+    <p>
+      If you put stiffness control and damping control together, it's 
+      called <i>compliance control</i>.
+    </p>
+    <p>
+      Whatever force the world is pushing on the finger (RHS), it will have a 
+      well-defined response - it's going to act like a mechanical spring (LHS). 
+      We are going to replace the dynamics of the robot with the dynamics of a spring. 
+      This is a very important intuitive idea. One of the things that's very nice about 
+      it is that springs are well behaved for any reasonable forces. If the world were 
+      to come up and try to hit your resonant frequency, that would be bad! But if the 
+      world is passive, energy conserving and the spring (the robot finger) is energy 
+      conserving, then we have some guarantees that even if we don't know exactly what's 
+      happening with the contact forces, things aren't going to go too bad.
+    </p>
+    <p>
+      When each of the elements of the control system are passive, 
+      then we can make guarantees about the stability of the entire system even 
+      when they're in a complex composition. The elements could include the world 
+      (if the world is energy conserving) and the robot (it could be energy conserving 
+      or potentially even dissipative i.e. when it's got friction/damping terms 
+      like the finger). There's a lot of deep literature on this <i>passivity-based 
+      control</i>. It's a very powerful idea and there are a couple of references 
+      in the notes about it - port hamiltonian theory takes this approach to an extreme.
+    </p>
+  </subsection>
+  
+  <subsection><h1>Stiffness control flip-up strategy demo</h1>
+    <p>
+      If we program the mechanics of our interaction, we can do something way 
+      better than if we're trying to program the forces or the positions.
+    </p>
+
+    We didn't do teleop with force control because if we put a slider 
+    and commanded the force, the demo would be very short because the finger 
+    would either slam into something or go off the screen. But with stiffness 
+    control we can move the set point of the spring around and do totally 
+    reasonable things. In this demo, we make the box transparent because we're going to 
+    stick our set point inside it. The gold finger is the set point and the aim of the 
+    red finger is to track the gold finger. If the set point is only moved by a 
+    short distance into the box, the force applied by the finger will be lower 
+    than that of static friction and the box will not move.
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/manipulation/10_stiffnessControl_flipUp1.png"/>
+      <figcaption>
+        Stiffness control flip-up strategy
+      </figcaption>
+    </figure>
+
+    <p>
+      The box will start moving all the way to the edge if we push harder 
+      by moving the set point farther into the box. If rather than pushing at a right angle 
+      into the box, we move the set point to an angle above the box, 
+      the finger will start to lift the box. (still way into the box so that the finger is 
+      still pushing into the box). This will cause a vertical component of the spring 
+      force because the finger is trying to go towards the set point at an angle.
+      The box won't rotate about the bottom LHS corner, but the top LHS corner.
+    </p>
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/manipulation/11_StiffnessControl_flippedUp.png"/>
+      <figcaption>
+        Stiffness control flip-up strategy
+      </figcaption>
+    </figure>
+    <p>
+      When the finger gets to the top, we are going to exceed the friction cone 
+      on the LHS top corner. We are going to have no ability to push and stay inside 
+      the friction cone. So the box is going to slip. In the previous model, we were 
+      monitoring the forces/accelerations and trying to estimate the moment of that slip - 
+      that's not a good way to go. If we wait to detect slip instantaneously 
+      (incipient slip - signals right before slip) and then make a control decision, 
+      we're not going to be successful in life. People try, but it's very hard.
+    </p>
+  </subsection>
+  
+  <subsection><h1>Philosophy of stiffness control</h1>
+    If we can program the interaction in the right way, so that we're pulling on the 
+    virtual set point or being pulled by it (it's a spring in between, pulling and 
+    pushing) and we're in some reasonably chosen configuration, then:
+    <ul>
+      <li>The spring is going to push the finger into the wall</li>
+      <li>The spring will tip both the box and the finger up</li>
+      <li>
+        The moment the box slips, we don't have to change the controller - 
+        the finger is going to be pushing down. The set point is going to pull the 
+        finger with it.
+      </li>
+    </ul>
+
+    <p>
+      This is a good strategy because large choices of the desired position, 
+      damping and stiffness terms in (5) give very reasonable behaviours.
+      Pushing the box into the corner solves the entire task; no detailed reasoning 
+      about forces, no detailed estimation of friction contacts/cones is required. 
+      We don't have to dial it in too carefully as in direct force control where 
+      we had to be careful about the friction constraints.  
+    </p>
+
+    <p>
+      This concept of programming the interactions/dynamics instead of the forces 
+      directly is a paradigm shift and works well for different shapes, objects and tasks. 
+      Classic tasks like wall following, welding, painting that are done by traditional 
+      robotic arms are well suited to these kinds of controllers or vice versa. 
+    </p>
+  </subsection>
+
+  <subsection><h1>Stiffness controller</h1>
+    Looking at just the $z$ axis, if we implement the equation of motion given by (2)
+    in the controller given by (5), the torque to be applied is given as:
+    $$\begin{equation}
+      u_z = -b\dot{z}_f - k(z_f - z^d_f) + mg
+    \end{equation}$$
+
+    This looks like PD control (first 2 RHS terms) for the point finger case plus 
+    gravity compensation (the final RHS term). More generally, it looks like a bunch 
+    of terms (gravity compensation in this case) that are trying to cancel out the 
+    dynamics of the robot and replace them with the dynamics of a spring (first 2 RHS terms), 
+    typically in the end effector's coordinates. 
+
+    <p>
+      If we had to do this with joints and act like a spring at the end point, 
+      it's not going to be just a simple PD controller. It's going to be mapped 
+      through some transformation to the joints. But if we master the robot's dynamics 
+      then we can still control the end effector contact forces/interactions.
+    </p>
+  </subsection>
 </section>
 
-<section id="8"><h1>Questions & Todo</h1>
+<section id="8"><h1>Impedance control</h1>
+  <i>Impedance control</i> is a 'generalisation' of (6). In fact, (6) can be called
+  an impedance controller. So far we just changed the stiffness and damping terms in 
+  (5) and not the effective mass of the sphere. Even if we changed the mass 
+  of our sphere, with a pretty simple controller as in (6) that doesn't have 
+  to know too much, we can make the sphere act like a spring mass damper system 
+  (as if it's got a spring attached to it).
+
+  <p>
+    If we have a real mastery of our robot's dynamics, we can even change the effect 
+    of mass. So if someone were to push on the robot, even if it is very heavy, 
+    we can make it act very light. That's a harder thing to implement. Depending on 
+    how we implement it with acceleration or force terms, it can be subtle to get right. 
+    It's also subtle to get right in terms of the bandwidth of the controller. So we could 
+    use impedance control to mean stiffness control. Strictly the full glory of impedance 
+    control is realised if we are also trying to change the mass. But, changing masses 
+    is a nasty business. 
+  </p>
+
+  Iiwa doesn't do that. They tried to cancel the mass but the final controller just 
+  doesn't do it. There's a different way to teach impedance control, but this is a 
+  more intuitive way.
+
+  <p>
+    If we're trying to train an RL controller and have a choice between position, 
+    impedance and torque commands; these are going to work very differently in the 
+    training procedures. Knowing a few things about impedance control (when they work 
+    and don't) is going to be useful for a lot of tasks that are contact rich.
+  </p>
+</section>
+
+<section id="9"><h1>Remote centered compliance</h1>
+  <subsection><h1>Peg-in-hole insertion task</h1>
+    There was a canonical task created in the 80s called the peg-in-hole insertion task, 
+    which motivated some great work in motion planning and control. So there is a 
+    hole in the world and we've got a peg that's roughly the same size as the hole. 
+    If we try to insert the peg into the hole with pure position control, it can be nasty.
+
+    <figure>
+      <img style="height:70px; width:auto"
+      src="../../../figures/manipulation/12_rcc.png"/>
+      <figcaption>
+        Different configurations of the peg-in-hole insertion task
+      </figcaption>
+    </figure>
+
+    <p>
+      To solve this problem, it's okay to cheat a little bit. We chamfer the corners 
+      of both the peg and the hole. If the peg is slightly out of alignment and we come 
+      down without paying attention, we're going to get a very large contact force at 
+      1 point (configuration 1). In configuration 2, we can actually get stuck with 
+      large contact forces occurring at 2 points (it's an under-determined problem for 
+      coulomb friction).       
+    </p>
+  </subsection>
+
+  <subsection><h1>Peg-in-hole solution</h1>
+    <figure>
+      <img style="height:70px; width:auto"
+      src="../../../figures/manipulation/13_rcc_translation.png"/>
+      <figcaption>
+        Translational stiffness
+      </figcaption>
+    </figure>
+    It was decided early on that it pays to be in a force/compliant control mode. 
+    Say, the robot is in position control mode and it has estimated things a 
+    bit wrong and it's coming down with the peg; we'd like to have some horizontal 
+    stiffness (a spring  horizontally) so that the controller slides a little bit 
+    (horizontally) in order to go in. That's the translational version.
+
+    <p>
+      We can do stiffness control in orientation too - we can program a rotational 
+      stiffness of the hand. We can solve the problem we had in configuration 2 by 
+      programming rotational stiffness so that the robot hand aligns the peg itself 
+      (after making the first awkward contact) and goes in. 
+    </p>
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/manipulation/14_rccInMiddle_rotation.png"/>
+      <figcaption>
+        Centre of rotation is in the middle of the vertical axis
+      </figcaption>
+    </figure>
+    For rotational stiffness, we need to have a centre of rotation, some 
+    coordinate frame to represent the rotation about. If we choose a rotational 
+    stiffness around the centre of the peg, then when we do need to make a correction, 
+    the peg will bend more at the opposite end to where the correction needs to be made. 
+    In the figure, we want to rotate the top end of the peg more (grey orientation is 
+    the desired). But, because the centre of rotation is in the middle, both ends rotate 
+    an equal amount (yellow orientation is what happens).
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/manipulation/15_rcc.png"/>
+      <figcaption>
+        Centre of rotation is at the end
+      </figcaption>
+    </figure>
+    What we need instead is to have an effective centre of compliance that's at 
+    the end point or even beyond the end. In the figure, the white axis is 
+    the desired/correct orientation. This concept is called a 
+    <i>remote centered compliance</i>. 
+    It's really just a choice of where we parameterize our orientation. 
+  </subsection>
+</section>
+
+<section id="10"><h1>Questions & Todo</h1>
   <ul>
     <li>
       I would love to be super comfortable with the manipulator equation
@@ -474,9 +738,14 @@
       What does it mean for a friction cone to be bigger (wider?) as 
       friction gets bigger?
     </li>
+    <p>
+      <li>Neville's lab teaches impedance control at MIT</li>
+      Neville Hogan introduced this in the 1980s.
+    </p>
   </ul>
 </section>
 
+</chapter>
 </body>
 </html>
 

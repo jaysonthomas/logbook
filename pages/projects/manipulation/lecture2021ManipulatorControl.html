@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 3"><h1>Manipulator control</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">1: Overview</a></li>
+    <li><a href="#2">2: Simple double pendulum</a></li>
+    <li><a href="#10">Questions & todo</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  In the <a href=lecture2021ForceControl.html>force control chapter</a>, 
+  we assumed that the robot was a point. We'll now add the rest of the robot. 
+  There are aspects of manipulator control that require executing trajectories at high 
+  speeds with very high accuracy possibly with uncertain payloads. But we'll focus 
+  on the force control aspects of manipulator control. 
+
+  <p>
+    For the pushing-a-book-on-a-table task, there is a sweet spot where we need to 
+    apply just the right amount of force to maintain frictional contact between the hand 
+    and the book and also between the book and the table such that the book is still 
+    able to slide on the table but the hand isn't sliding on the book.
+  </p>
+</section>
+
+<section id="2"><h1>Simple double pendulum</h1>
+  To explain all the concepts (for say writing on the board) we can describe the 
+  behaviour of a 7-joint robot arm with a simple double pendulum 
+  (simple because it uses point masses for the dynamics). 
+  We'll think of the double pendulum as hanging down from the top. 
+  A kuka is bolted on the bottom. That's no big deal.
+  
+  <subsection><h1>Setup</h1>
+    <figure>
+      <img style="height:70px; width:auto"
+      src="../../../figures/manipulation/16_simpleDP.png"/>
+      <figcaption>
+        Double pendulum parameterisation
+      </figcaption>
+    </figure> 
+
+    The DP is parameterized with just 2 angles, $\theta_1$ and $\theta_2$. 
+    The end point, 
+    which we'll call the end effector, is where we want to make contact 
+    (we'll use it for our kinematics). We'll have motors and therefore torques 
+    at both the joints. The mass is distributed. It's got the standard manipulator 
+    equation of motion 
+    form plus potentially any contact forces which we'll add later. If you just 
+    do lumped masses then the terms come out particularly easy (derived in the notes). 
+    
+    $$\begin{equation}M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + u\end{equation}$$
+    $$
+      q=\begin{bmatrix} \theta_1\\\theta_2 \end{bmatrix}, 
+      u=\begin{bmatrix} \tau_1\\\tau_2 \end{bmatrix}
+    $$
+
+    Our goal is to figure out what torques to apply to achieve some force control 
+    or program the interaction at the contact point. 
+  </subsection>
+</section>
+
+<section id="3"><h1>Feedback cancelling control</h1>
+  Given the system as written in (1), if we have $u$ as an input so we can apply 
+  torques at both of the joints; and if we know $M$, $C$, $\tau$(the gravity forces), 
+  then we can write a controller that changes the effective dynamics of the robot 
+  to anything we want. This is powerful idea is called 
+  <i>feedback cancelling control</i>.
+  If we write the right controller and have enough control authority 
+  (at some point we'll have torque limits or other problems)
+  then we can overwrite the dynamics of our system; even make
+  the pendulum defy gravity.
+    
+  <subsection><h1>Example</h1>
+    As an example to show how this approach is limiting, let's replace the dynamics 
+    of the two-link pendulum and make it act like a one-link pendulum. 
+    There's only two degrees of freedom so we can't make it act like a four-linked 
+    pendulum but we can impose whatever two link dynamics we like.
+
+    <p>
+      This would be equivalent to saying we'd like the accelerations of the 2-link 
+      pendulum to behave like the dynamics of a single pendulum for which the equations 
+      are easier. 
+    </p>
+
+    $$
+      \ddot{q}^d = 
+        \begin{bmatrix} \ddot{\theta}_1^d \\\ddot{\theta}_2^d \end{bmatrix}, 
+        =\begin{bmatrix} -\frac{g}{l}sin\theta_1 - b\dot{\theta}_1\\0\end{bmatrix}
+    $$
+    The $b$ term is present to account for damping. We would have to cancel any effects that 
+    are coming from $\theta_2$ moving around so that $\theta_1$ moves like a 
+    single simple pendulum.
+
+    <p>
+      Let's pretend the acceleration of joint 2 is 0. In practice if it doesn't 
+      start straight (this is the configuration when $\theta_2=0$), we would put 
+      a little feedback control to make it go straight. Making it swing like a 
+      single pendulum is not the natural physics of this DP. But we can do this 
+      algebraically. If were to apply the following controller which exactly cancels
+      out the terms in our EoM/plant specified by (1), into the closed loop system,
+    </p>
+    $$
+      u = C(q,\dot{q})-\tau_g(q) + M(q)\ddot{q}^d
+    $$
+
+    then $C$ and $\tau$ cancels and we get:
+    $$M(q)\ddot{q} = M(q)\ddot{q}^d$$
+
+    The world knows that mass is always positive; even in the mass matrix form, 
+    mass matrices are always positive definite or semi-definite depending on the system. 
+    In general we're going to say in these cases it's safe to do $M^{-1}(q)$; 
+    the inverse exists. It implies that: 
+    $$\ddot{q} = \ddot{q}^d$$
+  </subsection>
+
+  <subsection><h1>Limitations</h1>
+    <ul>
+      <li>This works only in the case of a known robot arm</li>
+      This method is very dependent on our ability to estimate the torques, masses, 
+      coriolis and the gravitational terms accurately. People do this! It's interesting 
+      to run the sensitivity analysis and check how sensitive we are to our mass matrix 
+      estimate and the like.
+
+      <p>
+        <li>A manipulation system is an underactuated system</li>
+        If we are to write the dynamics of a full manipulation problem where the 
+        equations of motion include both the (masses of) robot and the manipuland, 
+        then we can't write (1) with just $u$ in it anymore because we cannot apply torque 
+        directly to the objects; the torques are applied to the robot joints. So we can't 
+        directly overwrite the dynamics of the objects in the world. 
+      </p>
+      $$M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu$$
+
+      We introduce the $B$ matrix and it becomes low rank because we can't directly 
+      affect the objects in the world. That's why a <i>manipulation system</i> 
+      (which includes both the world and the robot) is an <i>underactuated system</i>. 
+
+      <p>
+        <li>Limitations in the robot</li>
+        if to follow some dynamics it requires ridiculous amounts of torque and we have 
+        torque limits, then it becomes an underactuated system.
+      </p>
+    </ul>
+  </subsection>
+</section>
+
+<section id="4"><h1>Stiffness control implemented using feedback cancellation</h1>
+  Locally, within reason, if we want to change our dynamics a bit then 
+  feedback cancelling control is an incredibly practical powerful idea.
+  Inspired by the force cancellation philosophy, our goal is to make the big complicated 
+  robot act like it's a point robot at the end such that we can apply forces or 
+  program the interaction at the end. 
+</section>
+
+<section id="10"><h1>Questions & todo</h1>
+  <ul>
+    <li>
+      I think the code to turn a DP into a single one is 
+      <code>intro.ipynb</code> </li>
+  </ul>
+</section>
+
+</chapter>
+</body>
+</html>

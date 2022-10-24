@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Drone project</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#2">Control part</a></li>
+    <li><a href="setup.html">Setup</a></li>    
+    <li><a href="#10">Questions & todo</a></li>    
+  </ul>
+</section>
+
+<section id="2"><h1>Control part</h1>
+  The C++ simulator is more bare-bones than the Python/Unity simulator, 
+  but it's more realistic in the physics that it models. We'll be porting code
+  written in python. The aim of the project is to:
+  <ul>
+    <li>Setup the C++ simulator and the development environment</li>
+    <li>Familiarisation with tools to evaluate the controller's performance</li>
+  </ul>
+</section>
+
+<section id="10"><h1>Questions & todo</h1>
+  <ul>
+    <li>
+      Can I easily modify the unity code to create a simple sim?
+      Is the code available online?
+    </li>
+    <p>
+      <li>
+        Understand 
+        <code>iso c++17 does not allow dynamic exception specifications</code>
+        better 
+      </li>
+      For example in <code>PracticalSocket.h</code> with the use
+      of <code>throw(SocketException)</code> seen 
+      <a href="https://t.ly/vF4L">here</a>. More info can be found
+      <a href="https://t.ly/3O_B">here</a>.
+    </p>
+    <li>
+      The <a href="https://t.ly/B-_T">readme</a> has all the 
+      project instructions
+    </li>
+  </ul>
+</section>
+
+</body>
+</html>
+

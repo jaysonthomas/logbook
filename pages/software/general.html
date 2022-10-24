@@ -48,7 +48,7 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 3"><h1>Projects</h1>
+<chapter style="counter-reset: chapter 3"><h1>General software related notes</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
@@ -59,6 +59,7 @@
     <li><a href="#5">Drake</a></li>
     <li><a href="#6">Webpage</a></li>
     <li><a href="#7">Drawio</a></li>
+    <li><a href="#8">Git</a></li>
   </ul>
 </section>
 
@@ -93,16 +94,14 @@
 
 <section id="2"><h1>Software downloads</h1>
   <subsection><h1>Snap installs</h1>
-<pre>
-<code class="bash">
+<pre><code class="bash">
 sudo snap install --classic code
 drawio
 </code></pre>
   </subsection>
 
   <subsection><h1>Apt-get installs</h1>
-<pre>
-<code class="bash">
+<pre><code class="bash">
 python3-pip
 python3.8 
 python3.8-venv
@@ -120,8 +119,8 @@ xournalpp
   </subsection>
 
   <subsection><h1>Apt installs</h1>
-    <pre>
-    <code>net-tools
+<pre><code>
+net-tools
 </code></pre>
   </subsection>
 
@@ -134,6 +133,13 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt-get install python3.8
 </code></pre>
+  </subsection>
+
+  <subsection><h1>Miscellaneous</h1>
+    <ul>
+      <li>Qt</li>
+      Good <a href="https://t.ly/e5-U">link</a>.
+    </ul>
   </subsection>
 </section>
 
@@ -170,26 +176,36 @@ grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
   </subsection>
    
   <subsection><h1>Software installation, update, removal</h1>
-    <p>
-      When the server from which ubuntu pulls updates didn't work, 
-      I found <a href="t.ly/xyaj">this</a> useful.
-      Just find the best server and go for whatever is suggested.
-    </p>
+    <ul>
+      <li>
+        When the server from which ubuntu pulls updates didn't work, 
+        I found <a href="t.ly/xyaj">this</a> useful.
+        Just find the best server and go for whatever is suggested.
+      </li>
+      <p>
+        <li>Ensure package manager is up-to-date</li>
+<pre><code class="bash">
+sudo apt-get update && sudo apt-get upgrade
+</code></pre>
+      </p>
+    </ul>
   </subsection>
 </section>
 
 <section id="5"><h1>Drake</h1>
   <subsection><h1>First installation attempt</h1>
     On 04.07.22, I did the following:
-    <pre>
-      <code>sudo apt-get install python3.10-venv
+
+<pre><code class="bash">
+sudo apt-get install python3.10-venv
 python3 -m venv env
 env/bin/pip install --upgrade pip
 env/bin/pip install drake
 </code></pre>
+
 Got this error:
-<pre>
-  <code>ERROR: Could not find a version that satisfies the requirement drake (from versions: none)
+<pre><code>
+ERROR: Could not find a version that satisfies the requirement drake (from versions: none)
 ERROR: No matching distribution found for drake
 </code></pre>
 
@@ -292,6 +308,20 @@ Linking to the equation from elsewhere.
 
   <li>Ctrl-Shift-P to make the sidebar disappear</li>
   <li>Ctri-Shift-u to ungroup</li>
+  </ul>
+</section>
+
+<section id="8"><h1>Git</h1>
+  <ul>
+    <li>Submodules</li>
+    <a href="https://t.ly/VMEV">Ref</a>.
+
+    <p>
+      <li>Unstage added files</li>
+<pre><code class="bash">
+git reset HEAD
+</code></pre>
+    </p>
   </ul>
 </section>
 </body>
