@@ -1,0 +1,19 @@
+@startuml
+
+state Devil_strategy {
+}
+
+state Our_weapons
+
+' ------------
+' Description
+' ------------
+Devil_strategy :\
+Patiently setup strongholds\n\
+through years of negative\n\
+experiences, theories &\n\
+reasonings
+
+Our_weapons :\
+Abide in the word
+@enduml

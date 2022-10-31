@@ -287,12 +287,22 @@ grep -r "index.ipynb" /folder/path
   <subsection><h1>Html</h1>
     <ul>
       <li>Linking to a specific sentence or equation in a page</li>
-      <pre><code class="xml">
+<pre><code class="xml">
 &lt;a id="eq1">Whatever is in between&lt;/a&gt;
 <br>
 Linking to the equation from elsewhere.
 &lt;a href="#eq1">The equation over here&lt;/a&gt;
 </code></pre>
+
+      <li>The other way to reference equations</li>
+      Just before <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
+      <br>
+      To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
+      <br><br>
+
+      <li>Using an underbrace in an equation</li>
+      <code>\underbrace{</code>The part of the equation to be labelled
+      <code>}_{\text{</code>The label<code>}}</code>
     </ul>
 
   </subsection>

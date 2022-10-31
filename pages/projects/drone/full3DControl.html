@@ -64,9 +64,40 @@
 </section>
 
 <section id="2"><h1>Review of 2D dynamics</h1>
+  <figure>
+    <img style="height:130px; width:auto"
+    src="../../../figures/drone/6_2dDynamicsReview.png"/>
+    <img style="height:170px; width:auto"
+    src="../../../figures/drone/6_2dReviewDynamics_2.png"/>
+    <figcaption>
+      2D dynamics
+    </figcaption>
+  </figure> 
   <ul>
-    
+    <li>We started by defining a state for the vehicle</li>
+    The <i>state</i> describes the minimal amount of information we need to 
+    keep around to be able to predict the motion of the vehicle from one time step 
+    to the next. For 2D, the state variables were the vehicle's lateral y-position, 
+    vertical z-position, and roll angle, $\phi$. We also had to track the velocities 
+    associated with each of those variables, which gave us a total of six state variables.
+
+    <p>
+      <li>Next, we had to figure out the forces and moments acting on the vehicle</li>
+      <li>
+        Then we had to convert these forces and moments into accelerations and angular 
+        accelerations, which we did by applying $f = m*a$, and its rotational equivalent
+      </li>
+    </p>
+
+    <p>
+      <li>Once we knew the accelerations and angular accelerations, we had to integrate 
+        once to figure out how these caused the $y$, $z$, and $\phi$ velocities to change
+      </li>
+    </p>
+    <li>Then we integrated the updated velocities to figure out how the positions changed</li>
   </ul>
+
+  <a href="https://t.ly/BbFG">advance_state(..)</a> captures these dynamics.
 </section>
 
 </body>
