@@ -1,0 +1,20 @@
+@startuml
+' GM - Drawing/GraphManager.cpp
+DrawUpdate --> glutPostRedisplay
+
+state main {
+    state glutTimerFunc
+}
+
+state OnTimer {
+    state DrawUpdate {
+    }
+}
+
+glutTimerFunc -> OnTimer
+state glutPostRedisplay #LightBlue
+
+' Descriptions
+DrawUpdate:GM
+OnTimer:main
+@enduml

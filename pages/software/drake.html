@@ -16,11 +16,11 @@
     </script>
     <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
 
-    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
-    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" type="text/css" href="../../htmlbook/book.css" />
+    <link rel="stylesheet" type="text/css" href="../../notes.css" />
   </head>
 
 <body onload="loadChapter('manipulation');">
@@ -53,6 +53,8 @@
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">General terms</a></li>
+    <li><a href="#2">Installation</a></li>
+    <li><a href="#3">Temporary way of running Drake locally</a></li>
   </ul>
 </section>
 
@@ -67,6 +69,111 @@
   </ul>
 </section>
 
+<section id="2"><h1>Installation</h1>
+  <subsection><h1>First installation attempt</h1>
+    On 04.07.22, I did the following:
+
+<pre><code class="bash">
+sudo apt-get install python3.10-venv
+python3 -m venv env
+env/bin/pip install --upgrade pip
+env/bin/pip install drake
+</code></pre>
+
+Got this error:
+<pre><code>
+ERROR: Could not find a version that satisfies the requirement drake (from versions: none)
+ERROR: No matching distribution found for drake
+</code></pre>
+
+Pip version is <code>pip-22.1.2</code>.
+I followed the instructions shown in <a href="https://t.ly/ivJH">installation via pip</a>.
+  </subsection>
+
+  <subsection><h1>Second installation attempt</h1>
+    <ul>
+      <li>Pip installation of <code>manipulation</code></li>
+      I could have just installed drake via pip, but installing 
+      <code>manipulation</code> covers it and lots of other extra packages. 
+      I had to install wheel, upgrade pip and then install manipulation again.
+<pre><code class="bash">
+python3.8 -m venv env
+source env/bin/activate
+which python
+python3 --version
+
+pip3 install manipulation
+python3 -m pip install --upgrade pip
+pip3 install wheel
+</code></pre>
+      There's a comment as follows, <a href="https://drake.mit.edu/pip.html#stable-releases">here</a>
+<pre><code class="language-plaintext">
+Drake publishes pre-compiled binaries as PyPI wheel packages.
+</code></pre>
+        
+      <li>Test if drake's been installed</li>
+<pre><code class="python">
+python3 -c 'import pydrake.all; print(pydrake.__file__)'
+Output: /home/jayson/P/mitManipulation/env/lib/python3.8/site-packages/pydrake/__init__.py
+</code></pre>
+      
+      <li>Had to install jupyter notebook</li>
+      This is to be able to run the exercises.
+<pre><code class="python">
+pip3 install notebook
+</code></pre>
+      
+      <li>Get graphs working</li>
+      I had to do the following outside of the virtual environment to get graphs working.
+<pre><code class="bash">
+sudo apt-get install graphviz
+</code></pre>
+
+      <li>Separate download of the <code>manipulation</code> repository</li>
+      I'm going directly to the source so I can stay up to date with the latest changes
+      to the pset files.
+<pre><code class="bash">
+cd ~/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/share/drake/tutorials/manipulation
+git clone https://github.com/RussTedrake/manipulation.git .
+</code></pre>
+    </ul>
+  </subsection>
+</section>
+
+<section id="3"><h1>Temporary way of running Drake locally</h1>
+  <ul>
+    <li>Activate virtual environment</li>
+<pre><code class="python">
+source env/bin/activate
+</code></pre>
+
+    <li>Deactivate virtual environment</li>
+<pre><code class="python">
+deactivate
+</code></pre>
+
+    <li>Run drake tutorial locally</li>
+<pre><code>
+python3 -m pydrake.tutorials
+Output: Serving notebooks from local directory: /home/jayson/p/2_drakePythonTests/env/lib/python3.8/site-packages/pydrake/share/drake/tutorials
+</code></pre>
+    <code>index.ipynb</code> gets served at <code>http://localhost:8888/notebooks/index.ipynb#</code>.
+    <br><br>
+
+    <li>Finding <code>index.ipynb</code></li>
+<pre><code>
+grep -r "index.ipynb" /folder/path
+</code></pre>
+    </ul>
+</section>
+
+<section id="10"><h1>Questions & todo</h1>
+  <ul>
+    <li>Unable to find texture files</li>
+    I've run into the problem described <a href="https://t.ly/-Cue">here</a>.
+  </ul>
+</section>
+
+</chapter>
 </body>
 </html>
-

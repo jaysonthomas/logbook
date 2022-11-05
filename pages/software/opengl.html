@@ -16,11 +16,11 @@
     </script>
     <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
 
-    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
-    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" type="text/css" href="../../htmlbook/book.css" />
+    <link rel="stylesheet" type="text/css" href="../../notes.css" />
   </head>
 
 <body onload="loadChapter('manipulation');">
@@ -48,21 +48,58 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 3"><h1>Projects</h1>
+<chapter style="counter-reset: chapter 0"><h1>OpenGL</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="general.html">General software useful tips</a></li>
-    <li><a href="python.html">Python</a></li>
-    <li><a href="drake.html">Drake</a></li>
-    <li><a href="c.html">C</a></li>
-    <li><a href="cpp.html">C++</a></li>
-    <li><a href="cmake.html">Cmake</a></li>
-    <li><a href="linux.html">Linux</a></li>
-    <li><a href="opengl.html">OpenGL</a></li>
+    <li><a href="#1">Misc functions</a></li>
+    <li><a href="#2">GLUT</a></li>
   </ul>
 </section>
 
+<section id="1"><h1>Misc functions</h1>
+</section>
+
+<section id="2"><h1>GLUT stuff</h1>
+  <a href="https://t.ly/_p-1">Ref</a>.
+  It stands for openGL Utility Toolkit.
+
+  <subsection><h1>glutMainLoop</h1>
+    It calls the display callback over and over, 
+    calling idle in between so it can maintain a specific framerate. 
+    <a href="https://t.ly/YZ0J">Ref</a>.
+    <ul>
+      <li>Display callback</li>
+      Main logic to draw whatever it is that should be going on.
+      <br><br>
+      
+      <li>Idle callback</li>
+      Some very lightweight operations to determine what the change in state should be 
+      from the last time display was called to the next time. For example, if we're 
+      animating something, this would be where we change its position or orientation.
+    </ul>
+
+    After a call to <code>glutMainLoop()</code>, we have no control over the execution 
+    of our program besides the callback functions we initialized before the call.
+
+    <ul>
+      <li><code>glutDisplayFunc</code> - the draw function</li>
+      Call <code>glClear</code>, followed by all the drawing code and then 
+      <code>glutSwapBuffers()</code>.
+      <br><br>
+      
+      <li><code>glutIdleFunc</code> - the update function</li>
+      Right at the end, call <code>glutPostRedisplay</code>.
+      <br><br>
+      
+      <li><code>glutMainLoop</code></li>
+      Loops within itself, processing events and triggering callback functions 
+      when necessary
+    </ul>
+  </subsection>
+</section>
+
+</chapter>
 </body>
 </html>
 

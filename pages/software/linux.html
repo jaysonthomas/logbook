@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../chapters.js"></script>
+    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+
+    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Linux</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Find</a></li>
+    <li><a href="#2">Software installation, update, removal</a></li>
+    <li><a href="#9">Useful tools</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Find</h1>
+  <ul>
+    <li>Find files</li>
+<pre><code class="bash">
+find . -name '*station*.ipynb'
+</code></pre>
+
+    <li>Find software version</li>
+<pre><code>bazel --version
+</code></pre>
+
+    <li>Find keywords</li>
+    <a href="https://bit.ly/3QU5KIU">Good link</a>.
+<pre><code class="bash">
+grep -r "file_name" /folder/path
+grep -r --include \*.{h,cpp} "file_name" /folder/path
+grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
+</code></pre>
+
+  </ul>
+</section>
+
+<section id="2"><h1>Software installation, update, removal</h1>
+  <ul>
+    <li>
+      When the server from which ubuntu pulls updates didn't work, 
+      I found <a href="t.ly/xyaj">this</a> useful.
+      Just find the best server and go for whatever is suggested.
+    </li>
+
+    <p>
+      <li>Ensure package manager is up-to-date</li>
+<pre><code class="bash">
+sudo apt-get update && sudo apt-get upgrade
+</code></pre>
+    </p>
+
+    <li>Removing a package</li>
+    Explanation of the below is given
+    <a href="https://t.ly/wFHk">here</a>.
+<pre><code class="bash">
+sudo apt-get purge <package_name>
+sudo apt-get autoremove
+</code></pre>
+    The autoremove option removes packages that were automatically installed 
+    because some other package required them but, with those other packages removed, 
+    they are no longer needed. Sometimes, an upgrade will suggest that you run this 
+    command.
+  </ul>
+</section>
+
+<section id="9"><h1>Useful tools</h1>
+  <ul>
+
+    <li>Tar</li>
+<pre><code>
+tar -xf filename.tar.xz
+</code></pre>
+
+    <li>Find ubuntu version</li>
+<pre><code>      
+lsb_release -a
+</code></pre>
+  </ul>
+</section>
+
+</chapter>
+</body>
+</html>
+

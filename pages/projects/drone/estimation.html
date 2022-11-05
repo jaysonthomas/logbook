@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Introduction</a></li>
+    <li><a href="pid.html">Control</a></li>
+    <li><a href="#3">Musings</a></li>
+    <li><a href="full3DControl.html">Full 3D control</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Introduction</h1>
+  <subsection><h1>Definition</h1>
+    Estimation:
+    <ul>
+      <li>Is a temporal process - so you integrate things over time.</li>
+      <li>
+        It's a process of managing uncertainty. We can never be 100% certain 
+        where the robot is.
+      </li>
+    </ul> 
+  </subsection>
+
+  <subsection><h1>The need for estimation</h1>
+    To quantify uncertainty. The goal is to make a very tight distribution, 
+    so that a robot is more certain of its state.
+    The real world (bot and environment) is uncertain in the following ways:
+    <ul>
+      <li>
+        It is stochastic. The effect of actions can have 
+        uncertain outcomes due to intrinsic or extrinsic factors.
+      </li>
+      We might intend for a vehicle to follow a certain path, but it might
+      get blown to one side by a gust of wind or suddenly stop working.
+      This change in state is a source of uncertainty, we never know when it's 
+      going to happen.
+      <br><br>
+
+      <li>
+        It is only partially observable. There is uncertainty about 
+        the current state of the world.
+      </li>
+      Where is the vehicle? What's behind that building over there? We can't
+      know everything about the world.
+    </ul>
+  </subsection>
+
+  <subsection><h1>Applications</h1>
+    We only need sensor feedback if we want the drone to be autonomous. 
+    To be autonomous, the robot needs to know the following (RHS of table). 
+    Estimation plays a role in all these problems.
+    <p><table class="center">
+      <tr>
+        <th>Type of problem</th>
+        <th>Knowledge of</th>
+      </tr>
+      <tr>
+        <td>Localisation, navigation</td>
+        <td>
+          Itself
+          <br>
+          Where the vehicle is, its attitude  
+          <br>
+          How fast it's going
+          </td>
+      </tr>
+      <tr>
+        <td>Mapping</td>
+        <td>
+          The environment
+          <br>
+          What is around me?
+        </td>
+      </tr>
+      <tr>
+        <td>Tracking</td>
+        <td>
+          Others
+          <br>
+          Where are the other vehicles?
+          <br>
+          How fast are they going?
+        </td>
+      </tr>
+    </table></p>
+    E.g. estimation is what makes GPS work so well, Apollo spacecraft, 
+    how the phone screen orients itself.
+  </subsection>
+</section>
+
+<section id="3"><h1>Musings</h1>
+</section>
+
+</chapter>
+</body>
+</html>
+
