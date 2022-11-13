@@ -124,6 +124,21 @@ outputArray = np.vstack(array1, array2)
   </ul>
 </section>
 
+<section id="3"><h1>Pandas</h1>
+  <ul>
+    <li>Convert group of numpy arrays into a pandas dataframe</li>
+<pre><code class="python">
+  test = np.vstack([w,h]).T
+  test.shape
+  df = pd.DataFrame(test, columns=['w', 'h'])
+
+  # If w and h are just 2 arrays with n rows each, when vertically stacked,
+  # the array turns into a (2xn) array. We have to then transpose it to get
+  # to a column major form.
+</code></pre>    
+  </ul>
+</section>
+
 </body>
 </html>
 

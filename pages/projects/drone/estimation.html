@@ -53,9 +53,7 @@
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Introduction</a></li>
-    <li><a href="pid.html">Control</a></li>
-    <li><a href="#3">Musings</a></li>
-    <li><a href="full3DControl.html">Full 3D control</a></li>
+    <li><a href="discreteProb.html">Discrete probability</a></li>
   </ul>
 </section>
 
@@ -99,7 +97,7 @@
     We only need sensor feedback if we want the drone to be autonomous. 
     To be autonomous, the robot needs to know the following (RHS of table). 
     Estimation plays a role in all these problems.
-    <p><table class="center">
+    <p><table class="table1 center">
       <tr>
         <th>Type of problem</th>
         <th>Knowledge of</th>
@@ -136,9 +134,29 @@
     E.g. estimation is what makes GPS work so well, Apollo spacecraft, 
     how the phone screen orients itself.
   </subsection>
+
+  <subsection><h1>How to create an estimator</h1>
+    We use <code>Bayes rule</code> which is a method:
+    <ul>
+      <li>To integrate data over time</li>
+      <li>
+        To take multiple sources of information, and come up with a distribution 
+        that is the best reflection of what the state might be
+      </li>
+    </ul>
+    Bayes rule relies on probability at its core to quantify uncertainty.
+    There are other ways, such as confidence scores, fuzzy logic etc.
+  </subsection>
 </section>
 
 <section id="3"><h1>Musings</h1>
+  <ul>
+    <li>Normalisation of data</li>
+    <a href="https://t.ly/C0lw">Ref1</a>, 
+    <a href="https://t.ly/q8JJ">Ref3</a>.
+    <li>Absolute vs relative tolerance</li>
+    <li>Standard deviation and variance</li>
+  </ul>
 </section>
 
 </chapter>

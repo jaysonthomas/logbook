@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Discrete Probability</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Variance</a></li>
+    <li><a href="#2">Standard deviation</a></li>
+    <li><a href="#3">Z-score</a></li>
+    <li><a href="#4">Normalisation</a></li>
+    <li><a href="#5">Definitions related to probability</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Variance</h1>
+  <code>Variance</code> is the average of the squared differences from the Mean.
+  The way to calculate the variance:
+  <ul>
+    <li>Find the mean</li>
+    <li>
+      For each number: subtract the mean and square the result 
+      (the squared difference)
+    </li>
+    Subtracting the mean makes the mean the zero point. It is a shift
+    operation. We can now represent everything w.r.t the mean as simple
+    deviations as shown <a href="https://t.ly/dipKw">here</a>.
+    Squaring the differences amplifies the deviation from the mean when
+    we calculate the average in the next step. This is useful when we compare
+    2 different distributions - we then have just 1 number representing each distribution
+    that contains all the information necessary to determine how spread out each
+    distribution is from its mean.
+    <br><br>
+
+    <li>Find the average of the squared differences</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Standard deviation</h1>
+  It is a measure of how spread out numbers are.
+  $$\displaylines{
+    \sigma = \sqrt{\frac{1}{N}\sum^{N}_{i=1}(x_i-\mu)^2} \\
+    Variance = \sigma^{2}
+  }$$
+</section>
+
+<section id="3"><h1>Z-score</h1>
+  It is the number of standard deviations from the mean.
+  Steps in calculating:
+  <ul>
+    <li>
+      For each number: subtract the mean, i.e. centre the distribution
+      at the mean. This difference will give us each number's deviation
+      from the mean.
+    </li>
+    <li>
+      Given a deviation, to find out how many standard deviations that is,
+      divide it by a single standard deviation.
+    </li>
+    $$
+      zScore = \frac{x-\mu}{\sigma}
+    $$
+    It is similar to mapping 100seconds to the equivalent number of minutes.
+    Since a minute is 60s, we divide 100 by 60 to get the answer. Here,
+    each x-axis division is a standard deviation (denominator). The numerator
+    is the deviation from the mean along the x-axis scale.
+    Love the illustration <a href="https://t.ly/KsMH">here</a>.
+    I like the example <a href="https://t.ly/hEXC">here</a>.
+  </ul>
+</section>
+
+<section id="4"><h1>Normalisation</h1>
+  Different types of normalisation and when to use each: 
+  <a href="https://t.ly/PN_i">Ref</a>.
+</section>
+
+<section id="5"><h1>Definitions related to probability</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Term</th>
+      <th>Definition</th>
+    </tr>
+    <tr>
+      <td>Event or outcome</td>
+      <td>Something that could happen</td>
+    </tr>
+    <tr>
+      <td>Sample space</td>
+      <td>List of events</td>
+    </tr>
+    <tr>
+      <td>Discrete sample space</td>
+      <td>Discrete set of events or possible outcomes</td>
+    </tr>
+    <tr>
+      <td>Probability</td>
+      <td>Relative likelihood or relative frequency of an event occurring</td>
+    </tr>
+    <tr>
+      <td>Probability distribution (PD)</td>
+      <td>
+        List of events with their associated probabilities. 
+        It can be written as a function that maps from the outcomes to their 
+        corresponding probabilities
+      </td>
+    </tr>
+    <tr>
+      <td>Normalised PD</td>
+      <td>A PD in which all the probabilities sum to 1</td>
+    </tr>
+    <tr>
+      <td>Probability of 0</td>
+      <td>The event is guaranteed to not happen</td>
+    </tr>
+    <tr>
+      <td>Probability of 1</td>
+      <td>The event is certain to happen</td>
+    </tr>
+    <tr>
+      <td>Probability mass function</td>
+      <td>
+        When the outcomes are discrete, the PD function is called a 
+        probability mass function
+      </td>
+    </tr>
+    <tr>
+      <td>Normalization</td>
+      <td>
+        The relative frequency of events may not be in the range of 0 to 1. 
+        But we can make the relative frequency sum to one by normalizing - dividing the 
+        probability of each event by the sum of probabilities of all the events.
+        A probability is normalized when the probabilities sum to 1.0.
+        <br> 
+        Any mathematically correct distribution must be normalized, but un-normalized 
+        distributions can also be useful if we just want to compare relative probabilities.
+      </td>
+    </tr>
+    <tr>
+      <td>Conditional probability</td>
+      <td>
+        The probability of some event given that some other event already 
+        occurred. We use the PMF to find this
+      </td>
+    </tr>
+    <tr>
+      <td>Random variable</td>
+      <td>
+        An integer value used to represent an event if the event's name 
+        is in string format
+      </td>
+    </tr>
+  </table>
+  $$
+    P(of\, a\, particular\, event) = 
+    \frac{Frequency\, of\, the\, particular\, event\, occurring}
+    {Total\, number\, of\, events}
+  $$
+</section>
+
+<section id="6"><h1>Example</h1>
+  Let's think about whether a vehicle is working or not working:
+  <figure>
+    <img style="height:200px; width:auto"
+    src="../../../figures/drone/7_probExample.png"/>
+    <figcaption>
+      Example of probability
+    </figcaption>
+  </figure>
+
+  $$
+    P(working) = 
+    \frac{Frequency\, of\, working}
+    {Total\, number\, of\, events} = \frac{9}{9+1} = 0.9
+  $$
+  Because this is a discrete sample space, we can write it in the form of a table.
+</section>
+
+<section id="7"><h1>Expected value</h1>
+  It is often referred to as the expectation, the mean, the average, or the first moment.
+  The <code>expected value</code> is, on any given draw from a distribution,
+  is the value we would expect to get?
+  Not the most likely, but the average value that we'd expect to
+  get if we were to continue drawing from this distribution over and over again.
+  It gives the long-run average value of a repeated probabilistic experiment.
+  $$
+    E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
+  $$
+  It's the integer value of the random variable, times the likelihood of each of 
+  those outcomes all summed together. 
+
+  <p>
+    The expected value of a random variable, where the underlying events are truly 
+    non-numeric quantities such as working or not working, may not be useful. 
+    In the above example, if we compute the expected value of that variable X, it's going 
+    to be equal to 0.15. What that means is really unclear. 
+  </p>
+
+  But imagine our sample space is actually a numeric quantity, such as the number of 
+  GPS satellites that a flying car can see or the birds that we can spot at any given
+  time. <a href="https://t.ly/CUyG">Ref</a>. The expected value tells us something about
+  what we might expect to see at any given time.
+</section>
+
+<section id="8"><h1>Variance</h1>
+  When we are drawing from a distribution over and over again, 
+  the <code>variance</code> tells us how spread out the samples (the values being drawn)
+  will be around the mean. It measures how spread out the numbers are 
+  from the mean (the expected value).
+  People sometimes use the variance as a measure of how well we know the mean,
+  something like a confidence. It's important to understand it isn't that,
+  but it will tell us how much the samples vary.
+
+  $$
+    \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
+  $$
+
+  I had asked <a href="https://t.ly/CUyG">this</a> question on stackexchange.
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+    <li>
+      In the standard deviation formula, if $\frac{1}{N}$ was outside
+      the square root, that would have made sense, because it would be 
+      the average of the squared deviations.
+    </li>
+    <br><br>
+    
+    <li>Why are there multiple formulae for variance</li>
+    <a href="https://t.ly/-5LN">Ref1</a>,
+    <a href="https://t.ly/fKH7">Ref2</a>.
+    <br><br>
+    
+    <li>Explain what a random variable is</li>
+    <li>
+      I want to see a real life usage of variance to understand
+      how spread out the samples are from the mean.
+    </li>
+  </ul>
+</section>
+
+</chapter>
+</body>
+</html>
+
