@@ -60,151 +60,7 @@
   </ul>
 </section>
 
-<section id="1"><h1>Variance</h1>
-  <code>Variance</code> is the average of the squared differences from the Mean.
-  The way to calculate the variance:
-  <ul>
-    <li>Find the mean</li>
-    <li>
-      For each number: subtract the mean and square the result 
-      (the squared difference)
-    </li>
-    Subtracting the mean makes the mean the zero point. It is a shift
-    operation. We can now represent everything w.r.t the mean as simple
-    deviations as shown <a href="https://t.ly/dipKw">here</a>.
-    Squaring the differences amplifies the deviation from the mean when
-    we calculate the average in the next step. This is useful when we compare
-    2 different distributions - we then have just 1 number representing each distribution
-    that contains all the information necessary to determine how spread out each
-    distribution is from its mean.
-    <br><br>
-
-    <li>Find the average of the squared differences</li>
-  </ul>
-</section>
-
-<section id="2"><h1>Standard deviation</h1>
-  It is a measure of how spread out numbers are.
-  $$\displaylines{
-    \sigma = \sqrt{\frac{1}{N}\sum^{N}_{i=1}(x_i-\mu)^2} \\
-    Variance = \sigma^{2}
-  }$$
-</section>
-
-<section id="3"><h1>Z-score</h1>
-  It is the number of standard deviations from the mean.
-  Steps in calculating:
-  <ul>
-    <li>
-      For each number: subtract the mean, i.e. centre the distribution
-      at the mean. This difference will give us each number's deviation
-      from the mean.
-    </li>
-    <li>
-      Given a deviation, to find out how many standard deviations that is,
-      divide it by a single standard deviation.
-    </li>
-    $$
-      zScore = \frac{x-\mu}{\sigma}
-    $$
-    It is similar to mapping 100seconds to the equivalent number of minutes.
-    Since a minute is 60s, we divide 100 by 60 to get the answer. Here,
-    each x-axis division is a standard deviation (denominator). The numerator
-    is the deviation from the mean along the x-axis scale.
-    Love the illustration <a href="https://t.ly/KsMH">here</a>.
-    I like the example <a href="https://t.ly/hEXC">here</a>.
-  </ul>
-</section>
-
-<section id="4"><h1>Normalisation</h1>
-  Different types of normalisation and when to use each: 
-  <a href="https://t.ly/PN_i">Ref</a>.
-</section>
-
-<section id="5"><h1>Definitions related to probability</h1>
-  <table class="table1 center">
-    <tr>
-      <th>Term</th>
-      <th>Definition</th>
-    </tr>
-    <tr>
-      <td>Event or outcome</td>
-      <td>Something that could happen</td>
-    </tr>
-    <tr>
-      <td>Sample space</td>
-      <td>List of events</td>
-    </tr>
-    <tr>
-      <td>Discrete sample space</td>
-      <td>Discrete set of events or possible outcomes</td>
-    </tr>
-    <tr>
-      <td>Probability</td>
-      <td>Relative likelihood or relative frequency of an event occurring</td>
-    </tr>
-    <tr>
-      <td>Probability distribution (PD)</td>
-      <td>
-        List of events with their associated probabilities. 
-        It can be written as a function that maps from the outcomes to their 
-        corresponding probabilities
-      </td>
-    </tr>
-    <tr>
-      <td>Normalised PD</td>
-      <td>A PD in which all the probabilities sum to 1</td>
-    </tr>
-    <tr>
-      <td>Probability of 0</td>
-      <td>The event is guaranteed to not happen</td>
-    </tr>
-    <tr>
-      <td>Probability of 1</td>
-      <td>The event is certain to happen</td>
-    </tr>
-    <tr>
-      <td>Probability mass function</td>
-      <td>
-        When the outcomes are discrete, the PD function is called a 
-        probability mass function
-      </td>
-    </tr>
-    <tr>
-      <td>Normalization</td>
-      <td>
-        The relative frequency of events may not be in the range of 0 to 1. 
-        But we can make the relative frequency sum to one by normalizing - dividing the 
-        probability of each event by the sum of probabilities of all the events.
-        A probability is normalized when the probabilities sum to 1.0.
-        <br> 
-        Any mathematically correct distribution must be normalized, but un-normalized 
-        distributions can also be useful if we just want to compare relative probabilities.
-      </td>
-    </tr>
-    <tr>
-      <td>Conditional probability</td>
-      <td>
-        The probability of some event given that some other event already 
-        occurred. We use the PMF to find this
-      </td>
-    </tr>
-    <tr>
-      <td>Random variable</td>
-      <td>
-        An integer value used to represent an event if the event's name 
-        is in string format
-      </td>
-    </tr>
-  </table>
-  $$
-    P(of\, a\, particular\, event) = 
-    \frac{Frequency\, of\, the\, particular\, event\, occurring}
-    {Total\, number\, of\, events}
-  $$
-</section>
-
-<section id="6"><h1>Example</h1>
+<section id="1"><h1>Example</h1>
   Let's think about whether a vehicle is working or not working:
   <figure>
     <img style="height:200px; width:auto"
@@ -222,7 +78,7 @@
   Because this is a discrete sample space, we can write it in the form of a table.
 </section>
 
-<section id="7"><h1>Expected value</h1>
+<section id="2"><h1>Expected value</h1>
   It is often referred to as the expectation, the mean, the average, or the first moment.
   The <code>expected value</code> is, on any given draw from a distribution,
   is the value we would expect to get?
@@ -248,11 +104,10 @@
   what we might expect to see at any given time.
 </section>
 
-<section id="8"><h1>Variance</h1>
+<section id="3"><h1>Variance</h1>
   When we are drawing from a distribution over and over again, 
-  the <code>variance</code> tells us how spread out the samples (the values being drawn)
-  will be around the mean. It measures how spread out the numbers are 
-  from the mean (the expected value).
+  the <code>variance</code> tells us how spread out the numbers or
+  samples (the values being drawn) will be from the mean(the expected value).
   People sometimes use the variance as a measure of how well we know the mean,
   something like a confidence. It's important to understand it isn't that,
   but it will tell us how much the samples vary.
@@ -262,23 +117,174 @@
   $$
 
   I had asked <a href="https://t.ly/CUyG">this</a> question on stackexchange.
+  Another good <a href="https://t.ly/-5LN">reference</a>.
+
+  <subsection><h1>Special case of variance</h1>
+    When the probability of every outcome $P(x_i)$ is $1/N$, the variance 
+    is just the average of the squared differences from the mean.
+
+    $$
+      \sigma^2 = \sum_{i=1}^{N}\frac{(x_i-\mu)^2}{N}
+    $$
+  </subsection>
+  
+  <subsection><h1>Equation deepdive</h1>
+    Subtracting the mean makes the mean the zero point. It is a shift
+    operation. We can now represent everything w.r.t the mean as simple
+    <i>deviations</i> as shown <a href="https://t.ly/dipKw">here</a>.
+    Squaring the differences amplifies the deviation from the mean when
+    we calculate the average as opposed to taking the average of the
+    absolute deviations (i.e. not squaring).
+  </subsection>  
+
+  <subsection><h1>Standard deviation</h1>
+    <code>Standard deviation</code> is just the square of the variance.
+  </subsection>
+</section>
+
+<section id="4"><h1>Z-score</h1>
+  It is the number of standard deviations from the mean.
+  Steps in calculating:
+  <ul>
+    <li>
+      For each number: subtract the mean, i.e. centre the distribution
+      at the mean. This difference will give us each number's deviation
+      from the mean.
+    </li>
+    <li>
+      Given a deviation, to find out how many standard deviations that is,
+      divide it by a single standard deviation.
+    </li>
+    $$
+      zScore = \frac{x-\mu}{\sigma}
+    $$
+    It is similar to mapping 100seconds to the equivalent number of minutes.
+    Since a minute is 60s, we divide 100 by 60 to get the answer. Here,
+    each x-axis division is a standard deviation (denominator). The numerator
+    is the deviation from the mean along the x-axis scale.
+    Love the illustration <a href="https://t.ly/KsMH">here</a>.
+    I like the example <a href="https://t.ly/hEXC">here</a>.
+  </ul>
+</section>
+
+<section id="5"><h1>Normalisation</h1>
+  Different types of normalisation and when to use each: 
+  <a href="https://t.ly/PN_i">Ref</a>.
+
+  <p>
+    The relative frequency of events may not be in the range of 0 to 1. 
+    But we can make the relative frequency sum to one by normalizing - dividing the 
+    probability of each event by the sum of probabilities of all the events.
+    A probability is normalized when the probabilities sum to 1.0.
+    Any mathematically correct distribution must be normalized, but un-normalized 
+    distributions can also be useful if we just want to compare relative probabilities.
+  </p>
+</section>
+
+<section id="6"><h1>Random variable</h1>
+  A <code>random variable</code> has more than one possible values. When
+  actually measured, the variable will take one of these values at random, each with a
+  certain probability. For example, the side on which a coin lands is a random variable with
+  two possible values: heads and tails, each with a probability of 0.5.
+  It takes on integer values to represent an event if the event's name 
+  is in string format
+
+  <p>
+    A <code>deterministic variable</code> is a variable with only one possible fixed 
+    value at any given time. For example, a person's age is a deterministic variable.
+  </p>
+</section>
+
+<section id="7"><h1>Probability mass function</h1>
+  A probability distribution divides the whole probability mass (equal to 1) of a
+  random variable and distributes it across its possible outcomes, the 
+  variable's sample space. When the outcomes are discrete, the 
+  probability distribution function is called a <code>probability mass function</code>.
+
+  <p>
+    A <code>probability distribution</code> is a list of events with their 
+    associated probabilities. It can be written as a function that maps from the 
+    outcomes to their corresponding probabilities. One can look at a distribution and ask, 
+    what is the most likely event?
+  </p>
+</section>
+
+<section id="8"><h1>Definitions related to probability</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Term</th>
+      <th>Definition</th>
+    </tr>
+    <tr>
+      <td>Event or outcome</td>
+      <td>Something that could happen</td>
+    </tr>
+    <tr>
+      <td>Sample space</td>
+      <td>List of events</td>
+    </tr>
+    <tr>
+      <td>Discrete sample space</td>
+      <td>Discrete set of events or possible outcomes</td>
+    </tr>
+    <tr>
+      <td>Probability</td>
+      <td>Relative likelihood or relative frequency of an event occurring</td>
+    </tr>
+    <tr>
+      <td>Normalised PD</td>
+      <td>A PD in which all the probabilities sum to 1</td>
+    </tr>
+    <tr>
+      <td>Probability of 0</td>
+      <td>The event is guaranteed to not happen</td>
+    </tr>
+    <tr>
+      <td>Probability of 1</td>
+      <td>The event is certain to happen</td>
+    </tr>
+    <tr>
+      <td>Conditional probability</td>
+      <td>
+        The probability of some event given that some other event already 
+        occurred. We use the PMF to find this
+      </td>
+    </tr>
+  </table>
+  $$
+    P(of\, a\, particular\, event) = 
+    \frac{Frequency\, of\, the\, particular\, event\, occurring}
+    {Total\, number\, of\, events}
+  $$
+</section>
+
+<section id="9"><h1>Notation</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Notation</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>$X$</td>
+      <td>List of random variables representing events</td>
+    </tr>
+    <tr>
+      <td>$X_i$</td>
+      <td>Random variable representing the ith event</td>
+    </tr>
+    <tr>
+      <td>$P(X)$</td>
+      <td>List of probabilities associated with the list of events</td>
+    </tr>
+    <tr>
+      <td>$P(X_i)$</td>
+      <td>Probability of the ith event</td>
+    </tr>
+  </table>
 </section>
 
 <section id="10"><h1>Musings</h1>
-  <ul>
-    <li>
-      In the standard deviation formula, if $\frac{1}{N}$ was outside
-      the square root, that would have made sense, because it would be 
-      the average of the squared deviations.
-    </li>
-    <br><br>
-    
-    <li>Why are there multiple formulae for variance</li>
-    <a href="https://t.ly/-5LN">Ref1</a>,
-    <a href="https://t.ly/fKH7">Ref2</a>.
-    <br><br>
-    
-    <li>Explain what a random variable is</li>
+  <ul>  
     <li>
       I want to see a real life usage of variance to understand
       how spread out the samples are from the mean.
