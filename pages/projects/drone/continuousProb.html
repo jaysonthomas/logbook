@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Continuous Probability</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Intro</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Intro</h1>
+  An example of a continuous samples space is the real value position of a satellite?
+  Random variables become extremely powerful in this case.
+  Using real numbers to index the members of a continuous set is fairly intuitive.
+
+  <p>
+    Since we are dealing with a continuous sample space,
+    we can no longer say anything about the probability
+    that our vehicle is at some specific or exact location,
+    because for a continuous sample space,
+    the probability of any particular value will always be zero.
+    We can only give the probability that our vehicle is in some region.
+  </p>
+
+  <subsection><h1>Cumulative distribution function</h1>
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../figures/drone/8_cdf.png"/>
+      <figcaption>
+        CDF
+      </figcaption>
+    </figure>
+    
+    $$
+      F_x(u) = p(x \leq u)
+    $$
+
+    The function describes the probability that a random variable $x$ is less than or equal
+    to $u$. 
+    
+    <p>
+      A <code>limit</code> is a value toward which an expression converges as one or more 
+      variables approach certain values.
+    </p>
+
+    <p>
+      $F$ will be monotonically increasing.
+      The limit of $F$ as $u$ goes to negative infinity is zero,
+      and the limit as $u$ goes to positive infinity is one.
+      It's important to understand that the index to the function is $u$,
+      but it is sub-scripted by $x$ to indicate which random variable we're characterizing by
+      the probability that the value of that random variable is less than $u$ or not.
+    </p>
+  </subsection>
+  
+  <subsection><h1>Probability density function</h1>
+    $$
+      f_x(u) = \frac{d}{du}F_x(u)
+    $$
+    It's the derivative of a CDF w.r.t. its index.
+
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/drone/9_pdf.png"/>
+      <figcaption>
+        Uniform PDF for the position $x$ of a vehicle
+      </figcaption>
+    </figure>
+
+    <p>
+      Consider this uniform PDF for the position $x$ of a vehicle.
+      It has the value 0.5 between $x$ equals zero and two, and zero everywhere else.
+      The probability that the vehicle is in the region between 0 and 2 is found
+      by calculating the area under the curve which would be $2*0.5$.
+      In fact, the probability that a random variable will take a value between x1 and x2,
+      is given by the integral of the probability density function from x1 to x2.
+
+      $$
+        p(x_1 < x < x_2) = \int^{x_2}_{x_1}f_x(x)dx
+      $$
+    </p>
+  </subsection>
+
+  This lowercase f of x isn't the probability,
+  and it can easily be greater than one.
+  But we do often write this density function as p of x.
+  This changes our notion of what it means to be a proper distribution.
+  To be a proper density,
+  lowercase f sub x of u has to be greater than or equal to zero,
+  and the integral under the distribution has to be equal to one.
+  Normalization implies finding a constant multiplier in
+  front of this density function to make it integrate to one.
+</section>
+
+</chapter>
+</body>
+</html>
+
