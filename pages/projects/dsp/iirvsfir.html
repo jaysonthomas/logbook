@@ -48,12 +48,34 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 0"><h1>DSP</h1>
+<chapter style="counter-reset: chapter 0"><h1>IIR vs FIR</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="bootstrap.html">Bootstrap</a></li>
-    <li><a href="iirvsfir.html">IIR vs FIR</a></li>
+    <li><a href="#10">Musings</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>IIR vs FIR</h1>
+  IIR is called infinite because the current filter's output depends on both
+  the current input value and the previous output value(s) (just 1 or a group).
+  The previous output value(s) depends on past inputs and outputs which can be
+  traced back to the 1st input value.
+
+  <p>
+    FIR is finite because it only depends on the weighted value of the current
+    input. <a href="https://t.ly/ocxu">Good ref</a>.
+  </p>
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+    <li>Good references</li>
+    <a href="https://t.ly/oILp">Ref1</a> - z transform, 
+    discretisation (bilinear transfrom), I think.
+    <br>
+    <a href="https://t.ly/GO65">Ref2</a>.
+    <a href="https://t.ly/q7Uk">Ref3</a>.
   </ul>
 </section>
 
