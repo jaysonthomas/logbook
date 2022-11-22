@@ -48,25 +48,72 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 0"><h1>Fundamentals</h1>
+<chapter style="counter-reset: chapter 0"><h1>Derivative filter</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="#2">Quick physics questions</a></li>
-    <li><a href="svd.html">SVD</a></li>
-    <li><a href="rbd.html">Rigid body dynamics</a></li>
-    <li><a href="friction.html">Friction</a></li>
-    <li><a href="slip.html">Tyre slip</a></li>
-    <li><a href="derivativeFilter.html">Derivative filter</a></li>
+    <li><a href="#1">Tyre slip</a></li>
+    <li><a href="#10">Musings</a></li>
   </ul>
 </section>
 
-<section id="2"><h1>Quick physics questions</h1>
-  Why every body (no matter the mass) falls down with $g$ acceleration: 
-  <a href="https://t.ly/F3JP">ref</a>.
+<section id="1"><h1>The problem</h1>
+  The derivative term contribution to the total torque applied to the motor:
+  $$\displaylines{
+    D_{cur} = \frac{(K_d*\Delta_{e}) + (t_{decay}*D_{prev})}
+                    {t_{decay} + T}
+            = (K*\Delta_{e}) + \frac{D_{prev}}{1+\frac{T}{t_{decay}}}\\
+            = (K*\Delta_{e}) + \frac{D_{prev}}{T_f}
+
+  }$$
+  
+  $K$ : $\frac{K_d}{t_{decay} + T}$
+  <br>
+  $T_f$ (filter time?) : $1+\frac{T}{t_{decay}}$
+  <br>
+  $T$ : loop period
+  <br>
+  $\Delta_{e}$ : $e_{cur} - e_{prev}$
+  <br>
+  $e$ : $pos_{target} - pos_{measured}$
+  <br><br>
+
+  Expanding this to get the values in time instant 0, 1, 2: 
+  $$\displaylines{
+    D_0 = K*\Delta_e\\
+    D_1 = (K*\Delta_{e1}) + \frac{K*\Delta_e}
+                                  {1+\frac{T}{t_{decay}}}
+        = K\bigg[\Delta_{e1} + \frac{\Delta_e}
+                        {1+\frac{T}{t_{decay}}}\bigg]\\
+    D_2 = K\bigg[\Delta_{e2} + 
+          \frac{\Delta_{e1}}
+                {1+\frac{T}{t_{decay}}} +
+          \frac{\Delta_e}
+                {(1+\frac{T}{t_{decay}})^2}\bigg]
+  }$$
+  
+  <b>Question</b>: How does $K$ and $\frac{1}{1+\frac{T}{t_{decay}}}$ contribute
+  to the filtering of a signal? What is the intuitive way of seeing it?
 </section>
 
+<section id="2"><h1>Low pass filter</h1>
+  <a href="https://t.ly/Wp8K">Ref</a>.
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+    <li>
+      Create an error signal in the form of a sinusoidal signal with a particular frequency
+      (+ few noise frequencies)
+      and pass it through the 'derivative-filter'.
+    </li>
+    <li>
+      Work backwards from the derivation of a low pass filter.
+    </li>
+  </ul>
+</section>
+
+</chapter>
 </body>
 </html>
 
