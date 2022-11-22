@@ -160,6 +160,28 @@ outputArray = np.vstack(array1, array2)
 
   # i will contain the indices from 0 to len(freq)-1
 </code></pre>
+
+    <li>Another way of writing a for loop</li>
+    The normal way:
+<pre><code class="python">
+  filteredFreq = np.empty(len(freq))
+
+  for i, f in enumerate(freq):
+    if (fpass-50 < i < fpass+50):
+      if (f > 1):
+        filteredFreq[i] = f
+      else:
+        filteredFreq[i] = 0
+    else:
+      filteredFreq[i] = 0
+</code></pre>
+
+    The condensed form:
+<pre><code class="python">
+  filteredFreq = np.array([f if (fpass-50 < i < fpass+50 and f>1) else 0 for i, f in enumerate(freq)])
+</code></pre>
+    
+
   </ul>
 </section>
 

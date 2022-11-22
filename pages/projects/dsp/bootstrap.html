@@ -80,24 +80,32 @@
       If the sampling rate is 2Hz, then $t = [0.5, 1]$ i.e. we will only have 2 samples
       in a second even if the actual frequency of the wave $f$ is much higher.
     </li>
-    <br>
   </ul>
 </section>
 
 <section id="2"><h1>Fourier Transform</h1>
-  A 1000 Hz audio tone in the frequency domain will remain the same no matter how long we look at it. 
-  But in the time domain, we will see the signal moving. The DFT was really slow to run on 
-  computers (back in the 70s), so the <code>Fast Fourier Transform</code> (FFT) was invented.
+  <a href="https://t.ly/kwzo">Ref</a>.
+  
+  <p>
+    A 1000 Hz audio tone in the frequency domain will remain the same no matter how long we look at it. 
+    But in the time domain, we will see the signal moving. The DFT was really slow to run on 
+    computers (back in the 70s), so the <code>Fast Fourier Transform</code> (FFT) was invented.
+  </p>
 
   <p>
     <code>Discrete Fourier Transform</code> is a method to find the frequencies present in a signal.
     The FFT function returns an array of complex numbers that may not make much sense, but 
     the real values tell us the frequencies present. Index 3 of the array will contain
     the frequency part of 3Hz. Likewise, index 56 of the array will contain the frequency part
-    of 56Hz. If there no frequency at a particular index, the value at the particular index
-    will be minuscule (of the order of $e^{-12}$). 
-    <code>Inverse Fourier Transform</code> converts the signal from frequency back to time domain.
+    of 56Hz. If a frequency corresponding to an index does not exist in the signal, 
+    the value at the particular index (of the fft output array) will be minuscule 
+    (of the order of $e^{-12}$). <a href="https://t.ly/S9K4">Code ref</a>.
   </p>
+
+  The highest frequency, <code>Nyquist frequency</code>
+  will be half the sampling frequency. The indices in the fft output array above the
+  Nyquist frequency represent the complext conjugate.
+  <code>Inverse Fourier Transform</code> converts the signal from frequency back to time domain.
 </section>
 
 <section id="10"><h1>Musings</h1>
@@ -108,8 +116,15 @@
       at least see more of a triangle shape instead of the sinusoidal one. Repeat this with a signal
       created using the scipy library.
     </li>
-    <br><br>
+    <br>
+    
     <li>Complex conjugate of FFT. What use does it have?</li>
+    <br>
+
+    <li>
+      In the sine wave <a href="https://t.ly/S9K4">code</a>, even though I set the amplitude to 1,
+      the 1000Hz wave doesn't attain it.
+    </li>
   </ul>
 </section>
 </body>

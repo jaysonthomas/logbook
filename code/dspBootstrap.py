@@ -2,16 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def simpleRemoveNoise(freq, fpass):
-  filteredFreq = np.empty(len(freq))
-
-  for i, f in enumerate(freq):
-    if (fpass-50 < i < fpass+50):
-      if (f < 1):
-        filteredFreq[i] = 0
-    else:
-      filteredFreq[i] = 0
-
-    # filteredFreq = np.array([f if (fpass-50<i)])
+  filteredFreq = np.array([f if (fpass-50 < i < fpass+50 and f>1) else 0 for i, f in enumerate(freq)])
   return filteredFreq
 
 f = 1000
@@ -28,9 +19,10 @@ fftOutput = np.fft.fft(y)
 fftFreq = np.abs(fftOutput)
 
 filteredFreq = simpleRemoveNoise(fftFreq, f)
+recoveredSignal = np.fft.ifft(filteredFreq)
 
 # 1- FFT
-plt.subplot(2,1,1) # subplot(nrows, ncols, plotIndex)
+plt.subplot(3,1,1) # subplot(nrows, ncols, plotIndex)
 # If we are sampling at fs, at most, we can only recreate
 # 0 to fs/2 frequencies. I think the remainder of the plot,
 # fs/2 onwards, is related to the complex conjugate.
@@ -38,10 +30,17 @@ plt.xlim(0, f+20)
 plt.xlabel('Time (s)')
 plt.ylabel('Amplitude')
 # plt.plot(t[:5000], y[:5000])
-plt.plot(filteredFreq)
+plt.plot(fftFreq)
 
-# 2 - signal
-plt.subplot(2,1,2)
+# 2 - Original signal
+plt.subplot(3,1,2)
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.plot(t[:5000], y[:5000])
+
+# 3 - Recovered signal
+y = recoveredSignal
+plt.subplot(3,1,3)
 plt.xlabel('Time (s)')
 plt.ylabel('Amplitude')
 plt.plot(t[:5000], y[:5000])
