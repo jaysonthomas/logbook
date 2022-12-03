@@ -61,53 +61,48 @@
 </section>
 
 <section id="1"><h1>Example</h1>
-  Let's think about whether a vehicle is working or not working:
-  <figure>
-    <img style="height:200px; width:auto"
-    src="../../../figures/drone/7_probExample.png"/>
-    <figcaption>
-      Example of probability
-    </figcaption>
-  </figure>
+  We are running tests to see if a bot comes to a stop at exactly the right point 
+  when it is asked to stop. We run the test a 1000 times. At the end of each test we
+  measure its position w.r.t. the target. The results are as shown 
+  <a href="https://t.ly/3nOj">here</a>.
 
   $$
-    P(working) = 
-    \frac{Frequency\, of\, working}
-    {Total\, number\, of\, events} = \frac{9}{9+1} = 0.9
+    P(Bot\, stops\, 1mm\, from\, target) = 
+    \frac{Frequency\, of\, particular\, event}
+    {Total\, number\, of\, events} = \frac{900}{1000} = 0.9
   $$
-  Because this is a discrete sample space, we can write it in the form of a table.
+
+  Random variable, $X$, represents the event, i.e. the error in the final position.
+  <br>
+  Example, $x_2 = 2000$, $P(X=x_2) = 50$.
 </section>
 
 <section id="2"><h1>Expected value</h1>
-  It is often referred to as the expectation, the mean, the average, or the first moment.
-  The <code>expected value</code> is, on any given draw from a distribution,
-  is the value we would expect to get?
-  Not the most likely, but the average value that we'd expect to
-  get if we were to continue drawing from this distribution over and over again.
+  It is not the most likely, but the average value that we'd expect to
+  get if we were to continue drawing from a distribution over and over again.
   It gives the long-run average value of a repeated probabilistic experiment.
   $$
     E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
   $$
-  It's the integer value of the random variable, times the likelihood of each of 
-  those outcomes all summed together. 
+  It's the value of the random variable, times the likelihood of each of 
+  those outcomes all summed together. When the probability of each event is
+  $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
 
   <p>
     The expected value of a random variable, where the underlying events are truly 
-    non-numeric quantities such as working or not working, may not be useful. 
-    In the above example, if we compute the expected value of that variable X, it's going 
-    to be equal to 0.15. What that means is really unclear. 
+    non-numeric quantities such as working or not working, may not be useful because
+    the values assigned to the random variables don't make much sense.
+    But in the example above, where the underlying events (final position of the bot)
+    are numeric events, the expected value tells us something about
+    what we might expect to see at any given time. 
   </p>
-
-  But imagine our sample space is actually a numeric quantity, such as the number of 
-  GPS satellites that a flying car can see or the birds that we can spot at any given
-  time. <a href="https://t.ly/CUyG">Ref</a>. The expected value tells us something about
-  what we might expect to see at any given time.
 </section>
 
 <section id="3"><h1>Variance</h1>
   When we are drawing from a distribution over and over again, 
   the <code>variance</code> tells us how spread out the numbers or
-  samples (the values being drawn) will be from the mean(the expected value).
+  samples (the values being drawn) will be from the mean(the expected value need not be
+  equal to the mean).
   People sometimes use the variance as a measure of how well we know the mean,
   something like a confidence. It's important to understand it isn't that,
   but it will tell us how much the samples vary.
@@ -120,22 +115,22 @@
   Another good <a href="https://t.ly/-5LN">reference</a>. 
   <a href="https://t.ly/jWCR">Code example</a>.
 
-  <subsection><h1>Special case of variance</h1>
+  <p>
     When the probability of every outcome $P(x_i)$ is $1/N$, the variance 
     is just the average of the squared differences from the mean.
 
     $$
       \sigma^2 = \sum_{i=1}^{N}\frac{(x_i-\mu)^2}{N}
     $$
-  </subsection>
+  </p>
   
   <subsection><h1>Equation deepdive</h1>
     Subtracting the mean makes the mean the zero point. It is a shift
     operation. We can now represent everything w.r.t the mean as simple
     <i>deviations</i> as shown <a href="https://t.ly/dipKw">here</a>.
-    Squaring the differences amplifies the deviation from the mean when
-    we calculate the average as opposed to taking the average of the
-    absolute deviations (i.e. not squaring).
+    Squaring the deviations as opposed to taking the raw or absolute values 
+    (i.e. not squaring), helps to amplify the deviations of samples from the 
+    mean which is helpful when comparing the variances of 2 different distributions.
   </subsection>  
 
   <subsection><h1>Standard deviation</h1>
