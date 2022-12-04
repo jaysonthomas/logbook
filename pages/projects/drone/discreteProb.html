@@ -77,7 +77,21 @@
   Example, $x_2 = 2000$, $P(X=x_2) = 50$.
 </section>
 
-<section id="2"><h1>Expected value</h1>
+<section id="2"><h1>Random variable</h1>
+  A <code>random variable</code> has more than one possible values. When
+  actually measured, the variable will take one of these values at random, each with a
+  certain probability. For example, the side on which a coin lands is a random variable with
+  two possible values: heads and tails, each with a probability of 0.5.
+  It takes on integer values to represent an event if the event's name 
+  is in string format
+
+  <p>
+    A <code>deterministic variable</code> is a variable with only one possible fixed 
+    value at any given time. For example, a person's age is a deterministic variable.
+  </p>
+</section>
+
+<section id="3"><h1>Expected value</h1>
   It is not the most likely, but the average value that we'd expect to
   get if we were to continue drawing from a distribution over and over again.
   It gives the long-run average value of a repeated probabilistic experiment.
@@ -98,7 +112,7 @@
   </p>
 </section>
 
-<section id="3"><h1>Variance</h1>
+<section id="4"><h1>Variance</h1>
   When we are drawing from a distribution over and over again, 
   the <code>variance</code> tells us how spread out the numbers or
   samples (the values being drawn) will be from the mean(the expected value need not be
@@ -116,7 +130,7 @@
   <a href="https://t.ly/jWCR">Code example</a>.
 
   <p>
-    When the probability of every outcome $P(x_i)$ is $1/N$, the variance 
+    When the probability of every outcome $P(x_i)$ is $\frac{1}{N}$, the variance 
     is just the average of the squared differences from the mean.
 
     $$
@@ -134,11 +148,11 @@
   </subsection>  
 
   <subsection><h1>Standard deviation</h1>
-    <code>Standard deviation</code> is just the square of the variance.
+    <code>Standard deviation</code> is the square root of variance.
   </subsection>
 </section>
 
-<section id="4"><h1>Z-score</h1>
+<section id="5"><h1>Z-score</h1>
   It is the number of standard deviations from the mean.
   Steps in calculating:
   <ul>
@@ -163,7 +177,7 @@
   </ul>
 </section>
 
-<section id="5"><h1>Normalisation</h1>
+<section id="6"><h1>Normalisation</h1>
   Different types of normalisation and when to use each: 
   <a href="https://t.ly/PN_i">Ref</a>.
 
@@ -177,21 +191,11 @@
   </p>
 </section>
 
-<section id="6"><h1>Random variable</h1>
-  A <code>random variable</code> has more than one possible values. When
-  actually measured, the variable will take one of these values at random, each with a
-  certain probability. For example, the side on which a coin lands is a random variable with
-  two possible values: heads and tails, each with a probability of 0.5.
-  It takes on integer values to represent an event if the event's name 
-  is in string format
-
-  <p>
-    A <code>deterministic variable</code> is a variable with only one possible fixed 
-    value at any given time. For example, a person's age is a deterministic variable.
-  </p>
-</section>
-
 <section id="7"><h1>Probability mass function</h1>
+  <code>Mass</code> is the quantity of matter in a physical body. It is also a measure of the 
+  body's inertia, the resistance to acceleration when a net force is applied. Example uses:
+  a mass of cyclists, the film has mass appeal.
+  
   A probability distribution divides the whole probability mass (equal to 1) of a
   random variable and distributes it across its possible outcomes, the 
   variable's sample space. When the outcomes are discrete, the 
@@ -252,31 +256,6 @@
     \frac{Frequency\, of\, the\, particular\, event\, occurring}
     {Total\, number\, of\, events}
   $$
-</section>
-
-<section id="9"><h1>Notation</h1>
-  <table class="table1 center">
-    <tr>
-      <th>Notation</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>$X$</td>
-      <td>List of random variables representing events</td>
-    </tr>
-    <tr>
-      <td>$X_i$</td>
-      <td>Random variable representing the ith event</td>
-    </tr>
-    <tr>
-      <td>$P(X)$</td>
-      <td>List of probabilities associated with the list of events</td>
-    </tr>
-    <tr>
-      <td>$P(X_i)$</td>
-      <td>Probability of the ith event</td>
-    </tr>
-  </table>
 </section>
 
 <section id="10"><h1>Musings</h1>
