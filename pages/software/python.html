@@ -57,6 +57,8 @@
     <li><a href="#3">Pandas</a></li>
     <li><a href="#4">Numpy</a></li>
     <li><a href="#5">General</a></li>
+
+    <li><a href="#10">Musings</a></li>
   </ul>
 </section>
 
@@ -139,6 +141,16 @@ outputArray = np.vstack(array1, array2)
   # the array turns into a (2xn) array. We have to then transpose it to get
   # to a column major form.
 </code></pre>    
+    <br>
+    
+    <li>Pandas datetime properties</li>
+    <a href="https://t.ly/5Mvv">This</a> seems useful.
+
+    <li>Find all rows of a particular column that are nans</li>
+<pre><code class="python">
+  df = df['colName']
+  df[pd.isna(df)].index
+</code></pre>    
   </ul>
 </section>
 
@@ -180,8 +192,6 @@ outputArray = np.vstack(array1, array2)
 <pre><code class="python">
   filteredFreq = np.array([f if (fpass-50 < i < fpass+50 and f>1) else 0 for i, f in enumerate(freq)])
 </code></pre>
-    
-
   </ul>
 </section>
 
