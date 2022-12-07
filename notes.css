@@ -53,59 +53,80 @@
 }
 /* End of side bar */
 
-/* Start of right side bar*/
-/* The side navigation menu */
-.sidenavR {
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  right: 0;
-  background-color: #111; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+/* Collapsible section */
+.collapsible {
+  background-color: rgb(57, 57, 57);
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  width: 640px;
+  border: none;
+  text-align: justify;
+  outline: none;
+  font-size: 15px;
 }
 
-/* The navigation menu links */
-.sidenavR a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
+.active, .collapsible:hover {
+  background-color: #555;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenavR a:hover {
-  color: #f1f1f1;
+.content {
+  display: none;
+  overflow: hidden;
+}
+/* End of collapsible section */
+
+/* Collapsible accordion */
+button.accordion {
+  background-color: rgb(57, 57, 57);
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  width: 640px;
+  border: none;
+  text-align: justify;
+  outline: none;
+  font-size: 15px;
 }
 
-/* Position and style the close button (top right corner) */
-.sidenavR .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+/* Hover behaviour */
+button.accordion.active, button.accordion:hover {
+  background-color: #555;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-  transition: margin-left .5s;
-  padding: 20px;
+/* Somehow this puts the plus sign at the end. */
+button.accordion:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidenavR {padding-top: 15px;}
-  .sidenavR a {font-size: 18px;}
+/*
+  If I put background colour in here, it changes the background
+  colour of the plus sign. Perhaps, this changes the plus to a 
+  minus when expanded.
+*/
+button.accordion.active:after {
+  content: "\2212";
 }
-/*End of right side bar*/
 
- body {
+/* 
+  Changes properties of the drop down like its background colour.
+  But for some reason the changes are only seen when not in dark mode.
+*/
+div.panel {
+  padding: 0 5px;
+  background-color: #f1f1f1;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  color:black;
+}
+/* End of collapsible accordion */
+
+body {
   background: white;
   background-color: white;
   width: 640px;
