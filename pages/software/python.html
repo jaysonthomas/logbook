@@ -195,10 +195,57 @@ outputArray = np.vstack(array1, array2)
   </ul>
 </section>
 
+<section id="6"><h1>Regular expressions</h1>
+  <ul>
+    <li>Substitute</li>
+<pre><code class="python">
+line = ',{"test":"2022-11-07T14:55:14","source":"water","test2":{ "type": "success"}'
+temp = re.sub(pattern=r'^.*{ "type"', repl='{"type"', string=line)
+
+Output: {"type": "success"}
+</code></pre>
+<code>^</code> - from the start of the string.
+<br>
+<code>.*</code> - match all characters except newline as many times as possible.
+    <br><br>
+
+    <li>Search</li>
+<pre><code class="python">
+line = ',{"test":"2022-11-07T14:55:14","source":"water","test2":{ "type": "success"}'
+ts = re.search(r'{(.*?),"source"', line).group(1)
+
+Output: "test":"2022-11-07T14:55:14"
+</code></pre>
+The starting '{' is just to indicate where we want to begin the search from.
+<br>
+<code>group(0)</code> - contains the string considered for the search.
+<br>
+<code>group(1)</code> is the portion represented in between the brackets using wildcards.
+    <br><br>
+
+    <li>Pick the last word after a given pattern is found</li>
+<pre><code class="python">
+line = 'Blah AS type'
+temp = re.search(r'^.*AS (\w*)', line, flags=re.IGNORECASE)
+if temp != None:
+  temp = temp.group(1)
+
+Output: type
+</code></pre>
+<code>\w</code> - returns a character. The asterisk picks the repetition of characters. No specific characters
+mentioned here.
+<br>
+With <code>IGNORECASE</code>, 'AS' can be lower or uppercase.
+  </ul>  
+</section>
+
 <section id="10"><h1>Musings</h1>
   <ul>
     <li>What does <code>enumerate</code> in a for loop do?</li>
     <a href="https://t.ly/txYV">Ref</a>.
+    <br><br>
+
+    <li>','.join(list), list.extend(['a','b']), list.copy()</li>
   </ul>
 </section>
 
