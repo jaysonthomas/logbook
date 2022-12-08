@@ -80,33 +80,31 @@
   <equation><h1>Lagrangian formulation</h1>
     $$
       L(\theta, \dot{\theta}) = 
-      \underbrace{K(\theta, \dot{\theta})}_
-      {\substack{\text{Kinetic} \\\\\\ \text{energy}}} - 
-      
-      \underbrace{P(\theta)}_
-      {\substack{\text{Potential} \\\\\\ \text{energy}}}
+      \sum_{i=1}^n(K_i(\theta, \dot{\theta}) - P_i(\theta))
     $$
     The potential energy only depends on the configuration $\theta$.
+    For a manipulator, the Lagrangian is the sum of the kinetic energies 
+    minus the potential energies of the links. A link has a motor on 1 end 
+    and a mass on the other.
     
-    <p>
-      We won't derive the Lagrangian equations of motion, which can be found in many 
-      textbooks on mechanics. We'll just state the result: the vector of joint forces and torques $\tau$
-      is equal to the time derivative of the partial derivative of the Lagrangian $L$ w.r.t. 
-      $\dot{\theta}$ minus the partial derivative of $L$ w.r.t. $\theta$.
-      
-      $$
-        \tau = \frac{d}{dt}\frac{\partial{L}}{\partial{\dot{\theta}}} - 
-        \frac{\partial{L}}{\partial{\theta}}
-      $$
-      
-      Vector equation in its components form:
-      $$
-        \tau_i = \frac{d}{dt}\frac{\partial{L}}{\partial{\dot{\theta_i}}} - 
-        \frac{\partial{L}}{\partial{\theta_i}}
-      $$
+    <p></p>
+    We won't derive the Lagrangian equations of motion, which can be found in many 
+    textbooks on mechanics. We'll just state the result: the vector of joint forces and 
+    torques $\tau$ of each joint 
+    is equal to the time derivative of the partial derivative of the Lagrangian $L$ w.r.t. 
+    $\dot{\theta}$ minus the partial derivative of $L$ w.r.t. $\theta$. In other words,
+    we can express the joint torques in terms of the derivatives of the Lagrangian. 
+    
+    $$
+      \tau_i = \frac{d}{dt}\frac{\partial{L}}{\partial{\dot{\theta_i}}} - 
+      \frac{\partial{L}}{\partial{\theta_i}}
+    $$
 
-      Power consumed or produced by joints $= \tau \cdot \dot{\theta}$
-    </p>
+    $i = 1,..,n$. 
+    <br>
+    $n$ is the total number of links.
+    <br>
+    Power consumed or produced by joints $= \tau \cdot \dot{\theta}$
   </equation>
 </section>
 
