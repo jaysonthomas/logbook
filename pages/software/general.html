@@ -55,6 +55,7 @@
     <li><a href="#1">Mathjax</a></li>
     <li><a href="#2">Software downloads</a></li>
     <li><a href="#3">Latex</a></li>
+    <li><a href="#4">Json</a></li>
     <li><a href="#6">Webpage</a></li>
     <li><a href="#7">Drawio</a></li>
     <li><a href="#8">Git</a></li>
@@ -161,8 +162,26 @@ sudo apt-get install python3.8
 <section id="3"><h1>Latex</h1>
   <subsection><h1>Good examples</h1>
     Modern robotics library document. I've placed it in my 
-    <a href="t.ly/sbeF">github repo</a> for the coursea assignment I completed.
+    <a href="t.ly/sbeF">github repo</a> for the coursera assignment I completed.
   </subsection>
+</section>
+
+<section id="4"><h1>Json</h1>
+  <a href="https://t.ly/i-y4">This</a> shows the general format.
+  I used it as:
+<pre><code class="json">
+  [
+    {"id":"44", "name":"Test"},
+    {"id":"55", "name":"Test1"}
+  ]
+</code></pre>
+
+To convert this into a dataframe:
+<pre><code class="python">
+  with open(inputFile, "r") as reader:
+    df = pd.DataFrame(json.loads(reader))
+</code></pre>
+Use <code>json.load()</code> to read a json file.
 </section>
 
 <section id="6"><h1>Webpage</h1>

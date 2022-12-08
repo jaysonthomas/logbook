@@ -57,7 +57,9 @@
     <li><a href="#3">Pandas</a></li>
     <li><a href="#4">Numpy</a></li>
     <li><a href="#5">General</a></li>
-
+    <li><a href="#6">Regular expressions</a></li>
+    <li><a href="#7">Lambda</a></li>
+    <li><a href="#8">Dictionary</a></li>
     <li><a href="#10">Musings</a></li>
   </ul>
 </section>
@@ -141,16 +143,20 @@ outputArray = np.vstack(array1, array2)
   # the array turns into a (2xn) array. We have to then transpose it to get
   # to a column major form.
 </code></pre>    
-    <br>
+    <p></p>
     
     <li>Pandas datetime properties</li>
     <a href="https://t.ly/5Mvv">This</a> seems useful.
+    <p></p>
 
     <li>Find all rows of a particular column that are nans</li>
 <pre><code class="python">
   df = df['colName']
   df[pd.isna(df)].index
-</code></pre>    
+</code></pre>
+
+    <li>Appending to a dataframe is expensive</li>
+    Use lists instead - <a href="https://bit.ly/3Fg5Ve3">Ref</a>.
   </ul>
 </section>
 
@@ -204,9 +210,9 @@ temp = re.sub(pattern=r'^.*{ "type"', repl='{"type"', string=line)
 
 Output: {"type": "success"}
 </code></pre>
-<code>^</code> - from the start of the string.
-<br>
-<code>.*</code> - match all characters except newline as many times as possible.
+    <code>^</code> - from the start of the string.
+    <br>
+    <code>.*</code> - match all characters except newline as many times as possible.
     <br><br>
 
     <li>Search</li>
@@ -216,11 +222,15 @@ ts = re.search(r'{(.*?),"source"', line).group(1)
 
 Output: "test":"2022-11-07T14:55:14"
 </code></pre>
-The starting '{' is just to indicate where we want to begin the search from.
-<br>
-<code>group(0)</code> - contains the string considered for the search.
-<br>
-<code>group(1)</code> is the portion represented in between the brackets using wildcards.
+    The starting '{' is just to indicate where we want to begin the search from.
+    <br>
+    <code>group(0)</code> - contains the string considered for the search.
+    <br>
+    <code>group(1)</code> is the portion represented in between the brackets using wildcards.
+    <br>
+    <code>(.*?)</code> - The <code>?</code> restricts the output to just the characters 
+    in the same position as the wildcards between the brackets. Otherwise, it will output the string
+    within the brackets as well as the remainder of the string.
     <br><br>
 
     <li>Pick the last word after a given pattern is found</li>
@@ -232,11 +242,86 @@ if temp != None:
 
 Output: type
 </code></pre>
-<code>\w</code> - returns a character. The asterisk picks the repetition of characters. No specific characters
-mentioned here.
-<br>
-With <code>IGNORECASE</code>, 'AS' can be lower or uppercase.
+    <code>\w</code> - returns a character. The asterisk picks the repetition of characters. No specific characters
+    mentioned here.
+    <br>
+    With <code>IGNORECASE</code>, 'AS' can be lower or uppercase.
   </ul>  
+</section>
+
+<section id="7"><h1>Lambda</h1>
+  <ul>
+    <li>Sorting</li>
+<pre><code class="python">
+  sorted(input, key=lambda item: item[1]) 
+</code></pre>    
+    
+    <code>input</code> is a list of tuples. <code>Tuples</code> are used to 
+    store multiple items in a single variable.
+    An example:
+<pre><code class="python">
+  Example for input:
+  [
+    ('test1', 1),
+    ('test2', 2)
+  ]
+</code></pre>   
+    More info on <code>sorted</code>, how it uses a key to decide the sorting
+    order - <a href="https://t.ly/E1z-">Ref</a>. Nice to see how a function can 
+    also be a key which leads well into a discussion on lambdas.
+
+    <p>
+      <code>Lambda</code> signifies an anonymous function. Here, it takes as input 
+      (<code>item</code>) each tuple from the list of tuples and returns the 
+      2nd element of each tuple. Some info on lambdas is
+      <a href="https://t.ly/xnN7">here</a>. Here, <code>sorted()</code>
+      breaks the list of tuples down into individual tuples and passes each one
+      to the lambda function to retrieve the key for sorting.
+    </p>
+  </ul>
+</section>
+
+<section id="8"><h1>Dictionary</h1>
+  <ul>
+    <li>.items()</li>
+<pre><code class="python">
+  a = {'t1':0, 't2':1, 't3':2}
+  print(a.items())
+  for i in a.items():
+    print(i)
+
+  Output:
+  dict_items([('t1', 0), ('t2', 1), ('t3', 2)])
+  ('t1', 0)
+  ('t2', 1)
+  ('t3', 2)
+</code></pre>    
+    <code>.items()</code> splits a dictionary into a list of (key,value) tuples that
+    we can iterate over.
+    <p></p>
+
+    <li>groupby and groups</li>
+<pre><code class="python">
+  df.groupby('columnName').groups
+</code></pre>    
+    This returns each unique row entry in the specific column as a dictionary with 
+    the 'row field name' as the key and the 'indices of occurrences' as the value.
+
+<pre><code class="python">
+  df.groupby('columnName').groups.items()
+</code></pre>    
+    This returns a list of tuples where each tuple is a pair containing 
+    (unique field name, list of indices of occurrences). We can now iterate
+    over this.
+
+<pre><code class="python">
+  pd.DataFrame([[ev, index.values] for ev, index in df.groupby('eventType').groups.items()],\
+                columns=['eventType', 'indices'])
+</code></pre>
+    'index' is a list of indices of occurrences of the particular row-event. But 
+    it is of type <code>'pandas.core.indexes.numeric.Int64Index'</code> which is 
+    converted to <code>numpy.ndarray</code> so we can use it as a list of ints.
+  </ul>
 </section>
 
 <section id="10"><h1>Musings</h1>
