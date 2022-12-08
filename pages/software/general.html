@@ -97,6 +97,12 @@
 
     <li>Spaces in equations</li>
     <a href="https://t.ly/M3Q4">Ref</a>.
+    <br><br>
+
+    <li>Underbrace</li>
+    $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
+    <code>\underbrace{</code>The part of the equation to be labelled
+      <code>}_{\text{</code>The label<code>}}</code>
   </ul>
 </section>
 
@@ -176,9 +182,27 @@ Linking to the equation from elsewhere.
       To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
       <br><br>
 
-      <li>Using an underbrace in an equation</li>
-      <code>\underbrace{</code>The part of the equation to be labelled
-      <code>}_{\text{</code>The label<code>}}</code>
+      <li>Creating block diagrams in a page</li>
+      <figure>
+        <div style="padding: 10px;">
+          <script type="text/javascript">
+          var system = { "name": "PidController", 
+            "input_ports" : ["estimated_state", "desired_state"],
+            "output_ports" : ["generalized_force"]
+            };
+          document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_pid_controller.html"));
+          </script> 
+        </div>
+        <div style="padding: 10px;">
+          <script type="text/javascript">
+            var system = { "name": "InverseDynamicsController", 
+              "input_ports" : ["estimated_state", "desired_state", '<span style="color:gray">desired_acceleration</span>'],
+              "output_ports" : ["generalized_force"]
+              };
+            document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_inverse_dynamics_controller.html"));
+          </script>
+        </div>
+      </figure>
     </ul>
 
   </subsection>

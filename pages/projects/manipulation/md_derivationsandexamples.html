@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ch. 1 - Introduction</title>
+  <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+  <script type="text/javascript" src="../../../chapters.js"></script>
+  <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+  <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+  <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+  <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+</head>
+
+<body onload="loadChapter('manipulation');">
+
+<!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+      </script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Manipulator dynamics</h1></chapter>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+    <li><a href="md_derivationsandexamples.html">Derivations and examples</a></li>
+  </ul>
+</section>
+  
+<section id="1"><h1>Lagrangian formulation of dynamics</h1>
+  <subsection><h1>$m_1$</h1>
+    Angular position and velocity of joint 1 can be broken down into linear 
+    position and velocity in the 2 axis of the end-point of link 1 i.e.
+    $m_1$. This is same as the linear position and velocity of joint 2
+    since joint 2 forms part of $m_1$. 
+    The linear position and velocity of joint1 is 0 since it is fixed
+    in place.
+      
+    <p>
+      Linear position of $m_1$:
+      $
+        \begin{bmatrix}x_1 \\ y_1\end{bmatrix} =
+        \begin{bmatrix}L_1cos\theta_1 \\ L_1sin\theta_1\end{bmatrix}
+      $
+      <br><br>
+      
+      Linear velocity of $m_1$:
+      $
+        \begin{bmatrix}\dot{x}_1 \\ \dot{y}_1\end{bmatrix} =
+        \begin{bmatrix}-L_1sin\theta_1 \\ L_1cos\theta_1\end{bmatrix}\dot{\theta}_1  
+      $
+      <br><br>
+      Kinetic energy of $m_1$:
+      $
+        K_1 = \frac{1}{2}m_1v^2_1 = \frac{1}{2}m_1(\dot{x}_1^2 + \dot{y}_1^2)
+      $
+    </p>
+  </subsection>
+</section>
+
+<section><h1>Test</h1>
+<button type="button" class="collapsible">Open Collapsible</button>
+<div class="content">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<p>
+  Test is here. Something!
+</p>
+<button class="accordion"> "Collapsible"</button>
+<div class="panel" style>
+  <p></p>
+  $
+    \begin{bmatrix}x_1 \\ y_1\end{bmatrix} =
+    \begin{bmatrix}L_1cos\theta_1 \\ L_1sin\theta_1\end{bmatrix}
+  $
+</div>
+
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+    <li>What does it mean to subtract potential energy from kinetic energy?</li>
+  </ul>
+</section>  
+</body>
+<script type="text/javascript" src="../../../test.js"></script>
+</html>
