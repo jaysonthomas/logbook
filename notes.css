@@ -157,6 +157,7 @@ table.table1, table.table1 th, table.table1 td {
 h1,h2,h3,h4,h5,h6 {
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(153,51,51); /* mit red */
+  text-align: left;
 }
 h5:first-line { margin-top: -5px; line-height: 0;}
 a:not(.image) {

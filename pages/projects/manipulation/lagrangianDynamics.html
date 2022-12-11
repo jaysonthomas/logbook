@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ch. 1 - Introduction</title>
+  <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+  <script type="text/javascript" src="../../../chapters.js"></script>
+  <script type="text/javascript" src="../../../notes.js"></script>
+
+  <script src="../../../notes-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  
+  <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+  <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+</head>
+
+<body  onload="loadChapter('manipulation');">
+
+<!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+      </script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Lagrangian dynamics</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+    <li><a href="#2">Calculate kinetic & potential energies of the masses</a></li>
+    <li><a href="#3">Calculate the joint torques using the Lagrangian</a></li>
+    <li><a href="#4">Velocity product terms</a></li>
+    <li><a href="#10">Musings</a></li>
+  </ul>
+</section>
+  
+<section id="1"><h1>Overview</h1>
+  <figure>
+    <img style="height:130px; width:30%"
+    src="../../../figures/manipulation/modernRob/1_2R.png">
+    <figcaption>
+      2R bot with point masses
+    </figcaption>
+  </figure>
+
+  Let's apply the formulation to a 2R robot in gravity. All the mass of the robot is 
+  concentrated in point masses $m_1$ and $m_2$.
+  We need to calculate the kinetic and potential energy of the two-point 
+  masses, so first we calculate the position of $m_1$, given by the coordinates 
+  $x_1$ and $y_1$. 
+</section>
+
+<section id="2"><h1>Calculate kinetic & potential energies of the masses</h1>
+  Consider mass $m_1$ first.
+  <p></p>
+
+  Angular position and velocity of joint 1 can be broken down into linear 
+  position and velocity in the 2 axis of the end-point of link 1 i.e.
+  $m_1$. This is same as the linear position and velocity of joint 2
+  since joint 2 forms part of $m_1$. 
+  The linear position and velocity of joint1 is 0 since it is fixed
+  in place.
+    
+  <p>
+    Linear position of $m_1$:
+    $
+      \begin{bmatrix}x_1 \\ y_1\end{bmatrix} =
+      \begin{bmatrix}L_1cos\theta_1 \\ L_1sin\theta_1\end{bmatrix}
+    $
+    <p></p>
+    
+    Linear velocity of $m_1$:
+    $
+      \begin{bmatrix}\dot{x}_1 \\ \dot{y}_1\end{bmatrix} =
+      \begin{bmatrix}-L_1sin\theta_1 \\ L_1cos\theta_1\end{bmatrix}\dot{\theta}_1  
+    $
+    <p></p>
+    
+    Kinetic energy of $m_1$:
+    $$\begin{gather*}
+      K_1 = \frac{1}{2}m_1v^2_1 = \frac{1}{2}m_1(\dot{x}_1^2 + \dot{y}_1^2)\\
+          = \frac{1}{2}m_1 L^2_1 \dot\theta^2_1
+    \end{gather*}$$
+    <p></p>
+
+    The potential energy of each mass depends only on its height, i.e. its y-coordinate.
+    Potential energy of $m_1$:
+    $$
+      P_1 = m_1gy_1 = m_1gL_1sin\theta_1
+    $$
+  </p>
+
+  <button class="accordion">Mass $m_2$</button>
+  <div class="panel">
+    <p></p>
+    Linear position of $m_2$:
+    $
+      \begin{bmatrix}x_2 \\ y_2\end{bmatrix} =
+      \begin{bmatrix}
+        L_1cos\theta_1 + L_2cos(\theta_1 + \theta_2) 
+        \\ 
+        L_1sin\theta_1 + L_2sin(\theta1 + \theta_2)
+      \end{bmatrix}
+    $
+    <p></p>
+
+    Linear velocity of $m_2$:
+    $
+      \begin{bmatrix}\dot{x}_2 \\ \dot{y}_2\end{bmatrix} =
+      \begin{bmatrix}
+        -L_1sin\theta_1 - L_2sin(\theta_1 + \theta_2)
+        &&
+        -L_2sin(\theta_1+\theta_2) 
+        \\ 
+        L_1cos\theta_1 + L_2cos(\theta1 + \theta_2)
+        &&
+        L_2cos(\theta1 + \theta_2)
+      \end{bmatrix}        
+      \begin{bmatrix}
+        \dot\theta_1 \\
+        \dot\theta_2
+      \end{bmatrix}
+    $
+    <p></p>
+
+    Potential energy of $m_2$:
+    $$
+      P_2 = m_2gy_2 = m_2g(L_1sin\theta_1 + L_2sin(\theta_1+\theta_2))
+    $$
+  </div>
+
+</section>
+
+<section id="3"><h1>Calculate joint torques using the Lagrangian</h1>
+  Using the following equations:
+  $$
+    L(\theta, \dot{\theta}) = 
+    \sum_{i=1}^n(K_i(\theta, \dot{\theta}) - P_i(\theta))
+  $$
+
+  $$
+    \tau_i = \frac{d}{dt}\frac{\partial{L}}{\partial{\dot{\theta_i}}} - 
+    \frac{\partial{L}}{\partial{\theta_i}}
+  $$
+  $i = 1,2$
+
+  <p></p>
+  We arrive at the following general form:
+  (The 'equations of motion' derived using the Lagrangian are complex even for a 
+  simple 2R robot case)
+  <equation>
+    $$
+      \tau =\underbrace{M(\theta)\ddot\theta}
+      _{\text{$n\times n$ mass matrix}} 
+        + \underbrace{c(\theta, \dot\theta)}
+      _{\text{velocity-product term}} 
+        + \underbrace{g(\theta)}
+      _{\text{gravity term}}
+    $$
+    We call the 3rd term a gravity term under the assumption that the potential energy 
+    comes only from gravity, but if there were springs at the robot joints, those springs 
+    would also contribute to the potential energy and therefore to $g(\theta)$.
+    $$
+      \underbrace{\tau}
+      _{\text{F}} 
+      =\underbrace{M(\theta)\ddot\theta + c(\theta, \dot\theta)}
+      _{\text{$ma$}} 
+      + \underbrace{g(\theta)}
+      _{\text{gravity}}
+      + \underbrace{J^T(\theta)F_{tip}}_
+      {\substack{\text{term to create} \\\\ \text{wrench at the hand}}}
+    $$
+    $F_{tip}$ - is the wrench that the end-effector applies to the environment.
+    <p></p>
+    Overall, the equation looks like $f=ma$ plus a gravity force, except that the accelerations 
+    $a$ of the masses $m$ depend not only on the joint accelerations but also products of the 
+    joint velocities. These velocity-product terms appear because the joint coordinates 
+    are not inertial coordinates. 
+  </equation>
+  <button class="accordion">2R joint torques details from $L$</button>
+  <div class="panel">
+    $$\begin{gather*}
+      \tau_1 = (m_1L^2_1 + m_2(L^2_1 + 2L_1L_2cos\theta_2 + L^2_2))\ddot\theta_1 
+      + m_2(L_1L_2cos\theta_2 + L_2^2)\ddot\theta_2 \\
+      - m_2L_1L_2sin\theta_2(2\dot\theta_1\dot\theta_2+\dot\theta_2^2) \\
+      + (m_1+m_2)L_1gcos\theta_1 + m_2gL_2cos(\theta_1 + \theta_2)
+    \end{gather*}$$
+    The equation tells us:
+    <ul>
+      <li>Some terms (line 1) are linear in the joint acceleration $\ddot\theta_i$</li>
+      <li>Some terms (line 2) do not depend on the joint acceleration but instead depend on 
+        a product of joint velocities like 
+        $\dot\theta_i \dot\theta_j$ or $\dot\theta_i^2$</li>
+      <li>Some terms (line 3) have no dependence on the joint velocities or accelerations</li>  
+    </ul>
+    Expansion of the general form in this 2R robot's case:
+    
+    $$
+      \tau = \begin{bmatrix}\tau_1 \\ \tau_2\end{bmatrix} =
+      M(\theta)\ddot\theta + c(\theta,\dot\theta) + g(\theta)
+    $$
+    $
+      M(\theta) = \begin{bmatrix} 
+        m_1L_1^2 + m_2(L_1^2 + 2L_1L_2cos\theta_2 + L_2^2)
+        &
+        m_2(L_1L_2cos\theta_2 + L_2^2)
+        \\
+        m_2(L_1L_2cos\theta_2 + L_2^2)
+        &
+        m_2L_2^2
+      \end{bmatrix}
+    $
+    <p></p>
+    $
+      C(\theta, \dot\theta) = \begin{bmatrix} 
+        -m_2L_1L_2sin\theta_2(2\dot\theta_1\dot\theta_2 + \dot\theta_2^2)
+        \\
+        m_2L_1L_2\dot\theta^2_1sin\theta_2
+      \end{bmatrix}
+    $
+    <p></p>
+    $
+      g(\theta) = \begin{bmatrix} 
+        (m_1 + m_2)L_1gcos\theta_1 + m_2gL_2cos(\theta_1+\theta_2)
+        \\
+        m_2gL_2cos(\theta_1 + \theta_2)
+      \end{bmatrix}
+    $
+  </div>
+</section>
+
+<section id="4"><h1>Velocity product terms</h1>
+  Terms that have the square of a single joint velocity are called 
+  <code>Centripetal terms</code>. Terms that have a product of two different 
+  joint velocities are called <code>Coriolis terms</code>.
+
+  <subsection><h1>Case 1: Assume gravity and joint accelerations are 0</h1>
+    $f=m {\cancel{a}}$
+    $$
+      f_1 = \begin{bmatrix}f_{x_1} \\ f_{y_1} \\ f_{z_1}\end{bmatrix}
+          = m_1 \begin{bmatrix}\ddot{x}_1 \\ \ddot{y}_1 \\ \ddot{z}_1\end{bmatrix}
+          = m_1 \begin{bmatrix}
+            -L_1\dot\theta_1^2c_1 - L_1\ddot\theta_1s_1
+           \\ -L_1\dot\theta_1^2s_1 + L_1\ddot\theta_1c_1
+           \\ 0
+           \end{bmatrix}
+    $$
+    $c_1 = cos\theta_1$, $c_{12} = cos(\theta_1 + \theta_2)$
+  </subsection>
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+    <li>What does it mean to subtract potential energy from kinetic energy?</li>
+    <li>
+      Terms of the manipulator equations, the units on LHS and RHS don't match?
+      Instead of $\tau=F\cdot d$, at least for the mass term it is $F\cdot d^2$.
+      Not sure how the product of the velocities is equivalent to acceleration.
+    </li>
+    <p></p>
+
+    <li>Joint coordinates aren't inertial coordinates</li>
+  </ul>
+</section>  
+
+</chapter>
+</body>
+</html>

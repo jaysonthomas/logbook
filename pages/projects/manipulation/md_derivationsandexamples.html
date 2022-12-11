@@ -46,107 +46,33 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 0"><h1>Manipulator dynamics</h1>
+<chapter style="counter-reset: chapter 0">
+  <h1>Manipulator dynamics derivations and examples</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
-    <li><a href="md_derivationsandexamples.html">Derivations and examples</a></li>
+    <li><a href="lagrangianDynamics.html">Lagrangian formulation of dynamics</a></li>
   </ul>
 </section>
   
-<section id="1"><h1>Lagrangian formulation of dynamics</h1>
-  <subsection><h1>Overview</h1>
-    Let's apply the formulation to a 2R robot in gravity. All the mass of the robot is 
-    concentrated in point masses $m_1$ and $m_2$.
-    We need to calculate the kinetic and potential energy of the two-point 
-    masses, so first we calculate the position of $m_1$, given by the coordinates 
-    $x_1$ and $y_1$. 
-  </subsection>
+<section id="1"><h1>Overview</h1>
+  <figure>
+    <img style="height:130px; width:30%"
+    src="../../../figures/manipulation/modernRob/1_2R.png">
+    <figcaption>
+      2R bot with point masses
+    </figcaption>
+  </figure>
 
-  <subsection><h1>Mass $m_1$</h1>
-    Angular position and velocity of joint 1 can be broken down into linear 
-    position and velocity in the 2 axis of the end-point of link 1 i.e.
-    $m_1$. This is same as the linear position and velocity of joint 2
-    since joint 2 forms part of $m_1$. 
-    The linear position and velocity of joint1 is 0 since it is fixed
-    in place.
-      
-    <p>
-      Linear position of $m_1$:
-      $
-        \begin{bmatrix}x_1 \\ y_1\end{bmatrix} =
-        \begin{bmatrix}L_1cos\theta_1 \\ L_1sin\theta_1\end{bmatrix}
-      $
-      <p></p>
-      
-      Linear velocity of $m_1$:
-      $
-        \begin{bmatrix}\dot{x}_1 \\ \dot{y}_1\end{bmatrix} =
-        \begin{bmatrix}-L_1sin\theta_1 \\ L_1cos\theta_1\end{bmatrix}\dot{\theta}_1  
-      $
-      <p></p>
-      
-      Kinetic energy of $m_1$:
-      $$\begin{gather*}
-        K_1 = \frac{1}{2}m_1v^2_1 = \frac{1}{2}m_1(\dot{x}_1^2 + \dot{y}_1^2)\\
-            = \frac{1}{2}m_1 L^2_1 \dot\theta^2_1
-      \end{gather*}$$
-      <p></p>
-
-      The potential energy of each mass depends only on its height, i.e. its y-coordinate.
-      Potential energy of $m_1$:
-      $$
-        P_1 = m_1gy_1 = m_1gL_1sin\theta_1
-      $$
-    </p>
-
-    <button class="accordion">Mass $m_2$</button>
-    <div class="panel">
-      <p></p>
-      Linear position of $m_2$:
-      $
-        \begin{bmatrix}x_2 \\ y_2\end{bmatrix} =
-        \begin{bmatrix}
-          L_1cos\theta_1 + L_2cos(\theta_1 + \theta_2) 
-          \\ 
-          L_1sin\theta_1 + L_2sin(\theta1 + \theta_2)
-        \end{bmatrix}
-      $
-      <p></p>
-
-      Linear velocity of $m_2$:
-      $
-        \begin{bmatrix}\dot{x}_2 \\ \dot{y}_2\end{bmatrix} =
-        \begin{bmatrix}
-          -L_1sin\theta_1 - L_2sin(\theta_1 + \theta_2)
-          &&
-          -L_2sin(\theta_1+\theta_2) 
-          \\ 
-          L_1cos\theta_1 + L_2cos(\theta1 + \theta_2)
-          &&
-          L_2cos(\theta1 + \theta_2)
-        \end{bmatrix}        
-        \begin{bmatrix}
-          \dot\theta_1 \\
-          \dot\theta_2
-        \end{bmatrix}
-      $
-      <p></p>
-
-      Potential energy of $m_2$:
-      $$
-        P_2 = m_2gy_2 = m_2g(L_1sin\theta_1 + L_2sin(\theta_1+\theta_2))
-      $$
-    </div>
-
-  </subsection>
+  Let's apply the formulation to a 2R robot in gravity. All the mass of the robot is 
+  concentrated in point masses $m_1$ and $m_2$.
+  We need to calculate the kinetic and potential energy of the two-point 
+  masses, so first we calculate the position of $m_1$, given by the coordinates 
+  $x_1$ and $y_1$. 
 </section>
 
 <section id="10"><h1>Musings</h1>
-  <ul>
-    <li>What does it mean to subtract potential energy from kinetic energy?</li>
-  </ul>
 </section>  
 
 </chapter>
