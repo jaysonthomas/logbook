@@ -50,19 +50,341 @@
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 3"><h1>Robotic Manipulation</h1>
 
-  <section id="table_of_contents"><h1>Table of Contents</h1>
-    <ul>
-      <li><a href="#1">1: Overview</a></li>
-      <li><a href="reflectedInertia.html">Reflected Inertia</a></li>
-      <li><a href="manipulationCV.html">Computer vision</a></li>
-      <li><a href="3dPyVisualisation.html">3d python frame visualisation</a></li>
-      <li><a href="forceControl.html">Force control project</a></li>
-      <li><a href="lecture2021ForceControl.html">2021 lecture notes: Force control</a></li>
-      <li><a href="lecture2021ManipulatorControl.html">2021 lecture notes: 
-        Manipulator control</a></li>
-      <li><a href="manipulatorDynamics.html">Manipulator dynamics</a></li>
-    </ul>
-  </section>
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">1: Overview</a></li>
+    <li><a href="reflectedInertia.html">Reflected Inertia</a></li>
+    <li><a href="manipulationCV.html">Computer vision</a></li>
+    <li><a href="3dPyVisualisation.html">3d python frame visualisation</a></li>
+    <li><a href="forceControl.html">Force control project</a></li>
+    <li><a href="lecture2021ForceControl.html">2021 lecture notes: Force control</a></li>
+    <li><a href="lecture2021ManipulatorControl.html">2021 lecture notes: 
+      Manipulator control</a></li>
+    <li><a href="manipulatorDynamics.html">Manipulator dynamics</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  where have we been people also asked in the survey for
+things like predict manipulation 40 years in the future that's hard but I'll you know
+I'll try to say a few things about where maybe where it's going to okay um
+okay so we started off you know after the basic introduction we started talking starting off with just like you
+know basic kinematics jacobians stuff like that um the multibody notation
+is something that I doubt too many people will move forward with as part of
+your major like um part of your life but if you do you'll be happier I promise I think I've seen
+bugs in notebooks that I mean I I made my my own you know like if if you find
+yourself frustrated that the Jacobian you got out of diff ik is in the wrong frame or your
+forces are somehow seem to be like in the wrong space or something like this more careful use of multi-body notation
+will save you consider it you know it really does help I think
+and I think the general view I tried to push sort of um less about the mechanics of the
+kinematic equations which is a slightly more standard treatment but I think thinking of it as a spatial algebra
+and understanding the basic operations of how rotations affect frames and stuff
+like this um you know that's a that's a lesson that we came back to multiple times
+and I really do think a lot of you found that the differential ik pipeline became
+a Workhorse for the for your projects a lot of people using it and some of you
+um really I think got to appreciate it or maybe you're mad at it but it but um you know a month from now you'll be
+really appreciative of it baby for instance I one of my regrets is that a bunch of people copied the iwa painter
+notebook and that had only used pseudo-inverse control not the full
+diffic because it that was sufficient for that notebook and I hadn't sort of pictured
+everybody copying it and trying to use it for more than it was good for the pseudo inverse controller can run into singularities right right and some of
+you did and it blows up unfortunately the way it blows up is it causes multi-body plant to say I can't or it
+says the integrator you know I I run into time step equals one e to the minus 14 and that's not a very clear message
+but fine that was just the pseudo-inverse being insufficient and if you switched over to the diff ik which
+was the least squares interpretation which allowed you to have constraints then those issues went away right so the
+differential ik as an optimization
+I think is a Workhorse uh and a thing I I hope you feel like you learned right
+we jumped into geometric perception
+there's a party going on somewhere of course we learned um you know
+iterative closest point and its variance I would say both the kinematics and the
+ICP kind of work helped me start talking about many of
+these problems as kinematics problems as optimizations too
+and I think the takeaway that some of you are seeing when you're playing with perception on the on the project is that you know
+these Point Cloud processing algorithms are very good for refinement if you have a known geometry
+but they're not great for the global part of the perception problem and you really wanted to bring in the Deep learning pipeline to help with that the
+bigger part of the problem and you know it requires those required
+models they're great for accuracy
+let's say for refinement if you will but they need an initial guess
+and remember I said that if if you were to take away if you told me I could only have RGB or I could only have depth
+my answer would have flipped a few years ago and I'd say take my depth keep I'll keep my RGB
+okay we built up more into the Clutter
+clearing was the example that I used um
+for a few reasons right we started to talk about perception and clutter you know richer perception that could
+handle the you know occlusions and things like that uh about
+more complicated simulation mechanics right and about even programming at the task
+level right so this was scaling up the basic recipe into a really much more sophisticated uh version of the problem
+foreign it also helped make the point that we didn't need to estimate the pose
+perfectly in order to be successful because that clutter clearing demo right was just using antipodal grasps it
+wasn't even thinking about what objects were and it went pretty far
+we jumped into deep perception
+right we talked about mask our CNN and the like right
+that was the first Workhorse if you're starting to do
+perception in in the real world you might very well still be using mascar CNN we talked about deep pose estimation
+the category level versions of this
+with for instance dense object dense descriptors and key points for instance being an alternative
+to actually estimating the pose maybe key points are enough or dense descriptors
+these are super powerful methods they're getting better I mean they're data hungry I think if there's one thing that we've there we're seeing as today's
+Trend that will continue uh is that a lot of the pipelines that started off
+being hugely successful based on supervised learning are now turning over into self-supervised learning versions
+of these problems right finding good ways to To Train A visual representation that's
+sufficient for these kind of Downstream tasks using unlabeled data is the big is the big new trend
+not even that new anymore okay we did motion planning like we covered a
+lot of stuff right we did motion planning which started with just richer
+spelling of inverse kinematics right all the power you use and a lot of you guys are using inverse kinematics
+only actually I'd say um you know calling a lot of sequential inverse kinematics calls and a handful
+of times I've been saying you know maybe you should turn that into a kinematic trajectory optimization right
+why because solving a bunch of inverse kinematics calls independently
+is good but it doesn't actually ask them to be related to each other in any smooth or subtle way
+and so Ken I tried to say the kinematic trajectory optimization was just inverse kinematics
+with the constraint that the inverse kinematic Solutions are consistent with each other they can all be described from one spline
+and we talked about sample based motion planning too
+sampling based right some powerful tools I threw in some stuff about graphic
+convex that's there too of course but you know if you remember
+rrt and PRM then you've got
+that basic vocabulary do you remember you know then all of the
+stuff about the different ways we're doing control on the manipulator
+we had our our next foray into Force control and manipulator control
+can you remember the you know why PID control is good but inverse Dynamics control is better if you have a model
+and why we actually use joint stiffness control
+in a lot of cases for the for the robot right we we like to think about executing
+joint trajectories but relatively look with a low stiffness controller so that if we bump into stuff right we're still
+compliant enough to to keep moving and not break our robot or the environment
+um but we also talked about direct Force control
+where you're thinking explicitly about the forces or indirect Force control
+like Cartesian impedance control or Cartesian stiffness control
+one of my favorite examples that came up with that actually remember the a few people are doing writing projects right
+and I gave them the mesh cat painter right a little thing that just says put a chalk weld it to your hand if you want
+and and draw some lines okay and it was interesting to have the conversations with people because
+in the in the case where the chalk is welded to your finger the difference between force control and
+just a difficult for instance with with the joint stiffness control or inverse
+Dynamics is small because you could put you just put yourself into
+a reasonable amount of penetration you move yourself around and that's all good the the robot will you might have to do
+a little tuning to not push too hard because otherwise the chalk will get stuck if you don't push hard enough it might not draw but pretty much you just
+tune in once how deep to push you follow your trajectory life is good
+but the people who switched from welding it to the finger to holding the chalk
+had a different experience yeah so as soon as you push down the chalk might move in your fingers
+as you draw it might start moving in your fingers and suddenly there if you just picked a nice trajectory and
+started moving around okay then you might have drawn for a little while and now you stop drawing or
+you know because it moved in your fingers and it's hard to know where the thing where the chalk is in your fingers so actually this is a beautiful case
+where if you think about the space of forces you just say I'd like to be pushing down with a certain amount of force then even if the chalk moves the
+end effector will move for you in order to keep yourself in contact with the with the table
+we talked about controlling not just the robot but then
+the whole you know the objects in the world right I used the language of
+visual motor policies to talk about that I really think
+something great happened when we started putting cameras at high rate into our controllers and we need to understand it
+better you know right now I'd say our ability to get visual motor policies is still a little weak we did it with
+behavior cloning we talked about it with
+RL policy search for instance
+but we should have more powerful reliable ways to get visual motor policies they're very good
+they're still we're still we're still working on it okay but this is the stuff that's making
+the Rockstar manipulation demos right now right I showed you rolling dough there's all
+kinds of things that visual motor policies can do that are surprising
+and then we wrapped up with um you know intuitive physics
+learning models
+task and motion planning and a little bit of belief space today
+so that's a lot of coverage right we've covered a lot of things some of them more carefully and some of them just
+quickly at the end but I think it's a pretty good representation of what's happening in a
+modern manipulation system when I reflect on the class
+and maybe what I'll do next time let's say just you know but um the one thing that I I think
+this overly emphasizes and maybe I wish I would emphasize more I think I'm going
+to put mobile manipulation earlier in the class because I think it opens up
+I didn't realize I mean I think the tools are actually not that different to solve mobile manipulation the math is
+the same but the the ideas you would have for your projects I think are going to be
+different yeah I think billions lecture yesterday really emphasized that right you
+you wouldn't ask you know a chat bot you know what should I do with you know go
+get me a Coke or something like that if it's if you're limited to the world of your table
+and I think the the open vocabulary ideas the Anything could happen in the
+world you're going to send your robot off and do anything Wheels help you think about that right
+you have to be you have to I don't know you could bring a lot of things to yourself in a conveyor belt but it's not the same okay so even though the math is
+actually very similar I'm going to probably make a bigger emphasis on mobile manipulation next next time
+um you know there are some different parts of the math where people think about navigation and and mapping and
+other scene level kind of perception problems that would come along with that
+but I think the biggest thing for me is just the needing to think about the open open domain open vocabulary part of the world
+for me and I'm saying this partly so you can agree with me or disagree with me over Anonymous feedback is fine you can
+shout it out right now that's fine um the other thing that I think I want to emphasize and I said it on on Tuesday
+I want to give a few more tools that you could in your projects for instance use
+for the task level reasoning I think if you could have just written a padiddles
+specification you might not love writing for dental it's kind of a weird but uh but it's very powerful to be able to
+think about longer or you know longer term tasks more abstract tasks and I think the I'm thinking that the
+presentation focused a little bit more on the the dexterous part of manipulation and a little less about the
+the world part but you can leave with a slightly you know knowing that there's other perks in fact it's interesting
+kind of to think about when I was thinking about that um that dichotomy
+uh you know it just happens that at Tri right the
+um the org chart is kind of telling right so there's a
+there's a dexterous manipulation team
+but there's also a mobile manipulation team separate
+and it really does bring they're complementary there's a lot of problems that you get into you know where you don't need you the the mobile
+manipulation team I showed you their grocery store robot it they were happy with a suction gripper for a lot of things they weren't thinking about the
+dexterity required but they're moving through the world and experiencing things that my robot on the
+table is not experiencing right and once I said that I realized okay well I haven't said enough about soft
+robots there's a soft robotics team and there's also a human robot
+interaction team I'll write it out
+right we mentioned soft and I and I offered to spend a lecture talking about tactile sensing but
+um but we didn't get to that one okay and human robot interaction I is hugely
+important I just it's not my expertise really but
+any thoughts or questions or anything about that high
+level scope stuff feedback
+yeah what would be the next steps for you as a manipulator a robot
+programmer yeah for you as students yeah I mean there are a lot of really good classes I
+don't know which of them you've taken and which you if you haven't I mean I'll be teaching under actuator which I've advertised a few times in the spring but
+there's great classes by Luca carlone about perception and state estimation
+and the like there's there's in fact I could offer I could just summarize a list of some of the great classes maybe
+on a Piazza post um I'd love to I'd be happy to do that we have a lot of good classes on campus
+maybe not enough actually I would love to see more
+um that's a great question is this a research tool kit or is this a you know I'm I need the robot to move today to
+make my startup work kind of toolkit I think um there's a lot of robots that do things
+that you'd consider to be manipulation that don't use a big part of the stack but they are the the places where the
+world is more constrained so the classic example would be a factory room floor where you're welding or something like
+this it uses maybe force control a lot of position uh programming and the like
+but it doesn't need to think about perception it doesn't need to think about all the uncertainty and complexity or even planning that comes with the
+fact that the world could be very diverse and I think in industry
+startups you know big companies are now investing a lot in the next generation of robots starting with more flexible
+manufacturing flexible Logistics the Amazon problem the delivery problems
+and I think that they are hitting this straight up this is a this is core material for that kind of a job and then
+absolutely there's research that is taking every one of those and decent pushing farther but I think as soon as
+you start needing to perceive the world in order to do your manipulation and
+that's driven by the task then the old stuff isn't getting it done and this this stuff is bread and butter
+yeah thank you
+so people asked me to predict the future I can't do that but I'll give you a few thoughts if you want so
+um in fact you know Rod Brooks another famous roboticist that got two uh you
+know went off and was lab director and uh then started a company and but he I took his class when I was a
+student embodied intelligence I think I think it's called body
+intelligence yeah
+he always says that people have a tendency he reminds us it's not his quote I guess but
+people have a tendency to overestimate the importance of a new technology in the short term and under dramatically
+underestimate the the potential in the long term so
+it just means I'm just saying everything I'm about to say is wrong but uh but I do think there's some huge trends
+that that we've seen enough of to to lean into right um I'd say actually billions talk last
+time is one of the biggest ones the idea that we could have more
+common sense priors to make decisions with robots I
+think is the biggest change coming to the field in a long time maybe and it's happening you know it's starting we've
+always wanted it and I don't think we're quite there with
+with large language models but I'd say like the large language models and the
+visual language models and the like um that Brian talked about are that's like the first
+compelling approach to say we're going to get something kind of that smells like an unnatural intelligence common sense
+right and I don't even know how to measure the potential change of that that's going to
+happen with that it's going to be um it's going to be weird I can guarantee that that's that's a high probability
+prediction right but it's I think it's really one of the the biggest things that's going to change what we're doing
+um it's sort of interesting the people I talked to about this um they actually say that
+maybe they're just trying to make me feel better but uh but they say it's interesting because there's so many people are excited about this
+and they want to think about how to make robots do these multi-level tasks that in some ways it actually puts a premium
+on motion planning that just works and feedback control and skills and other things all you know the stuff I did
+maybe emphasize a lot in the class is suddenly really important because there's you
+know Engineers everywhere that don't know that yet and the robots don't work all the time but if they did we could do
+incredible long-term tasks now so I actually think in a weird way this
+um you know not manipulator equation driven thing is probably going to put a
+premium on some of the core
+manipulation skills let me see
+the lower level slightly lower level stuff
+including you know dexterous style manipulation
+I would say that um we're going to see so I obviously like simulation
+um but I think we've turned a few Corners with simulation and I would expect that the use of simulation is I
+think it's just like at the beginning of what we're going to see in this field and it's going to continue to change
+rapidly um I think
+some percentage of the robotics population is converted and says I believe that if it worked in simulation
+I'd have a pretty good chance of it working in reality the people that are training perception systems on simulated
+data are pretty convinced I think I think less people are convinced about the contact mechanics
+um I mean we focused on it more than a lot of people and they're the Sim to real Gap in the in the contact mechanics
+and you definitely have to be a skilled user of simulation to make that transfer you could set parameters wrong but uh
+but I think if you if you're a skilled user simulation then more and more people believe that you
+can do your work in simulation the bottleneck there is content right
+how do you get your robot your art assets your objects you want to manipulate into simulation
+and I think there's going to be just probably a huge uh change
+in content we're already seeing it with um it's
+funny when someone says like five years ago let's say 10 years ago just to be safe people said
+um said I have I built a simulator they'd mean they wrote like f equals m a down and they would maybe they wrote a
+renderer that's part of a simulator right but now if someone says I've got a new simulator they don't even they they built
+something on top of a physics engine and they don't even cite the physics engine but but uh but it's they're like now
+you know there's these I think very important content aggregators right
+people that just say I've scanned a bunch of houses and I've put a bunch of different
+objects in those houses and that's my new simulator offering and I think that's value that's hugely valuable so
+we're seeing people generate that data in lots of different ways sometimes with manual effort sometimes with procedural
+generation you can make a program that spits out random living rooms right and increasingly what we're seeing is real
+to sim kind of work right um
+I think this is just going to be a huge component the fact that you can drive around stata with just an RGB camera
+come out with a perfect neural Radiance field representation of it you know and then
+so what do you do with that how do you get that into a simulator uh it's not enough it turns out to feed
+the simulator but people are thinking about this now right how do you how do I just ingest so that the robot
+every time it sees something new it puts it adds it to the simulator and we build the Matrix
+um I I predict that that would be a huge it's going to just ramp up more and more
+and more I guess along that route I think
+maybe an easy one to say but let's just think about it for a minute I think big data hasn't come to robotics yet but
+it's coming it's come through large language models and visual models but the thing that we're waiting
+for is uh let me say interaction
+data right data that has forces we talked about in the system ID world that
+if I watched an object fall on YouTube there's limits to what I can learn about it right I can't learn its mass for instance right and I think
+um we're getting to the late to the world where people are deploying enough robots and thinking seriously about how
+to aggregate that data um Fleet learning is a huge
+potential that you know all the robots on the edge as Edge nodes pool their understanding
+pool their models pull their data to learn something more about the world than they could learn by
+surfing the web right and that's coming but every year we say
+it's coming and it's still it's taking a long time considering how important it is it's taking a long time it's it's
+sort of frustrating that that we don't quite have it yet it's hard to because because the data that you generate on
+your robot that's not exactly the data I want to generate on my robot and so it's not immediately useful you have to think
+about off policy RL and all these but even the distributions shift can be really tough okay but we're gonna
+there's gonna be a crossing point where we have enough robots and they're similar enough or we have enough copies
+of the same robot and maybe we consolidate Hardware or something where where suddenly I'm going to program my
+robot completely differently because you generated a lot of data right also the same thing too is that a
+lot of the work we're doing here we're kind of programming the robot as if it's the first time it ever experienced this
+uh and we think a lot about learning as okay I started with my policy parameters as you know zero random numbers around
+zero how do I do that and that's not the world we're going to be living in right we're going to be living in a world where
+um there are many robots that have already done most of these things and I should start with their hive mind uh you know Global model and
+maybe specialize for my current situation so that's going to that's definitely coming to this
+this neck of the woods too and maybe just to to say a last one
+um I think uh I've said it a few times but I'm just very optimistic
+about theory of ml RL control
+um you know coming together with empirical stuff
+I think the empirical success of these things raced ahead
+but you know now we have many of the the best theorists in the world that are excited about understanding those better
+and I think that is just going to be a very harmonious future I mean we have uh Scott Aronson right is our Quantum
+computation guy he's he saw gpt3 and now he's open AI for I think I hope I'm not wrong Scott
+um you know but but to have the quantum computation people get so excited by these large models that they have to go
+figure them out that's good that's great right that's like bringing all the
+really great people together and I'm just very I mean the controls people are so smart they're so so smart you know
+and they now see that some of the things that were that have happened in RL and they're
+they're moving in that direction right and I'm very optimistic about that and how that changes things
+so if I were to just like at a meta level uh try to convince you of something
+uh it's maybe it's I think it's in this space which is and I said it on day one and I'll say it again to close this off
+here um I mean for me this class even and the notes as they slowly evolve and uh you
+know the way I think about it I think um because the systems we're building here
+are so complicated we have to think rigorously about them
+and I think having a foundation of the things we know and rigorous thinking
+about the things that we're still inventing is just so important and I think if you talk to the best
+empirical machine learning people and the most influential papers and you
+look at the authors or you look at the style of the papers you know
+they're extremely rigorous I think people get the impression that
+um that you can put a quick algorithm together you can make some curves and you're good but that's no those aren't
+the papers that are having massive impact and so I really I really want us to take
+the time to think deeply about these problems and and build a foundation of
+you know across these these complicated disciplines and you know push that I think that's what's going to push the
+field forward maybe maybe more now than in some other times there's just been such a bubbling up of ideas
+and I think feels it feels to me like it's time to to consolidate a little bit and then push forward again
+but good okay so um
+that's it for me it's your turn so Anthony sent out the uh logistics for
+Tuesday but basically I think and and his text is the gospel if I say anything
+different right now but the basic gist is please come come at two because it's going to take longer than an hour and a
+half to do it if you come at 2 30 that's fine but if you can cup it too it's great it really is like the best part of
+the class and please when you're presenting or making your videos you know the um think about what you learned that you
+wished other people knew that's the value and that's why I get tons of value out of that of learning about the things
+that you thought were going to work that didn't work you know um algorithm you tried that we we
+haven't covered or I haven't thought about that much I I hear your experiences and I understand things
+better because of them and so that's what I think you can all get that out of each each other next week
+um you know the goal is so once you put your name on the sheet we're going to March down the sheet people in the room
+will put up first uh we've had a few times where someone would sit in the room for a really long time watching
+people who aren't there and so so if you're here in the room then then and you've marked your uh video as public
+right so you can when you upload to Youtube you can make it public or unlisted the public videos means we're
+going to show it and we'll show it even on on the live stream because some people will watch remotely
+if it's unlisted it's still on the spreadsheet so you can watch everybody's videos I mean the the con the class you
+remember your your members of the class are your audience whether you're listed unlisted or or public
+but the broader world is is only your audience if you mark your video public okay
+and uh you know I've got a room until five we'll see what we do we're going to
+March through as many as we can try to give a little space for questions there's a lot of you and it takes time to March through the videos
+but please come it's it's really really a fun part of the class and I know there's people like all over that are
+going to be watching because they've they've seen awesome projects in the past right
+and I I think they're going to see awesome projects this time and it's not about how well your robot
+works it's about how much you learned and how you can communicate that okay
+okay good see you Tuesday I'm excited
+
+</section>
 
 </chapter>
 </body>

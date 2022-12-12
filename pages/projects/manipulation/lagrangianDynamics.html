@@ -259,17 +259,43 @@
   joint velocities are called <code>Coriolis terms</code>.
 
   <subsection><h1>Case 1: Assume gravity and joint accelerations are 0</h1>
-    $f=m {\cancel{a}}$
     $$
       f_1 = \begin{bmatrix}f_{x_1} \\ f_{y_1} \\ f_{z_1}\end{bmatrix}
           = m_1 \begin{bmatrix}\ddot{x}_1 \\ \ddot{y}_1 \\ \ddot{z}_1\end{bmatrix}
           = m_1 \begin{bmatrix}
-            -L_1\dot\theta_1^2c_1 - L_1\ddot\theta_1s_1
-           \\ -L_1\dot\theta_1^2s_1 + L_1\ddot\theta_1c_1
+            -L_1\dot\theta_1^2c_1 - \cancel{L_1\ddot\theta_1s_1}
+           \\ -L_1\dot\theta_1^2s_1 + \cancel{L_1\ddot\theta_1c_1}
            \\ 0
            \end{bmatrix}
     $$
     $c_1 = cos\theta_1$, $c_{12} = cos(\theta_1 + \theta_2)$
+    <p></p>
+    
+    The force needed to move mass $m_1$ is $m_1$ times the x-y-z linear acceleration of the mass.
+    Notice that there are joint velocity squared terms. In other words, zero acceleration 
+    of the joints does not mean zero acceleration of the mass in the linear coordinates 
+    x, y, and z. 
+
+    <button class="accordion">Mass $m_2$</button>
+  <div class="panel">
+    <p></p>
+    The force needed to move $m_2$ in the absence of gravity and joint accelerations:
+    $
+      f_2 =
+      m_2
+      \begin{bmatrix}
+        -L_1\dot\theta_1^2c_1 - L_2(\dot\theta_1+\dot\theta_2)^2c_{12}
+        \cancel{-L_1\ddot\theta_1s_1 - L_2(\ddot\theta_1 + \ddot\theta_2)s_{12}}
+        \\ 
+        -L_1\dot\theta_1^2s_1 - L_2(\dot\theta_1+\dot\theta_2)^2s_{12}
+        \cancel{+L_1\ddot\theta_1c_1 + L_2(\ddot\theta_1 + \ddot\theta_2)c_{12}}
+        \\
+        0
+      \end{bmatrix}
+    $
+    <p></p>
+  </div>
+
   </subsection>
 </section>
 
