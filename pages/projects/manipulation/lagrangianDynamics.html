@@ -275,27 +275,81 @@
     Notice that there are joint velocity squared terms. In other words, zero acceleration 
     of the joints does not mean zero acceleration of the mass in the linear coordinates 
     x, y, and z. 
-
+    <br>
     <button class="accordion">Mass $m_2$</button>
-  <div class="panel">
-    <p></p>
-    The force needed to move $m_2$ in the absence of gravity and joint accelerations:
-    $
-      f_2 =
-      m_2
-      \begin{bmatrix}
-        -L_1\dot\theta_1^2c_1 - L_2(\dot\theta_1+\dot\theta_2)^2c_{12}
-        \cancel{-L_1\ddot\theta_1s_1 - L_2(\ddot\theta_1 + \ddot\theta_2)s_{12}}
-        \\ 
-        -L_1\dot\theta_1^2s_1 - L_2(\dot\theta_1+\dot\theta_2)^2s_{12}
-        \cancel{+L_1\ddot\theta_1c_1 + L_2(\ddot\theta_1 + \ddot\theta_2)c_{12}}
-        \\
-        0
-      \end{bmatrix}
-    $
-    <p></p>
-  </div>
+    <div class="panel">
+      <p></p>
+      The force needed to move $m_2$ in the absence of gravity and joint accelerations:
+      $
+        f_2 =
+        m_2
+        \begin{bmatrix}
+          -L_1\dot\theta_1^2c_1 - L_2(\dot\theta_1+\dot\theta_2)^2c_{12}
+          \cancel{-L_1\ddot\theta_1s_1 - L_2(\ddot\theta_1 + \ddot\theta_2)s_{12}}
+          \\ 
+          -L_1\dot\theta_1^2s_1 - L_2(\dot\theta_1+\dot\theta_2)^2s_{12}
+          \cancel{+L_1\ddot\theta_1c_1 + L_2(\ddot\theta_1 + \ddot\theta_2)c_{12}}
+          \\
+          0
+        \end{bmatrix}
+      $
+      <p></p>
+    </div>
+  </subsection>
 
+  <subsection><h1>Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</h1>
+    At this configuration, the velocity-product acceleration terms for $m_2$ are given as:
+
+    $$
+      \begin{bmatrix} \ddot{x}_2 \\ \ddot{y}_2 \end{bmatrix}
+      =
+      \underbrace {
+        \begin{bmatrix} 
+          -L_1\dot\theta_1^2 
+          \\ -L_2\dot\theta_1^2 - L_2\dot\theta_2^2
+        \end{bmatrix}
+      }_{\text{Centripetal terms}}
+      +
+      \underbrace {
+        \begin{bmatrix} 
+          0
+        \\ -2L_2\dot\theta_1\dot\theta_2
+        \end{bmatrix}
+      }_{\text{Coriolis terms}}
+    $$
+
+    <button class="accordion">How we arrived at the equation</button>
+    <div class="panel">
+      <p></p>
+      Linear velocity of $m_2$:
+      $
+        \begin{bmatrix}\dot{x}_2 \\ \dot{y}_2\end{bmatrix} =
+        \begin{bmatrix}
+          -L_1sin\theta_1 - L_2sin(\theta_1 + \theta_2)
+          &&
+          -L_2sin(\theta_1+\theta_2) 
+          \\ 
+          L_1cos\theta_1 + L_2cos(\theta1 + \theta_2)
+          &&
+          L_2cos(\theta1 + \theta_2)
+        \end{bmatrix}        
+        \begin{bmatrix}
+          \dot\theta_1 \\
+          \dot\theta_2
+        \end{bmatrix}
+      $
+      Focusing on just $\ddot{x}_2$:
+      <br>
+      \begin{align*}
+        &\ddot{x}_2 = -L_1s_1\dot\theta_1 - L_2s_{12}\dot\theta_1 - L_2s_{12}\dot\theta_2
+        \\     
+        &= -L_1s_1\ddot\theta_1 - L_1c_1\dot\theta_1^2 - L_2s_{12}\ddot\theta_1
+          -L_2\dot\theta_1(c_{12}\dot\theta_1 + c_{12}\dot\theta_2)
+          -L_2s_{12}\ddot\theta_2 - L_2\dot\theta_2(c_{12}\dot\theta_1+c_{12}\dot\theta_2)
+      \end{align*}
+
+      <p></p>
+    </div>
   </subsection>
 </section>
 
