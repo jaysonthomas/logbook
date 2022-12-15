@@ -298,6 +298,11 @@
   </subsection>
 
   <subsection><h1>Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</h1>
+    <figure>
+      <img style="height:130px; width:30%"
+      src="../../../figures/manipulation/modernRob/2_2R90degrees.png">
+    </figure>
+  
     At this configuration, the velocity-product acceleration terms for $m_2$ are given as:
 
     $$
@@ -320,36 +325,111 @@
 
     <button class="accordion">How we arrived at the equation</button>
     <div class="panel">
-      <p></p>
-      Linear velocity of $m_2$:
-      $
-        \begin{bmatrix}\dot{x}_2 \\ \dot{y}_2\end{bmatrix} =
-        \begin{bmatrix}
-          -L_1sin\theta_1 - L_2sin(\theta_1 + \theta_2)
-          &&
-          -L_2sin(\theta_1+\theta_2) 
-          \\ 
-          L_1cos\theta_1 + L_2cos(\theta1 + \theta_2)
-          &&
-          L_2cos(\theta1 + \theta_2)
-        \end{bmatrix}        
-        \begin{bmatrix}
-          \dot\theta_1 \\
-          \dot\theta_2
-        \end{bmatrix}
-      $
+      <p>
+        Linear velocity of $m_2$:
+        $
+          \begin{bmatrix}\dot{x}_2 \\ \dot{y}_2\end{bmatrix} =
+          \begin{bmatrix}
+            -L_1sin\theta_1 - L_2sin(\theta_1 + \theta_2)
+            &&
+            -L_2sin(\theta_1+\theta_2) 
+            \\ 
+            L_1cos\theta_1 + L_2cos(\theta1 + \theta_2)
+            &&
+            L_2cos(\theta1 + \theta_2)
+          \end{bmatrix}        
+          \begin{bmatrix}
+            \dot\theta_1 \\
+            \dot\theta_2
+          \end{bmatrix}
+        $
+      </p>
       Focusing on just $\ddot{x}_2$:
       <br>
+      $c_{12}=0$, since $cos(0 + \frac{\pi}{2})=0$
+      <br>
       \begin{align*}
-        &\ddot{x}_2 = -L_1s_1\dot\theta_1 - L_2s_{12}\dot\theta_1 - L_2s_{12}\dot\theta_2
+        &\ddot{x}_2 = \frac{d}{d\theta}
+        (-L_1s_1\dot\theta_1 - L_2s_{12}\dot\theta_1 - L_2s_{12}\dot\theta_2)
         \\     
-        &= -L_1s_1\ddot\theta_1 - L_1c_1\dot\theta_1^2 - L_2s_{12}\ddot\theta_1
+        &= -L_1s_1\ddot\theta_1 \underline{- L_1c_1\dot\theta_1^2} - L_2s_{12}\ddot\theta_1
           -L_2\dot\theta_1(c_{12}\dot\theta_1 + c_{12}\dot\theta_2)
           -L_2s_{12}\ddot\theta_2 - L_2\dot\theta_2(c_{12}\dot\theta_1+c_{12}\dot\theta_2)
+        \\
+        &=-L_1(1)\dot\theta_1^2        
       \end{align*}
 
       <p></p>
     </div>
+  </subsection>
+
+  <subsection><h1>Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</h1>
+    <figure>
+      <img style="height:130px; width:20%"
+      src="../../../figures/manipulation/modernRob/3_2Rcentripetal.png">
+    </figure>
+
+    $$
+      \begin{bmatrix} \ddot{x}_2 \\ \ddot{y}_2 \end{bmatrix}
+      =
+      \underbrace {
+        \begin{bmatrix} 
+          -L_1\dot\theta_1^2 
+          \\ -L_2\dot\theta_1^2 - \cancel{L_2\dot\theta_2^2}
+        \end{bmatrix}
+      }_{\text{Centripetal terms}}
+      +
+      \underbrace {
+        \begin{bmatrix} 
+          0
+        \\ \cancel{-2L_2\dot\theta_1\dot\theta_2}
+        \end{bmatrix}
+      }_{\text{Coriolis terms}}
+    $$
+
+    Mass $m_2$ travels around a circle with its center at the first joint.
+    The centripetal acceleration of the mass is proportional to $\dot\theta_1^2$ toward joint 1.
+    Without the centripetal acceleration, the mass would fly off on a straight-line tangent
+    to the circle. The line of acceleration of $m_2$ passes through the first 
+    joint, and therefore the line of force needed to create the acceleration creates no moment
+    about joint 1. So joint 1 does not have to apply a torque at this configuration and velocity.
+    Joint 2, on the other hand, has to apply a positive torque to keep the mass moving along
+    the circle.
+  </subsection>
+
+  <subsection><h1>Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</h1>
+    Now the mass travels around a circle with its centre at the second joint, 
+    and the centripetal acceleration is proportional to $\dot\theta_2^2$.
+
+    <figure>
+      <img style="height:100px; width:20%"
+      src="../../../figures/manipulation/modernRob/4_2RJoint2Velocity.png">
+    </figure>
+
+    $$
+    \begin{bmatrix} \ddot{x}_2 \\ \ddot{y}_2 \end{bmatrix}
+    =
+    \underbrace {
+      \begin{bmatrix} 
+        -\cancel{L_1\dot\theta_1^2}
+        \\ -\cancel{L_2\dot\theta_1^2} - L_2\dot\theta_2^2
+      \end{bmatrix}
+    }_{\text{Centripetal terms}}
+    +
+    \underbrace {
+      \begin{bmatrix} 
+        0
+      \\ \cancel{-2L_2\dot\theta_1\dot\theta_2}
+      \end{bmatrix}
+    }_{\text{Coriolis terms}}
+  $$
+  </subsection>
+
+  <subsection><h1>Case 5: $\dot\theta_1$, $\dot\theta_2>0$</h1>
+    <figure>
+      <img style="height:120px; width:25%"
+      src="../../../figures/manipulation/modernRob/5_2RBothJointVelocities.png">
+    </figure>    
   </subsection>
 </section>
 
@@ -364,6 +444,13 @@
     <p></p>
 
     <li>Joint coordinates aren't inertial coordinates</li>
+
+    <p>
+      <li>Joint 2, on the other hand, has to apply a positive torque to keep 
+        the mass moving along the circle.</li>
+      I'd like to understand this. Ask stackoverflow. I should be able to simulate
+      this. Perhaps this is a good start to test in Drake.
+    </p>
   </ul>
 </section>  
 
