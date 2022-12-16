@@ -3,19 +3,18 @@
 <html>
 
 <head>
-  <title>Ch. 1 - Introduction</title>
+  <title>Poles and zeros</title>
   <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
   <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
   <script type="text/javascript" src="../../chapters.js"></script>
-  <script type="text/javascript" src="../../htmlbook/book.js"></script>
+  <script type="text/javascript" src="../../notes.js"></script>
 
-  <script src="../../htmlbook/mathjax-config.js" defer></script> 
+  <script src="../../htmlbook/notes-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
-  <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
-
+  
   <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
   <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
   <script>hljs.initHighlightingOnLoad();</script>
@@ -48,35 +47,33 @@
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
-<chapter style="counter-reset: chapter 0"><h1>Fundamentals</h1>
+<chapter style="counter-reset: chapter 0"><h1>Poles and zeros</h1>
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="svd.html">SVD</a></li>
-    <li><a href="rbd.html">Rigid body dynamics</a></li>
-    <li><a href="maths.html">Maths</a></li>
+    <li><a href="#10">Musings</a></li>
   </ul>
-
-  <subsection><h1>Physics</h1>
-    <ul>
-      <li><a href="friction.html">Friction</a></li>
-      <li><a href="slip.html">Tyre slip</a></li>
-      <li><a href="acceleration.html">Acceleration</a></li>
-      <li><a href="#2">Quick physics questions</a></li>
-    </ul>
-  </subsection>
-
-  <subsection><h1>Control systems</h1>
-    <li><a href="derivativeFilter.html">Derivative filter</a></li>
-    <li><a href="polesZeros.html">Poles and zeros</a></li>
-  </subsection>
 </section>
 
-<section id="2"><h1>Quick physics questions</h1>
-  Why every body (no matter the mass) falls down with $g$ acceleration: 
-  <a href="https://t.ly/F3JP">ref</a>.
+<section id="10"><h1>Musings</h1>
+  Assume that the position error trend can be approximated by a 
+  second order system with two complex conjugate poles (to model the oscillations) 
+  and a zero (at low frequency to model the overshoot), the mean of the error mean(y) 
+  could move away from the steady value r . So I was thinking, instead of 
+  using the average, that I could fit the y(t) expression to the data in order 
+  to identify the parameters, in particular r (keeping the assumption that 
+  the error can be actually modelled as a second order system).
+
+  <figure>
+    <img style="height:200px; width:75%"
+    src="../../figures/fundamentals/polesNzeros.png">
+  </figure>
+
+  <a href="https://t.ly/dFqb">This</a> seems interesting. I could also search
+  for 'curve fitting python' in google.
 </section>
 
+</chapter>
 </body>
 </html>
 
