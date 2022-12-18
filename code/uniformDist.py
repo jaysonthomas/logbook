@@ -20,6 +20,7 @@ class UniformDistribution:
     
     def F(self,x):
         "Cumulative Density Function (CDF) F(x)"
+        # Each event between b and a has the same probability.
         if x < self.a: return 0.0
         if x > self.b: return 1.0
         return (x - self.a) / (self.b - self.a)

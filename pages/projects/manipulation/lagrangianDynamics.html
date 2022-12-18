@@ -305,7 +305,7 @@
   
     At this configuration, the velocity-product acceleration terms for $m_2$ are given as:
 
-    $$
+    $$\begin{equation}
       \begin{bmatrix} \ddot{x}_2 \\ \ddot{y}_2 \end{bmatrix}
       =
       \underbrace {
@@ -321,7 +321,7 @@
         \\ -2L_2\dot\theta_1\dot\theta_2
         \end{bmatrix}
       }_{\text{Coriolis terms}}
-    $$
+      \label{eq:centripetalCoriolis}\end{equation}$$
 
     <button class="accordion">How we arrived at the equation</button>
     <div class="panel">
@@ -388,7 +388,8 @@
     $$
 
     Mass $m_2$ travels around a circle with its center at the first joint.
-    The centripetal acceleration of the mass is proportional to $\dot\theta_1^2$ toward joint 1.
+    The <code>centripetal acceleration</code> of the mass is proportional to 
+    $\dot\theta_1^2$ toward joint 1.
     Without the centripetal acceleration, the mass would fly off on a straight-line tangent
     to the circle. The line of acceleration of $m_2$ passes through the first 
     joint, and therefore the line of force needed to create the acceleration creates no moment
@@ -430,6 +431,36 @@
       <img style="height:120px; width:25%"
       src="../../../figures/manipulation/modernRob/5_2RBothJointVelocities.png">
     </figure>    
+
+    The linear acceleration equation for $m_2$ is the same as 
+    equation \ref{eq:centripetalCoriolis}.
+    <p>
+      In addition to the centripetal accelerations, there is now a 
+      <code>Coriolis acceleration</code> towards joint 2.
+      Mass $m_2$ times this Coriolis acceleration is a force that creates 
+      negative moment about joint 1. In other words, to keep both joint 
+      velocities constant, we must apply a negative torque to joint 1. 
+      If zero torque were applied to joint 1, joint 1 would accelerate.
+    </p>  
+    <p>
+      This is what happens to a skater in a spin when he pulls in his outstretched arms;
+      since his inertia decreases, his spinning velocity increases 
+      <a href="https://bit.ly/3ehGxYX">Ref</a>.
+    </p>
+  </subsection>
+
+  <subsection><h1>Rewriting the manipulator equation of motion</h1>
+    $$
+      \tau = M(\theta)\ddot\theta + \dot\theta^T\Gamma(\theta)\dot\theta + g(\theta)
+    $$
+    When the velocity product term is written this way, it emphasizes the fact that 
+    the terms are quadratic in the joint velocities. Also, it emphasizes that Gamma of 
+    theta depends only on the joint values $\theta$.
+
+    <p>
+      $\Gamma(\theta)$ is 3 dimensional $n\times n\times n$ matrix whose entries are 
+      called the <code>Christoffel symbols</code> derived from the mass matrix.
+    </p>
   </subsection>
 </section>
 
@@ -450,6 +481,16 @@
         the mass moving along the circle.</li>
       I'd like to understand this. Ask stackoverflow. I should be able to simulate
       this. Perhaps this is a good start to test in Drake.
+    </p>
+
+    <p>
+      <li>In <a href="#4">section 5</a>, I do not understand the direction 
+      of the applied torques in cases 3 and 5</li>
+      <a href="https://t.ly/F7Sq">Torque direction</a>.
+      <br>
+      Does different parts of the final link experience different acceleration,
+      i.e. parts closer to the joint accelerate faster? See animation linked in
+      <a href="../../fundamentals/acceleration.html#2">the coriolis acceleration section</a>.
     </p>
   </ul>
 </section>  
