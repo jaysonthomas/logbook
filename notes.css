@@ -1,6 +1,10 @@
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
+ .container{
+  display: flex
+ }
+ 
 /* Side bar */
 /* The side navigation menu */
 .sidenav {

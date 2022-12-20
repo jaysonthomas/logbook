@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Multivariate distributions</title>
+    <meta name="Multivariate distributions" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../notes.js"></script>
+  
+    <script src="../../../notes-mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+  
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Multivariate distributions</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Intro</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Intro</h1>
+  What if our random variable is a vector $x=[x_1,x_2,..,x_n]$, and not a scalar.
+  The vehicle position isn't going to be given by a single variable x, but by
+  x, y and z. And if we include attitude as well, $x$ becomes a six dimensional vector.
+  And we'd like to have a distribution over these variables.
+  
+  <p>
+    If we treat each one separately, then we're making some strong assumptions about
+    independence. But, we can actually define vector value functions and the 
+    same concepts that we saw for scalar values over the vector value inputs.
+  </p>
+</section>
+
+<section id="2"><h1>Vector value functions</h1>
+  <figure>
+    <img style="height:200px; width:80%"
+    src="../../../figures/drone/15_vectorValueFunctions.png">
+  </figure>
+  <ul>
+    <li>Normalisation</li>
+    The integral still has to come to one. In this case, the normalization constant 
+    that makes this come to 1 would be the integral of f(x), dx1, dx2 up to dxn.
+
+    <p>
+      <li>Mean</li>
+      The mean is given by the same set of integrals,
+      but it's the integral of x times f(x).
+    </p>
+
+    <li>Spread</li>
+    Instead of a variance, we have a <code>covariance</code>,
+    $\Sigma$, and that's going to be equal to the integral of x minus mu,
+    times x minus mu transpose, times the density.
+    
+    <p>
+      This covariance is going to be a matrix,
+      because the outer product, $(x-\mu)(x-\mu)^T$, is going to result in a matrix as well.
+      The covariance is going to be a <code>symmetric matrix</code> and 
+      <code>positive semi definite</code> (i.e. there are no negative eigenvalues).
+    </p>
+  </ul>
+</section>
+  
+<section id="3"><h1>Multivariate Gaussian and its parameter estimates</h1>
+  The functional form is not very different from the scalar gaussian:
+  <ul>
+    <li>
+      We're no longer taking square root of two pi, it's n over two for a vector x of length n
+    </li>
+
+    <p>
+      <li>$|\Sigma|$ is the <code>determinant</code> of the covariance</li>
+    </p>
+
+    <li>
+      And then we have the vector multiplication $(x-\mu)^T\Sigma^{-1}(x-\mu)$
+    </li>
+  </ul>
+  
+  The estimate of the parameters is almost the same as before,
+  taking care to do the vector math correctly.
+</section>
+
+<section id="4"><h1>Example of a two dimensional covariance</h1>
+  An important property of the covariance is that the 
+  <code>eigenvalues</code> and <code>eigenvectors</code> of the covariance 
+  describe the amount and direction of uncertainty.
+  
+  <p>
+    Here, we have an overhead view and
+    that location at the center of the ellipse would be the mean.
+    If we take the covariance and extract the eigenvalues and eigenvectors,
+    this would be the first eigenvector and this will be the second eigenvector.
+  </p>
+
+  If I draw an ellipse at one eigenvalue away from the mean along each vector,
+  then this one eigenvalue ellipse is going to define
+  a confidence region which in this case is an ellipsoid.
+
+  <p>
+    Just as one standard deviation distance away from the mean in the scalar case 
+    defined the 68% confidence interval for x, the ellipse in 2D defines the confidence interval.
+    The total probability inside the ellipse at 1 standard deviation is not 68% in this case.
+    The total probability for a given length of
+    axis actually depends on the number of variables in the random vector.
+    But in 2D, 95% probability is captured by axis with length that is roughly 
+    five times the eigenvalues.
+  </p>
+</section>  
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+
+  </ul>
+</section>
+
+</chapter>
+</body>
+</html>
+

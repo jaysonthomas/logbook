@@ -55,6 +55,8 @@
     <li><a href="#1">Intro</a></li>
     <li><a href="#2">Cumulative distribution function</a></li>
     <li><a href="#3">Probability density function</a></li>
+    <li><a href="#4">Parameters of a density function</a></li>
+    <li><a href="#5">What does a distribution have to do with robotics?</a></li>
   </ul>
 </section>
 
@@ -150,8 +152,11 @@
 <section id="4"><h1>Parameters of a density function</h1>
   There are two common distributions - the Uniform,
   and the Gaussian, or the normal. We will use $\theta$ to collectively refer to all of
-  the parameters that describe a particular distribution.  
-
+  the parameters that describe a particular distribution.
+  For example, a continuous distribution like a Gaussian,
+  can be fully described by two parameters $\mu$ and $\sigma^2$ 
+  which when taken together form part of $\theta$ for the distribution.
+  
   <p>
     One thing to emphasize is that $p$ of $x$ given $\theta$ is not
     the same thing as saying the function that
@@ -186,35 +191,65 @@
   </subsection>
 
   <subsection><h1>Gaussian or normal distribution</h1>
-    The other distribution that we'll see most of the time in this module is the Gaussian.
-    It's the familiar bell shaped curve,
-    centered at some mu,
-    with some width given by sigma.
-    The density function is given by p of x equals one,
-    divided by the square root of two pi,
-    sigma squared times e to the negative x minus mu all square over two sigma squared.
-    
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/drone/12_wideGaussian.png"/>
+        <figcaption>
+          Wide gaussian
+        </figcaption>
+      </figure>
+  
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/drone/13_thinGaussian.png"/>
+        <figcaption>
+          Thin gaussian
+        </figcaption>
+      </figure>
+    </div>
+
+    The gaussian is the familiar bell shaped curve, centered at some mean $\mu$,
+    with some width given by the standard deviation $\sigma$. 
+    The density function is given by:
+    $$
+      p(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{\frac{-(x-\mu)^2}{2\sigma^2}}
+    $$
+        
     The Gaussian has a few interesting properties.
-    First, it's symmetric around the mean mu.
-    Second, the probability that x is within plus or minus one,
-    standard deviation of mu is 68 percent,
-    and the probability that it's within plus or minus three sigma is 99.7 percent.
-    Notice how sigma describes how wide the distribution is.
-    When sigma's small, that will make the peak narrow and sharp,
-    and this implies that we have a high confidence of
-    predicting what a sample drawn from x will be.
-    When sigma is large the Gaussian,
-    the normal distribution is very wide and flat,
-    and that means we have poor knowledge of what exactly
-    any given sample from this distribution is going to look like.
-    
-    So, you can see that a continuous distribution like a Gaussian,
-    can actually be fully described by two parameters mu and sigma squared,
-    and taking together, these parameters are the theta for this distribution,
-    that I referenced earlier.
-    Solving estimation problems often boils down to using data often from sensors,
-    to come up with estimates for the values of these parameters.
+    <ul>
+      <li>It's symmetric around the mean</li>
+      <li>
+        The probability that $x$ is within $\pm 1\sigma$ is <code>68%</code>
+        and the probability that it's within $\pm 3\sigma$ is <code>99.7%</code>
+      </li>
+      <p>
+        Notice how $\sigma$ describes how wide the distribution is.
+        A small $\sigma$ will make the peak narrow and sharp, 
+        implying that we have a high confidence of predicting what a sample drawn from 
+        $x$ will be. A large $\sigma$ will make the normal distribution very wide and flat,
+        implying that we have poor knowledge of what exactly 
+        any given sample from this distribution will be.
+      </p>
+    </ul>
   </subsection>
+</section>
+
+<section id="5"><h1>What does a distribution have to do with robotics?</h1>
+  Solving estimation problems often boils down to using data from sensors,
+  to come up with estimates for the values of parameters like $\mu$ and $\sigma^2$
+  as in the case of a gaussian distribution, since sensors are imperfect.
+    
+  <p>
+    A range finder pointed at a wall 1m away will most likely give measurements that are 
+    slightly different than 1 meter like 0.992, 1.001... etc.
+    These measurements are generally centered on the true value of the distance 
+    (in this case 1 meter) but they have "Gaussian Noise" added on as well. 
+  </p>
+
+  A good sensor will have a small variance. A bad sensor will have a large variance. 
+  Either way, before we put a sensor on a robot we need to know, actually we need to estimate, 
+  what this variance is.
 </section>
 
 <section id="10"><h1>Musings</h1>
