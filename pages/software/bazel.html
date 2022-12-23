@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Bazel</title>
+    <meta name="Bazel" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../chapters.js"></script>
+    <script type="text/javascript" src="../../notes.js"></script>
+  
+    <script src="../../notes-mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    
+    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
+    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+  
+    <link rel="stylesheet" type="text/css" href="../../notes.css" />
+  </head>
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Bazel</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  Good to use with a project that has multiple coding languages - 
+  C++, Java, Python, Nodejs, Rust etc. Used with tensor flow. Google supports it.
+  Download a binary release from <a href="https://t.ly/dn7z9">here</a> - bazelisk-linux-amd64.
+
+  Follow <a href="https://bit.ly/3FOlrhA">these instructions</a> to install bazel using apt.
+  <a href="https://t.ly/f2W6t">Good video</a> on hello world for Bazel.
+  <p>
+    <button class="accordion">Reddit user's view on Bazel vs cmake</button>
+    <div class="panel">
+      <p></p>
+        We have recently migrated multiple CMake projects to Bazel and am very happy 
+        with the result.
+        <p>
+          Bazel is a better and more powerful build system overall, is more hermetic, 
+          has stronger support for accurate caching and parallel execution, 
+          including remote caching and remote execution, and caching and parallel/remote 
+          execution of tests, doing code generation directly in the build (eg protobuf), 
+          can produce docker images directly, and excels at integrating multiple 
+          languages together into the same build and at integration testing. 
+          And the build language is a straightforward limited version of Python. 
+          You can include multiple different configurations and toolchains in the 
+          same build as well.
+        </p>
+        
+        Broadly I find Bazel does things "more correctly" even if it is harder to get 
+        started with, and it works great with lots of languages as well.
+
+        <p>
+          CMake is a simpler, less featureful build system that is more broadly used with an 
+          objectively worse configuration language, but more people know it, 
+          it has easier access to libraries and works with more IDEs.
+        </p>
+        
+        Personally I either found Bazel builds of all the libraries I needed or they were 
+        trivial enough to include with http_archive and BUILD file containing a 
+        simple cc_library target. There is also rules_foreign_cc that allows 
+        you to delegate to the CMake build of an external library.
+
+        <p>
+          Both build systems are full of their own annoyances, but Bazel is more general, 
+          more powerful, more forward looking and gets the fundamentals right.
+          Another thing that’s nice about Bazel is with --disk_cache it will remember 
+          all previous build and test results instead of just the most recent one, 
+          so you can switch back and forth between branches without needing to rebuild and retest.
+        </p>
+      <p></p>
+    </div>
+  </p>
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+    <li>
+      
+    </li>
+  </ul>
+</section>
+
+</chapter>
+</body>
+</html>

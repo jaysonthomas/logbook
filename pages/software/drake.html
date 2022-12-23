@@ -55,6 +55,7 @@
     <li><a href="#1">Installation</a></li>
     <li><a href="#2">Temporary way of running Drake locally</a></li>
     <li><a href="#3">Learning resources</a></li>
+    <li><a href="#4">Executing drake cpp examples</a></li>
     <li><a href="#10">Questions & todo</a></li>
   </ul>
 </section>
@@ -79,12 +80,13 @@ pip3 --version
     Pip version is <code>pip-22.3.1</code>.    
     <br><br>
     
-    <li>Pip installation of <code>manipulation</code></li>
+    <li>Pip installation of <code>manipulation</code>/<code>underactuated</code></li>
     I could have just installed drake via pip, but installing 
-    <code>manipulation</code> covers it and lots of other extra packages. 
+    <code>manipulation</code> covers it and lots of other extra packages. Ipywidgets
+    is used with underactuated examples.
 <pre><code class="bash">
 source env/bin/activate
-pip3 install manipulation
+pip3 install manipulation underactuated ipywidgets
 </code></pre>
 
     <li>Test if drake's been installed</li>
@@ -93,13 +95,18 @@ python3 -c 'import pydrake.all; print(pydrake.__file__)'
 Output: /home/jayson/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/__init__.py
 </code></pre>
 
-    <li>Separate download of the <code>manipulation</code> repository</li>
+    <li>
+      Separate download of the <code>manipulation</code>/<code>underactuated</code> 
+      repository
+    </li>
     I'm going directly to the source so I can stay up to date with the latest changes
     to the pset files.
 <pre><code class="bash">
 cd ~/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/share/drake/tutorials
 mkdir manipulation; cd manipulation
 git clone https://github.com/RussTedrake/manipulation.git .
+mkdir underactuated; cd underactuated
+git clone https://github.com/RussTedrake/underactuated.git .
 </code></pre>
 
     <li>Download texture files</li>
@@ -110,7 +117,12 @@ cp -r ~/Downloads/drake-20221116-jammy/drake/share/drake/manipulation/models/ycb
 </code></pre>
     
     <li>Run a notebook</li>
-    Open -> manipulation/force/point_finger.ipynb
+    Open:
+    <ul>
+      <li>manipulation/force/point_finger.ipynb</li>
+      <li>manipulation/exercises/pick/robot_painter.ipynb</li>
+      <li>underactuated/intro.ipynb</li>
+    </ul>
   </ul>
 </section>
 
@@ -145,6 +157,10 @@ grep -r "index.ipynb" /folder/path
   <a href="https://t.ly/Xss_">Zucker notes</a>.
 </section>
 
+<section id="4"><h1>Executing drake cpp examples</h1>
+  Using bazel as a build system for drake - <a href="https://t.ly/jRAN">ref</a>.
+</section>
+
 <section id="10"><h1>Questions & todo</h1>
   <ul>
     <li>Unable to find texture files</li>
@@ -154,6 +170,26 @@ grep -r "index.ipynb" /folder/path
     <p>
       Drake stores all the relevant states and parameters in the context,
       which can act like a systematic log.
+    </p>
+
+    <p>
+      <li>Current error to deal with</li>
+<pre><code class="bash">
+$ cd drake
+$ bazel build //...
+Extracting Bazel installation...
+Starting local Bazel server and connecting to it...
+INFO: Analyzed 10129 targets (458 packages loaded, 33701 targets configured).
+INFO: Found 10129 targets...
+ERROR: /home/jayson/P/drakeCpp/drake/bindings/pydrake/BUILD.bazel:789:22: GenerateMypyStubs bindings/pydrake/pydrake/__init__.pyi failed: (Exit 1): stubgen failed: error executing command bazel-out/k8-opt/bin/bindings/pydrake/stubgen --quiet '--package=pydrake' '--output=bazel-out/k8-opt/bin/bindings/pydrake'
+
+Use --sandbox_debug to see verbose messages from the sandbox and retain the sandbox build root for debugging
+Matplotlib created a temporary config/cache directory at /tmp/matplotlib-ut1p_wem because the default path (/home/jayson/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+Critical error during semantic analysis: /home/jayson/.local/lib/python3.10/site-packages/pydrake/symbolic.pyi:203: error: invalid syntax  [syntax]
+INFO: Elapsed time: 2480.116s, Critical Path: 183.63s
+INFO: 6315 processes: 3324 internal, 2991 linux-sandbox.
+FAILED: Build did NOT complete successfully
+</code></pre>
     </p>
     <li>LeafSystem?</li>
   </ul>
