@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Least squares</title>
+    <meta name="Least squares" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../notes.js"></script>
+  
+    <script src="../../../notes-mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+  
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  <code>State estimation</code> (process of computing a physical quantity like position 
+  from a set of measurements) is used for localisation in autonomous driving.
+  Related to state estimation is the idea of <code>parameter estimation</code>. 
+  Unlike a <code>state</code>, which we will define as a physical quantity that changes over time, 
+  a <code>parameter</code> is constant over time. 
+  Position and orientation are states of a moving vehicle, while the resistance of a particular 
+  resistor in the electrical sub-system of a vehicle would be a parameter.
+
+  <p>
+    Things to know about:
+    <ul>
+      <li>Ordinary and weighted least squares</li>
+      <ul>
+        <li>How is the LS error criterion used to estimate the best parameters</li>
+        <li>Derive the necessary normal equations that we'll need to 
+          solve to use the method</li>
+      </ul>
+      <li>Recursive least squares</li>
+      <li>Link between least squares and the maximum likelihood estimation technique</li>
+    </ul>
+  </p>
+  Carl Friedrich Gauss' description of <code>Least Squares</code>:
+  <br>
+  The most probable value of an unknown parameter is that which minimizes the sum of 
+  squared errors between what we observe and what we expect multiplied by numbers that
+  measure the degree of precision.
+</section>
+
+<section id="2"><h1>Example</h1>
+  Suppose we are trying to measure the value in ohms of a carbon film
+  simple resistor within the drive system of an autonomous vehicle. Let's say we collect 
+  4 separate measurements, sequentially using a multimeter. 
+  Let's say the resistor is rated at $1k\Omega$. 
+  However, due to a number of factors, the true resistance can vary from the rated value. 
+  The resistor has a gold band which indicates that it can vary by as much as 
+  5%. Furthermore, let's imagine that our multimeter is particularly poor and that 
+  the person making the measurements is not particularly careful. 
+  <p>
+    <table class="table1 center">
+      <tr>
+        <th>Measurement</th>
+        <th>Resistance $\Omega$</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1068</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>988</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>1002</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>996</td>
+      </tr>
+    </table>
+  </p>
+
+  Let $x$ be the actual resistance. Assume it is a constant, but unknown.
+  We make measurements, $y$, of the resistance. We model our measurements as
+  corrupted by noise $v$.
+  $$\text{Measurement model}: y = x+v$$
+
+  For now, we'll treat this noise as equivalent to a general error, 
+  i.e. not interpret the noise from a probabilistic perspective.
+  
+  <figure>
+    <img style="height:150px; width:auto"
+    src="../../../figures/drone/18_ls1_measModel.png"/>
+  </figure>
+
+  <p>
+    For each of the four measurements, we define a scalar noise term that is independent of the 
+    other noise terms. Statistically, we would say in this case that the noise is 
+    <code>independent and identically distributed</code> or IID. 
+  </p>
+    
+  Next, we define the error between each measurement and the actual value of our resistance $x$. 
+  But remember, we don't yet know what $x$ is. To find $x$, we square these errors to 
+  arrive at an equation that is a function of our measurements and the unknown resistance 
+  that we're looking for. 
+  
+  <p>
+    With these errors defined, the method of least squares says that the resistance value we 
+    are looking for, that is the best estimate of $x$ is one which minimizes the squared error 
+    criterion, also sometimes called the 
+    <code>squared error cost function</code> or <code>loss function</code>. 
+  </p>
+  <figure>
+    <img style="height:60px; width:auto"
+    src="../../../figures/drone/19_ls2_squaredError.png"/>
+  </figure>
+
+  To minimize the squared error criterion, we'll rewrite our errors in matrix notation. 
+  This will be especially helpful when we have to deal with hundreds or even thousands of 
+  measurements. We'll define an error vector identified as bold e, that is a function of our observations stacked into a vector y and a matrix H called the Jacobian. Finally, our true resistance x. H has the dimensions m by n, where m is the number of measurements and n is the number of unknowns or parameters that we wish to estimate. In general, this will be a rectangular matrix which we can write down quite easily in this linear case. It will require some more mathematical effort to compute when we discuss non-linear estimation in an upcoming lesson. Note here that x is a single scaler. We'll see later that it can be a vector comprising multiple unknowns. With these definitions in mind, we can convert our squared error criterion to vector notation as follows. Expanding out the brackets, we arrive at this somewhat intimidating expression. So, what now? Well, remember that we need to minimize the squared error with respect to our true resistance x. From calculus, we know that we can do this by taking a derivative of the error function with respect to the unknown x and setting the derivative to zero. Let's do exactly that. We'll have to use some standard matrix expressions. Re-arranging, we arrive at what are called the normal equations, which can be written as a single matrix formula. We can solve these to find x-hat, the resistance which minimizes our squared error criterion. This expression has a unique solution if and only if H transpose H is not singular. In other words, if the matrix has an inverse. If we have m measurements and n unknown parameters, H transpose H will be n by n. The matrix will be invertible if and only if m is greater than or equal to n. So, we need at least as many measurements as unknowns in order to derive the least squares solution. This will usually not be a problem. In fact, we'll often face the challenge of dealing with too many measurements. But nevertheless, you should keep this limitation in mind when working with the formula. Coming back to our particular resistance problem, let's fill out our variables. Once we have these quantities, it's just a matter of plug and chug. The expression is quite straightforward to code up as you'll see in your module assignment. Note here that the expression simplifies to the arithmetic mean of our four measurements. Perhaps this is something you thought of doing all along. Now, we have another justification for using the arithmetic mean, it minimizes the simple least squares criterion. Finally, we should note two important assumptions that we've made. First, we've assumed that our measurement model is linear. This is a very important assumption that is often broken in complex systems. We'll discuss non-linear measurement models in later lessons. Second, we've assumed that all of our measurements have an equal weight in our error equation. To put this another way, we've assumed that we care about each of our measurements equally. To summarize, in this video, you've learned that the method of least squares was pioneered by Carl Friedrich Gauss who used it to accurately predict the orbit of a new planet like object called Ceres. You saw how we can minimize the least squares criterion to solve for parameter values of interest. We noted that the method of ordinary least squares assumes a linear measurement model and can't handle measurements of unequal importance. In the next video, we'll extend the method of least squares to the method of weighted least squares, which can account for measurements of varying importance.
+</section>
+
+<section id="10"><h1>Musings</h1>
+  <ul>
+
+  </ul>
+</section>
+
+</chapter>
+</body>
+</html>
+
