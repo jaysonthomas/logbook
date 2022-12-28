@@ -161,6 +161,17 @@ grep -r "index.ipynb" /folder/path
   Using bazel as a build system for drake - <a href="https://t.ly/jRAN">ref</a>.
 </section>
 
+<section id="5"><h1>Errors</h1>
+  I had the error described <a href="https://t.ly/3_lK">here</a> generated using
+  bazel instead of cmake. Did the following to resolve it:
+<pre><code class="bash">
+pip3 uninstall drake
+</code></pre>
+  I got a similar matplotlib warning. Changing the permission of just the .matplotlib directory
+  and the one before made no difference. Drake was installed to a different directory to the one
+  mentioned in the forum. Wonder how the installation paths are decided for these libraries?
+</section>
+
 <section id="10"><h1>Questions & todo</h1>
   <ul>
     <li>Unable to find texture files</li>
@@ -172,25 +183,6 @@ grep -r "index.ipynb" /folder/path
       which can act like a systematic log.
     </p>
 
-    <p>
-      <li>Current error to deal with</li>
-<pre><code class="bash">
-$ cd drake
-$ bazel build //...
-Extracting Bazel installation...
-Starting local Bazel server and connecting to it...
-INFO: Analyzed 10129 targets (458 packages loaded, 33701 targets configured).
-INFO: Found 10129 targets...
-ERROR: /home/jayson/P/drakeCpp/drake/bindings/pydrake/BUILD.bazel:789:22: GenerateMypyStubs bindings/pydrake/pydrake/__init__.pyi failed: (Exit 1): stubgen failed: error executing command bazel-out/k8-opt/bin/bindings/pydrake/stubgen --quiet '--package=pydrake' '--output=bazel-out/k8-opt/bin/bindings/pydrake'
-
-Use --sandbox_debug to see verbose messages from the sandbox and retain the sandbox build root for debugging
-Matplotlib created a temporary config/cache directory at /tmp/matplotlib-ut1p_wem because the default path (/home/jayson/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
-Critical error during semantic analysis: /home/jayson/.local/lib/python3.10/site-packages/pydrake/symbolic.pyi:203: error: invalid syntax  [syntax]
-INFO: Elapsed time: 2480.116s, Critical Path: 183.63s
-INFO: 6315 processes: 3324 internal, 2991 linux-sandbox.
-FAILED: Build did NOT complete successfully
-</code></pre>
-    </p>
     <li>LeafSystem?</li>
   </ul>
 </section>
