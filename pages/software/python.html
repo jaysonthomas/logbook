@@ -8,14 +8,13 @@
     <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
     <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+    <script type="text/javascript" src="../../notes.js"></script>
 
-    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script src="../../notes-mathjax-config.js" defer></script> 
     <script type="text/javascript" id="MathJax-script" defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
-
+    
     <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
     <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
     <script>hljs.initHighlightingOnLoad();</script>
@@ -135,13 +134,13 @@ outputArray = np.vstack(array1, array2)
   <ul>
     <li>Convert group of numpy arrays into a pandas dataframe</li>
 <pre><code class="python">
-  test = np.vstack([w,h]).T
-  test.shape
-  df = pd.DataFrame(test, columns=['w', 'h'])
+test = np.vstack([w,h]).T
+test.shape
+df = pd.DataFrame(test, columns=['w', 'h'])
 
-  # If w and h are just 2 arrays with n rows each, when vertically stacked,
-  # the array turns into a (2xn) array. We have to then transpose it to get
-  # to a column major form.
+# If w and h are just 2 arrays with n rows each, when vertically stacked,
+# the array turns into a (2xn) array. We have to then transpose it to get
+# to a column major form.
 </code></pre>    
     <p></p>
     
@@ -151,12 +150,19 @@ outputArray = np.vstack(array1, array2)
 
     <li>Find all rows of a particular column that are nans</li>
 <pre><code class="python">
-  df = df['colName']
-  df[pd.isna(df)].index
+df = df['colName']
+df[pd.isna(df)].index
 </code></pre>
 
     <li>Appending to a dataframe is expensive</li>
     Use lists instead - <a href="https://bit.ly/3Fg5Ve3">Ref</a>.
+
+    <p>
+      <li>Find the index of the max value of a particular column</li>
+<pre><code class="python">
+df['columnName'].idxmax()
+</code></pre>
+    </p>
   </ul>
 </section>
 

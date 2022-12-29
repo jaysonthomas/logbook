@@ -8,14 +8,11 @@
     <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
     <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+    <script type="text/javascript" src="../../notes.js"></script>
 
-    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script src="../../notes-mathjax-config.js" defer></script> 
     <script type="text/javascript" id="MathJax-script" defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || 
-    document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
@@ -287,20 +284,65 @@ Linking to the equation from elsewhere.
     <li>Submodules</li>
     <a href="https://t.ly/VMEV">Ref</a>.
 <pre><code class="bash">
-  git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
+git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
 </code></pre>
 
     <li>Unstage added files</li>
 <pre><code class="bash">
-  git reset HEAD
+git reset HEAD
 </code></pre>
 
-    <li>List all branches</li>
+    <li>Git branch</li>
 <pre><code class="bash">
-  git branch -a
+# List all branches
+git branch -a
+
+# Create branch Y from another, say X
+# Changes from branch X will show up as changes from the master on the 
+# new branch Y.
+git checkout [X]
+git checkout -b [Y]
+
+# To merge Z into the newly created branch Y
+git merge [Z]
+
+# What branch am I on?
+git branch --show
+</code></pre>
+
+    <p>
+      <li>Git stash</li>
+<pre><code class="bash">
+# List all the stashes related to different branches with stash indices
+git stash list
+
+# Delete a stash
+git stash drop index
 </code></pre>    
+    </p>
+
+    <li>Error when doing a git pull on the new branch created from another (not master)</li>
+    <a href="https://bit.ly/3YSHjRo">Great explanation</a> - fetch included.
+<pre><code class="bash">
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> 7374-adaptive-control
+</code></pre>    
+    <p>
+      <li>Git fetch</li>
+      <a href="https://t.ly/OCdf">Good link</a> on this. I think fetch is used to just
+      pull in meta-data.
+    </p>
   </ul>
 </section>
+
+</chapter>
 </body>
 </html>
 
