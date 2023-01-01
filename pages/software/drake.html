@@ -126,7 +126,7 @@ cp -r ~/Downloads/drake-20221116-jammy/drake/share/drake/manipulation/models/ycb
   </ul>
 </section>
 
-<section id="2"><h1>Temporary way of running Drake locally</h1>
+<section id="2"><h1>Temporary way of running the python version of Drake locally</h1>
   <ul>
     <li>Activate virtual environment</li>
 <pre><code class="python">
@@ -154,11 +154,22 @@ grep -r "index.ipynb" /folder/path
 </section>
 
 <section id="3"><h1>Learning resources</h1>
-  <a href="https://t.ly/Xss_">Zucker notes</a>.
+  <ul>
+    <li>Drake ros <a href="https://t.ly/Q1V1">github repo</a></li>
+    <li><a href="https://t.ly/Xss_">Zucker notes</a></li>
+    <li><a href="https://t.ly/VHqQ">C++ documentation</a></li>
+  </ul> 
 </section>
 
 <section id="4"><h1>Executing drake cpp examples</h1>
   Using bazel as a build system for drake - <a href="https://t.ly/jRAN">ref</a>.
+
+<pre><code class="bash">
+cd drake
+bazel build //... --jobs 12
+bazel run //tools:meldis -- --open-window &
+bazel run //examples/acrobot:run_swing_up
+</code></pre>
 </section>
 
 <section id="5"><h1>Errors</h1>
@@ -170,6 +181,33 @@ pip3 uninstall drake
   I got a similar matplotlib warning. Changing the permission of just the .matplotlib directory
   and the one before made no difference. Drake was installed to a different directory to the one
   mentioned in the forum. Wonder how the installation paths are decided for these libraries?
+</section>
+
+<section id="6"><h1>Drake terminology</h1>
+  <ul>
+    <li>MeshCat LCM Display Server (MeLDiS)</li>
+    Offers a MeshCat visualization server that listens for and draws 
+    Drake's legacy LCM visualization messages.
+
+    <p>
+      <li>MeshCat</li>
+      <a href="https://t.ly/65MQ">Github repo</a>.
+      MeshCat is a remotely-controllable 3D viewer, built on top of three.js. 
+      The MeshCat viewer runs in a browser and listens for geometry commands over WebSockets. 
+      This makes it easy to create a tree of objects and transformations by sending the 
+      appropriate commands over the websocket. 
+      
+      <p>
+        The MeshCat viewer is meant to be combined with an interface (python or julia) in the 
+        language of your choice (C++ in this case).
+      </p>
+    </p>
+
+    <li>LCM</li>
+    <a href="https://t.ly/CiKN">Discussion</a> on pros and cons of LCM.
+    There a further <a href="https://t.ly/CMi5">discussion</a> on protocol
+    buffers, <code>protobuf</code>.
+  </ul>
 </section>
 
 <section id="10"><h1>Questions & todo</h1>

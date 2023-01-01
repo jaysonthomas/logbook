@@ -3,18 +3,17 @@
 <html>
 
   <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <title>Fundamentals - maths</title>
+    <meta name="Fundamentals - maths" content="text/html; charset=utf-8;" />
     <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
     <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+    <script type="text/javascript" src="../../notes.js"></script>
 
-    <script src="../../htmlbook/mathjax-config.js" defer></script> 
+    <script src="../../notes-mathjax-config.js" defer></script> 
     <script type="text/javascript" id="MathJax-script" defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
 
     <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
     <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
@@ -53,6 +52,7 @@
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Differentiation</a></li>
+    <li><a href="#2">Least squares</a></li>
     <li><a href="#10">Musings</a></li>
   </ul>
 </section>
@@ -71,6 +71,40 @@
     <li>$\frac{d(cos(2x+b))}{dx}$</li>
     $= -2sin(2x+b) - sin(2x+b)\frac{d(b)}{dx} = -2sin(2x+b)$
   </ul>
+</section>
+
+<section id="2"><h1>Least squares</h1>
+  <ul>
+    <li>Subscript of $argmin$</li>
+    $argmin_x f(x)$ is the value of $x$ for which $f(x)$ attains its minimum.
+
+    <p>
+      <li>When multiplying with the transpose of a matrix</li>
+      The order in which the multiplicands are placed before and after the multiplication
+      is based on the dimensions of the matrices and how they change when transposed.
+      I like <a href="https://t.ly/PzlL">this advice</a> to   
+      first make sure to get the dimensions of all the vectors and matrices in place.
+    </p>
+
+    <li>Derivative of a function containing $x^T$ and $x$ w.r.t. $x$</li>
+    <a href="https://t.ly/PzlL">Great explanation</a>.
+
+    <p>
+      <li>Product rule</li>
+      $$
+        \frac{d}{dx}[f(x)\cdot g(x)] =
+        \frac{d}{dx}[f(x)]\cdot g(x) + f(x) \cdot \frac{d}{dx}[g(x)]
+      $$
+    </p>
+
+    <li>Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$</li>
+    <a href="https://t.ly/WUKV">Ref1</a>
+
+    <p>
+      <li>What a derivative evaluated at a particular value looks like</li>
+      $$\frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}}$$
+    </p>
+  </ul>  
 </section>
 
 <section id="10"><h1>Musings</h1>
