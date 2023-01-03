@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Recursive least squares</title>
+    <meta name="Recursive least squares" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../notes.js"></script>
+  
+    <script src="../../../notes-mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+  
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Recursive least squares</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  RLS extends the batch LS solution to work on the fly by keeping a running estimate of the 
+  LS solution as new measurements stream in. 
+  
+  <p>
+    Ideally, we'd like to have as 
+    many measurements as possible to get an accurate estimate. But, the amount of 
+    computational resources needed to solve 
+    our normal equations will grow with the measurement vector size. For this reason, having
+    a batch of stored measurements is not a good idea.  
+  </p>
+
+  We use a recursive method to keep a running estimate 
+  of the optimal parameter for all of the measurements that we've collected up to the previous 
+  time step and then update the estimate given the measurement at the current time step. 
+  Thus we incrementally update our estimate as we go along.
+</section>
+
+<section id="2"><h1>Linear recursive estimator</h1>
+  Let us assume that we have our best optimal estimate of our unknown parameters at time $k-1$. 
+  At time $k$ we receive a new measurement that we will assume follows a linear measurement 
+  model with additive Gaussian noise. 
+
+  $$
+    y_k = H_kx + v_k
+  $$
+  
+  Our goal is to compute an updated optimal estimate at 
+  time $k$, given our measurement $y_k$ and the previous estimate $\hat{x}_{k-1}$. 
+  <p></p>
+
+  A linear recursive estimate is given by the following expression:
+  
+  $$
+    \hat{x}_k = \hat{x}_{k-1} + 
+    \underbrace{K_k}_{\text{Estimator} \atop \text{gain matrix}}
+    (y_k - H_k\hat{x}_{k-1})
+  $$
+  Here k is called an estimator gain matrix. The term in brackets is called the innovation. 
+  It quantifies how well our current measurement matches our previous best estimate. 
+  Even without knowing the expression for k. We can already see how this recursive structure works. 
+  
+  Our new estimate is simply the sum of the old estimate and corrective term based on the 
+  difference between what we expected the measurement to be and what we actually measured. 
+  In fact, if the innovation were equal to zero, we would not change our old estimate at all. 
+  
+  Now, how do we compute k? Well, for that, we'll need to use a recursive least squares 
+  criterion and some matrix calculus as before. This time the math is significantly more 
+  involved, so, only work through a few steps and let the more curious learners refer to 
+  the textbook for more information. Our least squares criterion and in this case will be 
+  the expected value of r squared errors for our estimate at time k. 
+  
+  For a single scalar parameter like resistance, this amounts to minimizing the estimator 
+  state variance, sigma squared sub k. For multiple unknown parameters, this is equivalent 
+  to minimizing the trace of our state covariance matrix at time t. This is exactly like our 
+  former least squares criterion except now we have to talk about expectations. 
+  Instead of minimizing the error directly, we minimize its expected value which is actually 
+  the estimator variance. The lower the variance, the more we are certain of our estimate. 
+  
+  It turns out that we can formulate a recursive definition for this state covariance matrix P_k. 
+  By using matrix calculus and taking derivatives, we can show that this criterion is minimized 
+  when k has the following value. The full derivation is a bit beyond the scope of our course 
+  but can be found in any standard estimation text. 
+  
+  Finally, by using this formulation, we can also rewrite our recursive definition for 
+  P_k into something much simpler. Take a second to think about this equation. 
+  The larger our gain matrix k, the smaller our new estimator covariance will be. 
+  Intuitively, you can think of this gain matrix as balancing the information we get from our 
+  prior estimate and the information we receive from our new measurement. 
+  
+  Putting everything together, our least squares algorithm looks like this. 
+  We initialize the algorithm with estimate of our unknown parameters and a corresponding 
+  covariance matrix. This initial guess could come from the first measurement we take and the 
+  covariance could come from technical specifications. Next, we set up our measurement model 
+  and pick values for our measurement covariance. 
+  
+  Finally, every time a measurement is recorded, we compute the measurement gain and then 
+  use it to update our estimate of the parameters and our estimator covariance or uncertainty. 
+  Every time we get a new measurement our parameter uncertainty shrinks. 
+  
+  Why is recursive least squares an important algorithm? As we've seen, it enables us to 
+  minimize computational effort in our estimation process which is always a good thing. More 
+  importantly, recursive least squares forms the update step of the linear Kalman filter. 
+  
+  We'll discuss this in more detail in the next module. In your upcoming graded assessment, 
+  you'll get some hands on experience using recursive least squares to determine a voltage 
+  value from a series of measurements. 
+  
+  To summarize, the recursive least squares algorithm lets us produce a running estimate of a 
+  parameter without having to have the entire batch of measurements at hand and recursive 
+  least squares is a recursive linear estimator that minimizes the variance of the parameters 
+  at the current time. In the next and final video of this module, we'll discuss why 
+  minimizing squared errors is a reasonable thing to do by connecting the method of 
+  least squares with another technique from statistics, maximum likelihood estimation.
+</section>
+
+</chapter>
+</body>
+</html>

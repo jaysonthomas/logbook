@@ -150,6 +150,13 @@ table.table1, table.table1 th, table.table1 td {
   text-align: left;
 }
 
+/* Created the following copy of table1 to center the text in each column */
+table.table2, table.table2 th, table.table2 td {
+  border: 1px solid rgb(68, 66, 66);
+  border-collapse: collapse;
+  padding: 5px;
+  text-align: center;
+}
 /*
  * Created the following to center a table.
  * Set the class of table to center.
