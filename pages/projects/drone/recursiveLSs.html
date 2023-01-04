@@ -91,64 +91,124 @@
   $$
     \hat{x}_k = \hat{x}_{k-1} + 
     \underbrace{K_k}_{\text{Estimator} \atop \text{gain matrix}}
-    (y_k - H_k\hat{x}_{k-1})
+    \underbrace{(y_k - H_k\hat{x}_{k-1})}_{\text Innovation}
   $$
-  Here k is called an estimator gain matrix. The term in brackets is called the innovation. 
-  It quantifies how well our current measurement matches our previous best estimate. 
-  Even without knowing the expression for k. We can already see how this recursive structure works. 
+  <code>Innovation</code> quantifies how well our current measurement matches our previous 
+  best estimate. 
   
-  Our new estimate is simply the sum of the old estimate and corrective term based on the 
-  difference between what we expected the measurement to be and what we actually measured. 
-  In fact, if the innovation were equal to zero, we would not change our old estimate at all. 
+  <p>
+    We update our new state (estimate) as a linear combination of the previous estimate 
+    (best guess) and the current measurement residual (or error, 
+    difference between what we expected the measurement to be and what we actually measured),
+    weighted by a gain matrix $K_k$
+    If the innovation were equal to $0$, we would not change our old estimate at all. 
+  </p>
+</section>
+
+<section id="3"><h1>Computing the estimator gain matrix $K_k$</h1>
+  We can compute it by minimising a similar LSs criterion, but this time we'll use a
+  probabilistic formulation. We wish to minimise the expected value of the sum of squared
+  errors of our current estimate at time step $k$.
+
+  <p>
+    For a single scalar parameter like resistance, this amounts to minimising the estimator 
+    state variance:
+  </p>
+  $$\begin{align*}
+    \mathcal L_{RLS} &= \mathbb{E}[(x_k - \hat{x}_k)^2] \\
+    &= \sigma^2_k
+  \end{align*}$$
+
+  For multiple $n$ unknown parameters, this is equivalent 
+  to minimising the trace of our state covariance matrix at time step $k$: 
   
-  Now, how do we compute k? Well, for that, we'll need to use a recursive least squares 
-  criterion and some matrix calculus as before. This time the math is significantly more 
-  involved, so, only work through a few steps and let the more curious learners refer to 
-  the textbook for more information. Our least squares criterion and in this case will be 
-  the expected value of r squared errors for our estimate at time k. 
+  $$\begin{align*}
+    \mathcal L_{RLS} &= \mathbb{E}[(x_{1k} - \hat{x}_{1k})^2
+    + \cdots + (x_{nk} - \hat{x}_{nk})^2] \\
+    &= Trace(\underbrace{P_k}_{\text Estimator \atop \text covariance})
+  \end{align*}$$
   
-  For a single scalar parameter like resistance, this amounts to minimizing the estimator 
-  state variance, sigma squared sub k. For multiple unknown parameters, this is equivalent 
-  to minimizing the trace of our state covariance matrix at time t. This is exactly like our 
-  former least squares criterion except now we have to talk about expectations. 
-  Instead of minimizing the error directly, we minimize its expected value which is actually 
+  Instead of minimising the error directly, we minimise its expected value which is actually 
   the estimator variance. The lower the variance, the more we are certain of our estimate. 
   
-  It turns out that we can formulate a recursive definition for this state covariance matrix P_k. 
-  By using matrix calculus and taking derivatives, we can show that this criterion is minimized 
-  when k has the following value. The full derivation is a bit beyond the scope of our course 
-  but can be found in any standard estimation text. 
+  <p>
+    Using our linear recursive formulation, we can express the state covariance matrix $P_k$
+    as a function of $K_k$:
+
+    $$
+      P_k = (1-K_kH_k)P_{k-1}(1-K_kH_k)^T + K_kR_kK^T_k
+    $$  
+  </p>
+  
+  By using matrix calculus and taking derivatives, we can show that this criterion is minimised 
+  when $K_k$ has the following value: (find the full derivation in any standard estimation text)
+
+  $$
+    K_k = P_{k-1}H^T_k(H_kP_{k-1}H^T_k + R_k)^{-1}
+  $$
   
   Finally, by using this formulation, we can also rewrite our recursive definition for 
-  P_k into something much simpler. Take a second to think about this equation. 
-  The larger our gain matrix k, the smaller our new estimator covariance will be. 
-  Intuitively, you can think of this gain matrix as balancing the information we get from our 
-  prior estimate and the information we receive from our new measurement. 
+  $P_k$ into something much simpler. 
+
+  $$\begin{align*}
+    P_k &= P_{k-1} - K_kH_kP_{k-1} \\
+    &= (1-K_kH_k)P_{k-1}
+  \end{align*}$$
   
-  Putting everything together, our least squares algorithm looks like this. 
-  We initialize the algorithm with estimate of our unknown parameters and a corresponding 
-  covariance matrix. This initial guess could come from the first measurement we take and the 
-  covariance could come from technical specifications. Next, we set up our measurement model 
-  and pick values for our measurement covariance. 
+  The larger the gain matrix $K£, the smaller the new estimator covariance will be. 
+  Intuitively, the gain matrix balances the information we get from the 
+  prior estimate and the information we receive from the new measurement. 
+</section>
+
+<section id="4"><h1>RLS algorithm</h1>
+  <ul>
+    <li>Initialise the estimator</li>
+    Initialise the estimate of the unknown parameters and the corresponding covariance 
+    matrices.
+
+    $$\begin{align*}
+      \hat{x}_0 &= \mathbb{E}[x] \\
+      P_0 &= \mathbb{E}[(x-\hat{x}_0)(x-\hat{x}_0)^T]
+    \end{align*}$$
+  </ul>
+  This initial guess could come from the first measurement we take and the 
+  covariance could come from technical specifications. 
   
-  Finally, every time a measurement is recorded, we compute the measurement gain and then 
-  use it to update our estimate of the parameters and our estimator covariance or uncertainty. 
+  <p>
+    <li>
+      Set up the measurement model, defining the Jacobian and the measurement 
+      covariance matrix
+    </li>
+    $$
+      y_k = H_kx + v_k
+    $$
+  </p>
+
+  <li>Update the estimate $\hat{x}_k$ and the covariance $P_k$</li>
+  Using the following:
+  $$\begin{align*}
+    K_k &= P_{k-1}H^T_k(H_kP_{k-1}H^T_k + R_k)^{-1} \\
+    \hat{x}_k &= \hat{x}_{k-1} + K_k(y_k - H_k\hat{x}_{k-1}) \\
+    P_k &= (1-K_kH_k)P_{k-1}
+  \end{align*}$$
+  
+  Every time a measurement is recorded, we compute the measurement gain and then 
+  use it to update the estimate of the parameters and the estimator covariance or uncertainty. 
   Every time we get a new measurement our parameter uncertainty shrinks. 
-  
-  Why is recursive least squares an important algorithm? As we've seen, it enables us to 
-  minimize computational effort in our estimation process which is always a good thing. More 
-  importantly, recursive least squares forms the update step of the linear Kalman filter. 
-  
-  We'll discuss this in more detail in the next module. In your upcoming graded assessment, 
-  you'll get some hands on experience using recursive least squares to determine a voltage 
-  value from a series of measurements. 
-  
-  To summarize, the recursive least squares algorithm lets us produce a running estimate of a 
-  parameter without having to have the entire batch of measurements at hand and recursive 
-  least squares is a recursive linear estimator that minimizes the variance of the parameters 
-  at the current time. In the next and final video of this module, we'll discuss why 
-  minimizing squared errors is a reasonable thing to do by connecting the method of 
-  least squares with another technique from statistics, maximum likelihood estimation.
+</section>
+
+<section id="5"><h1>Summary</h1>
+  RLS enables us to 
+  minimise computational effort in our estimation process. More 
+  importantly, it forms the update step of the linear Kalman filter. 
+  RLS lets us produce a running estimate of a 
+  parameter without having to have the entire batch of measurements at hand. It 
+  is a recursive linear estimator that minimises the variance of the parameters 
+  at the current time. 
+
+  <p>
+    In the jupyter notebook, use RLS to determine a voltage value from a series of measurements. 
+  </p>
 </section>
 
 </chapter>
