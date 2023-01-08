@@ -10,3 +10,6 @@
 [submodule "slides"]
 	path = slides
 	url = git@github.com:jaysonthomas/slides.git
+[submodule "jlib"]
+	path = jlib
+	url = git@github.com:jaysonthomas/jlib.git
