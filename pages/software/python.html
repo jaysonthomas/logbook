@@ -66,8 +66,8 @@
 <section id="1"><h1>List</h1>
   <subsection><h1>List of numpy arrays</h1>
     The following is a list of 2 elements; each being a numpy array.
-    <pre class="highlight">
-      <code>temp = 
+<pre><code class="python">
+temp = 
 [
   np.array([
             [1, 0, 0, 1]
@@ -79,7 +79,8 @@
             [0, 1, 0, 0]
             [0, 0, 1, 1]
             [0, 0, 0, 1]])
-]</code></pre>
+]
+</code></pre>
 
     <p>
       I can then create an empty list and add this list to it.
@@ -170,8 +171,38 @@ df['columnName'].idxmax()
   <ul>
     <li>Create an empty array</li>
 <pre><code class="python">
-  test = np.empty(N)
+test = np.empty(N)
 </code></pre>    
+
+    <p>
+      <li>Create a 2d array</li>
+<pre><code class="python">
+# Outer square brackets are needed.
+# 2nd pair of square brackets indicate an individual row.
+# Rows are separated by a comma.
+# Output of x.shape: (1,5)
+x = np.array([[1, 2, 3, 4, 5]])
+
+# Output of x.shape: (5,)
+# Not a 2d array; no 2nd pair of []s.
+x = np.array([1, 2, 3, 4, 5])
+
+# Output of x.shape: (5,1)
+x = np.array([[1, 2, 3, 4, 5]]).T
+
+# Alternative. x is no longer of type array but numpy.matrix.
+x = np.mat([1, 2, 3, 4, 5]).T
+
+# To convert from matrix to array type
+np.asarray(x)
+</code></pre>
+    </p>
+
+    <li>Operations with numpy arrays</li>
+    We can use operations like <code>.shape</code>, <code>.T</code>,
+    but <code>type()</code> is not an attribute of the numpy array class,
+    hence we can't do <code>.type</code>. Similarly, converting numpy matrix
+    back to an array - <code>asarray</code> is not an attribute of the matrix class.
   </ul>
 </section>
 
