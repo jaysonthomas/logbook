@@ -224,7 +224,7 @@ Output: {"type": "success"}
     <li>Search</li>
 <pre><code class="python">
 line = ',{"test":"2022-11-07T14:55:14","source":"water","test2":{ "type": "success"}'
-ts = re.search(r'{(.*?),"source"', line).group(1)
+ts = re.search(r'{(.*),"source"', line).group(1)
 
 Output: "test":"2022-11-07T14:55:14"
 </code></pre>
@@ -233,13 +233,9 @@ Output: "test":"2022-11-07T14:55:14"
     <code>group(0)</code> - contains the string considered for the search.
     <br>
     <code>group(1)</code> is the portion represented in between the brackets using wildcards.
-    <br>
-    <code>(.*?)</code> - The <code>?</code> restricts the output to just the characters 
-    in the same position as the wildcards between the brackets. Otherwise, it will output the string
-    within the brackets as well as the remainder of the string.
-    <br><br>
-
-    <li>Pick the last word after a given pattern is found</li>
+    
+    <p>
+      <li>Pick the last word after a given pattern is found</li>
 <pre><code class="python">
 line = 'Blah AS type'
 temp = re.search(r'^.*AS (\w*)', line, flags=re.IGNORECASE)
@@ -248,10 +244,11 @@ if temp != None:
 
 Output: type
 </code></pre>
-    <code>\w</code> - returns a character. The asterisk picks the repetition of characters. No specific characters
-    mentioned here.
-    <br>
-    With <code>IGNORECASE</code>, 'AS' can be lower or uppercase.
+      <code>\w</code> - returns a character. The asterisk picks the repetition of characters. No specific characters
+      mentioned here.
+      <br>
+      With <code>IGNORECASE</code>, 'AS' can be lower or uppercase.
+    </p>
   </ul>  
 </section>
 
