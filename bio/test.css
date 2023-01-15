@@ -1,0 +1,51 @@
+H1 { 
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  font-size: xx-large;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-heigth: normal;
+}
+H2 {
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  font-size: x-large;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-heigth: normal;
+}
+H3 {
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  font-size: large;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-heigth: normal;
+}
+TD, UL {
+  font-size: small;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-heigth: normal;
+}
+
+.searchbox{
+padding: 5px;
+border: 1px solid #000000;
+background-color: #eeeeee;
+margin-top: 10px;
+}
