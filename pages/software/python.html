@@ -164,6 +164,15 @@ df[pd.isna(df)].index
 df['columnName'].idxmax()
 </code></pre>
     </p>
+
+    <li>Creating a dataframe from a dictionary but with a twist</li>
+    If there are 2 columns A and B, and I want 3 rows in A with different entries, 
+    but the same corresponding row entry in B:
+<pre><code class="python">
+l = ['a1', 'a2', 'a3']
+temp = pd.DataFrame({'A':l,
+                     'B':'test'})
+</code></pre>
   </ul>
 </section>
 
