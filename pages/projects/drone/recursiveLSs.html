@@ -15,23 +15,22 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     
-    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
   
     <link rel="stylesheet" type="text/css" href="../../../notes.css" />
   </head>
 
-<body onload="loadChapter('manipulation');">
+<body onload="loadChapter('');">
 
   <!-- The following division should be written on every page -->
 <div data-type="titlepage" pdf="no">
   <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's logbook</a></h1>
+    <h1><a href="../../../index.html" style="text-decoration:none;">logbook</a></h1>
     <p data-type="subtitle">Mostly control systems</p> 
     <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
     <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Wynne-Thomas, 2020-2022<br/>
       Last modified <span id="last_modified"></span>.</br>
       <script>
       var d = new Date(document.lastModified);
@@ -42,8 +41,8 @@
 
 <table style="width:100%;" pdf="no"><tr style="width:100%">
   <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+  <td style="width:33%;text-align:center;"><a href="leastSquares.html">Least squares</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html></a></td>
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
@@ -56,21 +55,18 @@
 </section>
 
 <section id="1"><h1>Overview</h1>
-  RLS extends the batch LS solution to work on the fly by keeping a running estimate of the 
-  LS solution as new measurements stream in. 
+  RLS extends the batch LS solution to work on the fly by keeping a running estimate of the
+  optimal parameter (the LS solution) for all measurements collected up to the previous 
+  time step and then updates the estimate given the measurement at the current time step.  
+  Thus the estimate is updated incrementally as new measurements stream in. 
   
   <p>
     Ideally, we'd like to have as 
     many measurements as possible to get an accurate estimate. But, the amount of 
     computational resources needed to solve 
-    our normal equations will grow with the measurement vector size. For this reason, having
+    the normal equations will grow with the measurement vector size. For this reason, having
     a batch of stored measurements is not a good idea.  
   </p>
-
-  We use a recursive method to keep a running estimate 
-  of the optimal parameter for all of the measurements that we've collected up to the previous 
-  time step and then update the estimate given the measurement at the current time step. 
-  Thus we incrementally update our estimate as we go along.
 </section>
 
 <section id="2"><h1>Linear recursive estimator</h1>
@@ -185,7 +181,7 @@
   </p>
 
   <li>Update the estimate $\hat{x}_k$ and the covariance $P_k$</li>
-  Using the following:
+  For every measurement $k$:
   $$\begin{align*}
     K_k &= P_{k-1}H^T_k(H_kP_{k-1}H^T_k + R_k)^{-1} \\
     \hat{x}_k &= \hat{x}_{k-1} + K_k(y_k - H_k\hat{x}_{k-1}) \\
