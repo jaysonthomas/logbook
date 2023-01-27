@@ -3,14 +3,14 @@
 <html>
 
   <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <title>Discrete Probability</title>
+    <meta name="Discrete Probability" content="text/html; charset=utf-8;" />
     <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
     <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+    <script type="text/javascript" src="../../../notes.js"></script>
 
-    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script src="../../../notes-mathjax-config.js" defer></script> 
     <script type="text/javascript" id="MathJax-script" defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
@@ -44,7 +44,9 @@
 <table style="width:100%;" pdf="no"><tr style="width:100%">
   <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
   <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+  <td style="width:33%;text-align:right;">
+    <a class="next_chapter" href=leastSquares.html>Least Squares</a>
+  </td>
 </tr></table>
 
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
@@ -52,17 +54,21 @@
 
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
-    <li><a href="#1">Variance</a></li>
-    <li><a href="#2">Standard deviation</a></li>
-    <li><a href="#3">Z-score</a></li>
-    <li><a href="#4">Normalisation</a></li>
-    <li><a href="#5">Definitions related to probability</a></li>
+    <li><a href="#1">Example</a></li>
+    <li><a href="#2">Random variable</a></li>
+    <li><a href="#3">Expected value</a></li>
+    <li><a href="#4">Variance</a></li>
+    <li><a href="#5">Z-score</a></li>
+    <li><a href="#6">Normalisation</a></li>
+    <li><a href="#7">Probability mass function</a></li>
+    <li><a href="#8">Definitions related to probability</a></li>
+    <li><a href="#10">Musings</a></li>
   </ul>
 </section>
 
 <section id="1"><h1>Example</h1>
-  We are running tests to see if a bot comes to a stop at exactly the right point 
-  when it is asked to stop. We run the test a 1000 times. At the end of each test we
+  We are running tests to see if a bot comes to a stop at exactly the right 
+  point. We run the test a 1000 times. At the end of each test we
   measure its position w.r.t. the target. The results are as shown 
   <a href="https://t.ly/3nOj">here</a>.
 
@@ -168,13 +174,10 @@
     $$
       zScore = \frac{x-\mu}{\sigma}
     $$
-    It is similar to mapping 100seconds to the equivalent number of minutes.
-    Since a minute is 60s, we divide 100 by 60 to get the answer. Here,
-    each x-axis division is a standard deviation (denominator). The numerator
-    is the deviation from the mean along the x-axis scale.
-    Love the illustration <a href="https://t.ly/KsMH">here</a>.
-    I like the example <a href="https://t.ly/hEXC">here</a>.
   </ul>
+
+  Love the illustration <a href="https://t.ly/KsMH">here</a>.
+  <a href="https://t.ly/hEXC">This example</a> is genius.
 </section>
 
 <section id="6"><h1>Normalisation</h1>
@@ -192,9 +195,8 @@
 </section>
 
 <section id="7"><h1>Probability mass function</h1>
-  <code>Mass</code> is the quantity of matter in a physical body. It is also a measure of the 
-  body's inertia, the resistance to acceleration when a net force is applied. Example uses:
-  a mass of cyclists, the film has mass appeal.
+  <code>Mass</code> is the quantity of matter in a physical body. 
+  Example uses: a mass of cyclists, the film has mass appeal.
   
   A probability distribution divides the whole <code>probability mass</code> (equal to 1) of a
   random variable and distributes it across its possible outcomes, the 
@@ -262,10 +264,38 @@
 
 <section id="10"><h1>Musings</h1>
   <ul>  
-    <li>
-      I want to see a real life usage of variance to understand
-      how spread out the samples are from the mean.
-    </li>
+    <li>Probability mass function</li>
+      Mass is also a measure of the body's inertia, the resistance to 
+      acceleration when a net force is applied.
+
+    <p></p>
+    <li>Variance</li>
+    $\sigma^2$ is the long-term average ($E$) of the square of the
+    deviation from the mean, i.e. $E(X=(x_i-\mu)^2)$. 
+    The 'summation' will give the average deviation squared.
+    To find $\sigma$, square root is taken over the whole term after
+    the summation, which will just be the average deviation.
+
+    <p>
+      In the expected value equation, the probability of a random
+      variable taking on a particular value is based on prior experiments.
+      It doesn't necessarily mean, in a particular set of draws,
+      the value will occur a certain number of times. But, if we draw
+      enough number of times, we should see the frequency match the 
+      probability. For example, if I say the probability of drawing a 
+      5 is 0.9. But, I do an experiment of drawing a card only once. 
+      It is highly likely that I will draw a 5, but I could also 
+      draw another number. But, if I do it enough number of times, 
+      5 will be drawn more number of times to match its probability. 
+      The expected value will not converge to be the
+      mean if the probability isn't $\frac{1}{N}$ for all numbers.
+    </p>
+
+    <li>Z-score</li>
+    It is similar to mapping 100seconds to the equivalent number of minutes.
+    Since a minute is 60s, we divide 100 by 60 to get the answer. Here,
+    each x-axis division is a standard deviation (denominator). The numerator
+    is the deviation from the mean along the x-axis scale.
   </ul>
 </section>
 

@@ -337,7 +337,8 @@
   <p>
     In the case of equal variances, the same parameters that 
     minimize our weighted least squares criterion will also minimize our ordinary least 
-    squares criterion as we should expect. 
+    squares criterion as we should expect. We do get $\frac{1}{\sigma^2}$; but since the 
+    variance is constant, it will not affect the final estimate. 
   </p>
 
 </section>
@@ -461,7 +462,7 @@
         are mutually independent (i.e., the cross-covariance of any pair is zero).
       </li>
       Right! This relationship is shown on the last slide, where the entries on the main 
-      diagonal of the matrix \mathbf{R}R are the same and the off-diagonal entries are all 
+      diagonal of the matrix $R$ are the same and the off-diagonal entries are all 
       equal to zero.
     </p>
   </ul>
@@ -494,11 +495,11 @@
     <p>
       For each of the 4 sensors, take 100 measurements and work out the 
       variance. Variance is the sum of deviation from the mean times the probability
-      of occurrence of the corresponding measurement. The probability gives an indication
-      of how repeatable the measurement is. The variance gives an indication of how 
-      accurate the measurement is, but only w.r.t. the mean which itself could be inaccurate.
+      of occurrence of the corresponding measurement. 
       I'm guessing a manufacturer will need to provide this info when they do tests of 
-      measuring known physical properties.
+      measuring known physical properties. In most cases, they'd probably assume
+      the probability of each of the 100 measurements is the same. So, the variance
+      just becomes the mean of the squared deviations.
     </p>
 
     <li>
@@ -512,7 +513,8 @@
         Just to confirm, when someone says the variance is $x$, it gives no indication
         of the accuracy right? It only gives an indication of the bias of each sensor
         from whatever the mean is. I think <a href="https://bit.ly/3VB6OnG">this post</a>
-        is confirming my thoughts are correct.
+        is confirming my thoughts are correct. If the sensor is accurate, the mean
+        is the actual value of the physical quantity.
       </li>
     </p>
 

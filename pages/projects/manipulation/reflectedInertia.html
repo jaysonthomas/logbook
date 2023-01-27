@@ -68,9 +68,9 @@
       We can think of manipulators on a higher level, kinematically 
       (purely in terms of joint angles and end-effector positions), 
       as opposed to worrying about dynamics (joint torques and inertias)
-      because there is a lower PID control and a set of motor/gearbox that
-      ensures the required torque is always available to maintain the desired
-      position.
+      because there is a lower level PID control and a set of motor/gearbox 
+      that ensures the required torque is always available to maintain 
+      the desired position.
       <p>
         <b>Task</b><br>
         Make a simple pendulum swing to any position with minimal position
@@ -145,18 +145,20 @@
         on the motion of objects. <i>Statics</i> is the study of forces in
         the absence of changes in motion. 
         <br>
-        Direct-drive means the motor's movements are directly translated to the joint side.
+        <i>Direct-drive</i> means the motor's movements are directly 
+        translated to the joint side.
         There is no gearing or that the gear ratio is 1.
       </p>
       <li>Control</li>
       <p>
-        First order form of system dynamics: $\dot{x}=f(x,u)$ where $x$ is the
-        state vector, $u$ is the control input. There are various parameters like
-        $m$, $g$, $l$ involved in the equation.
+        First order form of system dynamics: $\dot{x}=f(x,u)$ where $x$ is 
+        the state vector, $u$ is the control input. There are various 
+        parameters like $m$, $g$, $l$ involved in the equation.
       </p>
       <li>Pendulum specific</li>
       <p>
-        The simple pendulum is perhaps the simplest abstraction of a 'manipulator'.
+        The simple pendulum is perhaps the simplest abstraction of a 
+        'manipulator'.
       </p>
       <equation><h1>Simple Pendulum</h1>
         $$x=[q,\dot{q}]^T$$
@@ -166,11 +168,11 @@
           = \begin{bmatrix}
             \dot{q}\\
             \frac{(\frac{-mglsin(q)}{N}+\tau)}
-            {(\frac{Iml^2}{N^2})N}
+            {(\frac{I_ml^2}{N^2})N}
             \end{bmatrix}
         $$
         Without a motor and gearbox, the rotor inertia of the motor $I_m$
-        as well as the gear ration $N$ is 1.      
+        and the gear ratio $N$ are 1.      
       </equation>
     </ul>
   </subsection>
@@ -178,7 +180,7 @@
   <subsection><h1>Steps</h1>
     <ul>
       <li>Write the system dynamics with ideal input drive condition</li>
-      That is, $I_m == N == 1$.
+      That is, $I_m = N = 1$.
       <li>Include a motor and a gearbox into the system dynamics</li>
       <li>Decide on values for the different parameters</li>
       <li>Combine everything in drake</li>

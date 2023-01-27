@@ -15,24 +15,23 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     
-    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
-    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
   
     <link rel="stylesheet" type="text/css" href="../../notes.css" />
   </head>
   </head>
 
-<body onload="loadChapter('manipulation');">
+<body onload="loadChapter('');">
 
   <!-- The following division should be written on every page -->
 <div data-type="titlepage" pdf="no">
   <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <h1><a href="index.html" style="text-decoration:none;">Logbook</a></h1>
     <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Thomas</a></p>
     <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
       Last modified <span id="last_modified"></span>.</br>
       <script>
       var d = new Date(document.lastModified);
@@ -53,6 +52,9 @@
 <section id="table_of_contents"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
+    <li><a href="#2">C++</a></li>
+    <li><a href="#3">Python</a></li>
+    <li><a href="#4">Terminal commands</a></li>
   </ul>
 </section>
 
@@ -61,8 +63,11 @@
   C++, Java, Python, Nodejs, Rust etc. Used with tensor flow. Google supports it.
   Download a binary release from <a href="https://t.ly/dn7z9">here</a> - bazelisk-linux-amd64.
 
-  Follow <a href="https://bit.ly/3FOlrhA">these instructions</a> to install bazel using apt.
+  Follow <a href="https://bit.ly/3FOlrhA">these instructions</a> to install 
+  bazel using apt. <a href="https://t.ly/04QTG">Good C++</a> tutorial.
+  Checkout the concepts section as well.
   <a href="https://t.ly/f2W6t">Good video</a> on hello world for Bazel.
+  I found <a href="https://t.ly/WVpd">this</a> very useful.
   <p>
     <button class="accordion">Reddit user's view on Bazel vs cmake</button>
     <div class="panel">
@@ -107,14 +112,223 @@
   </p>
 </section>
 
-<section id="10"><h1>Musings</h1>
-  <ul>
-    <li>
-      
-    </li>
-  </ul>
+<section id="2"><h1>C++</h1>
+  The main aim is to build the C++ binary.
+  <subsection><h1>Directory structure for a single file</h1>
+    The constituent files of the root directory would be:
+    <ul>
+      <li>main.cc</li>
+      In this case, it's our main and only c++ file.
+
+      <p>
+        <li>BUILD</li>
+<pre><code class="c++">
+cc_binary (
+  name = "main",
+  srcs = ["main.cc"],
+)
+</code></pre>   
+        This is the rule for the build. The path name of the source file is 
+        called the <code>target name</code>. The output of the 
+        <code>cc_binary</code> rule gets stored in <code>bazel-bin</code>.      
+      </p>
+
+      <li>WORKSPACE</li>
+      We tell Bazel where the root of the workspace is. We place this in
+      the root folder.   
+    </ul>
+
+    Within the same directory, other directories get added on after a build
+    (These are symbolic links):
+    <ul>
+      <li>bazel-bin</li>
+      The output of the <code>cc_binary</code> rule gets stored in 
+      <code>bazel-bin</code>.
+
+      <p>
+        <li>bazel-out</li>
+      </p>
+
+      <li>bazel-testlogs</li>
+      Say we had a folder called 'mylib' (see the python example below). 
+      To see the test log, check 
+      <code>bazel-testlogs -> mylib -> test -> test.log</code> 
+    </ul>
+  </subsection>
+
+  <subsection><h1>Directory for multiple files</h1>
+    We'll have a library to be shared between multiple files.
+    In the same directory, we'll now have:
+    <br>
+    BUILD, WORKSPACE, main.cc, mylib.cc, mylib.hh
+    
+    <p>
+      main.cc needs to use a function from mylib.cc so includes
+      mylib.hh. The build rule file is as follows:
+<pre><code class="C++">
+cc_binary (
+  name = "main",
+  srcs = ["main.cc"],
+  deps = [":mylib"]
+)
+
+cc_library (
+  name = "mylib",
+  hdrs = ["mylib,hh"],
+  srcs = ["mylib.cc"],
+)
+</code></pre>           
+    </p>
+
+  </subsection>
 </section>
 
+<section id="3"><h1>Python</h1>
+  <subsection><h1>Directory structure for a single file</h1>
+    <ul>
+      <li>main.py</li>
+
+      <p>
+        <li>BUILD</li>
+<pre><code class="python">
+py_binary (
+  name = "main",
+  srcs = ["main.py"],
+)  
+</code></pre>        
+      </p>
+
+      <li>WORKSPACE</li>
+    </ul>    
+  </subsection>
+
+  <subsection><h1>Directory structure for a library</h1>
+    We have our usual files (BUILD, WORKSPACE, main.py)
+    and a new directory called mylib that has the following files in it:
+    <ul>
+      <li>test.py</li>
+<pre><code class="python">
+import unittest
+from mylib.x import getX
+
+class TestGetX(unittest.TestCase):
+  def testValue(self) -> None:
+    self.assertEqual(getX(), 'String to test the output against')
+
+if __name__ == '__main__':
+  unittest.main()
+</code></pre>   
+        We invoke the unit test in the last line.
+
+      <p>
+        <li>x.py</li>
+        It can be any python file. For this example, we've
+        created x.py and referenced it in BUILD.
+      </p>
+
+      <li>BUILD</li>
+<pre><code class="python">
+py_library (
+  name = "x",
+  srcs = ["x.py"],
+  visibility = ["//:__pkg__"]
+)
+</code></pre>      
+      We need to specify that the specific files are <code>visible</code>
+      to the package at the root of the project.
+<pre><code class="python">
+py_test (
+  name = "test",
+  srcs = "test.py",
+  deps = [":x"],
+)  
+</code></pre>      
+    </ul>
+
+    We modify the main BUILD file as follows:
+<pre><code class="python">
+py_binary (
+  name = "main",
+  srcs = ["main.py"],
+  deps = ["//mylib:x"]
+)
+</code></pre>
+    Now, we can directly use the library in main:
+    <code>from mylib.x import getX</code> 
+    (let's assume getX is a function in x.py)
+  </subsection>
+</section>
+
+<section id="4"><h1>Terminal commands</h1>
+  Bazel sorts out its package dependencies by itself for itself to run.
+
+  <subsection><h1>The basic commands</h1>
+    The following works for python as well, but here there are specific
+    details that only apply to c++.
+<pre><code class="c++">
+// Build everything in the root directory.
+bazel build //...
+
+// Run the binary executable.
+bazel run //:main
+
+// Clear bazel's cache of all the build artefacts.
+// This is how it knows what changes have been made between builds.
+bazel clean
+
+// To see which subcommands Bazel invokes when doing the build.
+bazel build //:main -s
+</code></pre>
+
+    The different subcommands that Bazel uses for the simple build include
+    (Look for the keyword <code>SUBCOMMAND</code> in the output):
+    <ul>
+      <li>Compiling</li>
+      You'll see the <code>PATH</code>, <code>PWD</code>,
+      then the compilation command which starts with the path to the
+      compiler (example: <code>/usr/bin/gcc</code>) followed by 
+      different compilation commands.
+  
+      <p>
+        An object file is stored in <code>bazel-out</code>
+        (not directly, but in other sub directories).
+      </p>
+      
+      <p>
+        <li>Linking</li>
+        Links with the parameter file (extension <code>.params</code>)
+        found in <code>bazel-bin</code>. This file is readable. 
+        It outputs the binary file and takes in the object file
+        created in the compilation step. We can see the other linker
+        options being used.
+      </p>
+    </ul>
+  
+<pre><code class="c++">
+// Compiling without any optimisation.
+bazel build //:main --copt=-O0 -s
+</code></pre>    
+  </subsection>
+
+  <subsection><h1>Unit test</h1>
+<pre><code class="python">
+# Run all tests within the root of the project.  
+bazel test //...
+
+# To see the errors in the test.
+bazel test //... --test_output=errors
+</code></pre>    
+  </subsection>
+
+  <subsection><h1>Example commands</h1>
+<pre><code class="bash">
+bazel build //estimation/...
+ls bazel-bin/estimation/
+bazel run //estimation:estimateResUsingRLS  
+</code></pre>    
+  </subsection>
+</section>
+  
 </chapter>
 </body>
 </html>
