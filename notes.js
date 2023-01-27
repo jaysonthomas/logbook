@@ -282,3 +282,31 @@ function notebook_link(project, d=deepnote, link_text="", notebook="") {
   }
   return `<p><center>ERROR: <i>Notebook link not found. Please do a "force reload" of this page. If that doesn't fix it, please email russt@mit.edu and let me know.</i></center></p>`;
 }
+
+var mini = true;
+function openNav() {
+  if (mini)
+  {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    this.mini = false;
+    // console.log("one");
+  }
+  else 
+  {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    document.body.style.backgroundColor = "white";
+    this.mini = true;
+    // console.log("test");
+  }
+}
+
+document.addEventListener('click', function(event) {
+  if (!mySidenav.contains(event.target) && mini == false && !main.contains(event.target))
+  {
+    openNav();
+    // console.log("two");
+  }
+});

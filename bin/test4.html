@@ -2,11 +2,24 @@
 <link rel="stylesheet" type="text/css" href="test.css" />
 <script type="text/javascript" src="test.js"></script>
 
-<div id="mySidebar" class="sidebar">
-  <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776; open</span>
-    
-  <a href="#">clients</a><br>
-  <a href="#">contact</a>
+<div class="header"></div>
+
+<div id="sidebarContainer">
+  <input type="checkbox" class="openSideMenu" id="openSideMenu">
+
+  <label for="openSideMenu" class="sideIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+
+  <div id="sideMenu">
+    <ul class="sideMenuInner">
+      <li class="active" onclick="hideSidebar()"><a href="#" data-toggle="tab">Item1</a></li>
+      <li onclick="hideSidebar()"><a href="#" data-toggle="tab">Item2</a></li>
+      <li onclick="hideSidebar()"><a href="#" data-toggle="tab">Item3</a></li>
+    </ul>
+  </div>
 </div>
 
 <div id="main">

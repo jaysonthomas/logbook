@@ -107,15 +107,15 @@ body {
   left: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 60px;
+  padding-top: 2px;   /*?*/
   white-space: nowrap;
 }
 
 /* Changing the sidebar items’ color on hover */
 .sidebar a {
-  padding: 8px 8px 8px 32px;
+  padding: 2px 2px 2px 2px; /*Padding around the letters*/
   text-decoration: none;
-  font-size: 25px;
+  font-size: 10px; /*?*/
   color: #818181;
   display: block;
 }
@@ -127,23 +127,29 @@ body {
 main .sidebar{
   position: absolute;
   top: 0;
-  right: 25px;
-  font-size: 10px;
-  margin-left: 50px;
+  right: 2px; /*?*/
+  font-size: 25px; /*?*/
+  margin-left: 50px; /*?*/
 }
 
 #main {
   transition: margin-left 0.5s;
-  padding: 16px;
-  margin-left: 10px;
+  /*
+    Below are the paddings between the hamburger and the sides of the
+    sidebar.
+  */
+  padding-left: 2px;
+  padding-right: 10px;
+  padding-top: 2px;
+  margin-left: 2px; /*?*/
 }
 
 @media screen and (max-height: 450px) {
   .sidebar {
-    padding-top: 15px;
+    padding-top: 2px; /*Padding between the hamburger sign and TOC*/
   }
   .sidebar a {
-    font-size: 18px;
+    font-size: 12px;  /*Font size of the sidebar items.*/
   }
 }
 
