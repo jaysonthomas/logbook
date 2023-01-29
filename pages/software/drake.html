@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Drake</title>
+  <meta name="Drake" content="text/html; charset=utf-8;" />
+  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
-  <head>
-    <title>Drake</title>
-    <meta name="Drake" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script type="text/javascript" src="../../notes.js"></script>
 
-    <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../notes.js"></script>
+  <script src="../../notes-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script src="../../notes-mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-    <link rel="stylesheet" type="text/css" href="../../notes.css" />
-  </head>
+  <link rel="stylesheet" type="text/css" href="../../notes.css" />
+</head>
 
 <body onload="loadChapter('');">
 
@@ -54,6 +51,7 @@
   <a href="#2">Temporary way of running Drake locally</a>
   <a href="#3">Learning resources</a>
   <a href="#4">Executing drake cpp examples</a>
+  <a href="#7">Reflected inertia tutorial in cpp</a>
   <a href="#10">Questions & todo</a>
 </div>
 
@@ -162,7 +160,8 @@ grep -r "index.ipynb" /folder/path
 </section>
 
 <section id="4"><h1>Executing drake cpp examples</h1>
-  Using bazel as a build system for drake - <a href="https://t.ly/jRAN">ref</a>.
+  Using bazel as a build system for drake - 
+  <a href="https://t.ly/jRAN">ref</a>.
 
 <pre><code class="bash">
 cd drake
@@ -208,6 +207,41 @@ pip3 uninstall drake
     There's a further <a href="https://t.ly/CMi5">discussion</a> on protocol
     buffers (<code>protobuf</code>).
   </ul>
+</section>
+
+<section id="7"><h1>Reflected inertia tutorial in cpp</h1>
+  <subsection><h1>Run examples from within drake folder</h1>
+    I'm aiming to understand and run 
+    <code>drake/examples/simple_discrete_time_system.cc</code>
+    outside of the drake folder.
+  
+<pre><code class="bash">
+bazel run //examples:simple_discrete_time_system
+</code></pre>
+  </subsection>
+
+  <subsection><h1>Run examples from outside of the drake folder</h1>
+    There are <a href="https://t.ly/aAcF">questions</a> on stackoverflow 
+    on how to use Drake as an external library. I found
+    <a href="https://t.ly/Ec1I">this</a> useful.
+
+<pre><code class="bash">
+cd drakeCpp/
+bazel build //helloWorld:simple_continuous_time_system
+bazel run //helloWorld:simple_continuous_time_system
+</code></pre>    
+
+    The hidden file <code>.bazelrc</code> in drakeCpp is important
+    to specify which C++ version to use.
+
+    <p>
+      There is an <a href="https://t.ly/lDoN">example</a> of how to use
+      external libraries as modules (the concept of repositories will
+      still be used but is also being retired.). More on 
+      bazel external dependencies can be found 
+      <a href="https://t.ly/z7XC">here</a>.
+    </p>
+  </subsection>
 </section>
 
 <section id="10"><h1>Questions & todo</h1>
