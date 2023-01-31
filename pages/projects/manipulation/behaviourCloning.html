@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Behaviour Cloning</title>
+  <meta name="Behaviour Cloning" content="text/html; charset=utf-8;" />
+  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+  <script type="text/javascript" src="../../notes.js"></script>
+
+  <script src="../../notes-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../notes.css" />
+</head>
+
+<body onload="loadChapter('');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<div id="main" class="sidebar1">
+  <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+</div>
+
+<div id="mySidenav" class="sidebar">
+  <a href="#1">Installation</a>
+</div>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Behaviour Cloning</h1>
+
+so last time last week i'd say
+we talked about trajectory motion planning right
+so given um either a cost function in the trajectory optimization case
+or just a start and a goal in the
+randomized motion planning case typically you know we had a start and a goal we
+were designing a single trajectory through space and we had some good tools to do that
+and potentially tools that scale pretty well to large dimensions right
+as we transition to rl rl is trying to solve a bigger problem right so
+maybe bigger problem
+where you know this the output of a motion planner is a particular path or trajectory
+right and now we're trying to solve um trying to find a policy
+right so that's synonymous with a controller for people who want to think about it that way
+but even in the motion planning picture if you think of this original motion planning gives me q as a function of
+time what i'd like you know the simplest analogy for a
+policy would be maybe i want to do a vector
+field i want to represent potentially the same sort of behavior
+but instead of having just a single path i'd like to say for every cue
+not just for every time but for every cue i'd like to say what direction i should be going in
+in order to accomplish my desires my cost or my you know achieve my
+uh goal right so it's potentially trying to solve a bigger problem
+you know this is for all q i'd like to have uh some instructions
+and you could think of them as representing certainly this captures if i were to start at this
+one and follow the vector field then it could you can pull the trajectory out of that one okay
+but it's potentially saying much more it says what happens when you're away from the trajectory
+good yeah so i'm going to try to make that connection too so the the the observation was actually what i'm drawing here doesn't doesn't look so
+different than maybe the prm or or the irt in its full glory right
+so uh yeah there's good connections there in fact since you asked why don't i show slide
+one yeah okay so um you know my favorite version of this actually is the
+optimizing version of rrt which is rrt star where they very explicitly make the point
+that if you do that rewiring then you can have a system that's a little bit small i hope you can see but
+you can have a system that finds a path fairly quickly but if you just keep adding keep sampling keep sampling keep
+rewiring then what you end up with really is more than just a path you can end up with a policy that covers tells
+you you know the vector field over the entire space okay so you can really go from
+a lot of the planning algorithms to something more like policies
+okay so that so um
+and a lot of the variants you know you could think of it that way alternatively another connection would
+be if you were just to do replanting if you can if you can plan fast enough right and then if you're if you look at
+whatever state you're currently in and you can execute a plan on the fly online planning
+you know is a policy basically and that's what people talk about when they talk about model predictive control
+for instance
+okay so there's lots of connections between these two and and actually i i even in the details i really don't want it to
+be your either a plan or a policy
+because i think there are there are beautiful ways to sort of blend the two for instance like if you if you've
+looked at alpha zero for instance you know they i think that's a very nice way of sort of
+planning uh uh and then using the planner to build the policy and vice versa
+we'll talk about that one later okay so but let's just compare the relative merits as a representation as a
+as the uh you know goal of an optimization problem or or a planning problem right
+you would think that q of t would be you know asking less right in many cases
+it's um you know it's it's not asking what it what should the behavior be at all possible states it's just acting asking
+along one particular path okay so in a sense you do benefit from that in a very real
+way but you can often plan for systems of very high dimensionality and you're
+roughly you know immune to the cursive dimensionality the you know the number of possible
+states that i might have to cover with a description of a policy can grow badly right if i were to make a grid and
+have to give a discrete answer for every point on the grid then it's exponential in the number of state variables
+okay and a path because it's only parameterized by t not by q
+t is always dimension one right so you can say the vector you have to put out
+is a little bit bigger but that doesn't really matter right so what matters is that i have a single path through a
+potentially very high dimensional space okay so in that sense you would you might think that planning can scale
+much better and i think there's certainly places where that's the case the counter argument
+is that sometimes plans can be extremely complicated to represent okay and
+sometimes very simple policies can actually describe behavior even in
+you know very complicated systems right so
+can describe rich behavior
+and i've mentioned a few examples of that before my favorite of all time is uh is the hopping robot from
+from mark rayburt where it's just just to this day i just love the fact that the whole controller fits on a one page
+of like this super small book and it's basically a picture and then a few pd controllers and it makes robots like
+throw themselves through the air and uh and had a huge impact on the field of legged locomotion
+right so very simple controller saying roughly when you're on the ground
+jump when you're in the air put your leg out in front of you roughly where you want to land and uh you know the
+resulting behavior when you couple that with the dynamical system which is the springy hopping robot gives you this
+beautiful rich output and actually if you had to plan a path for that it might be a harder problem
+right and i think that's also true if you start thinking about you know
+this is a you know example of it can be very robust even if they're relatively simple plans that's what i showed you before okay but
+now think about this as a very manipulation specific example right if you have to plan every detail of that
+multi-fingered hand and every contact that comes in contact with the plate that can be an enormously complicated
+plan to generate right but if you have a simple controller that just kind of goes down until you touch
+and then squeezes the hand it might be that you can write that controller very easily and
+maybe or maybe not get get beautiful performance out this is an open i would say this is an open question and one that we'll discuss
+a bit today okay i gotta find it find one that's not gonna be irritating
+i think i can pause this one okay
+maybe i can go on to the next thing here let's see
+okay so i do think the concept of planning and the concept
+of you know feedback control and policies i think both of them need to probably live in our
+you know our future manipulation systems we talked about motion planning at one level but even higher than that was our
+task level planner right so deciding that i'm going to first pick up the mug and then i'm going to you know open the
+dishwasher drawer and then pick up the mug and then put it down right the high level logical planner um
+when i've described it before quickly we talked about that as a planner not a policy
+and uh my you know my favorite thing from leslie kelbling leslie you know likes to
+say uh imagine you're trying to book a vacation to paris right you don't have a policy
+for booking a vacation to paris right it's not that you've like every possible place that you've ever you're ever going
+to vacation you've already pre-recorded a solution for that you know and then you just look up the solution to that
+there's it seems like there are places in our in our lives where we solve problems on
+the fly and do some deductive reasoning and do effectively planning okay now at
+the very low level you know we've got very continuous motions with very complex contact
+mechanics or whatever you know it's it's i'll we'll talk a little bit i
+think it was it's a still a little unclear but that feels more like a control problem where you really want to know what's going to happen from all
+different all the different states right and the exact details of what happens along a particular trajectory
+are probably not as important okay so maybe at the low level we kind of have policies
+and what's super interesting is to think about how that transition happens and where up and down the the
+the latter i guess you know does that transition happen and how does it happen how does it happen gracefully
+right we talked about motion planning of the arm that's a case of a super powerful set of tools that we have does
+it belong in our long term solution it depends maybe depends what the task is
+i would even say that my position on this has changed right so in legged robots um i think it's very
+natural to think about having low level controllers you're trying constantly trying to not fall down right so balance
+is a premium the lowest level thing you want is to be like a stabilization based you know
+thing and roughly you know there's kind of a nominal thing that i do i have a nominal gate i'd like to have that programmed in i'd
+like to know what's going to happen if i'm near that if i take my foot a slightly bad step feels very much like a policy to me and
+you could imagine having a handful of sort of you know maybe a step reflex or just a handful of like policies that you
+could combine and be a very effective walker like a legged locomotor right
+in manipulation i would have initially i did initially you know like a couple a handful of years ago thought it was
+different right because the sheer diversity of things that we do with our hands
+you know it's it's it's amazing like all the different things we do with our hands and to some extent we are not in this sort of
+periodic um you know very very like uh regular pattern right
+uh we're to some extent it feels like every time we do something with our hands we're doing something different we've never done before right and maybe
+the situation that we're seeing in front of us is kind of if it's never been seen before then it really puts us in a place
+where i just need to figure out this one thing kind of the single query rrt view of the world rather than the multi-query
+if you are you know trying to try to solve an entire feedback policy
+okay and i still i think there's good logic to that right
+but i've i've changed my mind a bit i think now that we probably do have i mean i don't know
+how high up the ladder it goes but i do think a relatively small set of policies
+down at the low level can probably describe a lot of the details of what we do with our hands and there's lots of evidence of like people talk about the
+you know if you just watch the the kinematics of people's hands when they're doing maneuvers it's actually relatively low dimensional there's like
+eigen grasps and there's all kinds of discussions about this but i would think even fundamentally i think there's
+there's handfuls handfuls of things that we do that was not intentional
+that we do that i think we probably could through practice get very good at a small number of you know policies and
+assemble them to you know and achieve a great diversity emotions but i don't know i mean i think i think
+somewhere we we have to live somewhere in this uh in this balance
+okay there's another problem actually with that with this picture right so if i put this back back up again
+or another thing that it doesn't address that i want to to call out right so this view of um
+of policies from plans
+this sort of q dot is some policy we almost always use pi for
+policy that's the rl notation okay
+this presumes that we know or that we somehow have a measurement or even know what q is
+it presumes that we
+know q and have estimated it let's say
+okay and this is um you know obviously a major assumption so uh for a for an arm moving through when
+when q is just the state of the arm and i'm doing motion planning that doesn't feel like a bad assumption we have very good
+sensors you know we've we've paid for the you know the nice kooka instrumentation
+it gives very accurate uh you know measurements of the joint positions of the arm but if we're in this um bigger view of
+manipulation where the you know the policy really needs to know
+not just the state of the arm but it's really somehow i'm
+i'm making some you know controlled decisions based on the entire state of the arm plus the
+world right this now is
+you know q of the robot v of the robot you know in general right
+q of the world of the environment obstacle you know object
+b and so on and so forth right i don't have good instrumentation on the
+red brick and the red brick is as easy as it gets it doesn't get easier than the red brick it only gets worse from there
+okay so already you know implicitly by saying that i've written written my policy like
+this you know it sort of assumes that i've been able to estimate those positions and
+velocities okay sometimes i don't even know how to write them down not just i didn't
+you know i don't want to assume i estimate them but maybe i don't even know what choice of q is a good state representation for the world right so
+my favorite example of that is just thinking about the problem of chopping onions right and then if you think about
+trying to write the pose and velocity of all the pieces of the onion and maybe it
+changes in number every time i make a cut right so i don't even know what the
+x of this state of this system should be right so that's when i say presumes that
+we know q right i don't i don't even know a good representation for that yet
+okay so what i really wanted to talk about here is a broader view of what a policy is
+it's not just a map from state to actions it's um it's a map potentially a map
+from observations to actions and it's a dynamical system okay so let me come over here
+so really what we have is our dynamic systems view of the world i've got my plant
+which is the robot plus the onions right
+okay i've got my sensors coming out i've got my actuators coming in
+there's a view of the world which says that i should just write a state estimator first
+and that gives me some estimate of x and then i can write my policy u equals pi
+of x hat and i could feed that policy around to uh
+to the plant okay that makes that means that you know the
+implications of that model here which is the class you know a classic model we've gotten from control
+right is that this thing has to be a perception system
+that estimates the you know the state of the onion in addition to the
+to the robot it has to be running at you know full frame rate according to this diagram
+if you think about how we've used them so far we've really kind of said let's do perception and then plan a trajectory
+and we basically close our eyes while we go and execute the trajectory but this is asking for more this is asking for a
+constant stream of sensors to be coming in and put out a constant stream of of you know x estimates coming out in order
+to make these decisions okay and this has been you know it's been
+good to us in control but it's breaking down when it gets to manipulation okay
+this this you know assumption of having a state estimator in the middle and having its requirement to output x
+hat is just too great you know and i would
+i would say that this burden of state estimation is just too great
+and it's not necessary necessarily to estimate the full state to make good decisions
+okay so i think one of the great things that manipulation is doing for control is it's it's
+fighting down some of these uh this this model of trying to do state estimation and then control yeah
+right so this definitely has the multi-body state right
+if i just think about what state variables did i have to declare to simulate the thing right in this model this could be a simple
+function input output function right
+no state we're going to generalize it of course okay and this if i think of this as like a
+column filter for instance
+or an extended kalman filter you know has has a state
+it's running an internal estimate x hat that's not the only way to implement that you can write state estimators that
+just have sliding windows or whatever but that would be a natural
+approximation so there would be state variables here state variables here and that could be a static function
+that would be the classic view
+as i was thinking about this you know i was kind of reflecting on my own journey through this process right so even when
+i was purely focused on legged locomotion um and the uavs i guess we were we were
+feeling the pain of this and i would say when people ask me you know what do i think why why aren't i working on like
+in locomotion right now and you know am i going to work on it again i i think this is still a limitation
+we're leaning hard on this this paradigm in our legged locomotion atlas has an incredible state estimation
+system in it right i mean i think they would tell you that it could even be better you know but but the inclination would be if i want to
+improve the performance i can make my state estimator better right i think it's going to take a big leap to break
+that mold and try to do control differently in legged locomotion but i was already feeling it and we were i was
+writing i remember i actually looked back just to look at the dates this morning and i was looking back at i wrote proposals like in 2011 that were
+saying you know we have to do integrated perception and control that was what we called it back then right integrated perception and
+control
+saying don't break those up into two separate um processes put it into one you know
+one system solve them jointly right and a lot of people were using those words at the time and it it sort of evolved
+right another another name for this is output feedback we'll talk about that
+in particular be dynamic output feedback
+where i have to take where i'm trying to design a feedback controller that goes all the way from sensors to actions that's an output feedback as
+opposed to a full state feedback
+okay and i was i you know i remember struggling and struggling to convince people that this was important my students would would kind of be like
+yeah i hear you but can we just make the state estimator better you know and uh
+in in uavs we started to finally you know started to see was we were flying very
+fast through forests that was the first project where we really started doing i think letting go a little bit of the
+full state and trying to just say we need a minimal sensing of the upcoming obstacles and
+that's sufficient to make our our short-term control decisions okay so our first you know papers and talks about
+integrated perception and control actually came in the uav space and it really um
+you know deep learning happened around 2015 you know 2016-ish people started calling it
+visual motor especially in the manipulation space visual motor policies and they i think
+in my mind they mean the same thing and this is the word to use today
+and it's really this sort of bigger view of trying to um write a controller that goes directly
+from your sensors to your actions and we'll ask the question of does it have state inside it okay
+but there's this beautiful view of the sort of visual motor policies and in my mind
+this is the reason to do manipulation for me i think this is forcing you know
+big questions that we don't know how to address solidly in control yet when the sensors
+are cameras or depth cameras or rgb right and we're trying to come in and write the best controller we know how in
+order to to make an action based on a stream of of rich visual motor sensor
+inputs okay
+so this view of visual motor policies
+i just draw that same thing again here but zoom in a little bit
+the simplest thing i could write here would just be as alex was asking about i could write that just
+i call my sensors y which i always do because i
+come more from the control i guess these days
+right i could just have a static function
+that maps from my current observation to my current action right that's a reasonable thing to do
+but it's limiting we already know that it's limiting because even for sort of basic control
+the simplest versions of control the simplest versions of output feedback in control would be like linear quadratic
+linear gaussian um optimal control
+already demands dynamic policies
+dynamic controllers which is exactly the column and filter state plus the lqr
+okay so another way to think about this is that this is a new dynamical system
+it has its own internal state okay one version of that is that inside it has the state estimator
+which has internal state it has the the controller here right that is a version of a
+dynamic controller that is the optimal thing to do in a linear gaussian quadratic
+optimal control problem okay is to to have a dynamic controller that estimates the full state and makes
+decisions but that's not true in general it is true in general that having dynamic policies can do a can do great
+things
+with a history of yesterday yeah good so so let's let's first just jump to say
+this is think of this this is a dynamical system we think of this as an input output dynamical system it's got a stream of actuator commands it has to
+predict the stream of sensors i want you to think about these controllers as having the same streamless sensor inputs
+and a stream of outputs command right so this is just a dynamical system
+okay so now in this in this weird case it's sort of wise coming in and used coming out but these are signals coming
+in and i have a system in the middle okay there are many ways to represent a system you could have a state space
+representation
+which is what we've been using most of the time which we're most familiar with i could say maybe x c is my or maybe it
+should be x pi but i'll call it c x xc of n plus 1 is some
+f of c x c of n you know y of n is coming in
+and then i'm saying that u coming out is like my pi
+which depends on both the internal state and my inputs coming in
+that would be a state space model where i have explicitly written down the state i move forward with a difference
+equation or a differential equation that state and i'm producing my outputs but there are also other perfectly good
+models of differential equations you know i think the one you're referring to would be like an ara model
+or you know arma or armor with exogenous inputs which is this is a an auto regressive model
+with you know yeah it doesn't really matter but it's it's uh with exogenous inputs but it but
+roughly it is now pi takes a history of observations
+coming in it also potentially takes a history of its own
+outputs which is a little bit goofy to write it the way i've got u and y flipped here but luckily
+the message is the same you need both of them in there okay that's why it's auto regressive because
+it gets to see its own output and it now just predicts its next controller
+maybe it's not allowed to see this one okay this is another perfectly good input
+output dynamical system
+okay is our the question is are they equivalently expressive right so in the
+limit yes so certainly for any um any finite horizon history
+i could take that the history of wise and call that my state right and then that would be a state-space model so you can certainly
+always go this way right you can also i mean yeah so again in the limit of infinite
+states and you can always go both ways in the limit but in practice if you have a truncated history right then this is
+good at some things and this is good at other things okay so what's an example of uh this is one
+of the points i wanted to make so thank you for asking it anyways okay so something that would be good that this would be perfectly adequate for let's
+say my observations
+um you know which are why then here are let's say some of some of you are working on ping-pong right so it's the position of
+a ping-pong ball right in my camera image
+clearly if i want to take a swing at the ping pong ball and i have to make a decision just purely based on a single image that
+seems inadequate right if i don't know what direction it's moving i need to know something more right
+if i have a even just two images let's say or positions of the
+ping pong ball then i could estimate the velocity of the ping pong ball that's already pretty useful and you could imagine if i had a longer
+history slightly longer history maybe i could filter out a little bit of measurement noise or something like that
+but that would be a very reasonable local estimator of my velocity of my ping pong ball okay
+if i wanted to for instance remember if i'm looking at the sink and
+i want to remember if i already opened up the dishwasher top drawer because i'm about to pick up a mug and i'm not looking at it right now
+that would be potentially if it's you know if i have to remember that a long time into the future
+that would be maybe a very painful thing to try to represent with a history of observations right
+so this is good for short term
+not so good for long term right
+memories let's say okay but it can be very clean like so i get to for instance you know if i'm
+taking just uh you know a bunch of images in i could just use a feed forward neural network
+to make my prediction that's a very appealing thing to do we know we're you know we're pretty good at training those things right
+you know in the states based representation if i want to remember the mug let's say
+or remember the dishwasher drawer
+that feels like a state right i could have x 32 being you know is the dishwasher
+open okay
+these are very uh familiar concepts i mean if you if you look at even just linear control theory
+right we know a lot of things about how to fit these models to data we know a lot of things how to do motion planning
+with those models trajectory optimization with those models you know same thing for these models this is a lot there's nothing new
+really about visual motor policies in this discussion right i think there is a choice you get to make about how you represent a dynamic controller either
+with histories or it's state-space representations or possibly combinations
+like a combination a very a nice combination would be for instance to maybe take a
+a simple filter bank of recent observations and use that as a surrogate for state right there's all kinds of
+like intermediate solutions so when you think about you know the way
+people jump to this kind of description here so right if we have an input output
+dynamical system in general you could do it in state-space form
+we can do it in auto-regressive form ah i forgot the other part of it shoot i was basically going to write down here
+that you know when you think about a recurrent neural network model right
+those are state-space models right so if you see someone talking about recurrent neural networks
+that's going to be a state-space model so for instance lstm a long short-term memory
+or other sort of recurrent models right and this would be for instance feed forward networks
+again there's nothing here about i mean so we start we if we start representing them with neural networks we've gotten
+into like new tools but the you know the modeling framework is old
+and well understood i would say
+for those of you that think about partial observability if you think about palm dps or whatever right um
+if i want to have a dynamic controller that's reasoning in a partially observable environment
+then x you know the the common filter view of the world you think of x as being
+the state of the system but really you should think about my state of my controller as being my belief representation or some approximation of
+the belief representation right so this x could be a compressed belief state for instance right
+so you'd like to think that if i'm training a recurring network policy that somehow
+the you know the internal dynamics are somehow building up a belief or whatever it is necessary to accomplish the task
+okay yeah the biggest thing that changed though is that basically
+you know we learned how to do computer vision and neural networks got big and data sets got big and so now people are
+writing the policies down with uh you know taking the the entire image in
+okay oftentimes if you look at some of the original works and actually a pretty standard sort of framework that you see
+for visual motor policies throughout is to is to have a big sort of pre-trained
+typically network that comes in from the that gets you from rgb space down to something smaller you know like a
+32-dimensional feature vector how does you design z is something we can talk about okay but um often times
+there's a relatively small policy that you're going to represent a relatively small network these tend to be you know
+a multi-layer perceptron with three layers and 255 units that's a sort of standard thing right okay
+and this tends to be like a resnet uh you know millions of parameters
+and the reason is you can you can pre-train this on a image-only task for instance and get potentially very good
+features out and then if you're going to do reinforcement learning or behavior cloning you can train a
+relatively much smaller network for the control given good good given good features
+because often our control training uh you know algorithms are
+more data hungry and uh you know training all the way through the resnet would be tough some people try to do it or certainly fine tune through it but
+that's considered hard okay so the million dollar question then
+is how do we design the weights of our lstm or our feedforward network how do we design pi right
+and again the the new thing here is
+the cameras coming in and the neural network's in the middle but even actually i would say even control people have thought about
+neural networks for a long time also all right so i think the biggest new
+thing in is the size of these and the fact that we're jamming images into them and the perception sort of works now
+right
+the big answer these days right
+is reinforcement learning okay that's what we're going to mostly focus on and i really want to think about
+you know this being good certainly down at the low level of my um of my ladder where i'm doing
+really dynamic things and i don't want to deal i want to represent a policy instead of a plan
+there are lots of people that think about rl for higher level decision making and the like i think that's not that's not the use
+case i'm going to emphasize here it's not the one i believe in as much okay
+even rl you know people ask me you know even in the context of
+of projects for the course you know like um i don't even know so this is the big
+answer these days i don't know if it's really a good answer right so so and it's not because i don't like rl i
+think rl is awesome but i think given this problem formulation right we should understand that rl is a very
+general purpose tool right for trying to solve pi it makes very few
+assumptions as a consequence it is statistically very weak
+so it's kind of you know i i mean this with much love right but it's the thing you should do if you
+don't know how to do something better i roughly right i mean it's and i mean that like rl research is very
+good i've done it that's what my thesis was on right but um i also think that there's a lot of
+things we know from control and they should be blended together and there's many ways to find pi okay
+in particular today i think there's a shortcut which is we can talk about behavior
+cloning and the reason i want to take that
+shortcut is because rl has a lot of challenges with it in terms of sample
+efficiency in terms of just whether it's going to converge or not right and it
+mixes up questions about the fundamental questions of representation of the policy is putting cameras in you know
+what should my architecture be what should my action space be my observation space be
+it mixes up all these questions with like did my rl algorithm perform well did i did i feed it and give it enough
+you know samples or give it enough roll outs did i roll it you know all these different things and i think you can sort of slice those down the middle if
+you if you take a shortcut and try to do behavior cloning instead
+okay so what is behavior cloning um behavior cloning is a subset of
+imitation learning imitation learning is also known as
+learning from demonstration
+okay i would say there's kind of two major camps in imitation learning
+one of them would be sort of the behavior cloning
+where the goal is to try to use supervised learning
+to mimic a demonstration
+okay and the other big branch would be inverse optimal control
+or inverse rl they're similar
+where instead of trying to basically take a demonstration and learn the policy directly you might try to
+learn the cost function
+then do planning or control or some other
+form so these are kind of the two big camps in imitation learning i think behavior
+cloning is immediately useful for us and it's very popular right now and it's producing
+just amazing demonstrations and manipulation
+okay so you know the basic setup is if i have a human demonstrating
+we'll talk about how they demonstrated you know examples of dexterous manipulation on a robot
+you could think of that as feeding the input output data right the sensor to
+action map and if i if i just want to find a function which describes the same
+map from sensors to actions then that's almost a supervised learning problem certainly i can apply supervised
+learning techniques to try to train pi okay that's the behavior cloning
+paradigm it's an old paradigm sorry
+right this is um you know 1995 but you know 89 90 are the ones are the papers that are sort of the
+seminal papers in the field right but um maybe they're harder to google because this is australian you
+know so um okay but uh already there was a a rich understanding
+of uh of behavior cloning its promise and its uh and its problems uh
+you know early on and i think we've only continued to understand how to make it work well and its
+limitations okay so the biggest limitations in behavior learning i can sort of um
+let me see i think i have a couple good examples here all right so this is um one of the early
+sort of you know examples of how you might provide that imitation learning data for
+a robot that's zoe
+that's a pr2 ps2 still alive upstairs yeah just barely
+all right okay this is uh you know obviously the
+virtual reality interface actually if you watch this video um
+you'll see that she uh the initial version that they used had sort of like robot gripper special purpose robot
+grippers yeah right there with imus on them and they you know she was like had a little a claw in her hand and it was
+it was manipulating things through the eyes of the robot right which is important
+because if you want to give exactly the same inputs and outputs to your policy then you really need to use the same
+actuators as your robot right and give the same sense of readings based on the same sensor readings
+in the paper that they um that they wrote and then they went on to use extensively
+they switched to a more commodity interface so it's just htc htc vive uh
+controllers okay in this but i think it's pretty cool to make a little pr2 hand for your fingers
+okay and there's a big question here just like how how much can you make that scale i'll show you some of the scaling
+efforts at the end okay but if you put that into a system
+and just do supervised type learning on it that's how we did some what you know
+really i think this is what changed my mind about behavior cloning and about visual motor policies
+was just like really really impressive for me robust uh you know
+controllers that came out of this thing which were making the you know the hallmark of these controllers is that
+they are making real-time decisions based on the camera-based feedback as opposed to stop perceive the world you
+know make a plan go these things as you knock them around they're constantly adjusting via the camera-based feedback
+the value of doing that is just so high that we're in a regime right now where
+our control synthesis algorithms i think are relatively weak but i'd rather apply a weak algorithm
+on a rich input and and and get this kind of feedback out
+okay so there's a couple things that people definitely know about behavior cloning that i want to sort of communicate here
+some of the big ideas and things to watch out for
+okay
+okay the first one is distribution shift
+just write them up here real quick and we'll dig in
+okay so what's this problem of distribution shift so
+i said we've got a bunch of input output data we have a bunch of examples of why coming in
+you going out that we got from zoe or somebody else teleopping our
+robot pete did it a lot in the videos that are on the screen right now
+okay so you can use supervised learning
+to train but you know
+i think drew bagnow for instance says
+behavior cloning imitation learning
+is not equal to supervised learning
+even though we can use the same gradient descent type algorithms to train it there's some really important differences okay
+the biggest difference is because of feedback
+and the classic example i don't think you can really do it better than the driving example which is what everybody
+uses okay so if i've got a someone training my
+autonomous car to drive or my um video game car and drew's original work for it
+right and i've got a a bunch of examples of people driving and staying in the lane okay
+then you know i've got some a bunch of of data u equals pi of y maybe this one only requires
+instantaneous y okay if i have an approximation that i get from
+supervised learning that's pretty close maybe it's
+um the original plus just some epsilon like i've got an epsilon perfect
+supervision you know base loss right then what happens is after a single run
+i've predicted almost perfectly okay but now i'm i'm maybe slightly away from
+where i was on my original training data okay and
+what happens in the case where i take my output that's now the new state when i pass it
+through the controller and i feed it back through then what i can quickly drift away whereas the original training data maybe
+has lots of data in the lane it doesn't take very much to have compounding errors and
+instability which quickly takes my system off the original training data and gets
+you know it has no idea what to do once it's away from the data okay and you'll spiral out of control bad things for
+autonomous cars okay so this is the problem of distribution shift why is that called
+distribution shift
+right the training distribution you know is some you know some distribution here the
+closed loop distribution is very different right the on policy distribution
+all right so how do you fix that
+do people know the fix yeah
+dagger's algorithm is uh is drew's version of the algorithm absolutely yeah i would say
+so it stands for data aggregation for me i always think of first teacher forcing
+which is similar in spirit dagger added the analysis i would say to the teacher forcing an idea
+okay which is basically um keep the demonstrator in the loop
+as you start giving control to your policy okay so the teacher forcing version
+which i which is the older you know kind of version of it it's a williams 89 was the
+1989 that is yeah
+this is the real-time current learning paper that i learned about a long time ago right
+they basically said okay you have this problem where you're going to drift away from your data so what you should do is you should
+start by training with only the data in you that's coming from your original um
+demonstrations but then keep the demonstrator in the loop and slowly add control maybe
+there's a a knob from alpha goes from zero to one right and at the beginning it's
+completely driven by the human and only zero on the on the controller
+and i start slowly moving the the knob taking the training wheels off and letting the the controller drive okay as
+opposed to just immediately stopping the demonstrations and starting the the
+car the policy driving the reason for that is you start if you can keep the teacher
+the training wheels on then you'll start to get data that is off the original human-only
+demonstrations the policy when it's on a little bit will pull me away but the human will
+pull me back okay the demonstrator will pull me back and it starts to broaden
+the distribution and similarly as the policy gets
+trained off the nominal trajectory it will be it'll become a stable system and not an unstable system and it will you
+know tend to stay close to the original data okay dagger is the one that
+drew came up with which is data data aggregation is a is gave some nice analysis to that
+talking about the you know if you assume just you have an epsilon erroring
+policy then you get cascading errors you get a you know something that grows at least the
+squared of your time horizon and you can by just feeding back in extra supervisory data the simplest case would
+actually be just let your shoot your human um provide sensory uh you know
+supervision on the bad data and and you throw that into your system to aggregate and you can sort of uh
+remedy this basic problem okay so teacher forcing or somehow
+keeping the human in the loop is a good remedy for this problem
+data augmentation is another big one
+okay if the and people have done this for autonomous
+driving nvidia did this famously for autonomous driving they basically just took their original
+data they actually had cameras facing off to the left and to the right of the um looking sort of this way and looking
+this way so they could make real data that looked like it was a little bit off uh in the wrong direction and they
+basically said the human told me to drive like this but i'm going to augment my data
+with a simple corrective policy that if i had if i hallucidated myself i didn't
+actually get data off this off the main trajectory but i'll hallucinate that i was off the trajectory and would have
+taken the simple stabilizing controller that would have gotten me back to the human-based data okay
+and that's data augmentation that's one one approach to data augmentation in fact
+pete and lucas used data augmentation a very similar form of data augmentation in that network
+where they basically as they push the hat or the box around they would just take their data set and just add random
+pose perturbations to the object they were pushing and then just move it back towards where the you know
+basically the next frame of the data assume that that the finger would have pushed it back into this into the
+trajectory that the data actually um actually followed
+and you hear over and over again people that are training these behavior cloning policies they're like if you don't do this it just doesn't work it's
+you will not get a good policy out a little bit of data augmentation it works amazingly well
+there's other ways that people do it people do it by just adding noise directly into the um the
+supervisory signal so another version of this would be
+i know we've said dart like four times in the um in the class but mike lasky had a
+version i think in probably
+17 or something like that where you basically add noise to the demonstrator
+it lives in this space clearly but basically right as i you know as the demonstrator is is doing their thing
+you take their action as a suggestion you add some random noise to it it causes the same sort of walk about
+behavior and it causes you to get some data off the nominal policy that is supervised by the human and if you just
+get a you know enough data in the vicinity then that can already solve the problem
+there are other interesting ideas i've seen people do like forecasting models um
+where you don't just predict the next trajec step in the trajectory
+but you try to predict an entire rollout that's i think a popular thing
+but yeah just to say there are there are many other ideas out there
+okay so let's see how that plays out here for um for for this example okay oh by the way
+this is um just some i guess hot off the press just some a
+teaser of some of the um behavior cloning work that's happening at tri but they're
+they're getting this stuff to work for incredibly hard manipulation problems now so i mean you can roll
+roll doe i don't even know what the state space would be for these problems right you can we can have uh
+there's a eric cucino wrote a beautiful little joystick controller that would drive both pandas around and
+spent very little time surprisingly little time rolling the dough and now he can walk up he can pick it up he can
+like throw the dough down and it'll just all day long it'll sit there rolling the dough right and uh
+you know see ones um we're thinking about lots of sort of food preparation kind of examples and
+you know c1's got it doing a lot of the sort of kitchen type tasks this is he's just the form of antagonization you can
+do when someone's trying to put an egg on your plate is minimal but but it's you know it's using constant
+real-time camera-based feedback okay to do these kind of things
+it's shockingly powerful but maybe maybe um
+misleadingly so right so i think it makes incredible demos and the question is really can you make it robust enough
+to field for the real system so let me just tell you how pete and lucas did their version of it um
+so we took the same sort of uh you know deep network front end right and there's
+lots of different ways people try to choose the z the output of the deep network
+perception part to put into a small policy pete and lucas had just done their dense
+descriptor work okay so they chose to have dense descriptors as the as the representation that they put into
+their policy and they asked the question that how does that perform compared to some other
+other choices for z based on auto encoders or other kind of representations okay so the idea was
+you remember the dense descriptors right so we have some canonical colors you know in if d equals three then we could
+draw the render the um descriptors of the object as colors
+and you basically just picked you know some small number of random values in
+this dense descriptor space and try to find at runtime you would find the closest points in the current
+image to those values and you just give the xyz location of those
+dense descriptors you could think of this as an unsupervised form of key points okay you push push those into the policy and
+maybe that's a very good representation for some tasks i think it's a very good representation
+okay so the setup looks like this and i i'm actually going to try to reconstruct this so you guys can play with it in simulation
+and uh and have the whole pipeline so in simulation you know
+there's a couple tests that was just like pushing a box around or flipping up a box
+we have a mouse space you can see the um the telly up on the real robot this case they actually wrote a simple
+hand design controller and just tried to clone from a hand design controller into the neural network as kind of a unit
+test just to make sure all the cloning was working all the dense descriptors were working and everything like that okay
+um but but even just a mouse so so pete didn't have a virtual reality interface he was just
+watching standing there next to the robot using a mouse and keyboard and did very effective teleop right
+this was flipping up a shoe you got pretty good at it yeah
+there is a thing where um you can have people that are good at demonstrations or not go to demonstrations right and that's for the
+reason number two primarily uh which we're going to talk about
+okay um the network representation there was uh an lstm because
+um it seemed first of all the hand design controller that pushed the box
+did have some internal state it had some notion of like was it in contact with the box yet or not right so when when they wrote the
+controller by hand they decided that it was useful to have a state variable and in fact it turned out that
+having a small network of a recurrent network actually did outperform the
+non-recurrent versions and this one i didn't did that play fast
+yeah i think i was talking about flipping up the box at the time and they
+they did it pretty easily
+okay it's a very useful pipeline very powerful
+okay we talked about the distribution shift problem the second problem and it's a real one a big one is this
+multi-modal demonstrations okay so
+in the simplest model here we'd like it to be that the controller is
+you know in our in our simplest form if i say u equals pi of y and let's just say it's a static
+function you'd like it to be um a perfect function of of
+that that there's not ever two let's see a situation in your data where
+y is the same value and there's different u's that come out a perfect function
+and this comes up all the time even in optimal control problems so if you remember the example i used for motion planning last
+time i'm just going left or right around the box right where i had my goal up here my start down here
+right and there was a solution that went like this and there's a solution that went like this right
+so even if i have an optimal controller
+they they're not always unique right in this situation right here there's two
+perfectly valid optimal decisions i could make right those are both perfectly good control
+decisions if you've asked someone to tally up your robot and they ever found themselves in
+the same state and made slightly different decisions decided to go left one time and write another time then
+you've got an optimization problem where you're trying to fit a function to something that's not described by a function
+okay so this is the problem of having sort of multimodal
+demonstrations
+and there's a few ways that people address it right so
+you can have your network can output a multi-modal a full distribution right
+for instance a mixture of gaussians or something like that i would say that's the standard thing
+that people try to do it gets to be a harder optimization problem of course but
+you know oftentimes if your policy you actually output a full distribution
+you know you can hopefully capture that full multimodal demonstration
+there are other approaches too pete has gone on and and recently in fact
+he's at coral right now the conference on robot learning is happening right now so it's a good time for me to be talking about
+this stuff he's got a new paper that he just presented which is i think really nice
+called implicit behavior cloning
+which is using energy-based methods i'm going to show you the videos
+it's pretty pretty awesome so instead of
+u equals pi of y he's using uh you know jan the style energy based
+method you try to say u is argument
+of u prime some u energy
+y so you learn a function that you have to optimize in order to make your control decision
+okay and it's he's got some fantastic examples of
+making this work i encourage you actually to read the paper but it was released sort of today okay he's
+got the same kind of examples but things that wouldn't have worked with the original for instance trying to get this
+into a tight area you see
+i think he's got a bigger view of that yeah here we go okay so his argument here is that this was a
+very hard policy to capture because of sharp discontinuities and possibly
+multimodal demonstrations did you see right there how the the demonstrator
+had a very similar state of the block and the hand and they took a very
+different corrective action in order to to nudge the thing here i think we're going to see it right here
+right as it comes in here very similar state oh that was not the one
+okay right there that little corrective action is like a super small difference in the
+um in the controller led to a very large difference in the policy right and those things can really wreak havoc on a on an
+existing sort of a supervised learning pipeline so roughly they tried to learn the
+functions differently so that you could they could represent discontinuities better and potentially multimodal behaviors better
+okay this is my favorite sort of generalization that i've seen in a while of of uh
+it's basically just the blocks pushing task okay but it's it's brilliant because it's got um all kinds of logical components these
+things are going to get mixed up and be um you know it's got like
+the physics of the basic pushing a block around but the logic of trying to have to separate things in by color and and
+potentially you know move the blue ones first out of the way and then the yellow ones i think it's a really really nice
+example i'd love to code it up myself
+okay but this is just you know continuing to show the power i'd say of these kind of approaches
+a few other ideas here okay so people talk about a major limitation of
+behavior cloning is that it's only as good as its demonstrators now that's
+i'll turn this down here a little bit okay it's actually interesting the first
+behavior cloning papers argued differently they actually said that because of a robot's steady hand you
+know you basically you filter you have no feedback delays you can be better than your demonstrator
+okay maybe a little bit roughly speaking people feel i think bottlenecked by the
+quality of their demonstrations okay and that's a major motivation for the inverse optimal control to say somehow
+that the behavior cloning is doing the dumb thing that's just trying to copy the demonstrator without any understanding
+of its intent and i think that if you can try to from demonstrations extract something
+higher level and put it through a plan or you can potentially do much better and these things produce amazing demos
+but they really can be very narrow demos i think this is a big question of how
+you know if you can put the right features in or out in order to get broader generalization but a lot of
+times these demos you know look incredibly good work incredibly well in the inside the training data but then
+they fall down as soon as you go anywhere off the training data
+okay so that leads me to maybe the last point i want to make here which is where do you get the training data
+there's some really clever ideas out there about how to how to sort of scale this stuff up
+okay one of them is this form to fit project kevin zaka is a friend and i think this is just so
+so clever so they wanted to do a kidding task and there's more to the paper than what i'm
+mentioning now but they wanted to basically you know solve this problem of putting objects into the bin
+right and that's a very hard thing to to you know you could take a long time to
+demonstrate a lot of like careful assemblies so what they did is they had basically the clutter clearing kind of example we
+had code they just had it disassemble all day long automatically okay and then
+they just said well the opposite of that that if i time reverse the disassembly that's a pretty good demonstration of
+the assembly right and they generated a bunch of like you know supervision based data that just yeah inverted time right
+super clever idea okay
+this is the paper the learning from play paper which i think is also it's you know pretty compelling right so that
+they're saying that asking humans to demonstrate one task at a time is maybe unnecessary and potentially gives very
+narrow demonstration data so they've
+i mean i think they gave an ex a system but they also gave sort of a pretty compelling argument that um if you just like give people a robot
+simulator to play with they're gonna do all kinds of crazy stuff right they're gonna if there's a button in the simulator they're totally gonna make the
+robot press the button right and um and actually if you just go through and
+[Music] and then effectively label all similar to the form to fit but basically
+if you take every trajectory that's rolling out anytime it visited a state in the simulator you have a trajectory
+that sort of the human chose to execute that got to that state in the world and if you wanted to use that as now uh you
+know demonstrations to achieve that particular state you've got you know you've got a trajectory that takes you
+to that state and they argue pretty convincingly i think that it's not arbitrary these are like very goal
+directed sort of behaviors it's not somehow random exploration that you'd get if you were doing um you know just
+random search in the control outputs but it's got a very directed humans are choosing sub goals they're executing
+them and that you can actually just leverage a pretty broad distribution of data that way to train a more general
+agent and then there are people that are trying to sort of scale things up right
+so this is the robo-turk project which is on has has gotten more mature
+now but this is one of their early versions where they're basically saying let's make it possible for people to teleop with their iphone you've got an
+imu and your iphone what if you use so if everybody who's got an iphone has a teleop device and we
+put a simulator in front of them then we can basically crowdsource teleop right and now they have these pretty massive
+data sets that have come out of of online online demonstration data right
+so i think it's a big question of whether you how far you really need to go um
+yeah how far you can go with sort of human-based demonstrations for the more dexterous manipulation
+all right how does it fit with um you know we talked about force control impedance control we've talked about
+um a couple different sort of approaches here the output of the
+uh network i wrote is just you so far right
+in an arbitrary way but what is you
+in most of these tasks people they will choose for instance
+an end effector velocity let's say or end effector position or delta position
+and that means you're running a differential ik or something controller on top of that or an impedance controller or something on top of that
+to do to do that right so i think it's pretty rare that people actually try to put torques out of the bottom of this
+thing right it's often putting some clever controller whether it's an impedance controller a force controller
+if you had a task that was more assembly or more welding or more handwriting or something like this you
+probably want to do some sort of force or stiffness control
+down here okay so i don't think this technology replaces the sort of mechanics based low
+level you know high gain feedback control that we know how to do well but it can send very interesting rich
+commands down inside of them right
+all right so i think behavior cloning is like this very clever way to like i said separate out the question
+of how do you train the weights and you know is the representation of the policy
+sufficient to do incredible tasks right and we see over and over again this is like this
+has really been happening in the last few years people have incredible results of neural networks
+solving really hard dexterous tasks from vision right so i think we've really made a lot of progress in understanding
+the representational power of these of these controllers the big question now is if you don't
+have to have everybody demonstrate how do you actually train those controllers so we'll take the rl approach next week
+good happy veterans day
+
+</chapter>
+</body>
+</html>
