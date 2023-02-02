@@ -5,9 +5,9 @@
   <meta name="Behaviour Cloning" content="text/html; charset=utf-8;" />
   <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
 
-  <script type="text/javascript" src="../../notes.js"></script>
+  <script type="text/javascript" src="../../../notes.js"></script>
 
-  <script src="../../notes-mathjax-config.js" defer></script> 
+  <script src="../../../notes-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,7 +16,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../notes.css" />
+  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
 </head>
 
 <body onload="loadChapter('');">
@@ -24,9 +24,9 @@
   <!-- The following division should be written on every page -->
 <div data-type="titlepage" pdf="no">
   <header>
-    <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+    <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
     <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+    <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
     <p style="font-size: 14px; text-align: right;"> 
       Last modified <span id="last_modified"></span>.</br>
       <script>
@@ -38,7 +38,7 @@
 
 <table style="width:100%;" pdf="no"><tr style="width:100%">
   <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
   <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
 </tr></table>
 
@@ -53,65 +53,98 @@
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Behaviour Cloning</h1>
 
-so last time last week i'd say
-we talked about trajectory motion planning right
-so given um either a cost function in the trajectory optimization case
-or just a start and a goal in the
-randomized motion planning case typically you know we had a start and a goal we
-were designing a single trajectory through space and we had some good tools to do that
-and potentially tools that scale pretty well to large dimensions right
-as we transition to rl rl is trying to solve a bigger problem right so
-maybe bigger problem
-where you know this the output of a motion planner is a particular path or trajectory
-right and now we're trying to solve um trying to find a policy
-right so that's synonymous with a controller for people who want to think about it that way
-but even in the motion planning picture if you think of this original motion planning gives me q as a function of
-time what i'd like you know the simplest analogy for a
-policy would be maybe i want to do a vector
-field i want to represent potentially the same sort of behavior
-but instead of having just a single path i'd like to say for every cue
-not just for every time but for every cue i'd like to say what direction i should be going in
-in order to accomplish my desires my cost or my you know achieve my
-uh goal right so it's potentially trying to solve a bigger problem
-you know this is for all q i'd like to have uh some instructions
-and you could think of them as representing certainly this captures if i were to start at this
-one and follow the vector field then it could you can pull the trajectory out of that one okay
-but it's potentially saying much more it says what happens when you're away from the trajectory
-good yeah so i'm going to try to make that connection too so the the the observation was actually what i'm drawing here doesn't doesn't look so
-different than maybe the prm or or the irt in its full glory right
-so uh yeah there's good connections there in fact since you asked why don't i show slide
-one yeah okay so um you know my favorite version of this actually is the
-optimizing version of rrt which is rrt star where they very explicitly make the point
-that if you do that rewiring then you can have a system that's a little bit small i hope you can see but
-you can have a system that finds a path fairly quickly but if you just keep adding keep sampling keep sampling keep
-rewiring then what you end up with really is more than just a path you can end up with a policy that covers tells
-you you know the vector field over the entire space okay so you can really go from
-a lot of the planning algorithms to something more like policies
-okay so that so um
-and a lot of the variants you know you could think of it that way alternatively another connection would
-be if you were just to do replanting if you can if you can plan fast enough right and then if you're if you look at
-whatever state you're currently in and you can execute a plan on the fly online planning
-you know is a policy basically and that's what people talk about when they talk about model predictive control
-for instance
-okay so there's lots of connections between these two and and actually i i even in the details i really don't want it to
-be your either a plan or a policy
-because i think there are there are beautiful ways to sort of blend the two for instance like if you if you've
-looked at alpha zero for instance you know they i think that's a very nice way of sort of
-planning uh uh and then using the planner to build the policy and vice versa
-we'll talk about that one later okay so but let's just compare the relative merits as a representation as a
-as the uh you know goal of an optimization problem or or a planning problem right
-you would think that q of t would be you know asking less right in many cases
-it's um you know it's it's not asking what it what should the behavior be at all possible states it's just acting asking
-along one particular path okay so in a sense you do benefit from that in a very real
-way but you can often plan for systems of very high dimensionality and you're
-roughly you know immune to the cursive dimensionality the you know the number of possible
-states that i might have to cover with a description of a policy can grow badly right if i were to make a grid and
-have to give a discrete answer for every point on the grid then it's exponential in the number of state variables
+<section><h1>Intro</h1>
+  A planning problem is an optimisation problem.
+  In motion planning, given:
+  <ul>
+    <li>a cost function in the trajectory optimization case or</li>
+    <li>a start and a goal in the randomized motion planning case</li>
+  </ul>
+  we design a single trajectory through space.
+  We have good tools to do that, that can potentially 
+  scale pretty well to large dimensions. As output, we get 
+  $q$ as a function of time, $q(t)$.
+
+  <div class="container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../figures/manipulation/18_outputOfMotionPlanning.png"/>
+      <figcaption>
+        Output of a simple motion planner
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/manipulation/19_RLPolicyAim.png"/>
+      <figcaption>
+        The policy that RL is trying to find
+      </figcaption>
+    </figure>
+  </div>
+
+  <p>
+    RL is trying to solve a bigger (?) problem, to find a policy
+    (synonymous with a controller). The simplest analogy for a
+    policy would be a vector
+    field. Instead of having just a single path, for every q
+    not just for every time, we'd like to know what direction we should 
+    be going in, in order to accomplish the goal or the cost. 
+
+    $$
+      \dot q = \pi(q)
+    $$
+
+    $\pi$ represents the policy.    
+  </p>
+  By following the vector field, we can extract the trajectory, but
+  RL is trying to capture what happens when we're 
+  away from the trajectory.
+
+  <p>
+    There are similarities with RRT and PRM. RRT* (the optimising version of 
+    RRT), explicitly makes the point, that if you keep sampling and 
+    rewiring, we don't just end up with a path, but a policy - 
+    a vector field that covers the entire space. So you can go from 
+    planning algorithms to policies.
+  </p>
+
+  Online planning (making a plan on-the-fly based on the current state),
+  is an example of a policy. This works if we can plan and execute the
+  plan fast enough. This is the basis of Model predictive control. 
+
+  <p>
+    It is possible to use the planner to build the policy. 
+    It shouldn't be mutually exclusive. Look for ways to blend them.
+  </p>
+</section>
+
+let's just compare the relative merits as a representation as a
+as the uh you know goal of an optimization problem or or a planning 
+problem right
+you would think that q of t would be you know asking less right in 
+many cases
+it's um you know it's it's not asking what it what should the behavior 
+be at all possible states it's just acting asking
+along one particular path okay so in a sense you do benefit from that 
+in a very real
+way but you can often plan for systems of very high dimensionality 
+and you're
+roughly you know immune to the cursive dimensionality the you know the 
+number of possible
+states that i might have to cover with a description of a policy can 
+grow badly right if i were to make a grid and
+have to give a discrete answer for every point on the grid then it's 
+exponential in the number of state variables
 okay and a path because it's only parameterized by t not by q
 t is always dimension one right so you can say the vector you have to put out
-is a little bit bigger but that doesn't really matter right so what matters is that i have a single path through a
-potentially very high dimensional space okay so in that sense you would you might think that planning can scale
-much better and i think there's certainly places where that's the case the counter argument
+is a little bit bigger but that doesn't really matter right so what 
+matters is that i have a single path through a
+potentially very high dimensional space okay so in that sense you 
+would you might think that planning can scale
+much better and i think there's certainly places where that's the case 
+
+the counter argument
 is that sometimes plans can be extremely complicated to represent okay and
 sometimes very simple policies can actually describe behavior even in
 you know very complicated systems right so
