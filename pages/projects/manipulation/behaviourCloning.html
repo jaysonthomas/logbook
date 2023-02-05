@@ -53,7 +53,7 @@
 <!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Behaviour Cloning</h1>
 
-<section><h1>Intro</h1>
+<section id="1"><h1>Intro</h1>
   A planning problem is an optimisation problem.
   In motion planning, given:
   <ul>
@@ -119,199 +119,178 @@
   </p>
 </section>
 
-let's just compare the relative merits as a representation as a
-as the uh you know goal of an optimization problem or or a planning 
-problem right
-you would think that q of t would be you know asking less right in 
-many cases
-it's um you know it's it's not asking what it what should the behavior 
-be at all possible states it's just acting asking
-along one particular path okay so in a sense you do benefit from that 
-in a very real
-way but you can often plan for systems of very high dimensionality 
-and you're
-roughly you know immune to the cursive dimensionality the you know the 
-number of possible
-states that i might have to cover with a description of a policy can 
-grow badly right if i were to make a grid and
-have to give a discrete answer for every point on the grid then it's 
-exponential in the number of state variables
-okay and a path because it's only parameterized by t not by q
-t is always dimension one right so you can say the vector you have to put out
-is a little bit bigger but that doesn't really matter right so what 
-matters is that i have a single path through a
-potentially very high dimensional space okay so in that sense you 
-would you might think that planning can scale
-much better and i think there's certainly places where that's the case 
+<section id="2"><h1>Comparison of the 2 methods</h1>
+  In a sense, the goal of an optimization or a planning 
+  problem is smaller. Since we're only interested in knowing
+  what the $q$ should be for every $t$ along a particular path and
+  not what the behaviour should be at all possible states,
+  we can often plan for systems of very high dimensionality. 
+  We're immune to the <code>curse of dimensionality</code>.
 
-the counter argument
-is that sometimes plans can be extremely complicated to represent okay and
-sometimes very simple policies can actually describe behavior even in
-you know very complicated systems right so
-can describe rich behavior
-and i've mentioned a few examples of that before my favorite of all time is uh is the hopping robot from
-from mark rayburt where it's just just to this day i just love the fact that the whole controller fits on a one page
-of like this super small book and it's basically a picture and then a few pd controllers and it makes robots like
-throw themselves through the air and uh and had a huge impact on the field of legged locomotion
-right so very simple controller saying roughly when you're on the ground
-jump when you're in the air put your leg out in front of you roughly where you want to land and uh you know the
-resulting behavior when you couple that with the dynamical system which is the springy hopping robot gives you this
-beautiful rich output and actually if you had to plan a path for that it might be a harder problem
-right and i think that's also true if you start thinking about you know
-this is a you know example of it can be very robust even if they're relatively simple plans that's what i showed you before okay but
-now think about this as a very manipulation specific example right if you have to plan every detail of that
-multi-fingered hand and every contact that comes in contact with the plate that can be an enormously complicated
-plan to generate right but if you have a simple controller that just kind of goes down until you touch
-and then squeezes the hand it might be that you can write that controller very easily and
-maybe or maybe not get get beautiful performance out this is an open i would say this is an open question and one that we'll discuss
-a bit today okay i gotta find it find one that's not gonna be irritating
-i think i can pause this one okay
-maybe i can go on to the next thing here let's see
-okay so i do think the concept of planning and the concept
-of you know feedback control and policies i think both of them need to probably live in our
-you know our future manipulation systems we talked about motion planning at one level but even higher than that was our
-task level planner right so deciding that i'm going to first pick up the mug and then i'm going to you know open the
-dishwasher drawer and then pick up the mug and then put it down right the high level logical planner um
-when i've described it before quickly we talked about that as a planner not a policy
-and uh my you know my favorite thing from leslie kelbling leslie you know likes to
-say uh imagine you're trying to book a vacation to paris right you don't have a policy
-for booking a vacation to paris right it's not that you've like every possible place that you've ever you're ever going
-to vacation you've already pre-recorded a solution for that you know and then you just look up the solution to that
-there's it seems like there are places in our in our lives where we solve problems on
-the fly and do some deductive reasoning and do effectively planning okay now at
-the very low level you know we've got very continuous motions with very complex contact
-mechanics or whatever you know it's it's i'll we'll talk a little bit i
-think it was it's a still a little unclear but that feels more like a control problem where you really want to know what's going to happen from all
-different all the different states right and the exact details of what happens along a particular trajectory
-are probably not as important okay so maybe at the low level we kind of have policies
-and what's super interesting is to think about how that transition happens and where up and down the the
-the latter i guess you know does that transition happen and how does it happen how does it happen gracefully
-right we talked about motion planning of the arm that's a case of a super powerful set of tools that we have does
-it belong in our long term solution it depends maybe depends what the task is
-i would even say that my position on this has changed right so in legged robots um i think it's very
-natural to think about having low level controllers you're trying constantly trying to not fall down right so balance
-is a premium the lowest level thing you want is to be like a stabilization based you know
-thing and roughly you know there's kind of a nominal thing that i do i have a nominal gate i'd like to have that programmed in i'd
-like to know what's going to happen if i'm near that if i take my foot a slightly bad step feels very much like a policy to me and
-you could imagine having a handful of sort of you know maybe a step reflex or just a handful of like policies that you
-could combine and be a very effective walker like a legged locomotor right
-in manipulation i would have initially i did initially you know like a couple a handful of years ago thought it was
-different right because the sheer diversity of things that we do with our hands
-you know it's it's it's amazing like all the different things we do with our hands and to some extent we are not in this sort of
-periodic um you know very very like uh regular pattern right
-uh we're to some extent it feels like every time we do something with our hands we're doing something different we've never done before right and maybe
-the situation that we're seeing in front of us is kind of if it's never been seen before then it really puts us in a place
-where i just need to figure out this one thing kind of the single query rrt view of the world rather than the multi-query
-if you are you know trying to try to solve an entire feedback policy
-okay and i still i think there's good logic to that right
-but i've i've changed my mind a bit i think now that we probably do have i mean i don't know
-how high up the ladder it goes but i do think a relatively small set of policies
-down at the low level can probably describe a lot of the details of what we do with our hands and there's lots of evidence of like people talk about the
-you know if you just watch the the kinematics of people's hands when they're doing maneuvers it's actually relatively low dimensional there's like
-eigen grasps and there's all kinds of discussions about this but i would think even fundamentally i think there's
-there's handfuls handfuls of things that we do that was not intentional
-that we do that i think we probably could through practice get very good at a small number of you know policies and
-assemble them to you know and achieve a great diversity emotions but i don't know i mean i think i think
-somewhere we we have to live somewhere in this uh in this balance
-okay there's another problem actually with that with this picture right so if i put this back back up again
-or another thing that it doesn't address that i want to to call out right so this view of um
-of policies from plans
-this sort of q dot is some policy we almost always use pi for
-policy that's the rl notation okay
-this presumes that we know or that we somehow have a measurement or even know what q is
-it presumes that we
-know q and have estimated it let's say
-okay and this is um you know obviously a major assumption so uh for a for an arm moving through when
-when q is just the state of the arm and i'm doing motion planning that doesn't feel like a bad assumption we have very good
-sensors you know we've we've paid for the you know the nice kooka instrumentation
-it gives very accurate uh you know measurements of the joint positions of the arm but if we're in this um bigger view of
-manipulation where the you know the policy really needs to know
-not just the state of the arm but it's really somehow i'm
-i'm making some you know controlled decisions based on the entire state of the arm plus the
-world right this now is
-you know q of the robot v of the robot you know in general right
-q of the world of the environment obstacle you know object
-b and so on and so forth right i don't have good instrumentation on the
-red brick and the red brick is as easy as it gets it doesn't get easier than the red brick it only gets worse from there
-okay so already you know implicitly by saying that i've written written my policy like
-this you know it sort of assumes that i've been able to estimate those positions and
-velocities okay sometimes i don't even know how to write them down not just i didn't
-you know i don't want to assume i estimate them but maybe i don't even know what choice of q is a good state representation for the world right so
-my favorite example of that is just thinking about the problem of chopping onions right and then if you think about
-trying to write the pose and velocity of all the pieces of the onion and maybe it
-changes in number every time i make a cut right so i don't even know what the
-x of this state of this system should be right so that's when i say presumes that
-we know q right i don't i don't even know a good representation for that yet
-okay so what i really wanted to talk about here is a broader view of what a policy is
-it's not just a map from state to actions it's um it's a map potentially a map
-from observations to actions and it's a dynamical system okay so let me come over here
-so really what we have is our dynamic systems view of the world i've got my plant
-which is the robot plus the onions right
-okay i've got my sensors coming out i've got my actuators coming in
-there's a view of the world which says that i should just write a state estimator first
-and that gives me some estimate of x and then i can write my policy u equals pi
-of x hat and i could feed that policy around to uh
-to the plant okay that makes that means that you know the
-implications of that model here which is the class you know a classic model we've gotten from control
-right is that this thing has to be a perception system
-that estimates the you know the state of the onion in addition to the
-to the robot it has to be running at you know full frame rate according to this diagram
-if you think about how we've used them so far we've really kind of said let's do perception and then plan a trajectory
-and we basically close our eyes while we go and execute the trajectory but this is asking for more this is asking for a
-constant stream of sensors to be coming in and put out a constant stream of of you know x estimates coming out in order
-to make these decisions okay and this has been you know it's been
-good to us in control but it's breaking down when it gets to manipulation okay
-this this you know assumption of having a state estimator in the middle and having its requirement to output x
-hat is just too great you know and i would
-i would say that this burden of state estimation is just too great
-and it's not necessary necessarily to estimate the full state to make good decisions
-okay so i think one of the great things that manipulation is doing for control is it's it's
-fighting down some of these uh this this model of trying to do state estimation and then control yeah
-right so this definitely has the multi-body state right
-if i just think about what state variables did i have to declare to simulate the thing right in this model this could be a simple
-function input output function right
-no state we're going to generalize it of course okay and this if i think of this as like a
-column filter for instance
-or an extended kalman filter you know has has a state
-it's running an internal estimate x hat that's not the only way to implement that you can write state estimators that
-just have sliding windows or whatever but that would be a natural
-approximation so there would be state variables here state variables here and that could be a static function
-that would be the classic view
-as i was thinking about this you know i was kind of reflecting on my own journey through this process right so even when
-i was purely focused on legged locomotion um and the uavs i guess we were we were
-feeling the pain of this and i would say when people ask me you know what do i think why why aren't i working on like
-in locomotion right now and you know am i going to work on it again i i think this is still a limitation
-we're leaning hard on this this paradigm in our legged locomotion atlas has an incredible state estimation
-system in it right i mean i think they would tell you that it could even be better you know but but the inclination would be if i want to
-improve the performance i can make my state estimator better right i think it's going to take a big leap to break
-that mold and try to do control differently in legged locomotion but i was already feeling it and we were i was
-writing i remember i actually looked back just to look at the dates this morning and i was looking back at i wrote proposals like in 2011 that were
-saying you know we have to do integrated perception and control that was what we called it back then right integrated perception and
-control
-saying don't break those up into two separate um processes put it into one you know
-one system solve them jointly right and a lot of people were using those words at the time and it it sort of evolved
-right another another name for this is output feedback we'll talk about that
-in particular be dynamic output feedback
-where i have to take where i'm trying to design a feedback controller that goes all the way from sensors to actions that's an output feedback as
-opposed to a full state feedback
-okay and i was i you know i remember struggling and struggling to convince people that this was important my students would would kind of be like
-yeah i hear you but can we just make the state estimator better you know and uh
-in in uavs we started to finally you know started to see was we were flying very
-fast through forests that was the first project where we really started doing i think letting go a little bit of the
-full state and trying to just say we need a minimal sensing of the upcoming obstacles and
-that's sufficient to make our our short-term control decisions okay so our first you know papers and talks about
-integrated perception and control actually came in the uav space and it really um
-you know deep learning happened around 2015 you know 2016-ish people started calling it
-visual motor especially in the manipulation space visual motor policies and they i think
-in my mind they mean the same thing and this is the word to use today
-and it's really this sort of bigger view of trying to um write a controller that goes directly
-from your sensors to your actions and we'll ask the question of does it have state inside it okay
-but there's this beautiful view of the sort of visual motor policies and in my mind
-this is the reason to do manipulation for me i think this is forcing you know
-big questions that we don't know how to address solidly in control yet when the sensors
-are cameras or depth cameras or rgb right and we're trying to come in and write the best controller we know how in
-order to to make an action based on a stream of of rich visual motor sensor
-inputs okay
+  <p>
+    If were to make a grid and give a discrete answer for every point
+    on the grid, the number of state variables to cover with a policy
+    grows exponentially.
+  </p>
+
+  But, a single path is only parameterized by $t$ (which is always 1D)
+  not by $q$, hence the output vector might be big, but it would
+  scale much better through a high dimensional space.
+
+  The counter argument
+  is that sometimes plans can be extremely complicated to represent and
+  sometimes very simple policies can actually describe the behavior
+  in very rich, complicated systems.
+
+  <p>
+    For example, for a manipulation task to lift a plate from the sink.
+    It would be hard to make a plan for all the contact points of the 
+    hand with the plate. But, it would be easier to write a controller that 
+    moves the fingers till you touch the plate and then squeeze.
+  </p>
+
+  Hopping robot - simple controller that said, when you're on the ground, 
+  jump! And when you're in the air, put your leg in front of you roughly 
+  where you want to land. When you couple this simple behaviour 
+  with the dynamical system which is the springy hopping robot,
+  we get a beautiful rich output. It had just a few PD loops.
+
+  <p>
+    The view of obtaining policies from plans,
+    presumes that we somehow have a measurement of
+    and have estimated what $q$ is.
+  </p>
+
+  For an arm moving around, when $q$ is just the 
+  state of the arm and we're doing motion planning, that 
+  doesn't feel like a bad assumption. We have very good
+  sensors along the arm that gives very accurate 
+  measurements of the joint positions.
+
+  <p>
+    But if we want a bigger view of
+    manipulation where the policy needs to know
+    not just the state of the arm but needs to make 
+    controlled decisions based on the 
+    entire state of the arm plus the world ($x$).
+    So, $u = \pi(x)$ where
+    $x = \begin{bmatrix}
+    q_{robot} \\
+    v_{robot} \\
+    q_{object} \\
+    v_{object}
+    \end{bmatrix}$.    
+  </p>
+  We don't have good instrumentation on any of the objects in
+  the world.
+
+  <p>
+    Written like this, we assume the policy has a good
+    estimate of the positions and velocities of the world.
+    But, very often we don't even know what choice of $q$ 
+    is a good state representation for the world.
+
+    A good example is the problem of chopping onions 
+    and everytime we make a cut, the number of pieces increase.
+    It would be hard to write the pose and velocity 
+    of all the pieces of the onion.
+  </p>
+
+  The broader view of a policy is one where
+  it's not just a map from state to actions. It's 
+  potentially a map from observations to actions and it's 
+  a dynamical system. 
+</section>
+
+<section id="3"><h1>What is RL's role in manipulation</h1>
+  High-level - Task planning. Eg: what we're going to pick up first.
+  Low-level - There are continuous motions with very complex contact
+  mechanics. It feels more like a 
+  control problem where you really want to know what's going to happen 
+  from all the different states and the exact details of what 
+  happens along a particular trajectory are probably not as important.
+  Policies are more suited to this level.
+  It would be interesting to think about how the transition between the
+  layers could happen gracefully.  
+
+  <p>
+    In legged robots, it's natural to think the low level 
+    controllers
+    would be responsible for balance and stabilisation, to keep 
+    the robot upright no matter what step is taken.
+    We would want to know what would happen if we took a 
+    bad step.
+    This feels very much like a policy. We could imagine having a 
+    handful of policies that 
+    could combine and be a very effective walker.
+  </p>
+
+  In manipulation, our hands do a diverse set of things constantly.
+  There's no periodic, regular pattern like walking. 
+  Every time we do something with 
+  our hands we're doing something different that we've never done before.
+  And maybe we've not see the exact same situation that is in front of us 
+  at any given time, before. So that puts us in a place
+  where we just need to figure out one thing, similar to the single query 
+  rrt view of the world rather than a multi-query in the case of solving
+  an entire feedback policy.
+
+  <p>
+    There's good logic to that. But may be, a relatively 
+    small set of policies at the low level can probably 
+    describe a lot of the 
+    details of what we do with our hands. When we watch the 
+    kinematics of people's hands 
+    when they're doing maneuvers, it's actually relatively 
+    low dimensional. 
+    There are discussions about topics like eigen grasps.
+  </p>
+  We could potentially assemble a small number of 
+  policies and achieve a great diversity of motions.
+</section>
+ 
+<section id="4"><h1>History of visuomotor policies</h1>
+  In the classic view of control, we would sense, then plan
+  a trajectory, then close our eyes and execute the trajectory.
+  We can't do this in manipulation.
+  But this burden of state estimation is just too great
+  and it's not necessary to estimate the full state to 
+  make good decisions.
+
+  <div class="container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../figures/manipulation/20_classicViewOfControl.png"/>
+      <figcaption>
+        Classic view of control
+      </figcaption>
+    </figure>
+  </div>
+  The state estimator could also be a simple sliding window.
+
+  <p>
+    This reduced burden on the state estimator used to be 
+    called <code>Integrated perception and control</code>
+    in the UAV space; i.e. solve estimation and control
+    in a single system. Another term for it was
+    <code>(Dynamic) Output feedback</code> vs full-state
+    feedback.
+  </p>
+
+  In UAVs, whilst moving fast through forests, the aim
+  was to do minimal sensing of the upcoming obstacles which
+  was sufficient to make good short-term control decisions 
+  instead of the full state feedback. Deep learning happened
+  around 2015. In 2016, IPC started to be called
+  <code>Visuomotor policies</code> in the manipulation space.
+  It's the bigger view of writing a controller that
+  goes directly from sensor to action. We'll explore if 
+  there is state inside it. This is the reason
+  to work on manipulation - how do you do control (output
+  the right actions) based on just a rich stream of
+  sensory information.
+</section>
+
 so this view of visual motor policies
 i just draw that same thing again here but zoom in a little bit
 the simplest thing i could write here would just be as alex was asking about i could write that just
@@ -319,22 +298,38 @@ i call my sensors y which i always do because i
 come more from the control i guess these days
 right i could just have a static function
 that maps from my current observation to my current action right that's a reasonable thing to do
-but it's limiting we already know that it's limiting because even for sort of basic control
-the simplest versions of control the simplest versions of output feedback in control would be like linear quadratic
+but it's limiting 
+
+we already know that it's limiting because even for sort of 
+basic control
+the simplest versions of control the simplest versions 
+of output feedback in control would be like linear quadratic
 linear gaussian um optimal control
 already demands dynamic policies
-dynamic controllers which is exactly the column and filter state plus the lqr
-okay so another way to think about this is that this is a new dynamical system
-it has its own internal state okay one version of that is that inside it has the state estimator
+dynamic controllers which is exactly the column and filter 
+state plus the lqr
+
+okay so another way to think about this is that this is a 
+new dynamical system
+it has its own internal state okay one version of that is 
+that inside it has the state estimator
 which has internal state it has the the controller here right that is a version of a
-dynamic controller that is the optimal thing to do in a linear gaussian quadratic
-optimal control problem okay is to to have a dynamic controller that estimates the full state and makes
-decisions but that's not true in general it is true in general that having dynamic policies can do a can do great
-things
-with a history of yesterday yeah good so so let's let's first just jump to say
-this is think of this this is a dynamical system we think of this as an input output dynamical system it's got a stream of actuator commands it has to
-predict the stream of sensors i want you to think about these controllers as having the same streamless sensor inputs
-and a stream of outputs command right so this is just a dynamical system
+dynamic controller that is the optimal thing to do in a 
+linear gaussian quadratic
+optimal control problem okay is to to have a dynamic controller 
+that estimates the full state and makes
+decisions but that's not true in general it is true in general 
+that having dynamic policies can do a can do great
+things.
+
+let's let's first just jump to say
+this is think of this this is a dynamical system we think of 
+this as an input output dynamical system it's got a stream of 
+actuator commands it has to
+predict the stream of sensors i want you to think about 
+these controllers as having the same streamless sensor inputs
+and a stream of outputs command right so this is just a 
+dynamical system
 okay so now in this in this weird case it's sort of wise coming in and used coming out but these are signals coming
 in and i have a system in the middle okay there are many ways to represent a system you could have a state space
 representation
