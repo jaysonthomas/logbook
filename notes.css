@@ -9,13 +9,6 @@
   --nav-border-width: 8px;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: sans-serif;
-}
-
 .page-container {
   height: inherit;
   display: flex;
