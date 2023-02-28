@@ -1,21 +1,31 @@
 @startuml
 
-simulator --> context
-manipulationStation --> context
-multibodyPlant --> context
-state simulator {
-    state diagram{
-        state manipulationStation {
-            state multibodyPlant {             
-            }
-        }
+ComputeDarbouxFrame -> CollisionLineSearch
+CollisionLineSearch -> NonemptyGrasp
+NonemptyGrasp -> GraspSamplingAlgorithm
+state GraspCandidate {
+    state ComputeDarbouxFrame {
+    }
 
-        state meshcatVisualizer
+    state CollisionLineSearch {
+    }
+
+    state NonemptyGrasp {
+
+    }
+
+    state GraspSamplingAlgorithm {
+        
     }
 }
 
-state context {
 
-}
+GraspCandidate:Select a grasp pose using heuristic based on the local curvature
+
+' (*) -> "Select a grasp pose using a\nheuristic based on the local\ncurvature"
+
+' -r-> "Plan a grasp"
+' -r-> "Move arm to grasp"
+' -r-> "Force control"
 
 @enduml

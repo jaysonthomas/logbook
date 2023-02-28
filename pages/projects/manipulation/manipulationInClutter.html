@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manipulation in clutter</title>
+  <meta name="Manipulation in clutter" content="text/html; charset=utf-8;" />
+  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+  <script type="text/javascript" src="../../../notes.js"></script>
+
+  <script src="../../../notes-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+</head>
+
+<body onload="loadChapter('');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<div id="main" class="sidebar1">
+  <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+</div>
+
+<div id="mySidenav" class="sidebar">
+  <a href="#1">Installation</a>
+</div>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Manipulation in clutter</h1>
+
+<section><h1>Overview</h1>
+  (Summary of course until now, might be useful for planning!)
+  so i think as we start the conversation about more complicated environments
+  um i think one of the first obvious natural questions would be
+  how do you stimulate or test in your robot you know all the random environments
+  that you want to want to use so this is work from from greg
+  he's done sort of random sinks inspired by the dish loading examples but also random kind of kitchen
+  type environments and he's looked into you know probabilistic languages for
+  generating diverse environments in simulation maybe that can be calibrated to the real world
+  we'll get back to that if we can in one of the in the more advanced lectures
+  but my point for today is actually this is super hard right in general i'd say that's super hard people
+  um if you're autonomous i'm going to switch slides just because that's going to distract people but
+  if you're like in autonomous driving company for instance right um you
+  the cash of value that you have is the number of miles you've driven in the real world and the number of times
+  you've taken um you know someone that and it took the real world data and turned that into like a simulation
+  scenario like the number of scenarios you've had of random things that happen in the world is like your treasure chest of
+  experience that you have and whoever has more bigger treasure chests you know it feels like they're doing really well right
+  the same thing would be kind of true in manipulation but we haven't had the same scale of effort right we haven't had people like auto labeling or manually
+  labeling kitchens yet maybe that's you know next year but um
+  so so so far you know there are shortcuts that people are using in manipulation simpler instances of the
+  problem where you can generate random scenes sort of simply they're still
+  very useful for feeding some of the pipelines we want to feed right when we're training deep learning
+  systems we want to have lots of examples of images that are relevant and lots of examples of
+  robots picking up random things and you don't need it to be an elaborate kitchen to make that true you can just dump a
+  lot of things in a bin for instance that's what we're going to start with okay but but it's a it's a sliver of the
+  much bigger problem of trying to actually parameterize the whole world you know right uh writing a distribution over all
+  possible worlds right not in a multiverse kind of way but in like you know what could i possibly see
+  if i wanted a robot to work in everybody's kitchen kind of way
+  so here's an example actually very early on tri one of the ways we started we said we want to start
+  feeding our machine learning hungry algorithms with data and lots of people have done variants of
+  this this is just tris version of it we call it the clutter clearing task and it was a very useful thing to get up
+  off the ground where we basically can pour any object in the bin and watch the
+  robot pick it up and put it in the other bin kind of all day long and it's you know it's great because you can have
+  you know important visitors you say put your wallet in there and and you know maybe you give it back right but uh
+  so but this is you know this robot really does run all day long for you know for for a long time uh collecting lots of
+  data lots of grasps it's a super useful pipeline to have okay so let's make sure we can do
+  that kind of pipeline um it is funny because there are some weird objects that get put you know so
+  it was just became you know throw any random object that's roughly the size of the gripper in there it doesn't matter if it's soft or hard
+  this thing will just kind of pick it up and people would throw the weirdest things in there and then every once in a while the robot you know after running
+  for eight hours or something you'd look at it it had thrown some of them out and someone found this like rubber duck that
+  was looked like spock have you seen ever seen this is like kind of like a rubber duck and it always threw that one out as
+  far as i could tell it was like always reject the spock duck um but
+  okay so one of the things that happens as we
+  as we start simulating you know working in simulation on these more complicated scenes is that it
+  we have to get more advanced with our simulation okay and um simulation of of complex scenes can
+  be a pretty complicated thing so um to start we'll we'll just be
+  talking about you know how do you populate a bin with lots of random objects and the simplest version of that is just
+  you know drop a bunch of objects out of the sky and uh uh you know you'll get a random set of
+  configurations every time start picking them and moving them to the other bin okay
+  now it's pretty interesting to think about and we will i think by the end of the lecture uh hopefully understand pretty well why
+  that is the choice that people make in order to make these random bins of
+  of clutter but it's pretty subtle it doesn't have to be
+  red bricks although you know i love the little foam red brick you know one of the classic data sets
+  for that people use in manipulation of just random sort of household objects is the ycb um which is the yale cal
+  so yale berkeley and cmu i always think of that in the wrong way but it's uh
+  yeah it was cmu at the time right and so this is the you know the data set you'll see
+  like an unusually large number of spam cans and mustard bottles and sugar boxes in manipulation papers and this is why
+  it's because there was a project early on to say let's take some things you can order on
+  amazon we'll scan them once in high fidelity we'll give you good cad models and we'll give you rough inertial
+  properties right and we'll distribute them to the world and even say if you write us a nice letter we'll send you
+  those actual the parts right so everybody can have the same data and play with the same data in the same in the different labs
+  now unfortunately like cheezit as a company didn't didn't comply right
+  so they now now you buy a cheesy box at the store with the same skew and it says like low carb on it and so it's like
+  your your images are broken but um but it's roughly the same right and uh the sugar boxes um
+  tend to leak sugar all over the lab but uh and then the mice come but
+  it's been pretty darn good to the field there's a lot of other data sets out there that you might know about or have used
+  if you work on computer vision but not all of them a lot of them you would
+  think you would want to use don't have enough information to be simulated in a manipulation context so a
+  lot of object data sets that are good enough for visual rendering don't have inertial properties or friction
+  properties or other things so you have to do some work to either make some assumptions
+  or or whatever these this is um this is a data set that that with a little bit of work can be good enough
+  for for simulation too so it's been a bedrock and you can drop
+  random um boxes and mustard bottles and spam cans from the sky and um
+  i i said it in the notes too it always cracks me up that you can sort of like see the central limit theorem even if
+  it's like spam cans and mustard bottles and camel soup right but if you just drop them
+  they fall into this canonical distributions right
+  okay and um you know what's that going to do for us down the line so we're going to make a
+  grasping system that will reach into this and you know
+  pick up any box and move it to the next side you could imagine asking the question should i estimate the pose of
+  each box one at a time with icp with iterative closest point icp
+  and you could potentially but we'll take a different approach that's going to be more robust and not assume as much about
+  the known objects we'll explore that too but when you start taking overhead pictures like this
+  uh this is the stuff that we're gonna in uh next week you know start feeding into our machine learning pipeline so if i
+  can simulate images diverse images of cluttered sinks and i can in simulation make ground
+  truth labels saying this pixel is associated with a domino's sugar
+  and this one's associated with a cheez-it then that's the perfect cache of training data for uh for training a
+  machine learning system okay
+  so that was a little bit about the motivation for for why we're going to
+  generate cluttered scenes but because the the ask on the simulator has gone up
+  significantly and because i think it's important and i like it we're going to talk about simulating contact okay and my my
+  promise to you here is that i i hope you will level up your use of simulation
+  some people in your questions or comments or pset have asked questions like you know is
+  should i have had a physics course recently before i take this class is that sort of a prerequisite
+  uh we'll talk about you know equations of motion again here but i i do hope that you don't feel like it's a
+  prerequisite i think it's important to me actually that um you know i think a skill as a roboticist
+  is to be able to uh abstract a little bit right so so roboticists sort of have to be the jack
+  of all trades uh and i think there is a skill like it really is a skill you will develop
+  continue to develop of getting the gist of something right and knowing that you can dig down and having the ability to
+  dig down for details if and when you want so for those of you that know something
+  about multi-body dynamics i hope you'll get a lot out of this for those of you that feel less comfortable i hope you still get a bunch out of it and know
+  where to dig in a little bit farther if if it's not if it doesn't all land immediately
+  okay and then we'll end talking about some of the things i promised last time about static equilibrium
+  i think even if you don't love every equation i write i think you will still become a more proficient user of simulation and at least understand why
+  sometimes simulation blows up
+  okay why is simulation hard
+  for robotics especially manipulation okay
+  i would contrast this with simulating a quad rotor or simulating an
+  autonomous vehicle you know most autonomous vehicles or you know a lot of different robots
+  that don't make and break contact with the world as an integral part of their operation those tend to be much easier to simulate
+  okay but when you start simulating contact then things get a lot more difficult okay
+  right in all the cases but this the equations are still f equals n a
+  right so there's nothing different about that set of equations for
+  manipulation so what makes simulating contact more difficult
+  there's you know two basic points that i'll make i think one of the major reasons is that
+  we get stiff differential equations
+  okay and i mean technically they're even differential inclusions but i think even
+  this idea of getting stiff equations i'll make sure you understand what i mean by that
+  and the fact that the computational geometry
+  gets very complicated and potentially fragile
+  our sources of um of instability of difficulty that are
+  not present if you're you know a quadrotor flying through space without making contact
+  okay so what do i mean by stiff differential equations i'll come over here and start
+  fresh
+  fundamentally we have equations that look like f equals m a and we need to integrate them
+  numerically right so fundamentally we're doing numerical integration of equations so
+  um
+  let me take a a very
+  overly simple sort of idea where i'm really just integrating a function and it's there's no feedback or
+  anything so imagine i have some function f of t and i want to take an integral right i
+  want to figure out what is x at time t which would be the integral
+  from zero to t of f of t prime dt prime
+  plus whatever x of 0 was right
+  and how do i go about do that doing that like i mean just thinking about what you already know about integration you could
+  use this to derive the basic rules of integration but certainly people use them in numerical integration too is
+  that you end up breaking up the problem into a series of discrete
+  evaluations of your function right and then taking course approximations
+  of your function right that would be a trapezoidal
+  type approximation right and you integrate all the pieces right and if you're
+  saying something about calculus you take a limit as those intervals go to zero
+  but if you're writing an algorithm you know those they don't go to zero they say there's some finite discretization that has to happen in your solver in
+  order to make progress okay
+  so um and there's very ways i mean we have the trapezoidal rules right to do this you
+  can also take higher order integration right so you can you can evaluate more times inside each region and make a
+  more advanced approximation but still taking you know course time steps there's lots
+  that's known about that in the numerical integration so what are the cases that make that
+  hard right so if i had a different function here
+  that was did something like this okay right and
+  i'm happy happily marching along and i take my random integration intervals and i'm approximating it with
+  my segments here and i just got a little unlucky and had to go like that
+  right you can get potentially very big errors
+  in your integral if your function changes very quickly
+  right so this would be you know f of t changing quickly
+  and what does it imply implies that you're going to need to take very small time steps right so this this is time
+  you know this is my my time step here implies to get to get accurate real
+  solutions you need delta t to be small
+  right at some point if i make them small enough i can get a good accurate integration
+  but this one as i've drawn it is actually particularly frustrating right because you don't need small delta t
+  everywhere you only just need it right there right so it's kind of a waste of energy to take a constant delta t
+  and just simulate slowly all the time because that gets expensive and that's when simulators get slow is that they're taking these really small time steps
+  right all because there's a fear of a possible event like this okay but that happens right
+  so this is a this is one of the ways that someone would call it a stiff differential equation when you have um
+  when you have a difference in time scales or very something that makes your time scale need to be very very small
+  that would be a considered a stiff differential equation
+  when this was a x dot it's a differential equation right
+  there are other stiff is a kind of overloaded word people use it for when some variables have
+  big time steps and others are changed fast okay but this is fundamentally what's
+  happening in contact you know i think that's not totally surprising that you could be you know moving along
+  suddenly and you make contact and you get these big jumps but we'll try to understand a little bit more deeply why that's happening and how people are
+  addressing it okay so contact leads to these stiff different differential equations
+  now it's interesting to think so so if you've thought about numerical integration before there's actually a lot of tools to potentially address
+  those kind of problems right if you if you're in matlab and you've got a suite of integrators to choose from and you
+  think okay i've got you know i've got an equation a system that does this well there's a bunch of things i could try to do
+  right so one of them is would be variable step integration
+  also known as error controlled
+  and the basic ideas there would be you take try to take big time steps but you take
+  a couple different you try to take different integrations so maybe i'll use a fourth order grader fourth order
+  update and a fifth order update both in my big steps and if they match i feel
+  like i've got confidence that i've chosen a safe step if they give very different results with two different integration schemes then you think oh i
+  missed something i need to reduce my time step right and this can have these can have the the property that they can take big
+  time steps here and then possibly take small time skip steps here and they can work for robotics not many
+  simulators use them because it's kind of annoying like if you want your simulation to play in real time for
+  instance right this is going to have something that is fast sometimes and then slow during the interesting parts and then fast again
+  so so it's not as popular for that reason certainly game engines don't use that game engines want to have a locked
+  time step and and do this um we do have a whole integration suite in drake to do
+  that kind of stuff and we actually when we're debugging our fixed timestep algorithms which we
+  we also like but we we like the ability to run the error controlled integration to check that we get the right answer
+  even if it runs slow and then you know it can use it as unit tests against their are faster solvers
+  there's another idea there too which is to do explicit event detection
+  okay where you might actually if this is a contact happening
+  you might actually tell your simulator about the existence of these events right and say look for the distance
+  between my objects going crossing zero you know about zero crossing detection
+  right and you can sometimes do more to sort of tell your simulators about that
+  but in addition to you know being potentially slow and this being
+  great in fact for my walking robots we did a lot of event detection and we simulated very well and we're very happy
+  with that but in manipulation it doesn't scale right if i
+  if i have a robot foot that hits the ground every once in a while i can i can register every event and be
+  very happy with that if i'm a hand dexterous hand grabbing a mug and i've got like a million events happening in
+  one grasp it just doesn't just doesn't work so in tradition we traditionally haven't used event detection
+  in manipulation
+  okay so what do people do there's a lot of good work in the simulator world for multi-body
+  simulation of basically trying to figure out how to make these approximations
+  robust if not correct we don't actually know a lot of them that we're using a lot we don't actually have any
+  guarantees that they're correct some of them might add energy into the system you know there's there's some problems with some
+  of them okay but we try to take big time steps and we think a lot about the integration scheme
+  that we use inside there often to the point where we are solving a small optimization problem to to make
+  the best you know the best update we can over a finite interval okay and this has
+  allowed people to take big time steps again and have performance simulators okay so you know more advanced integration
+  and they often lead to these time stepping methods
+  one of the most famous is they're called solving linear complementarity problems lcp
+  is that's the name of the optimization solved at each step
+  and these don't call you know most sec or gerobi or snopped they're calling highly specialized solvers that are
+  tuned in exactly for the multibody equations they use as much as they can about the sparsity and they you know
+  they have to be specialized in order to be effective okay and still i mean i heard
+  a great talk yesterday about the newer a new integration scheme for for these kind of methods i mean this is continued
+  to be active research and it's a it can be a game changer for the field if someone makes progress in them
+  okay so let's i'm going to try to tell you you know at least the the
+  basic ideas behind here and connect it to the physics right so i want you to have an intuition of the now from the eq
+  physical equations you know why do these jumps happen uh what can we do about them and i want you to come away with a
+  practical understanding like if my simulator looks like you know my objects look like they're
+  mexican jumping beans you know what do i do about it or if if uh you know if my
+  atlas used to explode right so like uh i'd be i would be working on our atlas and simulation and it would literally
+  explode and that would be frustrating when you're working on a controller you know and sometimes it was our fault and
+  sometimes it was the simulator's fault but you should come away from this with
+  an increased understanding of like what you would do about it and why that sometimes happens
+  all right so let's think about some of the basic physics of contact
+  i'm happy to take any questions about that too if people have any questions
+  okay let's say i've got a sphere mass m you're going to do this a bit on your
+  pset too gravity's down okay i've got a ground plane um
+  what does the sphere do okay so it's going to come down now the
+  natural thing to say is that's a ball that would bounce but in our class spheres don't bounce that's
+  we have uh yeah in manipulation you mostly don't want things to be bouncing around and in
+  practice a lot of things you're picking up you know you pick them up with a padded finger or something like this but you
+  could certainly expect it to bounce if there's some elastic elasticity right if there's an
+  elastic contact
+  the coefficient of restitution is what we talk about but we drive it to zero okay we say
+  you know here we're going to do inelastic
+  we can get back to elastic it's not that we can't simulate um elastic is just uh i think the exposition is cleaner if
+  we just let it go okay for now right so that's all that's uh an assumption
+  it's like elasticity zero so the ball's gonna go down hit the hit the ground and stop okay
+  but it's actually really subtle how it happens right um and it has all those issues right so
+  the equations of motion here are simple right i can call it q or i'll call it z i
+  guess just my z height here of the ball
+  uh it's just f equals m a right so it's just going to be negative g mg sorry
+  right and uh when it's when it's in the air that's all that's happening okay
+  when we hit the ground when we get to the second configuration oops let me make it
+  exactly kiss the ground here for this okay
+  there's going to be a new force involved which is going to be our our contact force
+  we're going to have various um you know notation to talk about spatial forces right so
+  if you remember we did spatial velocities already accelerations
+  where we said the big v with we could have
+  all the stuff it's got it a rotational component and a
+  translational component right
+  and we're going to have spatial forces too
+  where i'll have a big f let's just say
+  i'm going to have the translational torques okay and i'll have the
+  small f be my horizontal or my translational velocities okay that can have
+  a relative to b all this stuff
+  they don't always need all that but it's available okay
+  and in particular we're going to typically work in a coordinate frame that's called the
+  contact frame which will be right here
+  okay so that's just a long way of me saying i want to call that force the force on let's say body i'll call it
+  force on m in the contact frame and since my contact frame
+  i'm going to always say that the normal is the z component it's the z component okay
+  it'll save us later but i know it feels heavy right now it's always sometimes it's also called
+  the normal force
+  sometimes in the notes i actually sort of i almost always write this and i long to
+  get myself to really write this all the time so i sometimes just write the normal force like that
+  sounds good yeah uh
+  the request was to write bigger i'm sure the people on watching online think that too so
+  if there's anything you need me to rewrite i'm happy to but otherwise i'll be bigger going forward
+  okay so when we're in the contact configuration
+  we get this additional component here it happens that everything's in the same frame
+  so it's going to be a world z here on mass
+  is what what i care about here but it happens that c and w are aligned in this case
+  okay so what do we expect the trajectory of the ball to look like okay so if i have time here maybe i need to
+  i start with an initial z let me even that's even simpler to think
+  about z dot first let's think about z dot let's say it starts at zero
+  okay before contact let's say that my time of contact happens over here
+  time of contact before contact i just have this linear
+  acceleration constant acceleration which means a linear velocity
+  now at the moment of contact i have a decision to make okay i have you know lots of there's a couple
+  different there's only really two different ways i'd say to talk about what f should be okay
+  but the pure version that i think you kind of like mathematically would be to say
+  i never penetrate the ground right that force
+  does whatever it needs to do in order to prevent me from penetrating the ground that's sort of a natural
+  definition but in order for that to be true if i'm coming down with a positive z
+  velocity and then all of a sudden at this instant that i hit the ground
+  my z velocity has to instantaneously become zero otherwise i will penetrate the ground
+  that means that i have a discontinuous jump at the moment i hit
+  the ground okay
+  so that
+  is what we'll call the rigid con what people call the rigid contact model
+  say how do i solve for
+  for the force
+  called it out and force on m
+  option one is i would say the rigid contact approach
+  so you actually solve a small optimization problem potentially in this in the harder cases
+  and you try to compute what is the smallest force possible that could avoid penetration
+  so this is becomes a constrained optimization i could write it as
+  so there's some constraint where z has got to be greater than equal to zero
+  for all time and the force ends up being whatever it needs to be in order to make z greater
+  than equal to zero but among all the forces that could make keep z from going less than zero it's
+  the smallest one that's called the principle of least action
+  it comes from principal's least action
+  okay so that's a well-defined problem right i could figure out um
+  you know i could solve for that whatever f needs to be to make sure that z never goes less than zero yes
+  good so yeah so that's that was exactly the next question so the question is doesn't that mean f has to be infinite
+  yes so in order to do rigid contact um in order for this to happen where f
+  is going to be zero in the continuous time until the moment that it hits the ground
+  and if the velocity changes discontinuously the acceleration so so the way to think about that is f
+  has to be impulsive it has to be a delta function right it has to have finite
+  results change in velocity over infinite decimal instead of time
+  all right delta function
+  it's going to look something like this
+  there's some delta function sitting there the moment you make contact you have an impulsive collision
+  now that's not cra i mean so nothing is actually rigid in practice
+  okay i mean even when people run on treadmills it happens you know i worked on walking robots a
+  lot so people who run on treadmills if you look at the way you run on treadmills at the moment of heel strike you see a big
+  huge spike and then you'll see the constant sort of stance force right that's a real thing i mean you'll see
+  this kind of a pattern in on a gate analysis machine if you're going running on a gate analysis machine
+  most people don't run on a treadmill with real-time force feedback but it's cool
+  okay so that's a sort of a real thing now the real systems aren't infinitely rigid
+  so there'll be a little bit of deformation of the objects so in practice it's not an impulse it's a it's
+  a spread out a little bit over time but it can be very sharp okay and in fact i think you should really
+  think about this as rigid contact is not reality it's an approximation we
+  make to reality that can be good for some algorithms and bad for other algorithms okay for some of the trajectory optimization
+  it actually makes things good because we can do explicit event detection make a decision variable exactly for
+  that you know and then otherwise have simple problems for simulation it's
+  typically not for manipulation simulation it's not typically done
+  okay does that does that make sense the fact that you need an impulse here so that's that's um
+  potentially bad news for a simulator if you're not doing event so you i think when you have this you want to be doing event detection
+  otherwise you're not going to integrate that very carefully
+  okay if however
+  in discrete time if we're willing to do these fixed time step solvers we can make an approximation
+  so this if i wrote this a little bit more carefully might say z of t greater than
+  equal to zero for all possible t okay in discrete time when we're taking these
+  big time step algorithms one of the things that we do is we relax that a little bit we say
+  that well z at my dt as my constant interval of dt
+  so my um let's say dt times k my k
+  step has to be greater than equal to zero did i say that well enough so
+  i plot z um time here
+  z of t if i'm making discrete updates and i'm
+  only looking at it at a fixed dts 2 dt
+  3 dt i got small sorry okay if i only require that z is greater than
+  zero here at the finite points i only implement my constraint at these points
+  then it's enough to say the total integral of the force over an interval
+  is sufficient to put me into out of penetration okay
+  so that can be finite again and that can be well behaved
+  does that make sense to yeah so basically
+  i'm not even so if i hit the ground somewhere in the interval between delta t and 2 delta t
+  i don't have to potentially do event detection i have to solve for some force which when integrated over this interval
+  will make sure that i'm out of penetration or exactly on penetration at the end of the interval that means my
+  force has a finite duration of time to work over and becomes finite again it removes these delta functions that
+  are nasty and that's the fundamental idea that happens in these discrete time time
+  stepping solvers yeah what happens
+  so the question is what happens if you're predicted to hit the time hit just between the time steps so it
+  handles that very well so it gets the
+  forces are allowed to be non-zero if at the end of time the constraint needs to be active
+  that's the semi-implicit methods so the rules are at the end of each interval you must satisfy the constraints
+  and you're allowed to have force that's non-zero if it's required to make your
+  constraints act you know that you stay out of penetration at the end of time
+  the harder one actually is if i'm leaving contact in the middle of an interval
+  okay then you must be able to leave contact without force that's the trade-off that the solvers
+  typically make okay but they solve these small problems such that the end of each interval
+  you will satisfy those constraints yes
+  okay so the question is if i have torque limits but i simulated a high frequency can i
+  get arbitrarily large forces so i think
+  we have to be a little careful there could so so i think if the torques are limited ever at every step but they are changing very rapidly
+  and you integrate them badly then you could imagine adding power into the system
+  and cause things to look a physical or whatever but i think that would be uh that's not
+  the governing equations that are wrong in that case that's meaning that you're probably integrating them uh
+  incorrectly right so if you take large you know quickly changing torques and you're not integrating carefully things could
+  lead to high accuracy or high errors
+  okay so this is the rigid contact assumption
+  and it's gross in this way but with some time average approximations it can become reasonable
+  again okay and the the hope is to try to enforce these constraints
+  completely
+  option two is a soft contact model or compliant contact
+  okay and in this in a soft or compliant contact you no longer try to solve an
+  optimization problem i mean there's versions that combine all these ideas but in the simplest form of soft contact
+  you actually prescribe that the force is a function you allow your system to penetrate two bodies to penetrate a
+  little bit so the ball is going to go a little bit under the ground but you make a force that resists that's proportional let's say to this like a
+  spring pushing you out of the ground the ground becomes a spring
+  okay so you might have something like your force in the world or in the contact frame
+  equals zero if z is greater than or equal to zero or negative k
+  z if z is less than zero
+  and physically that might look like
+  the ball actually will go under the ground and i've got a little tiny spring pushing me back up
+  some force okay
+  more generally we'll add damping and stuff too
+  something like that these are still discontinuous
+  sorry it's they're continuous but they're uh they're not differential something changes at the at the moment
+  where you can hit the ground but it's at least continuous right in fact the way that people will plot these
+  the way to think about it here is if i think of z as my function here
+  the rigid contact model for all positive z's the force must be zero
+  and when z equals zero it could be anything
+  positive here
+  for my soft contact model i'm going to get something that looks more like this
+  okay where this is my stiffness k
+  makes a spring law
+  okay in fact so i made it easy with the it's just a ball falling down vertically
+  you know so the distance between the the ball and the in the world and the
+  ground is just z more generally
+  that distance we've already seen a name for that distance right we've we've used phi for sine
+  distance function okay and actually sine distance function is exactly what we want to use here again for all the
+  contact computations right so more generally this could be phi which would be a total function of q
+  all my all my position variables which is the sign distance function
+  let's say between body a
+  and body b okay so the general version of these plots they still in the frame of the
+  contact fee plays an extremely important role okay it's the number it's a scalar but um it
+  happens to represent you know exactly the direct the distance between the objects
+  and it sort of defines the coordinate system of our contact frame okay so we want where z where
+  phi is going up to be the z axis of our contact frame okay and we still make these plots
+  saying that the the force in z of our contact frame you know it
+  can look like this in the rigid
+  more like this in the soft and you can choose different curves if you want to right yeah
+  it doesn't have to bounce if there's dissipation right
+  you can in fact a lot of times you'll have even an asymmetric dissipation so that it will
+  you know come in and it'll try to resist a lot of energy like when you're when you're pulling back up
+  you would bounce if you didn't have damping otherwise yes
+  and you can simulate soft contact with in continuous time now
+  or discrete time you can try to do the event detection or not it really doesn't change okay but
+  but in particular so choosing k is a big deal right this is one of the
+  things that you should think about when your simulator is not working well right is that where is
+  the stiffness in my problem coming from right if k is very large
+  then i could have a stiff set of differential equations i'm making my equations more stiff and i probably have to take smaller time
+  steps okay so you know how do you pick k
+  well it depends on the inertia in your system right so if i'm a 400 pound humanoid and i'm sitting on the ground
+  and i don't want to like be six feet under the ground then uh then i need a large k to keep me pushing back up
+  right um so so
+  you have to be careful i mean what we really care about is the stiffness and acceleration right so
+  so you can you can potentially choose a large k and have an inertial system and and and
+  still have a reasonable um set of of accelerations that are not too
+  stiff uh which is why walking robots have often worked well and they've been easy to simulate okay but if like
+  atlas starts trying to pick up a toothpick or something like this right then you get this huge range of inertias
+  and you have to pick some stiffness to rule them all right and that's where things get really bad right you get some
+  you know huge forces to try to keep atlas out of the ground and and you apply it to a little toothpick and
+  things will you know right it really that does happen right and i mean even
+  um i mean i heard a talk from you know we worked a lot on the atlas simulation right and uh
+  at the end of the simulation we had to all this work on model-based control right and uh you know
+  we're thinking about we take the urdf in we write a great controller it's like optimal in some ways or whatever and after the
+  simulation i hear this talk and they say um we had trouble making the simulator work fast enough so we realized that if
+  we make the fingers 10 times heavier then the simulator could run faster and i'm like what you know i just you know i
+  wrote all this math to assume that the fingers were like a certain you can't just change the fingers behind the scenes you know i was like i i'm a
+  pretty laid back guy but i think like you know those pictures cartoons where you're like it gets red and then steam starts coming out of the ears you know
+  because i didn't sleep for like two years working on that robot and people are just changing masses behind the scenes um you know but that's true i
+  mean if you have a dexterous hand with little light inertias in your fingers and a big heavy robot that's the bad
+  case that's like the really bad case for trying to choose these these spring constants and trying to make a good simulator
+  so so you know but if so that's a that's a subtle point right so we're gonna how do you choose these
+  stiffnesses do you choose them per body or per pair of bodies right most of the simulators you pick them per body and
+  then the stiffness that you get as you interact between two bodies is some combination of those two stiffnesses
+  right really the true properties would be a function of the material properties
+  pair of material properties right but it becomes very cumbersome to have for every possible pair of materials to
+  specify that i mean even then i think you could have big forces coming from atlas's feet
+  you know interacting with the solver with small forces at the at the fingers and things are still very tough in this
+  in the stiffness of the differential equations sense okay
+  and if you don't do event detection which i said people really don't you have to think that the stiffness you
+  choose is not just about like the resting depth of my you know the resting penetration
+  at steady state that stiffness has to do all the work of stopping you when you fall into the
+  ground that initial contact it has to do the work of the impulse too so people think oh it's not it's not a
+  big deal i'm going to just let my robot at steady state go a little bit under the ground but that's not true because it at the impact you might go way into
+  the ground and not be happy
+  okay so you'll see actually if you look at the the code right so
+  when you call multi-body plant there's this mysterious time step
+  parameter right it defaults to zero um right
+  so now you know a lot more about what that time step's doing okay so in the in
+  the drake systems framework each individual individual system can declare what its update rates are right you
+  don't have to say use one time step for the entire system you can say this system this subsystem must be integrated
+  at this time step if time step is zero then it tries to use the continuous time
+  variable step integration and do accurate integration and it should be stable but it will be slow
+  and it will slow down at the contacts right it'll like it'll take big steps your simulator will move fast and then
+  it'll make contact and it'll slow down it'll stimulate very carefully and then it'll speed back up okay but for for
+  sanity checking your physics that's great that's super useful okay if you then pick you know
+  oftentimes we'll pick like uh one kilohertz or something here as there's you know
+  one millisecond for the time step right or some small numbers like this if you see your system blowing up
+  the first thing you should do is look figure out why these what's causing stiffness right
+  but you can also turn the time step down and expect it to work better and then slowly move it back up yeah
+  yeah good right so people will choose different functions for this um some of them do
+  you know increase in a nonlinear way as you as you as you go deep absolutely that's a good idea i think
+  yeah absolutely a good idea i only cartoon the linear spring
+  okay so we thought a little bit about normal forces and trying to prevent penetration let's think about um
+  friction yeah i'll come over here
+  caveat rigid body friction like has all these weird quirks uh right
+  so it's it's an imperfect model uh you can find you can get yourself
+  in situations where there's no good solution given their models or there's no unique solution for instance
+  so with that caveat i'll tell you what the common models are right
+  degenerate solutions okay but despite that everybody uses it okay
+  uh so just to think i've got maybe my ball
+  coming down it's still plastic it's still gonna stick but now when it hits the ground boom i'm going to have not
+  only a normal force but i'll have some tangential force okay so in my
+  z frame and then i'll have my let's say cx or my sometimes i'll call this this
+  is the normal force i often use the shorthand fn
+  and this is the tangential force
+  often shorthand f tangential
+  the same way that the normal force the sort of the cleanest statement of the product were
+  you sorry did you have a question no the the simplest statement of the question is the normal force is whatever the
+  smallest force it needs to be to resist penetration the simplest specification of the
+  friction force is it's the the force that it needs to be to stop horizontal motion
+  okay so fcx
+  is whatever force
+  is needed to stop horizontal motion
+  which is tangential velocity so that would be the velocity
+  of body a relative to body b at the contact frame expressed in the contact frame
+  in in let's say x in the contact frame
+  if i had no limits on friction this is this is what it's going to do it's going to you're going to solve for whatever
+  force is needed okay but in practice friction is limited
+  so we up to some limit
+  and the standard model of that is coulomb friction
+  where we say that the i'll just write ft is less than
+  some coefficient of friction times my normal force the way i've drawn it my normal force is
+  always positive but i can do this just to be careful i guess
+  so this is a coefficient of friction
+  it's also the coulomb friction is also known described often as called the friction
+  cone because that is a conic constraint
+  you see in 3d on my my plot there in 3d i still have the normal and i have two
+  tangential velocities right i always have this contact frame right in the contact frame
+  if i have my normal force then the tangential force is
+  proportional to the normal force so it comes up like a cone right depending on what my normal force is
+  i can i have if i have more normal force if i'm pushing down harder on the ground i can have more friction force
+  proportionally if i were able to draw that well enough on the screen
+  if i have you know tangential direction one tangential direction two in my normal direction
+  then it really does look like a friction cone because if that's an l2 which it almost always is and l2
+  you know euclidean distance there but it really is this this cone
+  okay so we call that the friction cone
+  it's the admissible frictions which are
+  a function of the normals
+  okay so the definition is pretty simple it's whatever up to the up to this limit
+  it's whatever the friction needs to be to match that and then if you are sliding if you if you are not
+  able to produce enough friction to completely stop resist motion that it
+  will be the maximum dissipation so it will be whatever force it does that slows you down the most
+  which is always resisting it's in the direction resisting your velocity okay these are all details but friction
+  tries to stop you in the tangential velocity right
+  sliding friction tends to be we tend to have two coefficient of frictions
+  so let me make sure this plot makes sense here but the same way i was able to draw
+  the normal force as a function of the sine distance here i'm looking at the
+  tangential velocity in the contact frame that's x here
+  and the plot that you will see is that when there's zero
+  velocity when zero velocity is possible i can have whatever force
+  i'm allowed to have up to the mu static friction if i have if i
+  distinguish between the two and once i start sliding
+  i expect my force
+  to be as big as possible to resist motion okay
+  and this would be potentially a different number sometimes
+  the dynamics friction and static friction are set the same but typically you can get more force instiction than
+  when you're sliding you get slightly less force so you'll get a you'll transition to a maximum dissipation with a slightly
+  smaller limit and you will see some of the
+  simulators don't if you don't do this strict optimization sort of to get to impose those exactly you'll see
+  approximations of this that look like you know this these kind of
+  non-linear you know stiff sort of approximate approximations of that
+  that are used in the simulators one of one of them that we use in drake
+  is called the stribec approximation
+  street back german
+  now the same thing you asked about for stiffnesses it's true here the the static friction you'd expect and the
+  dynamic friction you expect between two objects is really a function of the material pairs
+  but in practice almost all the simulators all the urdfs everything you specify a coefficient of friction for
+  this object and for this object and then the simulators do a best effort for every pair to turn it into some averaged
+  coefficient or friction between the two
+  okay so um so all of these things lead to potential stiffness in the equations right that
+  that the numerical integration story i told you at the beginning you have all this stuff like these are all big big ugly
+  functions that are going boom right so that's what makes um simulating these things con hard and the best solvers i
+  mean the good work here is a lot of work at the numerical methods of simulating those equations
+  uh you know efficiently taking as big steps as you as you can in the details of how you do you know matrix inverses
+  or basically these squares kind of solutions they're really in the weeds they're trying to exploit all the sparsity in the equations it's tough
+  stuff
+  okay it gets worse too so um it gets worse too i told you there's
+  two big problems right there was the stiffness of the equations the other thing that happens is that the contact geometries are really ugly okay
+  so one of the things that i kind of alluded to here is that
+  a lot of the models allow you to penetrate the ground a little bit or two objects will penetrate themselves
+  a little bit even the rigid models it turns out that the optimization problems we solve
+  in order to make them efficient we tend to linearize we take jacobians for instance to linearize the the
+  friction cones and the constraints and because that's an approximation we can actually even the rigid models do allow
+  some penetration so you get two bodies that are overlapping as you will see in your problem set
+  even computing sign distance functions when things are in overlapping gets ugly okay and it's not exactly you want the
+  you want something that's slightly different than the sign distance inside you want the maximum penetration depth okay but
+  that stuff gets really really bad and it's a source of a lot of problems in simulators so let me just
+  um you know i actually i had some slides i put together the other day so let me show you some
+  some of the the work that we do to try to make that better but it's hard stuff okay so in walking this wasn't really a
+  problem for me right like really point contacts um simple geometries were pretty pretty
+  good okay but um once you get more if you get like a coffee mug
+  interacting with a dexterous hand you know and they start overlapping and you think okay where are the forces to be
+  applied on these two overlapping bodies you'll quickly realize and i actually made a little gui in the course notes if
+  you start taking bodies and plot them over each other you'll realize there's kind of no good answer if you
+  want to summarize the overlap of two bodies and with a single point force or wrench or something to push it out of
+  contact out of penetration it's a bad problem okay so if you think
+  about these like this is a logical choice it's not the only choice you could imagine putting it here or here or here
+  you could i mean you probably don't want to put it there but what where should you push the force to push things out of penetration
+  okay this is the way that point contact if you try to summarize the overlap of two
+  bodies with a single point as it's implemented in drake it makes one set of choices
+  which is no better or worse than any other it's i mean it's the one we chose that was best it still looks a little weird in this
+  particular configuration okay
+  but the problem with it if you noticed is that it's going it's going it's going
+  and then it changes discontinuously okay so if you for almost any rule that you
+  pick of like how am i going to decide give an instantaneous snapshot of two bodies which direction i should put the
+  force if you go into deeper penetration then that force can change very
+  discontinuously okay this is a big reason why simulators blow
+  up if you get a little bit too much penetration boom you just like explode out like if
+  the ball is coming down here all of a sudden it explodes out the side right this is a big problem
+  partial fee partial q happens to be the gradients the you know the normals and stuff but
+  but it's really uh that's kind of what it looks like on the inside and it's messy stuff so you will see
+  in our simulators if you were to open up the urdf of the ycb objects or my little red foam brick
+  we actually um to make that good and consistent and to make the forces always appear in the
+  sort of unique or in the same location stably we will actually often annotate our geometry with little point spheres
+  okay so our box is actually a box collision geometry and eight sphere geometries of radius
+  almost zero okay that way and when you drop those boxes there's going to be consistent contact
+  forces between the spheres and the other boxes that are inlet inset just a little bit and that's what gives you like
+  robust and new stable simulations but it's a total pain
+  and for all you know settings knowing where to put those spheres is like a major
+  pain point so one of the things we've been working on um in inside drake is this uh
+  generalization of that idea okay where we try to instead of taking one point at a time most simulators
+  choose a few points with some heuristics but it leads to instability
+  we've been trying to just do the harder work the extra computational geometry to take an integral over an entire surface
+  between the two bodies and so we have a very robust and numerically stable contact wrench that comes out of that
+  forces and torques that comes out of that so it's it's moving away from point contact but it's much less than a full final it
+  looks a little bit like a finite element method when i draw it like that but the geometries and the masses are
+  not changing it is a rigid shape stays the same shape all the time but instantaneously we're con we're just
+  integrating the force more like a limit surface for those who know about limit surfaces but for 3d geometries
+  okay and you'll see lots of examples of like just some some things that were very
+  unstable before become very stable when you just do the extra work of integrating that extra and it's a lot of
+  extra work okay now when boxes penetrate we take an integral
+  and we get beautiful smooth contact forces okay
+  you can make one object hard and one object soft you can make them both soft and you get sort of some surface that's
+  like in the in in between the two all right
+  and there's just like a lot of computational geometry behind it so if you had a yeah object and a hard
+  object in the real world and you motion controlled one across the other wouldn't you get continuously
+  so i think um the notion of penetration is like a weird limitation of rigid body physics
+  right like actually things are moving out of the way right and they're resisting along this surface right so so
+  how do you take two geometries assume that you know act like their geometries haven't changed but then
+  kind of produce a force as if the things had moved out of the way that's the game we end up playing so
+  if you took if you actually took a rigid object and shoved it to a soft i would have to think exactly about how
+  that would work and the material properties would start to coming into play right um you know if i took a book
+  and shoved it through a teddy bear maybe i don't know that's probably not what you're thinking but uh
+  yeah i mean the teddy bear is gonna like deform underneath it right and and it's gonna resist in certain ways this is our
+  proposed approximation of that yeah so when you see some of the more
+  advanced sims like for the allegro hand picking up the mug you'll see some of these like
+  um extra renders off to the side here of like the full contact patch being computed
+  and it just like over and over ago we've we've seen um you know simulations that were kind of
+  barely stable or or unstable with or took a lot of work sprinkling contact spheres all over the place but give very
+  stable contact forces uh with this extra with the extra work that goes into that
+  right so it's like picking up pieces of potato or whatever we're simulating in this one right and
+  you're doing a lot of work to simulate those surfaces but it's it's kind of a we think it's kind of a goldilocks
+  between the point contact which is fast but unstable and inaccurate and
+  finite elements too expensive this is like getting just the geometry
+  piece not all the extra state variables we've done things like simulate legos
+  you get these beautiful stable matings of legos okay
+  and when you when you actually do these sort of experiments of trying to you know drop things that cross that
+  terrible boundary okay and you look at the difference between a point contact model even in the
+  frictionless cases the simple thing versus the hydroelastic model it just takes a lot
+  of the grossness and and gets rid of it so all of our some of the discontinuities that just
+  come from the geometry computations get better
+  right things that were discontinuous solutions become continuous
+  right so there's two major sources of
+  grossness one is the stiffness of the equations the other one is i think the computational geometry of penetrating
+  bodies okay i guess i'll i'll save the static equilibrium since we're running up on
+  time but people have questions i mean this is a lot of a lot of you know i hope opening up your
+  awareness of these topics you don't have to know every detail about all these models i didn't give you all every detail
+  but i hope you'll come away with like this this sense that there's these parameters sitting around in your simulator right if you want to simulate
+  faster you got to make things less stiff right and then take bigger time steps those two have to play together when i
+  see people like saying oh we chose a time step of you know five milliseconds and we never looked back and we started changing
+  robots or whatever that just doesn't make sense to me you have to like those two have to be tuned together you put a
+  different robot in the first thing you should do is find the right time step for that robot so you can get maximum simulation performance
+  yeah so this is clearly like an approximation of sort of what goes on
+  is this is it usually good enough for life manipulation like if we do things with
+  this sort of simulation in sim and then try to do it in the real world are the policies or whatever we
+  figure out robust enough awesome question so the question was um you know there's a lot of approximations in here
+  uh is it good enough can we do things in simulation and expect them to transfer to reality right
+  so you will see simulators out there that are using these equations and they can be made very accurate so i
+  like let me just say like mojoko is a great simulator but if you are a machine learning person who is trying
+  to make your learning curve look good you can take these parameters and make them ridiculous and make videos that make that don't
+  look like physics and they become easier to optimize and you get a better learning curve so there are a lot of i think it's not mujoko's fault but people
+  have taken those parameters and made them ridiculous and then those simulations are not going to transfer to reality
+  if you take and set these parameters well then i do think there's a lot of
+  good symmetry real work coming on um i mean over and over again we're we're
+  training things in simulation and seeing them work in reality you know i think we have spent a lot of time matching those
+  two and not every simulator has there are still foibles in these
+  formulations so like maybe one of my favorite ones if you hang with me for the last minute but um one of the
+  classic examples of where the coolant friction model isn't good enough
+  or so if i take a four-legged table and let's just say it's it's balancing on the ground so if to say that it's not
+  penetrating there's four contact forces assuming there's four points okay four contact forces the sum of those forces
+  has to equal the weight of the table okay but the actual balance of the forces need not be uniform there's really
+  nothing in the don't penetrate the ground that tells me how those forces should be distributed
+  but the friction depends on the normal force so if i walk up and shove the table sideways
+  these rules don't tell me where it's going to go it could go off to one side it can go off to the other side my equations haven't actually told me which
+  of those solutions is real right because i could have put a lot of my normal force on one corner right so i
+  get a lot of friction one corner starts spinning i just haven't i've written degenerate equations on the board and in our code
+  and in every in every friction rigid body model everywhere
+  so that's real at some point you have to model the deformation to resolve some of those
+  inefficiencies okay i know we're up against the hour  
+</section>
+  
+</chapter>
+</body>
+</html>
