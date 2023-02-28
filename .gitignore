@@ -130,3 +130,6 @@ dmypy.json
 
 # Directories
 w/
+
+# Drawio
+*.bkp
