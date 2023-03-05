@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Ch. 1 - Introduction</title>
+    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
+    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+
+    <script type="text/javascript" src="../../../chapters.js"></script>
+    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+
+    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
+    <script type="text/javascript" id="MathJax-script" defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+
+    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
+    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  </head>
+
+<body onload="loadChapter('manipulation');">
+
+  <!-- The following division should be written on every page -->
+<div data-type="titlepage" pdf="no">
+  <header>
+    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
+    <p data-type="subtitle">Mostly control systems</p> 
+    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
+    <p style="font-size: 14px; text-align: right;"> 
+      &copy; Jayson Thomas, 2020-2022<br/>
+      Last modified <span id="last_modified"></span>.</br>
+      <script>
+      var d = new Date(document.lastModified);
+      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+    </p>
+  </header>
+</div>
+
+<table style="width:100%;" pdf="no"><tr style="width:100%">
+  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
+  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
+  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
+</tr></table>
+
+<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
+<chapter style="counter-reset: chapter 0"><h1>Reflected inertia</h1>
+
+<section id="table_of_contents"><h1>Table of Contents</h1>
+  <ul>
+    <li><a href="#1">Overview</a></li>
+    <li><a href="#2">Reflected Inertia</a></li>
+    <li><a href="#3">Differential IK optimisation</a></li>
+    <li><a href="#4">Planar manipulator</a></li>
+    <li><a href="#5">Rigid transforms</a></li>
+    <li><a href="#6">Robot painter</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  <ul>
+    <p>
+      <li>Differential IK optimisation</li>
+      We can plan our trajectory in the ee space. But, we do need to calculate
+      (for the lower level mechanism) the positions/velocities of the joints
+      to achieve the ee requirements at every time step. The lower level 
+      mechanism works in the joint space. We need to make sure to avoid kinematic
+      singularities where we end up demanding very high speeds in the joint
+      space. We need to come as close as possible to achieving the desired
+      ee velocities.
+
+      <p>
+        <b>Task</b><br>
+        A constant desired ee velocity is demanded for 7 continuous seconds.
+        The aim is to get a robot arm to track that desired ee velocity whilst
+        not violating its joint position, velocity and acceleration constraints.
+      </p>
+    </p>
+
+    <p>
+      <li>Planar manipulator</li>
+      Using geometrical reasoning, derive the FK, jacobian of the FK map
+      and the conditions for which the jacobian is singular for a 2 link manipulator.
+
+      <p><b>Task</b><br>
+        Visualise the FK-movement of a 2 link manipulator in the ee space. Reason 
+        in which joint angle configurations would the manipulator attain singularity
+        i.e. we wouldn't be able to invert the jacobian?
+      </p>
+    </p>
+
+    <p>
+      <li>Rigid transforms</li>
+      The ee trajectory is dependent on how we plan to grasp an object. For which
+      computing rigid transforms of frames in various reference frames is important.
+
+      <p><b>Task</b><br>
+        Design a simple grasp pose given an object's frame w.r.t. to a world frame.
+        No visualisation yet.
+      </p>
+    </p>
+
+    <p>
+      <li>Robot painter</li>
+      We bring everything together in this part - spatial transformations and interpolation
+      between keyframes play a key role. But, under the hood, I'm sure a differential IK,
+      closed loop control is involved. It is also interesting to see how to visualise
+      different frames and play an animation in drake. It's good to see how to put together
+      a working application (composition of different subsystems) in drake.      
+
+      <p><b>Task</b><br>
+        Design the gripper of a robot arm to follow a circular trajectory about a given
+        center with its z axis always pointed towards the center of the trajectory.
+        Compute the key frames first, then interpolate the trajectory from the key frames.
+      </p>
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>Reflected Inertia</h1>
+  <subsection><h1>Background knowledge</h1>
+    <ul>
+      <li>Physics/The physical system</li>
+      <p>
+        <i>Dynamics</i> is the study of the effect that forces have
+        on the motion of objects. <i>Statics</i> is the study of forces in
+        the absence of changes in motion. 
+        <br>
+        <i>Direct-drive</i> means the motor's movements are directly 
+        translated to the joint side.
+        There is no gearing or that the gear ratio is 1.
+      </p>
+      <li>Control</li>
+      <p>
+        First order form of system dynamics: $\dot{x}=f(x,u)$ where $x$ is 
+        the state vector, $u$ is the control input. There are various 
+        parameters like $m$, $g$, $l$ involved in the equation.
+      </p>
+      <li>Pendulum specific</li>
+      <p>
+        The simple pendulum is perhaps the simplest abstraction of a 
+        'manipulator'.
+      </p>
+      <equation><h1>Simple Pendulum</h1>
+        $$x=[q,\dot{q}]^T$$
+        $$u=\tau$$
+        $$
+          \frac{d}{dt} \begin{bmatrix}q \\ \dot{q}\end{bmatrix}
+          = \begin{bmatrix}
+            \dot{q}\\
+            \frac{(\frac{-mglsin(q)}{N}+\tau)}
+            {(\frac{I_ml^2}{N^2})N}
+            \end{bmatrix}
+        $$
+        Without a motor and gearbox, the rotor inertia of the motor $I_m$
+        and the gear ratio $N$ are 1.      
+      </equation>
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Steps</h1>
+    <ul>
+      <li>Write the system dynamics with ideal input drive condition</li>
+      That is, $I_m = N = 1$.
+      <li>Include a motor and a gearbox into the system dynamics</li>
+      <li>Decide on values for the different parameters</li>
+      <li>Combine everything in drake</li>
+      <p>
+        Input to the plant (Pendulum with motor and gearbox)
+        is the drive torque. Output is the new orientation/angular speed of the pendulum.
+        The PID controller calculates the drive torque based on the 
+        difference (error) between the measured and desired state.
+        The logger logs all the states w.r.t. time (trajectory).
+      </p>
+      <li>Simulate the closed loop system</li>
+      Advance the system in time.
+    </ul>
+  </subsection>
+
+  <subsection><h1>Figures</h1>
+    <figure>
+      <img style="height:200px; width:70%"
+      src="../../../figures/pendulum_with_motor.png"/>
+      <figcaption>
+        The physical system
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:200px; width:70%"
+      src="../../../figures/system_diagram.png"/>
+      <figcaption>
+        Control system overview
+      </figcaption>
+    </figure>
+  </subsection>
+
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>Dynamics equation of a simple pendulum with an attached gear and motor.</li>
+      Where do I get the equation from? What is the intuitive meaning behind it?
+  
+      <li>Motor side vs joint side dynamics?</li>
+      <li>What happens in the direct-drive case?</li>
+      Apparently, stability in this scenario, can only be achieved if the PID
+      gains are high enough.
+      
+      <p>
+        <li>Why is $sin\theta$ considered to induce non-linear behaviour?</li>
+        <li>
+          Intuitively, why does gravity have less of an effect on the system
+          when there are gears/motor involved?
+        </li>
+      </p>
+      <li>Go through brian douglas' introduction of 
+        <a href="https://t.ly/V62f">state space equations</a></li>
+        This is to understand why we include velocity in the state
+        vector for a first order state space equation because that
+        would involve calculating the acceleration.
+      </li>
+      <li>What is in context?</li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="3"><h1>Differential IK optimisation</h1>
+  <subsection><h1>Background knowledge</h1>
+    <p>
+      <i>Kinematics</i> is a branch of physics concerned with the geometrically possible 
+      movements of a body or a system of bodies without considering the forces and masses involved.
+      <i>Robot manipulator kinematics</i> deals with how the robot joints need to move, 
+      in a coordinate manner, to achieve the end-effector prescribed movement.
+    </p>
+
+    <p>
+      <i>Differential kinematics</i> relates the <i>velocities</i> of the manipulator components. 
+      The standard approach to differential kinematics is to relate joint 
+      and ee velocities through the Jacobian matrix, which allows the calculation of the ee 
+      velocities given the joint velocities (<i>direct differential kinematics</i>) or, 
+      to determine the joint velocities in order to move the end-effector with a 
+      prescribed speed (<i>inverse differential kinematics</i>). 
+      <a href = "https://bit.ly/3RJAz4e">Source</a>.
+    </p>
+  </subsection>
+
+  <subsection><h1>Steps</h1>
+    <ul>
+      <li>Differential IK through inverse jacobian</li>
+      The aim is to find the desired joint velocities $v$ from the desired
+      spatial (end effector) velocities $V^G$.
+      $$v = [J^G(q)]^{\dagger} V^{G}$$
+      <p>
+        We use a <i>Moore-Penrose pseudoinverse</i> of the jacobian to achieve the
+        differential IK controller.
+      </p>  
+      <li>Velocity limits</li>
+      But the pseudoinverse method gets unreliable at the limits of the
+      kinematic workspace (i.e. under kinematic singularities). 
+      I think the Jacobian becomes singular and the pseudoinverse of it
+      generates very large values.
+      We turn this into an optimisation problem:
+      <eq id="eq1">
+        \begin{equation}\displaylines{  
+          \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+          s.t. \quad & |v|\leq v_{max}     
+        }\end{equation}
+      </eq>
+      <p>
+        I think the aim is to minimise the difference between the ee 
+        velocity that can actually be achieved and the desired target ee velocity. 
+        The absolute value is taken element wise, 
+        so the last constraint on the joint velocities is really saying 
+        "for all $i$, make sure none of the 
+        elements of $|v[i]|$ exceed $v_{max}[i]$. Such constraints are also 
+        called <i>Bounding Box constraints</i>.
+      </p>
+
+      <p>
+        <li>Position and acceleration limits</li>
+        in addition to doing joint velocity constraints, we can also put 
+        constraints on joint positions and accelerations through 
+        first-order Euler finite difference. Given $v_{now}$ and $q_{now}$:
+
+        <eq id="eq2">
+          \begin{equation}
+            \displaylines{  
+            \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+            s.t. \quad & |v|\leq v_{max} \\
+            \quad & q_{min} \leq q_{now} + h v \leq q_{max} \\
+            \quad & a_{min} \leq (v-v_{now})/h \leq a_{max}
+            }
+        \end{equation}
+      </eq>
+        
+        $h==dt$, the timestep.
+      </p>      
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>What is a <code>LeafSystem</code> in drake?</li>
+      <li>Jacobian is a function of joint angles and gives out joint velocities?</li>
+      <li>What is a <code>ManipulationStation</code> in drake?</li>
+      <li><code>get_multibody_plant()</code>?</li>
+      <li>
+        Wrapping a <code>Simulator</code> around a built <code>DiagramBuilder</code>;
+        what does it do?
+      </li>
+      It's probably a class that is initialised with the DiagramBuilder.
+      <li>Is there a simple example for the simulator?</li>
+      <li><code>simulator.set_target_realtime_rate</code></li>
+      <p>
+        Is this the rate at which the system is changing or the rate at which
+        the controller is sensing and actuating? We need to be, ideally, 10 times
+        faster than the operation rate of the system.
+      </p>
+      <li>What are kinematic singularities?</li>
+      <li>
+        Why did the Jacobian-pseudoinverse get unreliable at the limits of the kinematic workspace.
+      </li>
+      <li>Intro to <a href="https://t.ly/q0G3">QP</a></li>
+      <li>A note on why a square is used for cost function optimisation</li>
+      <p>
+        <a href="https://t.ly/Bq5P">This link</a> is a good starting point.
+        It is the square of the absolute error that we're trying to minimise?
+        <a href="https://t.ly/p8R8">This google search</a> might also be relevant?
+      </p>
+
+      <li>When to turn differential IK into an optimisation problem?</li>
+      Imagine following a trajectory in the ee space. At every instant, joint velocities
+      are calculated to achieve a desiredd ee velocity. How/when to detect a particular
+      ee velocity is not achievable because we've hit a kinematic singularity? Would the
+      pseudoinverse jacobian give joint velocities greater than the limits? If it does,
+      how do we then turn it into an optimisation problem to find the right joint velocities
+      that will come close enough to the desired ee velocity?
+
+      <li>What is the underscore 2 <a href="#eq1">here</a>?</li>
+      <li>
+        All of the constraints discussed above are formulated 
+        in the joint-space. But could we also end up with a 
+        linear constraint if we try to impose a constraint 
+        in the end-effector space?
+      </li>
+
+      <p>
+        <li>
+          Why pass <code>v</code> to 
+          <code>result.GetSolution(v)</code>?
+        </li>
+      </p>
+      <li>
+        To implement <a href="#eq2">(2)</a>, the code uses
+        the lower half of the $(6\times1)$ <code>v</code> matrix
+        which I assume is just angular velocity.
+      </li>
+
+      <p>
+        <li>I'd like to understand the integrator</li>
+<pre><code class="python">
+  integrator.GetMyContextFromRoot(simulator.get_mutable_context()).get_mutable_continuous_state_vector().SetFromVector(station.GetIiwaPosition(station_context))
+</code></pre>
+      </p>
+      <li>
+        Advance the simulator by just 1 timestep and see what the values
+        are for all the context variables.
+      </li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="4"><h1>Planar manipulator</h1>
+  <subsection><h1>Steps</h1>
+    <ul>
+      <li>Write down the forward kinematics of the two-link manipulator</li>
+      <li>
+        Derive the Jacobian of the forward kinematic map and 
+        analyze the conditions for which it is singular
+      </li>
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Figures</h1>
+    <figure>
+      <img style="height:200px; width:50%"
+      src="../../../figures/planar_two_link.png"/>
+      <figcaption>
+        Planar manipulator
+      </figcaption>
+    </figure>
+  </subsection>
+  
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>
+        Learn the derivation of the jacobian and the reason for the 
+        partial derivatives.
+      </li>
+      <p>
+        <li>
+          What is the physical meaning of the determinant of a jacobian being 0,
+          i.e. the manipulator is at a kinematic singularity.
+        </li>
+      </p>
+      <li>The 2d python program looks cool</li>
+      Could build up on it to make a 3d one or add more links?
+      <li>Add caption and equations to the figure</li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="5"><h1>Rigid transforms</h1>
+  <subsection><h1>Background knowledge</h1>
+    Grasp pose in the world frame: ${^OX^G}$. 
+    <br>
+    In drake: <code>X_OG</code> -> 
+    X {w.r.t./reference frame}_(expressed in frame)(the frame being considered))
+    [<a href="https://bit.ly/3qRwhfx">Reference</a>]
+
+    <figure>
+      <img style="width:60%" src="../../../figures/11_notation.svg"></img>
+    </figure>
+    <p>
+      $^Fp^A \equiv {^Fp^A_F}$
+      <p>
+        If there is a 'reference' frame and no expressed-in frame, it should be assumed
+        that the expressed-in frame is the same as the reference.
+      </p>
+      $p^A \equiv {}^Wp^A_W$
+    </p>
+  </subsection>
+  
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>Write down the most often used formulae</li>
+      <li>
+        What is the difference between the 'expressed in' frame and 
+        the 'w.r.t. frame'?
+      </li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="6"><h1>Robot painter</h1>
+  <subsection><h1>Background knowledge</h1>
+    <ul>
+      <li>Right hand rule</li>
+      This convention is just in <a href="https://t.ly/qH3b">robotics</a> perhaps.
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Steps</h1>
+    <ul>
+      <li>Design and implement a circular trajectory for the Iiwa arm to follow</li>
+      <ul>
+        <li>Compute the key frames of the circular trajectory</li>
+        <li>Construct interpolated trajectory from the key frames</li>
+      </ul>
+      <li>Observe and reflect on the Differential IK controller</li>
+    </ul>
+  </subsection>
+
+  <subsection><h1>Key frames visualisation</h1>
+    <ul>
+      <p>
+        <li>How are the frames laid out?</li>
+        <figure>
+          <img style="height:90px; width:auto"
+          src="../../../figures/8_robotPainterFrames.png"/>
+          <figcaption>
+            Given frames
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img style="height:100px; width:auto"
+          src="../../../figures/9_gripperWrtWorldFrameDrake.png"/>
+          <figcaption>
+            Given frames in the drake environment
+          </figcaption>
+        </figure>
+
+        <code>painter.get_X_WG()</code> gives the current gripper frame. All frames
+        are specified w.r.t. the world frame. In drake, the length of 2 sqaures make up 
+        1 unit. The length of the world frame axes plotted in drake are 0.5 units long.
+        As can be seen in the image above, the trajectory-center-frame is roughly ~0.5 units 
+        in the x and z directions.
+        The transformation matrix of the trajectory center w.r.t. ${w}$ in {w} is
+        given as:
+        $\begin{bmatrix}
+          0 & 1 & 0 & {\sim}0.5\\ 
+          0 & 0 & -1 & {\sim}0\\
+          -1 & 0 & 0 & {\sim}0.5
+        \end{bmatrix}$ 
+      </p>
+
+      <p>
+        <li>What is the objective of the task?</li>
+        Given the world frame, the gripper frame and the frame at the 
+        center of the circular trajectory (both in/w.r.t. ${w}$); we need to
+        <ul>
+          <li>
+            Move the gripper frame to the start position on the trajectory.
+            The gripper frame is just above the center frame at the start and not 
+            perfectly aligned with it.
+          </li>
+          <li>
+            Then, rotate the gripper frame such that its z axis points towards the
+            center of the circle, its x axis is parallel to +y axis of {w}, its
+            y axis is parallel to -z axis of {w}.
+          </li>
+        </ul>
+      </p>
+    </ul>
+  </subsection>
+  
+  <subsection><h1>Questions & todo</h1>
+    <ul>
+      <li>What is <code>traj.MakeDerivative()</code>?</li>
+      <li><code>builder.AddSystem(Integrator(7))</code>?</li>
+      <li><code>self.CreateDefaultContext()</code></li>
+      <li><code>self.diagram.Publish(context)</code></li>
+      
+      <p>
+        <li>
+          What does it mean to pass something to a class
+          in python when defining it.</li> 
+          Example: 
+          <code>class PseudoInverseController(LeafSystem):</code>
+      </p>
+      <li>
+        Buy wacom tablet and transfer the task drawing to the website.
+      </li>
+      <li>
+        <code>PiecewisePose.MakeLinear(times, key_frame_poses)</code>?
+        There might be an explanation of this in the lectures.
+      </li>
+      <li>Do the entire flowchart.</li>
+      <li>Make a video/gif of the robot painter</li>
+      <li>Place a few horizontal lines</li>
+    </ul>
+  </subsection>
+</section>
+
+</body>
+</html>
+

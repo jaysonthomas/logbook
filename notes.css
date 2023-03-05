@@ -1,7 +1,15 @@
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
- .container{
+ ul.no-bullets {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+}
+
+.container{
   display: flex
  }
  :root {
