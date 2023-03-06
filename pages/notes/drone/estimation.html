@@ -1,56 +1,73 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Estimation</title>
+  <meta name="Estimation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
 
-    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-    <script>hljs.initHighlightingOnLoad();</script>
+<body onload="loadChapter('');">  
 
-    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
-  </head>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
 
-<body onload="loadChapter('manipulation');">
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Introduction</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Definition</a></li>
+  <li><a href="#1.1">The need for estimation</a></li>
+  <li><a href="#1.2">Applications</a></li>
+  <li><a href="#1.3">How to create an estimator</a></li>
+</ul>
+<a href="#2">Estimating parameters from data</a>
+<a href="#3">Musings</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Introduction</a></li>
     <li><a href="discreteProb.html">Discrete probability</a></li>
@@ -61,7 +78,7 @@
 </section>
 
 <section id="1"><h1>Introduction</h1>
-  <subsection><h1>Definition</h1>
+  <subsection id="1.0"><h1>Definition</h1>
     Estimation:
     <ul>
       <li>Is a temporal process - so you integrate things over time.</li>
@@ -72,7 +89,7 @@
     </ul> 
   </subsection>
 
-  <subsection><h1>The need for estimation</h1>
+  <subsection id="1.1"><h1>The need for estimation</h1>
     To quantify uncertainty. The goal is to make a very tight distribution, 
     so that a robot is more certain of its state.
     The real world (bot and environment) is uncertain in the following ways:
@@ -96,7 +113,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Applications</h1>
+  <subsection id="1.2"><h1>Applications</h1>
     We only need sensor feedback if we want the drone to be autonomous. 
     To be autonomous, the robot needs to know the following (RHS of table). 
     Estimation plays a role in all these problems.
@@ -138,7 +155,7 @@
     how the phone screen orients itself.
   </subsection>
 
-  <subsection><h1>How to create an estimator</h1>
+  <subsection id="1.3"><h1>How to create an estimator</h1>
     We use <code>Bayes rule</code> which is a method:
     <ul>
       <li>To integrate data over time</li>
@@ -210,6 +227,6 @@
 </section>
 
 </chapter>
+
 </body>
 </html>
-

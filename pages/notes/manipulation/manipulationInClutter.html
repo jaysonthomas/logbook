@@ -1,13 +1,12 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Manipulation in clutter</title>
   <meta name="Manipulation in clutter" content="text/html; charset=utf-8;" />
-  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script type="text/javascript" src="../../../notes.js"></script>
-
-  <script src="../../../notes-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,44 +15,50 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
-<body onload="loadChapter('');">
+<body onload="loadChapter('');">  
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<div id="main" class="sidebar1">
-  <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
-</div>
-
-<div id="mySidenav" class="sidebar">
-  <a href="#1">Installation</a>
-</div>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Manipulation in clutter</h1>
 
-<section><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   (Summary of course until now, might be useful for planning!)
   so i think as we start the conversation about more complicated environments
   um i think one of the first obvious natural questions would be
@@ -743,5 +748,6 @@
 </section>
   
 </chapter>
+
 </body>
 </html>

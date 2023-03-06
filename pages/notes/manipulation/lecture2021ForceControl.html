@@ -1,56 +1,97 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Robotic Manipulation: Force control</title>
+  <meta name="Robotic Manipulation: Force control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
 
-    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-    <script>hljs.initHighlightingOnLoad();</script>
+<body onload="loadChapter('');">  
 
-    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
-  </head>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
 
-<body onload="loadChapter('manipulation');">
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">Task setup - decisions to be made</a>
+<a href="#3">System view</a>
+<a href="#4">Creating the model</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Equations for the finger</a></li>
+</ul>
+<a href="#5">Testing the interaction of forces using the model</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Quasi-static assumption</a></li>
+  <li><a href="#5.1">Applying a constant force via the finger</a></li>
+  <li><a href="#5.2">Varying the constant horizontal force</a></li>
+</ul>
+<a href="#6">Direct force control flip-up strategy</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Case where fine control is not available</a></li>
+  <li><a href="#6.1">Case where fine control is possible</a></li>
+  <li><a href="#6.2">Controller implementation</a></li>
+</ul>
+<a href="#7">Indirect force control</a>
+<ul class="no-bullets">
+  <li><a href="#7.0">Stiffness control</a></li>
+  <li><a href="#7.1">Stiffness control flip-up strategy demo</a></li>
+  <li><a href="#7.2">Philosophy of stiffness control</a></li>
+  <li><a href="#7.3">Stiffness controller</a></li>
+</ul>
+<a href="#8">Impedance control</a>
+<a href="#9">Remote centered compliance</a>
+<ul class="no-bullets">
+  <li><a href="#9.0">Peg-in-hole insertion task</a></li>
+  <li><a href="#9.1">Peg-in-hole solution</a></li>
+</ul>
+<a href="#10">Questions & Todo</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Robotic Manipulation: Force control</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">Task setup - decisions to be made</a></li>
@@ -209,7 +250,7 @@
     \end{bmatrix}
   $$
 
-  <subsection><h1>Equations for the finger</h1>
+  <subsection id="4.0"><h1>Equations for the finger</h1>
     Let's write out the whole equation for the finger in the x coordinate:
     $$\begin{equation}
       m_f \ddot{x}_f = u_x + f^c_x
@@ -249,7 +290,7 @@
   command a $u$ to be applied to the robot's finger in order to achieve a desired force out
   from it. Algebraically we can write this out and see if it makes sense.
   
-  <subsection><h1>Quasi-static assumption</h1>
+  <subsection id="5.0"><h1>Quasi-static assumption</h1>
     <p>
       Let's assume we're in the mode of applying accelerations via the finger. 
       Let's also assume the finger is moving slowly and its accelerations are 
@@ -276,7 +317,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Applying a constant force via the finger</h1>
+  <subsection id="5.1"><h1>Applying a constant force via the finger</h1>
     <p>
       The forces of contact are actually coming from the interaction forces. 
       The physics engine is going to solve for some complicated relation to decide that.
@@ -317,7 +358,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Varying the constant horizontal force</h1>
+  <subsection id="5.2"><h1>Varying the constant horizontal force</h1>
     <figure>
       <img style="height:150px; width:auto"
       src="../../../figures/manipulation/7_forceControl_constantForce.png"/>
@@ -372,7 +413,7 @@
 </section>
 
 <section id="6"><h1>Direct force control flip-up strategy</h1>
-  <subsection><h1>Case where fine control is not available</h1>
+  <subsection id="6.0"><h1>Case where fine control is not available</h1>
     So, we want to flip up a box. I was originally going to shove it to the side and 
     then flip it. But how do we flip it up in its current location. It's pretty subtle. 
     To get the box into a regime where we're controlling the contact forces enough to 
@@ -382,7 +423,7 @@
     with a little bit of force on the opposite side of the box.
   </subsection>
 
-  <subsection><h1>Case where fine control is possible</h1>
+  <subsection id="6.1"><h1>Case where fine control is possible</h1>
     If we know the friction coefficient and the robot can regulate/apply the contact forces 
     more accurately, then we can slide and tip the box.
     <figure>
@@ -404,7 +445,7 @@
     and will cause the box to rotate up. 
   </subsection>
 
-  <subsection><h1>Controller implementation</h1>
+  <subsection id="6.2"><h1>Controller implementation</h1>
     Locally the flip-up strategy looks like a least squares problem and 
     the friction cone constraint can be locally approximated as a linear constraint.
     The whole derivation (a controller to flip the box up) is in the notes.
@@ -462,7 +503,7 @@
   There's a class of models called <i>indirect force control</i> where we program 
   the force with an indirect objective. 
 
-  <subsection><h1>Stiffness control</h1>
+  <subsection id="7.0"><h1>Stiffness control</h1>
     One of the most powerful examples would be <i>stiffness control</i> - 
     instead of saying the goal is to regulate the contact force between the finger
     and the box, we make the finger act like a spring. So, if the finger was pushed on, 
@@ -518,7 +559,7 @@
     </p>
   </subsection>
   
-  <subsection><h1>Stiffness control flip-up strategy demo</h1>
+  <subsection id="7.1"><h1>Stiffness control flip-up strategy demo</h1>
     <p>
       If we program the mechanics of our interaction, we can do something way 
       better than if we're trying to program the forces or the positions.
@@ -569,7 +610,7 @@
     </p>
   </subsection>
   
-  <subsection><h1>Philosophy of stiffness control</h1>
+  <subsection id="7.2"><h1>Philosophy of stiffness control</h1>
     If we can program the interaction in the right way, so that we're pulling on the 
     virtual set point or being pulled by it (it's a spring in between, pulling and 
     pushing) and we're in some reasonably chosen configuration, then:
@@ -600,7 +641,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Stiffness controller</h1>
+  <subsection id="7.3"><h1>Stiffness controller</h1>
     Looking at just the $z$ axis, if we implement the equation of motion given by (2)
     in the controller given by (5), the torque to be applied is given as:
     $$\begin{equation}
@@ -654,7 +695,7 @@
 </section>
 
 <section id="9"><h1>Remote centered compliance</h1>
-  <subsection><h1>Peg-in-hole insertion task</h1>
+  <subsection id="9.0"><h1>Peg-in-hole insertion task</h1>
     There was a canonical task created in the 80s called the peg-in-hole insertion task, 
     which motivated some great work in motion planning and control. So there is a 
     hole in the world and we've got a peg that's roughly the same size as the hole. 
@@ -678,7 +719,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Peg-in-hole solution</h1>
+  <subsection id="9.1"><h1>Peg-in-hole solution</h1>
     <figure>
       <img style="height:70px; width:auto"
       src="../../../figures/manipulation/13_rcc_translation.png"/>
@@ -746,6 +787,6 @@
 </section>
 
 </chapter>
+
 </body>
 </html>
-

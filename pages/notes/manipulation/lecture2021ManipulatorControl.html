@@ -1,56 +1,92 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Manipulator control</title>
+  <meta name="Manipulator control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
 
-    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-    <script>hljs.initHighlightingOnLoad();</script>
+<body onload="loadChapter('');">  
 
-    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
-  </head>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
 
-<body onload="loadChapter('manipulation');">
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">Simple double pendulum</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Setup</a></li>
+</ul>
+<a href="#3">Feedback cancelling control</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Example</a></li>
+  <li><a href="#3.1">Limitations</a></li>
+</ul>
+<a href="#4">Stiffness control implemented using feedback cancellation</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Example: Double pendulum - joint stiffness control</a></li>
+  <li><a href="#4.1">Benefit of having gravity compensation</a></li>
+</ul>
+<a href="#5">Joint impedance control</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Example: Iiwa</a></li>
+  <li><a href="#5.1">Example: Opening a dishwasher door</a></li>
+</ul>
+<a href="#6">Stiffness control in end-effector coordinates</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Change of coordinates</a></li>
+  <li><a href="#6.1">Is (\ref{eq:opSpaceForm}) invertible?</a></li>
+  <li><a href="#6.2">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
+</ul>
+<a href="#7">Side notes</a>
+<a href="#8">Questions & todo</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 3"><h1>Manipulator control</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">Simple double pendulum</a></li>
@@ -87,7 +123,7 @@
   We'll think of the double pendulum as hanging down from the top. 
   A kuka is bolted on the bottom. That's no big deal.
   
-  <subsection><h1>Setup</h1>
+  <subsection id="2.0"><h1>Setup</h1>
     <figure>
       <img style="height:70px; width:auto"
       src="../../../figures/manipulation/16_simpleDP.png"/>
@@ -127,7 +163,7 @@
   then we can overwrite the dynamics of our system; even make
   the pendulum defy gravity.
     
-  <subsection><h1>Example</h1>
+  <subsection id="3.0"><h1>Example</h1>
     As an example to show how this approach is limiting, let's replace the dynamics 
     of the two-link pendulum and make it act like a one-link pendulum. 
     There's only two degrees of freedom so we can't make it act like a four-linked 
@@ -170,7 +206,7 @@
     $$\ddot{q} = \ddot{q}^d$$
   </subsection>
 
-  <subsection><h1>Limitations</h1>
+  <subsection id="3.1"><h1>Limitations</h1>
     <ul>
       <li>This works only in the case of a known robot arm</li>
       This method is very dependent on our ability to estimate the torques, masses, 
@@ -216,7 +252,7 @@
     it has some desired mechanical response. 
   </p>
 
-  <subsection><h1>Example: Double pendulum - joint stiffness control</h1>
+  <subsection id="4.0"><h1>Example: Double pendulum - joint stiffness control</h1>
     There's a bunch of different controllers we could write here - torque control and 
     position control. If we were to write a position controller for this we might write a 
     PD control:
@@ -270,7 +306,7 @@
     <i>Impedance control</i> is the more general term for the whole set of concepts.
   </subsection>
 
-  <subsection><h1>Benefit of having gravity compensation</h1>
+  <subsection id="4.1"><h1>Benefit of having gravity compensation</h1>
     In practice, the difference in having a controller with just PD control and no 
     gravity compensation is huge. In DP, if we wanted to hold the pendulum in a horizontal 
     position (i.e. choose a stiffness that allows us to do that) where gravity is pulling down; 
@@ -305,7 +341,7 @@
   to achieve good accuracy of our mass. When we decide to change $M$ and $C$, 
   the control method is called <i>joint impedance control</i>.
 
-  <subsection><h1>Example: Iiwa</h1>
+  <subsection id="5.0"><h1>Example: Iiwa</h1>
     In reality, compared to (5), Iiwa does much more than just GC. 
     When we run iiwa in joint-impedance control mode, it also does 
     friction compensation and some subtle stuff at the actuator level to cancel out the 
@@ -321,7 +357,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Example: Opening a dishwasher door</h1>
+  <subsection id="5.1"><h1>Example: Opening a dishwasher door</h1>
     <p>
       The joint trajectory that iiwa is programmed to follow during the opening motion 
       is going to deviate significantly depending on how accurately we have modelled and 
@@ -362,7 +398,7 @@
     \end{equation}$$
   </p>
 
-  <subsection><h1>Change of coordinates</h1>
+  <subsection id="6.0"><h1>Change of coordinates</h1>
     We have our joint angles in $q$ coordinates and we have to somehow change to $p$
     coordinates in order to achieve our goal. 
 
@@ -406,7 +442,7 @@
     just do feedback cancellation in this lower space.
   </subsection>
 
-  <subsection><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
+  <subsection id="6.1"><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
     What are the conditions that would be required for the matrix in (\ref{eq:opSpaceForm}) 
     be invertible? 
 
@@ -439,7 +475,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
+  <subsection id="6.2"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
     If we write a controller that tells the robot to act like a certain dynamics in the 
     xyz configuration, but say the robot has 7 DOF, then we've still got to specify 
     something for the joints (so that the joints don't get into an odd configuration and 
@@ -473,7 +509,7 @@
   </subsection>
 </section>
 
-<section id="9"><h1>Side notes</h1>
+<section id="7"><h1>Side notes</h1>
   The papers on how control is implemented in Iiwa are great. They are linked in the notes.
   <ul>
     <li>Abu Ahafer and Christian Ott about impedance control of elastic joint robots</li>
@@ -482,7 +518,7 @@
   </ul>
 </section>
 
-<section id="10"><h1>Questions & todo</h1>
+<section id="8"><h1>Questions & todo</h1>
   <ul>
     <li>
       I think the code to turn a DP into a single one is 
@@ -506,5 +542,6 @@
 </section>
 
 </chapter>
+
 </body>
 </html>

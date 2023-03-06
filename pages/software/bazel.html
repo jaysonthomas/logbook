@@ -1,55 +1,81 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Bazel</title>
+  <meta name="Bazel" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
 
-  <head>
-    <title>Bazel</title>
-    <meta name="Bazel" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../notes.js"></script>
-  
-    <script src="../../notes-mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
   
-    <link rel="stylesheet" type="text/css" href="../../notes.css" />
-  </head>
-  </head>
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-<body onload="loadChapter('');">
-
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Logbook</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">C++</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Directory structure for a single file</a></li>
+  <li><a href="#2.1">Directory for multiple files</a></li>
+</ul>
+<a href="#3">Python</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Directory structure for a single file</a></li>
+  <li><a href="#3.1">Directory structure for a library</a></li>
+</ul>
+<a href="#4">Terminal commands</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">The basic commands</a></li>
+  <li><a href="#4.1">Unit test</a></li>
+  <li><a href="#4.2">Example commands</a></li>
+</ul>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Bazel</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">C++</a></li>
@@ -116,7 +142,7 @@
 
 <section id="2"><h1>C++</h1>
   The main aim is to build the C++ binary.
-  <subsection><h1>Directory structure for a single file</h1>
+  <subsection id="2.0"><h1>Directory structure for a single file</h1>
     The constituent files of the root directory would be:
     <ul>
       <li>main.cc</li>
@@ -158,7 +184,7 @@ cc_binary (
     </ul>
   </subsection>
 
-  <subsection><h1>Directory for multiple files</h1>
+  <subsection id="2.1"><h1>Directory for multiple files</h1>
     We'll have a library to be shared between multiple files.
     In the same directory, we'll now have:
     <br>
@@ -186,7 +212,7 @@ cc_library (
 </section>
 
 <section id="3"><h1>Python</h1>
-  <subsection><h1>Directory structure for a single file</h1>
+  <subsection id="3.0"><h1>Directory structure for a single file</h1>
     <ul>
       <li>main.py</li>
 
@@ -204,7 +230,7 @@ py_binary (
     </ul>    
   </subsection>
 
-  <subsection><h1>Directory structure for a library</h1>
+  <subsection id="3.1"><h1>Directory structure for a library</h1>
     We have our usual files (BUILD, WORKSPACE, main.py)
     and a new directory called mylib that has the following files in it:
     <ul>
@@ -264,7 +290,7 @@ py_binary (
 <section id="4"><h1>Terminal commands</h1>
   Bazel sorts out its package dependencies by itself for itself to run.
 
-  <subsection><h1>The basic commands</h1>
+  <subsection id="4.0"><h1>The basic commands</h1>
     The following works for python as well, but here there are specific
     details that only apply to c++.
 <pre><code class="c++">
@@ -312,7 +338,7 @@ bazel build //:main --copt=-O0 -s
 </code></pre>    
   </subsection>
 
-  <subsection><h1>Unit test</h1>
+  <subsection id="4.1"><h1>Unit test</h1>
 <pre><code class="python">
 # Run all tests within the root of the project.  
 bazel test //...
@@ -322,7 +348,7 @@ bazel test //... --test_output=errors
 </code></pre>    
   </subsection>
 
-  <subsection><h1>Example commands</h1>
+  <subsection id="4.2"><h1>Example commands</h1>
 <pre><code class="bash">
 bazel build //estimation/...
 ls bazel-bin/estimation/
@@ -332,5 +358,6 @@ bazel run //estimation:estimateResUsingRLS
 </section>
 
 </chapter>
+
 </body>
 </html>

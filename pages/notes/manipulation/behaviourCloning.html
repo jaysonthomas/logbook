@@ -1,13 +1,12 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Behaviour Cloning</title>
   <meta name="Behaviour Cloning" content="text/html; charset=utf-8;" />
-  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script type="text/javascript" src="../../../notes.js"></script>
-
-  <script src="../../../notes-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,44 +15,78 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
-<body onload="loadChapter('');">
+<body onload="loadChapter('');">  
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Intro</a>
+<a href="#1">Comparison of the 2 methods</a>
+<a href="#2">What is RL's role in manipulation</a>
+<a href="#3">History of visuomotor policies</a>
+<a href="#4">Different ways of representing a system</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Examples</a></li>
+</ul>
+<a href="#5">What's new?</a>
+<a href="#6">How to design $\pi$?</a>
+<a href="#7">Behaviour Cloning Intro</a>
+<a href="#8">Distribution shift</a>
+<ul class="no-bullets">
+  <li><a href="#8.0">Example</a></li>
+  <li><a href="#8.1">Solutions</a></li>
+</ul>
+<a href="#9">Case study of BC</a>
+<a href="#10">Multi-modal demonstrations</a>
+<ul class="no-bullets">
+  <li><a href="#10.0">Solutions</a></li>
+</ul>
+<a href="#11">BC is only as good as its demonstrators</a>
+<a href="#12">Generalisation</a>
+<ul class="no-bullets">
+  <li><a href="#12.0">Where do we get training data from?</a></li>
+</ul>
+<a href="#13">How does BC fit with force/impedance control</a>
+<a href="#14">Summary</a>
+<a href="#15">Musings</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<div id="main" class="sidebar1">
-  <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
-</div>
-
-<div id="mySidenav" class="sidebar">
-  <a href="#1">Installation</a>
-</div>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Behaviour Cloning</h1>
 
-<section id="1"><h1>Intro</h1>
+<section id="0"><h1>Intro</h1>
   A planning problem is an optimisation problem.
   In motion planning, given:
   <ul>
@@ -119,7 +152,7 @@
   </p>
 </section>
 
-<section id="2"><h1>Comparison of the 2 methods</h1>
+<section id="1"><h1>Comparison of the 2 methods</h1>
   In a sense, the goal of an optimization or a planning 
   problem is smaller. Since we're only interested in knowing
   what the $q$ should be for every $t$ along a particular path and
@@ -202,7 +235,7 @@
   a dynamical system. 
 </section>
 
-<section id="3"><h1>What is RL's role in manipulation</h1>
+<section id="2"><h1>What is RL's role in manipulation</h1>
   High-level - Task planning. Eg: what we're going to pick up first.
   Low-level - There are continuous motions with very complex contact
   mechanics. It feels more like a 
@@ -249,7 +282,7 @@
   policies and achieve a great diversity of motions.
 </section>
  
-<section id="4"><h1>History of visuomotor policies</h1>
+<section id="3"><h1>History of visuomotor policies</h1>
   In the classic view of control, we would sense, then plan
   a trajectory, then close our eyes and execute the trajectory.
   We can't do this in manipulation.
@@ -327,8 +360,7 @@
   can do great things.
 </section>
 
-<section id="5">
-  <h1>Different ways of representing a system</h1>
+<section id="4"><h1>Different ways of representing a system</h1>
   Q: What is the tradeoff between having a dynamic policy
   vs augmenting the policy with a history of observations?
 
@@ -406,7 +438,7 @@
   then ARMAX is good at some things and the 
   state space is good at others.
 
-  <subsection><h1>Examples</h1>
+  <subsection id="4.0"><h1>Examples</h1>
     Let's take the example of trying to hit a 
     ping-pong ball. If we had to make a decision just purely 
     based on a single image, that seems inadequate. 
@@ -492,7 +524,7 @@
   </p>
 </section>
 
-<section><h1>What's new?</h1>
+<section id="5"><h1>What's new?</h1>
   The new thing we've learned is how to do computer vision 
   and NNs and data sets got big. So now people are
   writing policies using the entire image as input.
@@ -532,7 +564,7 @@
   that's considered hard. 
 </section>
 
-<section><h1>How to design $\pi$?</h1>
+<section id="6"><h1>How to design $\pi$?</h1>
   So the million dollar question then
   is how do we design the weights of our LSTM or our 
   FF network - how do we design $\pi$?
@@ -590,7 +622,7 @@
   </p>
 </section>
 
-<section><h1>Behaviour Cloning Intro</h1>
+<section id="7"><h1>Behaviour Cloning Intro</h1>
   <i>behaviour cloning</i> is a subset of
   imitation learning which is also known as
   <i>learning from demonstration</i>.
@@ -636,7 +668,7 @@
   </ul>
 </section>
 
-<section><h1>Distribution shift</h1>
+<section id="8"><h1>Distribution shift</h1>
   We get a bunch of examples of $y$ coming in
   and $u$ going out from a human teleopping a robot .
   We could use supervised learning to train but Drew Bagnell 
@@ -646,7 +678,7 @@
   algorithms to train it there's some really important 
   differences. The biggest difference is because of feedback.
 
-  <subsection><h1>Example</h1>
+  <subsection id="8.0"><h1>Example</h1>
     Let's say we're training an autonomous car to drive 
     and we've got a a bunch of examples of people driving and 
     staying in the lane; i.e. we've got a bunch of of data 
@@ -677,7 +709,7 @@
 
   </subsection>
 
-  <subsection><h1>Solutions</h1>
+  <subsection id="8.1"><h1>Solutions</h1>
     <ul>
       <li>Teacher forcing</li>
       Similar to dagger's algorithm; Dagger added the 
@@ -757,7 +789,7 @@
   </subsection>
 </section>
 
-<section><h1>Case study of BC</h1>
+<section id="9"><h1>Case study of BC</h1>
   pete and lucas used the same deep network front 
   end. There are lots of different ways in which people 
   choose the output of the deep network
@@ -812,7 +844,7 @@
   outperformed the non-recurrent versions
 </section>
 
-<section><h1>Multi-modal demonstrations</h1>
+<section id="10"><h1>Multi-modal demonstrations</h1>
   In the simplest model, we have: $u = \pi(y)$.
   We'd like the policy/controller to be perfect, i.e.
   there are no 2 optimal actions for a given sensory input.
@@ -837,7 +869,7 @@
   This is the problem of having <i>multimodal
   demonstrations</i>  
 
-  <subsection><h1>Solutions</h1>
+  <subsection id="10.0"><h1>Solutions</h1>
     <ul>
       <li>
         Have the NN output a full multi-modal distribution
@@ -871,7 +903,7 @@
   </subsection>
 </section>
 
-<section><h1>BC is only as good as its demonstrators</h1>
+<section id="11"><h1>BC is only as good as its demonstrators</h1>
   First BC papers argued differently. They 
   said that because of a robot's steady hand, we filter 
   noise, we have no feedback, the robot can be better 
@@ -889,14 +921,14 @@
   but they really can be very narrow demos.
 </section>
  
-<section><h1>Generalisation</h1>
+<section id="12"><h1>Generalisation</h1>
   The big question is what features to select 
   to put in or out in order to get a broader generalization.
   A lot of
   times demos work incredibly well inside the training data 
   but fails as soon as it goes off the training data.  
 
-  <subsection><h1>Where do we get training data from?</h1>
+  <subsection id="12.0"><h1>Where do we get training data from?</h1>
     <ul>
       <li>Invert time</li>
       Takes a long time to place objects in a box and train
@@ -921,7 +953,7 @@
   </subsection>
 </section>
 
-<section><h1>How does BC fit with force/impedance control</h1>
+<section id="13"><h1>How does BC fit with force/impedance control</h1>
   The output of the NN is $u$.
   
   <p>
@@ -941,7 +973,7 @@
   </p>
 </section>
 
-<section><h1>Summary</h1>
+<section id="14"><h1>Summary</h1>
   BC is a clever way to separate out the 2 questions:
   <ul>
     <li>How to train the weights of the NN</li>
@@ -960,11 +992,12 @@
 </section>
 
 
-<section><h1>Musings</h1>
+<section id="15"><h1>Musings</h1>
   <ul>
     <li>Is there a behaviour cloning sim example?</li>
   </ul>
 </section>
 </chapter>
+
 </body>
 </html>

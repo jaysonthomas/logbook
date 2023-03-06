@@ -1,13 +1,12 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Deep Perception</title>
   <meta name="Deep Perception" content="text/html; charset=utf-8;" />
-  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script type="text/javascript" src="../../../notes.js"></script>
-
-  <script src="../../../notes-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,45 +15,65 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
-<body onload="loadChapter('');">
+<body onload="loadChapter('');">  
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Limitation of using geometry alone for perception</a>
+<a href="#1">How does Deep Learning help?</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">What will be covered</a></li>
+</ul>
+<a href="#2">What questions can we ask of the NN?</a>
+<a href="#3">Outcome of creating the COCO dataset</a>
+<a href="#4">How to generate labels?</a>
+<a href="#5">Simulation vs real world data generation</a>
+<a href="#6">The simulation pipeline</a>
+<a href="#7">How to go from image recognition to object detection</a>
+<a href="#8">Object representations</a>
+<a href="#9">Deep pose estimation</a>
+<a href="#10">Bingham distribution</a>
+<a href="#11">Does this really matter in practice</a>
+<a href="#12">Closing remarks</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<div id="main" class="sidebar1">
-  <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
-</div>
-
-<div id="mySidenav" class="sidebar">
-  <a href="#1">Installation</a>
-</div>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Deep Perception</h1>
 
-<section id="1"><h1>Limitation of using geometry 
-  alone for perception</h1>
+<section id="0"><h1>Limitation of using geometry alone for perception</h1>
   <ul>
     <li>No understanding of what an object is</li>
     It was purely based on points in space (point cloud).
@@ -80,7 +99,7 @@
   </ul>
 </section>
 
-<section><h1>How does Deep Learning help?</h1>
+<section id="1"><h1>How does Deep Learning help?</h1>
   To do more effective manipulation, we need to understand 
   what objects are and the properties of objects. 
 
@@ -112,7 +131,7 @@
     control to a much more diverse set of tasks.
   </p>
   
-  <subsection><h1>What will be covered</h1>
+  <subsection id="1.0"><h1>What will be covered</h1>
     Will only focus on 
     parts that are relevant to robotics and manipulation i.e.
     <ul>
@@ -131,7 +150,7 @@
   </subsection>
 </section>
 
-<section><h1>What questions can we ask of the NN?</h1>
+<section id="2"><h1>What questions can we ask of the NN?</h1>
   The input to the NN is RGB images. We could feed in
   the depth channel as well. Some people represent
   the depth info differently and feed it in.
@@ -228,7 +247,7 @@
   </ul>
 </section>
 
-<section><h1>Outcome of creating the COCO dataset</h1>
+<section id="3"><h1>Outcome of creating the COCO dataset</h1>
   The COCO dataset was created by crowdsourcing it.
   People clicked pixel-by-pixel and labeled
   images. This powered instance segmentation labels 
@@ -305,7 +324,7 @@
   </p>
 </section>
 
-<section><h1>How to generate labels?</h1>
+<section id="4"><h1>How to generate labels?</h1>
   How to generate the smaller amount of training data?
 
   <p>
@@ -358,7 +377,7 @@
   images.
 </section>
 
-<section><h1>Simulation vs real world data generation</h1>
+<section id="5"><h1>Simulation vs real world data generation</h1>
   ICP can converge close, but not quite.
   Even though it's an effective pipeline and generates 
   lots of data, even those imperfections of ICP are a 
@@ -382,7 +401,7 @@
   sprinnkled in just for good measure. 
 </section>
 
-<section><h1>The simulation pipeline</h1>
+<section id="6"><h1>The simulation pipeline</h1>
   Drake has an Rgbd sensor module that gives out depth,
   rgb colour and labeled images.
   It outputs an image that's the same size as what the camera
@@ -419,8 +438,7 @@
   </p>
 </section>
 
-<section><h1>How to go from image recognition to 
-  object detection</h1>
+<section id="7"><h1>How to go from image recognition to object detection</h1>
   We won't discuss architecture, just why we can ask
   questions like how many objects are in the scene. 
   
@@ -558,7 +576,7 @@
   </p>    
 </section>
 
-<section><h1>Object representations</h1>
+<section id="8"><h1>Object representations</h1>
   <ul>
     <li>Mesh model + pose</li>
     Here we feed the NN an input image and out comes the pose.
@@ -566,7 +584,7 @@
   </ul>
 </section>
 
-<section><h1>Deep pose estimation</h1>
+<section id="9"><h1>Deep pose estimation</h1>
   ICP doesn't work globally. It's hard to beat geometric perception for really fine estimation of the pose. 
   But in terms of going from an image and having an initial guess, in the spirit of trying to find the needle in the haystack, deep learning pose estimation is a very nice approach. 
   
@@ -671,7 +689,7 @@
   </p> 
 </section>
 
-<section><h1>Bingham distribution</h1>
+<section id="10"><h1>Bingham distribution</h1>
   What are the right ways to write distributions over orientations. Bingham distribution is a reasonable way to write distributions over unit quaternions.
   
   <div class="container">
@@ -694,7 +712,7 @@
   So, instead of estimating a single pose, it is best to use the NN to make multiple pose hypotheses with associated uncertainties i.e. solutions in the form of full probability distributions. Choosing the right network output for the poses makes a big difference.
 </section>
 
-<section><h1>Does this really matter in practice</h1>
+<section id="11"><h1>Does this really matter in practice</h1>
   If a data set has a million samples and discontinuities only happen in a very small fraction, does it matter?
   
   <p>
@@ -702,7 +720,7 @@
   </p>
 </section>
 
-<section><h1>Closing remarks</h1>
+<section id="12"><h1>Closing remarks</h1>
   There are different ways to generate data for training. One method is the fine tuning/transfer learning method where we pick the trained network that was trained closest to our dataset, chop the head off and train it for our task.
 
   <p>
@@ -725,5 +743,6 @@
 </section>
   
 </chapter>
+
 </body>
 </html>

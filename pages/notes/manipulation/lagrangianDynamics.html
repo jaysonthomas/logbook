@@ -1,54 +1,77 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ch. 1 - Introduction</title>
-  <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-  <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <title>Lagrangian dynamics</title>
+  <meta name="Lagrangian dynamics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script type="text/javascript" src="../../../chapters.js"></script>
-  <script type="text/javascript" src="../../../notes.js"></script>
-
-  <script src="../../../notes-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
-  
-  <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-  <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../notes.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
-<body  onload="loadChapter('manipulation');">
+<body onload="loadChapter('');">  
 
-<!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
         var d = new Date(document.lastModified);
-        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-      </script>
-    </p>
-  </header>
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">Calculate kinetic & potential energies of the masses</a>
+<a href="#3">Calculate joint torques using the Lagrangian</a>
+<a href="#4">Velocity product terms</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Case 1: Assume gravity and joint accelerations are 0</a></li>
+  <li><a href="#4.1">Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</a></li>
+  <li><a href="#4.2">Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</a></li>
+  <li><a href="#4.3">Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</a></li>
+  <li><a href="#4.4">Case 5: $\dot\theta_1$, $\dot\theta_2>0$</a></li>
+  <li><a href="#4.5">Rewriting the manipulator equation of motion</a></li>
+</ul>
+<a href="#5">Musings</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Lagrangian dynamics</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">Calculate kinetic & potential energies of the masses</a></li>
@@ -258,7 +281,7 @@
   <code>Centripetal terms</code>. Terms that have a product of two different 
   joint velocities are called <code>Coriolis terms</code>.
 
-  <subsection><h1>Case 1: Assume gravity and joint accelerations are 0</h1>
+  <subsection id="4.0"><h1>Case 1: Assume gravity and joint accelerations are 0</h1>
     $$
       f_1 = \begin{bmatrix}f_{x_1} \\ f_{y_1} \\ f_{z_1}\end{bmatrix}
           = m_1 \begin{bmatrix}\ddot{x}_1 \\ \ddot{y}_1 \\ \ddot{z}_1\end{bmatrix}
@@ -297,7 +320,7 @@
     </div>
   </subsection>
 
-  <subsection><h1>Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</h1>
+  <subsection id="4.1"><h1>Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</h1>
     <figure>
       <img style="height:130px; width:30%"
       src="../../../figures/manipulation/modernRob/2_2R90degrees.png">
@@ -363,7 +386,7 @@
     </div>
   </subsection>
 
-  <subsection><h1>Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</h1>
+  <subsection id="4.2"><h1>Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</h1>
     <figure>
       <img style="height:130px; width:20%"
       src="../../../figures/manipulation/modernRob/3_2Rcentripetal.png">
@@ -398,7 +421,7 @@
     the circle.
   </subsection>
 
-  <subsection><h1>Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</h1>
+  <subsection id="4.3"><h1>Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</h1>
     Now the mass travels around a circle with its centre at the second joint, 
     and the centripetal acceleration is proportional to $\dot\theta_2^2$.
 
@@ -426,7 +449,7 @@
   $$
   </subsection>
 
-  <subsection><h1>Case 5: $\dot\theta_1$, $\dot\theta_2>0$</h1>
+  <subsection id="4.4"><h1>Case 5: $\dot\theta_1$, $\dot\theta_2>0$</h1>
     <figure>
       <img style="height:120px; width:25%"
       src="../../../figures/manipulation/modernRob/5_2RBothJointVelocities.png">
@@ -449,7 +472,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Rewriting the manipulator equation of motion</h1>
+  <subsection id="4.5"><h1>Rewriting the manipulator equation of motion</h1>
     $$
       \tau = M(\theta)\ddot\theta + \dot\theta^T\Gamma(\theta)\dot\theta + g(\theta)
     $$
@@ -464,7 +487,7 @@
   </subsection>
 </section>
 
-<section id="10"><h1>Musings</h1>
+<section id="5"><h1>Musings</h1>
   <ul>
     <li>What does it mean to subtract potential energy from kinetic energy?</li>
     <li>
@@ -496,5 +519,6 @@
 </section>  
 
 </chapter>
+
 </body>
 </html>

@@ -1,56 +1,96 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Reflected inertia</title>
+  <meta name="Reflected inertia" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../htmlbook/book.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <script src="../../../htmlbook/mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
 
-    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-    <script src="../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-    <script>hljs.initHighlightingOnLoad();</script>
+<body onload="loadChapter('');">  
 
-    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
-  </head>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
 
-<body onload="loadChapter('manipulation');">
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">Reflected Inertia</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Background knowledge</a></li>
+  <li><a href="#2.1">Steps</a></li>
+  <li><a href="#2.2">Figures</a></li>
+  <li><a href="#2.3">Questions & todo</a></li>
+</ul>
+<a href="#3">Differential IK optimisation</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Background knowledge</a></li>
+  <li><a href="#3.1">Steps</a></li>
+  <li><a href="#3.2">Questions & todo</a></li>
+</ul>
+<a href="#4">Planar manipulator</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Steps</a></li>
+  <li><a href="#4.1">Figures</a></li>
+  <li><a href="#4.2">Questions & todo</a></li>
+</ul>
+<a href="#5">Rigid transforms</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Background knowledge</a></li>
+  <li><a href="#5.1">Questions & todo</a></li>
+</ul>
+<a href="#6">Robot painter</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Background knowledge</a></li>
+  <li><a href="#6.1">Steps</a></li>
+  <li><a href="#6.2">Key frames visualisation</a></li>
+  <li><a href="#6.3">Questions & todo</a></li>
+</ul>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Reflected inertia</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">Reflected Inertia</a></li>
@@ -122,7 +162,7 @@
 </section>
 
 <section id="2"><h1>Reflected Inertia</h1>
-  <subsection><h1>Background knowledge</h1>
+  <subsection id="2.0"><h1>Background knowledge</h1>
     <ul>
       <li>Physics/The physical system</li>
       <p>
@@ -162,7 +202,7 @@
     </ul>
   </subsection>
   
-  <subsection><h1>Steps</h1>
+  <subsection id="2.1"><h1>Steps</h1>
     <ul>
       <li>Write the system dynamics with ideal input drive condition</li>
       That is, $I_m = N = 1$.
@@ -181,7 +221,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Figures</h1>
+  <subsection id="2.2"><h1>Figures</h1>
     <figure>
       <img style="height:200px; width:70%"
       src="../../../figures/pendulum_with_motor.png"/>
@@ -199,7 +239,7 @@
     </figure>
   </subsection>
 
-  <subsection><h1>Questions & todo</h1>
+  <subsection id="2.3"><h1>Questions & todo</h1>
     <ul>
       <li>Dynamics equation of a simple pendulum with an attached gear and motor.</li>
       Where do I get the equation from? What is the intuitive meaning behind it?
@@ -228,7 +268,7 @@
 </section>
 
 <section id="3"><h1>Differential IK optimisation</h1>
-  <subsection><h1>Background knowledge</h1>
+  <subsection id="3.0"><h1>Background knowledge</h1>
     <p>
       <i>Kinematics</i> is a branch of physics concerned with the geometrically possible 
       movements of a body or a system of bodies without considering the forces and masses involved.
@@ -247,7 +287,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Steps</h1>
+  <subsection id="3.1"><h1>Steps</h1>
     <ul>
       <li>Differential IK through inverse jacobian</li>
       The aim is to find the desired joint velocities $v$ from the desired
@@ -301,7 +341,7 @@
     </ul>
   </subsection>
   
-  <subsection><h1>Questions & todo</h1>
+  <subsection id="3.2"><h1>Questions & todo</h1>
     <ul>
       <li>What is a <code>LeafSystem</code> in drake?</li>
       <li>Jacobian is a function of joint angles and gives out joint velocities?</li>
@@ -374,7 +414,7 @@
 </section>
 
 <section id="4"><h1>Planar manipulator</h1>
-  <subsection><h1>Steps</h1>
+  <subsection id="4.0"><h1>Steps</h1>
     <ul>
       <li>Write down the forward kinematics of the two-link manipulator</li>
       <li>
@@ -384,7 +424,7 @@
     </ul>
   </subsection>
   
-  <subsection><h1>Figures</h1>
+  <subsection id="4.1"><h1>Figures</h1>
     <figure>
       <img style="height:200px; width:50%"
       src="../../../figures/planar_two_link.png"/>
@@ -394,7 +434,7 @@
     </figure>
   </subsection>
   
-  <subsection><h1>Questions & todo</h1>
+  <subsection id="4.2"><h1>Questions & todo</h1>
     <ul>
       <li>
         Learn the derivation of the jacobian and the reason for the 
@@ -414,7 +454,7 @@
 </section>
 
 <section id="5"><h1>Rigid transforms</h1>
-  <subsection><h1>Background knowledge</h1>
+  <subsection id="5.0"><h1>Background knowledge</h1>
     Grasp pose in the world frame: ${^OX^G}$. 
     <br>
     In drake: <code>X_OG</code> -> 
@@ -434,7 +474,7 @@
     </p>
   </subsection>
   
-  <subsection><h1>Questions & todo</h1>
+  <subsection id="5.1"><h1>Questions & todo</h1>
     <ul>
       <li>Write down the most often used formulae</li>
       <li>
@@ -446,14 +486,14 @@
 </section>
 
 <section id="6"><h1>Robot painter</h1>
-  <subsection><h1>Background knowledge</h1>
+  <subsection id="6.0"><h1>Background knowledge</h1>
     <ul>
       <li>Right hand rule</li>
       This convention is just in <a href="https://t.ly/qH3b">robotics</a> perhaps.
     </ul>
   </subsection>
   
-  <subsection><h1>Steps</h1>
+  <subsection id="6.1"><h1>Steps</h1>
     <ul>
       <li>Design and implement a circular trajectory for the Iiwa arm to follow</li>
       <ul>
@@ -464,7 +504,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Key frames visualisation</h1>
+  <subsection id="6.2"><h1>Key frames visualisation</h1>
     <ul>
       <p>
         <li>How are the frames laid out?</li>
@@ -518,7 +558,7 @@
     </ul>
   </subsection>
   
-  <subsection><h1>Questions & todo</h1>
+  <subsection id="6.3"><h1>Questions & todo</h1>
     <ul>
       <li>What is <code>traj.MakeDerivative()</code>?</li>
       <li><code>builder.AddSystem(Integrator(7))</code>?</li>
@@ -549,3 +589,15 @@
 </body>
 </html>
 
+
+</body>
+</html>
+
+</body>
+</html>
+
+</body>
+</html>
+
+</body>
+</html>
