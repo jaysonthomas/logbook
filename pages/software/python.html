@@ -367,6 +367,11 @@ Output: type
   </ul>
 </section>
 
+<section id="9"><h1>Timing python code</h1>
+<pre><code class="python">
+python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
+</code></pre>  
+</section>
 <section id="10"><h1>Musings</h1>
   <ul>
     <li>What does <code>enumerate</code> in a for loop do?</li>
