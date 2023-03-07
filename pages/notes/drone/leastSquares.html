@@ -1,54 +1,75 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Least squares</title>
+  <meta name="Least squares" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <head>
-    <title>Least squares</title>
-    <meta name="Least squares" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../notes.js"></script>
-  
-    <script src="../../../notes-mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
   
-    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
-  </head>
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-<body onload="loadChapter('');">
-
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">logbook</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">Example</a>
+<a href="#3">Minimising the squared error criterion</a>
+<a href="#4">Method of LS assumptions</a>
+<a href="#5">Weighted LS</a>
+<a href="#6">Minimising the weighted LS criterion</a>
+<a href="#7">Weighted LS example</a>
+<a href="#8">Summary of WLS vs LS</a>
+<a href="#9">Independent and identically distributed</a>
+<a href="#10">LS examples</a>
+<a href="#11">Musings</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href="discreteProb.html">Discrete Probability</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html></a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="recursiveLSs.html">Recursive LSs</a></li>
@@ -537,6 +558,6 @@
 </section>
 
 </chapter>
+
 </body>
 </html>
-

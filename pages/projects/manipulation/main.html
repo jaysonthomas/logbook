@@ -1,71 +1,101 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Projects in Manipulation</title>
+  <meta name="Projects in Manipulation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <head>
-    <title>Projects in Manipulation</title>
-    <meta name="Projects in Manipulation" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../../chapters.js"></script>
-    <script type="text/javascript" src="../../../notes.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <script src="../../../notes-mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
 
-    <link rel="stylesheet" href="../../../htmlbook/highlight/styles/default.css">
-    <script src="../../../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-    <script>hljs.initHighlightingOnLoad();</script>
+<body onload="loadChapter('');">  
 
-    <link rel="stylesheet" type="text/css" href="../../../notes.css" />
-  </head>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
 
-<body onload="loadChapter('manipulation');">
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Simulation</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Physics simulation and behaviour</a></li>
+  <li><a href="#1.1">Drake simulation</a></li>
+  <li><a href="#1.2">Kinematics</a></li>
+  <li><a href="#1.3">Geometry</a></li>
+</ul>
+<a href="#2">Grasping</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Grasp candidate</a></li>
+  <li><a href="#2.1">Normal estimation from depth</a></li>
+  <li><a href="#2.2">Deep perception</a></li>
+</ul>
+<a href="#3">Planning</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Door opening</a></li>
+</ul>
+<a href="#4">Control</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Hybrid force-position control</a></li>
+</ul>
+<a href="#5">Musings</a>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 3"><h1>Projects in Manipulation</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
   </ul>
 </section>
 
-<section><h1>Simulation</h1>
-  <subsection><h1>Physics simulation and behaviour</h1>
+<section id="1"><h1>Simulation</h1>
+  <subsection id="1.0"><h1>Physics simulation and behaviour</h1>
     [<a href="https://bit.ly/3YebxNn">Textbook</a>]
     2 boxes stacked on top of each other and sliding down a slope is used to understand contact forces.
   </subsection>
 
-  <subsection><h1>Drake simulation</h1>
+  <subsection id="1.1"><h1>Drake simulation</h1>
   </subsection>
 </section>
   
-  <subsection><h1>Kinematics</h1>
+  <subsection id="1.2"><h1>Kinematics</h1>
     <ul>
       <li>Reflected inertia</li>
       [<a href="reflectedInertia.html">Link</a>]
@@ -83,11 +113,11 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Geometry</h1>
+  <subsection id="1.3"><h1>Geometry</h1>
   </subsection>
 
-<section><h1>Grasping</h1>
-  <subsection><h1>Grasp candidate</h1>
+<section id="2"><h1>Grasping</h1>
+  <subsection id="2.0"><h1>Grasp candidate</h1>
     [<a href="https://bit.ly/3SB8xcK">Textbook location</a>]
     The aim is to find a certain number of valid grasp poses for a given object. The steps involved:
     <ul>
@@ -111,7 +141,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Normal estimation from depth</h1>
+  <subsection id="2.1"><h1>Normal estimation from depth</h1>
     [<a href="https://bit.ly/3kx8nqi">Textbook location</a>] 
     For a selected pixel, the pixels that surround it are likely to be its nearest neighbours. Therefore we use the nearest pixels in place of computing the nearest neighbours.
     The steps involved (the steps are mixed together):
@@ -127,11 +157,11 @@
 </section>
 
  
-  <subsection><h1>Deep perception</h1>
+  <subsection id="2.2"><h1>Deep perception</h1>
   </subsection>
 
-<section><h1>Planning</h1>
-  <subsection><h1>Door opening</h1>
+<section id="3"><h1>Planning</h1>
+  <subsection id="3.0"><h1>Door opening</h1>
     [<a href="https://bit.ly/3YpEW7v">Textbook location</a>] A nominal trajectory to reach and open a cupboard door is precomputed by dividing the motion into segments. The aim is to convert these setpoints in the EE space (EE trajectory) to joint-space trajectory using optimisation-based inverse kinematics.
     The steps involved are:
     <ul>
@@ -143,8 +173,8 @@
   </subsection>
 </section>
 
-<section><h1>Control</h1>
-  <subsection><h1>Hybrid force-position control</h1>
+<section id="4"><h1>Control</h1>
+  <subsection id="4.0"><h1>Hybrid force-position control</h1>
     [<a href="https://bit.ly/3KIQM9r">Textbook location</a>]
     The aim is to push a book with the help of friction. This is an example of non-prehensile manipulation. The steps include:
     <ul>
@@ -159,9 +189,10 @@
   </subsection>
 </section>
 
-<section><h1>Musings</h1>
+<section id="5"><h1>Musings</h1>
   Interesting 2020 pset <a href="https://t.ly/f6P0">link</a>.
 </section>
 </chapter>
+
 </body>
 </html>

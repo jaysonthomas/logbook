@@ -1,56 +1,95 @@
+
 <!DOCTYPE html>
-
 <html>
+<head>
+  <title>Pick and place</title>
+  <meta name="Pick and place" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
 
-  <head>
-    <title>Ch. 1 - Introduction</title>
-    <meta name="Ch. 1 - Introduction" content="text/html; charset=utf-8;" />
-    <link rel="canonical" href="https://jaysonthomas.github.io/interviewPrep.html" />
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 
-    <script type="text/javascript" src="../../chapters.js"></script>
-    <script type="text/javascript" src="../../htmlbook/book.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    <script src="../../htmlbook/mathjax-config.js" defer></script> 
-    <script type="text/javascript" id="MathJax-script" defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-    </script>
-    <script>window.MathJax || document.write('<script type="text/javascript" src="../../htmlbook/MathJax/es5/tex-chtml.js" defer><\/script>')</script>
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
 
-    <link rel="stylesheet" href="../../htmlbook/highlight/styles/default.css">
-    <script src="../../htmlbook/highlight/highlight.pack.js"></script> <!-- http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#language-names-and-aliases -->
-    <script>hljs.initHighlightingOnLoad();</script>
+<body onload="loadChapter('');">  
 
-    <link rel="stylesheet" type="text/css" href="../../htmlbook/book.css" />
-  </head>
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
 
-<body onload="loadChapter('manipulation');">
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
 
-  <!-- The following division should be written on every page -->
-<div data-type="titlepage" pdf="no">
-  <header>
-    <h1><a href="index.html" style="text-decoration:none;">Jayson's notes</a></h1>
-    <p data-type="subtitle">Mostly control systems</p> 
-    <p style="font-size: 18px;"><a href="http://people.csail.mit.edu/russt/">Jayson Thomas</a></p>
-    <p style="font-size: 14px; text-align: right;"> 
-      &copy; Jayson Thomas, 2020-2022<br/>
-      Last modified <span id="last_modified"></span>.</br>
-      <script>
-      var d = new Date(document.lastModified);
-      document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-    </p>
-  </header>
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Overview</a>
+<a href="#2">Simulation</a>
+<a href="#3">Reference trajectory generation</a>
+<a href="#4">Feedback control</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Input</a></li>
+  <li><a href="#4.1">Output</a></li>
+  <li><a href="#4.2">Method</a></li>
+  <li><a href="#4.3">Tests</a></li>
+</ul>
+<a href="#5">Handling joint singularities</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">What are these singularities?</a></li>
+  <li><a href="#5.1">Choosing joint limits</a></li>
+  <li><a href="#5.2">Code implementation</a></li>
+</ul>
+<a href="#6">Putting it all together</a>
+<a href="#7">Questions</a>
+<ul class="no-bullets">
+  <li><a href="#7.0">Simulation</a></li>
+  <li><a href="#7.1">Reference trajectory generation</a></li>
+  <li><a href="#7.2">Feedback control</a></li>
+</ul>
+<a href="#8">Todo</a>
+<ul class="no-bullets">
+  <li><a href="#8.0">Simulation</a></li>
+  <li><a href="#8.1">Reference trajecotry generation</a></li>
+  <li><a href="#8.2">Feedback control</a></li>
+  <li><a href="#8.3">Handling joint singularities</a></li>
+  <li><a href="#8.4">Miscellaneous</a></li>
+</ul>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 0"><h1>Pick and place</h1>
 
-<section id="table_of_contents"><h1>Table of Contents</h1>
+<section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
     <li><a href="#2">Simulation</a></li>
@@ -135,7 +174,7 @@
     </p>
 </section>
 
-<section id="5"><h1>Reference trajectory generation</h1>
+<section id="3"><h1>Reference trajectory generation</h1>
     <p><i>Timing</i>
       <ul>
         <li>Controller feedback loop</li>
@@ -212,8 +251,8 @@
 
 </section>
 
-<section id="6"><h1>Feedback control</h1>
-  <subsection><h1>Input</h1>
+<section id="4"><h1>Feedback control</h1>
+  <subsection id="4.0"><h1>Input</h1>
     <ul>
       <li>Current actual ee configuration</li>
       <li>Current reference ee configuration</li>
@@ -223,11 +262,11 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Output</h1>
+  <subsection id="4.1"><h1>Output</h1>
     The commanded ee twist $V$ expressed in ${e}$.
   </subsection>
 
-  <subsection><h1>Method</h1>
+  <subsection id="4.2"><h1>Method</h1>
     <ul>
       Find the following:
       <p>
@@ -264,7 +303,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Tests</h1>
+  <subsection id="4.3"><h1>Tests</h1>
     <ul>
       <p>
         <li>
@@ -289,8 +328,8 @@
   </subsection>
 </section>
 
-<section id="7"><h1>Handling joint singularities</h1>
-  <subsection><h1>What are these singularities?</h1>
+<section id="5"><h1>Handling joint singularities</h1>
+  <subsection id="5.0"><h1>What are these singularities?</h1>
     <p>
       If the <i>6x9</i> jacobian matrix $J_{e}$ is singular or nearly singular
       in a particular direction,
@@ -338,7 +377,7 @@
     </p>
   </subsection>
   
-  <subsection><h1>Choosing joint limits</h1>
+  <subsection id="5.1"><h1>Choosing joint limits</h1>
     <p>
       Joint limits are needed to avoid self collisions and singularities.
       For example, constraints can be added to joints 3 and 4 to always be
@@ -352,7 +391,7 @@
     </p>
   </subsection>
   
-  <subsection><h1>Code implementation</h1>
+  <subsection id="5.2"><h1>Code implementation</h1>
     <p>
       Write a function to return a list of joints that violate the limits 
       given the robot arm's current configuration.
@@ -377,7 +416,7 @@
 
 </section>
 
-<section id="8"><h1>Putting it all together</h1>
+<section id="6"><h1>Putting it all together</h1>
   <ul>
     <li>Feedforward control test with no external errors</li>
     <p>
@@ -416,20 +455,20 @@
   </ul>
 </section>
 
-<section id="3"><h1>Questions</h1>
-  <subsection><h1>Simulation</h1>
+<section id="7"><h1>Questions</h1>
+  <subsection id="7.0"><h1>Simulation</h1>
     <p>
       I'm guessing the controls mentioned here is very different from the input torque applied.
     </p>
   </subsection>
     
-  <subsection><h1>Reference trajectory generation</h1>
+  <subsection id="7.1"><h1>Reference trajectory generation</h1>
     <p>
       Apart from a visual method, is there another way of testing a trajectory?
     </p>
   </subsection>
 
-  <subsection><h1>Feedback control</h1>
+  <subsection id="7.2"><h1>Feedback control</h1>
     <p>
       For the feedforward term calculation, is the following the same:
       <br>
@@ -440,15 +479,15 @@
   </subsection>
 </section>
 
-<section id="4"><h1>Todo</h1>
-  <subsection><h1>Simulation</h1>
+<section id="8"><h1>Todo</h1>
+  <subsection id="8.0"><h1>Simulation</h1>
     <ul>
       <li>For the testing, move certain joints and check if the output is as expected.</li>
       <li>Write a note on odometry in general and in particular what it means here.</li>
     </ul>
   </subsection>
   
-  <subsection><h1>Reference trajecotry generation</h1>
+  <subsection id="8.1"><h1>Reference trajecotry generation</h1>
     <ul>
       <li>Can I plot the motion of the Ee 3d vector w.r.t. time in bokeh?</li>
       <li>Define all the frames and view it in scene 8.</li>
@@ -460,20 +499,20 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Feedback control</h1>
+  <subsection id="8.2"><h1>Feedback control</h1>
     <p>
       With the tests for $X_{err}$, I need to confirm how it's possible to quickly tell
       if the bot just needs to correct its orientation in the y direction.
     </p>    
   </subsection>
 
-  <subsection><h1>Handling joint singularities</h1>
+  <subsection id="8.3"><h1>Handling joint singularities</h1>
     <p>
       Could run the code with and without joint limits in place.
     </p>
   </subsection>
 
-  <subsection><h1>Miscellaneous</h1>
+  <subsection id="8.4"><h1>Miscellaneous</h1>
     <ul>
       <li>Give a brief description of the modeling of the mecanum wheels driven bot.</li>
       <li>Description of forward kinematics/what to do with the screw axes.</li>
@@ -494,3 +533,15 @@
 </body>
 </html>
 
+
+</body>
+</html>
+
+</body>
+</html>
+
+</body>
+</html>
+
+</body>
+</html>
