@@ -76,6 +76,67 @@
   
 </section>
 
+<section id="2"><h1>Basic commands with example</h1>
+  <ul>
+    <li><code>add_library()</code></li>
+    Adds a library to the project using the specified source files.
+    <li><code>target_link_libraries()</code></li>
+    Specifies libraries to use when linking a given target/executable.
+    <li><code>target_include_directories()</code></li>
+    Specifies the include directories to use when compiling a given target.
+    <li><code>add_executable()</code></li>
+    Add an executable to the project using the specified source files.
+  </ul>
+
+  To use as subroutine libraries for linking, archive files (<code>.a</code>) are created from compiled object files using the program <code>ar</code>. These <i>archive files</i> contain named subfiles called members.
+
+  <subsection><h1>Example</h1>
+    We are trying to create an executable called <code>test</code> that uses the <code>component</code> library which is composed of 2 code files component.c and component.h. The 2 code files uses another library called <code>std</code> (for math.h). In this example, component.h is present in another folder which we need to explicitly inform <code>gcc</code> of. Possibly, the build system uses the default compiler present on the system (?).
+
+    <p>
+      The cmake code for the component library will look as follows (contained in a <code>CMakeLists.txt</code> file):
+<pre><code class="cmake">
+project(COMPONENT)
+add_library (
+    component
+    component.c
+    include/component.h
+)
+
+target_link_libraries(component PRIVATE std)
+target_include_directories(component PUBLIC ./include)
+</code></pre>
+    </p>
+
+    The test project:
+<pre><code class="cmake">
+project(TEST)
+add_executable ( 
+  test
+  test.c
+)
+
+target_link_libraries(test PRIVATE component)
+</code></pre>    
+
+The resultant makefile:
+<pre><code class="Makefile">
+# Compile component.c. Include the path for math.h for gcc.
+gcc -c component.c -I<STD_INCLUDE_DIR>/ -o component.o
+
+# Create an archive file for linking.
+ar -o libcomponent.a component.o     
+
+# Compile test
+gcc -c test.c -o test.o          
+
+# Link the object file/executable test.o. libstd and its binary dir is also passed in this linking stage.
+ld -o test -L<COMPONENT_BINARY_DIR> -L<STD_BINARY_DIR> test.o -lcomponent -lstd
+</code></pre>
+
+  </subsection>
+</section>
+
 </chapter>
 
 </body>
