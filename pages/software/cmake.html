@@ -55,6 +55,10 @@
   
 <a href="#0">Table of Contents</a>
 <a href="#1">Overview</a>
+<a href="#2">Basic commands with example</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Example</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Cmake</h1>
@@ -90,7 +94,7 @@
 
   To use as subroutine libraries for linking, archive files (<code>.a</code>) are created from compiled object files using the program <code>ar</code>. These <i>archive files</i> contain named subfiles called members.
 
-  <subsection><h1>Example</h1>
+  <subsection id="2.0"><h1>Example</h1>
     We are trying to create an executable called <code>test</code> that uses the <code>component</code> library which is composed of 2 code files component.c and component.h. The 2 code files uses another library called <code>std</code> (for math.h). In this example, component.h is present in another folder which we need to explicitly inform <code>gcc</code> of. Possibly, the build system uses the default compiler present on the system (?).
 
     <p>

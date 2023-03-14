@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Robotic Manipulation</title>
-  <meta name="Robotic Manipulation" content="text/html; charset=utf-8;" />
+  <title>Basics of pick and place</title>
+  <meta name="Basics of pick and place" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -53,20 +53,19 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Overview</a>
+<a href="#0">Overview</a>
+<a href="#1">Notations</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Position</a></li>
+  <li><a href="#1.1">Orientation</a></li>
+  <li><a href="#1.2">Pose</a></li>
+  <li><a href="#1.3">Example usage</a></li>
+</ul>
 </div>
 
-<table style="width:100%;" pdf="no"><tr style="width:100%">
-  <td style="width:33%;text-align:left;"><a class="previous_chapter"></a></td>
-  <td style="width:33%;text-align:center;"><a href=../../../index.html>Table of contents</a></td>
-  <td style="width:33%;text-align:right;"><a class="next_chapter" href=robot.html>Next Chapter</a></td>
-</tr></table>
-
-<!-- EVERYTHING ABOVE THIS LINE IS OVERWRITTEN BY THE INSTALL SCRIPT -->
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
 
-<section id="1"><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   <ul>
     <li>Getting the notations right</li>
     Even in deep neural networks (say to calculate pose estimation), we're going to have a kinematics problem at some point and we're going to have a bug where the vectors are pointing the wrong way etc. If we get the notations right, spatial algebra will protect us.
@@ -86,6 +85,104 @@
   </ul>
 </section>
 
+<section id="1"><h1>Notations</h1>
+  <subsection id="1.0"><h1>Position</h1>
+    The simplest concept is just a point in some three-dimensional space. 
+    <ul>
+      <li>$A$ is the frame or point of interest</li>
+      <li>$P^A$ - Position of $A$</li>
+      <p>
+        <li>$^BP^A$ - Position of $A$ relative to $B$</li>
+        $P$ is a vector going from point $B$ to $A$ - Imagine an arrow drawn from $B$ to $A$. Positions always have to be defined w.r.t. something.
+      </p>
+      <li>$\in\mathbb{R}^3$</li>
+      Our 3D vectors (3x1) contain 3 real numbers.
+      <p>
+        <li>$^BP^A_C$ - $C$ is the expressed in frame</li>
+        Distance between 2 people is given by $P$. But if we turn our back, the vector between the 2 points is still the same, but now they'll be expressed using different numbers w.r.t. me looking the other way.
+      </p>
+    </ul>
+
+    A <i>reference frame</i> has a point at its centre. Its orientation can be represented in many ways but it is visually represented with the xyz axes. XYZ => RGB. Use the <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system). 
+
+    <p>
+      We'll have lots of frames. Our aim will be to get the frames to match; because once they do, the algebra becomes trivial. For example, once the frames match, we can add positions.
+
+      <div class="container">
+        <figure>
+          <img style="height:60px; width:auto"
+          src="../../../figures/manipulation/34_vectorAddition.png"/>
+          <figcaption>
+            $^BP^E_C = ^BP^A_C + ^AP^E_C$
+          </figcaption>
+        </figure>
+      </div>
+    </p>
+    Another example, inverse flips the sign: $-^BP^A_C = ^AP^B_C$
+  </subsection>
+
+  <subsection id="1.1"><h1>Orientation</h1>
+    There are a number of ways to represent the relative orientation: 
+    <ul>
+      <li>Rotation matrix</li>
+      <li>Euler angles of which there are many but the familiar ones are roll pitch yaw</li>
+      <li>Quaternions</li>
+    </ul>
+    There are functions that let us go back and forth in between them.  Unfortunately there's no one representation to rule them all. Different parts of the stack will use different representations. But in the spatial algebra we call the whole thing $R$. Orientation of $A$ relative to $B$:  
+    $$^BR^A$$ 
+    
+    This orientation can be represented in any of the above formats, but we'll still call it $R$ for the actual purposes of the algebra. For orientations, we use the multiplication operator instead of the addition operator: 
+    $$
+      ^BR^A \cdot ^AR^C = ^BR^C
+    $$
+
+    Orientations don't need an expressed-in frame. We can turn our head however we want or change the current frame, but the rotation of $A$ relative to $B$ will still be the same. Just like we had an additive inverse for addition we have a multiplicative inverse for rotations/orientations:
+    $$
+      [^BR^A]^{-1} = ^AR^B
+    $$ 
+
+    If we think about $R$ as a rotation matrix, then the inverse is just the matrix inverse and life is good. We've abstracted away from the underlying numerical representation. We're just talking about the ability to go back and forth between rotations. It happens that if we have a 3x3 rotation matrix representing the orientation, then because rotation matrices are orthonormal, the transpose is the same as the inverse. 
+  </subsection>
+
+  <subsection id="1.2"><h1>Pose</h1>
+    The position and orientation of a frame, put together, is called the pose of the frame:
+    $$
+      ^BX^A
+    $$
+    
+    This is the position and orientation of frame $A$ relative to the position orientation of frame B. In Drake, pose is the noun and transform is the verb. (We need an expressed-in frame for the pose because of the position part.)
+
+    <p>
+      $P^A$ is the same as $^WP^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
+      $$^GP^A \equiv {^GP^A_G}$$ 
+    </p>
+
+    $$\begin{align*}
+      ^GP^A &= ^GX^F \cdot ^FP^A \\
+            &= (^GP^F \cdot ^GR^F) \cdot ^FP^A \\
+            &= (^GP^F_G \cdot ^GR^F_G) \cdot ^FP^A \\
+    \end{align*}$$
+
+    If these were all expressed in different frames, then it would not be a valid equation. The multiplication operator along with the rotation that is encoded in $X$ transforms the position of $A$ in the following way:
+    <ul>
+      <li>W.r.t. $F$ to another frame, w.r.t. $G$</li>
+      <li>The expressed-in frame, from $F$ to $G$</li>
+      The basic operation of a rotation matrix is to take a position and change its expressed-in frame.
+    </ul>
+    
+    A pose also has a multiplicative inverse:  $[^GX^F]^{-1}= ^FX^G$. A pose can be represented in different ways. This is only a notation indicating we are taking an inverse. But actually it's not just a direct matrix inverse - it will be some simple function of the elements of the matrix representation.
+
+    <p>
+      A lot of times a pose is represented as a 3x4 matrix for instance. It can also be called a <i>rigid transform</i>. <i>Homogeneous transforms</i> also allow shearing and scaling. But a rigid transform which just allows changing between frames in the kinematics is only positions and rotations; no scaling or shearing. 
+    </p>
+
+    Poses multiply with other poses. A set of rules are given in Chapter 3. I should figure out <a href="https://bit.ly/3mJCHP6">this question</a>.
+  </subsection>
+
+  <subsection id="1.3"><h1>Example usage</h1>
+    These are core manipulation principles used in planning, perception, controls etc. If we had cameras mounted around a kuka. Each of those cameras are taking some depth measurements, trying to find out where things are in the scene. The data coming into each of those cameras are going to be in the associated camera's frame. If we want to coordinate all that data into a common representation, then the core operation is just going to be converting to some common frame typically a world frame (or a gripper frame). We'll take all the data coming into the different cameras and multiply each of them by $X$ to get it into some common coordinate frame. We can put them together if the frames match. 
+  </subsection>
+</section>
 </chapter>
 
 </body>

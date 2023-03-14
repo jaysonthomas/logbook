@@ -53,30 +53,22 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Overview</a>
-<a href="#2">Example</a>
-<a href="#3">Minimising the squared error criterion</a>
-<a href="#4">Method of LS assumptions</a>
-<a href="#5">Weighted LS</a>
-<a href="#6">Minimising the weighted LS criterion</a>
-<a href="#7">Weighted LS example</a>
-<a href="#8">Summary of WLS vs LS</a>
-<a href="#9">Independent and identically distributed</a>
-<a href="#10">LS examples</a>
-<a href="#11">Musings</a>
+<a href="#0">Overview</a>
+<a href="#1">Example</a>
+<a href="#2">Minimising the squared error criterion</a>
+<a href="#3">Method of LS assumptions</a>
+<a href="#4">Weighted LS</a>
+<a href="#5">Minimising the weighted LS criterion</a>
+<a href="#6">Weighted LS example</a>
+<a href="#7">Summary of WLS vs LS</a>
+<a href="#8">Independent and identically distributed</a>
+<a href="#9">LS examples</a>
+<a href="#10">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="recursiveLSs.html">Recursive LSs</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   <code>State estimation</code> (process of computing a physical quantity like position 
   from a set of measurements) is used for localisation in autonomous driving.
   Related to state estimation is the idea of <code>parameter estimation</code>. 
@@ -105,12 +97,12 @@
   measure the degree of precision.
 
   <p>
-    The <a href="../../fundamentals/maths.html#2">fundamental maths</a> for this chapter.
+    The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
     <a href="https://t.ly/EKOi">Coursera ref</a>.
   </p>
 </section>
 
-<section id="2"><h1>Example</h1>
+<section id="1"><h1>Example</h1>
   Suppose we are trying to measure the value in ohms of a carbon film
   simple resistor within the drive system of an autonomous vehicle. Let's say we collect 
   4 separate measurements, sequentially using a multimeter. 
@@ -169,7 +161,7 @@
   that we're looking for. 
 </section>
 
-<section id="3"><h1>Minimising the squared error criterion</h1>
+<section id="2"><h1>Minimising the squared error criterion</h1>
   <p>
     With the above errors defined, the method of least squares says that the resistance value we 
     are looking for, i.e. the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) 
@@ -210,10 +202,27 @@
   $$\begin{align*}
     \mathcal{L}_{LS}(x) = e^2_1 + e^2_2 + e^2_3 + e^2_4 &= \mathbf{e}^T\mathbf{e} \\
     &= (\mathbf{y} - \mathbf{H}x)^T(\mathbf{y} - \mathbf{H}x) \\
-    &= \mathbf{y}^T\mathbf{y} - x^T\mathbf{H}^T\mathbf{y} - \mathbf{y}^T\mathbf{H}x
-    + x^T\mathbf{H}^T\mathbf{H}x
+    &= \mathbf{y}^T\mathbf{y} - x^T\mathbf{H}^T\mathbf{y} - \mathbf{y}^T\mathbf{H}x + x^T\mathbf{H}^T\mathbf{H}x
   \end{align*}$$
   
+  <button class="accordion">Selah</button>
+  <div class="panel">
+    $e^Te$, i.e. matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.
+
+    $$\begin{align*}
+      y &= H\hat{x} \\
+      \hat{x} &= \frac{y}{H} \\
+      &= \frac{H^Ty}{H^TH} = (H^TH)^{-1}H^Ty
+
+    \end{align*}$$
+
+    Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>. 
+    
+    <p>
+      When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?
+    </p>
+  </div>
+
   We need to minimize the squared error with respect to our true resistance $x$. 
   From calculus, we know that we can solve for an extremum (here, a minimum) 
   by taking the partial derivative of the function (here, squared error) w.r.t. 
@@ -272,7 +281,7 @@
   </p>
 </section>
 
-<section id="4"><h1>Method of LS assumptions</h1>
+<section id="3"><h1>Method of LS assumptions</h1>
   We've assumed that:
   <ul>
     <li>Our measurement model is linear</li>
@@ -285,7 +294,7 @@
   </ul>
 </section>
 
-<section id="5"><h1>Weighted LS</h1>
+<section id="4"><h1>Weighted LS</h1>
   What if some of our measurements are of better quality than others i.e. there's
   varying measurement noise variance? For example, 1 sensor is better than the other.
 
@@ -364,7 +373,7 @@
 
 </section>
 
-<section id="6"><h1>Minimising the weighted LS criterion</h1>
+<section id="5"><h1>Minimising the weighted LS criterion</h1>
   Expanding the new criterion:
 
   $$\begin{align*}
@@ -391,7 +400,7 @@
   matrix $\mathbf{R}$ (and its inverse) is $m \times m$ in size.
 </section>
   
-<section id="7"><h1>Weighted LS example</h1>
+<section id="6"><h1>Weighted LS example</h1>
   <figure>
     <img style="height:70px; width:auto"
     src="../../../figures/drone/19_wlsExample.png"/>
@@ -423,7 +432,7 @@
   measured.
 </section>
 
-<section id="8"><h1>Summary of WLS vs LS</h1>
+<section id="7"><h1>Summary of WLS vs LS</h1>
   By using weighted least squares, we can vary the importance of each measurement to the 
   final estimate. It's important to be comfortable working with different measurement 
   variances and also with measurements that are sometimes correlated. 
@@ -466,7 +475,7 @@
   or the problem of estimating quantities that change continuously over time.
 </section>
 
-<section id="9"><h1>Independent and identically distributed</h1>
+<section id="8"><h1>Independent and identically distributed</h1>
   What does it mean for a set of random variables to be independent and identically distributed?
   <ul>
     <li>
@@ -496,7 +505,7 @@
 
 </section>
 
-<section id="10"><h1>LS examples</h1>
+<section id="9"><h1>LS examples</h1>
   <ul>
     <li>Example 1 </li>
     V=IR. We don't know R. We collect lots of data related to V and I,
@@ -507,7 +516,7 @@
   </ul>
 </section>
 
-<section id="11"><h1>Musings</h1>
+<section id="10"><h1>Musings</h1>
   <ul>
     <li>Ordinary LS measurement variance</li>
     If the 4 resistance measurements are taken by different sensors;
@@ -522,12 +531,6 @@
       the probability of each of the 100 measurements is the same. So, the variance
       just becomes the mean of the squared deviations.
     </p>
-
-    <li>
-      When minimising the sum of squared errors criterion (imagining a plot with $e^2$
-      on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local
-      maximum instead of the minimum when we set $dx=0$?
-    </li>
 
     <p>
       <li>

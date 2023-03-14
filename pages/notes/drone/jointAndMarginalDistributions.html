@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multivariate distributions</title>
+  <meta name="Multivariate distributions" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Table of Contents</a>
+<a href="#1">Intro</a>
+<a href="#2">Vector value functions</a>
+<a href="#3">Multivariate Gaussian and its parameter estimates</a>
+<a href="#4">Example of a two dimensional covariance</a>
+<a href="#5">Musings</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Joint and Marginal distributions</h1>
+
+<section><h1>Definitions</h1>
+  A lot of the times, knowing the value of one field in our vector tells us something about the other fields. For instance, if a vehicle has a distribution over a state x, y, z, knowing the altitude of the vehicle may tell us something about its lateral position or vice versa. We can't treat those probabilities separately and differently.
+
+  <p>
+    Hence, if we have a multivariate distribution, we can't just assume that we have a separate probability distribution around each variable or field in the vector.
+  </p>
+  
+  We often have joint distributions, where if we have a vector $x = [x_1,x_2]$, then $ p(x) = p(x_1, x_2)$.
+  
+  <p>
+    The function $p(x)$ is a probability distribution over the 2 variables that takes the vector as an input and outputs a scalar density.
+  </p>
+
+  To find the probability over $x_1$ from the joint distribution, we compute the <i>marginal</i> by integrating $x_2$ out of the density function:
+  $$
+    p(x_1) = \int{p(x_1,x_2)dx_2}
+  $$
+
+  If we have many variables in our vector, we can integrate out all the variables we don't want to get a marginal over any subset of variables we do want.
+
+  <p>
+    The system that we're estimating may have more than two variables. A flying vehicle may have variables for x, y, z, roll, pitch, yaw and perhaps even for their derivatives which takes it to 12. We might have variables that track what's happening in the environment - example, states (12 each) of other drones. This distribution can get unwieldy very quickly.
+  </p>
+  
+  But only some of the variables may actually have information about each other, i.e. some of the random variables in the vector are independent.
+  <i>Independence</i> is the property that the joint probability density function is the product of individual densities of the component variables:
+  $$
+    p(x_1,x_2) = p(x_1)p(x_2)
+  $$
+  
+  We can see the effect for a 2D Gaussian where,
+  if I have x1 and x2,
+  and if x1 and x2 are correlated,
+  then I may have a distribution which is kind of tilted up like so,
+  and you can see that if you have a positive x1,
+  then you're very likely to have a positive x2.
+  If you have a negative x1 you're very likely to have a negative x2.
+  
+  On the other hand, if I have a spherical Gaussian like this,
+  then knowing where I am on the x1 axis,
+  tells me very little about where I might be on the x2 axis.
+  Really, this idea of independence is that knowing the value
+  of one variable has no effect on the other random variable,
+  and knowing the value of x1,
+  tells us nothing about x2.
+</section>
+
+<section><h1>Musings</h1>
+  <ul>
+    <li>If we have many variables in our vector, we can integrate out all the variables we don't want to get a marginal over any subset of variables we do want.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

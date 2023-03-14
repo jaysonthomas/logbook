@@ -53,35 +53,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Overview</a>
-<a href="#2">Calculate kinetic & potential energies of the masses</a>
-<a href="#3">Calculate joint torques using the Lagrangian</a>
-<a href="#4">Velocity product terms</a>
+<a href="#0">Overview</a>
+<a href="#1">Calculate kinetic & potential energies of the masses</a>
+<a href="#2">Calculate joint torques using the Lagrangian</a>
+<a href="#3">Velocity product terms</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Case 1: Assume gravity and joint accelerations are 0</a></li>
-  <li><a href="#4.1">Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</a></li>
-  <li><a href="#4.2">Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</a></li>
-  <li><a href="#4.3">Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</a></li>
-  <li><a href="#4.4">Case 5: $\dot\theta_1$, $\dot\theta_2>0$</a></li>
-  <li><a href="#4.5">Rewriting the manipulator equation of motion</a></li>
+  <li><a href="#3.0">Case 1: Assume gravity and joint accelerations are 0</a></li>
+  <li><a href="#3.1">Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</a></li>
+  <li><a href="#3.2">Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</a></li>
+  <li><a href="#3.3">Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</a></li>
+  <li><a href="#3.4">Case 5: $\dot\theta_1$, $\dot\theta_2>0$</a></li>
+  <li><a href="#3.5">Rewriting the manipulator equation of motion</a></li>
 </ul>
-<a href="#5">Musings</a>
+<a href="#4">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Lagrangian dynamics</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="#2">Calculate kinetic & potential energies of the masses</a></li>
-    <li><a href="#3">Calculate the joint torques using the Lagrangian</a></li>
-    <li><a href="#4">Velocity product terms</a></li>
-    <li><a href="#10">Musings</a></li>
-  </ul>
-</section>
-  
-<section id="1"><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   <figure>
     <img style="height:130px; width:30%"
     src="../../../figures/manipulation/modernRob/1_2R.png">
@@ -97,7 +86,7 @@
   $x_1$ and $y_1$. 
 </section>
 
-<section id="2"><h1>Calculate kinetic & potential energies of the masses</h1>
+<section id="1"><h1>Calculate kinetic & potential energies of the masses</h1>
   Consider mass $m_1$ first.
   <p></p>
 
@@ -178,7 +167,7 @@
 
 </section>
 
-<section id="3"><h1>Calculate joint torques using the Lagrangian</h1>
+<section id="2"><h1>Calculate joint torques using the Lagrangian</h1>
   Using the following equations:
   $$
     L(\theta, \dot{\theta}) = 
@@ -276,12 +265,12 @@
   </div>
 </section>
 
-<section id="4"><h1>Velocity product terms</h1>
+<section id="3"><h1>Velocity product terms</h1>
   Terms that have the square of a single joint velocity are called 
   <code>Centripetal terms</code>. Terms that have a product of two different 
   joint velocities are called <code>Coriolis terms</code>.
 
-  <subsection id="4.0"><h1>Case 1: Assume gravity and joint accelerations are 0</h1>
+  <subsection id="3.0"><h1>Case 1: Assume gravity and joint accelerations are 0</h1>
     $$
       f_1 = \begin{bmatrix}f_{x_1} \\ f_{y_1} \\ f_{z_1}\end{bmatrix}
           = m_1 \begin{bmatrix}\ddot{x}_1 \\ \ddot{y}_1 \\ \ddot{z}_1\end{bmatrix}
@@ -320,7 +309,7 @@
     </div>
   </subsection>
 
-  <subsection id="4.1"><h1>Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</h1>
+  <subsection id="3.1"><h1>Case 2: In addition, $\theta_1=0$, $\theta_2=\frac{\pi}{2}$</h1>
     <figure>
       <img style="height:130px; width:30%"
       src="../../../figures/manipulation/modernRob/2_2R90degrees.png">
@@ -386,7 +375,7 @@
     </div>
   </subsection>
 
-  <subsection id="4.2"><h1>Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</h1>
+  <subsection id="3.2"><h1>Case 3: In addition, $\dot\theta_1>0$, but $\dot\theta_2=0$</h1>
     <figure>
       <img style="height:130px; width:20%"
       src="../../../figures/manipulation/modernRob/3_2Rcentripetal.png">
@@ -421,7 +410,7 @@
     the circle.
   </subsection>
 
-  <subsection id="4.3"><h1>Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</h1>
+  <subsection id="3.3"><h1>Case 4: Instead of case 3, $\dot\theta_1=0$, $\dot\theta_2>0$</h1>
     Now the mass travels around a circle with its centre at the second joint, 
     and the centripetal acceleration is proportional to $\dot\theta_2^2$.
 
@@ -449,7 +438,7 @@
   $$
   </subsection>
 
-  <subsection id="4.4"><h1>Case 5: $\dot\theta_1$, $\dot\theta_2>0$</h1>
+  <subsection id="3.4"><h1>Case 5: $\dot\theta_1$, $\dot\theta_2>0$</h1>
     <figure>
       <img style="height:120px; width:25%"
       src="../../../figures/manipulation/modernRob/5_2RBothJointVelocities.png">
@@ -472,7 +461,7 @@
     </p>
   </subsection>
 
-  <subsection id="4.5"><h1>Rewriting the manipulator equation of motion</h1>
+  <subsection id="3.5"><h1>Rewriting the manipulator equation of motion</h1>
     $$
       \tau = M(\theta)\ddot\theta + \dot\theta^T\Gamma(\theta)\dot\theta + g(\theta)
     $$
@@ -487,7 +476,7 @@
   </subsection>
 </section>
 
-<section id="5"><h1>Musings</h1>
+<section id="4"><h1>Musings</h1>
   <ul>
     <li>What does it mean to subtract potential energy from kinetic energy?</li>
     <li>

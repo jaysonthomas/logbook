@@ -494,7 +494,8 @@ algorithm > h1:after {
   content: ")";
 }
 figcaption:before {
-  content: "Figure " counter(chapter) "." counter(figure) " - ";
+  /* content: "Figure " counter(chapter) "." counter(figure) " - "; */
+  content: "Figure " counter(sect1) "." counter(figure) " - ";
 }
 
 /* Appendix versions */
