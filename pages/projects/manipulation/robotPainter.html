@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Robot painter</title>
+  <meta name="Robot painter" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Task</a>
+<a href="#1">Background knowledge</a>
+<a href="#2">Steps</a>
+<a href="#3">Key frames visualisation</a>
+<a href="#4">Questions & todo</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Robot painter</h1>
+
+<section id="0"><h1>Task</h1>
+  Design the gripper of a robot arm to:
+  <ul>
+    <li>Follow a circular, planar trajectory about a given center and radius</li>
+    <li>Have its z axis always pointed towards the center of the trajectory</li>
+    <li>Rotate counterclockwise about the +z axis of the world frame</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Background knowledge</h1>
+  <ul>
+    <li>Spatial transformations</li>
+    <li>Interpolation between frames</li>
+    <li>Differential IK</li>
+    <li>Frame visualisation in Drake</li>
+    <li>Frame animation in Drake</li>
+    <li>Composition of multiple subsystems to form a bigger system in Drake</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Steps</h1>
+  <ul>
+    <li>Design and implement a circular trajectory for the Iiwa arm to follow</li>
+    <ul>
+      <li>Compute the key frames of the circular trajectory</li>
+      <li>Construct interpolated trajectory from the key frames</li>
+    </ul>
+    <li>Observe and reflect on the Differential IK controller</li>
+  </ul>
+</section>
+
+<section id="3"><h1>Key frames visualisation</h1>
+  <ul>
+    <p>
+      <li>How are the frames laid out?</li>
+      <figure>
+        <img style="height:90px; width:auto"
+        src="../../../figures/8_robotPainterFrames.png"/>
+        <figcaption>
+          Given frames
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../figures/9_gripperWrtWorldFrameDrake.png"/>
+        <figcaption>
+          Given frames in the drake environment
+        </figcaption>
+      </figure>
+
+      <code>painter.get_X_WG()</code> gives the current gripper frame. All frames
+      are specified w.r.t. the world frame. In drake, the length of 2 sqaures make up 
+      1 unit. The length of the world frame axes plotted in drake are 0.5 units long.
+      As can be seen in the image above, the trajectory-center-frame is roughly ~0.5 units 
+      in the x and z directions.
+      The transformation matrix of the trajectory center w.r.t. ${w}$ in {w} is
+      given as:
+      $\begin{bmatrix}
+        0 & 1 & 0 & {\sim}0.5\\ 
+        0 & 0 & -1 & {\sim}0\\
+        -1 & 0 & 0 & {\sim}0.5
+      \end{bmatrix}$ 
+    </p>
+
+    <p>
+      <li>What is the objective of the task?</li>
+      Given the world frame, the gripper frame and the frame at the 
+      center of the circular trajectory (both in/w.r.t. ${w}$); we need to
+      <ul>
+        <li>
+          Move the gripper frame to the start position on the trajectory.
+          The gripper frame is just above the center frame at the start and not 
+          perfectly aligned with it.
+        </li>
+        <li>
+          Then, rotate the gripper frame such that its z axis points towards the
+          center of the circle, its x axis is parallel to +y axis of {w}, its
+          y axis is parallel to -z axis of {w}.
+        </li>
+      </ul>
+    </p>
+  </ul>
+</section>
+
+<section id="4"><h1>Questions & todo</h1>
+  <ul>
+    <li>What is <code>traj.MakeDerivative()</code>?</li>
+    <li><code>builder.AddSystem(Integrator(7))</code>?</li>
+    <li><code>self.CreateDefaultContext()</code></li>
+    <li><code>self.diagram.Publish(context)</code></li>
+    
+    <p>
+      <li>
+        What does it mean to pass something to a class
+        in python when defining it.</li> 
+        Example: 
+        <code>class PseudoInverseController(LeafSystem):</code>
+    </p>
+    <li>
+      Buy wacom tablet and transfer the task drawing to the website.
+    </li>
+    <li>
+      <code>PiecewisePose.MakeLinear(times, key_frame_poses)</code>?
+      There might be an explanation of this in the lectures.
+    </li>
+    <li>Do the entire flowchart.</li>
+    <li>Make a video/gif of the robot painter</li>
+    <li>Place a few horizontal lines</li>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

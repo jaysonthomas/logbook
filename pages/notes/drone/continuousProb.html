@@ -53,36 +53,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Intro</a>
-<a href="#2">Cumulative distribution function</a>
-<a href="#3">Probability density function</a>
-<a href="#4">Parameters of a density function</a>
+<a href="#0">Continuous samples space</a>
+<a href="#1">Cumulative distribution function</a>
+<a href="#2">Probability density function</a>
+<a href="#3">Parameters of a density function</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Uniform distribution</a></li>
-  <li><a href="#4.1">Gaussian or normal distribution</a></li>
+  <li><a href="#3.0">Uniform distribution</a></li>
+  <li><a href="#3.1">Gaussian or normal distribution</a></li>
 </ul>
-<a href="#5">What does a distribution have to do with robotics?</a>
-<a href="#6">Musings</a>
+<a href="#4">What does a distribution have to do with robotics?</a>
+<a href="#5">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Continuous Probability</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Intro</a></li>
-    <li><a href="#2">Cumulative distribution function</a></li>
-    <li><a href="#3">Probability density function</a></li>
-    <li><a href="#4">Parameters of a density function</a></li>
-    <li><a href="#5">What does a distribution have to do with robotics?</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Intro</h1>
-  An example of a continuous samples space is the real value position of a robot?
-  <a href="https://t.ly/_1lN">Slide 10</a>.
+<section id="0"><h1>Continuous samples space</h1>
+  An example of a continuous samples space is the real value position of a robot: <a href="https://t.ly/_1lN">Slide 11</a>.
   Random variables become extremely powerful in this case.
-  Using real numbers to index the members of a continuous set is fairly intuitive.
+  [Using real numbers to index the members of a continuous set is fairly intuitive.]
 
   <p>
     When dealing with a continuous sample space,
@@ -94,7 +82,8 @@
   </p>
 </section>
 
-<section id="2"><h1>Cumulative distribution function</h1>
+<section id="1"><h1>Cumulative distribution function</h1>
+  [<a href="https://t.ly/LlT8">Further reading</a>]
   <figure>
     <img style="height:85px; width:auto"
     src="../../../figures/drone/8_cdf.png"/>
@@ -123,10 +112,9 @@
     but it is sub-scripted by $x$ to indicate which random variable we're characterizing by
     the probability that the value of that random variable is less than $u$ or not.
   </p>
-  <a href="https://t.ly/LlT8">Further reading</a>.
 </section>
   
-<section id="3"><h1>Probability density function</h1>
+<section id="2"><h1>Probability density function</h1>
   $$
     f_x(u) = \frac{d}{du}F_x(u)
   $$
@@ -159,7 +147,7 @@
     This changes our notion of what it means to be a proper distribution.
     To be a proper density, $f_x(u)$ has to be greater than or equal to $0$,
     and the integral under the distribution has to be equal to $1$.
-    Normalization implies finding a constant multiplier in
+    <i>Normalization</i> implies finding a constant multiplier in
     front of this density function to make it integrate to $1$.
   </p>
 
@@ -167,7 +155,7 @@
   <a href="https://t.ly/UB4I">Python code</a>.  
 </section>
 
-<section id="4"><h1>Parameters of a density function</h1>
+<section id="3"><h1>Parameters of a density function</h1>
   There are two common distributions - the Uniform,
   and the Gaussian, or the normal. We will use $\theta$ to collectively refer to all of
   the parameters that describe a particular distribution.
@@ -185,7 +173,7 @@
     $p(x|\theta)$ implies $\theta$ is a random variable itself.
   </p>
 
-  <subsection id="4.0"><h1>Uniform distribution</h1>
+  <subsection id="3.0"><h1>Uniform distribution</h1>
     A uniform distribution can be parameterised in 2 ways:
     <ul>
       <li>Using $a$ and $b$ bounds</li>
@@ -208,7 +196,7 @@
     </ul>
   </subsection>
 
-  <subsection id="4.1"><h1>Gaussian or normal distribution</h1>
+  <subsection id="3.1"><h1>Gaussian or normal distribution</h1>
     <div class="container">
       <figure>
         <img style="height:80px; width:auto"
@@ -253,7 +241,7 @@
   </subsection>
 </section>
 
-<section id="5"><h1>What does a distribution have to do with robotics?</h1>
+<section id="4"><h1>What does a distribution have to do with robotics?</h1>
   Solving estimation problems often boils down to using data from sensors,
   to come up with estimates for the values of parameters like $\mu$ and $\sigma^2$
   as in the case of a gaussian distribution, since sensors are imperfect.
@@ -270,7 +258,7 @@
   what this variance is.
 </section>
 
-<section id="6"><h1>Musings</h1>
+<section id="5"><h1>Musings</h1>
   <ul>
     <li>This distribution says all possible outcomes are equally likely</li>
     I disagree with this. Since the PDF gives the slope of the CDF (which actually gives

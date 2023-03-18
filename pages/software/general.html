@@ -68,9 +68,6 @@
 </ul>
 <a href="#3">Json</a>
 <a href="#4">Webpage</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Html</a></li>
-</ul>
 <a href="#5">Drawio</a>
 <a href="#6">Git</a>
 </div>
@@ -176,20 +173,20 @@ drawio
 
   <subsection id="1.1"><h1>Apt-get installs</h1>
 <pre><code class="bash">
-  python3-pip
-  python3.8 
-  python3.8-venv
-  python3.10-venv
-  graphviz
-  plantuml
-  valgrind
-  libopencv-*
-  libgtk2.0-dev libgtk-3-dev
-  gnome-screenshot
-  google-chrome-stable
-  vlc
-  simplescreenrecorder
-  xournalpp
+python3-pip
+python3.8 
+python3.8-venv
+python3.10-venv
+graphviz
+plantuml
+valgrind
+libopencv-*
+libgtk2.0-dev libgtk-3-dev
+gnome-screenshot
+google-chrome-stable
+vlc
+simplescreenrecorder
+xournalpp
 </code></pre>
   </subsection>
 
@@ -247,9 +244,8 @@ Use <code>json.load()</code> to read a json file.
 </section>
 
 <section id="4"><h1>Webpage</h1>
-  <subsection id="4.0"><h1>Html</h1>
-    <ul>
-      <li>Linking to a specific sentence or equation in a page</li>
+  <ul>
+    <li>Linking to a specific sentence or equation in a page</li>
 <pre><code class="xml">
 &lt;a id="eq1">Whatever is in between&lt;/a&gt;
 <br>
@@ -257,55 +253,53 @@ Linking to the equation from elsewhere.
 &lt;a href="#eq1">The equation over here&lt;/a&gt;
 </code></pre>
 
-      <li>The other way to reference equations</li>
-      Just before <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
-      <br>
-      To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
-      <br><br>
+    <li>The other way to reference equations</li>
+    Just before <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
+    <br>
+    To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
+    <br><br>
 
-      <li>Creating block diagrams in a page</li>
-      <figure>
-        <div style="padding: 10px;">
-          <script type="text/javascript">
-          var system = { "name": "PidController", 
-            "input_ports" : ["estimated_state", "desired_state"],
+    <li>Creating block diagrams in a page</li>
+    <figure>
+      <div style="padding: 10px;">
+        <script type="text/javascript">
+        var system = { "name": "PidController", 
+          "input_ports" : ["estimated_state", "desired_state"],
+          "output_ports" : ["generalized_force"]
+          };
+        document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_pid_controller.html"));
+        </script> 
+      </div>
+      <div style="padding: 10px;">
+        <script type="text/javascript">
+          var system = { "name": "InverseDynamicsController", 
+            "input_ports" : ["estimated_state", "desired_state", '<span style="color:gray">desired_acceleration</span>'],
             "output_ports" : ["generalized_force"]
             };
-          document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_pid_controller.html"));
-          </script> 
-        </div>
-        <div style="padding: 10px;">
-          <script type="text/javascript">
-            var system = { "name": "InverseDynamicsController", 
-              "input_ports" : ["estimated_state", "desired_state", '<span style="color:gray">desired_acceleration</span>'],
-              "output_ports" : ["generalized_force"]
-              };
-            document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_inverse_dynamics_controller.html"));
-          </script>
-        </div>
-      </figure>
-
-      <li>Placing figures side-by-side</li>
-      <div class="container">
-        <figure>
-          <img style="height:80px; width:auto"
-          src="../../figures/drone/12_wideGaussian.png"/>
-          <figcaption>
-            Wide gaussian
-          </figcaption>
-        </figure>
-    
-        <figure>
-          <img style="height:80px; width:auto"
-          src="../../figures/drone/13_thinGaussian.png"/>
-          <figcaption>
-            Thin gaussian
-          </figcaption>
-        </figure>
+          document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_inverse_dynamics_controller.html"));
+        </script>
       </div>
-    </ul>
+    </figure>
 
-  </subsection>
+    <li>Placing figures side-by-side</li>
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../figures/drone/12_wideGaussian.png"/>
+        <figcaption>
+          Wide gaussian
+        </figcaption>
+      </figure>
+  
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../figures/drone/13_thinGaussian.png"/>
+        <figcaption>
+          Thin gaussian
+        </figcaption>
+      </figure>
+    </div>
+  </ul>
 </section>
 
 <section id="5"><h1>Drawio</h1>
@@ -327,8 +321,12 @@ Linking to the equation from elsewhere.
     <a href="https://t.ly/VMEV">Ref</a>.
 <pre><code class="bash">
 git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
+git submodule update --init --recursive
 </code></pre>
 
+    The 2nd command is used to initialise and update submodules present in git repositories that are cloned from elsewhere. Add the recursive option to do it recursively.
+    <p></p>
+    
     <li>Unstage added files</li>
 <pre><code class="bash">
 git reset HEAD
