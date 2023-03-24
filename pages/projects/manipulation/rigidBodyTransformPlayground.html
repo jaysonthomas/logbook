@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3d frame visualisation in python</title>
-  <meta name="3d frame visualisation in python" content="text/html; charset=utf-8;" />
+  <title>A playground for rigid body transforms</title>
+  <meta name="A playground for rigid body transforms" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -53,50 +53,12 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Background knowledge</a>
+<a href="#0">Break down of forward kinematics code</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>3d frame visualisation in python</h1>
-
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Background knowledge</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Background knowledge</h1>
-  <a href="https://t.ly/ygR3">This</a> seems like a good starting point
-  using <code>matplotlib</code> and <code>pytransform3d</code>. Had to install the
-  latter library using pip. There are <a href="https://t.ly/KEkF">good resources</a> 
-  in google on it.
-
-  <ul>
-    <li>Transformation matrices</li>
-    Assume we know the three Euler angle values of frame 
-    B w.r.t. frame A and the translation $(tx, ty, tz)$ of the origin of 
-    frame B from frame A in the frame A coordinates. 
-    The transformation matrix for converting from the <i>frame of 
-    reference</i> B to A is given as $T_{AB}$.
-
-    <p>
-      <li>Multiplication order</li>
-      It's from right to left. The following equation takes a point $p_0$ from 
-      frame of reference D to frame of reference A. Note that a point in homogenous 
-      coordinates is represented as $[x, y, z, 1]$
-      $$T_{AB} = 
-      \begin{bmatrix}
-        R & t\\0 & 1
-      \end{bmatrix}$$
-
-      $$T_{AD} = T_{AB}T_{BC}T_{CD}$$
-      $$^AP_0 = T_{AD}^DP_0$$
-    </p>
-  </ul>
-
-
-</section>
-
+<chapter style="counter-reset: chapter 3"><h1>A playground for rigid body transforms</h1>
+<section id="0"><h1>Break down of forward kinematics code</h1>
+  </section>
 </chapter>
 
 </body>

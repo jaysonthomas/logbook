@@ -57,21 +57,18 @@
 <a href="#1">Vector value functions</a>
 <a href="#2">Multivariate Gaussian and its parameter estimates</a>
 <a href="#3">Example of a two dimensional covariance</a>
-<a href="#4">Musings</a>
+<a href="#4">Joint distribution</a>
+<a href="#5">Marginal</a>
+<a href="#6">Independence</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Multivariate distributions</h1>
 
 <section id="0"><h1>Intro</h1>
-  What if our random variable is a vector $x=[x_1,x_2,..,x_n]$, and not a scalar.
-  The vehicle position isn't going to be given by a single variable x, but by
-  x, y and z. And if we include attitude as well, $x$ becomes a six dimensional vector.
-  And we'd like to have a distribution over these variables.
+  What if our random variable is a vector $x=[x_1,x_2,..,x_n]$, and not a scalar. The vehicle position isn't going to be given by a single variable x, but by x, y and z. And if we include attitude as well, $x$ becomes a six dimensional vector. And we'd like to have a distribution over these variables.
   
   <p>
-    If we treat each one separately, then we're making some strong assumptions about
-    independence. But, we can actually define vector value functions and the 
-    same concepts that we saw for scalar values over the vector value inputs.
+    If we treat each one separately, then we're making some strong assumptions about independence. But, we can define vector value functions and the same concepts used for scalar values over the vector value inputs.
   </p>
 </section>
 
@@ -83,44 +80,25 @@
   <ul>
     <li>Normalisation</li>
     The integral still has to come to one. In this case, the normalization constant 
-    that makes this come to 1 would be the integral of f(x), dx1, dx2 up to dxn.
+    that makes this come to 1 would be the integral of $f(x)$, $dx_1$, $dx_2$ up to $dx_n$.
 
     <p>
-      <li>Mean</li>
-      The mean is given by the same set of integrals,
-      but it's the integral of x times f(x).
-    </p>
-
-    <li>Spread</li>
-    Instead of a variance, we have a <code>covariance</code>,
-    $\Sigma$, and that's going to be equal to the integral of x minus mu,
-    times x minus mu transpose, times the density.
-    
-    <p>
-      This covariance is going to be a matrix,
-      because the outer product, $(x-\mu)(x-\mu)^T$, is going to result in a matrix as well.
-      The covariance is going to be a <code>symmetric matrix</code> and 
-      <code>positive semi definite</code> (i.e. there are no negative eigenvalues).
+      <li>Spread</li>
+      [It should be $\sigma^2$ in the image] Instead of a variance, we have a <code>covariance</code>, $\Sigma$. It is going to be a matrix, because the outer product, $(x-\mu)(x-\mu)^T$, is going to result in a matrix. The covariance is going to be a <code>symmetric matrix</code> and <code>positive semi definite</code> (i.e. there are no negative eigenvalues).
     </p>
   </ul>
 </section>
   
 <section id="2"><h1>Multivariate Gaussian and its parameter estimates</h1>
   <figure>
-    <img style="height:50%; width:40%"
+    <img style="height:40%; width:30%"
     src="../../../figures/drone/16_multivariateGaussian.png">
   </figure>
 
   The functional form is not very different from the scalar gaussian:
   <ul>
-    <li>
-      We're no longer taking square root of two pi, it's n over two for a vector x of length n
-    </li>
-
-    <p>
-      <li>$|\Sigma|$ is the <code>determinant</code> of the covariance</li>
-    </p>
-
+    <li>We're no longer taking square root of $2\pi$; it's $\frac{n}{2}$ for a vector $x$ of length $n$</li>
+    <li>$|\Sigma|$ is the <code>determinant</code> of the covariance</li>
     <li>
       And then we have the vector multiplication $(x-\mu)^T\Sigma^{-1}(x-\mu)$
     </li>
@@ -131,41 +109,85 @@
 </section>
 
 <section id="3"><h1>Example of a two dimensional covariance</h1>
-  <figure>
-    <img style="height:30%; width:40%"
-    src="../../../figures/drone/17_multivariateGaussianExample.png">
-  </figure>
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../figures/drone/17_multivariateGaussianExample.png">
+      <figcaption>
+        An overhead view. The center of the ellipse is the mean. The figure shows the 1st and 2nd eigen vectors which we get from extracting the eigenvalues and eigenvectors from the covariance. 
+      </figcaption>
+    </figure>
+  </div>
 
   An important property of the covariance is that the 
   <code>eigenvalues</code> and <code>eigenvectors</code> of the covariance 
   describe the amount and direction of uncertainty.
   
-  <p>
-    Here, we have an overhead view and
-    that location at the center of the ellipse would be the mean.
-    If we take the covariance and extract the eigenvalues and eigenvectors,
-    this would be the first eigenvector and this will be the second eigenvector.
-  </p>
-
-  If I draw an ellipse at one eigenvalue away from the mean along each vector,
-  then this one eigenvalue ellipse is going to define
-  a confidence region which in this case is an ellipsoid.
+  An ellipse drawn at one eigenvalue away from the mean along each vector, defines a confidence region which in this case is an ellipsoid.
 
   <p>
-    Just as one standard deviation distance away from the mean in the scalar case 
-    defined the 68% confidence interval for x, the ellipse in 2D defines the confidence interval.
-    The total probability inside the ellipse at 1 standard deviation is not 68% in this case.
-    The total probability for a given length of
-    axis actually depends on the number of variables in the random vector.
-    But in 2D, 95% probability is captured by axis with length that is roughly 
-    five times the eigenvalues.
+    Just as one standard deviation distance away from the mean in the scalar case defined the 68% confidence interval for x, the ellipse in 2D defines the confidence interval. The total probability inside the ellipse at 1 standard deviation is not 68% in this case. The total probability for a given length of axis actually depends on the number of variables in the random vector. But in 2D, 95% probability is captured by axis with length that is roughly five times the eigenvalues.
   </p>
 </section>  
 
-<section id="4"><h1>Musings</h1>
-  <ul>
+<section id="4"><h1>Joint distribution</h1>
+  A lot of the times, knowing the value of one field in our vector tells us something about the other fields. For instance, if a vehicle has a distribution over a state x, y, z, knowing the altitude of the vehicle may tell us something about its lateral position or vice versa. We can't treat those probabilities separately and differently.
 
-  </ul>
+  <p>
+    Hence, if we have a multivariate distribution, we can't just assume that we have a separate probability distribution around each variable or field in the vector.
+  </p>
+  
+  We often have joint distributions, where if we have a vector $x = [x_1,x_2]$, then: $$p(x) = p(x_1, x_2)$$
+  
+  <p>
+    The function $p(x)$ is a probability distribution over the 2 variables that takes the vector as an input and outputs a scalar density.
+  </p>
+</section>
+
+<section id="5"><h1>Marginal</h1>
+  To find the probability over $x_1$ from the joint distribution, we compute the <i>marginal</i> by integrating $x_2$ out of the density function:
+  $$
+    p(x_1) = \int{p(x_1,x_2)dx_2}
+  $$
+
+  <m>If we have many variables in our vector, we can integrate out all the variables we don't want, to get a marginal over any subset of variables we do want</m>.
+</section>
+
+<section id="6"><h1>Independence</h1>
+  The system that we're estimating may have more than two variables. A flying vehicle may have variables for x, y, z, roll, pitch, yaw and perhaps even for their derivatives which takes it to 12. We might have variables that track what's happening in the environment - example, states (12 each) of other drones. This distribution can get unwieldy very quickly.
+
+  <p>
+    But only some of the variables may actually have information about each other, i.e. some of the random variables in the vector are independent. <i>Independence</i> is the property that the joint probability density function is the product of individual densities of the component variables:
+    $$
+      p(x_1,x_2) = p(x_1)p(x_2)
+    $$
+  </p>
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/drone/20_notIndependent.png"/>
+      <figcaption>
+        Dependent
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/drone/21_independent.png"/>
+      <figcaption>
+        Independent
+      </figcaption>
+    </figure>
+  </div>
+
+  We can see the effect for a 2D Gaussian where, if $x_1$ and $x_2$ are correlated, then we may have a distribution that is oval shaped and tilted. Here, if we have a positive $x_1$,
+  then we're very likely to have a positive $x_2$. If we have a negative $x_1$ we're very likely to have a negative $x_2$.
+  
+  <p>
+    On the other hand, for a spherical Gaussian, knowing where we are on the $x_1$ axis, tells us very little about where we might be on the $x_2$ axis. 
+  </p>
+
+  The idea of independence is that knowing the value of one variable has no effect on the other random variable, i.e. knowing the value of $x_1$ tells us nothing about $x_2$.
 </section>
 
 </chapter>

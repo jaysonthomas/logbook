@@ -53,32 +53,43 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Structure</a>
-<a href="#1">List</a>
+<a href="#0">Pip</a>
+<a href="#1">Structure</a>
+<a href="#2">List</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">List of numpy arrays</a></li>
+  <li><a href="#2.0">List of numpy arrays</a></li>
 </ul>
-<a href="#2">Python learning from Drake python api</a>
-<a href="#3">Pandas</a>
-<a href="#4">Numpy</a>
-<a href="#5">General</a>
-<a href="#6">Regular expressions</a>
-<a href="#7">Lambda</a>
-<a href="#8">Dictionary</a>
-<a href="#9">Timing python code</a>
-<a href="#10">Musings</a>
+<a href="#3">Python learning from Drake python api</a>
+<a href="#4">Pandas</a>
+<a href="#5">Numpy</a>
+<a href="#6">General</a>
+<a href="#7">Regular expressions</a>
+<a href="#8">Lambda</a>
+<a href="#9">Dictionary</a>
+<a href="#10">Timing python code</a>
+<a href="#11">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Python</h1>
-<section id="0"><h1>Structure</h1>
+
+<section id="0"><h1>Pip</h1>
+<pre><code class="python">
+pip3 show drake
+pip3 install drake==1.10.0  
+pip3 install test.whl --force-reinstall
+pip3 --version
+</code></pre>
+</section>
+
+<section id="1"><h1>Structure</h1>
   <ul>
     <li><code>__init__.py</code></li>
     [<a href="https://bit.ly/3FpJ3cK">Ref</a>] An old way of doing things to mark modules that come under a particular namespace. The namespace here is the name of the folder that the script is placed in. By modules, I mean, anything we want to import - functions, classes or files.
   </ul>
 </section>
 
-<section id="1"><h1>List</h1>
-  <subsection id="1.0"><h1>List of numpy arrays</h1>
+<section id="2"><h1>List</h1>
+  <subsection id="2.0"><h1>List of numpy arrays</h1>
     The following is a list of 2 elements; each being a numpy array.
 <pre><code class="python">
 temp = 
@@ -119,7 +130,7 @@ print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre
   </subsection>
 </section>
 
-<section id="2"><h1>Python learning from Drake python api</h1>
+<section id="3"><h1>Python learning from Drake python api</h1>
   <ul>
     <li>Random number generator</li>
     <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
@@ -145,7 +156,7 @@ outputArray = np.vstack(array1, array2)
   </ul>
 </section>
 
-<section id="3"><h1>Pandas</h1>
+<section id="4"><h1>Pandas</h1>
   <ul>
     <li>Convert group of numpy arrays into a pandas dataframe</li>
 <pre><code class="python">
@@ -190,7 +201,7 @@ temp = pd.DataFrame({'A':l,
   </ul>
 </section>
 
-<section id="4"><h1>Numpy</h1>
+<section id="5"><h1>Numpy</h1>
   <ul>
     <li>Create an empty array</li>
 <pre><code class="python">
@@ -229,7 +240,7 @@ np.asarray(x)
   </ul>
 </section>
 
-<section id="5"><h1>General</h1>
+<section id="6"><h1>General</h1>
   <ul>
     <li>For loop to iterate through list with indices</li>
     <a href="https://t.ly/SLyk">Ref</a>.
@@ -261,7 +272,7 @@ np.asarray(x)
   </ul>
 </section>
 
-<section id="6"><h1>Regular expressions</h1>
+<section id="7"><h1>Regular expressions</h1>
   <ul>
     <li>Substitute</li>
 <pre><code class="python">
@@ -306,7 +317,7 @@ Output: type
   </ul>  
 </section>
 
-<section id="7"><h1>Lambda</h1>
+<section id="8"><h1>Lambda</h1>
   <ul>
     <li>Sorting</li>
 <pre><code class="python">
@@ -338,7 +349,7 @@ Output: type
   </ul>
 </section>
 
-<section id="8"><h1>Dictionary</h1>
+<section id="9"><h1>Dictionary</h1>
   <ul>
     <li>.items()</li>
 <pre><code class="python">
@@ -381,13 +392,13 @@ Output: type
   </ul>
 </section>
 
-<section id="9"><h1>Timing python code</h1>
+<section id="10"><h1>Timing python code</h1>
 <pre><code class="python">
 python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
 </code></pre>  
 </section>
 
-<section id="10"><h1>Musings</h1>
+<section id="11"><h1>Musings</h1>
   <ul>
     <li>What does <code>enumerate</code> in a for loop do?</li>
     <a href="https://t.ly/txYV">Ref</a>.

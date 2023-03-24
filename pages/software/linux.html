@@ -53,23 +53,14 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Find</a>
-<a href="#2">Software installation, update, removal</a>
-<a href="#3">Useful tools</a>
+<a href="#0">Find</a>
+<a href="#1">Software installation, update, removal</a>
+<a href="#2">Useful tools</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Linux</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Find</a></li>
-    <li><a href="#2">Software installation, update, removal</a></li>
-    <li><a href="#9">Useful tools</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Find</h1>
+<section id="0"><h1>Find</h1>
   <ul>
     <li>Find files</li>
 <pre><code class="bash">
@@ -91,7 +82,7 @@ grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
   </ul>
 </section>
 
-<section id="2"><h1>Software installation, update, removal</h1>
+<section id="1"><h1>Software installation, update, removal</h1>
   <ul>
     <li>
       When the server from which ubuntu pulls updates didn't work, 
@@ -120,7 +111,7 @@ sudo apt-get autoremove
   </ul>
 </section>
 
-<section id="3"><h1>Useful tools</h1>
+<section id="2"><h1>Useful tools</h1>
   <ul>
 
     <li>Tar</li>
@@ -132,6 +123,19 @@ tar -xf filename.tar.xz
 <pre><code>      
 lsb_release -a
 </code></pre>
+
+    <li>Setting an environment variable</li>
+<pre><code class="bash">
+export DRAKE_INSTALL_DIR=/home/jayson/P/external/drake
+
+# Confirming the variable's value
+echo $DRAKE_INSTALL_DIR
+</code></pre>
+
+    <li>Checking the last modification time of a file</li>
+<pre><code class="bash">
+stat -c '%y' /home/random.file
+</code></pre>    
   </ul>
 </section>
 

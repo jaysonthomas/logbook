@@ -61,8 +61,7 @@
   <li><a href="#1.2">Applications</a></li>
   <li><a href="#1.3">How to create an estimator</a></li>
 </ul>
-<a href="#2">Estimating parameters from data</a>
-<a href="#3">Musings</a>
+<a href="#2">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
@@ -74,7 +73,6 @@
     <li><a href="continuousProb.html">Continuous probability</a></li>
     <li><a href="multivariateDistributions.html">Multivariate distributions</a></li>
     <li><a href="leastSquares.html">Least squares</a></li>
-    <li><a href="jointAndMarginalDistributions.html">Joint and Marginal distributions</a></li>
   </ul>
 </section>
 
@@ -170,51 +168,7 @@
   </subsection>
 </section>
 
-<section id="2"><h1>Estimating parameters from data</h1>
-  We do parameter estimation when coming up with a model for a sensor.
-  For example, if we mount a laser rangefinder exactly one meter from a wall,
-  and use it to measure the distance, we probably won't get a measured distance of 
-  exactly one meter. It will likely be slightly above, or slightly below.
-
-  <p>
-    But if we repeat this measurement many times, we'll likely find that on average 
-    the sensor does measure the correct distance plus or minus some error.
-    That error is also called <code>sensor noise</code>,
-    and it's often best modeled as a Gaussian random variable with some mean ideally zero,
-    and some standard deviation.
-  </p>
-
-  In order to use that sensor most effectively,
-  we need an accurate estimate of what the parameters of that distribution are.
-  We can't know the exact values of the parameters of a distribution given some data,
-  but we can compute estimates of the parameters in a variety of ways.
-
-  <p>
-    For example, a Gaussian is parameterized by $\mu$ and $\sigma^2$.
-    We'll write the estimates of these parameters as $\hat{x}$, and $\hat\sigma^2$ respectively.
-    Now, let's imagine that we have some Gaussian that's generating samples from $x$,
-    with probability density $p(x)$, and we don't know $\mu$, or $\sigma$.
-  </p>
-
-  <figure>
-    <img style="height:150px; width:auto"
-    src="../../../figures/drone/14_estimatingParametersExample.png"/>
-  </figure>
-  
-  If we repeatedly draw from this distribution to collect samples of data,
-  we'll likely get more data near the mean, and fewer samples out on the tails of the gaussian.
-  Using a technique called the <code>method of moments</code>,
-  we can show that if we have samples $\{x_1, x_2,.., x_n\}$, then 
-  $$\hat{x} = \frac{1}{n} \sum^n_{i=1}x_i$$
-  $$\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (x_i-\hat{x})^2$$
-
-  <p>
-    It's quite convenient that the mean of the distribution matches the expected value,
-    and the variance of the distribution matches that variance.
-  </p>
-</section>
-
-<section id="3"><h1>Musings</h1>
+<section id="2"><h1>Musings</h1>
   <ul>
     <li>Normalisation of data</li>
     <a href="https://t.ly/C0lw">Ref1</a>, 

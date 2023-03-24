@@ -56,13 +56,14 @@
 <a href="#0">Continuous samples space</a>
 <a href="#1">Cumulative distribution function</a>
 <a href="#2">Probability density function</a>
-<a href="#3">Parameters of a density function</a>
+<a href="#3">Parameters of a distribution</a>
+<a href="#4">Common probability distributions</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Uniform distribution</a></li>
-  <li><a href="#3.1">Gaussian or normal distribution</a></li>
+  <li><a href="#4.0">Uniform distribution</a></li>
+  <li><a href="#4.1">Gaussian or normal distribution</a></li>
 </ul>
-<a href="#4">What does a distribution have to do with robotics?</a>
-<a href="#5">Musings</a>
+<a href="#5">What does a distribution have to do with robotics?</a>
+<a href="#6">Estimating parameters from data</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Continuous Probability</h1>
@@ -115,6 +116,14 @@
 </section>
   
 <section id="2"><h1>Probability density function</h1>
+  [<a href="https://t.ly/L1RY">Great ref</a>]
+  <br>
+  [<a href="https://t.ly/WqWw">Ref</a>] I like the different probability distributions described here. Not sure the definition for PDF is accurate.
+  <p>
+    <a href="https://t.ly/1iwF">Ref</a> - why is it referred to as density?!
+    <br>
+    Refer to <code>uniformDist</code> in <a href="../../../jlib/docs/estimationExamples.html">Jlib docs</a>.
+  </p>
   $$
     f_x(u) = \frac{d}{du}F_x(u)
   $$
@@ -150,30 +159,24 @@
     <i>Normalization</i> implies finding a constant multiplier in
     front of this density function to make it integrate to $1$.
   </p>
-
-  <a href="https://t.ly/1iwF">Ref</a> - why is it referred to as density?!
-  <a href="https://t.ly/UB4I">Python code</a>.  
 </section>
 
-<section id="3"><h1>Parameters of a density function</h1>
-  There are two common distributions - the Uniform,
-  and the Gaussian, or the normal. We will use $\theta$ to collectively refer to all of
-  the parameters that describe a particular distribution.
-  For example, a continuous distribution like a Gaussian,
-  can be fully described by two parameters $\mu$ and $\sigma^2$ 
-  which when taken together form part of $\theta$ for the distribution.
-  
+<section id="3"><h1>Parameters of a distribution</h1>
+  We will use $\theta$ to collectively refer to all of the parameters that describe a particular distribution. For example, a continuous distribution like a Gaussian, can be fully described by two parameters $\mu$ and $\sigma^2$ which when taken together form part of $\theta$ for the distribution.
+
   <p>
-    One thing to emphasize is that $p$ of $x$ given $\theta$ is not
-    the same thing as saying the function that
-    describes the density of $x$ is parameterized by $\theta$.
-    
+    $p$ of $x$ given $\theta$ is not the same as the function that describes the density of $x$, parameterized by $\theta$.
+
     $$p(x|\theta) \neq p(x;\theta)$$
-    
     $p(x|\theta)$ implies $\theta$ is a random variable itself.
   </p>
+</section>
 
-  <subsection id="3.0"><h1>Uniform distribution</h1>
+<section id="4"><h1>Common probability distributions</h1>
+  [<a href="https://t.ly/5ik0s">Ref</a>] A probability distribution refers to a probability density function in the continuous space and to a probability mass function in the discrete space. CDF is common to both.
+  There are two common distributions.
+
+  <subsection id="4.0"><h1>Uniform distribution</h1>
     A uniform distribution can be parameterised in 2 ways:
     <ul>
       <li>Using $a$ and $b$ bounds</li>
@@ -196,7 +199,7 @@
     </ul>
   </subsection>
 
-  <subsection id="3.1"><h1>Gaussian or normal distribution</h1>
+  <subsection id="4.1"><h1>Gaussian or normal distribution</h1>
     <div class="container">
       <figure>
         <img style="height:80px; width:auto"
@@ -241,32 +244,40 @@
   </subsection>
 </section>
 
-<section id="4"><h1>What does a distribution have to do with robotics?</h1>
-  Solving estimation problems often boils down to using data from sensors,
-  to come up with estimates for the values of parameters like $\mu$ and $\sigma^2$
-  as in the case of a gaussian distribution, since sensors are imperfect.
-    
+<section id="5"><h1>What does a distribution have to do with robotics?</h1>
+  Solving estimation problems often boils down to using data from sensors which are imperfect.
+
   <p>
-    A range finder pointed at a wall 1m away will most likely give measurements that are 
-    slightly different than 1 meter like 0.992, 1.001... etc.
-    These measurements are generally centered on the true value of the distance 
-    (in this case 1 meter) but they have "Gaussian Noise" added on as well. 
+    For example, a range finder pointed at a wall 1m away will most likely give measurements that are slightly different than 1 meter like 0.992, 1.001... etc. But if we repeat this measurement many times, we'll likely find that on average the sensor does measure the correct distance plus or minus some error. This error is called <i>sensor noise</i>,
+    and it's often best modeled as a Gaussian random variable with some mean ideally $0$, and some standard deviation.
   </p>
 
-  A good sensor will have a small variance. A bad sensor will have a large variance. 
-  Either way, before we put a sensor on a robot we need to know, actually we need to estimate, 
-  what this variance is.
+  Therefore, in order to use a sensor more effectively, we need an accurate estimate of what the parameters of its output distribution are, i.e. we need a <i>sensor model</i>. <n>We can't know the exact values of the parameters of a distribution given some data</n>, but we can compute estimates of the parameters in a variety of ways.
+  
+  <p>
+    A good sensor will have a small variance. A bad sensor will have a large variance. Before we put a sensor on a robot we need to estimate what this variance is.
+  </p>
 </section>
 
-<section id="5"><h1>Musings</h1>
-  <ul>
-    <li>This distribution says all possible outcomes are equally likely</li>
-    I disagree with this. Since the PDF gives the slope of the CDF (which actually gives
-    the probability of a continuous event), a flat PDF doesn't mean the probability of
-    1 event vs the next is the same but actually, the probability of the next has increased
-    the same amount as the current vs the previous. The probability of the upper event
-    is going to be greater than all the other events.
-  </ul>
+<section id="6"><h1>Estimating parameters from data</h1>
+  <p>
+    For example, a Gaussian is parameterized by $\mu$ and $\sigma^2$. We'll write the estimates of these parameters as $\hat{x}$, and $\hat\sigma^2$ respectively. Now, let's imagine that we have some Gaussian that's generating samples from $x$, with probability density $p(x)$, and we don't know $\mu$, or $\sigma$.
+  </p>
+
+  <figure>
+    <img style="height:150px; width:auto"
+    src="../../../figures/drone/14_estimatingParametersExample.png"/>
+  </figure>
+  
+  If we repeatedly draw from this distribution to collect samples of data,
+  we'll likely get more data near the mean, and fewer samples out on the tails of the gaussian. Using a technique called the <i>method of moments</i>, we can show that if we have samples $\{x_1, x_2,.., x_n\}$, then 
+  $$\hat{x} = \frac{1}{n} \sum^n_{i=1}x_i$$
+  $$\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (x_i-\hat{x})^2$$
+
+  <p>
+    It's quite convenient that the mean of the distribution matches the expected value,
+    and the variance of the distribution matches that variance.
+  </p>
 </section>
 
 </chapter>
