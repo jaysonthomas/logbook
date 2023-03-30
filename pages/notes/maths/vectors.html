@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vectors</title>
+  <meta name="Vectors" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Dimension of a vector space</a>
+<a href="#1">Determinant</a>
+<a href="#2">Eigenvectors and Eigenvalues</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Vectors</h1>
+
+<section id="0"><h1>Dimension of a vector space</h1>
+  The dimension of a vector space is the number of linearly independent vectors that form a <n>basis</n> for the vector space, i.e. the minimum number of vectors that can be used to express any vector in the space.
+
+  For example, the standard basis for the three-dimensional Euclidean space consists of three linearly independent vectors: (1, 0, 0), (0, 1, 0), and (0, 0, 1). Therefore, the dimension of this vector space is 3. Similarly, the dimension of a two-dimensional vector space such as the xy-plane is 2, because any vector in this space can be expressed as a linear combination of two linearly independent vectors, such as (1, 0) and (0, 1).
+</section>
+
+<section id="1"><h1>Determinant</h1>
+  [<a href="https://t.ly/Ug0a">Ref</a>] The <i>determinant</i> gives an idea of how much an area (in 2D and volume in 3D) is being squished, scaled or flipped.
+</section>
+
+<section id="2"><h1>Eigenvectors and Eigenvalues</h1>
+  A linear transformation described by a matrix can be thought of as the landing spots it moves the basis vectors to.
+
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/maths/1_linearTransformation.png"/>
+      <figcaption>
+        Linear transformation, $A = \begin{bmatrix}3 & 1\\0 & 2\end{bmatrix}$
+        applied on the basis vectors $\begin{bmatrix}1 & 0\\0 & 1\end{bmatrix}$
+      </figcaption>
+    </figure>
+  </div>
+
+  A better way to find what a linear transformation does, that is less dependent on the chosen coordinate system, is to find the eigenvectors and eigenvalues.
+
+  $$
+    A\vec{v} = \lambda\vec{v}
+  $$
+
+$A$ - matrix representing some transformation.<br>
+$\vec{v}$ - eigenvector.<br>
+$\lambda$ - scalar value; the corresponding eigenvalue.
+
+<p>
+  This expression says that the matrix-vector product (LHS) gives the same result as just scaling the eigenvector (RHS). So finding the eigenvectors and their eigenvalues <n>of a matrix $A$</n> comes down to finding the values of $\vec{v}$ and $\lambda$ that make this expression true.
+</p>
+
+We rewrite RHS as a matrix-vector multiplication to match the LHS (instead of being a scalar-vector multiplication). We can only manipulate the equation if both sides are of the same kind. We use a matrix, which has the effect of scaling any vector by a factor of $\lambda$. The columns of such a matrix will represent what happens to each basis vector, and each basis vector is simply times $\lambda$. So this matrix will have the number $\lambda$ down the diagonal with $0$'s everywhere else. The common way to write this is as follows using the identity matrix:
+
+$$\begin{bmatrix}
+  \lambda & 0 & 0 \\
+   0 & \lambda & 0 \\
+   0 & 0 & \lambda
+\end{bmatrix} 
+= \lambda \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+          \end{bmatrix} 
+= \lambda I
+$$
+
+$$\begin{align*}
+  A\vec{v} &= \lambda\vec{v} \\
+  A\vec{v} &= (\lambda I)\vec{v} \\
+  (A - \lambda I)\vec{v} &= 0 \\
+\end{align*}$$
+
+This expression will always be true if $\vec{v}$ itself is the zero vector, but that's boring. What we want is a non-zero eigenvector.
+
+<p>
+  We can treat $(A - \lambda I)$ as a transformation matrix. The only way for the product of a matrix with a non-zero vector to be $0$ is if the transformation associated with that matrix squishes space into a lower dimension. And this squishification corresponds to a zero determinant for the matrix. Using the linear transformation matrix as above as an example:
+
+  $$\begin{align*}
+    det(A - \lambda I) &= 0 \\
+    det \left( \begin{bmatrix}
+      3-\lambda & 1 \\
+      0 & 2-\lambda
+    \end{bmatrix} \right) &= 0
+  \end{align*}$$
+
+  An <a href="https://t.ly/c7PJ">example</a>. As $k$ goes to 3 or 2, the 2D planar area gets squished to a 1D line of a certain length.
+</p>
+
+
+
+To be concrete, let's say your matrix a has columns (2, 1) and (2, 3),
+
+  Application - to find the axis of rotation. Determinant = 1.
+  Does a vector remain on its span or get knocked off.
+  Think of stretching or squishing the whole space.
+
+  In linear algebra, a right eigenvector of a square matrix A is a non-zero vector v that satisfies the equation:
+
+Av = λv
+
+where λ is a scalar known as the eigenvalue corresponding to the eigenvector v.
+
+Geometrically, a right eigenvector of a matrix A is a vector that, when multiplied by A, is simply scaled by a factor λ, with the direction of the vector remaining unchanged.
+
+The term "right" refers to the fact that the eigenvector is multiplied on the right-hand side of the matrix A, as opposed to a left eigenvector, which would be multiplied on the left-hand side of A.
+
+Right eigenvectors are important in many areas of mathematics and physics, as they play a fundamental role in the diagonalization of matrices, which is a powerful technique for studying the behavior of linear transformations and systems of linear equations. Additionally, right eigenvectors can be used to decompose a matrix into simpler components, such as a diagonal matrix and a set of eigenvectors.
+</section>
+
+</chapter>
+
+</body>
+</html>

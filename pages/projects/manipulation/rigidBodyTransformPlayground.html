@@ -54,11 +54,43 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Break down of forward kinematics code</a>
+<a href="#1">File locations</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>A playground for rigid body transforms</h1>
 <section id="0"><h1>Break down of forward kinematics code</h1>
-  </section>
+  
+</section>
+
+<section id="1"><h1>File locations</h1>
+  In the following line:
+<pre><code class="python">
+FindResource("models/iiwa_and_wsg.dmd.yaml")
+</code></pre>
+
+<code>FindResource</code> is part of the manipulation library in <code>~/.local/lib/python3.10/site-packages/manipulation</code>. So, it looks for files in the same folder.
+ 
+<p>
+  <code>Parser</code> on the other hand, is part of the <code>pydrake</code> module. So, it searches for files in <code>~/.local/lib/python3.10/site-packages/pydrake/share/</code>. Consider the following line:
+</p>
+
+<pre><code class="python">
+parser.AddAllModelsFromFile(FindResource(..))
+</code></pre>
+
+<code>Parser</code> resolves model file paths (<code>.sdf</code>) found within the <code>.dmd.yaml</code> file by looking for the specific package within the above path. Meshes specified within the .sdf file are looked for in the same location.
+
+<div class="container">
+  <figure>
+    <img style="height:80px; width:auto"
+    src="../../../figures/manipulation/36_drakeModelFiles.png"/>
+    <figcaption>
+      Relationship of Drake's model files.
+    </figcaption>
+  </figure>
+</div>
+</section>
+
 </chapter>
 
 </body>

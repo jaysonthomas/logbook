@@ -61,6 +61,8 @@
 <ul class="no-bullets">
   <li><a href="#4.0">Equation deepdive</a></li>
   <li><a href="#4.1">Standard deviation</a></li>
+  <li><a href="#4.2">Sample variance</a></li>
+  <li><a href="#4.3">Covariance</a></li>
 </ul>
 <a href="#5">Z-score</a>
 <a href="#6">Normalisation</a>
@@ -174,6 +176,27 @@
 
   <subsection id="4.1"><h1>Standard deviation</h1>
     <code>Standard deviation</code> is the square root of variance.
+  </subsection>
+
+  <subsection id="4.2"><h1>Sample variance</h1>
+    Assuming the probability of every observation is the same, in calculating <i>sample variance</i>, we divide by $N-1$ instead of $N$:
+
+    $$
+    \sigma^2 = \sum_{i=1}^{N}\frac{(x_i-\mu)^2}{N-1}
+    $$
+    Dividing by $N - 1$ adjusts for the fact that the sample mean is itself an estimate based on the data, and is not known with certainty. This adjustment reduces the bias in the estimate of the population variance, making it an <i>unbiased estimator</i> of the population variance.
+
+    <p>
+      When we divide by $N$, the resulting estimate is biased low, meaning it tends to underestimate the population variance. This bias can be substantial for small samples, but becomes negligible as the sample size increases.
+    </p>
+  </subsection>
+
+  <subsection id="4.3"><h1>Covariance</h1>
+    The <i>covariance matrix</i> is a square matrix that summarizes the pairwise correlations between the variables in a dataset. 
+
+    <p>
+      The covariance matrix is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
+    </p>
   </subsection>
 </section>
 
