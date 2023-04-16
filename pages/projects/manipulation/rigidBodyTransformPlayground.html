@@ -55,6 +55,11 @@
   
 <a href="#0">Break down of forward kinematics code</a>
 <a href="#1">File locations</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Example</a></li>
+</ul>
+<a href="#2">Model instances</a>
+<a href="#3">Clues</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>A playground for rigid body transforms</h1>
@@ -69,16 +74,12 @@ FindResource("models/iiwa_and_wsg.dmd.yaml")
 </code></pre>
 
 <code>FindResource</code> is part of the manipulation library in <code>~/.local/lib/python3.10/site-packages/manipulation</code>. So, it looks for files in the same folder.
- 
-<p>
-  <code>Parser</code> on the other hand, is part of the <code>pydrake</code> module. So, it searches for files in <code>~/.local/lib/python3.10/site-packages/pydrake/share/</code>. Consider the following line:
-</p>
 
 <pre><code class="python">
 parser.AddAllModelsFromFile(FindResource(..))
 </code></pre>
 
-<code>Parser</code> resolves model file paths (<code>.sdf</code>) found within the <code>.dmd.yaml</code> file by looking for the specific package within the above path. Meshes specified within the .sdf file are looked for in the same location.
+<code>Parser</code> on the other hand, is part of the <code>pydrake</code> module. So, it searches for files in <code>~/.local/lib/python3.10/site-packages/pydrake/share/</code>. Consider the following line:
 
 <div class="container">
   <figure>
@@ -89,6 +90,35 @@ parser.AddAllModelsFromFile(FindResource(..))
     </figcaption>
   </figure>
 </div>
+
+<code>Parser</code> resolves model file paths (<code>.sdf</code>) found within the <code>.dmd.yaml</code> file by looking for the specific package within the above path. Meshes specified within the .sdf file are looked for in the same location.
+
+  <subsection id="1.0"><h1>Example</h1>
+    Somehow, even though <code>iiwa_and_wsg.dmd.yaml</code> is found in <code>site-packages/manipulation/models/</code>, the parser is able to find it when we specify it in the following way [referenced in <code>models/clutter.dmd.yaml</code>]:
+<pre><code class="yaml">
+- add_directives:
+file: package://manipulation/iiwa_and_wsg.dmd.yaml
+</code></pre>
+  </subsection>
+</section>
+
+<section id="2"><h1>Model instances</h1>
+  [<a href="https://t.ly/63lGV">Ref - the special model instances</a>]
+  <ul>
+    <li>WorldModelInstance</li>
+    <li>DefaultModelInstance</li>
+    <li>iiwa</li>
+    <li>wsg</li>
+    <li>bin0</li>
+    <li>bin1</li>
+    <li>floor</li>
+  </ul>
+</section>
+
+<section id="3"><h1>Clues</h1>
+  <ul>
+    <li><code>plant.WeldFrames(plant.world_frame(), plant.GetFrameByName("iiwa_link_0"))</code></li>
+  </ul>
 </section>
 
 </chapter>

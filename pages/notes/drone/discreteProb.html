@@ -53,17 +53,17 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Example</a>
-<a href="#2">Random variable</a>
-<a href="#3">Expected value</a>
-<a href="#4">Variance</a>
+<a href="#0">Example</a>
+<a href="#1">Random variable</a>
+<a href="#2">Expected value</a>
+<a href="#3">Variance</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Equation deepdive</a></li>
-  <li><a href="#4.1">Standard deviation</a></li>
-  <li><a href="#4.2">Sample variance</a></li>
-  <li><a href="#4.3">Covariance</a></li>
+  <li><a href="#3.0">Equation deepdive</a></li>
+  <li><a href="#3.1">Standard deviation</a></li>
+  <li><a href="#3.2">Sample variance</a></li>
+  <li><a href="#3.3">Covariance</a></li>
 </ul>
+<a href="#4">Relationship of covariance and expectation</a>
 <a href="#5">Z-score</a>
 <a href="#6">Normalisation</a>
 <a href="#7">Probability mass function</a>
@@ -73,21 +73,7 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Discrete Probability</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Example</a></li>
-    <li><a href="#2">Random variable</a></li>
-    <li><a href="#3">Expected value</a></li>
-    <li><a href="#4">Variance</a></li>
-    <li><a href="#5">Z-score</a></li>
-    <li><a href="#6">Normalisation</a></li>
-    <li><a href="#7">Probability mass function</a></li>
-    <li><a href="#8">Definitions related to probability</a></li>
-    <li><a href="#10">Musings</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Example</h1>
+<section id="0"><h1>Example</h1>
   We are running tests to see if a bot comes to a stop at exactly the right 
   point. We run the test a 1000 times. At the end of each test we
   measure its position w.r.t. the target. The results are as shown 
@@ -104,7 +90,7 @@
   Example, $x_2 = 2000$, $P(X=x_2) = 0.05$.
 </section>
 
-<section id="2"><h1>Random variable</h1>
+<section id="1"><h1>Random variable</h1>
   A <code>random variable</code> has more than one possible values. When
   actually measured, the variable will take one of these values at random, each with a
   certain probability. For example, the side on which a coin lands is a random variable with
@@ -118,7 +104,7 @@
   </p>
 </section>
 
-<section id="3"><h1>Expected value</h1>
+<section id="2"><h1>Expected value</h1>
   It is not the most likely, but the average value that we'd expect to
   get if we were to continue drawing from a distribution over and over again.
   It gives the long-run average value of a repeated probabilistic experiment.
@@ -139,7 +125,7 @@
   </p>
 </section>
 
-<section id="4"><h1>Variance</h1>
+<section id="3"><h1>Variance</h1>
   When we are drawing from a distribution over and over again, 
   the <code>variance</code> tells us how spread out the numbers or
   samples (the values being drawn) will be from the mean(the expected value need not be
@@ -165,7 +151,7 @@
     $$
   </p>
   
-  <subsection id="4.0"><h1>Equation deepdive</h1>
+  <subsection id="3.0"><h1>Equation deepdive</h1>
     Subtracting the mean makes the mean the zero point. It is a shift
     operation. We can now represent everything w.r.t the mean as simple
     <i>deviations</i> as shown <a href="https://t.ly/dipKw">here</a>.
@@ -174,11 +160,11 @@
     mean which is helpful when comparing the variances of 2 different distributions.
   </subsection>  
 
-  <subsection id="4.1"><h1>Standard deviation</h1>
+  <subsection id="3.1"><h1>Standard deviation</h1>
     <code>Standard deviation</code> is the square root of variance.
   </subsection>
 
-  <subsection id="4.2"><h1>Sample variance</h1>
+  <subsection id="3.2"><h1>Sample variance</h1>
     Assuming the probability of every observation is the same, in calculating <i>sample variance</i>, we divide by $N-1$ instead of $N$:
 
     $$
@@ -191,13 +177,37 @@
     </p>
   </subsection>
 
-  <subsection id="4.3"><h1>Covariance</h1>
+  <subsection id="3.3"><h1>Covariance</h1>
     The <i>covariance matrix</i> is a square matrix that summarizes the pairwise correlations between the variables in a dataset. 
 
     <p>
       The covariance matrix is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
     </p>
   </subsection>
+</section>
+
+<section id="4"><h1>Relationship of covariance and expectation</h1>
+  $$\begin{align*}
+  cov(x_1, x_2) &= E[(x_1 - \mu_{x_1})(x_2 - \mu_{x_2})] \\
+                &= E[(x_1 - E[x_1])(x_2 - E[x_2])] \\ 
+                &= E[x_1x_2 - x_1E[x_2] - x_2E[x_1] + E[x_1]E[x_2]] \\ 
+  \end{align*}$$
+
+  Using <i>linearity of the expectation</i>, where if $a,b$ are constants and $X,Y$ are random variables, then:
+  $$
+    E[aX + bY] = aE[X] + bE[Y]
+  $$
+  In other words, the expected value of a linear combination of random variables is equal to the linear combination of their expected values, with the same coefficients.
+
+  <p>
+    The covariance becomes:
+    $$\begin{align*}
+    cov(x_1, x_2) &= E[x_1x_2] - E[x_1]E[x_2] - E[x_2]E[x_1] + E[x_1]E[x_2] \\ 
+                  &= E[x_1x_2] - E[x_1]E[x_2]
+    \end{align*}$$
+  
+  </p>
+
 </section>
 
 <section id="5"><h1>Z-score</h1>
@@ -294,6 +304,27 @@
       <td>
         The probability of some event given that some other event already 
         occurred. We use the PMF to find this
+      </td>
+    </tr>
+
+    <tr>
+      <td>$p(x)$</td>
+      <td>
+        The probability of the vehicle being in position $x$.
+      </td>
+    </tr>
+
+    <tr>
+      <td>$p(x,y)$</td>
+      <td>
+        The probability of the vehicle being in position x and making measurements y.
+      </td>
+    </tr>
+
+    <tr>
+      <td>$p(y|x)$</td>
+      <td>
+        The probability of making measurements y given that the vehicle is in position x.
       </td>
     </tr>
   </table>

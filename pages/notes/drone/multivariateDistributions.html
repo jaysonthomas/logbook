@@ -60,6 +60,21 @@
 <a href="#4">Joint distribution</a>
 <a href="#5">Marginal</a>
 <a href="#6">Independence</a>
+<a href="#7">Correlation</a>
+<ul class="no-bullets">
+  <li><a href="#7.0">Pearson Product-Moment Correlation</a></li>
+  <li><a href="#7.1">Application of the correlation test</a></li>
+</ul>
+<a href="#8">Relationship of Correlation with Covariance</a>
+<a href="#9">Conditional distribution</a>
+<ul class="no-bullets">
+  <li><a href="#9.0">Chain rule</a></li>
+  <li><a href="#9.1">Bayes' rule</a></li>
+</ul>
+<a href="#10">Applying Bayes' rule</a>
+<ul class="no-bullets">
+  <li><a href="#10.0">Properties of the equation for the mean of the posterior distribution</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Multivariate distributions</h1>
@@ -190,6 +205,193 @@
   The idea of independence is that knowing the value of one variable has no effect on the other random variable, i.e. knowing the value of $x_1$ tells us nothing about $x_2$.
 </section>
 
+<section id="7"><h1>Correlation</h1>
+  How to know if 2 variables are independent? How can we tell if a random variable such as whether the vehicle is working is independent of whether the payload is working? If the data are discrete and we have a probability mass function also known as having <i>categorical data</i>, then a <i>chi-square test</i> is a type of statistical test that can be used to determine the degree to which the differences between variables are due to chance or if they're actually correlated in some way. For continuous data, we can examine what's known as <i>correlation</i>.
+
+  <p>
+    Intuitively, correlation gives us some measure of how related two variables are. Let's say we <n>sample some distribution over 2 variables</n> ($x_1$, $x_2$) and plot those points. In this case we would say the correlation is positive since a large $x_1$ means $x_2$ is likely to be large as well. For <i>zero correlation</i>, the knowledge of $x_1$ doesn't really say anything about $x_2$.
+  </p>
+
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/drone/24_correlation.png"/>
+      <figcaption>
+        Correlation between 2 variables.
+      </figcaption>
+    </figure>
+  </div>
+  This is fine for a qualitative understanding of whether the correlation is positive, negative, or zero. But to precisely quantify the correlation, we need a correlation function.
+
+  <subsection id="7.0"><h1>Pearson Product-Moment Correlation</h1>
+    There are many different choices for correlation functions. One common choice is the <i>Pearson Product-Moment Correlation</i>.
+    $$
+      \rho_{1,2} = \frac{cov(x_1,x_2)}{\rho_{x_1}\rho_{x_2}}
+    $$
+    $\rho_{x_1}\rho_{x_2}$ - Standard deviations of the variables
+    <br>
+    $\rho_{1,2}$ - Correlation between the variables
+    <br>
+    $cov(x_1,x_2)$ - Covariance of the 2 variables
+
+    <p>
+      If the data are independent, then the correlation is going to be equal to $0$ because the covariance is going to be 0 as follows:
+
+      $$\begin{align*}
+      cov(x_1, x_2)  &= E[x_1x_2] - E[x_1]E[x_2] \\
+      if\:independent &= E[x_1]E[x_2]- E[x_1]E[x_2] \\
+                     &= 0
+      \end{align*}$$
+    </p>
+  </subsection>
+
+  <subsection id="7.1"><h1>Application of the correlation test</h1>
+    Imagine we had 2 random variables constructed from some other random variable that itself is distributed from $0$ to $2\pi$.
+
+    $$\begin{align*}
+      y_1 &= sin(x) \\
+      y_2 &= cos(x)
+    \end{align*}$$
+
+    $x$ is uniform on $[0,2\pi]$.
+
+    <p>
+      The $y$ variables are clearly not independent - if we know one with high probability, we know the other. But, the expected value of all the $y$'s is equal to $0$, and the co-variance is equal to $0$. Which means the variables are uncorrelated, but they're clearly not independent.
+
+      $$\begin{align*}
+        E[y_1] = E[y_2] = E[y_1y_2] = 0 \\
+        cov(y_1,y_2) = 0
+      \end{align*}$$
+    </p>
+
+    For <n>jointly</n> Gaussian random variables $x_1$ and $x_2$, we can show that if the correlation is zero then the variables are indeed independent. It's a useful test just for this particular setting. It's also easy to construct an example where if the marginal of $x_1$ and the marginal of $x_2$ are each Gaussian, the covariance will be $0$ even though they're clearly not independent.
+  </subsection>
+</section>
+
+
+<section id="8"><h1>Relationship of Correlation with Covariance</h1>
+  When two random variables are <i>correlated</i>, knowledge of one provides some information about the other. For example, the position of a vehicle now and the position of a vehicle in one second are correlated random variables: knowledge of one should give me some insight into the value of the other.
+
+  <p>
+    The <i>Pearson correlation coefficient</i> is one way of quantifying this relationship.
+  </p>
+  
+  <i>Covariance</i> is a measure of the joint variability of two random variables. If one variable tends to be big when the other is big, then the covariance is positive. The <i>correlation coefficient</i> is simply the <n>normalized version</n> of the covariance.
+</section>
+
+<section id="9"><h1>Conditional distribution</h1>
+  Another useful property of joint random variables is that it's often of extreme interest to find a density of one of the unknown random variables given specific knowledge of other random variables. For instance, is a vehicle moving, given the current state of the propulsion system.
+
+  <subsection id="9.0"><h1>Chain rule</h1>
+    $$
+      p(x|y) = \frac{p(x,y)}{p(y)}
+    $$
+
+    $p(x,y)$ is the joint distribution - probability of $x$ and $y$.
+    <br>
+    $p(x|y)$ is the <i>conditional distribution</i>.
+    <br>
+    $p(y)$ is the marginal of the conditioning variable.
+  </subsection>
+
+  <subsection id="9.1"><h1>Bayes' rule</h1>
+    A really useful application is sometimes we want to reverse our conditional probabilities. When we do estimation for a flying vehicle, we generally have access to measurements $y$ (example: GPS which will always have some noise) and we want to know the probability of $x$ given those measurements. So we want to calculate the conditional probability $p(x|y)$.
+    
+    <p>
+      If we had a model of the position probability density function given a measurement then we have everything we need. But it's often much easier to generate a model of the measurement distribution (i.e. generate the distribution of measurement likelihoods) given the current position, $p(y|x)$. This is where <i>Bayes' Rule</i> is really helpful! We can apply the chain rule twice:
+
+      $$
+        p(x|y) = \frac{p(y|x)p(x)}{p(y)}
+      $$
+    </p>
+  </subsection>
+</section>
+
+<section id="10"><h1>Applying Bayes' rule</h1>
+  How can we use Bayes' rule?
+  <ul>
+    <li>We start with <i>prior</i> belief</li>
+    For example, imagine that we don't know where our vehicle is, but we have some knowledge about roughly where it is, called the prior. We know the vehicle position is distributed with some mean and some variance. The variance tells us how well we think we know where the vehicle is.
+
+    <p>
+      Let us assume that the prior distribution of $x$ is Gaussian with mean $\mu_x$ and variance $\sigma^2_x$:
+      $$
+        p(x) = \mathcal{N}(\mu_x, \sigma^2_x)
+      $$
+    </p>
+
+    <li>We make a measurement $y=x+v$</li>
+    $x$ is the true position of the vehicle, $v$ is the error added during measurement, and $y$ is the received measured value. We can assume that the position is independent of the measurement noise, which means $x$ is independent of $v$.
+
+    $$
+      p(v) = \mathcal{N}(0,\sigma^2_v)
+    $$
+
+    <p>
+      <li>Compute $p(y|x)$</li>
+      Given the prior and the measurement distributions are gaussian, the likelihood of the measurement $y$ given $x$ is also Gaussian. From chain rule, we can derive:
+      $$\begin{align*}
+        p(y) &= \mathcal{N}(\mu_x,\sigma^2_x + \sigma^2_v) \\
+        p(y|x) &= \mathcal{N}(x, \sigma^2_v)
+      \end{align*}$$
+    </p>
+
+    <li>Find the posterior distribution $p(x|y)$</li>
+    We can compute the distribution over the position given the measurement using Bayes' rule. If we apply all the normal distributions into the Bayes' rule equation (product of two normal distributions, divided by a third normal distribution), we get another normal distribution as the result.
+
+    $$
+      p(x|y) \sim \mathcal{N}(\mu, \sigma^2)
+    $$
+
+    where the mean and variance are as follows:
+    $$
+      \mu = \mu_x + \frac{\sigma^2_x}{\sigma^2_x + \sigma^2_v}(y-\mu_x)
+    $$
+
+    $$
+      \sigma^2 = \frac{\sigma^2_x\sigma^2_v}{\sigma^2_x + \sigma^2_v}
+    $$
+  </ul>
+
+  <button class="accordion">Derivation of the posterior distribution $p(x|y)$ is a work in progress</button>
+  <div class="panel">
+    <p></p>
+    The marginal probability of $y$:
+    $$\begin{align*}
+      p(y) &= \int p(y|x) \times p(x) dx \\
+           &= \int \mathcal{N}(x, \sigma^2_v) \times \mathcal{N}(\mu_x, \sigma^2_x) dx
+    \end{align*}$$
+
+    $$\begin{align*}
+      p(x|y) &= \frac{p(y|x) \times p(x)}{p(y)} \\
+            &= \frac{\mathcal{N}(x, \sigma^2_v) \times \mathcal{N}(\mu_x, \sigma^2_x)}{\int \mathcal{N}(x, \sigma^2_v) \times \mathcal{N}(\mu_x, \sigma^2_x) dx} 
+    \end{align*}$$
+
+    $$
+      \mu = E[x|y] = \frac{\sigma^2_x}{\sigma^2_x + \sigma^2_v} \times y + \frac{\sigma^2_v}{\sigma^2_x + \sigma^2_v} \times \mu_x
+    $$
+  </div>
+
+  <subsection id="10.0"><h1>Properties of the equation for the mean of the posterior distribution</h1>
+    $$
+      \mu = \underbrace{\mu_x}_{\text{Initial estimate}} + 
+      \underbrace{\frac{\sigma^2_x}{\sigma^2_x + \sigma^2_v}}_{\text{Trade off of trust} \atop \text{Measurement vs prior}}
+      (\underbrace{y}_{\tiny{Measurement}}-\mu_x)
+    $$
+    <ul>
+      <li>The measurement $y$ is applied as a correction to the initial estimate $\mu_x$</li>
+
+      <p>
+        <li>If $\sigma_v$ is small compared to $\sigma_x$, it means we have more trust in our measurement than in our initial estimate, and that results in a new estimate which is centered very close to the measurement</li>
+      </p>
+
+      <li>If we trust the prior more, i.e. $\sigma_x$ is small compared to $\sigma_v$, then the updated position estimate only gets moved slightly in the direction of the measurement</li>
+    </ul>
+  </subsection>
+  
+  
+  
+</section>
 </chapter>
 
 </body>

@@ -53,31 +53,25 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Introduction</a>
+<a href="#0">Introduction</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Definition</a></li>
-  <li><a href="#1.1">The need for estimation</a></li>
-  <li><a href="#1.2">Applications</a></li>
-  <li><a href="#1.3">How to create an estimator</a></li>
+  <li><a href="#0.0">Definition</a></li>
+  <li><a href="#0.1">The need for estimation</a></li>
+  <li><a href="#0.2">Applications</a></li>
+  <li><a href="#0.3">How to create an estimator</a></li>
+</ul>
+<a href="#1">Approaches to estimation</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">3 Approaches to estimation</a></li>
+  <li><a href="#1.1">Variable reference</a></li>
 </ul>
 <a href="#2">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Introduction</a></li>
-    <li><a href="discreteProb.html">Discrete probability</a></li>
-    <li><a href="continuousProb.html">Continuous probability</a></li>
-    <li><a href="multivariateDistributions.html">Multivariate distributions</a></li>
-    <li><a href="leastSquares.html">Least squares</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Introduction</h1>
-  <subsection id="1.0"><h1>Definition</h1>
+<section id="0"><h1>Introduction</h1>
+  <subsection id="0.0"><h1>Definition</h1>
     Estimation:
     <ul>
       <li>Is a temporal process - so you integrate things over time.</li>
@@ -88,7 +82,7 @@
     </ul> 
   </subsection>
 
-  <subsection id="1.1"><h1>The need for estimation</h1>
+  <subsection id="0.1"><h1>The need for estimation</h1>
     To quantify uncertainty. The goal is to make a very tight distribution, 
     so that a robot is more certain of its state.
     The real world (bot and environment) is uncertain in the following ways:
@@ -112,7 +106,7 @@
     </ul>
   </subsection>
 
-  <subsection id="1.2"><h1>Applications</h1>
+  <subsection id="0.2"><h1>Applications</h1>
     We only need sensor feedback if we want the drone to be autonomous. 
     To be autonomous, the robot needs to know the following (RHS of table). 
     Estimation plays a role in all these problems.
@@ -154,7 +148,7 @@
     how the phone screen orients itself.
   </subsection>
 
-  <subsection id="1.3"><h1>How to create an estimator</h1>
+  <subsection id="0.3"><h1>How to create an estimator</h1>
     We use <code>Bayes rule</code> which is a method:
     <ul>
       <li>To integrate data over time</li>
@@ -166,6 +160,123 @@
     Bayes rule relies on probability at its core to quantify uncertainty.
     There are other ways, such as confidence scores, fuzzy logic etc.
   </subsection>
+</section>
+
+<section id="1"><h1>Approaches to estimation</h1>
+  The goal of estimation is to come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors. For a 2D quadrator moving in the vertical plane, this would be $y$, $z$, the roll angle $\phi$, and their corresponding derivatives.
+
+  <p>
+    In each of the below mentioned three approaches, we'll have three things:
+    <div class="container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../figures/drone/25_estimationApproaches.png">
+        <figcaption>
+          The drone which is at a distance of $z$ from the ground, would get a laser range measurement of $\frac{z}{cos\phi}$ 
+        </figcaption>
+      </figure>
+    </div>
+  </p>
+  
+  <ul>
+    <li>Measurement model $H$</li>
+    A measurement model projects a state into measurement space. Let's say we had a 2D quadrotor with some true state vector $x$:
+    $$
+      x = \begin{bmatrix}y \\ z \\ \phi \\ \dot{y} \\ \dot{z} \\ \dot{\phi}\end{bmatrix}
+    $$
+
+    The drone is at some vertical position $z$ with a laser range finder pointing downwards. If it were a perfect sensor, it would measure a distance to the ground that's equal to $\frac{z}{cos\phi}$. In this case the measurement space is one dimensional. <n>$H$ is the function that maps a state to a measurement</n>:
+    $$\begin{align*}
+      Hx &= \begin{bmatrix} \frac{z}{cos\phi} \end{bmatrix} \\
+      H &= \begin{bmatrix} 0 & \frac{1}{cos\phi} & 0 & 0 & 0 & 0\end{bmatrix}
+    \end{align*}$$
+
+    <li>Make $m$ measurements $y$ of true state $x$</li>
+    $y$ represents a measurement. If they were perfect, we would get:
+    $$
+      y = Hx
+    $$
+
+    Each measurement will have some measurement noise:
+    $$
+      y = Hx + v
+    $$
+
+    <li>Mathematical model of noise</li>
+    Since the measurements are imperfect, we need some model of the measurement noise $v$. This doesn't mean we'll know exactly how much noise gets added to each individual measurement; that will still be unknown. Rather, it means that we know the distribution from which this noise is sampled.
+
+    $$
+      v \sim N(0, R)
+    $$
+    
+    Generally, we're going to model $v$ as a 0 mean Gaussian with some covariance $R$. So, where a perfect rangefinder would make some perfect measurement $Hx$, a realistic rangefinder would also add some zero mean Gaussian noise to each measurement.
+  </ul>
+
+  <subsection id="1.0"><h1>3 Approaches to estimation</h1>
+  Each of the 3 approaches makes slightly different assumptions about the measurements and the underlying measurement model.
+
+  <ul>
+    <li>Least squares</li>
+    The least squares approach, for example, requires that the measurements all come in all at once, and it assumes that the measurement model $H$ is an $n \times m$ matrix, which maps a state vector of length $n$ to a measurement vector of $m$ individual measurements.
+
+    <p>
+      Note that this means the measurement model must be linear, which wouldn't have worked for example earlier with the rangefinder since that measure model had a cosine in it. These are some pretty unrealistic assumptions, but this will be a useful starting point for discussing estimation.
+    </p>
+
+    <li>Recursive least squares</li>
+    With the recursive estimator, measurements will come in one at a time. The measurement model will still be linear, but since measurements are coming in one at a time, $H$ will just be a vector, not a matrix, and this vector will map a state to a single measurement.
+
+    <p>
+      <li>Non-linear leasts squares</li>
+      The non-linear least squares estimator is also recursive, which allows us to handle measurements coming in one at a time. But in this case, we'll allow the measurement model to be some arbitrary function of the underlying state.
+    </p>
+  </ul>
+  To estimate the state of a vehicle, these approaches assume the vehicle is stationary. To incorporate motion into our state estimation process, we'll need to use the Kalman filter and its variants called the extended kalman filter and the unscented kalman filter. 
+</subsection>
+
+  <subsection id="1.1"><h1>Variable reference</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Variable</th>
+      <th style="text-align:center">Meaning</th>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$x$</td>
+      <td>The unknown (and constant) state vector. This is what we're estimating!</td>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$H$</td>
+      <td>The (linear) measurement model. Perfect measurement of the state would yield $Hx$</td>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$v$</td>
+      <td>The noise which corrupts our measurements. It's sampled from a zero-mean normal distribution.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$R$</td>
+      <td>The covariance of the measurement noise.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$m$</td>
+      <td>The number of measurements made.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$n$</td>
+      <td>The size of the state vector $x$.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align:center">$\tilde{y}$</td>
+      <td>The actual noisy measurements.</td>
+    </tr>
+  </table>
+</subsection>
 </section>
 
 <section id="2"><h1>Musings</h1>

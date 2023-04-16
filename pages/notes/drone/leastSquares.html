@@ -64,6 +64,10 @@
 <a href="#8">Independent and identically distributed</a>
 <a href="#9">LS examples</a>
 <a href="#10">Musings</a>
+<a href="#11">Intro</a>
+<ul class="no-bullets">
+  <li><a href="#11.0">Example</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
@@ -560,6 +564,43 @@
   </ul>
 </section>
 
+<section id="11"><h1>Intro</h1>
+  The standard least squares approach applied to estimating the state of a flying car, would make the following unrealistic assumptions:
+
+  <ul>
+    <li>The vehicle is stationary</li>
+    <li>The measurements come in all at once</li>
+    <li>The underlying measurement model $H$ is noisy but linear</li>
+    Measurements of things like orientation are rarely linear.
+  </ul>
+
+  A linear function of $x$, which in this case maybe a vehicle position, can be written as:
+  $$
+    y = Ax + b
+  $$
+  
+  Despite these over-simplifications/assumptions, this estimation technique is common for calibration, finding the transform between two coordinate systems or model fitting.
+
+  <subsection id="11.0"><h1>Example</h1>
+    Let's consider a system where we make $m$ measurements $y$ of a constant state $x$, such that:
+    $$
+      \tilde{y} = Hx + v
+    $$
+    
+    $x$ is the constant unknown state vector of length $n$ that we're trying to estimate.
+    <br>
+    $\tilde{y}$ is the specific vector of measurements of length $m$. tilde denotes the actual measurements received. The measurements are a linear function of the state perturbed by some unknown noise.
+    <br>
+    $v$ is the unknown error vector. The noise is assumed to be drawn from a Gaussian distribution with a $0$ mean and some covariance $R$, which perhaps can be assumed to be some known variance times the identity matrix.
+    <br>
+    $H$ is the measurement matrix. It's assumed to be constant and known and it projects the state into the measurement space.
+
+    <p>
+      If we knew the error $v$, we could solve for $x$: $Hx = \tilde{y} - v$. Or if we knew $x$, we can solve for $v$. We don't know either of these and that's what makes this an estimation problem. We're going to use a maximum likelihood estimation approach. Intuitively, what we're going to do is look at our measurements and ask what vehicle state is the most likely to yield this particular set of measurements.
+    </p>
+  </subsection>
+  
+</section>
 </chapter>
 
 </body>

@@ -342,6 +342,10 @@ exercise {
   margin-bottom: 10px;
   padding: 10px;
 }
+figure2 {
+  text-align: left;
+  counter-increment: figure;
+}
 figure {
   text-align: center;
   counter-increment: figure;

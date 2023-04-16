@@ -58,16 +58,17 @@
 <ul class="no-bullets">
   <li><a href="#1.0">Implementation details</a></li>
 </ul>
-<a href="#2">Plant</a>
-<a href="#3">Parser</a>
-<a href="#4">Package map</a>
-<a href="#5">Leaf system</a>
-<a href="#6">DeclareForcedPublishEvent</a>
-<a href="#7">Simulation description format (SDF)</a>
+<a href="#2">Relationship between Plant and Scenegraph</a>
+<a href="#3">Plant</a>
+<a href="#4">Parser</a>
+<a href="#5">Package map</a>
+<a href="#6">Leaf system</a>
+<a href="#7">DeclareForcedPublishEvent</a>
+<a href="#8">Simulation description format (SDF)</a>
 <ul class="no-bullets">
-  <li><a href="#7.0">Moment of inertia</a></li>
+  <li><a href="#8.0">Moment of inertia</a></li>
 </ul>
-<a href="#8">Drake resources</a>
+<a href="#9">Drake resources</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Drake components</h1>
@@ -94,7 +95,32 @@
   </subsection>
 </section>
 
-<section id="2"><h1>Plant</h1>
+<section id="2"><h1>Relationship between Plant and Scenegraph</h1>
+  <figure2>
+    <img style="height:350px; width:auto"
+    src="../../../figures/manipulation/37_basicDrakeDiagram.png"/>
+    <figcaption>
+      A basic drake diagram
+    </figcaption>
+  </figure2>
+
+  In Drake, the SceneGraph manages the geometric representation of a system, while the Plant manages its physical dynamics.
+
+  <p>
+    The SceneGraph system contains information about the geometry of a system, such as the location, size, and shape of objects. It also provides methods for querying the geometric properties of objects in the scene, such as their positions, orientations, and velocities. These queries are performed using the <code>geometry_query</code> object.
+  </p>
+  
+  The Plant system, on the other hand, is responsible for modeling the dynamics of a system. It contains information about the physical properties of objects, such as their masses, moments of inertia, and contact models.
+
+  <p>
+    To connect these two systems, the Plant system receives geometric information from the SceneGraph through the geometry_query object. The Plant system uses this information to compute the physical properties/dynamics of objects, such as their positions, velocities, and forces.
+  </p>
+  
+  For example, suppose we have a rigid body in the Plant system that is connected to a visual geometry in the SceneGraph. To compute the forces acting on the rigid body, the Plant system might first request information about the position and orientation of the visual geometry using the geometry_query object. It can then use this information to compute the forces acting on the rigid body due to interactions with other objects in the scene.
+</section>
+
+<section id="3"><h1>Plant</h1>
+  [<a href="https://t.ly/YM78">Ref</a>], [<a href="https://bit.ly/3M97DTo">Finalize ref</a>].
   <code>class 'pydrake.multibody.plant.MultibodyPlant'</code>.
   A <i>plant</i> refers to a physical system that can be modeled using differential equations. This could be a mechanical system such as a robot or a physical process such as a chemical reaction or a fluid flow.
 
@@ -102,9 +128,13 @@
     Each plant in Drake has a <n>set of inputs and outputs</n>, which represent the external forces or signals that affect the plant and the output of the plant's behavior, respectively. The plant's behavior is defined by a set of differential equations that describe how the <n>plant's state</n> changes over time in response to its inputs.
   </p>
   Plants in Drake are represented using a unified interface, which allows them to be easily composed and interconnected.  Drake also provides a library of pre-built plants that can be used to model a wide range of physical systems. Additionally, users can create their own custom plants by implementing the necessary interface functions and providing the relevant differential equations.
+
+  <p>
+
+  </p>
 </section>
 
-<section id="3"><h1>Parser</h1>
+<section id="4"><h1>Parser</h1>
   In Drake, a <i>parser</i> is a tool that reads and interprets files or data in a specific format (URDF, SDF, STL, and OBJ) and converts it into an internal data structure (an internal representation of the objects and their properties) that can be used by other parts of the system (example, it can be used to create a scenegraph or a physical model of a robot or other object).
 
   <p>
@@ -113,7 +143,7 @@
   Drake also allows users to create their own custom parsers for reading data in other formats. 
 </section>
 
-<section id="4"><h1>Package map</h1>
+<section id="5"><h1>Package map</h1>
   Drake uses a package-based approach to organizing its code and resources, where each package corresponds to a collection of related code and data files. The PackageMap provides a way to map the logical names of these packages to their physical locations on the file system, which allows the system to locate and load the files as needed.
 
   <p>
@@ -121,7 +151,7 @@
   </p>
 </section>
 
-<section id="5"><h1>Leaf system</h1>
+<section id="6"><h1>Leaf system</h1>
   <i>Leaf systems</i> are the smallest building blocks in Drake and can be combined to create more complex systems. A leaf system represents a single:
   <ul>
     <li>Physical component - spring, damper, sensor or a RigidBodyPlant or</li> 
@@ -132,12 +162,12 @@
   Leaf systems in Drake have well-defined inputs and outputs, which can be either continuous signals, such as position or velocity, or discrete events, such as button presses or sensor readings.
 </section>
 
-<section id="6"><h1>DeclareForcedPublishEvent</h1>
+<section id="7"><h1>DeclareForcedPublishEvent</h1>
   [<a href="https://bit.ly/3TPAuxX">Ref</a>] This could be the first Drake function in C++ that I try to understand. In short, the function must be called with a callback or a handler as the argument. The callback function must be a function within a class that is derived from <code>LeafSystem</code> and takes <code>context</code> as its argument.
 </section>
 
-<section id="7"><h1>Simulation description format (SDF)</h1>
-  <subsection id="7.0"><h1>Moment of inertia</h1>
+<section id="8"><h1>Simulation description format (SDF)</h1>
+  <subsection id="8.0"><h1>Moment of inertia</h1>
   <i>ixx</i> refers to the moment of inertia of a 3D object along the x-axis. The <i>moment of inertia</i> is a measure of an object's resistance to rotational motion about an axis, and it depends on the object's mass distribution and shape. 
   
   <p> 
@@ -152,7 +182,7 @@
   </subsection>
 </section>
 
-<section id="8"><h1>Drake resources</h1>
+<section id="9"><h1>Drake resources</h1>
   <ul>
     <li>How to run drake tutorials - <a href="https://t.ly/XkQA">ref</a></li>
     <li>Drake tutorials main page - <a href="https://t.ly/qkRB">ref</a></li>

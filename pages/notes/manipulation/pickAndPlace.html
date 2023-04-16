@@ -59,8 +59,10 @@
   <li><a href="#1.0">Position</a></li>
   <li><a href="#1.1">Orientation</a></li>
   <li><a href="#1.2">Pose</a></li>
-  <li><a href="#1.3">Example usage</a></li>
+  <li><a href="#1.3">Notation understanding check</a></li>
+  <li><a href="#1.4">Example usage</a></li>
 </ul>
+<a href="#2">Frames for pick and place</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
@@ -176,10 +178,36 @@
        Pose can also be called a <i>rigid transform</i> because it only allows changing between frames in the kinematics, i.e. only positions and rotations; no scaling or shearing. <i>Homogeneous transforms</i> also allow shearing and scaling.
     </p>
 
-    Poses multiply with other poses. A set of rules are given in Chapter 3. <m>I should figure out <a href="https://bit.ly/3mJCHP6">this question</a></m>.
+    Poses multiply with other poses. A set of rules are given in Chapter 3.
   </subsection>
 
-  <subsection id="1.3"><h1>Example usage</h1>
+  <subsection id="1.3"><h1>Notation understanding check</h1>
+    <div class="container">
+      <figure>
+        <img style="height:120px; width:auto"
+        src="../../../figures/manipulation/38_poseQuestion.png"/>
+        <figcaption>
+          What is $^GP^O$ and $^GP^O_W$?
+        </figcaption>
+      </figure>
+    </div>
+
+    For the question above, the possible answers are: (a) [.2,0,-.2], (b) [0,.3,.1], (c) [0,-.3,.1]
+
+    <p>
+      $^GP^O = {^GR^W} \cdot {^WP^O}$
+    </p>
+
+    $^WP^O$ will undergo 2 rotations to align $W$ with $G$: <code>Rotz(-90), Rotx(-45)</code>. Once it's aligned, we can see there is an offset in the Y and Z directions. Hence the answer must be (b).
+
+    <p>
+      $^GP^O_W = {^WR^G} \cdot {^GP^O}$
+    </p>
+
+    This is the same as $^WP^O$. We can see there is an offset in the Z and X directions. Hence the answer must be (a).
+  </subsection>
+  
+  <subsection id="1.4"><h1>Example usage</h1>
     The is core to planning, perception, controls etc. If we had cameras mounted around a kuka, taking some depth measurements, trying to find out where things are in the scene. The data coming into each of those cameras are going to be in the associated camera's frame. For it to be usable, we'll have to convert it to a common representation - a common coordinate frame typically a world frame (or a gripper frame). The way we do that is by multiplying each camera's output by $X$. We can put them together if the frames match. 
 
     <div class="container">
@@ -193,6 +221,42 @@
     </div>
   </subsection>
 </section>
+
+<section id="2"><h1>Frames for pick and place</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Object frames</th>
+      <th>Gripper frames</th>
+    </tr>
+    <tr>
+      <td>$O_{initial}$, $O_{goal}$</td>
+      <td>$G_{initial}$, $G_{pick}$
+        <br>
+        $G_{prepick}$, $G_{postpick}$
+        <br>
+        $G_{place}$
+        <br>
+        $G_{preplace}$, $G_{postplace}$
+        <br>
+        $G_{clearance}$</td>
+    </tr>
+  </table>
+
+  The numerical representation used to represent a frame, say $O_{initial}$ on disk is its pose -  $^WX^{O_{initial}}$. $O$ is an example of a frame which just defines the semantics of whether we can connect two poses. But the pose $X$ is the manifestation that holds the position and orientation of a frame relative to some other frame. $O$ in some sense is absolute and can't be represented because we have to somehow make a pose relative to something else.
+
+  <p>
+    Representing the pose of the object relative to the gripper or vice-versa is the most simple/robust representation commonly used for picking an object.
+  </p>
+
+  We interpolate from some initial gripper pose to a pose with the right clearance above the object to guarantee we avoid any collisions.Then we do a simpler approach to the object. People do lots of interesting complicated algorithms to figure out how to move through space and just hand code the last movement often to avoid collision. 
+
+  <p>
+    To define the position of the gripper to move into to pick an object, pick whatever direction (in terms of axis) is the easiest relative to the object. A similar thinking applies to orientation. For this, it would be good to know what orientation the object is in. For a little red cube, it is hard to get its orientation from a perception system because it's symmetric. Then we get our pose $^{G_{pick}}X^{O_{initial}}$. We do the same for pre/post pick etc.
+  </p>
+
+  In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
+</section>
+
 </chapter>
 
 </body>
