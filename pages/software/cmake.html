@@ -63,21 +63,33 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Cmake</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="#2"></a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Overview</h1>
+<section id="1"><h1>References</h1>
   <ul>
     <li><a href="https://t.ly/_tyQ">Cmake tutorial</a></li>
     <li>Dynamic vs static library</li>
     <a href="https://t.ly/4Qx2">Basics</a>, 
     <a href="https://t.ly/tmyJ">another perspective</a>.
+  </ul>  
+</section>
+
+<section><h1>Linking against libraries vs executables</h1>
+  Advantages of libraries:
+  <ul>
+    <li>Reusability</li>
+    <i>Libraries</i> are collections of precompiled code (commonly used functions and classes) that can be reused across different programs.
+
+    <p>
+      <li>Libraries can be updated independently of the programs that use them</li>
+      When a library is updated, all programs that use it can benefit from the changes without the need to recompile or modify each program individually.
+    </p>
   </ul>
-  
+
+  Disadvantage of linking against executables:
+  <ul>
+    <li>Redundancy</li>
+    <i>Executables</i> are standalone programs that can be executed on their own. It is difficult to reuse an executable across multiple programs, as each program would have to include the whole executable which would also contain libraries that the program doesn't necessarily need. This can result in larger program sizes.
+  </ul>
+
 </section>
 
 <section id="2"><h1>Basic commands with example</h1>
