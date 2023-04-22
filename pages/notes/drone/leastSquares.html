@@ -64,10 +64,19 @@
 <a href="#8">Independent and identically distributed</a>
 <a href="#9">LS examples</a>
 <a href="#10">Musings</a>
-<a href="#11">Intro</a>
+<a href="#11">Another intro</a>
 <ul class="no-bullets">
   <li><a href="#11.0">Example</a></li>
 </ul>
+<a href="#12">Deriving The Maximum Likelihood Estimator</a>
+<ul class="no-bullets">
+  <li><a href="#12.0">Breaking down the derivation steps</a></li>
+</ul>
+<a href="#13">Fitting A Line With Linear Least Squares</a>
+<ul class="no-bullets">
+  <li><a href="#13.0">Example</a></li>
+</ul>
+<a href="#14">The problem with non-linearities</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
@@ -223,7 +232,7 @@
     Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>. 
     
     <p>
-      When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?
+      <m>When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?</m>
     </p>
   </div>
 
@@ -564,7 +573,7 @@
   </ul>
 </section>
 
-<section id="11"><h1>Intro</h1>
+<section id="11"><h1>Another intro</h1>
   The standard least squares approach applied to estimating the state of a flying car, would make the following unrealistic assumptions:
 
   <ul>
@@ -600,6 +609,170 @@
     </p>
   </subsection>
   
+</section>
+
+<section id="12"><h1>Deriving The Maximum Likelihood Estimator</h1>
+  We want to know what vehicle state is most consistent with our measurements. Mathematically, the goal is to select our estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of our actual measurements $\tilde{y}$:
+  <br>
+  Goal: Choose $\hat{x}$ to maximise $p(y=\tilde{y} | x = \hat{x})$
+
+  <p>
+    There are two steps to this process:
+    <ul>
+      <li>Find $p(y|x)$</li>
+      The probability density function $p(y|x)$ in this model, tells us the likelihood of the measurement y when the state is x .
+
+      <p>
+        <li>Choose $\hat{x}$</li>
+        Select the estimate $\hat{x}$ to be the value that yields a maximum likelihood of the actual measurements $\tilde{y}$ given the estimate $\hat{x}$.
+      </p>
+    </ul>
+  </p>
+
+  <subsection id="12.0"><h1>Breaking down the derivation steps</h1>
+
+  </subsection>
+    We're going to assume that the distribution $p(y|x)$ is Gaussian. We need an expression for the parameters of the distribution:
+
+    <ul>
+      <li>Mean</li>
+      Since $y = Hx + v$ and $v$ is a zero-mean gaussian, it's easy to show that the expected value, the mean, is: $\bar{y} = Hx$
+
+      <p>
+        <li>Covariance</li>
+        Given the properties of our noise model, $v \sim \mathcal{N}(0,R)$, it's also easy to show that the covariance $(y-\bar{y})(y-\bar{y})^T$ is going to be equal to the covariance of just the noise, $R$.
+      </p>
+    </ul>
+
+    Thus, $p(y|x) = \mathcal{N}(Hx, R)$
+
+    <p>
+      We just need to find a value of x-hat that maximizes the likelihood of the actual measurements y-tilde given x-hat.
+    </p>
+    
+    Writing out the formula for the above Gaussian:
+    $$
+      p(\tilde{y}|x) = \underbrace{
+          \frac{1}{(2\pi)^{\frac{n}{2}}\lvert{R}\rvert^{\frac{1}{2}}}
+        }_{\text{Normalizer}}
+      e^
+        \underbrace{
+          {-\frac{1}{2}(\tilde{y}-Hx)^TR^{-1}(\tilde{y}-Hx)}
+        }_{\text{Term to maximise}}
+    $$
+
+    The normalizer term does not depend on $x$ at all. For the likelihood of the received measurements of y-tilde given x, the specific choice of x has no impact on the normalizer and can be ignored.
+
+    <p>
+      To maximise this overall function, we need to maximise the term that's in the exponent; which means we just need to maximize the function in the exponent.
+    </p>
+
+
+    A standard way to solve for the maximum of a function is to take the derivative and find where it is zero. If we take the derivative of the exponent, set it equal to zero, and then solve for $x$, we get:
+    $$
+      \hat{x} = (H^TH)^{-1}H^T\tilde{y}
+    $$
+
+    This is a solution to the least squares estimation problem given some measurements $\tilde{y}$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that we assume we know. Using this, we can solve for the most likely estimate, $\hat{x}$.
+</section>
+
+<section id="13"><h1>Fitting A Line With Linear Least Squares</h1>
+  [<a href="https://t.ly/mwtO">Good quick tutorial</a>].
+  <br>
+  We now have the equation for the maximum likelihood estimator $\hat{x}$. The best estimate is purely a function of the measurement model $H$ and the actual measurements $\tilde{y}$.
+
+  <subsection id="13.0"><h1>Example</h1>
+    We're going to fit some noisy data to a straight line, given by the equation:
+    $$
+      y = at + b
+    $$
+
+    <div class="container">
+      <figure>
+        <img style="height:125px; width:auto"
+        src="../../../figures/drone/26_leastSquareLineFit.png"/>
+        <figcaption>
+          Straight line representing noisy data
+        </figcaption>
+      </figure>
+    </div>
+  </subsection>
+
+Let's assume that our data is sampled from the line with some added noise. What we actually want are the properties of the line, which form our unknown state vector $x$:
+$$
+  x = \begin{bmatrix}
+  a \\ b
+  \end{bmatrix}
+$$
+
+The model assumes that our measurements $y_1, y_2, \cdots$ are drawn according to a linear function $y_i$:
+$$
+  y_i = at_i + b + v_i
+$$
+It's the unknown $v_i$ that's perturbing the measurements from the line. The measurements are in the form of:
+$$
+  \tilde{y} = Hx + v
+$$
+
+We have the state vector $x$ and all the measured values: 
+$$\begin{bmatrix}
+  \tilde{y_1} \\
+  \vdots \\
+  \tilde{y_m}
+\end{bmatrix}$$
+
+In order to get the vector $y_i$ to match up with the vector $\tilde{y}$, we need an $H$ that looks as follows:
+$$\begin{bmatrix}
+  t_1 & 1 \\
+  \vdots & \vdots \\
+  t_m & 1
+\end{bmatrix}$$
+
+Now that we have our measurements, we have our $H$, we can use the equation for the maximum likelihood estimate to find the best estimate for x, $\hat{x}$. 
+
+<p>
+  An important thing to note is that once we have the measurements $\tilde{y}$, the least squares estimation problem boils down to figuring out exactly what the measurement model $H$ looks like. Figuring out how to form $H$ for any estimation problem is often the tricky bit.
+</p>
+</section>
+
+<section id="14"><h1>The problem with non-linearities</h1>
+  We want to infer the location of a vehicle from position measurements. The measurements are received one at a time when the vehicle is stationary. But now the measurements are noisy and a nonlinear function of the position. Maybe the measurements tell us something about the orientation.
+
+  $$
+    \tilde{y} = h(x) + v
+  $$
+  $x$: is a constant unknown state vector of length $n$
+  <br>
+  $\tilde{y}$: is the vector of $m$ measurements that is actually received
+  <br>
+  $v$: is the unknown error/noise vector with zero mean and known covariance
+  <br>
+  $h$: the measurement function (constant and known, but non-linear)
+
+  <p>
+    Before we had a linear function which meant we could write the function as a matrix $H$ times $x$.
+  </p>
+
+h is now problem,
+you might not have realized it but in recursive estimation we were actually
+projecting the measurement distribution into the same state space as the estimate.
+We had our estimate x and p of x.
+We had some distribution of measurements y and p of y.
+And the mean of that distribution was given by h of x,
+and the covariance was r. We could use
+the linear matrix h to project
+Gaussian distributions in the measurement space into the state space,
+and the fact that the measurements were related by a linear function given
+by h. Ensure that the projected distribution stayed Gaussian.
+That meant that the weighted average posterior distribution was Gaussian as well.
+
+But if h is an arbitrary function,
+we have no guarantees at all that the projected distribution of y will stay Gaussian,
+which makes it a lot harder to take a weighted average between
+the prior x hat naught and what the new measurements are telling us.
+So, we're left with a bit of a problem if
+we want to preserve this Gaussian to Gaussian mapping,
+we're going to need to find a way to make the measurement model linear.
 </section>
 </chapter>
 

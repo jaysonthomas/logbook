@@ -392,7 +392,7 @@ subsection > h1 {
   font-size: medium;
 }
 subsubsection > h1 {
-  display: inline;
+  /* display: inline; */
   font-size: medium;
 }
 definition > h1 {

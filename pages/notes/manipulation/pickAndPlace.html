@@ -54,6 +54,9 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Basic strategy</a></li>
+</ul>
 <a href="#1">Notations</a>
 <ul class="no-bullets">
   <li><a href="#1.0">Position</a></li>
@@ -63,6 +66,29 @@
   <li><a href="#1.4">Example usage</a></li>
 </ul>
 <a href="#2">Frames for pick and place</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Timing between key frames</a></li>
+</ul>
+<a href="#3">Interpolation between poses</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Interpolation between positions</a></li>
+  <li><a href="#3.1">Problems faced when interpolating between orientations</a></li>
+  <li><a href="#3.2">The right way to interpolate between orientations</a></li>
+</ul>
+<a href="#4">Forward kinematics problem</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Description</a></li>
+  <li><a href="#4.1">Computing the pose of the EE using FK</a></li>
+  <li><a href="#4.2">Defining $q$</a></li>
+  <li><a href="#4.3">Drake implementation</a></li>
+</ul>
+<a href="#5">Inverse kinematics</a>
+<a href="#6">Differential IK</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Description</a></li>
+  <li><a href="#6.1">Spatial velocity</a></li>
+  <li><a href="#6.2">Geometric jacobian</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
@@ -85,6 +111,27 @@
       We map the gripper plan sketch to moving the whole arm.
     </p>
   </ul>
+
+  <subsection id="0.0"><h1>Basic strategy</h1>
+    We have designed the gripper poses as a function of time using a trajectory generator and our aim is obtain corresponding joint positions as a function of time:
+
+    $$
+      X^G(t) \rightarrow q(t)
+    $$
+
+    The controller takes joint positions as input so we need to go from EE coordinates to joint commands. We start with a $q(0)$ and integrate forward using the joint velocity for that instant. The joint velocity is obtained by taking the inverse jacobian of the spatial velocity:
+
+    $$
+      \dot{q}(t) = [J^G(q)]^{-1}V^G(t)
+    $$
+    $V^G(t)$ is the spatial velocity of the gripper as a function of time.
+
+    <p>
+      We need to make sure the matrix is invertible or address it with more sophisticated methods. But intuitively we're going to design controllers that use the derivative of the kinematics (jacobian is approximately the derivative of FK) to get the smoothness in joint position transitions from one time instant to the next. 
+    </p>
+
+    We want to convert the smooth trajectory in EE coordinates to a smooth trajectory in the joint space, avoiding kinematic sigularities.
+  </subsection>
 </section>
 
 <section id="1"><h1>Notations</h1>
@@ -255,6 +302,249 @@
   </p>
 
   In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
+
+  <subsection id="2.0"><h1>Timing between key frames</h1>
+    Sometimes the time to finish a segment between going from 1 key frame to another, is absolute. Sometimes, it's scaled based on the distance between the frames. 
+  </subsection>
+</section>
+
+<section id="3"><h1>Interpolation between poses</h1>
+  We need to figure out where the gripper needs to be at all times between the pick and place frames, i.e. we need to interpolate between the key poses.
+
+  <subsection id="3.0"><h1>Interpolation between positions</h1>
+    <p>
+      Say, we had the following plot:
+      <ul>
+        <li>X-axis: time.</li>
+        We can specify when the pick and place should take place and all the other intermediate frames specified in time.
+
+        <p>
+          <li>Y-axis: ${^WP^G_{W_x}}$</li>
+          The position of the gripper in the world frame is a 3 element vector but we only consider the x component.
+        </p>
+      </ul>
+    </p>
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/39a_positionInterpolation.png"/>
+        <figcaption>
+          Key frames between pick and place times
+        </figcaption>
+      </figure>
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/39b_positionInterpolation.png"/>
+        <figcaption>
+          First order interpolation
+        </figcaption>
+      </figure>
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/39c_positionInterpolation.png"/>
+        <figcaption>
+          Zero order hold
+        </figcaption>
+      </figure>
+    </div>
+
+    There are different ways of interpolating:
+    <ul>
+      <li>First order hold</li>
+      It's called first order because the line joining 2 points has 1DOF i.e. the slope of the line. It's a simple straight line interpolation. Doing a first order interpolation for orientation requires a bit more care compared to doing it for positions.
+
+      <p>
+        <li>Zero order hold</li>
+        Zero order hold would be if there was no interpolation between the points and we just did some staircase. It is not safe to run this on a robot.
+      </p>
+      
+      <li>Higher order interpolations</li>
+      They give nice curves between key poses.
+    </ul>
+  </subsection>
+  
+  <subsection id="3.1"><h1>Problems faced when interpolating between orientations</h1>
+    <subsubsection><h1>Choice of representation</h1>
+      Some representations look simple to interpolate but then would blow up - could potentially go through bad states in the middle. 
+
+      <p>
+        There are roll pitch yaw values that represent very similar orientations but are actually very far in the values. Trying to go between one and another representation of roll pitch yaw might take the robot through extremely large numbers. This goes along with gimbal lock. 
+      </p>
+    </subsubsection>
+
+    <subsubsection><h1>Simple linear interpolation for orientations is not possible</h1>
+      Let's take a simple 2D rotation matrix example. We have a 2D rotation written as a function of some angle $\theta$ which will rotate a $2 \times 1$ vector by $\theta$ degrees:
+      $$
+        R(\theta) = \begin{bmatrix}
+        c\theta & -s\theta \\
+        s\theta & c\theta
+        \end{bmatrix}
+      $$
+
+      Let's say we have 2 rotation matrices for rotating by $90^0$ and the other by $0^0$.
+      $$
+        R(0) = \begin{bmatrix}
+        1 & 0 \\
+        0 & 1
+        \end{bmatrix} \quad
+        R(\frac{\pi}{2}) = \begin{bmatrix}
+        0 & -1 \\
+        1 & 0
+        \end{bmatrix}
+      $$
+
+      <div class="container">
+        <figure>
+          <img style="height:80px; width:auto"
+          src="../../../figures/manipulation/40a_0rotation.png"/>
+          <figcaption>
+            Rotation of a unit frame <code>Rotz(0)</code>
+          </figcaption>
+        </figure>
+        <figure>
+          <img style="height:80px; width:auto"
+          src="../../../figures/manipulation/40b_90rotation.png"/>
+          <figcaption>
+            Rotation of a unit frame <code>Rotz(90)</code>
+          </figcaption>
+        </figure>
+      </div>
+      If we were to linearly interpolate between the 2 angles, we wouldn't get $45^0$ i.e. we'd get $\frac{1}{2}$s in the rotation matrix instead of $\frac{1}{\sqrt{2}}$s. We can't just interpolate orientations.
+    </subsubsection>
+  </subsection>
+
+  <subsection id="3.2"><h1>The right way to interpolate between orientations</h1>
+    People typically use:
+    <ul>
+      <li>The quaternion representation to get around gimbal lock</li>
+      <li><i>SLERP (Spherical linear interpolation)</i> to get a smooth first order interpolation</li>
+    </ul>
+  </subsection>
+
+</section>
+
+<section id="4"><h1>Forward kinematics problem</h1>
+  <subsection id="4.0"><h1>Description</h1>
+    $$
+      X^G = f^G_{kin}(q)
+    $$  
+    The mapping from joint angles to poses is called the <i>Forward Kinematics problem</i>. Looking at the 2D rotation matrix above:
+    $$
+      R(\theta) = \begin{bmatrix}
+      c & -s \\
+      s & c     
+      \end{bmatrix}
+    $$
+    
+    If we have joint angle $\theta$ and we want to turn it into a rotation or a pose then it is almost always going to be a nonlinear map from the joint angles into the poses. The matrix above is maybe the simplest example of it.
+  </subsection>
+
+  <subsection id="4.1"><h1>Computing the pose of the EE using FK</h1>
+    Given that we've set all the joint angles:
+    <ul>
+      <li>Compute pose of the EE relative to the wrist</li>
+      We find the rotation matrix for the rotation joint which is just a relative pose.
+
+      <p>
+        <li>Chain it backwards all the way to the world coordinates</li>
+      </p>
+    </ul>
+
+    The math is simple because each individual joint is just describing a small rotation matrix kind of operation on a relative transform from right before the robot's joint until right after the robot's joint. That's how robots are specified in robot description files as relative poses of each link - 6 numbers: x, y, z, roll, pitch, yaw. Joints are just operations that will make a transformation from the pre joint frame to the post-joint frame. 
+
+  </subsection>
+
+  <subsection id="4.2"><h1>Defining $q$</h1>
+    In code, we define a $3\times 3$ rotation matrix for each joint based on the corresponding joint angle. We can then go through a series of frame transformations (through all the joints) to get the full kinematics. 
+    <ul>
+      <li>Iiwa</li>
+      In iiwa, it's a $7\times 1$ vector of rotational joint angles representing the revolute joints. It's 7 because we choose to use quaternions in the coordinate representation to avoid gimbal locks and singularities.
+
+      <p>
+        <li>Allegro hand</li>
+        It has 4 fingers with 4 links per finger. Total number of joint angles is 16. Plus, 7 numbers to configure its position in space. 
+      </p>
+
+      <li>Allegro hand picking up a brick</li>
+      23 numbers for the hand and 7 for the brick. The kinematics problem then becomes going from the 30 numbers (representing q) to some pose of the brick and hand.
+    </ul>
+  </subsection>
+
+  <subsection id="4.3"><h1>Drake implementation</h1>
+    To compute the FK in drake, we need to specify the frames to get the pose of the desired frame relative to some other frame expressed in some other frame.
+
+    <p>
+      The context is taken as the argument instead of $q$ because the kinematics can be parameterized. If we were designing a robot and we wanted to optimise the length of a link for instance. Then we'd like the kinematics to also be a function of the link lengths or some other quantities. Hence, this is useful.
+    </p>
+
+    The <i>context</i> is just state + parameters + time; it's just the structure that wraps it. 
+  </subsection>
+</section>
+
+<section id="5"><h1>Inverse kinematics</h1>
+  We could also do the following to get the joint angles:
+  $$
+    q = (f^G)^{-1}(X^G)
+  $$
+  
+  This is a nonlinear complicated function called <i>inverse kinematics</i>. There are many cases where there are multiple solutions or no solutions going from pose to joint angles. Going the other way is more straight forward. 
+
+  <p>
+    Sometimes we use the IK directly but oftentimes we do not because if your IK engine gives you slightly different answers for very similar poses, then it might involve crazy arm movements to achieve it. When we specify IK we don't only ask for the inverse we also put in some additional requirements for continuity/smoothness/centering etc. An example: if I had enough DOF in my arm and there were multiple solutions for joint angles given a fixed pose for the hand, then the IK engine could ask for different joint angles (for the same hand pose) every 0.0001 seconds. That wouldn't be good. 
+  </p>
+</section>
+
+<section id="6"><h1>Differential IK</h1>
+  <subsection id="6.0"><h1>Description</h1>
+    In order to encourage smoothness between joint angles instead of looking at IK we look at differential kinematics where we examine how an incremental change in $q$ makes an incremental change in the pose $X$:
+
+    $$\begin{align*}
+      \underbrace{dX^B}_{\text{Incremental change} \atop \text{in pose}} &= 
+      \frac{\partial{f^B}(q)}{\partial{q}}
+      
+      \underbrace{dq}_{\text{Incremental change} \atop \text{in joint angle}} \\
+
+      &= \underbrace{J^B(q)}_{\text{Jacobian}} \quad dq
+    \end{align*}$$ 
+
+    The Jacobian is a function of the current joint angles. 
+  </subsection>
+  
+  <subsection id="6.1"><h1>Spatial velocity</h1>
+    In order to start thinking about differential quantities (like the Jacobian), we'll need to know the joint velocity ($\frac{dq}{dt}$) and some pose velocity.
+
+    <p>
+      Just like we have spatial algebra for positions and orientations, we have it for velocities called <i>spatial velocity</i> which has a translation component and an orientation component:
+
+      $$\begin{bmatrix}
+        \omega \\ v
+      \end{bmatrix}$$
+
+      $\omega$ is the <i>angular velocities</i>, a $3 \times 1$ vector 
+      <br>
+      $v$ is the <i>translational velocities</i>, a $3 \times 1$ vector 
+      <br>
+      Spatial velocity is a $6 \times 1$ vector 
+    </p>
+
+    In pose, there's no canonical choice. In orientation, for example, we have problems based on the chosen representation. That's why we constantly move between representations. However there is a canonical choice for angular velocity. It is 3 numbers which are the rotations around the major axes. This notion of angular velocity simplifies everything once we get to velocities and spatial accelerations. 
+  </subsection>
+
+  <subsection id="6.2"><h1>Geometric jacobian</h1>
+    So, purely in terms of representation of spatial velocity, we have a canonical choice. The problem is that because we have so many different choices for $q$ and $X$, we have many different possible Jacobians to determine how we're going to go from joint angles/velocities to some spatial velocity. 
+    
+    <p>
+      A <i>geometric jacobian</i> takes joint velocities and maps that to spatial velocity vectors. It's not quite $\frac{\partial{f^B}(q)}{\partial q}$. It's this plus the change of coordinates into the spatial vectors. The analytic jacobian is the true partial derivative. But it's not recommended as much. There are cases where we might want that but almost always spatial velocities is recommended. 
+    </p>
+
+    Floating Allegro hand + brick: 30 numbers, 23 positions but only 22 velocities. For example, we'll have an extra term if we use the quaternion representation. But, this needs to turn into the $6 \times 1$ spatial velocity vector. So, there is a change of representation that takes place.
+
+    $$
+      dX^B = J^B(q) \underbrace{dq}_{\dot{q}?}
+    $$
+    Geometric jacobian is always a function of q. How do we represent $\dot{q}$? The joint position vector (because of say quaternion representation) is often times bigger than the joint velocity vector. And the spatial joint velocity can only take 6 numbers. Joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. We can map between them though. 
+  </subsection>
 </section>
 
 </chapter>
