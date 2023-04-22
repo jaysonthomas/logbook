@@ -59,6 +59,12 @@
 <a href="#3">Computing the estimator gain matrix $K_k$</a>
 <a href="#4">RLS algorithm</a>
 <a href="#5">Summary</a>
+<a href="#6">RLS from another view point</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Description</a></li>
+  <li><a href="#6.1">Finding $p(x|y)$</a></li>
+  <li><a href="#6.2">Choosing $\hat{x}$</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Recursive least squares</h1>
@@ -220,6 +226,109 @@
   <p>
     In the jupyter notebook, use RLS to determine a voltage value from a series of measurements. 
   </p>
+</section>
+
+<section id="6"><h1>RLS from another view point</h1>
+  <subsection id="6.0"><h1>Description</h1>
+    Instead of coming up with an estimate taking in all the measurements at once, we're going to maintain an estimate, allowing new measurements to update that estimate one at a time.
+
+    <p>
+      Let's assume that we have a prior estimate of the vehicle position, given as a Gaussian with an initial estimate $\hat{x}_0$ and covariance $Q_0$. The subscript $0$ denotes the estimate before any measurement is received and subscript $1$ denotes the estimate after one measurement is received.
+    </p>
+
+    $$
+      p(x) \sim \mathcal{N}(\hat{x}_0, Q_0)
+    $$
+
+    How can we actually use this prior in our estimation process? We adopt a very similar approach to the two steps we did before maximum likelihood estimation:
+
+    <ul>
+      <li>We first found the probability density function $p(y|x)$</li>
+      <li>We selected $x$ to be the value that yielded the maximum likelihood of the measurements, $\tilde{y}$ given $\hat{x}$</li>
+    </ul>
+
+    Now that we have a prior, we can find the posterior estimate $p(x|\tilde{y})$. The two steps of the new process are:
+
+    <ul>
+      <li>Find the probability density function $p(x|y)$</li>
+      <li>Select $\hat{x}$ to be the value that yields the maximum $p(\hat{x}|\tilde{y})$</li>
+      <p>
+        The output of this recursive estimate is usually referred to as the <i>Maximum A Posteriori (MAP) estimate</i>. We turn the prior into a posterior using new information from the new measurement. 
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="6.1"><h1>Finding $p(x|y)$</h1>
+    Applying Bayes' rule to Gaussians, we can get:
+    $$\begin{align*}
+      p(x|y) &= \frac{p(y|x)p(x)}{p(y)} \\
+      &= \underbrace{\alpha}_{\text{Normaliser}}
+      \underbrace{\mathcal{N}(Hx, R)}_{p(y|x)}
+      \underbrace{\mathcal{N}(\hat{x}_0, Q_0)}_{p(x)}
+    \end{align*}$$
+    
+    $p(x)$ is the prior. We can ignore the normaliser alpha just as we did in the maximum likelihood estimate, as it is not going to have any impact on the maximum.
+  </subsection>
+
+  <subsection id="6.2"><h1>Choosing $\hat{x}$</h1>
+    We select $\hat{x}$ hat to be the value that yields a maximum likelihood of $p(\hat{x}|\tilde{y})$. If we look at the full formula for the product Gaussian:
+
+    $$
+      p(\hat{x}|\tilde{y}) = 
+      \underbrace{
+      \frac{1}
+      {(2\pi)^{\frac{n}{2}} \lvert{R}\rvert^{\frac{1}{2}}}
+      \frac{1}
+      {(2\pi)^{\frac{n}{2}} \lvert{Q_0}\rvert^{\frac{1}{2}}}
+      }_{\text{Normalisers}}
+
+      e^\underbrace{{
+        -\frac{1}{2}(\tilde{y} - H\hat{x})^T 
+        R^{-1}(\tilde{y} - H\hat{x}) 
+        - \frac{1}{2}(\hat{x} - \hat{x}_0)^T
+        Q_0^{-1}(\hat{x}-\hat{x}_0)
+      }}_{\qquad\qquad\qquad\text{Maximise}}
+    $$
+
+    We have 2 of the normalizers from the Gaussian. We also have the product of the two exponents, which when we take the product of exponents becomes the exponent of the sum.
+
+    <p>
+      Just as before, the normaliser term does not depend on $x$, whereas the exponent does. We take the maximum of the function in the exponent by taking the derivative and finding where it's zero.
+    </p>
+
+    The result for this maximum A posteriori estimate is still a Gaussian with an updated mean and covariance:
+
+    $$
+      p(\hat{x}|\tilde{y}) \sim \mathcal{N}(\hat{x}_1, Q_1)
+    $$
+
+    <ul>
+      <li>We first do a covariance update to get $Q_1$</li>
+      $$
+        Q_1 = (Q_0^{-1} + H^TR^{-1}H)^{-1}
+      $$
+      $Q_1$ depends on $R$ even if $R$ is defined to be a variance times the identity matrix.
+
+      <p>
+        <li>The mean is then updated based on the new covariance</li>
+        $$
+          \hat{x} = \hat{x}_0 + 
+          \underbrace{Q_1}_{\text{Prior} \atop \text{covariance}}
+          H^T
+          \underbrace{R^{-1}}_{\text{Measurement} \atop \text{covariance}}
+          (\tilde{y} - H\hat{x}_0)
+        $$
+
+        The MAP estimate $\hat{x}$ is a weighted average between the prior $\hat{x}_0$ and what the new measurement says about $x$, $(\tilde{y} - H\hat{x}_0)$. The weights come from the relative magnitude of the prior and the measurement covariance.
+
+        <p>
+          The more we trust the prior estimate, the smaller the prior covariance! And the less the measurements will affect the estimate. The more we trust the measurements, the smaller the measurement covariance and the more the new measurements will change the current estimate.
+        </p>
+
+        A balance between prior and new information is the heart of the estimation process.
+      </p>
+    </ul>    
+  </subsection>
 </section>
 
 </chapter>
