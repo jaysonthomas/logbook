@@ -88,7 +88,10 @@
   <li><a href="#6.0">Description</a></li>
   <li><a href="#6.1">Spatial velocity</a></li>
   <li><a href="#6.2">Geometric jacobian</a></li>
+  <li><a href="#6.3">Joint velocity</a></li>
+  <li><a href="#6.4">Inverse Jacobian</a></li>
 </ul>
+<a href="#7">The controller</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
@@ -104,7 +107,7 @@
     </p>
 
     <li>Trajectory generation</li>
-    We'll plot the frames for the open-loop trajectory of the gripper picking up and dropping off the brick at the desired location.
+    We'll plot the frames for the open-loop trajectory of the gripper picking up and dropping off the brick at the desired location. We forget the rest of the robot and just decide the different trajectory of poses the hand needs to go through in space at different timestamps. We start off with a sketch and then just fill it out with interpolation.
 
     <p>
       <li>Inverse kinematics</li>
@@ -199,7 +202,7 @@
       ^BX^A
     $$
     
-    This is the position and orientation of frame $A$ relative to the position and orientation of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. (We need an expressed-in frame for the pose because of the position part.)
+    This is the position and orientation of frame $A$ relative to the position and orientation of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things we do in robotics, we do not need an expressed-in frame for a transform $^BX^A$. It's fine to put it in, but it's not needed. We however use the expressed-in frame for the derivative of a pose i.e. the spatial velocity $V_{6 \times 1}$.
 
     <p>
       $P^A$ is the same as $^WP^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
@@ -412,6 +415,16 @@
       </div>
       If we were to linearly interpolate between the 2 angles, we wouldn't get $45^0$ i.e. we'd get $\frac{1}{2}$s in the rotation matrix instead of $\frac{1}{\sqrt{2}}$s. We can't just interpolate orientations.
     </subsubsection>
+
+    <subsubsection><h1>Why don't we have such problems with angular velocities</h1>
+      Angles wrap around every $2\pi$ and velocities don't. If we rotate by $\pi$, $-\pi$ or $3\pi$, we'll end up at the same place. But $100rad/s$ is still different than every other positive radian per second.
+
+      <p>
+        In 2D, you can represent everything with a scalar, a single rotation. When the wrapping effect is seen, flip back from polar coordinates or rectangular coordinates and we can always figure out the angles between two locations. In 2d, if we think about a rotation taking us around a unit sphere - a point moving around the unit sphere, the angular velocity is just the tangent on that and it's well behaved.
+      </p>
+ 
+      In 3d, there are rotations/angles that we can get to from many paths and picking a unique inverse of it is messy. 
+    </subsubsection>
   </subsection>
 
   <subsection id="3.2"><h1>The right way to interpolate between orientations</h1>
@@ -427,16 +440,31 @@
 <section id="4"><h1>Forward kinematics problem</h1>
   <subsection id="4.0"><h1>Description</h1>
     $$
-      X^G = f^G_{kin}(q)
+      X^B = f^B_{kin}(q)
     $$  
-    The mapping from joint angles to poses is called the <i>Forward Kinematics problem</i>. Looking at the 2D rotation matrix above:
-    $$
-      R(\theta) = \begin{bmatrix}
-      c & -s \\
-      s & c     
-      \end{bmatrix}
-    $$
+
+    In this mathematical equation (actual implementation in code is different):
+    <br>
+    $q$ is the vector of positions.
+    <br>
+    $X$ is the pose in the world.
+    <br>
+    $f_{kin}$ is the FK of the body.
+    <br>
+    $B$ stands for body.
+    <br>
+    $G$ stands for gripper if it was used instead of $B$.    
     
+    <p>
+      The mapping from joint angles to poses is called the <i>Forward Kinematics problem</i>. Looking at the 2D rotation matrix above:
+      $$
+        R(\theta) = \begin{bmatrix}
+        c & -s \\
+        s & c     
+        \end{bmatrix}
+      $$
+    </p>
+
     If we have joint angle $\theta$ and we want to turn it into a rotation or a pose then it is almost always going to be a nonlinear map from the joint angles into the poses. The matrix above is maybe the simplest example of it.
   </subsection>
 
@@ -456,6 +484,10 @@
   </subsection>
 
   <subsection id="4.2"><h1>Defining $q$</h1>
+    <p>
+      $q$ should be defined in such a way so as to be sufficient to tell us where all the attached bodies are in the world. In iiwa that's bolted down, all we need are 7 numbers of the different rotations of the different joints. But if we have a red brick on the table, we need enough something in $q$ to be able to eventually pull out the pose. 
+    </p>
+
     In code, we define a $3\times 3$ rotation matrix for each joint based on the corresponding joint angle. We can then go through a series of frame transformations (through all the joints) to get the full kinematics. 
     <ul>
       <li>Iiwa</li>
@@ -479,25 +511,29 @@
     </p>
 
     The <i>context</i> is just state + parameters + time; it's just the structure that wraps it. 
+
+    <p>
+      Very often, quaternions is used to represent the position/orientation and rotation matrix is used to represent the pose $X$.
+    </p>
   </subsection>
 </section>
 
 <section id="5"><h1>Inverse kinematics</h1>
-  We could also do the following to get the joint angles:
+  We want to go from poses in the world to joint positions.
   $$
-    q = (f^G)^{-1}(X^G)
+    q = (f^B)^{-1}(X^B)
   $$
   
-  This is a nonlinear complicated function called <i>inverse kinematics</i>. There are many cases where there are multiple solutions or no solutions going from pose to joint angles. Going the other way is more straight forward. 
-
+  This is a nonlinear complicated function called <i>inverse kinematics</i>. It's not necessarily a unique mapping - there can be multiple $q$s that get the same pose in the world. There could also be no solutions. Going the other way is more straight forward.   
+  
   <p>
-    Sometimes we use the IK directly but oftentimes we do not because if your IK engine gives you slightly different answers for very similar poses, then it might involve crazy arm movements to achieve it. When we specify IK we don't only ask for the inverse we also put in some additional requirements for continuity/smoothness/centering etc. An example: if I had enough DOF in my arm and there were multiple solutions for joint angles given a fixed pose for the hand, then the IK engine could ask for different joint angles (for the same hand pose) every 0.0001 seconds. That wouldn't be good. 
+    Sometimes we use the IK directly but oftentimes we do not because if our IK engine gives us slightly different answers for very similar poses, then it might involve crazy arm movements to achieve it. We want to send smooth commands to the robot so that it's not jumping around to different solutions. When we specify IK, we normally also specify additional requirements for continuity/smoothness/centering etc. An example: if we had enough DOF in an arm and there were multiple solutions for joint angles given a fixed pose for the hand, then the IK engine could ask for different joint angles (for the same hand pose) every 0.0001 seconds. That wouldn't be good. 
   </p>
 </section>
 
 <section id="6"><h1>Differential IK</h1>
   <subsection id="6.0"><h1>Description</h1>
-    In order to encourage smoothness between joint angles instead of looking at IK we look at differential kinematics where we examine how an incremental change in $q$ makes an incremental change in the pose $X$:
+    In order to encourage smoothness between joint angles instead of IK we use the differential form of the kinematics where we examine how an incremental change in $q$ makes an incremental change in the pose $X$. If we want to make a relatively small change in a certain direction to the current pose, we figure out the incremental change in $q$ we need to make. Differential IK isn't defined perfectly everywhere but partial derivatives exist everywhere. 
 
     $$\begin{align*}
       \underbrace{dX^B}_{\text{Incremental change} \atop \text{in pose}} &= 
@@ -505,7 +541,9 @@
       
       \underbrace{dq}_{\text{Incremental change} \atop \text{in joint angle}} \\
 
-      &= \underbrace{J^B(q)}_{\text{Jacobian}} \quad dq
+      \underbrace{V^B}_{\text{Spatial} \atop \text{velocity}} 
+      &= \underbrace{J^B(q)}_{\text{Jacobian}} \quad \dot{q} \\
+
     \end{align*}$$ 
 
     The Jacobian is a function of the current joint angles. 
@@ -532,21 +570,50 @@
   </subsection>
 
   <subsection id="6.2"><h1>Geometric jacobian</h1>
-    So, purely in terms of representation of spatial velocity, we have a canonical choice. The problem is that because we have so many different choices for $q$ and $X$, we have many different possible Jacobians to determine how we're going to go from joint angles/velocities to some spatial velocity. 
+    <p>
+      Geometric jacobian is always a function of $q$. It is a position dependent matrix.
+    </p>
+    Purely in terms of <n>representation</n> of spatial velocity, we have a canonical choice. The problem is that because we have so many different choices for $q$ and $X$, we have many different possible Jacobians to determine how we're going to go from joint angles/velocities to some spatial velocity. 
     
     <p>
       A <i>geometric jacobian</i> takes joint velocities and maps that to spatial velocity vectors. It's not quite $\frac{\partial{f^B}(q)}{\partial q}$. It's this plus the change of coordinates into the spatial vectors. The analytic jacobian is the true partial derivative. But it's not recommended as much. There are cases where we might want that but almost always spatial velocities is recommended. 
     </p>
 
     Floating Allegro hand + brick: 30 numbers, 23 positions but only 22 velocities. For example, we'll have an extra term if we use the quaternion representation. But, this needs to turn into the $6 \times 1$ spatial velocity vector. So, there is a change of representation that takes place.
+  </subsection>
 
-    $$
-      dX^B = J^B(q) \underbrace{dq}_{\dot{q}?}
-    $$
-    Geometric jacobian is always a function of q. How do we represent $\dot{q}$? The joint position vector (because of say quaternion representation) is often times bigger than the joint velocity vector. And the spatial joint velocity can only take 6 numbers. Joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. We can map between them though. 
+  <subsection id="6.3"><h1>Joint velocity</h1>
+     How do we represent $\dot{q}$? The joint position vector (because of say quaternion representation) is often bigger than the joint velocity vector. And the spatial joint velocity can only take 6 numbers. Joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. We can map between them though. 
+  </subsection>
+
+  <subsection id="6.4"><h1>Inverse Jacobian</h1>
+    <subsubsection><h1>The problem</h1>
+      $$
+        \dot{q}_{\scriptscriptstyle{7 \times 1}} = 
+        [J^B_{\scriptscriptstyle{6\times{7}}}(q)]^{-1} 
+        V^B_{\scriptscriptstyle{6\times{1}}}
+      $$
+      The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. However, we can't take the inverse of a non-square matrix. Hence, this equation only represents what we would like to do conceptually.
+    </subsubsection>
+
+    <subsubsection><h1>Pseudo Inverse Jacobian</h1>
+      $$
+        \dot{q} = [J^B(q)]^{\dagger}V^B
+      $$
+      We actually do a pseudo inverse. It has magical properties. It works (i.e. it's well-defined)even if the matrix isn't square. When things are not square, we could have infinitely many or no solutions. <code>pinv</code> does the right thing. 
+
+      <p>
+        In the infinitely many solutions case, it will pick the one that's minimum norm in the least squares norm. It'll find the smallest solution. In this case it'd be the smallest joint velocities that achieve the desired velocity. If there are no solutions then it doesn't just fail it actually does its best effort and tries to find $\dot{q}$ that is as close to matching the equality as possible. The pseudo inverse is awesome. It just outputs a matrix.
+      </p>
+
+    </subsubsection>
   </subsection>
 </section>
 
+<section id="7"><h1>The controller</h1>
+  <a href="test.html">test</a>
+</section>
+</details>
 </chapter>
 
 </body>
