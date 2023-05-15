@@ -53,10 +53,14 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Example</a>
-<a href="#2">Minimising the squared error criterion</a>
-<a href="#3">Method of LS assumptions</a>
+<a href="#0">Definitions</a>
+<a href="#1">Assumptions in LS</a>
+<a href="#2">Least squares method</a>
+<a href="#3">Batch LS equation: Minimising the squared error criterion</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Limitation of the batch LS equation</a></li>
+  <li><a href="#3.1">Example</a></li>
+</ul>
 <a href="#4">Weighted LS</a>
 <a href="#5">Minimising the weighted LS criterion</a>
 <a href="#6">Weighted LS example</a>
@@ -64,99 +68,89 @@
 <a href="#8">Independent and identically distributed</a>
 <a href="#9">LS examples</a>
 <a href="#10">Musings</a>
-<a href="#11">Another intro</a>
+<a href="#11">Deriving The Maximum Likelihood Estimator</a>
 <ul class="no-bullets">
-  <li><a href="#11.0">Example</a></li>
+  <li><a href="#11.0">Breaking down the derivation steps</a></li>
 </ul>
-<a href="#12">Deriving The Maximum Likelihood Estimator</a>
+<a href="#12">Fitting A Line With Linear Least Squares</a>
 <ul class="no-bullets">
-  <li><a href="#12.0">Breaking down the derivation steps</a></li>
+  <li><a href="#12.0">Example</a></li>
 </ul>
-<a href="#13">Fitting A Line With Linear Least Squares</a>
-<ul class="no-bullets">
-  <li><a href="#13.0">Example</a></li>
-</ul>
-<a href="#14">The problem with non-linearities</a>
-<a href="#15">Calculating the Jacobian</a>
+<a href="#13">The problem with non-linearities</a>
+<a href="#14">Calculating the Jacobian</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
 
-<section id="0"><h1>Overview</h1>
-  <code>State estimation</code> (process of computing a physical quantity like position 
-  from a set of measurements) is used for localisation in autonomous driving.
-  Related to state estimation is the idea of <code>parameter estimation</code>. 
-  Unlike a <code>state</code>, which we will define as a physical quantity that changes over time, 
-  a <code>parameter</code> is constant over time. 
-  Position and orientation are states of a moving vehicle, while the resistance of a particular 
-  resistor in the electrical sub-system of a vehicle would be a parameter.
+<section id="0"><h1>Definitions</h1>
+  A <i>state</i> is a physical quantity that changes over time. <i>State estimation</i> (process of computing a state from a set of measurements) is used for localisation in autonomous driving. Position and orientation are states of a moving vehicle.
 
   <p>
-    Things to know about:
-    <ul>
-      <li>Ordinary and weighted least squares</li>
-      <ul>
-        <li>How is the LS error criterion used to estimate the best parameters</li>
-        <li>Derive the necessary normal equations that we'll need to 
-          solve to use the method</li>
-      </ul>
-      <li>Recursive least squares</li>
-      <li>Link between least squares and the maximum likelihood estimation technique</li>
-    </ul>
+    Related to state estimation is the idea of <i>parameter estimation</i>. A <i>parameter</i> is a physical quantity that is constant over time. The resistance of a particular resistor in the electrical sub-system of a vehicle would be a parameter.
   </p>
+
   Carl Friedrich Gauss' description of <code>Least Squares</code>:
   <br>
-  The most probable value of an unknown parameter is that which minimizes the sum of 
-  squared errors between what we observe and what we expect multiplied by numbers that
-  measure the degree of precision.
-
-  <p>
-    The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
-    <a href="https://t.ly/EKOi">Coursera ref</a>.
-  </p>
+  The most probable value of an unknown parameter is that which minimizes the sum of squared errors between what we observe and what we expect multiplied by numbers that measure the degree of precision.
 </section>
 
-<section id="1"><h1>Example</h1>
-  Suppose we are trying to measure the value in ohms of a carbon film
-  simple resistor within the drive system of an autonomous vehicle. Let's say we collect 
-  4 separate measurements, sequentially using a multimeter. 
-  Let's say the resistor is rated at $1k\Omega$. 
-  However, due to a number of factors, the true resistance can vary from the rated value. 
-  The resistor has a gold band which indicates that it can vary by as much as 
-  5%. Furthermore, let's imagine that our multimeter is particularly poor and that 
-  the person making the measurements is not particularly careful. 
+<section id="1"><h1>Assumptions in LS</h1>
+  Things to keep in mind when making a measurement:
+  <ul>
+    <li>Sampling time</li>
+    <li>Measurement model</li>
+    <li>State of the system at the time of the measurement</li>
+    <li>Accuracy of the measurements</li>
+  </ul>
+
+  With this in mind, the standard least squares approach applied to estimating the state of a flying car, would make the following unrealistic assumptions:
+
+  <ul>
+    <li>The measurements come in all at once</li>
+    <li>The underlying measurement model $H$ is noisy but linear</li>
+    Measurements of things like orientation are rarely linear.
+    <li>The vehicle is stationary</li>
+    <li>Each measurement has an equal weight in the error equation</li>
+    We care about each of the measurements equally.
+  </ul>
+
+</section>
+
+<section id="2"><h1>Least squares method</h1>
+  Despite the over-simplifications/assumptions above, the estimation technique is common for calibration, finding the transform between two coordinate systems or model fitting.
+
   <p>
-    <table class="table1 center">
-      <tr>
-        <th>Measurement</th>
-        <th>Resistance $\Omega$</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1068</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>988</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>1002</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>996</td>
-      </tr>
-    </table>
+    A linear function of $x$ can be written as: $y = Ax + b$. Consider a system where we take measurements of a state (which is constant at the time of measurement) or a parameter, $x$, such that:
+    $$
+      \underbrace{\tilde{y}}_{\scriptsize\text{Known}} = 
+      \underbrace{H}_{\scriptsize\text{Known} \atop \scriptsize\text{Constant}}
+      \underbrace{x}_{\scriptsize\text{Unknown} \atop \scriptsize\text{Constant}} 
+      + \underbrace{v}_{\scriptsize\text{Unknown}}
+    $$
+  </p>
+  $x$ is the constant unknown state/parameter vector of length $n$ that is to be estimated.
+  <br>
+  $\tilde{y}$ is the vector of measurements of length $m$ that is actually received. The measurements are a linear function of the physical quantity perturbed by some unknown noise.
+  <p>
+    $v$ is the unknown error vector. The noise is assumed to be drawn from a Gaussian distribution with a $0$ mean and some covariance $R$, i.e. $v$ can be assumed to be some known variance times the identity matrix.
+  </p>
+  $H$ is the <i>measurement matrix</i>. It is assumed to be known. It remains constant when a measurement is being taken. It projects the state/parameter into the measurement space.
+
+  <p>
+    If the error $v$ is known, we can solve for $x$: $Hx = \tilde{y} - v$. Or if $x$ is known, we can solve for $v$. We don't know either and that's what makes this an estimation problem. We use a <i>maximum likelihood estimation</i> approach. Intuitively, we look at the measurements and ask what state/parameter is the most likely to yield the particular set of measurements.
   </p>
 
+</section>
+
+<section id="3"><h1>Batch LS equation: Minimising the squared error criterion</h1>
+  Consider a parameter estimation example: To measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle, we collect 4 separate measurements sequentially using a multimeter. Let's say the resistor is rated at $1k\Omega$, but the true value can vary from the rated one. Furthermore, the multimeter could be inaccurate or there could be some human error in taking the measurements. 
+  
   Let $x$ be the actual resistance. Assume it is a constant, but unknown.
   We make measurements, $y$, of the resistance. We model our measurements as
-  corrupted by noise $v$.
+  corrupted by noise $v$. 
   $$\text{Measurement model}: y = x+v$$
 
-  For now, we'll treat this noise as equivalent to a general error, 
-  i.e. not interpret the noise from a probabilistic perspective.
+  For now, we'll treat this noise as equivalent to a general error, i.e. <n>not interpret the noise from a probabilistic perspective</n>.
   
   <figure>
     <img style="height:150px; width:auto"
@@ -164,18 +158,11 @@
   </figure>
 
   <p>
-    For each of the four measurements, we define a scalar noise term that is independent of the 
-    other noise terms. Statistically, we would say in this case that the noise is 
-    <code>independent and identically distributed</code> or <code>IID</code>. 
+    For each of the four measurements, we define a scalar noise term that is independent of the other noise terms. Statistically, we would say in this case that the noise is <code>independent and identically distributed</code> or <code>IID</code>. 
   </p>
     
-  Next, we define the error between each measurement and the actual value of our resistance $x$. 
-  But remember, we don't yet know what $x$ is. To find $x$, we square these errors to 
-  arrive at an equation that is a function of our measurements and the unknown resistance 
-  that we're looking for. 
-</section>
+  Next, we define the error between each measurement and the actual value of our resistance $x$ which we don't yet know. To find $x$, we square these errors to arrive at an equation that is a function of the measurements and the unknown resistance.
 
-<section id="2"><h1>Minimising the squared error criterion</h1>
   <p>
     With the above errors defined, the method of least squares says that the resistance value we 
     are looking for, i.e. the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) 
@@ -187,14 +174,7 @@
     \hat{x}_{LS} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
   $$
 
-  To minimize the squared error criterion, we'll rewrite our errors in matrix notation. 
-  This will be especially helpful when we have to deal with hundreds or even thousands of 
-  measurements. 
-  
-  <p></p>
-  We'll define an error vector identified as bold e, that is a function of our 
-  observations stacked into a vector y, a matrix H called the <code>Jacobian</code> and the 
-  true resistance. 
+  To minimize the squared error criterion, we'll rewrite our errors in matrix notation. This will be especially helpful when we have to deal with hundreds or even thousands of measurements. We define an error vector identified as $e$, that is a function of the observations stacked into a vector $y$, a matrix $H$ called the <code>Jacobian</code> and the true resistance. 
   $$\begin{gather*}
     \mathbf{e} = \mathbf{y} - \mathbf{H}x\\
     \begin{bmatrix}e_1 \\ e_2 \\ e_3 \\ e_4\end{bmatrix}
@@ -202,14 +182,10 @@
     \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
   \end{gather*}$$
   
-  $H$ has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ 
-  is the number of unknowns or parameters that we wish to estimate. In general, $H$
-  is a rectangular matrix that is easy to write down in this linear case but
-  will require more mathematical effort to compute in the case of non-linear 
-  estimation.
+  $H$ has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ is the number of unknowns that we wish to estimate. In general, $H$ is a rectangular matrix that is easy to write down in this linear case <n>but will require more mathematical effort to compute in the case of non-linear estimation</n>. 
   
   <p>
-    $x$ is a single scalar here. It can be a vector comprising multiple unknowns. 
+    In this example, $x$ is a single scalar, but it can be a vector comprising multiple unknowns. 
   </p>
   We can convert our squared error criterion to vector notation as follows. 
 
@@ -248,31 +224,25 @@
     -2y^TH + 2\hat{x}^TH^TH = 0
   \end{align*}$$
 
-  Re-arranging, we arrive at what are called the <code>normal equations</code>, which can be 
-  written as a single matrix formula. We can solve these to find $\hat{x}_{LS}$, 
-  the resistance which minimizes our squared error criterion. 
+  Re-arranging, we arrive at what are called the <code>normal equations</code>, which can be written as a single matrix formula. We can solve these to find $\hat{x}_{LS}$, the resistance which minimizes our squared error criterion. 
     
   $$
     \hat{x}_{LS} = (H^TH)^{-1}H^Ty
   $$
 
-  This expression has a unique solution, i.e. we will only be able to solve for $\hat{x}$ 
-  if and only if $(H^TH)^{-1}$ is not singular i.e. if the matrix $(H^TH)$ has an inverse,
-  i.e. if it is invertible. 
-  
-  If we have m measurements and n unknown parameters, then
-  $$
-    H \in \mathbb{R}^{m\times n} \quad\quad H^TH \in \mathbb{R}^{n\times n}
-  $$
-   
-  The matrix exists (and therefore derive the least squares 
-  solution) if and only if there are at least as many measurements as there are unknown 
-  parameters. This will usually not be a problem. In fact, we'll often face the challenge of 
-  dealing with too many measurements. 
-  But nevertheless, keep this limitation in mind when working with the formula. 
+  <subsection id="3.0"><h1>Limitation of the batch LS equation</h1>
+    This expression has a unique solution, i.e. we will only be able to solve for $\hat{x}$ if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an inverse, i.e. if it is invertible. 
+    
+    If we have m measurements and n unknown parameters, then
+    $$
+      H \in \mathbb{R}^{m\times n} \quad\quad H^TH \in \mathbb{R}^{n\times n}
+    $$
+    
+    The matrix exists (and therefore we'd be able to derive the least squares solution) if and only if there are at least as many measurements as there are unknowns. This will usually not be a problem. In fact, we'll often face the challenge of dealing with too many measurements. 
+  </subsection>
 
-  <p>
-    For our example:
+  <subsection id="3.1"><h1>Example</h1>
+    As per the above example:
     $$
       y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
       \quad
@@ -286,26 +256,13 @@
       \end{bmatrix}^{-1}
       \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
       \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
-      = \frac{1}{4}(1068 + 988 + 1002  996) = 1013.5 \Omega
+      = \frac{1}{4}(1068 + 988 + 1002 + 996) = 1013.5 \Omega
     $$
 
     Note that the expression simplifies to the arithmetic mean of the 4 measurements. 
     Now, we have another justification for using the arithmetic mean, 
     it minimizes the simple least squares criterion. 
-  </p>
-</section>
-
-<section id="3"><h1>Method of LS assumptions</h1>
-  We've assumed that:
-  <ul>
-    <li>Our measurement model is linear</li>
-    This is a very important assumption that is often broken in complex systems. 
-    
-    <p>
-      <li>Our measurements have an equal weight in our error equation</li>
-      We've assumed that we care about each of our measurements equally
-    </p>
-  </ul>
+  </subsection>
 </section>
 
 <section id="4"><h1>Weighted LS</h1>
@@ -510,13 +467,6 @@
       equal to zero.
     </p>
   </ul>
-  
-
-
-
-
-
-
 </section>
 
 <section id="9"><h1>LS examples</h1>
@@ -526,11 +476,29 @@
     and fit a straight line through the points. The slope gives R.
     Include reference to jlib documentation. Start jlib documentation from
     index.
-    <a href="../">Test</a>
   </ul>
 </section>
 
 <section id="10"><h1>Musings</h1>
+  <p>
+    The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
+    <a href="https://t.ly/EKOi">Coursera ref</a>.
+  </p>
+
+  <p>
+    Things to know about:
+    <ul>
+      <li>Ordinary and weighted least squares</li>
+      <ul>
+        <li>How is the LS error criterion used to estimate the best parameters</li>
+        <li>Derive the necessary normal equations that we'll need to 
+          solve to use the method</li>
+      </ul>
+      <li>Recursive least squares</li>
+      <li>Link between least squares and the maximum likelihood estimation technique</li>
+    </ul>
+  </p>
+
   <ul>
     <li>Ordinary LS measurement variance</li>
     If the 4 resistance measurements are taken by different sensors;
@@ -574,45 +542,7 @@
   </ul>
 </section>
 
-<section id="11"><h1>Another intro</h1>
-  The standard least squares approach applied to estimating the state of a flying car, would make the following unrealistic assumptions:
-
-  <ul>
-    <li>The vehicle is stationary</li>
-    <li>The measurements come in all at once</li>
-    <li>The underlying measurement model $H$ is noisy but linear</li>
-    Measurements of things like orientation are rarely linear.
-  </ul>
-
-  A linear function of $x$, which in this case maybe a vehicle position, can be written as:
-  $$
-    y = Ax + b
-  $$
-  
-  Despite these over-simplifications/assumptions, this estimation technique is common for calibration, finding the transform between two coordinate systems or model fitting.
-
-  <subsection id="11.0"><h1>Example</h1>
-    Let's consider a system where we make $m$ measurements $y$ of a constant state $x$, such that:
-    $$
-      \tilde{y} = Hx + v
-    $$
-    
-    $x$ is the constant unknown state vector of length $n$ that we're trying to estimate.
-    <br>
-    $\tilde{y}$ is the specific vector of measurements of length $m$. tilde denotes the actual measurements received. The measurements are a linear function of the state perturbed by some unknown noise.
-    <br>
-    $v$ is the unknown error vector. The noise is assumed to be drawn from a Gaussian distribution with a $0$ mean and some covariance $R$, which perhaps can be assumed to be some known variance times the identity matrix.
-    <br>
-    $H$ is the measurement matrix. It's assumed to be constant and known and it projects the state into the measurement space.
-
-    <p>
-      If we knew the error $v$, we could solve for $x$: $Hx = \tilde{y} - v$. Or if we knew $x$, we can solve for $v$. We don't know either of these and that's what makes this an estimation problem. We're going to use a maximum likelihood estimation approach. Intuitively, what we're going to do is look at our measurements and ask what vehicle state is the most likely to yield this particular set of measurements.
-    </p>
-  </subsection>
-  
-</section>
-
-<section id="12"><h1>Deriving The Maximum Likelihood Estimator</h1>
+<section id="11"><h1>Deriving The Maximum Likelihood Estimator</h1>
   We want to know what vehicle state is most consistent with our measurements. Mathematically, the goal is to select our estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of our actual measurements $\tilde{y}$:
   <br>
   Goal: Choose $\hat{x}$ to maximise $p(y=\tilde{y} | x = \hat{x})$
@@ -630,7 +560,7 @@
     </ul>
   </p>
 
-  <subsection id="12.0"><h1>Breaking down the derivation steps</h1>
+  <subsection id="11.0"><h1>Breaking down the derivation steps</h1>
 
   </subsection>
     We're going to assume that the distribution $p(y|x)$ is Gaussian. We need an expression for the parameters of the distribution:
@@ -677,12 +607,12 @@
     This is a solution to the least squares estimation problem given some measurements $\tilde{y}$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that we assume we know. Using this, we can solve for the most likely estimate, $\hat{x}$.
 </section>
 
-<section id="13"><h1>Fitting A Line With Linear Least Squares</h1>
+<section id="12"><h1>Fitting A Line With Linear Least Squares</h1>
   [<a href="https://t.ly/mwtO">Good quick tutorial</a>].
   <br>
   We now have the equation for the maximum likelihood estimator $\hat{x}$. The best estimate is purely a function of the measurement model $H$ and the actual measurements $\tilde{y}$.
 
-  <subsection id="13.0"><h1>Example</h1>
+  <subsection id="12.0"><h1>Example</h1>
     We're going to fit some noisy data to a straight line, given by the equation:
     $$
       y = at + b
@@ -736,7 +666,7 @@ Now that we have our measurements, we have our $H$, we can use the equation for 
 </p>
 </section>
 
-<section id="14"><h1>The problem with non-linearities</h1>
+<section id="13"><h1>The problem with non-linearities</h1>
   We want to infer the location of a vehicle from position measurements which are received one at a time when the vehicle is stationary. But now the measurements are noisy and a nonlinear function of the position. Maybe the measurements tell us something about the orientation.
 
   $$
@@ -783,7 +713,7 @@ Now that we have our measurements, we have our $H$, we can use the equation for 
   </p>
 </section>
 
-<section id="15"><h1>Calculating the Jacobian</h1>
+<section id="14"><h1>Calculating the Jacobian</h1>
   A common thing to do when linearising a nonlinear function, is to take the Taylor series approximation of $h$ around the estimate $\hat{x}_0$:
 
   $$

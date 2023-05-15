@@ -59,6 +59,7 @@
 <ul class="no-bullets">
   <li><a href="#2.0">Example</a></li>
 </ul>
+<a href="#3">Further commands</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Cmake</h1>
@@ -151,6 +152,42 @@ ld -o test -L<COMPONENT_BINARY_DIR> -L<STD_BINARY_DIR> test.o -lcomponent -lstd
 </code></pre>
 
   </subsection>
+</section>
+
+<section id="3"><h1>Further commands</h1>
+  <ul>
+    <li><code>set</code></li>
+<pre><code class="cmake">
+set(MY_VAR "Hello, world!")
+</code></pre>
+
+    If the value field is not specified, the variable is set to an empty string. <code>${variable_name}</code> allows us to access the value of a variable. This is useful if, for example, the variable holds the parent directory path and we want to access 1 particular file in the directory. 
+
+<pre><code class="cmake">
+${PARENT_DIR}/test.h
+</code></pre>
+
+    <p>
+      <li><code>list</code></li>
+<pre><code class="cmake">
+set(MY_VAR)
+list (APPEND MY_VAR test.h)
+</code></pre>
+
+      MY_VAR now has the value 'test.h'.
+    </p>
+
+    <li><code>if</code></li>
+<pre><code class="cmake">
+if(MY_VAR MATCHES "test.h")
+  # do something
+elseif
+  message(FATAL_ERROR "Test")
+endif
+</code></pre>
+
+    It's interesting how the variable name is used directly in the if loop.
+  </ul>
 </section>
 
 </chapter>

@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DIY Projects</title>
-  <meta name="DIY Projects" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../logbook.js"></script>
+  <title>Drone dynamics</title>
+  <meta name="Drone dynamics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script src="../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -57,25 +57,35 @@
 <a href="#1">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>DIY Projects</h1>
+<chapter style="counter-reset: chapter 0"><h1>Drone dynamics</h1>
 
 <section id="0"><h1>Table of Contents</h1>
   <ul>
     <li><a href="#1">Overview</a></li>
-    <li><a href="electrical.html">Electrical</a></li>
-    <li><a href="pallets.html">Wooden pallets</a></li>
-    <li><a href="tools.html">Tools</a></li>
-    <li><a href="loft.html">The loft</a></li>
-    <li><a href="cad.html">CAD of the house</a></li>
-    <li><a href="boiler.html">Boiler</a></li>
-    <li><a href="shower.html">Shower</a></li>
-    <li><a href="ladder.html">Ladder</a></li>
+    <li><a href="pid.html">Control</a></li>
+    <li><a href="#3">Musings</a></li>
+    <li><a href="full3DControl.html">Full 3D control</a></li>
   </ul>
 </section>
 
 <section id="1"><h1>Overview</h1>
-</section>
+  From a control standpoint, having a good dynamics model of a vehicle allows us to intelligently influence the output of the vehicle by properly setting the inputs. For a drone, the input would be the rotation rates of the four propellers and the output would be the resulting motion of the vehicle. 
 
+  <p>
+    <i>Dynamics</i> is concerned with the motion of bodies under the action of forces. For a drone, understanding the dynamics involves understanding:
+    <ul>
+      <li>How the rotation of the drone's four propellers creates forces</li>
+      <li>How these forces generate motion of the vehicle</li>
+    </ul>
+  </p>
+
+  The aim is to:
+  <ul>
+    <li>Understand the forces acting on a drone and how they affect motion</li>
+    <li>Implement a mathematical model of these forces in python</li>
+    <li>Use the model to advance the current state of the vehicle</li>
+  </ul>
+</section>
 </chapter>
 
 </body>

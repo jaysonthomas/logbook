@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gaussians</title>
+  <meta name="Gaussians" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Background</a>
+<a href="#1">Equation breakdown</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Gaussians</h1>
+
+<section id="0"><h1>Background</h1>
+  [<a href="https://t.ly/f0xn">Ref</a>] The basic form is given as:
+  $$
+    f(x) = e^{-x^2}
+  $$
+
+  The familiar gaussian equation used in probability is given as:
+  $$
+    p(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{\frac{-(x-\mu)^2}{2\sigma^2}}
+  $$
+</section>
+
+<section id="1"><h1>Equation breakdown</h1>
+  [<a href="https://bit.ly/44FVhZM">Desmos plots</a>]
+  <ul>
+    <li>$e^{x}$</li>
+    $e^{0.5} = 1.648$
+    <br>
+    $e^{1} = 2.718$
+    <br>
+    $e^{5} = 148.413$
+
+    <p>
+      With positive exponents, the value of the function keeps increasing exponentially.
+    </p>
+
+    $e^{-0.5} = 0.606$
+    <br>
+    $e^{-1} = 0.367$
+    <br>
+    $e^{-5} = 0.006737$
+
+    <p>
+      With negative exponents, the value keeps decreasing exponentially.
+    </p>
+
+    <li>$e^{-x}$</li>
+    This is a mirror of $e^x$. The value of the function decreases exponentially with positive $x$. But, increases exponentially with negative $x$. To get the familiar bell shape, we need to curb this exponential increase with negative values of $x$ and replicate the exponential decrease seen with positive $x$. Hence, we square $x$.
+
+    <p>
+      <li>$e^{-(x-\mu)^2}$</li>
+      The peak of the bell curve gets centred on $\mu$, i.e. with increasing positive values of $\mu$, the peak shifts to the right.
+    </p>
+
+    <li>$e^{-\frac{(x-\mu)^2}{\sigma^2}}$</li>
+    As $\sigma^2$ increases, the exponent becomes less negative, i.e. the exponent increases and the overall curve becomes flatter at the peak. For a given value of $x$, the function's value is now larger, so the curve doesn't have to decrease as fast.
+
+    <p>
+      To increase the probability of an event, we would need to decrease the variance, i.e. for a given value of $x$, the function's value is now smaller, so the curve has to decrease faster. The curve would be less flat at the peak.
+    </p>
+
+    If $\sigma$ wasn't squared, we would get an inverted bell curve.
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

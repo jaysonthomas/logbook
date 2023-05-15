@@ -64,6 +64,7 @@
 </ul>
 <a href="#5">What does a distribution have to do with robotics?</a>
 <a href="#6">Estimating parameters from data</a>
+<a href="#7">Drawing samples from a uniform distribution</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Continuous Probability</h1>
@@ -71,15 +72,9 @@
 <section id="0"><h1>Continuous samples space</h1>
   An example of a continuous samples space is the real value position of a robot: <a href="https://t.ly/_1lN">Slide 11</a>.
   Random variables become extremely powerful in this case.
-  [Using real numbers to index the members of a continuous set is fairly intuitive.]
 
   <p>
-    When dealing with a continuous sample space,
-    we can no longer say anything about the probability
-    that our vehicle is at some specific location,
-    because for a continuous sample space,
-    the probability of any particular value will always be zero.
-    We can only give the probability that our vehicle is in some region.
+    When dealing with a continuous sample space, we can no longer say anything about the probability that a vehicle is at some specific location, because for a continuous sample space, the probability of any particular value will always be 0. We can only give the probability that the vehicle is in some region.
   </p>
 </section>
 
@@ -277,6 +272,14 @@
   <p>
     It's quite convenient that the mean of the distribution matches the expected value,
     and the variance of the distribution matches that variance.
+  </p>
+</section>
+
+<section id="7"><h1>Drawing samples from a uniform distribution</h1>
+  Why it's okay for the probability density function to be greater than 1 [<a href="https://t.ly/2zE0">Ref</a>].
+
+  <p>
+    Drawing samples from a uniform distribution means randomly selecting values from a continuous range of values with an equal probability of selecting any value within that range. The probability density function of a uniform distribution is a constant, and the probability of selecting any given value within the range is the same. 
   </p>
 </section>
 
