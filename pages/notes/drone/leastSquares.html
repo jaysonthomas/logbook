@@ -58,26 +58,35 @@
 <a href="#2">Least squares method</a>
 <a href="#3">Batch LS equation: Minimising the squared error criterion</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Limitation of the batch LS equation</a></li>
-  <li><a href="#3.1">Example</a></li>
+  <li><a href="#3.0">Define the overall measurement model</a></li>
+  <li><a href="#3.1">Define the noise model</a></li>
+  <li><a href="#3.2">Define the cost function</a></li>
+  <li><a href="#3.3">Rewrite the cost function in matrix notation</a></li>
+  <li><a href="#3.4">Minimise the cost function to find the estimate</a></li>
+  <li><a href="#3.5">Limitation of the batch LS equation</a></li>
+  <li><a href="#3.6">Example</a></li>
 </ul>
 <a href="#4">Weighted LS</a>
-<a href="#5">Minimising the weighted LS criterion</a>
-<a href="#6">Weighted LS example</a>
-<a href="#7">Summary of WLS vs LS</a>
-<a href="#8">Independent and identically distributed</a>
-<a href="#9">LS examples</a>
-<a href="#10">Musings</a>
-<a href="#11">Deriving The Maximum Likelihood Estimator</a>
 <ul class="no-bullets">
-  <li><a href="#11.0">Breaking down the derivation steps</a></li>
+  <li><a href="#4.0">Estimating multiple unknowns</a></li>
+  <li><a href="#4.1">Defining the cost function</a></li>
+  <li><a href="#4.2">Minimising the cost function</a></li>
+  <li><a href="#4.3">Example</a></li>
 </ul>
-<a href="#12">Fitting A Line With Linear Least Squares</a>
+<a href="#5">Summary of WLS vs LS</a>
+<a href="#6">Independent and identically distributed</a>
+<a href="#7">LS examples</a>
+<a href="#8">Musings</a>
+<a href="#9">Deriving The Maximum Likelihood Estimator</a>
 <ul class="no-bullets">
-  <li><a href="#12.0">Example</a></li>
+  <li><a href="#9.0">Breaking down the derivation steps</a></li>
 </ul>
-<a href="#13">The problem with non-linearities</a>
-<a href="#14">Calculating the Jacobian</a>
+<a href="#10">Fitting A Line With Linear Least Squares</a>
+<ul class="no-bullets">
+  <li><a href="#10.0">Example</a></li>
+</ul>
+<a href="#11">The problem with non-linearities</a>
+<a href="#12">Calculating the Jacobian</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
@@ -116,7 +125,7 @@
 
 </section>
 
-<section id="2"><h1>Least squares method</h1>
+<section id="2"><h1>Least squares method overview</h1>
   Despite the over-simplifications/assumptions above, the estimation technique is common for calibration, finding the transform between two coordinate systems or model fitting.
 
   <p>
@@ -142,95 +151,103 @@
 
 </section>
 
-<section id="3"><h1>Batch LS equation: Minimising the squared error criterion</h1>
-  Consider a parameter estimation example: To measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle, we collect 4 separate measurements sequentially using a multimeter. Let's say the resistor is rated at $1k\Omega$, but the true value can vary from the rated one. Furthermore, the multimeter could be inaccurate or there could be some human error in taking the measurements. 
-  
-  Let $x$ be the actual resistance. Assume it is a constant, but unknown.
-  We make measurements, $y$, of the resistance. We model our measurements as
-  corrupted by noise $v$. 
-  $$\text{Measurement model}: y = x+v$$
+<section id="3"><h1>Batch LS: Minimising the squared error criterion</h1>
+  <subsection id="3.0"><h1>Define the overall measurement model</h1>
+    Consider a parameter estimation example: To measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle, we collect 4 separate measurements sequentially using a multimeter. Let's say the resistor is rated at $1k\Omega$, but the true value can vary from the rated one. Furthermore, the multimeter could be inaccurate or there could be some human error in taking the measurements. 
 
-  For now, we'll treat this noise as equivalent to a general error, i.e. <n>not interpret the noise from a probabilistic perspective</n>.
-  
-  <figure>
-    <img style="height:150px; width:auto"
-    src="../../../figures/drone/18_ls1_measModel.png"/>
-  </figure>
+    <p>
+      Let $x$ be the actual resistance. Assume it is a constant, but unknown.
+      We make measurements, $y$, of the resistance. We model our measurements as corrupted by noise $v$. 
+      $$\text{Measurement model}: y = x+v$$
+    </p>
+  </subsection>
 
-  <p>
-    For each of the four measurements, we define a scalar noise term that is independent of the other noise terms. Statistically, we would say in this case that the noise is <code>independent and identically distributed</code> or <code>IID</code>. 
-  </p>
+  <subsection id="3.1"><h1>Define the noise model</h1>
+    For now, we'll treat this noise as equivalent to a general error, i.e. <n>not interpret the noise from a probabilistic perspective</n>.
     
-  Next, we define the error between each measurement and the actual value of our resistance $x$ which we don't yet know. To find $x$, we square these errors to arrive at an equation that is a function of the measurements and the unknown resistance.
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../figures/drone/18_ls1_measModel.png"/>
+    </figure>
 
-  <p>
-    With the above errors defined, the method of least squares says that the resistance value we 
-    are looking for, i.e. the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) 
-    is one which minimizes the <code>squared error criterion</code>, also sometimes called the 
-    <code>squared error cost function</code> or <code>loss function</code>; i.e. the sum of 
-    squared errors.
-  </p>
-  $$
-    \hat{x}_{LS} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
-  $$
+    <p>
+      For each of the four measurements, we define a scalar noise term that is independent of the other noise terms. Statistically, we would say in this case that the noise is <code>independent and identically distributed</code> or <code>IID</code>. 
+    </p>
+  </subsection>  
 
-  To minimize the squared error criterion, we'll rewrite our errors in matrix notation. This will be especially helpful when we have to deal with hundreds or even thousands of measurements. We define an error vector identified as $e$, that is a function of the observations stacked into a vector $y$, a matrix $H$ called the <code>Jacobian</code> and the true resistance. 
-  $$\begin{gather*}
-    \mathbf{e} = \mathbf{y} - \mathbf{H}x\\
-    \begin{bmatrix}e_1 \\ e_2 \\ e_3 \\ e_4\end{bmatrix}
-    = \begin{bmatrix}y_1 \\ y_2 \\ y_3 \\ y_4\end{bmatrix} -
-    \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
-  \end{gather*}$$
-  
-  $H$ has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ is the number of unknowns that we wish to estimate. In general, $H$ is a rectangular matrix that is easy to write down in this linear case <n>but will require more mathematical effort to compute in the case of non-linear estimation</n>. 
-  
-  <p>
-    In this example, $x$ is a single scalar, but it can be a vector comprising multiple unknowns. 
-  </p>
-  We can convert our squared error criterion to vector notation as follows. 
+  <subsection id="3.2"><h1>Define the cost function</h1>
+    Next, we define the error between each measurement and the actual value of our resistance $x$ which we don't yet know. To find $x$, we square these errors to arrive at an equation that is a function of the measurements and the unknown resistance.
 
-  $$\begin{align*}
-    \mathcal{L}_{LS}(x) = e^2_1 + e^2_2 + e^2_3 + e^2_4 &= \mathbf{e}^T\mathbf{e} \\
-    &= (\mathbf{y} - \mathbf{H}x)^T(\mathbf{y} - \mathbf{H}x) \\
-    &= \mathbf{y}^T\mathbf{y} - x^T\mathbf{H}^T\mathbf{y} - \mathbf{y}^T\mathbf{H}x + x^T\mathbf{H}^T\mathbf{H}x
-  \end{align*}$$
-  
-  <button class="accordion">Selah</button>
-  <div class="panel">
-    $e^Te$, i.e. matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.
+    <p>
+      With the above errors defined, the method of least squares says that the resistance value we are looking for, i.e. the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) is one which minimizes the <code>squared error criterion</code>, also sometimes called the 
+      <code>squared error cost function</code> or <code>loss function</code>; i.e. the sum of squared errors.
+    </p>
+    $$
+      \hat{x}_{LS} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
+    $$
+  </subsection>
 
-    $$\begin{align*}
-      y &= H\hat{x} \\
-      \hat{x} &= \frac{y}{H} \\
-      &= \frac{H^Ty}{H^TH} = (H^TH)^{-1}H^Ty
-
-    \end{align*}$$
-
-    Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>. 
+  <subsection id="3.3"><h1>Rewrite the cost function in matrix notation</h1>
+    To minimize the squared error criterion, we'll rewrite our errors in matrix notation. This will be especially helpful when we have to deal with hundreds or even thousands of measurements. We define an error vector identified as $e$, that is a function of the observations stacked into a vector $y$, a matrix $H$ called the <code>Jacobian</code> and the true resistance. 
+    $$\begin{gather*}
+      \mathbf{e} = \mathbf{y} - \mathbf{H}x\\
+      \begin{bmatrix}e_1 \\ e_2 \\ e_3 \\ e_4\end{bmatrix}
+      = \begin{bmatrix}y_1 \\ y_2 \\ y_3 \\ y_4\end{bmatrix} -
+      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
+    \end{gather*}$$
+    
+    $H$ has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ is the number of unknowns that we wish to estimate. In general, $H$ is a rectangular matrix that is easy to write down in this linear case <n>but will require more mathematical effort to compute in the case of non-linear estimation</n>. 
     
     <p>
-      <m>When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?</m>
+      In this example, $x$ is a single scalar, but it can be a vector comprising multiple unknowns. 
     </p>
-  </div>
+    We can convert our squared error criterion to vector notation as follows. 
 
-  We need to minimize the squared error with respect to our true resistance $x$. 
-  From calculus, we know that we can solve for an extremum (here, a minimum) 
-  by taking the partial derivative of the function (here, squared error) w.r.t. 
-  the unknown $x$ and setting the derivative to $0$. 
-  
-  $$\begin{align*}
-    \frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}} = 
-    -y^TH - y^TH + 2\hat{x}^TH^TH = 0 \\
-    -2y^TH + 2\hat{x}^TH^TH = 0
-  \end{align*}$$
+    $$\begin{align*}
+      \mathcal{L}_{LS}(x) = e^2_1 + e^2_2 + e^2_3 + e^2_4 &= \mathbf{e}^T\mathbf{e} \\
+      &= (\mathbf{y} - \mathbf{H}x)^T(\mathbf{y} - \mathbf{H}x) \\
+      &= \mathbf{y}^T\mathbf{y} - x^T\mathbf{H}^T\mathbf{y} - \mathbf{y}^T\mathbf{H}x + x^T\mathbf{H}^T\mathbf{H}x
+    \end{align*}$$
+  </subsection>
 
-  Re-arranging, we arrive at what are called the <code>normal equations</code>, which can be written as a single matrix formula. We can solve these to find $\hat{x}_{LS}$, the resistance which minimizes our squared error criterion. 
+  <subsection id="3.4"><h1>Minimise the cost function to find the estimate</h1>
+    <button class="accordion">Selah</button>
+    <div class="panel">
+      $e^Te$, i.e. matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.
+
+      $$\begin{align*}
+        y &= H\hat{x} \\
+        \hat{x} &= \frac{y}{H} \\
+        &= \frac{H^Ty}{H^TH} = (H^TH)^{-1}H^Ty
+
+      \end{align*}$$
+
+      Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>. 
+      
+      <p>
+        <m>When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?</m>
+      </p>
+    </div>
+
+    We need to minimize the squared error with respect to our true resistance $x$. 
+    From calculus, we know that we can solve for an extremum (here, a minimum) 
+    by taking the partial derivative of the function (here, squared error) w.r.t. 
+    the unknown $x$ and setting the derivative to $0$. 
     
-  $$
-    \hat{x}_{LS} = (H^TH)^{-1}H^Ty
-  $$
+    $$\begin{align*}
+      \frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}} = 
+      -y^TH - y^TH + 2\hat{x}^TH^TH = 0 \\
+      -2y^TH + 2\hat{x}^TH^TH = 0
+    \end{align*}$$
 
-  <subsection id="3.0"><h1>Limitation of the batch LS equation</h1>
+    Re-arranging, we arrive at what are called the <code>normal equations</code>, which can be written as a single matrix formula. We can solve these to find $\hat{x}_{LS}$, the resistance which minimizes our squared error criterion. 
+      
+    $$
+      \hat{x}_{LS} = (H^TH)^{-1}H^Ty
+    $$
+  </subsection>
+
+  <subsection id="3.5"><h1>Limitation of the batch LS equation</h1>
     This expression has a unique solution, i.e. we will only be able to solve for $\hat{x}$ if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an inverse, i.e. if it is invertible. 
     
     If we have m measurements and n unknown parameters, then
@@ -241,7 +258,7 @@
     The matrix exists (and therefore we'd be able to derive the least squares solution) if and only if there are at least as many measurements as there are unknowns. This will usually not be a problem. In fact, we'll often face the challenge of dealing with too many measurements. 
   </subsection>
 
-  <subsection id="3.1"><h1>Example</h1>
+  <subsection id="3.6"><h1>Example</h1>
     As per the above example:
     $$
       y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
@@ -266,147 +283,132 @@
 </section>
 
 <section id="4"><h1>Weighted LS</h1>
-  What if some of our measurements are of better quality than others i.e. there's
-  varying measurement noise variance? For example, 1 sensor is better than the other.
-
-  <p>
-    From now on, 
-    let's drop the assumption that we're only estimating one parameter and derive the 
-    more general normal equations. This will allow us to formulate a way to estimate multiple 
-    parameters at one time. For example, if we wanted to estimate several resistance values 
-    at once. 
-  </p>
-
-  Let's begin by using the following general notation. We have $m$ 
-  measurements that are related to $n$ unknown parameters through a linear model 
-  represented by $H$, the Jacobian matrix whose form and entries will depend on the particular 
-  problem at hand. 
-
-  $$
-    \begin{bmatrix}y_1 \\ . \\ . \\ y_m\end{bmatrix}
-    = H\begin{bmatrix}x_1 \\ . \\ . \\ x_n\end{bmatrix}
-    + \begin{bmatrix}v_1 \\ . \\ . \\ v_m\end{bmatrix}
-  $$
-  $$
-    y = Hx + v
-  $$
+  <subsection id="4.0"><h1>Estimating multiple unknowns</h1>
+    <p>
+      From now on, let's drop the assumption that we're only estimating one parameter and derive the more general normal equations. This will allow us to formulate a way to estimate multiple parameters at one time. For example, if we wanted to estimate several resistance values at once. 
+    </p>
   
-  One way to interpret the ordinary method of least squares is to say 
-  that we are implicitly assuming that each noise term v_i is an independent random 
-  variable across measurements and has an equal variance i.e. IID.
-
-  $$
-    \mathbb{E}[v^2_i] = \sigma^2\enspace (i=1,..,m)
-    \qquad \qquad R = \mathbb{E}[vv^T]=
-    \begin{bmatrix}
-    \sigma^2 & & 0 \\
-    & \ddots & \\
-    0 & & \sigma^2    
-    \end{bmatrix}
-  $$
+    Let's begin by using the following general notation. We have $m$ 
+    measurements that are related to $n$ unknown parameters through a linear model represented by $H$, the Jacobian matrix whose form and entries will depend on the particular problem at hand. 
   
-  $\mathbb{E}$ is the expected value. The expected value of the square of the deviation
-  from the mean (here, the mean is assumed to be the true value) is the same as the 
-  variance.
-  
-  <p>
-    If we instead assume that each noise term is independent but has a
-    different variance, we can define our noise covariance as follows.
-  </p>
+    $$
+      \begin{bmatrix}y_1 \\ . \\ . \\ y_m\end{bmatrix}
+      = H\begin{bmatrix}x_1 \\ . \\ . \\ x_n\end{bmatrix}
+      + \begin{bmatrix}v_1 \\ . \\ . \\ v_m\end{bmatrix}
+    $$
+    $$
+      y = Hx + v
+    $$
+  </subsection>
 
-  $$
-    \mathbb{E}[v^2_i] = \sigma^2_i \enspace (i=1,..,m)
-    \qquad \qquad R = \mathbb{E}[vv^T]=
-    \begin{bmatrix}
-    \sigma_1^2 & & 0 \\
-    & \ddots & \\
-    0 & & \sigma_m^2    
-    \end{bmatrix}
-  $$
+  <subsection id="4.1"><h1>Defining the cost function</h1>
+    What if some of our measurements are of better quality than others i.e. there's varying measurement noise variance? For example, 1 sensor is better than the other.
 
-  We can define a weighted least squares criterion as:
-  $$\begin{align*}
-    \mathcal{L}_{WLS}(x) &= e^TR^{-1}e\\
-    &= \frac{e^2_1}{\sigma^2_1} + \cdots + \frac{e^2_m}{\sigma^2_m}
-  \end{align*}$$
-  
-  Each squared error term is now weighted by the inverse of the variance 
-  associated with the corresponding measurement. In other words, the lower the 
-  variance of the noise, the more strongly it's associated error term will 
-  be weighted in the loss function. 
-  
-  <p>
-    In the case of equal variances, the same parameters that 
-    minimize our weighted least squares criterion will also minimize our ordinary least 
-    squares criterion as we should expect. We do get $\frac{1}{\sigma^2}$; but since the 
-    variance is constant, it will not affect the final estimate. 
-  </p>
+    One way to interpret the ordinary method of least squares is to say 
+    that we are implicitly assuming that each noise term $v_i$ is an independent random variable across measurements and has an equal variance i.e. IID.
 
+    $$
+      \mathbb{E}[v^2_i] = \sigma^2\enspace (i=1,..,m)
+      \qquad \qquad R = \mathbb{E}[vv^T]=
+      \begin{bmatrix}
+      \sigma^2 & & 0 \\
+      & \ddots & \\
+      0 & & \sigma^2    
+      \end{bmatrix}
+    $$
+    
+    $\mathbb{E}$ is the expected value. The expected value of the square of the deviation from the mean (here, the mean is assumed to be the true value) is the same as the variance.
+    
+    <p>
+      If we instead assume that each noise term is independent but has a
+      different variance, we can define our noise covariance as follows.
+    </p>
+
+    $$
+      \mathbb{E}[v^2_i] = \sigma^2_i \enspace (i=1,..,m)
+      \qquad \qquad R = \mathbb{E}[vv^T]=
+      \begin{bmatrix}
+      \sigma_1^2 & & 0 \\
+      & \ddots & \\
+      0 & & \sigma_m^2    
+      \end{bmatrix}
+    $$
+
+    We can define a weighted least squares criterion as:
+    $$\begin{align*}
+      \mathcal{L}_{WLS}(x) &= e^TR^{-1}e\\
+      &= \frac{e^2_1}{\sigma^2_1} + \cdots + \frac{e^2_m}{\sigma^2_m}
+    \end{align*}$$
+    
+    Each squared error term is now weighted by the inverse of the variance 
+    associated with the corresponding measurement. In other words, the lower the variance of the noise, the more strongly it's associated error term will be weighted in the loss function. 
+    
+    <p>
+      In the case of equal variances, we get $\frac{1}{\sigma^2}$; but since the variance is constant, it will not affect the final estimate. 
+    </p>
+  </subsection>
+  
+  <subsection id="4.2"><h1>Minimising the cost function</h1>
+    Expanding the new criterion:
+
+    $$\begin{align*}
+      \mathcal{L}_{WLS}(x) &= e^TR^{-1}e\\
+      &= (y-Hx)^TR^{-1}(y-Hx)
+    \end{align*}$$
+
+    We minimise the same way as before by taking a derivative. 
+    In the general case where we have $n$ unknown parameters in our bold vector $x$, 
+    this derivative will actually be a gradient. Setting the gradient to the 0 vector, 
+    we then solve for our best or optimal parameter vector $\mathbf{\hat{x}}$. 
+    $$
+      \hat{x} = argmin_x\mathcal{L}(x) \qquad \longrightarrow \qquad
+      \frac{\partial{\mathcal L}}{\partial x}\Bigr|_{x=\hat{x}}
+      = 0 = -y^TR^{-1}H + \hat{x}^TH^TR^{-1}H
+    $$
+    This leads to another set of normal equations called the weighted normal equations. 
+    $$\begin{align*}
+      H^TR^{-1}H\hat{x}_{WLS} &= H^TR^{-1}y \\
+      \hat{x} &= (H^TR^{-1}H)^{-1} H^TR^{-1}y
+    \end{align*}$$
+
+    An individual variance is assigned to each measurement, which means that the 
+    matrix $\mathbf{R}$ (and its inverse) is $m \times m$ in size.
+  </subsection>
+  
+  <subsection id="4.3"><h1>Example</h1>
+    <figure>
+      <img style="height:70px; width:auto"
+      src="../../../figures/drone/19_wlsExample.png"/>
+    </figure>
+
+    Noise is described in standard deviations, hence why they have the units of ohms. They need to be squared to get the variances.
+
+    $$\begin{align*}
+      \hat{x} &= (H^TR^{-1}H)^{-1} H^TR^{-1}y \\
+      &=
+      \begin{bmatrix}
+        \begin{bmatrix}1 & 1 & 1 & 1\end{bmatrix} &
+        \begin{bmatrix}400&&& \\ &400&& \\ &&4& \\ &&&4 \end{bmatrix}^{-1} &
+        \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}
+      \end{bmatrix}^{-1} 
+
+      \begin{bmatrix}1 & 1 & 1 & 1\end{bmatrix}
+      \begin{bmatrix}400&&& \\ &400&& \\ &&4& \\ &&&4 \end{bmatrix}^{-1}
+      \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996\end{bmatrix} \\
+
+      &= \frac{1}{1/400 + 1/400 + 1/4 + 1/4}
+      (\frac{1068}{400} + \frac{988}{400} + \frac{1002}{4} + \frac{996}{4}) \\
+      &= 999.3\Omega
+    \end{align*}$$
+
+    Evaluating the weighted least squares solution, we can see that the 
+    final resistance value is much closer to what the more accurate multimeter 
+    measured.
+  </subsection>
 </section>
 
-<section id="5"><h1>Minimising the weighted LS criterion</h1>
-  Expanding the new criterion:
-
-  $$\begin{align*}
-    \mathcal{L}_{WLS}(x) &= e^TR^{-1}e\\
-    &= (y-Hx)^TR^{-1}(y-Hx)
-  \end{align*}$$
-
-  We minimise the same way as before by taking a derivative. 
-  In the general case where we have $n$ unknown parameters in our bold vector $x$, 
-  this derivative will actually be a gradient. Setting the gradient to the 0 vector, 
-  we then solve for our best or optimal parameter vector $\mathbf{\hat{x}}$. 
-  $$
-    \hat{x} = argmin_x\mathcal{L}(x) \qquad \longrightarrow \qquad
-    \frac{\partial{\mathcal L}}{\partial x}\Bigr|_{x=\hat{x}}
-    = 0 = -y^TR^{-1}H + \hat{x}^TH^TR^{-1}H
-  $$
-  This leads to another set of normal equations called the weighted normal equations. 
-  $$\begin{align*}
-    H^TR^{-1}H\hat{x}_{WLS} &= H^TR^{-1}y \\
-    \hat{x} &= (H^TR^{-1}H)^{-1} H^TR^{-1}y
-  \end{align*}$$
-
-  An individual variance is assigned to each measurement, which means that the 
-  matrix $\mathbf{R}$ (and its inverse) is $m \times m$ in size.
-</section>
-  
-<section id="6"><h1>Weighted LS example</h1>
-  <figure>
-    <img style="height:70px; width:auto"
-    src="../../../figures/drone/19_wlsExample.png"/>
-  </figure>
-
-  Noise is described in standard deviations, hence why they have the units of ohms.
-  They need to be squared to get the variances.
-
-  $$\begin{align*}
-    \hat{x} &= (H^TR^{-1}H)^{-1} H^TR^{-1}y \\
-    &=
-    \begin{bmatrix}
-      \begin{bmatrix}1 & 1 & 1 & 1\end{bmatrix} &
-      \begin{bmatrix}400&&& \\ &400&& \\ &&4& \\ &&&4 \end{bmatrix}^{-1} &
-      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}
-    \end{bmatrix}^{-1} 
-
-    \begin{bmatrix}1 & 1 & 1 & 1\end{bmatrix}
-    \begin{bmatrix}400&&& \\ &400&& \\ &&4& \\ &&&4 \end{bmatrix}^{-1}
-    \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996\end{bmatrix} \\
-
-    &= \frac{1}{1/400 + 1/400 + 1/4 + 1/4}
-    (\frac{1068}{400} + \frac{988}{400} + \frac{1002}{4} + \frac{996}{4}) \\
-    &= 999.3\Omega
-  \end{align*}$$
-
-  Evaluating the weighted least squares solution, we can see that the 
-  final resistance value is much closer to what the more accurate multimeter 
-  measured.
-</section>
-
-<section id="7"><h1>Summary of WLS vs LS</h1>
-  By using weighted least squares, we can vary the importance of each measurement to the 
-  final estimate. It's important to be comfortable working with different measurement 
-  variances and also with measurements that are sometimes correlated. 
+<section id="5"><h1>Summary of WLS vs LS</h1>
+  By using weighted least squares, we can vary the importance of each measurement to the final estimate. Measurements can have different   variances and also, sometimes, be correlated. 
 
   <p>
     <table class="table2 center">
@@ -436,17 +438,10 @@
     </table>
   </p>
 
-  We need to make sure that we model our error sources correctly.
-  We derived the weighted 
-  least squares criterion and the associated weighted normal equations that can be solved 
-  to yield the weighted least squares estimate of a set of 'constant parameters'. 
-  We need to modify the method of least squares to work 
-  recursively, that is to compute an optimal estimate based on a stream of measurements
-  without having to acquire the entire set beforehand, when we look at state estimation, 
-  or the problem of estimating quantities that change continuously over time.
+  We derived the weighted least squares criterion and the associated weighted normal equations that can be solved to yield the weighted least squares estimate of a set of 'constant parameters'. We need to modify the method of least squares to work recursively, that is to compute an optimal estimate based on a stream of measurements without having to acquire the entire set beforehand, when we look at state estimation, or the problem of estimating quantities that change continuously over time.
 </section>
 
-<section id="8"><h1>Independent and identically distributed</h1>
+<section id="6"><h1>Independent and identically distributed</h1>
   What does it mean for a set of random variables to be independent and identically distributed?
   <ul>
     <li>
@@ -469,34 +464,10 @@
   </ul>
 </section>
 
-<section id="9"><h1>LS examples</h1>
-  <ul>
-    <li>Example 1 </li>
-    V=IR. We don't know R. We collect lots of data related to V and I,
-    and fit a straight line through the points. The slope gives R.
-    Include reference to jlib documentation. Start jlib documentation from
-    index.
-  </ul>
-</section>
-
-<section id="10"><h1>Musings</h1>
+<section id="8"><h1>Musings</h1>
   <p>
     The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
     <a href="https://t.ly/EKOi">Coursera ref</a>.
-  </p>
-
-  <p>
-    Things to know about:
-    <ul>
-      <li>Ordinary and weighted least squares</li>
-      <ul>
-        <li>How is the LS error criterion used to estimate the best parameters</li>
-        <li>Derive the necessary normal equations that we'll need to 
-          solve to use the method</li>
-      </ul>
-      <li>Recursive least squares</li>
-      <li>Link between least squares and the maximum likelihood estimation technique</li>
-    </ul>
   </p>
 
   <ul>
@@ -506,12 +477,7 @@
 
     <p>
       For each of the 4 sensors, take 100 measurements and work out the 
-      variance. Variance is the sum of deviation from the mean times the probability
-      of occurrence of the corresponding measurement. 
-      I'm guessing a manufacturer will need to provide this info when they do tests of 
-      measuring known physical properties. In most cases, they'd probably assume
-      the probability of each of the 100 measurements is the same. So, the variance
-      just becomes the mean of the squared deviations.
+      variance. Variance is the sum of squared deviations from the mean times the probability of occurrence of the corresponding measurement. I'm guessing a manufacturer will need to provide this info when they do tests of measuring known physical properties. In most cases, they'd probably assume the probability of each of the 100 measurements is the same. So, the variance just becomes the mean of the squared deviations.
     </p>
 
     <p>
@@ -542,7 +508,7 @@
   </ul>
 </section>
 
-<section id="11"><h1>Deriving The Maximum Likelihood Estimator</h1>
+<section id="9"><h1>Deriving The Maximum Likelihood Estimator</h1>
   We want to know what vehicle state is most consistent with our measurements. Mathematically, the goal is to select our estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of our actual measurements $\tilde{y}$:
   <br>
   Goal: Choose $\hat{x}$ to maximise $p(y=\tilde{y} | x = \hat{x})$
@@ -560,7 +526,7 @@
     </ul>
   </p>
 
-  <subsection id="11.0"><h1>Breaking down the derivation steps</h1>
+  <subsection id="9.0"><h1>Breaking down the derivation steps</h1>
 
   </subsection>
     We're going to assume that the distribution $p(y|x)$ is Gaussian. We need an expression for the parameters of the distribution:
@@ -607,12 +573,12 @@
     This is a solution to the least squares estimation problem given some measurements $\tilde{y}$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that we assume we know. Using this, we can solve for the most likely estimate, $\hat{x}$.
 </section>
 
-<section id="12"><h1>Fitting A Line With Linear Least Squares</h1>
+<section id="10"><h1>Fitting A Line With Linear Least Squares</h1>
   [<a href="https://t.ly/mwtO">Good quick tutorial</a>].
   <br>
   We now have the equation for the maximum likelihood estimator $\hat{x}$. The best estimate is purely a function of the measurement model $H$ and the actual measurements $\tilde{y}$.
 
-  <subsection id="12.0"><h1>Example</h1>
+  <subsection id="10.0"><h1>Example</h1>
     We're going to fit some noisy data to a straight line, given by the equation:
     $$
       y = at + b
@@ -666,7 +632,7 @@ Now that we have our measurements, we have our $H$, we can use the equation for 
 </p>
 </section>
 
-<section id="13"><h1>The problem with non-linearities</h1>
+<section id="11"><h1>The problem with non-linearities</h1>
   We want to infer the location of a vehicle from position measurements which are received one at a time when the vehicle is stationary. But now the measurements are noisy and a nonlinear function of the position. Maybe the measurements tell us something about the orientation.
 
   $$
@@ -706,14 +672,14 @@ Now that we have our measurements, we have our $H$, we can use the equation for 
       </figcaption>
     </figure>
   </div>
-  But if $h$ is an arbitrary function, we have no guarantees that the projected distribution of $y$ will stay Gaussian; which makes it a lot harder to take a weighted average between the prior $\hat{x}_0$ and what the new measurements are telling us.
+  But if $h$ is an arbitrary function, we have no guarantees that the projected distribution of $y$ will stay Gaussian; <m>which makes it a lot harder to take a weighted average between the prior $\hat{x}_0$ and what the new measurements are telling us</m>.
 
   <p>
     The problem is, if we want to preserve the Gaussian to Gaussian mapping, we need to find a way to make the measurement model linear.
   </p>
 </section>
 
-<section id="14"><h1>Calculating the Jacobian</h1>
+<section id="12"><h1>Calculating the Jacobian</h1>
   A common thing to do when linearising a nonlinear function, is to take the Taylor series approximation of $h$ around the estimate $\hat{x}_0$:
 
   $$
