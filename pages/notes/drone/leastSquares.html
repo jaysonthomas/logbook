@@ -55,8 +55,8 @@
   
 <a href="#0">Definitions</a>
 <a href="#1">Assumptions in LS</a>
-<a href="#2">Least squares method</a>
-<a href="#3">Batch LS equation: Minimising the squared error criterion</a>
+<a href="#2">Least squares method overview</a>
+<a href="#3">Batch LS: Minimising the squared error criterion</a>
 <ul class="no-bullets">
   <li><a href="#3.0">Define the overall measurement model</a></li>
   <li><a href="#3.1">Define the noise model</a></li>
@@ -75,18 +75,17 @@
 </ul>
 <a href="#5">Summary of WLS vs LS</a>
 <a href="#6">Independent and identically distributed</a>
-<a href="#7">LS examples</a>
-<a href="#8">Musings</a>
-<a href="#9">Deriving The Maximum Likelihood Estimator</a>
+<a href="#7">Musings</a>
+<a href="#8">Deriving The Maximum Likelihood Estimator</a>
 <ul class="no-bullets">
-  <li><a href="#9.0">Breaking down the derivation steps</a></li>
+  <li><a href="#8.0">Breaking down the derivation steps</a></li>
 </ul>
-<a href="#10">Fitting A Line With Linear Least Squares</a>
+<a href="#9">Fitting A Line With Linear Least Squares</a>
 <ul class="no-bullets">
-  <li><a href="#10.0">Example</a></li>
+  <li><a href="#9.0">Example</a></li>
 </ul>
-<a href="#11">The problem with non-linearities</a>
-<a href="#12">Calculating the Jacobian</a>
+<a href="#10">The problem with non-linearities</a>
+<a href="#11">Calculating the Jacobian</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least squares</h1>
@@ -464,7 +463,7 @@
   </ul>
 </section>
 
-<section id="8"><h1>Musings</h1>
+<section id="7"><h1>Musings</h1>
   <p>
     The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
     <a href="https://t.ly/EKOi">Coursera ref</a>.
@@ -508,7 +507,7 @@
   </ul>
 </section>
 
-<section id="9"><h1>Deriving The Maximum Likelihood Estimator</h1>
+<section id="8"><h1>Deriving The Maximum Likelihood Estimator</h1>
   We want to know what vehicle state is most consistent with our measurements. Mathematically, the goal is to select our estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of our actual measurements $\tilde{y}$:
   <br>
   Goal: Choose $\hat{x}$ to maximise $p(y=\tilde{y} | x = \hat{x})$
@@ -526,7 +525,7 @@
     </ul>
   </p>
 
-  <subsection id="9.0"><h1>Breaking down the derivation steps</h1>
+  <subsection id="8.0"><h1>Breaking down the derivation steps</h1>
 
   </subsection>
     We're going to assume that the distribution $p(y|x)$ is Gaussian. We need an expression for the parameters of the distribution:
@@ -573,12 +572,12 @@
     This is a solution to the least squares estimation problem given some measurements $\tilde{y}$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that we assume we know. Using this, we can solve for the most likely estimate, $\hat{x}$.
 </section>
 
-<section id="10"><h1>Fitting A Line With Linear Least Squares</h1>
+<section id="9"><h1>Fitting A Line With Linear Least Squares</h1>
   [<a href="https://t.ly/mwtO">Good quick tutorial</a>].
   <br>
   We now have the equation for the maximum likelihood estimator $\hat{x}$. The best estimate is purely a function of the measurement model $H$ and the actual measurements $\tilde{y}$.
 
-  <subsection id="10.0"><h1>Example</h1>
+  <subsection id="9.0"><h1>Example</h1>
     We're going to fit some noisy data to a straight line, given by the equation:
     $$
       y = at + b
@@ -632,7 +631,7 @@ Now that we have our measurements, we have our $H$, we can use the equation for 
 </p>
 </section>
 
-<section id="11"><h1>The problem with non-linearities</h1>
+<section id="10"><h1>The problem with non-linearities</h1>
   We want to infer the location of a vehicle from position measurements which are received one at a time when the vehicle is stationary. But now the measurements are noisy and a nonlinear function of the position. Maybe the measurements tell us something about the orientation.
 
   $$
@@ -679,7 +678,7 @@ Now that we have our measurements, we have our $H$, we can use the equation for 
   </p>
 </section>
 
-<section id="12"><h1>Calculating the Jacobian</h1>
+<section id="11"><h1>Calculating the Jacobian</h1>
   A common thing to do when linearising a nonlinear function, is to take the Taylor series approximation of $h$ around the estimate $\hat{x}_0$:
 
   $$

@@ -53,128 +53,36 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Mathjax</a>
-<a href="#1">Software downloads</a>
+<a href="#0">Software downloads</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Snap installs</a></li>
-  <li><a href="#1.1">Apt-get installs</a></li>
-  <li><a href="#1.2">Apt installs</a></li>
-  <li><a href="#1.3">Repositories</a></li>
-  <li><a href="#1.4">Miscellaneous</a></li>
+  <li><a href="#0.0">Snap installs</a></li>
+  <li><a href="#0.1">Apt-get installs</a></li>
+  <li><a href="#0.2">Apt installs</a></li>
+  <li><a href="#0.3">Repositories</a></li>
+  <li><a href="#0.4">Visual studio code extensions</a></li>
+  <li><a href="#0.5">Miscellaneous</a></li>
 </ul>
-<a href="#2">Latex</a>
+<a href="#1">Latex</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Good examples</a></li>
+  <li><a href="#1.0">Good examples</a></li>
 </ul>
-<a href="#3">Json</a>
-<a href="#4">Webpage</a>
-<a href="#5">Drawio</a>
-<a href="#6">Git</a>
+<a href="#2">Json</a>
+<a href="#3">Webpage</a>
+<a href="#4">Drawio</a>
+<a href="#5">Git</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>General software related notes</h1>
 
-<section id="0"><h1>Mathjax</h1>
-  <ul>
-    <li>Matrix notation</li>
-    $\begin{bmatrix}a & b\\c & d\end{bmatrix}$
-    <br>
-    Rows are terminated with <i>\\\</i> and columns are separated by <i>&</i>.
-    <p></p>
-    
-    <li>Display lines</li>
-    <a href="https://t.ly/4pZq">The selected answer</a> works. If the equations
-    need not be numbered use <code>\begin{gather*}</code>
-    and <code>\end{gather*}</code>. Use align for alignment.
-    <p></p>
-
-    <li>Left alignment of equations</li>
-    <a href="https://bit.ly/3UUkxpd">Ref</a>. Use <code>&</code>
-    to specify the points in lines that we want aligned with each other.
-    <p></p>
-    
-    <li><a href="t.ly/8MRnV">Good link</a> for quick reference</li>
-    
-    <li>Numbering equations</li>
-    \begin{equation}\bh(\bq) = 0.\end{equation}
-    
-    <p></p>
-    <li>Aligning parts of the equation and adding newlines</li>
-    \begin{equation}\displaylines{  
-      \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
-      s.t. \quad & |v|\leq v_{max}     
-    }\end{equation}
-
-    <code>\quad</code> adds 4 spaces.
-    <br>
-    <code>&</code> aligns the centres of the left sides (to the ampersand symbol)
-    between themselves. Does the same to the right sides as well.
-    <br>
-    <code>\displaylines</code> takes into account <code>\\</code> to mean
-    'leave a new line'.
-    <p></p>
-
-    <li>'Sum of' with the limits</li>
-    <a href="https://t.ly/FO2d">Good link</a>.
-    <p></p>
-
-    <li>Spaces in equations</li>
-    <a href="https://t.ly/M3Q4">Ref</a>.
-    <p></p>
-
-    <li>Underbrace</li>
-    $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
-    <code>\underbrace{</code>The part of the equation to be labelled
-      <code>}_{\text{</code>The label<code>}}</code>
-    <br>
-    [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
-
-    <p>
-      <li>Multiple lines in underbrace</li>
-      <a href="https://t.ly/YkN6">Ref</a>.
-      <code>\underbrace{}_{\text{} \atop \text{}}</code> works well.
-    </p>
-
-
-    <li>Adding a package to mathjax</li>
-    Added the cancel package to <a href="../../notes-mathjax-config.js">here</a>.
-    <a href="https://t.ly/PEhT">Ref</a>.
-
-    <p>
-      <li>Including normal text with math</li>
-      <code>\text{}</code>
-    </p>
-
-    <li>Evaluated at</li>
-    $$\frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}}$$
-
-    <p>
-      <li>Symbols</li>
-      $$
-        \in \quad \mathbb{R}
-      $$
-    </p>
-
-    <li>Randoms</li>
-    enspace - half of a quad
-    <br>
-    qquad - double the quad
-    <br>
-    ddots - diagonal dots (3) useful for a matrix
-    <br>
-    cdots - horizontal dots (3)
-  </ul>
-</section>
-
-<section id="1"><h1>Software downloads</h1>
-  <subsection id="1.0"><h1>Snap installs</h1>
+<section id="0"><h1>Software downloads</h1>
+  <subsection id="0.0"><h1>Snap installs</h1>
 <pre><code class="bash">
 sudo snap install --classic code
 drawio
 </code></pre>
   </subsection>
 
-  <subsection id="1.1"><h1>Apt-get installs</h1>
+  <subsection id="0.1"><h1>Apt-get installs</h1>
 <pre><code class="bash">
 python3-pip
 python3.8 
@@ -194,14 +102,14 @@ texlive-full
 </code></pre>
   </subsection>
 
-  <subsection id="1.2"><h1>Apt installs</h1>
+  <subsection id="0.2"><h1>Apt installs</h1>
 <pre><code>
 net-tools
 bazel
 </code></pre>
   </subsection>
 
-  <subsection id="1.3"><h1>Repositories</h1>
+  <subsection id="0.3"><h1>Repositories</h1>
     To be able to download different versions of python. I couldn't install python3.8 otherwise. 
     There is a standard/default python version that is included in every version of 
     ubuntu - I only have access to that otherwise.
@@ -212,14 +120,14 @@ sudo apt-get install python3.8
 </code></pre>
   </subsection>
 
-  <subsection><h1>Visual studio code extensions</h1>
+  <subsection id="0.4"><h1>Visual studio code extensions</h1>
 <pre><code>
 Latex workshop
 Plantuml
 </code></pre>    
   </subsection>
   
-  <subsection id="1.4"><h1>Miscellaneous</h1>
+  <subsection id="0.5"><h1>Miscellaneous</h1>
     <ul>
       <li>Qt</li>
       Good <a href="https://t.ly/e5-U">link</a>.
@@ -227,16 +135,16 @@ Plantuml
   </subsection>
 </section>
 
-<section id="2"><h1>Latex</h1>
+<section id="1"><h1>Latex</h1>
   <a href="https://t.ly/JKUa">Cheat sheet</a>.
   
-  <subsection id="2.0"><h1>Good examples</h1>
+  <subsection id="1.0"><h1>Good examples</h1>
     Modern robotics library document. I've placed it in my 
     <a href="t.ly/sbeF">github repo</a> for the coursera assignment I completed.
   </subsection>
 </section>
 
-<section id="3"><h1>Json</h1>
+<section id="2"><h1>Json</h1>
   <a href="https://t.ly/i-y4">This</a> shows the general format.
   I used it as:
 <pre><code class="json">
@@ -254,7 +162,7 @@ To convert this into a dataframe:
 Use <code>json.load()</code> to read a json file.
 </section>
 
-<section id="4"><h1>Webpage</h1>
+<section id="3"><h1>Webpage</h1>
   <ul>
     <li>Details</li>
     [<a href="https://t.ly/cJkC">Ref</a>] Just the details tag. The summary tag provides the summary.
@@ -270,7 +178,7 @@ Linking to the equation from elsewhere.
     </p>
     
     <li>The other way to reference equations</li>
-    Just before <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
+    Just <n>before</n> <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
     <br>
     To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
     <br><br>
@@ -318,7 +226,7 @@ Linking to the equation from elsewhere.
   </ul>
 </section>
 
-<section id="5"><h1>Drawio</h1>
+<section id="4"><h1>Drawio</h1>
   <ul>
   <li>
     To type mathematical equations, enable 
@@ -331,7 +239,7 @@ Linking to the equation from elsewhere.
   </ul>
 </section>
 
-<section id="6"><h1>Git</h1>
+<section id="5"><h1>Git</h1>
   <ul>
     <li>Submodules</li>
     <a href="https://t.ly/VMEV">Ref</a>.

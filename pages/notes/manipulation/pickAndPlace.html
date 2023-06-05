@@ -92,6 +92,9 @@
   <li><a href="#6.4">Inverse Jacobian</a></li>
 </ul>
 <a href="#7">The controller</a>
+<ul class="no-bullets">
+  <li><a href="#7.0">Limitations</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
@@ -640,7 +643,7 @@
     The manipulation station outputs the actual/measured iiwa positions. The trajectory generator converts the planned sketch into a spatial velocity trajectory. It feed into the PIC, which feeds into the integrator which feeds the manipualtion station.
   </p>
 
-  <subsection><h1>Limitations</h1>
+  <subsection id="7.0"><h1>Limitations</h1>
     The chapter's notebook has sliders that rotates the joints of the arm which then changes the Jacobian, which is printed.
 
     <p>
