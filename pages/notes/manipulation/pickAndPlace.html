@@ -95,6 +95,21 @@
 <ul class="no-bullets">
   <li><a href="#7.0">Limitations</a></li>
 </ul>
+<a href="#8">Singularities</a>
+<a href="#9">Differential IK as optimisation</a>
+<ul class="no-bullets">
+  <li><a href="#9.0">Simple linear example - scalar case</a></li>
+  <li><a href="#9.1">Simple linear example - vector/matrix case</a></li>
+  <li><a href="#9.2">Adding limits/boundaries</a></li>
+</ul>
+<a href="#10">Summary of the usefulness of optimisation</a>
+<a href="#11">Example</a>
+<a href="#12">Closing remarks</a>
+<ul class="no-bullets">
+  <li><a href="#12.0">QP formulation 1</a></li>
+  <li><a href="#12.1">QP formulation 2</a></li>
+  <li><a href="#12.2">Comparison of the 2 formulations</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
@@ -600,9 +615,10 @@
     </subsubsection>
 
     <subsubsection><h1>Pseudo Inverse Jacobian</h1>
-      $$
+      $$\begin{equation}
+        \label{eq:pseudoInverseJacobian}
         \dot{q} = [J^B(q)]^{\dagger}V^B
-      $$
+      \end{equation}$$
       We actually do a pseudo inverse. It has magical properties. It works (i.e. it's well-defined)even if the matrix isn't square. When things are not square, we could have infinitely many or no solutions. <code>pinv</code> does the right thing. 
 
       <p>
@@ -679,6 +695,288 @@
     </p>
 
   </subsection>
+</section>
+
+<section id="8"><h1>Singularities</h1>
+  Refer to <code>two_link_singularities.py</code>. It's a simple example of a two-link pendulum. It runs through a simple trajectory where it will get fully extended along the way. The pendulum is walking in and out of singularity with no problems. There's nothing blowing up but the Jacobian does go singular.
+
+  <p>
+    People talk a lot about singularities and they can be mysterious, but they need not be. We can derive the Jacobian for the example. Are there good solutions the controller could make or is it just hopeless?  We start by deriving the short version of the kinematics. 
+  </p>
+
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/manipulation/43_singularityExample2Link.png"/>
+      <figcaption>
+        2 link pendulum. $\theta_1$ will be negative since right-hand coordinate system is used.
+      </figcaption>
+    </figure>
+  </div>
+
+  The pendulum follows a simple open loop trajectory. It's designed so that the horizontal position of the EE is a sine wave and the vertical position (y axis) is always 0:
+
+  $$
+    P^G(t) = \begin{bmatrix}
+      2c(1-t) \\
+      0       \\
+    \end{bmatrix}
+  $$
+
+  The position of the gripper is given by:
+  $$
+    P^G = \begin{bmatrix}
+      c\theta_1 + c(\theta_1 + \theta_2) \\
+      s\theta_1 + s(\theta_1 + \theta_2) \\
+    \end{bmatrix}
+  $$
+
+  The first row is the x component. The first part of the first row is the contribution of link 1 and after the plus sign is the contribution of link 2. Taking the Jacobian is relatively simple. Here, in translational coordinates, there is no change of variables; no weird orientations; it really is just the partial derivative of this matrix.
+
+  $$
+    J^G = \begin{bmatrix}
+      -s\theta_1 - s(\theta_1 + \theta_2) & -s(\theta_1 + \theta_2) \\
+       c\theta_1 + c(\theta_1 + \theta_2) & c(\theta_1 + \theta_2)  \\
+    \end{bmatrix}
+  $$
+
+  When the arm is fully extended, the sine of both angles go to 0 (in row 1) and the whole row goes to zero; The matrix drops rank.
+
+  <p>
+    Things could get bad with a pseudo inverse controller, but the aim is to understand why/how they get bad and how we can predict it. So singularities are real. It really is that the mapping between the EE positions and the joint angles gets into a terrible situation. But it does not mean the robot is helpless. So what does it mean?
+  </p>
+
+  If the arm is stretched out (in the forward direction), how do we control it to move it back (like in the <a href="https://shorturl.at/ghrW0">animation</a>)? Is there any velocity that we can command at the joint angles? If we have a desired velocity at the EE, how do we map to a desired velocity of the joints? We can't! The only possible velocity at the joints is zero. That's real, we can't move with a velocity instantaneously but we can accelerate backwards. By choosing a joint angle that is not instantaneously achieving the velocity objective, we can move out, start accelerating and get to a position where we can start commanding velocities. 
+
+  <p>
+    So thinking about things only in the EE velocity space does have foibles, some quirks but it does not mean the robot is helpless. It just means we have to be a little more clever. 
+  </p>
+
+  Q: If we move everything up to acceleration space have we just deferred the problem to the next set of variables? No. It's actually better in acceleration space. Now we'd have to think about exactly what the acceleration based controller would be to give a great answer. We can accelerate instantaneously but we cannot command a velocity instantaneously.
+
+  <p>
+    In practice, the thing to worry about is running the Jacobian based controller very close to dropping rank (similar to the pendulum example with the sine of angle being 0) because maybe we don't actually want the robot to be at its very end. But if we're just innocently choosing some trajectories we can get close to singularity (0) and we might start commanding ridiculous velocities ($\dot q$ is the output of the pseudo inverse (\ref{eq:pseudoInverseJacobian})). Even worse, the robot will be velocity limited and that velocity cap method will not be aware of the overall control objectives. There's a downstream part of the robot that might clip a joint's velocity even if a higher velocity was commanded. And it's not going to clip it nicely. It's just going to saturate or get into a fault.
+  </p>
+
+  So our solutions start getting arbitrarily wrong or we've commanded something bad. The pseudo inverse is a beautiful mathematical object. If we want to do our best effort knowing that there are limitations of the robot like velocity/joint limits and other things, the pseudo inverse doesn't have a chance if we haven't given it these extra bits of information. So we need a richer version of the pseudo-inverse that can consume more information about the problem specification. 
+
+  <p>
+    Q: If we have a singularity, aren't we also going to struggle to compute a torque? 
+    $$
+      \tau = J^{-1}(q)f
+    $$
+
+    Yes. Any jacobian-based approach is going to struggle. Is it true that we can't compute a torque for an arbitrary force? We can't produce a force instantaneously, but we can accelerate our joints in such a way, producing zero force that gets us out of the singularity. That is absolutely true but it's the differential version that gets us out. Just like it's bad to command velocities for an arm stretched out, it's also bad to ask for forces. That is just real - you cannot instantaneously produce a force.
+  </p>
+</section>
+
+<section id="9"><h1>Differential IK as optimisation</h1>
+  The Pseudo-Inverse controller is magical in the first place because it is solving an optimization problem. And we're going to solve harder optimization problems. But we'll try to understand the controller first through the lens of optimisation, then we can add in some constraints to have a more general solution. 
+
+  <p>
+    Find $\dot{q}$, such that the LHS is approximately equal (as close as possible) to the RHS (spatial velocity):
+    $$
+      J^G(q)\dot{q} \approx V^G
+    $$
+  </p>
+
+  We're going to minimise over $\dot{q}$ the least squares error:
+  $$
+      \| J^G(q)\dot{q} - V^G\|^2
+  $$
+
+  <subsection id="9.0"><h1>Simple linear example - scalar case</h1>
+    The above operation is standard in linear algebra. When people write $Ax\approx b$, they want to find the best solution for $x$ such that the LHS is approximately equal to the RHS.
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/50_leastSquares.png"/>
+        <figcaption>
+          $Ax \approx{b}$
+        </figcaption>
+      </figure>
+    </div>
+
+    There's only a few things that $a$, $x$ and $b$ can do. $a$ is the slope. $x^*$ is the solution we're looking for such that $ax^* = b$.
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/51_leastSquaresParabola.png"/>
+        <figcaption>
+          The quadratic curve of least squares.
+        </figcaption>
+      </figure>
+    </div>
+    $\|ax-b\|^2$ indicates that we're going to score all the different options along the parabola, the quadratic form to find the lowest point on the curve. When the curve touches 0, $ax=b$. The 2 values diverge, as the curve moves farther from 0.
+
+    If the slope $a$ starts getting small, the solutions start getting worse! We need a bigger $x$ to achieve the same $b$. 
+
+    <p>
+      As the dimensions increase, we'd still like to be able to say how good any given solution is, even when the method isn't able to achieve the perfect solution. We want to be able to add constraints - the solution isn't allowed to go past a certain $x$ i.e. pick the smallest point on the curve that's within a certain regime. That's a richer class of optimizations but it's still based on the fundamental idea of first scoring all the points (on the parabola) and then finding the minimum of it. 
+    </p>
+
+    An example of this formulation would be:
+    $$
+      min_x \quad s.t. x\leq 2 \quad \|ax-b\|^2
+    $$
+
+    This equation says minimise over $x$ subject to $x$ is less than or equal to 2 (the boundary of the search, the regime, the stop condition). This would be a reasonable generalization of that optimization and it's a well-defined optimisation.
+
+    <ul>
+      <li>We've made a scoring function for all the possible $x$s</li>
+      <li>We're limiting the search to the constraint $x \leq{2}$</li>
+      <li>We find the lowest point</li>
+    </ul>
+
+    This is a more robust formulation because we're able to put more information into it. 
+  </subsection>
+
+  <subsection id="9.1"><h1>Simple linear example - vector/matrix case</h1>
+    $$
+      Ax \approx b
+    $$
+    The matrix case is only a little bit more interesting but super powerful.When things are unconstrained, the way we do the minimisation is to take the cost function (the quadratic $\|Ax-b\|^2$) and find the place where the gradient is the minimum. Since we know this is a convex bowl (with the ends) pointing up, it's enough to find any point where the gradient is zero:
+
+    $$\begin{align*}
+      \frac{\partial}{\partial x} \|Ax-b\|^2 &=
+      \frac{\partial}{\partial x} [x^T A^T Ax - b^T Ax - x^T A^T b + b^2] \\
+      &= 2x^T A^T A - 2b^T A = 0 \\
+      (x^*)^T &= b^T \underbrace{A (A^T A)^{-1}}_{\text{Transpose of the} \atop \text{pseudo-Inverse}} \\
+
+      x^* &= A^{\dagger}b
+    \end{align*}$$
+
+    $A (A^T A)^{-1}$ has no $b$ in it. That's why to take the pinv, we don't need to know $b$ to use it; because the solution is linear in $b$, we can separate out $A$ and $b$. It is kept in the form of the transposes for convenience.
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/52_quadraticBowl.png"/>
+        <figcaption>
+          The generalisation of the above parabola is a quadratic bowl.
+        </figcaption>
+      </figure>
+    </div>
+
+    In higher dimensions, the parabola turns into a quadratic bowl. The axes are $x_1$, $x_2$ and the objective $\|Ax-b\|^2$. We score every value $x$ by the cost function $\|Ax-b\|^2$ and find the minimum of it. As shown above, the quadratic form is given by: $[x^T A^T Ax - b^T Ax - x^T A^T b + b^2]$ but the shape is given by $A^T A$ in $x^T A^T Ax$.
+
+    <p>
+      When $A$ starts having small singular values, the bowl starts elongating just as in the case of the parabola with smaller slopes. It can elongate more or less in some directions/dimensions. As it gets long, the minimum $x$ starts leaving it, i.e. gets bigger. 
+    </p>
+  </subsection>
+
+  <subsection id="9.2"><h1>Adding limits/boundaries</h1>
+    If we add boundaries to the problem i.e. don't go past some reasonable velocities (some linear constraints), but within those bounded solutions, find the best solution using the score function $\|Ax-b\|^2$. This not the only generalization but this is the one that is used in the lectures.
+
+    $$
+    \|Ax-b\|^2 \quad s.t. \; \underbrace{Cx = d}_{\text{Linear constraint}}
+    $$
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/53_boundaries.png"/>
+        <figcaption>
+          The generalisation, but with boundaries.
+        </figcaption>
+      </figure>
+    </div>
+
+    A problem like this that has a convex quadratic objective (we know that this bowl is going up) and linear constraints is called a <i>convex quadratic program</i>. It's an important class of optimization problems. Quadratic programs are not something we think of solving with pen and paper unless they're very very small. There are very efficient algorithms for finding them that can be run in real time at high speeds.
+
+  </subsection>
+</section>
+
+<section id="10"><h1>Summary of the usefulness of optimisation</h1>
+  To get more robust Jacobian based controllers, we need to use a richer language (i.e. give it more details of the robot). For example, we say, find the desired spatial velocity that is as close as possible to the minimum but respects the joint/acceleration/velocity limits of the robot. 
+
+  <p>
+    The 3 main pieces of drake:
+    <ul>
+      <li>The systems framework</li>
+      <li>The multibody plant</li>
+      <li>Mathematical programs</li>
+    </ul>
+
+    Mathematical programs make it really easy to write optimisation problems and connect it to the other two pieces. Drake is a language that provides this framework - we can say I'm going to make a new optimization problem or a mathematical program. <i>Mathematical programs</i> are slightly bigger than optimisation. It doesn't need to have an objective. If it's a feasibility problem with no objective you can study mathematically. 
+    
+  </p>
+
+  For an optimisation problem, in drake, we can:
+  <ul>
+    <li>Declare the decision variables $x$</li>
+    <li>Add constraints</li>
+    <li>Add cost function</li>
+    <li>Solve to get the solution as the output</li>
+  </ul> 
+</section>
+
+<section id="11"><h1>Example</h1>
+  In <code>qp_diff_ik.ipynb</code>, the Kuka is turned into a 2d version. Only 2 joints are active to make it as similar as possible to the 2 link pendulum example. It plots the quadratic cost function in the 2 variables (in green) which is the optimization problem given by the Jacobian $\|J^{G}(q) \dot{q}-V^G\|^2$ subject to a few constraints on velocities. The constraints are in red. The optimal solution is represented by a green blob. 
+
+  <p>
+    The arm moves back and forth through the singularity. When the arm is straight, the bowl goes completely flat (if our viewing angle is set correctly, we can see it). It goes flat depending on how quickly the code integrates, but it gets broader and broader. Already in this configuration, the solution looks a little dicey up against the velocity limit. The arm has a tilt to it too, so the optimal solution would have been a very large velocity but the constraints keep us safe. 
+  </p>
+</section>
+
+<section id="12"><h1>Closing remarks</h1>
+  Q: What if the actual constraints are not linear? We can choose to solve a harder optimisation problem but the standard choice is linear. For instance the joint limits actually would be a nonlinear function in general. But we approximate it with an euler approximation which makes it a linear constraint. Position and acceleration limits are actually linear for any euler kind of integration step. Torque limits are not linear. The linearization for the latter is a bit tricky but we tend to not do torque limits. 
+
+  <p>
+    The idea of optimisation and quadratic programming is such a powerful framework and we're going to use it more. This is just a quick introduction. 
+  </p>
+
+  The worst case is when the robot is up against a limit on one joint. For instance, the second joint moves along as if nothing happened and the first joint changes which means the hand is going off in the wrong direction. We're going to eventually have feedback loops coming through this whole system and that's what's going to save us. But even in this open loop framework because we know about where the limits are, we can plan for them without any direct feedback and we can at least do a better best effort in the beginning. 
+
+  <p>
+    For instance, the way that we actually run the robot is we don't run it to be as close as possible to our desired velocity in the least squares sense. We actually do a slightly different objective. We have some desired velocity. We pick joint angles that will move the hand in the direction of that velocity. When a limit is hit we scale down the whole velocity but keep the direction the same; because we don't want our robot walking away from the desired trajectory. This is a richer formulation but we can still make it work as a quadratic program. 
+  </p>
+
+  <subsection id="12.0"><h1>QP formulation 1</h1>
+    Find $\dot{q}$ such that $J^G(q)\dot{q} \approx V^G$.
+
+    $$\begin{align*}
+      min_{\dot{q}} \quad &\|J^G(q)\dot{q} - V^G\|^2 \\
+      s.t. \quad & \|\dot{q}\| \leq \dot{q}_{max} \\
+          & \text{joint/acceleration limits etc.}
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="12.1"><h1>QP formulation 2</h1>
+    This is a slightly different formulation which says constrain the arm to move only in the desired direction of the gripper. We're going to maximise a linear objective. This is actually a simpler program.
+
+    $$\begin{align*}
+      max_{\dot{q}, \alpha} \; & \alpha \\
+      s.t. \quad & J^G(q)\dot{q} = \alpha V^G \\
+          & 0 \leq \alpha \leq 1 \\
+          & \text{joint velocity/acceleration/position limits}
+    \end{align*}$$
+
+    $\dot{q}$ (vector), $\alpha$ (scalar) are the decision variables. The objective though is only in terms of one of the decision variables; the aim is to make the scalar $\alpha$ as big as possible (maximise) subject to the above conditions. The desired spatial velocity is a vector which is allowed to be scaled by $\alpha$, but we must choose a $\dot{q}$ on the LHS that matches some scaled version of that vector. 
+
+    <p>
+      Even though $\dot{q}$ is not part of the objective, we still need to define a solution for it because it enters in via the equality constraint. So $\dot{q}$ can only live on the set of possible $\dot{q}$s such that $\dot{q}$ times the current Jacobian (LHS) moves the EE in the direction of the desired spatial velocity (RHS)! If $\alpha$ is arbitrary, then if we have one $\dot{q}$ that's a solution, we could multiply it by two and it would still be a solution. 
+    </p>
+
+    So basically, we take the $\dot{q}$ that will achieve the objective without any constraints and then scale it down - shrink all of the joint velocities by the same scaling in order to satisfy the constraints. So now the arm will always move in the desired direction - it would rather stop completely when deviating.
+
+    <p>
+      This is what's happening inside the differential IK. This differential IK controller was used in the first teleop notebook. One will get a lot of mileage out of this method in the class. It takes in poses, does the differentiation and integration and runs this kind of control. 
+    </p>
+  </subsection>
+
+  <subsection id="12.2"><h1>Comparison of the 2 formulations</h1>
+    Between the 2 methods, we only changed what we want as a degradation in performance. When we have to give up performance, we can choose what we give up. In the 1st case we are after a spatial velocity as output that's as close as possible in the least squares sense to the desired spatial velocity. In the 2nd case we are willing for it to be less close in the numbers as long as it stays constrained in the right direction. So it's just a different choice of how we are okay for it to degrade when it can't satisfy the constraints perfectly. 
+
+    <p>
+      What happens if there were no constraints? In the 2nd case, it's going to choose $\alpha = 1$ and it's going to make $\dot{q}$ exactly equal to the spatial velocity. So it'll solve the problem exactly. And as the constraints become active because the arm might be running up against them, then $\alpha$ will have to shrink and that can be considered as a very graceful degradation.
+    </p>
+
+    In the 1st case if there are no limits, again it'll find $\dot{q}$ exactly to drive the objective to zero. As the constraints come on, it will find a different velocity but it might make the arm move in the wrong direction. We get to specify how we want it to degrade. 
+  </subsection>
+
 </section>
 </details>
 </chapter>

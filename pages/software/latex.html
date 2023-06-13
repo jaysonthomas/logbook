@@ -53,11 +53,30 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Mathjax</a>
+<a href="#0">Alignment, numbering and Labeling</a>
+<a href="#1">Mathjax</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Mathjax-Latex</h1>
-<section id="0"><h1>Mathjax</h1>
+<section id="0"><h1>Alignment, numbering and Labeling</h1>
+  <ul>
+    <li>
+      When no numbering is required, alignment can be done with <code>\begin{align*}</code> and <code>\end{align*}</code>
+    </li>
+
+    <p>
+      <li>
+        To have numbers on certain lines, use <code>\begin{align}</code> along with <code>\nonumber</code> at the end of the line before <code>\\</code>
+      </li>
+    </p>
+
+    <li>
+      Place the label just before the equation line that we need to be referenced later <code>\label{eq:xxx}</code>. When referencing the equation using <code>\ref{eq:xxx}</code>, the equation number shows up as a link.
+    </li>
+  </ul>
+</section>
+
+<section id="1"><h1>Mathjax</h1>
     <ul>
       <li>Matrix notation</li>
       $\begin{bmatrix}a & b\\c & d\end{bmatrix}$
