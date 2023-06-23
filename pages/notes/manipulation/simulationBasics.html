@@ -1,0 +1,749 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Geometric Perception II</title>
+  <meta name="Geometric Perception II" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">ICP Summary</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Limitations</a></li>
+</ul>
+<a href="#2">Point-to-mesh correspondence</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Example</a></li>
+  <li><a href="#2.1">Algorithm</a></li>
+  <li><a href="#2.2">The big picture in using optimisation</a></li>
+  <li><a href="#2.3">Algorithm using optimisation</a></li>
+</ul>
+<a href="#3">Rejecting outliers</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Easy case when we are in the last stages of convergence</a></li>
+  <li><a href="#3.1">Hard case: Global point registration</a></li>
+</ul>
+<a href="#4">Global point registration solutions</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Segmentation</a></li>
+  <li><a href="#4.1">RANSAC - Random Sample Consensus</a></li>
+  <li><a href="#4.2">Pairwise distance</a></li>
+</ul>
+<a href="#5">In-between summary</a>
+<a href="#6">Generalise correspondence</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Simulation basics</h1>
+
+<section><h1>What makes simulating contact for manipulation challenging?</h1>
+  The main focus is on the physics engine piece of the simulation. 
+  <ul>
+    <li>Stiff differential equations</li>
+    Stiffness is under our control. Understand where it comes from, how it manifests itself in simulations and how to deal with it when things go wrong.
+  </ul>
+
+</section>
+
+<section><h1>Mass spring damper system</h1>
+  Equation of damped oscillator:
+  $$
+  \underbrace{m}_{\text{Mass} \atop \text{matrix}}\ddot{q} + 
+  \underbrace{b}_{\scriptsize \text{Damping}}\dot{q} + 
+  \underbrace{k}_{\text{Spring} \atop \text{stiffness}}q = 0
+  $$
+
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../figures/manipulation/54_massSpringDamper.png"/>
+      <figcaption>
+        Mass spring damper
+      </figcaption>
+    </figure>
+  </div>
+
+</section>
+
+type system um right so let's see I've got a
+just a mass there's no friction to speak of and I'm going to put a spring on it
+and I'll put a damper on it which I normally we normally draw like that okay and this would be its X position
+okay and this is like x equals zero here okay so the equations of motion of of
+this actually let me call it not X let me call it Q since we are going to distinguish between x and q
+and we've been calling Physicians Q right so this is going to be mq double dot
+plus b q dot plus k q this is the classical equations of a damped
+oscillator right where this is the mass Matrix
+is the damping
+this is the stiffness spring stiffness
+okay so um in in my other robotics course under actuated robotics we talk a lot about
+stability and what that means and how to generalize it to non-linear systems but
+I think even without that full introduction we can talk about just uh
+the basic stability of this system uh stability in this very simple
+setting just just is just asking is the limit as time goes to Infinity of
+X of t equal to zero Q of t
+right I'd like to say if I start this here with some initial position and velocity
+and it starts is it going to come to rest or is it
+going to do something different right this damper is the physical intuition you should have is that's pulling out
+energy that's friction right so this thing is wants to oscillate because of the spring but it's going to slow down because of
+the damper and we're going to try to understand make sure we understand how to simulate this accurately even if you've got you
+know these kind of simple equations is that clear
+for the continuous time system the answer the the question about
+stability is very easy to understand um you could you could ask what is the
+stability properties given a change M B and K the parameters and it turns out that the the answer is
+yes it's stable
+I'll just say if if mass is greater than zero the damping
+is greater than zero K is greater than zero as long as I all of my numbers are
+positive which is the normal physical intuition case then yes that that system is going to decay
+and I put strictly greater than zero for the damping so that it's it's actually decaying to zero and that's not
+oscillating forever and this just because I don't I don't want Mass to be zero right
+okay and if I wanted to to if you remember your your differential equations right so I could I obtained
+this uh with confidence by taking the eigenvalues of the of the system right
+so if I write this in my state space form just to completely close the loop
+but here I've got q and velocity Q Dot and this Q dot does
+equal V in this simple case so I can write Q dot equals
+or x dot equals Q Dot and then 1 over m negative V Q dot minus k q
+which I can write that as a x where
+a is just 0 1 negative K Over m
+negative B over m is that familiar to people
+and give me a thumbs up or a thumbs down if that is that familiar to people that kind of stuff it's been a while
+maybe so but this would be a differential equation way to think about that system
+I could just write the equations of motion in this form you're this is you know for this example
+you don't need to generate these from scratch here but uh if you remember if for those of you
+that remember then the eigen values of this Matrix can check the stability of the system
+yeah Okay so
+what's interesting now is if I try to integrate that on a computer right so that you could take an entire course on
+numerical methods I don't need all of that but I just want to
+think about numerical integration in its simplest form here to make a few points
+so this is a continuous time equation and I want to Now integrate it forward
+uh with a with an algorithm right so the simplest form of that would be to
+make an approximation here a discrete time approximation to say I'm going to advance this
+simulator by taking my current state
+and I'm going to increment it by I'll call it h
+this is my Dynamics this is my x dot right this one here H is what I'll typically
+use to denote my time step
+I want that to be also greater than zero
+okay and if you care about the linear analysis again you could write this as I
+plus h a
+this gives me a different linear dynamical system which we can talk about its stability
+or its instability asking does X of n as n goes to Infinity does it go to zero
+and nice questions from analysis are about you know if I choose different H's for
+instance how accurately can I simulate the true solution from this differential equation
+these are the fundamental questions of numerical analysis okay and the answer here
+is much more subtle than this right and I think I actually have the
+eigenvalues and here but they're they're messier than I wanted so
+um so I'll just do it numerically I'll do an example numerically okay one of the great things about linear
+dynamical systems is I can integrate them perfectly in closed form so I can I can give the solution to this with no
+artificial artifacts from numerical integration and then I can do the integration version of this and ask how
+similar they are by the way this is a particular type of integration this is called the Euler integration you've
+probably heard it
+it's even forward Euler if you want to get um more into the details
+Okay so I'm
+worried that this is not going to show up great on the monitor because webgl doesn't
+accept the line with command sort of annoying
+um but let's try oh I could try Safari I wonder Safari's whipped yellow supports
+okay nope still doesn't it's like right in
+the webgl docs it says most browsers don't support line width so yeah
+uh okay that's annoying but we'll deal this is the phase portrait let me let me
+draw it first on the board just to make sure I you know what we're seeing here
+I'm going to go in and add like axes and other matte plotlet like things into mesh cat but I haven't done it yet okay
+so the plot I want to make here to understand the integration of this Mass
+spring damper system is a phase plot phase portrait
+portrait which is when I plot Q versus Q Dot so if I plotted Q as a function of time
+I would expect to see an oscillation that would Decay if it's stable or blow
+up if it's unstable but the timing of this is is one feature
+that I'm less worried about the timing I want to see more it's be it's long-term Behavior it's going to be a little bit clearer to see it in this plot where I'm
+going to start if I start from some initial condition let's say a positive q and zero velocity
+then I would expect it to start getting pulled towards the origin so that's negative velocity and
+you'll expect it's I think not too hard to exp see that we're going
+to expect something like that to happen when it's stable when velocity is positive I'll be moving in
+this direction in the in this picture right and when velocity is negative I'm
+moving this direction so I could tend to take Spirals and in the good case when
+the when there's damping I expect those spirals to be like this
+okay so that's what we're seeing here we're seeing an initial condition here and this is the origin and I can change
+the stiffness and damping and the like okay
+and this is chosen with a pretty small H H is chosen to be 0.1 seconds here
+okay so I have a mass of one a damping of one which I should have picked 0.1 or
+something and a stiffness of two so these are all kind of like a round number the number one I get the sort of
+reasonable solution interestingly as I increase the stiffness this is making K bigger
+then I'm going to get elongated I'm going to get larger velocities right I'm going to like this right but it it'll still
+eventually converge now the red line so the blue line is the analytical solution no numerical
+integration accuracies the red line is the numerical approximation that I get from doing Euler integration
+now the natural thing you could imagine is if I start taking bigger steps right so basically so what it's basically
+doing is it's taking the derivative at each time and then forecasting that out as if it was constant
+and then it's evaluating the derivative at that time forecasting it out so it's going to make an approximation of that curve
+the problem is if I pick um H to be I'm going to start increasing H now so if I start increasing h
+my approximation is going to get more and more decimated okay and I'm going to my accuracy is
+going to go down right if I increase H too much
+okay sorry that was the stiffness let me increase H too much things can get bad right so I'm simulating A system that is
+the continuous time Dynamics are stable but the discrete time approximation is
+unstable this seems totally artificial enforced
+you might see a simulator do this on you uh one day okay and it's the same the reasons for it are exactly what we're
+seeing here okay so the the very first lesson is just if you see your simulator blow up
+turn the time step down that's the first one but but actually the interaction with the stiffness and
+the damping and the mass is actually um easy to understand too okay and we're
+going to try to make sure that those those points land okay in particular what matters is the
+time step as a ratio or a compared relative to the
+um not K but K Over m okay
+so the the thing that matters is H relative to K Over m
+these are the accelerations this is like the Q dot the nominal Q Dot I'm sorry Q
+double dot okay this is the the stiffness divided by masses
+and if if K Over m is large
+then you're going to need a smaller h to simulate it accurately because those this is going to make if I
+increase K here as I increase K that's getting my my derivatives are going to be larger
+and so taking a long step with fast changing derivatives can quickly lead to
+Big errors that's the intuition if your accelerations are big
+then you need to make your time steps small so it turns out that when you're
+simulating a humanoid let's say a 400 pound Atlas robot that's generating relatively big forces on the ground
+you would think that might be a hard thing to simulate but actually the accelerations are relatively low okay so big forces on a big robot are
+kind of okay when Atlas goes to pick up like a toothpick that's the bad case you get big forces
+on a little mass and you send toothpicks flying in your simulator okay
+and it turns out he was picking up stuff are not so different from that and in
+the range of inertias that you have to deal with in manipulation is the first challenge you tend to have very stiff
+equations and also the accuracy of the contact simulation is such that you need to choose K larger
+than you would for walking and I'll make that point when we get into the contact equations
+okay does that sort of that basic idea makes sense what does it mean to be a stiff differential equation it means
+that I have these accelerations this K Over m in this simple system is large
+which means K has to be small I'm sorry H has to be small
+good
+so we're going to see now where some of that stiffness comes from in the contact problem
+let's do a little contact mechanics
+I'm going to take almost the same example but I'm going to put a contact inside it okay in fact I'll I'll do it
+in the vertical plane this time instead of the horizontal plane just so I'm pulling down
+with mg okay and I've got a ground here and I want to think about
+what happens if my my point Mass goes into the ground now your physical intuition will
+probably tell you all kinds of things about that um first of all you probably expect it to bounce
+but that will depend on our contact parameters some of the models that we're going to talk about it's actually going to go and stop depends what you if you assume
+that the ground and the point are infinitely rigid then actually unless you do something else to model
+restitution or something like this then actually rigid contact would have it defined as just coming into
+losing all of its energy on collision and so most of our models most of our
+mathematical models are actually rigid geometries so so the default answer
+actually is stop but we'll see ways to make that better okay so this is almost the same
+equations but I don't have damping now I just have if I call this now the Z
+m z double dot is just negative uh mg
+is when I'm in the air but then once I get into the ground I'm going to have a
+contact force let me call it the normal force for now but we're going to use our full
+spatial notation after the basic example okay so when it's on the ground
+I'll have this force of normal and I'll have the mg both
+okay so then in this case how my equations look like this
+like I said you might expect it to bounce but we'll see the cases where it's it's not so the question is where does f n come
+from when it's at rest you could sort of Imagine That FN will be negative mg and
+you'll have an equilibrium but it's more interesting to ask what happens when you when you collide
+okay so option one
+is rigid contact
+meaning we've assumed both objects are perfectly rigid to like steel
+objects you know colliding like this right even harder than steel right because
+steel would bounce a little bit right um so the way that FN is defined in the
+perfectly rigid case FN is the smallest Force
+that resists penetration
+it's the principle of least action if you want the variational version
+right so the this represents a constraint and the forces of constraint
+in the principle of least action which is a mechanics principle are that the constraint forces are the minimal forces
+they need to be in order to they make the minimal change to the unconstrained
+motion as possible now what is that what does that Force
+have to be what is the minimal Force at the moment of impact is the interesting case
+anybody know the answer I don't even have to tell you what m is you can tell me the answer
+at the moment of impact FN has to be infinite
+okay why so if I were to plot
+the function of T let's say Z Dot let me just simulate for it I'm going to
+a version of this of my my pot here so Z dot is just going to increase
+it's going to get more and more negative until the moment of collision this is the
+and then in the perfect rigid model
+Z dot is going to suddenly be zero okay so in an in an Impulse I went from
+having a negative velocity to having a zero velocity and that requires an
+impulsive Force
+a Delta function in force okay which does it has finite work but over an
+infinitely small interval so it's it's actually a Delta function yes discreet timer
+yes simulation good that's exactly the the question so so this is in the perfectly continuous
+time case and the question was what happens if I now do my Euler integration if I only ask that the penetration is
+satisfied at the finite time steps of my integration which is all I tend to ask
+then yes you can have a finite force that resists and gets you perfectly back
+okay so I was going to say that later but I'll say that now that's good
+um let me let me introduce one bit of notation to say that carefully
+so we'll there's one other quantity that we're going to use generally here which is the sine distance function
+this is just the sine distance function we used in perception right this is the distance between the object and the
+other object that I'm trying to collide right so this is the smallest force that
+resists penetration resisting penetration means that Phi of Q stays greater than equal to zero
+okay yeah and I think um I guess I don't I don't need it yeah so
+for Euler integration
+if we only require
+V Q at certain n to be greater than equal to zero right
+at discrete times
+then FN can be finite
+that's a little unfortunate there's two ends there
+yeah and in that case it has the it's still we think of it as an impulsive Force integrated over the some finite
+time so it has a finite magnitude
+is that clear yeah how about I guess good
+most of you aren't giving me any thumbs but that's okay I know it's a little strange
+okay so but but this notion of rigid unrigid contact
+which most of our mechanics is rigid body mechanics leads to this seeming problem where I
+need instantaneous forces and collision which makes makes it hard to simulate
+accurately you could if you want to simulate and continue you know as accurately as possible in continuous time you actually have to do event
+detection and you have to handle the that Collision event explicitly and then continue integrating
+if you make a discrete time approximation then we can we're going to play different tricks
+so let's just before we move on to those time steppers let me also say option two here
+is to think about soft contact
+so now when the ball is on the ground here
+I'm actually gonna let me draw it even a little bit in penetration here
+I'll I'll make instead a spring law that governs
+I can make it bigger you guys are far away I've got a ball that's way under the ground
+right and let me put a spring that's trying to Define
+my normal force that would be an alternative and I can do a spring damper in fact that's more
+practical to do a spring damper and in fact another good way to define
+the normal force here would be to say it's zero if V Q
+is greater than zero and it's negative
+VQ times k if V Q
+Plus or equal to zero
+and then we could we could add damping into for instance
+foreign this is actually I would say a better model of what
+really happens in the world than the rigid objects no objects are technically rigid
+but the stiffness of real collisions
+because it says to simulate accurate things that don't penetrate much like imperceptibly right you're when I'm when
+my foot's hitting the ground there's a small deformation of my skin right but but not a big deformation which means in
+order to model that accurately I have to choose K to be very big and this is the tension right so so now
+I have I can add stiffness in my contact model but it makes means I have to simulate slowly
+right even worse the the simulation is changing the the stiffness of the
+simulation in some sense is changing as a function of the of the configuration so in my plot it's hard to pick one time
+step that will work in all of the regions because the stiffness values are different in different regions
+if I have two objects if I get an object jammed between multiple objects for you know that's a different configuration it's much harder to pick a single h
+that works for all the possible derivatives you're going to get across the states
+okay so we in practice you'll pick K enough to you know visually
+be satisfying you won't see I mean when we debugged we were first debugging Atlas we would have Atlas like fall a
+meter into the ground just to make sure that we got you know the time steps right and stuff like this and then we would slowly make it tune that up
+okay and then I should have said but when in the when I make H small it takes longer to
+simulate right I have to if I want to simulate for five seconds and my time step is small it's going to take a long time to simulate so this is the tension
+how accurate do you want your physics to be how large do you want K to be versus how
+fast you want to simulate sorry okay good
+is that clear the basic basic story okay so let's think now about
+friction we've only talked about horizontal force or sorry vertical Force so far in the
+where vertical is always defined in this in this Frame
+as the direction the the gradient of the sine distance function so I'll say that
+more carefully but um in the ball falling from the sky it's the normal force is always vertical
+but for any two objects as they're coming together the normal direction is the
+the place of it's the direction of closest distance minimal distance
+okay that's the generalization think about what friction looks like
+in the simple case let me now throw a ball sideways at the ground okay
+and when I get to the ground I'm going to have not my blue again I don't know
+it's blue I always break blue yeah you guys are not going to be able to see blue okay
+that's my normal force and I'm going to call this my tangential Force here okay
+we came up with um two ways to possibly Define a normal force
+loads of details behind them but the general idea is either the the whatever force is required to completely resist
+penetration or a spring Force to go like this but we haven't said anything about
+slowing me down if I'm sliding along the ground okay and the rigid approximation of
+friction is most famously cool in friction
+which says again it's a dissipation law which says that my my
+um my frictional force my tangential force
+is less than or equal to the some coefficient of friction times my
+normal force
+and inside that limit then it's going to be the um
+the smallest Force
+that resists sliding
+okay and then once you're sliding and so this is sticking
+and then once you're sliding when you have a velocity at the at the interface
+that's greater than zero then it's the maximal dissipation
+it's it's the force that has magnitude mu FN that dissipates the most energy
+that just tells me what direction the force should be applied the magnitude is going to be based on my normal force and
+the direction is the whatever direction would slow me down the most
+okay this is kind of a strange thing but but the coulomb friction law
+just says that if my object is if I have a larger normal force if I push down
+harder on my object then it's going to resist it's going to provide more friction and it's proportionally more and that I can
+summarize that friction interaction with this single coefficient
+okay in 2D what does this look like
+this is this is saying I say it's greater than you know I've got an absolute value of the normal force is is
+proportional to my the absolute value of the tangential force is proportional to my normal force
+that means as my normal force grows I can get more tangential Force and the way that we draw this you could
+draw this as a the admissible frictions here
+live in a cone right as the normal force increases then I can have larger tangential forces
+anything inside this region here and this is called the friction cone
+foreign this definition still works in 3D
+the friction cone now becomes an ice cream cone in 3D it still describes a limit on the total
+amount of frictional force based on the normal force
+Okay so what happens here then so when I said these things quickly it's the smallest
+force that resists sliding and then it's the maximal dissipation so if you think about a simple case for instance
+of my ball or let me make it a box so we don't think about the rolling
+version of it okay on an inclined plane
+then I'll have normal forces that live inside some friction cone I'll
+summarize the contact at these two points for now
+I could even I can say there's little little points of contact here and the rest is suspended a little bit
+foreign okay so I'm allowed to have any Force inside the friction cone
+so what happens now if I have mg pulling me down like this
+and I have a friction that's trying a frictional force that has to live inside this cone
+right that's trying to push up and it's going to pick the maximal direction it can pick up
+my my artwork I think actually I had forgotten to make this carefully but I
+did make the both of those red lines are consistently slanted so given this
+beautiful rendition here there is no Force
+that can be applied at these points that would perfectly resist gravity so
+this is this object is going to slide if my friction cone was if my mu was
+larger my friction cone could increase there's a you see the geometric picture I'm trying to say there's a in order to
+get force balance I would need a force of friction that's perfectly resisting gravity
+since this is outside my friction cone in that picture that means that thing's going to slide if I were to increase the friction cone
+by increasing mu then I could get inside that or if I were to decrease the ramp
+I could get inside that okay but there's actually a beautiful geometric version of friction in that
+picture okay ask ask some questions is this
+Landing is this a useful level of detail no that's fine yeah
+yes
+exactly so if my if I were to make a free body diagram which I'm doing here right and I said I wanted the forces to
+balance then in order for the forces to balance the forces of contact would have to be able to be equal and opposite to
+the force of gravity and because that is not an acceptable friction Force
+that means that it would slide and in fact the friction Force you would get would be on this line
+resisting as much as possible that's the maximal dissipation idea resisting as
+much as possible but ultimately still not stopping it from sliding
+what else can I say to help
+friction cone idea is going to come up over and over again you can't talk about manipulation without the you know saying
+friction cone so you don't have to understand all the details about it but
+the concept of a friction cone is essential yes
+the forces will always be inside the cone that's the the rule and they and
+if I want this brick to stay still then I would want the friction the force to the friction cone to have a force inside
+it that could resist that gravity yeah
+is this like arbitrary the way you do the code or is it based off of like
+good good good good question so the normal is um is defined
+it turns out in the general case it's defined by the direction in which the distance is smallest in this picture
+it's totally reasonable I'm going to use the same color as here is to say that the normal
+FN was here the tangent
+is a core is a coordinate system that is on the surface yeah when it's a
+two-dimensional surface we have to pick a coordinate system for those tangents and so therefore the tangent in red
+is in this direction it's normal
+so that's what defined the geometry of that cone the angle there is given by
+the coefficient of friction I have a picture actually of the coordinate systems
+somewhere here okay so in general I have two general
+objects I defined the sign distance between those objects with this the normal is always the direction of that
+sign distance the gradient of the sign distance it turns out and the tangent is some Choice like this
+in I tried to do a 3D picture I hope that is sort of clear you could
+pick any coordinate system on that surface and then you'll design a cone so it would look like an ice cream cone
+uh in that with the normal in the middle of the cone
+sliding friction is cool too but I'm not sure if you have the appetite yeah
+so uh there's actually no top so the this law of friction
+which is not a great law honestly it's the best we've got but it has problems um
+I can actually I'll tell you the problem in a second here but um this says if you give me more normal force I will give
+you more friction there's no limit yeah okay here's here's a reason why
+it's bad and this is why rigid contact is actually bad Here's a thought experiment let me just
+so imagine I have a table with four legs
+okay and all I know all of the equations of motion would tell me is that if I if I
+walk up to a table that's standing still then the normal forces must be sufficient to balance the force of
+gravity so I know that there's a sum of normal forces that cancels gravity
+even more I actually know that those forces have to resist the torque any torques due to gravity
+but I've got four feet and I could produce the necessary torque with any balance and with only three
+feet that means that the rules of mechanics don't actually tell me how much normal
+force is in each feed it's a It's like a just a failing of our of our rules of
+rigid mechanics okay so I could have I could take some normal force over here and put it over here and still get a valid solution to the equations
+everything I've said here does not completely define what FN is here's the problem now
+so if you go to push the table some of those feet might be in sticking
+some of them might be in sliding depending on the normal force you don't know what the friction force is
+so the the rules of rigid body mechanics will not tell me if the table goes straight or turns or left or right all
+of them are possible solutions given the governing equations they do not give me a unique solution to the differential
+equations I generate that seems totally embarrassing right we have like
+so much smarts and mechanics but we can't tell you which way the table is going to go we would need a like atom
+level simulation of the differences of the actual contacts or whatever to we need more than a point model of contact
+at each feet to resolve that ambiguity I can write down a perfectly reasonable set of equations and it has non-unique
+Solutions yes
+yep that's a different thing well first of
+all that's probably not good for your felt table right but uh like if my kids were doing that I would yell at them um
+you're saying you push down and then it squirts out yeah I think if you push down perfectly with absolute normal
+force it wouldn't Square it out you're putting a large force and you're accidentally putting a little bit on the side and uh and it'll go out yeah
+done in that box diagram if we put oil on that yep
+yes that's exactly if I were to change the the slipperiness that is this coefficient of friction the cones will
+come in and I will more likely slide it's exactly the right intuition now the interesting thing is that the
+coefficient of friction is really a property of the interaction between the two
+types of materials so you can't say this object this mustard bottle has coefficient of
+friction three it's when the mustard pairs with the steel table it has a certain coefficient
+it's in contact pairs right so it's a little Annoying to specify and people
+typically specify individual numbers for individual ones and come up with a hacky way to combine them uh in in the
+simulator yes I am going to not yet not yet this is
+but this is exactly right so I summarized that's why you heard me hemenha about I just drew the forces
+there but really there should be a forces distributed potentially across that entire thing
+um but most simulators don't do that so let's actually talk about that so so
+um sliding friction is awesome but I'm going to skip it
+but basic yeah I mean there's a there's a different uh you know the rules of governing what force you'll get when you
+do start sliding are have a similar rules typically it's it's basically it's
+almost exactly the same with maximal dissipation but most of the time people will say that your mu decreases once you
+start sliding you'll have a different coefficient of sliding friction then static friction
+so just if you see mu static or mu Dynamic that just means once you start moving
+we have a different coefficient of friction and that is uh you know it shouldn't be that way right
+that's just like our equations aren't quite right and we're going to cover it up by saying there's two numbers there and they discontinuously interact uh
+it's just weird but this is our best rigid approximation
+okay so um so now you I think you appreciate a little bit more this notion of contact
+forces how they need to be big potentially so for instance
+this was back in the day when we were competing to win Atlas and this was in
+gazebo um right and the we didn't get to pick the parameters
+of the simulator right um and it was really annoying to walk over the rough terrain because
+it would go like this right um so one of two things should have happened
+at this point if we had control of the simulator we would have changed the stiffness of the ground down
+and admitted that it would sink in a little bit or we would have turned the time step down
+right when you start seeing artifacts like that that means you're getting into the regime where your integrator is not
+accurately tracking there's a few other ways that you could get that artifact and I'll tell you but but that's getting into the regime where
+your your integrator is not tracking the true Dynamics and your first instinct should be to turn the time step down
+your second Instinct should be to start looking for where the stiffness in your differential equation is coming from
+ironically in the first demo this is the Ewa moving around and picking up the block
+I had to pick a certain stiffness time step right and I wanted it to run well in deep node and all these things the
+thing the place where the stiffness comes from I think you'll never guess
+there's just a even moving around with a little red block any guess where's what's the stiff part
+of the differential equation in that system I've set you up to say it's the red block it's not the red block
+it's the fingers it turns out the way that we simulate the the wsg I guess I
+did say it maybe a little bit but that was that excellent but um yeah the the wsg has a mechanical
+drive so that the two fingers are always equal and opposite magnitude we simulate
+that with a stiff spring two stiff spring like it has to be stiff but it's this it's the thing that drives
+the bottleneck of my simulator that's annoying okay but at least I know it I found it
+and I know that if I want to make my simulator faster I can change that number or handle that in that stiffness
+properly okay let's think about the the question
+of surfaces right so you so um we had a question now that why did I draw two arrows when I really should be
+thinking about integrating over the surface it's a pretty subtle thing
+so most simulators think about Force vectors
+applied at points that's the natural thing to think about when you're writing a Dynamics engine
+but it gets subtle fast so let's just think about box on box contact
+that's what we saw when I dropped a bunch of red boxes out of the sky right
+so let's say I've got I've got one box and I've got another box here okay box one and box two
+where do I draw the contact forces my normal forces right I drew them here and here to make my
+free body diagram work but that was a little arbitrary you might think if you're writing the
+simulator that you'd think oh I'll just pick the corners but that's not robust enough to handle
+all the cases right so what where are you going to pick them if you find yourself in a situation where your box is hanging off the end
+right the points of maybe I need to somehow pick here
+and pick here for instance would be a reasonable choice
+but there's another you know there's other cases too so because the integration time step isn't perfect and
+I might not simulate the the equations perfectly I might find myself
+with my block like this it you know my integration wasn't
+perfect so my geometries are overlapping a little bit now where do you draw the contact forces
+right it's not super clear right maybe you pick here maybe you pick here
+writing an algorithm that picks those forces consistently is hard maybe impossible I don't know I
+think it has never been done and this is another big reason why simulators of contact become unstable
+is you'll be you'll be simulating along you'll take steps of the integration and it will quickly change its mind about
+where the forces should be applied and then all of a sudden something will explode okay
+that could be what happened it was happening here too was that it could be slightly changing its mind about where the forces should be applied
+so um yeah so here's a here's a a reasonable candidate right so
+let's say I've got two boxes that are in penetration I think a natural algorithm that I would
+try to write would say I'm going to pick the point of maximal penetration and then I'm going to take the closest
+exit from that maximal penetration and I'm going to apply a force like that
+okay so that's a pretty good algorithm yeah but if I start looking at the way
+that Force gets applied as I move the objects through there's a problem which is that the
+location of the force changes discontinuously as I move across that corner
+so in particular this this notion of penetration distance and closest exit
+has the property that if I'm going in and I cross this corner a force that was
+previously pushing me in this direction my normal force all of a sudden tried to decide me push push up in this direction
+since I'm into penetration it could be a large force that suddenly changed Direction this is another big source of
+stiffness or or instability in the differential equations in in the contact equations
+okay take a quick stretch and then I'll tell you how to solve that problem
+thank you
+my blue shot
+okay I'm gonna solve it because we only have a little a little bit of time left
+so the I think the this really is a big source of of errors
+and a lot of simulations I think the answer in some sense was in your question why not integrate over the
+surface right the answer has just been it's computationally expensive and hard to do that computational geometry
+but one of the things that has made the simulation engine and Drake much more robust now is by we're doing that extra
+work to integrate over the surface so um but okay a first trick which actually
+we use a lot is to just um if you and you could put this in any simulator you certainly put
+it in in Drake we often actually put extra contact geometries down so for
+that red brick to fall and land in the piles and and be accurate in all the different cases
+if you look at the if you visualize the Collision geometry instead of the visual geometry you'll actually see that the
+red box has a little box just in set just partly inset from the original box and then there's
+for there's zero radius spheres at all of the corners
+why I'm telling the simulator do your best in all these hard places to pick
+one point to um you know one point to summarize the force but go ahead and
+put an extra point at the corners always do that I'm saying there's an extra so we get one contact force per Collision
+geometry pair so by having extra points declared to the side I'm just saying always pick the
+corners and then do your best on the interior when we're simulating with Point contact that actually works
+surprisingly well even in these sort of cases um like the the bricks falling down like
+this if you watch carefully this is actually only simulating with Point contact and it I had to convince myself like
+every one of those cases is actually resisting penetration because some corner is hitting some that
+other interior that slightly inset box right or the points on points so it's a
+very good heuristic that makes these you know these things work pretty well even if like grippers picking up the box in the middle it's all you know that that
+has worked very well so if you just want to use a Point contact based simulator better then you can help by just making
+the Collision geometry a little bit more friendly okay but you can also do this harder thing of trying to to
+um do the surface integrals how does that work okay so this is
+called in Drake it's called hydroelastic Contact so it turns out the rules of physics across a surface in
+3D of arbitrary geometry they're not in a textbook we had to invent some that sounds bad
+but uh wait we took our best extension of the existing laws of physics across
+the surface and we applied them in this in this way but it required first a bunch of computational geometry
+which you take meshes intersecting with other meshes and you compute volumetric meshes on the Fly of the
+intersection and then you try to take a surface inside that mesh which summarizes the
+Collision boundary and you take an integral across that surface mesh and you apply forces in a
+proportion across that whole surface integral and that has made a huge difference in the way that we do
+simulation you get these beautiful simulations that if you turn on all of the hydroelastic
+visualization you'll get you'll see the rich contact geometry moving around
+if you take the box on box Collision right where it was changing discontinuously before now we get
+beautiful smooth changing and contact forces
+just to show the before and after here right that is a salute it's an expensive
+solution to the problem but that is a robust solution to the problem
+okay there's a lot of computational geometry work behind that and I want to be clear so the the model
+that we have going on here now is actually uh in most of the cases when I
+say it's soft on soft for instance that would be the spring like model so we have a stiffness
+in these hydroelastic simulations the object is not deforming
+you can do fully deformable simulation too this is a nearly rigid simulation
+we're allowing penetration so the contact geometry doesn't change but on every instant we're allowing the
+penetration and we're Computing an integral over the penetration to present the force so this is good for soft
+simulation in the low deformation mode if you can say my geometry is roughly not changing
+but I want it to be squishy a little bit this is a good model for that right or for a nearly rigid if I turn K up on my
+stiffness I can simulate very pretty nearly rigid things with this okay it's not going to simulate a plush toy if you
+want to pick up a you know a plush toy and shake it around or a rope or a cloth this is not the right model for that
+that's what it means when I said State space for simulation and planning is the original rigid body State it's not
+adding state to track the shape of the surface
+friction in hydroelastic again is uh I mean it's applied in a similar way
+sliding friction is even more subtle but it required taking our best approximation of coolant
+friction on that on that surface right so it it's in the paper there's a lot of
+details but it's uh it's a it's a almost cool and frictiony
+so it's more expensive than Point contact but less expensive than finite element for instance
+so you get these great simulations then if you watch the hand pick up the mug and you turn off the hand visualization
+and just show the the hydroelastic regions you know this is what turned it
+into a really robust simulation this is one of the things yeah
+the other thing is a really good contact solver so that we're not doing Euler
+integration we're actually doing a much more advanced integration scheme inside inside Drake
+the if there are demo reels from the teams that are working in this are hilarious they always just have random
+objects falling and uh they always look beautiful and are doing more advanced things but
+this week it was green peppers falling out of the sky and this is now a green pepper
+in a bowl that almost falls off a table but not right and the contact forces are being
+visualized what's really amazing is if you watch the surface contact surface changing
+even between the bowl and the table it's the little lip of the bowl right and that's so subtle to get that right
+and if you want to measure the happiness of a Dynamics expert the the measure is
+how constant how smooth are those contact forces moving right if you
+there's some really fun situations I think I've got a Lego example here somewhere yeah we put Legos on right we're mating Legos
+and the contact forces came out like this and were just like a rock solid and I think that that was you know ecstasy
+for the Dynamics Team that was like did you see what our contact force engine just did you know because normally you'd
+be like like this right um in a lot of so a lot of the a lot of
+simulators will use this blocks falling from the sky as kind of a demo reel right of a very advanced
+simulations but it's a kind of a trick right because you can't look at that and judge if it's
+physically accurate or not in practice if you were to zoom in you'd see objects intersecting all the time because what they do when they're
+simulating that is they they say I've got like 10 000 contacts happening
+I'm going to pick 10. I'll make those work this time step and then the next time step I'll pick another 10. and that
+10 is a magic number right and in net it kind of looks like Things fall and separate and that's all good but it's
+not very accurate and the contact forces like you see all over the place and they'd be missing in some places or
+whatever you know so this is this is uh the real test is if you can visualize the contact forces and they are just
+sitting rock steady then you've got a strong numerical recipe behind it
+let me ask yeah
+so um okay there's a multi-level response so
+the question was why is it important that we allow penetration so fundamentally if we think about a
+spring model then there's no contact force until penetration so the first choice is to do that
+the alternative to a spring model is to handle the impulsive forces and try to obey those constraints exactly there is
+a mode you can try to put one soft thing in with another hard object in hydroelastic that does some of
+this work but but right now in this in the simplest version of the model forces are only defined when you're in
+penetration that's when you have a surface to work with
+yes for the
+mug with the hand yeah yeah I mean they're they're we always
+aim for real-time simulation um what's that still it's uh it depends on which simulation
+and it depends on the number of the mesh test relation of the so you have to take your surface mesh and make it a tet mesh
+and the number of finite elements in your tet mesh will cut would be the computational cost so the reason it is not on by default in
+Drake is because it's slower but it's it's actionable we use it we choose to turn it on often in our
+manipulation workflows yeah yes
+right so so the so the question is so what about finite element models Fem
+so let's just mention deformable simulation for a second here
+so if I wanted to simulate a plush toy or something like this then I might use
+a finite element model
+which is f e m okay which roughly says I'm gonna I'm gonna
+model my um my Stanford bunny plush Stanford Bunny with
+a bunch of Springs and spring masses across the the surface of the object and
+allow them to compress and shrink and possibly change their relative location because the thing is deformable
+fem is just uh computationally optimized version of that to some extent
+so the question was can we make finite element real time I think people definitely have and can
+GPU is is a big accelerator for fem type models where
+um contact is actually not super opt it is not optimized well by GPU because it's
+very branchy in the sense of you you take a different path through the code whether you're making contact between
+object one and object three or not and that branches so much that the GPU isn't
+a huge accelerator but for finite element where you have a whole mesh and you know things are going to be uh you
+know there's no branching on that particular mesh then you put it on the finite element and people have very uh
+performant simulations so there's an Nvidia simulation of a fingertip with a soft
+finger that's running in real time rates yes
+so I don't guess it's not not a lot of penetration simulations yeah so so okay then there's
+a question of how does the finite element get connected with contact forces and I
+think you can use all the same if you treat each of your methods as each of your
+elements as either rigid or soft allowing penetration or not I think all of those things can can be handled the
+same connections now Drake has fem also it's not on by default either but we do
+have a finite element method that's not GPU accelerated yet because it's very hard to release open source code that
+will work on everybody's GPU but that's coming um
+and uh there's one other one I'll mention but there's a question
+yes so this is a great question so um the
+recipe of trying to summarize a whole body when you're in penetration with a
+single Force is is difficult with a spring Force but if I'm willing to take
+forces everywhere then the question is resolved again so I'm actually it's not just a single
+normal force that's being applied you could summarize the total forces by putting a point somewhere you know
+they're mathematically equivalent but the way it's being computed is by taking an integral over the surface of contact
+and so that ambiguity disappears disappears
+the other um so finite elements are are good for many for
+I've never actually seen anybody shake a standard money but I'm sure they I'm sure there's a paper out there that does that um but let's say I wanted a plush
+toy or something um large and soft when you get to like cloth simulation that's an extra level
+of complexity because you have to worry a lot about thin objects you can have piercing phenomenon so a small if you
+take slightly too big of a Time step you're on the other side or part of your object is on the other side of the object and then so you just have to deal
+with sort of these breakthrough events but you can do that again with a finite element method for instance and extra
+extra work but we I would say I don't claim that Drake can support cloth yet that'll be a future future work
+the other one that that a lot of people are interested in and have been working with is uh mpm material Point methods
+particle type simulations
+um so if you've seen Nvidia Flex for instance or if you've seen like these
+particle simulations where you have something that could be a fluid it could turn into a rigid it can be something in
+between this is doing like not quite the atom level but like a you know big molecule
+kind of level simulation of these objects and on the GPU it can be made surprisingly performant it's you tend to
+give up a lot in terms of um if you tried to simulate a rigid thing
+with an npm model you would find big gaps in the modeling but for fluids and
+other things you know again if you were to compare it to navier Stokes you'd probably find big gaps but in terms of
+like if I just want to see a robot crack an egg and see what that looks like then it's not it's it's I think it's the way
+that people have been trending yes foreign
+that's why I gave these um optimization principles they give trivial answers in the when
+two so let me repeat the question sorry which was I've only said anything about two objects colliding but I can have
+cases where uh you know I've got a bunch of objects colliding like in the blocks falling for instance so then how do
+these forces get resolved in that so in the dissipation sorry in the penetration with springs it's clear
+the interesting part is when I'm doing rigid contact let's say and I'm trying to avoid penetration in a multi-object
+setting then you actually you you resolve these forces of smallest force
+that resists sliding and maximum dissipation in the multibody equations
+with all of them adding constraints and you solve an optimization problem on every time step to resolve the forces
+this is these are the time stepping simulators there if you've heard of linear complementarity problems LCP that
+is a way to solve this problem it's falling out of favor because it's um it's a bad numerical problem but it's um
+yeah that yes we solve an optimization problem on every time step in order to figure out the forces in the general
+case great question
+Okay so your Wizardry level of uh of using even
+just being a user of context emulation I hope got up a little bit there's you saw a little bit of
+um what's going on behind the scenes but if you learn if you take away one thing if you see your feet shaking or objects
+whatever the first thing you do is you turn down the time step and make sure that phenomenon goes away you
+should always be able to take that times that phenomenon Away by making the time steps small enough it just might be painfully slow to simulate
+but then what you do is you find the source of stiffness in your equations
+figure out why the gripper was tuned with too high of a gain it might be your controller oftentimes a controller will
+add stiffness or it might be some contact parameter resolve that stiffness and then crank
+your simulation back up to get fast simulation okay and this the you know what makes a
+fast simulator is really how big can you make h there's a bit a little bit about how
+much you've optimized your multibody code a little bit but the dominant factor is how big of a Time step can you
+take and that's a property of of your integrator and your in your equations of
+motion good okay I'll see you Thursday
+
+</chapter>
+
+</body>
+</html>
