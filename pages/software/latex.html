@@ -54,7 +54,8 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Alignment, numbering and Labeling</a>
-<a href="#1">Mathjax</a>
+<a href="#1">Conditions on equations</a>
+<a href="#2">Mathjax</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Mathjax-Latex</h1>
@@ -73,10 +74,49 @@
     <li>
       Place the label just before the equation line that we need to be referenced later <code>\label{eq:xxx}</code>. When referencing the equation using <code>\ref{eq:xxx}</code>, the equation number shows up as a link.
     </li>
+
+    <p>
+      <li>Numbering equations</li>
+      \begin{equation}\bh(\bq) = 0.\end{equation}
+    </p>
   </ul>
 </section>
 
-<section id="1"><h1>Mathjax</h1>
+<section id="1"><h1>Conditions on equations</h1>
+  <ul>
+    <li>'Sum of' with the limits</li>
+    <a href="https://t.ly/FO2d">Good link</a>.
+
+    <p>
+      <li>Evaluated at</li>
+      $$\frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}}$$
+    </p>
+
+    <li>One sided curly brackets</li>
+    [<a href="https://shorturl.at/lnxAL">Ref</a>]
+    $$
+      \left\{
+        \begin{array}{ c l }
+          \frac{x^2 - x}{2} & \quad \textrm{if } x \geq 1 \\
+          0                 & \quad \textrm{otherwise}
+        \end{array}
+      \right.
+    $$
+
+    <p>
+      <li>Applying a limit</li>
+      [<a href="https://t.ly/FQsBB">Ref</a>]
+      
+      $$
+        \lim_{x \to \infty} f(x)
+      $$
+
+
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>Mathjax</h1>
     <ul>
       <li>Matrix notation</li>
       $\begin{bmatrix}a & b\\c & d\end{bmatrix}$
@@ -95,9 +135,6 @@
       
       <li><a href="t.ly/8MRnV">Good link</a> for quick reference</li>
       
-      <li>Numbering equations</li>
-      \begin{equation}\bh(\bq) = 0.\end{equation}
-      
       <p></p>
       <li>Aligning parts of the equation and adding newlines</li>
       \begin{equation}\displaylines{  
@@ -112,10 +149,6 @@
       <br>
       <code>\displaylines</code> takes into account <code>\\</code> to mean
       'leave a new line'.
-      <p></p>
-  
-      <li>'Sum of' with the limits</li>
-      <a href="https://t.ly/FO2d">Good link</a>.
       <p></p>
   
       <li>Spaces in equations</li>
@@ -145,9 +178,6 @@
         <code>\text{}</code>
       </p>
   
-      <li>Evaluated at</li>
-      $$\frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}}$$
-  
       <p>
         <li>Symbols</li>
         $$
@@ -163,17 +193,6 @@
       ddots - diagonal dots (3) useful for a matrix
       <br>
       cdots - horizontal dots (3)
-
-      <li>One sided curly brackets</li>
-      [<a href="https://shorturl.at/lnxAL">Ref</a>]
-      $$
-        $\left\{ 
-          \begin{array}{ c l }
-            \frac{x^2 - x}{2} & \quad \textrm{if } x \geq 1 \\
-            0                 & \quad \textrm{otherwise}
-          \end{array}
-        \right.
-      $$
     </ul>
   </section>
 </chapter>

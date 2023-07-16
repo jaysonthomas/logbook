@@ -59,9 +59,8 @@
 <a href="#3">Variance</a>
 <ul class="no-bullets">
   <li><a href="#3.0">Equation deepdive</a></li>
-  <li><a href="#3.1">Standard deviation</a></li>
-  <li><a href="#3.2">Sample variance</a></li>
-  <li><a href="#3.3">Covariance</a></li>
+  <li><a href="#3.1">Sample variance</a></li>
+  <li><a href="#3.2">Covariance</a></li>
 </ul>
 <a href="#4">Relationship of covariance and expectation</a>
 <a href="#5">Z-score</a>
@@ -126,21 +125,18 @@
 </section>
 
 <section id="3"><h1>Variance</h1>
-  When we are drawing from a distribution over and over again, 
-  the <code>variance</code> tells us how spread out the numbers or
-  samples (the values being drawn) will be from the mean(the expected value need not be
-  equal to the mean).
-  People sometimes use the variance as a measure of how well we know the mean,
-  something like a confidence. It's important to understand it isn't that,
-  but it will tell us how much the samples vary.
+  <p>
+    I had asked <a href="https://t.ly/CUyG">this</a> question on stackexchange. Another good <a href="https://t.ly/-5LN">reference</a>.   <a href="https://t.ly/jWCR">Code example</a>.
+  </p>
+  
+  When drawing from a distribution over and over again, the <i>variance</i> gives an indication of how spread out the numbers or <i>samples</i> (the values being drawn) will be from the mean(the expected value need not be
+  equal to the mean). The variance is not a measure of how well we know the mean, but just how much the samples vary.
 
   $$
     \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
   $$
 
-  I had asked <a href="https://t.ly/CUyG">this</a> question on stackexchange.
-  Another good <a href="https://t.ly/-5LN">reference</a>. 
-  <a href="https://t.ly/jWCR">Code example</a>.
+  $\sigma$ is the <i>standard deviation</i> which is the square root of variance. 
 
   <p>
     When the probability of every outcome $P(x_i)$ is $\frac{1}{N}$, the variance 
@@ -160,11 +156,7 @@
     mean which is helpful when comparing the variances of 2 different distributions.
   </subsection>  
 
-  <subsection id="3.1"><h1>Standard deviation</h1>
-    <code>Standard deviation</code> is the square root of variance.
-  </subsection>
-
-  <subsection id="3.2"><h1>Sample variance</h1>
+  <subsection id="3.1"><h1>Sample variance</h1>
     Assuming the probability of every observation is the same, in calculating <i>sample variance</i>, we divide by $N-1$ instead of $N$:
 
     $$
@@ -177,12 +169,8 @@
     </p>
   </subsection>
 
-  <subsection id="3.3"><h1>Covariance</h1>
-    The <i>covariance matrix</i> is a square matrix that summarizes the pairwise correlations between the variables in a dataset. 
-
-    <p>
-      The covariance matrix is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
-    </p>
+  <subsection id="3.2"><h1>Covariance</h1>
+    The <i>covariance matrix</i> is a square matrix that summarizes the pairwise correlations between the variables in a dataset. It is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
   </subsection>
 </section>
 

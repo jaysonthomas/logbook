@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Non Linear Least Squares</title>
+  <meta name="Non Linear Least Squares" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">The problem with non-linearities</a>
+<a href="#1">Calculating the Jacobian</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Non Linear Least Squares</h1>
+<section id="0"><h1>The problem with non-linearities</h1>
+  We want to infer the location of a vehicle from position measurements which are received one at a time when the vehicle is stationary. But now the measurements are noisy and a nonlinear function of the position. Maybe the measurements tell us something about the orientation.
+
+  $$
+    \tilde{y} = h(x) + v
+  $$
+  $x$ is a constant unknown state vector of length $n$.
+  <br>
+  $\tilde{y}$ is the vector of $m$ measurements (of $x$) that is actually received.
+  <br>
+  $v$ is the unknown error/noise vector with zero mean and known covariance
+  <br>
+  $h$ is the measurement function (<n>constant and known</n>, but non-linear)
+
+  <p>
+    Before we had a linear function which meant we could write the function as a matrix $H$ times $x$.
+  </p>
+
+  $h$ is now a problem. In recursive estimation, we were projecting the measurement distribution into the same state space as the estimate. We had our estimate $x$ and $p(x)$. We had some distribution of measurements $y$ and $p(y)$. The mean of the distribution was given by $Hx$ and the covariance was $R$. 
+  
+  <div class="container">
+    <figure>
+      <img style="height:180px; width:auto"
+      src="../../../figures/drone/27_relationBetweenMeasAndStateSpace.png"/>
+      <figcaption>
+        Linear relationship between the measurement and the state/parameter space
+      </figcaption>
+    </figure>
+  </div>
+  We could use the linear matrix $H$ to project Gaussian distributions in the measurement space into the state space. The fact that the measurements were related by a linear function ($H$) ensured that the projected distribution stayed Gaussian. That meant that the weighted average posterior distribution was Gaussian as well.
+
+  <div class="container">
+    <figure>
+      <img style="height:180px; width:auto"
+      src="../../../figures/drone/28_nonLinearRelationBetweenMeasAndStateSpace.png"/>
+      <figcaption>
+        Non-Linear relationship between the measurement and the state/parameter space
+      </figcaption>
+    </figure>
+  </div>
+  But if $h$ is an arbitrary function, we have no guarantees that the projected distribution of $y$ will stay Gaussian; <m>which makes it a lot harder to take a weighted average between the prior $\hat{x}_0$ and what the new measurements are telling us</m>.
+
+  <p>
+    The problem is, if we want to preserve the Gaussian to Gaussian mapping, we need to find a way to make the measurement model linear.
+  </p>
+</section>
+
+<section id="1"><h1>Calculating the Jacobian</h1>
+  A common thing to do when linearising a nonlinear function, is to take the Taylor series approximation of $h$ around the estimate $\hat{x}_0$:
+
+  $$
+    h(x) \approx h(\hat{x}_0) + H_{\hat{x}_0}(x-\hat{x}_0)
+  $$
+  
+  $H_{\hat{x}_0}$ is the first derivative of $h$ evaluated at $\hat{x}_0$.
+  <br>
+  Notice the 'approximately equal to' sign.
+
+  <p>
+    This is similar to some of the linearization done in controls. If $x$ and $y$ are scalars, then the first derivative is a scalar as well. $H_{\hat{x}_0}$ would be a simple derivative.
+  </p>
+
+  But if $x$ and $y$ are vectors of length $n$ and $m$ respectively, then from linear algebra, the first derivative is a matrix called the <i>jacobian</i>. $H_{\hat{x}_0}$ would be equal to a matrix with the individual partial derivative components in the various locations in the matrix.
+
+  $$
+    H_{\hat{x}_0} = \begin{bmatrix}
+    \frac{\partial{h_1}}{\partial{x_1}} & \cdots & 
+    \frac{\partial{h_m}}{\partial{x_1}} \\
+    \vdots & \ddots & \vdots \\
+    \frac{\partial{h_1}}{\partial{x_n}} & \cdots &
+    \frac{\partial{h_m}}{\partial{x_n}}
+    \end{bmatrix}
+  $$
+
+  Since we know both $\hat{x}_0$ and $h$, we can compute the jacobian and the function evaluated at the prior mean $h(\hat{x}_0)$, which lets us rewrite all of this in a linear form which is the form we need for a cursive estimation to work:
+
+  $$
+    h(x) \approx Ax + b
+  $$
+  
+  As a result the maximum a posteriori algorithm is basically unchanged, with just an extra step of linearization; that is constructing the jacobian.
+
+  <p>
+    Our three steps are now:
+    <ul>
+      <li>Construct the jacobian $H_{\hat{x}_0}$ to get a linear approximation of $h$ around the estimated state</li>
+
+      <p>
+        <li>Compute the posterior covariance</li>
+        $$
+          Q_1 = (Q^{-1}_0 + H^T_{\hat{x}_0}R^{-1}H_{\hat{x}_0})^{-1}
+        $$
+      </p>
+
+      <li>Compute the posterior mean estimate</li>
+      $$
+        \hat{x}_1 = \hat{x}_0 + Q_1H^T_{\hat{x}_0}R^{-1}(\tilde{y} - h(\hat{x}_0))
+      $$
+    </ul>
+  </p>
+  
+  We now have the ability to take in a series of measurements of an unknown quantity, where the measurements are non-linear function of the unknown quantity. Assuming that we have gaussian noise being injected into the system to perturb the measurements, we can still recover a reasonable estimate.
+
+  <p>
+    We'll see how specific sensors can plug into this formulation, to relax the assumption about the vehicle moving using the Kalman filter.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

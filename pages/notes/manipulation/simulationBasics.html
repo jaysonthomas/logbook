@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Geometric Perception II</title>
-  <meta name="Geometric Perception II" content="text/html; charset=utf-8;" />
+  <title>Simulation basics</title>
+  <meta name="Simulation basics" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -54,203 +54,165 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">ICP Summary</a>
+<a href="#1">Mass spring damper system</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Limitations</a></li>
+  <li><a href="#1.0">The system</a></li>
+  <li><a href="#1.1">Differential equations</a></li>
+  <li><a href="#1.2">Stability analysis</a></li>
+  <li><a href="#1.3">Numerical integration</a></li>
+  <li><a href="#1.4">Phase portrait</a></li>
 </ul>
-<a href="#2">Point-to-mesh correspondence</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Example</a></li>
-  <li><a href="#2.1">Algorithm</a></li>
-  <li><a href="#2.2">The big picture in using optimisation</a></li>
-  <li><a href="#2.3">Algorithm using optimisation</a></li>
-</ul>
-<a href="#3">Rejecting outliers</a>
-<ul class="no-bullets">
-  <li><a href="#3.0">Easy case when we are in the last stages of convergence</a></li>
-  <li><a href="#3.1">Hard case: Global point registration</a></li>
-</ul>
-<a href="#4">Global point registration solutions</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Segmentation</a></li>
-  <li><a href="#4.1">RANSAC - Random Sample Consensus</a></li>
-  <li><a href="#4.2">Pairwise distance</a></li>
-</ul>
-<a href="#5">In-between summary</a>
-<a href="#6">Generalise correspondence</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simulation basics</h1>
 
-<section><h1>What makes simulating contact for manipulation challenging?</h1>
-  The main focus is on the physics engine piece of the simulation. 
+<section id="0"><h1>Overview</h1>
+  The main focus is on the physics engine piece of the simulation. The following makes simulating contact for manipulation challenging: 
   <ul>
     <li>Stiff differential equations</li>
-    Stiffness is under our control. Understand where it comes from, how it manifests itself in simulations and how to deal with it when things go wrong.
+    Stiffness is under our control. We need to understand where it comes from, how it manifests itself in simulations and how to deal with it when things go wrong.
   </ul>
 
 </section>
 
-<section><h1>Mass spring damper system</h1>
-  Equation of damped oscillator:
-  $$
-  \underbrace{m}_{\text{Mass} \atop \text{matrix}}\ddot{q} + 
-  \underbrace{b}_{\scriptsize \text{Damping}}\dot{q} + 
-  \underbrace{k}_{\text{Spring} \atop \text{stiffness}}q = 0
-  $$
+<section id="1"><h1>Mass spring damper system</h1>
+  <subsection id="1.0"><h1>The system</h1>
+    <div class="container">
+      <figure>
+        <img style="height:85px; width:auto"
+        src="../../../figures/manipulation/54_massSpringDamper.png"/>
+        <figcaption>
+          Mass spring damper
+        </figcaption>
+      </figure>
+    </div>
 
-  <div class="container">
-    <figure>
-      <img style="height:85px; width:auto"
-      src="../../../figures/manipulation/54_massSpringDamper.png"/>
-      <figcaption>
-        Mass spring damper
-      </figcaption>
-    </figure>
-  </div>
+    Equation of damped oscillator:
+    $$
+    \underbrace{m}_{\text{Mass} \atop \text{matrix}}\ddot{q} + 
+    \underbrace{b}_{\scriptsize \text{Damping}}\dot{q} + 
+    \underbrace{k}_{\text{Spring} \atop \text{stiffness}}q = 0
+    $$
 
+    $q$ is the position.
+
+    <p>
+      The physical intuition for the damper is that it pulls energy out of the system. Example, friction. Here, the mass wants to oscillate because of the spring but it's going to slow down because of
+      the damper.
+    </p>
+
+    How do we simulate a simple system like this, accurately.
+  </subsection>
+
+  <subsection id="1.1"><h1>Differential equations</h1>
+    A differential equation way to think about the system is to write the equations of motion in the state-space form:
+
+    $$\begin{align*}
+      x &= \begin{bmatrix}
+            q \\ \dot{q}
+          \end{bmatrix} \\
+      \dot{x} &= \begin{bmatrix}
+                    \dot{q} \\
+                    \frac{1}{m}(-b\dot{q} - k{q})
+                \end{bmatrix} \\
+              &= Ax \\
+
+      A &= \begin{bmatrix}
+            0 & 1 \\
+            -\frac{k}{m} & -\frac{b}{m}
+          \end{bmatrix}
+    \end{align*}$$
+  </subsection>
+  
+  <subsection id="1.2"><h1>Stability analysis</h1>
+    For the MSD continuous time system, what are the stability properties given a change in the parameters $m, b, k$? If we start at some initial position and velocity as shown in the figure, and let go, does the mass go back and forth about position 0 and come to rest or is it going to do something different. Is the limit of the position as time goes to $\infty$ equal to 0?
+
+    $$
+      \lim_{t \to \infty} q(t) = 0 \text{?}
+    $$
+
+    <p>
+       The system is stable as long as the parameters are all greater than 0. The damping needs to be strictly greater than 0, so that the system is actually decaying and not oscillating forever. Mass cannot be not greater than 0.
+    </p>
+
+    The way we can confidently tell whether our parameters will be greater than 0 and hence whether the system is a stable one or not, is by taking the eigen values of the $A$ matrix.
+  </subsection>
+
+  <subsection id="1.3"><h1>Numerical integration</h1>
+    To integrate a continuous time equation forward i.e. advance this simulator, we make a discrete time approximation.
+
+    $$
+      x[n+1] = x[n] + 
+      \underbrace{h}_{\text{Time step} > 0}
+      \underbrace{Ax[n]}_{\dot{x}}
+    $$
+
+    This is a particular kind of integration called <i>Forward euler integration</i>. If one cares about the linear analysis, the above equation can be written as:
+
+    $$
+      x[n+1] = (I + hA)x[n]
+    $$
+
+    This is a different linear dynamical system and we can ask the following fundamental questions related to numerical analysis:
+    <ul>
+      <li>Is the system stable or not</li>
+      As $n$ goes to $\infty$, does $x$ go to $0$?
+
+      <li>
+        For different values of $h$, how accurately can we simulate the true solution from above differential equation
+      </li>
+    </ul>
+
+    The answer is subtle. The eigen values are messier than we would like. So we opt to do it numerically. One of the great things about linear dynamical systems is that we can integrate them perfectly in closed form. So we can compare the analytical solution (will have no numerical
+    integration accuracies) with the solution obtained through numerical approximation (using Euler integration) and ask how similar they are.
+
+    <p>
+      The integration method takes the derivative at each time and then forecasts that out as if it was constant; so it's going to make an approximation of the analytical solution. As we increase $h$, i.e. take bigger time steps, the accuracy of the approximation is going to decrease until it gets very bad. 
+    </p>
+
+    So it is possible to artificially enforce a system whose continuous time dynamics are stable, to have a discrete time approximation that is unstable by having a very large time step in simulation.    
+
+    <p>
+      In particular what matters is the time step $h$ relative to the acceleration $\ddot{q} \sim \frac{k}{m}$. If the stiffness increases, the derivatives are going to get larger. Taking a long time step with fast changing derivatives can quickly lead to big errors. If the accelerations are big, we need to take small time steps to simulate the system accurately. 
+    </p>
+
+    To simulate a heavy humanoid that is generating relatively big forces on the ground is easier since big forces on big robot generates relatively low accelerations. If the humanoid were to pick up a toothpick, this is a bad case since it's generating big forces on a little mass. This could lead to the toothpicks flying off in simulation.
+
+    <p>
+      One of the challenges in simulating manipulation is that we have to deal with a range of inertias. We tend to have very stiff equations and also the accuracy of the contact simulation is such that we need to choose $k$ larger than we would for walking. 
+    </p>
+
+    Having a stiff differential equation means that we have large accelerations resulting in having to use small time steps to simulate accurately.
+  </subsection>
+
+  <subsection id="1.4"><h1>Phase portrait</h1>
+    <div class="container">
+      <figure>
+        <img style="height:85px; width:auto"
+        src="../../../figures/manipulation/55_StableSystemPlot.png"/>
+        <figcaption>
+          Damped system
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:130px; width:auto"
+        src="../../../figures/manipulation/56_phasePortrait.png"/>
+        <figcaption>
+          Expected phase portrait in a damped scenario
+        </figcaption>
+      </figure>
+    </div>
+    
+    To understand the integration of this MSD system, we could plot $q$ as a function of time. We would expect to see an oscillation that decays if it's stable or blow up if it's unstable. But, to see the long term behaviour of the system, it would be clearer to do a phase plot i.e. $q$ versus $\dot{q}$.    
+
+    <p>
+      As the stiffness $k$ gets bigger, the phase portrait becomes more elongated i.e. we get larger velocities.
+    </p>
+  </subsection>
 </section>
 
-type system um right so let's see I've got a
-just a mass there's no friction to speak of and I'm going to put a spring on it
-and I'll put a damper on it which I normally we normally draw like that okay and this would be its X position
-okay and this is like x equals zero here okay so the equations of motion of of
-this actually let me call it not X let me call it Q since we are going to distinguish between x and q
-and we've been calling Physicians Q right so this is going to be mq double dot
-plus b q dot plus k q this is the classical equations of a damped
-oscillator right where this is the mass Matrix
-is the damping
-this is the stiffness spring stiffness
-okay so um in in my other robotics course under actuated robotics we talk a lot about
-stability and what that means and how to generalize it to non-linear systems but
-I think even without that full introduction we can talk about just uh
-the basic stability of this system uh stability in this very simple
-setting just just is just asking is the limit as time goes to Infinity of
-X of t equal to zero Q of t
-right I'd like to say if I start this here with some initial position and velocity
-and it starts is it going to come to rest or is it
-going to do something different right this damper is the physical intuition you should have is that's pulling out
-energy that's friction right so this thing is wants to oscillate because of the spring but it's going to slow down because of
-the damper and we're going to try to understand make sure we understand how to simulate this accurately even if you've got you
-know these kind of simple equations is that clear
-for the continuous time system the answer the the question about
-stability is very easy to understand um you could you could ask what is the
-stability properties given a change M B and K the parameters and it turns out that the the answer is
-yes it's stable
-I'll just say if if mass is greater than zero the damping
-is greater than zero K is greater than zero as long as I all of my numbers are
-positive which is the normal physical intuition case then yes that that system is going to decay
-and I put strictly greater than zero for the damping so that it's it's actually decaying to zero and that's not
-oscillating forever and this just because I don't I don't want Mass to be zero right
-okay and if I wanted to to if you remember your your differential equations right so I could I obtained
-this uh with confidence by taking the eigenvalues of the of the system right
-so if I write this in my state space form just to completely close the loop
-but here I've got q and velocity Q Dot and this Q dot does
-equal V in this simple case so I can write Q dot equals
-or x dot equals Q Dot and then 1 over m negative V Q dot minus k q
-which I can write that as a x where
-a is just 0 1 negative K Over m
-negative B over m is that familiar to people
-and give me a thumbs up or a thumbs down if that is that familiar to people that kind of stuff it's been a while
-maybe so but this would be a differential equation way to think about that system
-I could just write the equations of motion in this form you're this is you know for this example
-you don't need to generate these from scratch here but uh if you remember if for those of you
-that remember then the eigen values of this Matrix can check the stability of the system
-yeah Okay so
-what's interesting now is if I try to integrate that on a computer right so that you could take an entire course on
-numerical methods I don't need all of that but I just want to
-think about numerical integration in its simplest form here to make a few points
-so this is a continuous time equation and I want to Now integrate it forward
-uh with a with an algorithm right so the simplest form of that would be to
-make an approximation here a discrete time approximation to say I'm going to advance this
-simulator by taking my current state
-and I'm going to increment it by I'll call it h
-this is my Dynamics this is my x dot right this one here H is what I'll typically
-use to denote my time step
-I want that to be also greater than zero
-okay and if you care about the linear analysis again you could write this as I
-plus h a
-this gives me a different linear dynamical system which we can talk about its stability
-or its instability asking does X of n as n goes to Infinity does it go to zero
-and nice questions from analysis are about you know if I choose different H's for
-instance how accurately can I simulate the true solution from this differential equation
-these are the fundamental questions of numerical analysis okay and the answer here
-is much more subtle than this right and I think I actually have the
-eigenvalues and here but they're they're messier than I wanted so
-um so I'll just do it numerically I'll do an example numerically okay one of the great things about linear
-dynamical systems is I can integrate them perfectly in closed form so I can I can give the solution to this with no
-artificial artifacts from numerical integration and then I can do the integration version of this and ask how
-similar they are by the way this is a particular type of integration this is called the Euler integration you've
-probably heard it
-it's even forward Euler if you want to get um more into the details
-Okay so I'm
-worried that this is not going to show up great on the monitor because webgl doesn't
-accept the line with command sort of annoying
-um but let's try oh I could try Safari I wonder Safari's whipped yellow supports
-okay nope still doesn't it's like right in
-the webgl docs it says most browsers don't support line width so yeah
-uh okay that's annoying but we'll deal this is the phase portrait let me let me
-draw it first on the board just to make sure I you know what we're seeing here
-I'm going to go in and add like axes and other matte plotlet like things into mesh cat but I haven't done it yet okay
-so the plot I want to make here to understand the integration of this Mass
-spring damper system is a phase plot phase portrait
-portrait which is when I plot Q versus Q Dot so if I plotted Q as a function of time
-I would expect to see an oscillation that would Decay if it's stable or blow
-up if it's unstable but the timing of this is is one feature
-that I'm less worried about the timing I want to see more it's be it's long-term Behavior it's going to be a little bit clearer to see it in this plot where I'm
-going to start if I start from some initial condition let's say a positive q and zero velocity
-then I would expect it to start getting pulled towards the origin so that's negative velocity and
-you'll expect it's I think not too hard to exp see that we're going
-to expect something like that to happen when it's stable when velocity is positive I'll be moving in
-this direction in the in this picture right and when velocity is negative I'm
-moving this direction so I could tend to take Spirals and in the good case when
-the when there's damping I expect those spirals to be like this
-okay so that's what we're seeing here we're seeing an initial condition here and this is the origin and I can change
-the stiffness and damping and the like okay
-and this is chosen with a pretty small H H is chosen to be 0.1 seconds here
-okay so I have a mass of one a damping of one which I should have picked 0.1 or
-something and a stiffness of two so these are all kind of like a round number the number one I get the sort of
-reasonable solution interestingly as I increase the stiffness this is making K bigger
-then I'm going to get elongated I'm going to get larger velocities right I'm going to like this right but it it'll still
-eventually converge now the red line so the blue line is the analytical solution no numerical
-integration accuracies the red line is the numerical approximation that I get from doing Euler integration
-now the natural thing you could imagine is if I start taking bigger steps right so basically so what it's basically
-doing is it's taking the derivative at each time and then forecasting that out as if it was constant
-and then it's evaluating the derivative at that time forecasting it out so it's going to make an approximation of that curve
-the problem is if I pick um H to be I'm going to start increasing H now so if I start increasing h
-my approximation is going to get more and more decimated okay and I'm going to my accuracy is
-going to go down right if I increase H too much
-okay sorry that was the stiffness let me increase H too much things can get bad right so I'm simulating A system that is
-the continuous time Dynamics are stable but the discrete time approximation is
-unstable this seems totally artificial enforced
-you might see a simulator do this on you uh one day okay and it's the same the reasons for it are exactly what we're
-seeing here okay so the the very first lesson is just if you see your simulator blow up
-turn the time step down that's the first one but but actually the interaction with the stiffness and
-the damping and the mass is actually um easy to understand too okay and we're
-going to try to make sure that those those points land okay in particular what matters is the
-time step as a ratio or a compared relative to the
-um not K but K Over m okay
-so the the thing that matters is H relative to K Over m
-these are the accelerations this is like the Q dot the nominal Q Dot I'm sorry Q
-double dot okay this is the the stiffness divided by masses
-and if if K Over m is large
-then you're going to need a smaller h to simulate it accurately because those this is going to make if I
-increase K here as I increase K that's getting my my derivatives are going to be larger
-and so taking a long step with fast changing derivatives can quickly lead to
-Big errors that's the intuition if your accelerations are big
-then you need to make your time steps small so it turns out that when you're
-simulating a humanoid let's say a 400 pound Atlas robot that's generating relatively big forces on the ground
-you would think that might be a hard thing to simulate but actually the accelerations are relatively low okay so big forces on a big robot are
-kind of okay when Atlas goes to pick up like a toothpick that's the bad case you get big forces
-on a little mass and you send toothpicks flying in your simulator okay
-and it turns out he was picking up stuff are not so different from that and in
-the range of inertias that you have to deal with in manipulation is the first challenge you tend to have very stiff
-equations and also the accuracy of the contact simulation is such that you need to choose K larger
-than you would for walking and I'll make that point when we get into the contact equations
-okay does that sort of that basic idea makes sense what does it mean to be a stiff differential equation it means
-that I have these accelerations this K Over m in this simple system is large
-which means K has to be small I'm sorry H has to be small
-good
+35:06
 so we're going to see now where some of that stiffness comes from in the contact problem
 let's do a little contact mechanics
 I'm going to take almost the same example but I'm going to put a contact inside it okay in fact I'll I'll do it

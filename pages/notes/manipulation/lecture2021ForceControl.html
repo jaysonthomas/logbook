@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Robotic Manipulation: Force control</title>
-  <meta name="Robotic Manipulation: Force control" content="text/html; charset=utf-8;" />
+  <title>Force control</title>
+  <meta name="Force control" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -53,60 +53,44 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Overview</a>
-<a href="#2">Task setup - decisions to be made</a>
-<a href="#3">System view</a>
-<a href="#4">Creating the model</a>
+<a href="#0">Overview</a>
+<a href="#1">Task setup - decisions to be made</a>
+<a href="#2">System view</a>
+<a href="#3">Creating the model</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Equations for the finger</a></li>
+  <li><a href="#3.0">Equations for the finger</a></li>
 </ul>
-<a href="#5">Testing the interaction of forces using the model</a>
+<a href="#4">Testing the interaction of forces using the model</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">Quasi-static assumption</a></li>
-  <li><a href="#5.1">Applying a constant force via the finger</a></li>
-  <li><a href="#5.2">Varying the constant horizontal force</a></li>
+  <li><a href="#4.0">Quasi-static assumption</a></li>
+  <li><a href="#4.1">Applying a constant force via the finger</a></li>
+  <li><a href="#4.2">Varying the constant horizontal force</a></li>
 </ul>
-<a href="#6">Direct force control flip-up strategy</a>
+<a href="#5">Direct force control flip-up strategy</a>
 <ul class="no-bullets">
-  <li><a href="#6.0">Case where fine control is not available</a></li>
-  <li><a href="#6.1">Case where fine control is possible</a></li>
-  <li><a href="#6.2">Controller implementation</a></li>
+  <li><a href="#5.0">Case where fine control is not available</a></li>
+  <li><a href="#5.1">Case where fine control is possible</a></li>
+  <li><a href="#5.2">Controller implementation</a></li>
 </ul>
-<a href="#7">Indirect force control</a>
+<a href="#6">Indirect force control</a>
 <ul class="no-bullets">
-  <li><a href="#7.0">Stiffness control</a></li>
-  <li><a href="#7.1">Stiffness control flip-up strategy demo</a></li>
-  <li><a href="#7.2">Philosophy of stiffness control</a></li>
-  <li><a href="#7.3">Stiffness controller</a></li>
+  <li><a href="#6.0">Stiffness control</a></li>
+  <li><a href="#6.1">Stiffness control flip-up strategy demo</a></li>
+  <li><a href="#6.2">Philosophy of stiffness control</a></li>
+  <li><a href="#6.3">Stiffness controller</a></li>
 </ul>
-<a href="#8">Impedance control</a>
-<a href="#9">Remote centered compliance</a>
+<a href="#7">Impedance control</a>
+<a href="#8">Remote centered compliance</a>
 <ul class="no-bullets">
-  <li><a href="#9.0">Peg-in-hole insertion task</a></li>
-  <li><a href="#9.1">Peg-in-hole solution</a></li>
+  <li><a href="#8.0">Peg-in-hole insertion task</a></li>
+  <li><a href="#8.1">Peg-in-hole solution</a></li>
 </ul>
-<a href="#10">Questions & Todo</a>
+<a href="#9">Questions & Todo</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Robotic Manipulation: Force control</h1>
+<chapter style="counter-reset: chapter 0"><h1>Force control</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="#2">Task setup - decisions to be made</a></li>
-    <li><a href="#3">System view</a></li>
-    <li><a href="#4">Creating the model</a></li>
-    <li><a href="#5">Testing the interaction of forces using the model</a></li>
-    <li><a href="#6">Direct force control flip-up strategy</a></li>
-    <li><a href="#7">Indirect force control</a></li>
-    <li><a href="#8">Impedance control</a></li>
-    <li><a href="#9">Remote centered compliance</a></li>
-    <li><a href="#10">Questions & Todo</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   Our goal:
   <ul>
     <li>Come up with a strategy to flip up the box</li>
@@ -129,7 +113,7 @@
   </p>
 </section>
 
-<section id="2"><h1>Task setup - decisions to be made</h1>
+<section id="1"><h1>Task setup - decisions to be made</h1>
   <ul>
     <li>Choice of controller</li>
     <p>
@@ -180,7 +164,7 @@
   </ul>
 </section>
 
-<section id="3"><h1>System view</h1>
+<section id="2"><h1>System view</h1>
   <figure>
     <img style="height:100px; width:auto"
     src="../../../figures/manipulation/5_forceControl_systemView.svg"/>
@@ -195,10 +179,7 @@
       I've got a plant with $u$ coming in. The model equations are inside the plant.
     </li>
     <li>
-      The force controller is going to take in $q$ and $\dot{q} potentially - 
-      position and velocity of the finger if we're only doing force control on the finger. 
-      But could also include that of the box. 
-      It could also take in a desired force. 
+      The force controller is going to take in $q$ and $\dot{q}$ potentially - position and velocity of the finger if we're only doing force control on the finger. But could also include that of the box. It could also take in a desired force. 
     </li>
   </ul>
 
@@ -222,7 +203,7 @@
   </p>
 </section>
 
-<section id="4"><h1>Creating the model</h1>
+<section id="3"><h1>Creating the model</h1>
   The entire configuration space of the system, the $q$ vector has elements for both
   <ul>
     <li>The finger</li>
@@ -231,74 +212,60 @@
     It's pinned down - so modeled as a 2D planar joint.
   </ul>
 
-  $$q=\begin{bmatrix}x_{f}\\z_{f}\\x_{box}\\z_{box}\\\theta_{box}\end{bmatrix}$$
+  $$
+    q = \begin{bmatrix}
+          x_{f}\\z_{f}\\x_{box}\\z_{box}\\\theta_{box}
+        \end{bmatrix}
+  $$
 
   The simulator implements the manipulator equation:
   $$
     M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu + \Sigma_iJ_i^T(q)f^{c_i}
   $$
-  There are 2 systems contributing to the manipulator equation, that are only connected
-  through the contact forces. The mass matrix for instance would have entries for the 
-  finger and the box. But they don't have any coupling terms (i.e. the diagonal terms are 0). 
-  They're only coupled through the forces (3rd term RHS). If I'm not touching, 
-  just wiggling the finger around, it doesn't do anything to the box i.e. 
-  cause any accelerations on it.
+  
+  The 2 systems (box and finger) contributing to the manipulator equation, are only connected/coupled through the contact forces $f^c$. The mass matrix for instance has entries for the finger and the box; but it doesn't have any coupling terms (i.e. the diagonal terms are 0). If the finger is not touching the box i.e. just wiggling in free air, it doesn't affect the box i.e. cause any accelerations on it.
+
   $$
     M(q) = \begin{bmatrix}
-      fingerTerm & 0 \\
-      0 & boxTerm 
+      \text{Finger term} & 0 \\
+      0 & \text{Box term}
     \end{bmatrix}
   $$
 
-  <subsection id="4.0"><h1>Equations for the finger</h1>
-    Let's write out the whole equation for the finger in the x coordinate:
+  <subsection id="3.0"><h1>Equations for the finger</h1>
+    Equation for the finger in the $x$ coordinate:
     $$\begin{equation}
       m_f \ddot{x}_f = u_x + f^c_x
     \end{equation}$$
-    The subscript f stands for finger. The force term isn't $f^{c_i}_x$ because
-    there's only 1 contact hence only 1 force along x.
+    
+    The subscript f stands for finger. The force term isn't $f^{c_i}_x$ because there's only 1 contact which is along x, hence only 1 force. To move the finger, we assume we have a perfect torque/force source on the finger $u_x$ i.e. noise isn't modeled. 
 
-    We've chosen this scenario intentionally to be particularly simple. 
-    It is assumed that we have a perfect torque/force source on the finger $u_x$ to move it
-    [i.e. noise isn't modeled]. 
-    The above eq. is just the 1st row of the manipulator equation in the x coordinate 
-    i.e. the 2nd row considers the box. 
-    It just happens gravity doesn't have any affect on the finger in the x direction, 
-    so there's no contribution from the g term. It's a point mass, so there's no 
-    coriolis term and the Jacobian is the identity matrix. 
-    And of course, it leads us to just the free body F=ma equation.
+    <p>
+      The above equation is just the 1st row of the manipulator equation in the x coordinate. The 2nd row considers the box. Gravity doesn't have any affect on the finger in the x direction, so there's no contribution from it in the equation. It's a point mass, so there's no coriolis term and the Jacobian is the identity matrix. 
+    </p>
 
     <figure>
       <img style="height:100px; width:auto"
       src="../../../figures/manipulation/4_forceControl.png"/>
       <figcaption>
-        Free body diagram for the finger (pink) if it was only in contact with 
-        the box in the x or z directions
+        Free body diagram for the finger (pink) if it was only in contact with the box in the x or z directions
       </figcaption>
     </figure>
 
     $$\begin{equation}
-    m_f \ddot{z}_f = u_z + f^c_z - m_{f}g
+      m_f \ddot{z}_f = u_z + f^c_z - m_{f}g
     \end{equation}$$
-    $f$ is positive in the eqs. because of the way we've aligned our right-hand rule 
-    coordinate frame.
+
+    $f^c$ is positive in the equations because of the way we've aligned our right-hand rule coordinate frame.
   </subsection>
 </section>
 
-<section id="5"><h1>Testing the interaction of forces using the model</h1>
-  The goal of our force controller is to take a desired force in, 
-  command a $u$ to be applied to the robot's finger in order to achieve a desired force out
-  from it. Algebraically we can write this out and see if it makes sense.
+<section id="4"><h1>Testing the interaction of forces using the model</h1>
+  The goal of our force controller is to apply a desired force $u$ to the robot's finger in order to achieve a desired force out from it.
   
-  <subsection id="5.0"><h1>Quasi-static assumption</h1>
+  <subsection id="4.0"><h1>Quasi-static assumption</h1>
     <p>
-      Let's assume we're in the mode of applying accelerations via the finger. 
-      Let's also assume the finger is moving slowly and its accelerations are 
-      effectively zero ($\ddot{x}==0$, $\ddot{z}==0$).
-      Then any terms being contributed by the finger's inertial dynamics are small 
-      compared to the contact force $f_{c}$, the applied force $u$ and gravity. 
-      This idea is called making <i>quasi-static approximations</i> which we will
-      use to start because it's easier. 
+      Let's assume we're in the mode of applying accelerations via the finger. Let's also assume the finger is moving so slowly that its accelerations are effectively zero ($\ddot{x}==0$, $\ddot{z}==0$). Then any terms being contributed by the finger's inertial dynamics are small compared to the contact force $f_{c}$, the applied force $u$ and gravity. This idea is called making <i>quasi-static approximations</i> which is an easy place to start at.
     </p>
     <p>
       Equations (1) and (2) would then be:
@@ -308,57 +275,39 @@
     <p>
       With the quasi-static assumption, given our desired contact forces, the controller output
       would be:
-      $$\begin{equation}
-      u_x = -f^{c_d}_x
-      \end{equation}$$
-      $$\begin{equation}
-      u_z = -f^{c_d}_z + m_{f}g
-      \end{equation}$$
+      
+      $$\begin{align}
+        u_x &= -f^{c_d}_x \label{eq:quasiX}\\
+        u_z &= -f^{c_d}_z + m_{f}g \label{eq:quasiY}
+      \end{align}$$
     </p>
   </subsection>
 
-  <subsection id="5.1"><h1>Applying a constant force via the finger</h1>
-    <p>
-      The forces of contact are actually coming from the interaction forces. 
-      The physics engine is going to solve for some complicated relation to decide that.
-      Let's think about the case of a constant force that is 0 in the z direction and 
-      some positive constant greater than zero in the x direction:
-      $$
-        f^{c_d} = \begin{bmatrix}
-                    c>0 \\
-                    0
-                  \end{bmatrix}
-      $$
+  <subsection id="4.1"><h1>Applying a constant force via the finger</h1>
+    The forces of contact $f_c$ are actually coming from the interaction forces. What would happen if a constant force (= 0) and a force that is some positive constant greater than zero were applied in the z and the x directions respectively:
+    $$
+      f^{c_d} = \begin{bmatrix}
+                  c>0 \\
+                  0
+                \end{bmatrix}
+    $$
 
-      <figure>
-        <img style="height:100px; width:auto"
-        src="../../../figures/manipulation/6_forceControl_notYetInContact.png"/>
-        <figcaption>
-          Applying force through the finger when it's not yet in contact.
-        </figcaption>
-      </figure>
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/manipulation/6_forceControl_notYetInContact.png"/>
+      <figcaption>
+        Applying force through the finger when it's not yet in contact.
+      </figcaption>
+    </figure>
 
-      In many cases if we command a force and we're not actually making contact, 
-      our controller is unjustified. The above controller 
-      is expecting a reaction force, $f^{c}$. But it tends to do the right thing. 
-      It will drive the finger into contact; the finger will move in the direction
-      the force is being applied with some constant acceleration i.e. $m\ddot{x}=c$.
-      Once in contact, then using (3,4) in a controller
-      is a more reasonable attempt to try to regulate the contact force. 
-      This is a very important point - a hallmark of force control.
-    </p>
+    The controller in (\ref{eq:quasiX}, \ref{eq:quasiY}) is expecting a reaction force $f^{c}$. If a force is commanded and the finger isn't making contact (i.e. there's no reaction force), the controller will drive the finger into contact; the finger will move in the direction of the force being applied with some constant acceleration i.e. $m\ddot{x}=c$. Once in contact, then using (\ref{eq:quasiX}, \ref{eq:quasiY}) in a controller is a reasonable method to regulate the contact force.
+
     <p>
-      So, driving the finger to apply a force when there's no reaction force from a wall, 
-      tends to drive the finger into contact if it's close to contact. 
-      Walking robots are in (roughly) position control mode when swinging 
-      because we'd like to get our foot to a particular position. But when it's 
-      above the desired foot position, it goes into force control mode 
-      (for the step and stance - staying there). This is good because if the terrain 
-      is uneven, then the controller will still drive the robot's foot into the ground.
+      Walking robots are in position control mode when swinging. But when the foot is above the desired position, the controller is switched to force control mode. If a terrain is uneven, the controller will still do the right thing by driving the robot's foot into the ground.
     </p>
   </subsection>
 
-  <subsection id="5.2"><h1>Varying the constant horizontal force</h1>
+  <subsection id="4.2"><h1>Varying the constant horizontal force</h1>
     <figure>
       <img style="height:150px; width:auto"
       src="../../../figures/manipulation/7_forceControl_constantForce.png"/>
@@ -412,20 +361,14 @@
   </subsection>
 </section>
 
-<section id="6"><h1>Direct force control flip-up strategy</h1>
-  <subsection id="6.0"><h1>Case where fine control is not available</h1>
-    So, we want to flip up a box. I was originally going to shove it to the side and 
-    then flip it. But how do we flip it up in its current location. It's pretty subtle. 
-    To get the box into a regime where we're controlling the contact forces enough to 
-    flip it up, there needs to be a lot of friction i.e. the friction cone needs to be
-    bigger. The bigger friction cone allows us to have a bigger range of contact forces 
-    to tip the box up. Normally, we would use our 2nd hand to help out friction 
-    with a little bit of force on the opposite side of the box.
+<section id="5"><h1>Direct force control flip-up strategy</h1>
+  <subsection id="5.0"><h1>Case where fine control is not available</h1>
+    How do we flip the box up in its current location? To get the box into a regime where we're controlling the contact forces enough to flip it up, there needs to be a lot of friction i.e. the friction cone needs to be
+    bigger. A bigger friction cone allows us to have a bigger range of contact forces to tip the box up. Normally, we would use our 2nd hand to help out friction with a little bit of force on the opposite side of the box.
   </subsection>
 
-  <subsection id="6.1"><h1>Case where fine control is possible</h1>
-    If we know the friction coefficient and the robot can regulate/apply the contact forces 
-    more accurately, then we can slide and tip the box.
+  <subsection id="5.1"><h1>Case where fine control is possible</h1>
+    If we know the friction coefficient and the robot can regulate/apply the contact forces more accurately, then we can tip the box.
     <figure>
       <img style="height:150px; width:auto"
       src="../../../figures/manipulation/8_forceControl_flipUp.png"/>
@@ -434,21 +377,12 @@
       </figcaption>
     </figure>
 
-    Ideally, the only force we want on the LHS of the box is friction. 
-    The finger will apply a force on the top RHS of the box.
-    We have a friction cone (2, on the top RHS) based on the normal forces of the finger
-    (it's equal and opposite force). 
-    We're only allowed to apply forces within friction cone 2 otherwise the finger will 
-    slip up the box (the box is a bit slippery). So the game becomes can you find a 
-    force that stays inside friction cone 2 so there's just enough force within
-    friction cone 1 to keep that point (LHS edge of the box) from slipping 
-    and will cause the box to rotate up. 
+    Ideally, the only force we want on the LHS of the box is friction. The finger will apply a force on the top RHS of the box; which creates a friction cone (2, on the top RHS) based on the normal forces of the finger (it's equal and opposite force). If the finger applies a force outside of friction cone 2, it will slide/slip up the box. So the aim is to find a force that stays inside friction cone 2 so there's just enough force within friction cone 1 to keep LHS edge-point of the box from slipping/sliding and will cause the box to rotate up. 
   </subsection>
 
-  <subsection id="6.2"><h1>Controller implementation</h1>
-    Locally the flip-up strategy looks like a least squares problem and 
-    the friction cone constraint can be locally approximated as a linear constraint.
-    The whole derivation (a controller to flip the box up) is in the notes.
+  <subsection id="5.2"><h1>Controller implementation</h1>
+    <n>Locally the flip-up strategy looks like a least squares problem and 
+    the friction cone constraint can be locally approximated as a linear constraint.</n> The whole derivation (a controller to flip the box up) is in the notes.
 
     <p>
       The controller we write is effectively thinking about a virtual angle. 
@@ -498,12 +432,12 @@
   </subsection>
 </section>
 
-<section id="7"><h1>Indirect force control</h1>
+<section id="6"><h1>Indirect force control</h1>
   Commanding forces only is potentially a limiting view of the world. 
   There's a class of models called <i>indirect force control</i> where we program 
   the force with an indirect objective. 
 
-  <subsection id="7.0"><h1>Stiffness control</h1>
+  <subsection id="6.0"><h1>Stiffness control</h1>
     One of the most powerful examples would be <i>stiffness control</i> - 
     instead of saying the goal is to regulate the contact force between the finger
     and the box, we make the finger act like a spring. So, if the finger was pushed on, 
@@ -559,7 +493,7 @@
     </p>
   </subsection>
   
-  <subsection id="7.1"><h1>Stiffness control flip-up strategy demo</h1>
+  <subsection id="6.1"><h1>Stiffness control flip-up strategy demo</h1>
     <p>
       If we program the mechanics of our interaction, we can do something way 
       better than if we're trying to program the forces or the positions.
@@ -610,7 +544,7 @@
     </p>
   </subsection>
   
-  <subsection id="7.2"><h1>Philosophy of stiffness control</h1>
+  <subsection id="6.2"><h1>Philosophy of stiffness control</h1>
     If we can program the interaction in the right way, so that we're pulling on the 
     virtual set point or being pulled by it (it's a spring in between, pulling and 
     pushing) and we're in some reasonably chosen configuration, then:
@@ -641,7 +575,7 @@
     </p>
   </subsection>
 
-  <subsection id="7.3"><h1>Stiffness controller</h1>
+  <subsection id="6.3"><h1>Stiffness controller</h1>
     Looking at just the $z$ axis, if we implement the equation of motion given by (2)
     in the controller given by (5), the torque to be applied is given as:
     $$\begin{equation}
@@ -663,7 +597,7 @@
   </subsection>
 </section>
 
-<section id="8"><h1>Impedance control</h1>
+<section id="7"><h1>Impedance control</h1>
   <i>Impedance control</i> is a 'generalisation' of (6). In fact, (6) can be called
   an impedance controller. So far we just changed the stiffness and damping terms in 
   (5) and not the effective mass of the sphere. Even if we changed the mass 
@@ -694,8 +628,8 @@
   </p>
 </section>
 
-<section id="9"><h1>Remote centered compliance</h1>
-  <subsection id="9.0"><h1>Peg-in-hole insertion task</h1>
+<section id="8"><h1>Remote centered compliance</h1>
+  <subsection id="8.0"><h1>Peg-in-hole insertion task</h1>
     There was a canonical task created in the 80s called the peg-in-hole insertion task, 
     which motivated some great work in motion planning and control. So there is a 
     hole in the world and we've got a peg that's roughly the same size as the hole. 
@@ -719,7 +653,7 @@
     </p>
   </subsection>
 
-  <subsection id="9.1"><h1>Peg-in-hole solution</h1>
+  <subsection id="8.1"><h1>Peg-in-hole solution</h1>
     <figure>
       <img style="height:70px; width:auto"
       src="../../../figures/manipulation/13_rcc_translation.png"/>
@@ -770,7 +704,7 @@
   </subsection>
 </section>
 
-<section id="10"><h1>Questions & Todo</h1>
+<section id="9"><h1>Questions & Todo</h1>
   <ul>
     <li>
       I would love to be super comfortable with the manipulator equation

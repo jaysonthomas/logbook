@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Batch Linear Least Squares</title>
+  <meta name="Batch Linear Least Squares" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Batch LS: Minimising the squared error criterion</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Define the overall measurement model</a></li>
+  <li><a href="#0.1">Define the noise model</a></li>
+  <li><a href="#0.2">Define the cost function</a></li>
+  <li><a href="#0.3">Rewrite the cost function in matrix notation</a></li>
+  <li><a href="#0.4">Minimise the cost function to find the estimate</a></li>
+  <li><a href="#0.5">Limitation of the batch LS equation</a></li>
+  <li><a href="#0.6">Example</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Batch Linear Least Squares</h1>
+<section id="0"><h1>Batch LS: Minimising the squared error criterion</h1>
+  <subsection id="0.0"><h1>Define the overall measurement model</h1>
+    Consider a parameter estimation example: To measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle, we collect 4 separate measurements sequentially using a multimeter. Let's say the resistor is rated at $1k\Omega$, but the true value can vary from the rated one. Furthermore, the multimeter could be inaccurate or there could be some human error in taking the measurements. 
+
+    <p>
+      Let $x$ be the actual resistance. Assume it is a constant, but unknown.
+      We make measurements, $y$, of the resistance. We model our measurements as corrupted by noise $v$. 
+      $$\text{Measurement model}: y = x+v$$
+    </p>
+  </subsection>
+
+  <subsection id="0.1"><h1>Define the noise model</h1>
+    For now, we'll treat this noise as equivalent to a general error, i.e. <n>not interpret the noise from a probabilistic perspective</n>.
+    
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../figures/drone/18_ls1_measModel.png"/>
+    </figure>
+
+    <p>
+      For each of the four measurements, we define a scalar noise term that is independent of the other noise terms. Statistically, we would say in this case that the noise is <code>independent and identically distributed</code> or <code>IID</code>. 
+    </p>
+  </subsection>  
+
+  <subsection id="0.2"><h1>Define the cost function</h1>
+    Next, we define the error between each measurement and the actual value of our resistance $x$ which we don't yet know. To find $x$, we square these errors to arrive at an equation that is a function of the measurements and the unknown resistance.
+
+    <p>
+      With the above errors defined, the method of least squares says that the resistance value we are looking for, i.e. the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) is one which minimizes the <code>squared error criterion</code>, also sometimes called the 
+      <code>squared error cost function</code> or <code>loss function</code>; i.e. the sum of squared errors.
+    </p>
+    $$
+      \hat{x}_{LS} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
+    $$
+  </subsection>
+
+  <subsection id="0.3"><h1>Rewrite the cost function in matrix notation</h1>
+    To minimize the squared error criterion, we'll rewrite our errors in matrix notation. This will be especially helpful when we have to deal with hundreds or even thousands of measurements. We define an error vector identified as $e$, that is a function of the observations stacked into a vector $y$, a matrix $H$ called the <code>Jacobian</code> and the true resistance. 
+    $$\begin{gather*}
+      \mathbf{e} = \mathbf{y} - \mathbf{H}x\\
+      \begin{bmatrix}e_1 \\ e_2 \\ e_3 \\ e_4\end{bmatrix}
+      = \begin{bmatrix}y_1 \\ y_2 \\ y_3 \\ y_4\end{bmatrix} -
+      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
+    \end{gather*}$$
+    
+    $H$ has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ is the number of unknowns that we wish to estimate. In general, $H$ is a rectangular matrix that is easy to write down in this linear case <n>but will require more mathematical effort to compute in the case of non-linear estimation</n>. 
+    
+    <p>
+      In this example, $x$ is a single scalar, but it can be a vector comprising multiple unknowns. 
+    </p>
+    We can convert our squared error criterion to vector notation as follows. 
+
+    $$\begin{align*}
+      \mathcal{L}_{LS}(x) = e^2_1 + e^2_2 + e^2_3 + e^2_4 &= \mathbf{e}^T\mathbf{e} \\
+      &= (\mathbf{y} - \mathbf{H}x)^T(\mathbf{y} - \mathbf{H}x) \\
+      &= \mathbf{y}^T\mathbf{y} - x^T\mathbf{H}^T\mathbf{y} - \mathbf{y}^T\mathbf{H}x + x^T\mathbf{H}^T\mathbf{H}x
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="0.4"><h1>Minimise the cost function to find the estimate</h1>
+    <button class="accordion">Selah</button>
+    <div class="panel">
+      $e^Te$, i.e. matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.
+
+      $$\begin{align*}
+        y &= H\hat{x} \\
+        \hat{x} &= \frac{y}{H} \\
+        &= \frac{H^Ty}{H^TH} = (H^TH)^{-1}H^Ty
+
+      \end{align*}$$
+
+      Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>. 
+      
+      <p>
+        <m>When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?</m>
+      </p>
+    </div>
+
+    We need to minimize the squared error with respect to our true resistance $x$. 
+    From calculus, we know that we can solve for an extremum (here, a minimum) 
+    by taking the partial derivative of the function (here, squared error) w.r.t. 
+    the unknown $x$ and setting the derivative to $0$. 
+    
+    $$\begin{align*}
+      \frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}} = 
+      -y^TH - y^TH + 2\hat{x}^TH^TH = 0 \\
+      -2y^TH + 2\hat{x}^TH^TH = 0
+    \end{align*}$$
+
+    Re-arranging, we arrive at what are called the <code>normal equations</code>, which can be written as a single matrix formula. We can solve these to find $\hat{x}_{LS}$, the resistance which minimizes our squared error criterion. 
+      
+    $$
+      \hat{x}_{LS} = (H^TH)^{-1}H^Ty
+    $$
+  </subsection>
+
+  <subsection id="0.5"><h1>Limitation of the batch LS equation</h1>
+    This expression has a unique solution, i.e. we will only be able to solve for $\hat{x}$ if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an inverse, i.e. if it is invertible. 
+    
+    If we have m measurements and n unknown parameters, then
+    $$
+      H \in \mathbb{R}^{m\times n} \quad\quad H^TH \in \mathbb{R}^{n\times n}
+    $$
+    
+    The matrix exists (and therefore we'd be able to derive the least squares solution) if and only if there are at least as many measurements as there are unknowns. This will usually not be a problem. In fact, we'll often face the challenge of dealing with too many measurements. 
+  </subsection>
+
+  <subsection id="0.6"><h1>Example</h1>
+    As per the above example:
+    $$
+      y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
+      \quad
+      H = \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
+    $$
+    $\hat{x}_{LS} = (H^TH)^{-1}H^Ty$
+    $$
+      \begin{bmatrix}
+      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
+      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
+      \end{bmatrix}^{-1}
+      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
+      \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
+      = \frac{1}{4}(1068 + 988 + 1002 + 996) = 1013.5 \Omega
+    $$
+
+    Note that the expression simplifies to the arithmetic mean of the 4 measurements. 
+    Now, we have another justification for using the arithmetic mean, 
+    it minimizes the simple least squares criterion. 
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

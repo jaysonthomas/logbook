@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least squares</title>
-  <meta name="Least squares" content="text/html; charset=utf-8;" />
+  <title>Least Squares</title>
+  <meta name="Least Squares" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -54,38 +54,13 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Definitions</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Independent and identically distributed</a></li>
+</ul>
 <a href="#1">Assumptions in LS</a>
-<a href="#2">Least squares method overview</a>
-<a href="#3">Batch LS: Minimising the squared error criterion</a>
-<ul class="no-bullets">
-  <li><a href="#3.0">Define the overall measurement model</a></li>
-  <li><a href="#3.1">Define the noise model</a></li>
-  <li><a href="#3.2">Define the cost function</a></li>
-  <li><a href="#3.3">Rewrite the cost function in matrix notation</a></li>
-  <li><a href="#3.4">Minimise the cost function to find the estimate</a></li>
-  <li><a href="#3.5">Limitation of the batch LS equation</a></li>
-  <li><a href="#3.6">Example</a></li>
-</ul>
-<a href="#4">Weighted LS</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Estimating multiple unknowns</a></li>
-  <li><a href="#4.1">Defining the cost function</a></li>
-  <li><a href="#4.2">Minimising the cost function</a></li>
-  <li><a href="#4.3">Example</a></li>
-</ul>
-<a href="#5">Summary of WLS vs LS</a>
-<a href="#6">Independent and identically distributed</a>
-<a href="#7">Musings</a>
-<a href="#8">Deriving The Maximum Likelihood Estimator</a>
-<ul class="no-bullets">
-  <li><a href="#8.0">Breaking down the derivation steps</a></li>
-</ul>
-<a href="#9">Fitting A Line With Linear Least Squares</a>
-<ul class="no-bullets">
-  <li><a href="#9.0">Example</a></li>
-</ul>
-<a href="#10">The problem with non-linearities</a>
-<a href="#11">Calculating the Jacobian</a>
+<a href="#2">Uses</a>
+<a href="#3">Branches</a>
+<a href="#4">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least Squares</h1>
@@ -100,6 +75,29 @@
   Carl Friedrich Gauss' description of <code>Least Squares</code>:
   <br>
   The most probable value of an unknown parameter is that which minimizes the sum of squared errors between what we observe and what we expect multiplied by numbers that measure the degree of precision.
+
+  <subsection id="0.0"><h1>Independent and identically distributed</h1>
+    What does it mean for a set of random variables to be independent and identically distributed?
+    <ul>
+      <li>
+        Each random variable follows the same probability distribution and the variance of 
+        any random variable does not depend on the other variables.
+      </li>
+      Close! It is true that, if the random variables all follow the same probability 
+      distribution, each must have the same variance (which is fixed). 
+      However, the term "i.i.d" refers to the statistical independence of any pair of 
+      random variables.
+      <p>
+        <li>
+          Each random variable follows the same probability distribution and all the variables 
+          are mutually independent (i.e., the cross-covariance of any pair is zero).
+        </li>
+        Right! This relationship is shown on the last slide, where the entries on the main 
+        diagonal of the matrix $R$ are the same and the off-diagonal entries are all 
+        equal to zero.
+      </p>
+    </ul>
+  </subsection>
 </section>
 
 <section id="1"><h1>Assumptions in LS</h1>
@@ -123,333 +121,21 @@
   </ul>
 </section>
 
-<section><h1>Uses</h1>
+<section id="2"><h1>Uses</h1>
   Despite the over-simplifications/assumptions above, the estimation technique is common for calibration, finding the transform between two coordinate systems or model fitting.
 </section>
 
-<section><h1>Branches</h1>
+<section id="3"><h1>Branches</h1>
   <ul>
     <li><a href="lls.html">Linear least squares</a></li>
-    <li><a href="">Batch least squares</a></li>
-    <li><a href="">Weighted batch least squares</a></li>
-    <li><a href="">Recursive least squares</a></li>
+    <li><a href="batchLs.html">Batch linear least squares</a></li>
+    <li><a href="wls.html">Weighted batch least squares</a></li>
+    <li><a href="rls.html">Recursive least squares</a></li>
+    <li><a href="nls.html">Non linear least squares</a></li>
   </ul>
 </section>
 
-<section id="3"><h1>Batch LS: Minimising the squared error criterion</h1>
-  <subsection id="3.0"><h1>Define the overall measurement model</h1>
-    Consider a parameter estimation example: To measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle, we collect 4 separate measurements sequentially using a multimeter. Let's say the resistor is rated at $1k\Omega$, but the true value can vary from the rated one. Furthermore, the multimeter could be inaccurate or there could be some human error in taking the measurements. 
-
-    <p>
-      Let $x$ be the actual resistance. Assume it is a constant, but unknown.
-      We make measurements, $y$, of the resistance. We model our measurements as corrupted by noise $v$. 
-      $$\text{Measurement model}: y = x+v$$
-    </p>
-  </subsection>
-
-  <subsection id="3.1"><h1>Define the noise model</h1>
-    For now, we'll treat this noise as equivalent to a general error, i.e. <n>not interpret the noise from a probabilistic perspective</n>.
-    
-    <figure>
-      <img style="height:150px; width:auto"
-      src="../../../figures/drone/18_ls1_measModel.png"/>
-    </figure>
-
-    <p>
-      For each of the four measurements, we define a scalar noise term that is independent of the other noise terms. Statistically, we would say in this case that the noise is <code>independent and identically distributed</code> or <code>IID</code>. 
-    </p>
-  </subsection>  
-
-  <subsection id="3.2"><h1>Define the cost function</h1>
-    Next, we define the error between each measurement and the actual value of our resistance $x$ which we don't yet know. To find $x$, we square these errors to arrive at an equation that is a function of the measurements and the unknown resistance.
-
-    <p>
-      With the above errors defined, the method of least squares says that the resistance value we are looking for, i.e. the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) is one which minimizes the <code>squared error criterion</code>, also sometimes called the 
-      <code>squared error cost function</code> or <code>loss function</code>; i.e. the sum of squared errors.
-    </p>
-    $$
-      \hat{x}_{LS} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
-    $$
-  </subsection>
-
-  <subsection id="3.3"><h1>Rewrite the cost function in matrix notation</h1>
-    To minimize the squared error criterion, we'll rewrite our errors in matrix notation. This will be especially helpful when we have to deal with hundreds or even thousands of measurements. We define an error vector identified as $e$, that is a function of the observations stacked into a vector $y$, a matrix $H$ called the <code>Jacobian</code> and the true resistance. 
-    $$\begin{gather*}
-      \mathbf{e} = \mathbf{y} - \mathbf{H}x\\
-      \begin{bmatrix}e_1 \\ e_2 \\ e_3 \\ e_4\end{bmatrix}
-      = \begin{bmatrix}y_1 \\ y_2 \\ y_3 \\ y_4\end{bmatrix} -
-      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
-    \end{gather*}$$
-    
-    $H$ has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ is the number of unknowns that we wish to estimate. In general, $H$ is a rectangular matrix that is easy to write down in this linear case <n>but will require more mathematical effort to compute in the case of non-linear estimation</n>. 
-    
-    <p>
-      In this example, $x$ is a single scalar, but it can be a vector comprising multiple unknowns. 
-    </p>
-    We can convert our squared error criterion to vector notation as follows. 
-
-    $$\begin{align*}
-      \mathcal{L}_{LS}(x) = e^2_1 + e^2_2 + e^2_3 + e^2_4 &= \mathbf{e}^T\mathbf{e} \\
-      &= (\mathbf{y} - \mathbf{H}x)^T(\mathbf{y} - \mathbf{H}x) \\
-      &= \mathbf{y}^T\mathbf{y} - x^T\mathbf{H}^T\mathbf{y} - \mathbf{y}^T\mathbf{H}x + x^T\mathbf{H}^T\mathbf{H}x
-    \end{align*}$$
-  </subsection>
-
-  <subsection id="3.4"><h1>Minimise the cost function to find the estimate</h1>
-    <button class="accordion">Selah</button>
-    <div class="panel">
-      $e^Te$, i.e. matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.
-
-      $$\begin{align*}
-        y &= H\hat{x} \\
-        \hat{x} &= \frac{y}{H} \\
-        &= \frac{H^Ty}{H^TH} = (H^TH)^{-1}H^Ty
-
-      \end{align*}$$
-
-      Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>. 
-      
-      <p>
-        <m>When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set $dx=0$?</m>
-      </p>
-    </div>
-
-    We need to minimize the squared error with respect to our true resistance $x$. 
-    From calculus, we know that we can solve for an extremum (here, a minimum) 
-    by taking the partial derivative of the function (here, squared error) w.r.t. 
-    the unknown $x$ and setting the derivative to $0$. 
-    
-    $$\begin{align*}
-      \frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}} = 
-      -y^TH - y^TH + 2\hat{x}^TH^TH = 0 \\
-      -2y^TH + 2\hat{x}^TH^TH = 0
-    \end{align*}$$
-
-    Re-arranging, we arrive at what are called the <code>normal equations</code>, which can be written as a single matrix formula. We can solve these to find $\hat{x}_{LS}$, the resistance which minimizes our squared error criterion. 
-      
-    $$
-      \hat{x}_{LS} = (H^TH)^{-1}H^Ty
-    $$
-  </subsection>
-
-  <subsection id="3.5"><h1>Limitation of the batch LS equation</h1>
-    This expression has a unique solution, i.e. we will only be able to solve for $\hat{x}$ if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an inverse, i.e. if it is invertible. 
-    
-    If we have m measurements and n unknown parameters, then
-    $$
-      H \in \mathbb{R}^{m\times n} \quad\quad H^TH \in \mathbb{R}^{n\times n}
-    $$
-    
-    The matrix exists (and therefore we'd be able to derive the least squares solution) if and only if there are at least as many measurements as there are unknowns. This will usually not be a problem. In fact, we'll often face the challenge of dealing with too many measurements. 
-  </subsection>
-
-  <subsection id="3.6"><h1>Example</h1>
-    As per the above example:
-    $$
-      y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
-      \quad
-      H = \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
-    $$
-    $\hat{x}_{LS} = (H^TH)^{-1}H^Ty$
-    $$
-      \begin{bmatrix}
-      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
-      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
-      \end{bmatrix}^{-1}
-      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
-      \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
-      = \frac{1}{4}(1068 + 988 + 1002 + 996) = 1013.5 \Omega
-    $$
-
-    Note that the expression simplifies to the arithmetic mean of the 4 measurements. 
-    Now, we have another justification for using the arithmetic mean, 
-    it minimizes the simple least squares criterion. 
-  </subsection>
-</section>
-
-<section id="4"><h1>Weighted LS</h1>
-  <subsection id="4.0"><h1>Estimating multiple unknowns</h1>
-    <p>
-      From now on, let's drop the assumption that we're only estimating one parameter and derive the more general normal equations. This will allow us to formulate a way to estimate multiple parameters at one time. For example, if we wanted to estimate several resistance values at once. 
-    </p>
-  
-    Let's begin by using the following general notation. We have $m$ 
-    measurements that are related to $n$ unknown parameters through a linear model represented by $H$, the Jacobian matrix whose form and entries will depend on the particular problem at hand. 
-  
-    $$
-      \begin{bmatrix}y_1 \\ . \\ . \\ y_m\end{bmatrix}
-      = H\begin{bmatrix}x_1 \\ . \\ . \\ x_n\end{bmatrix}
-      + \begin{bmatrix}v_1 \\ . \\ . \\ v_m\end{bmatrix}
-    $$
-    $$
-      y = Hx + v
-    $$
-  </subsection>
-
-  <subsection id="4.1"><h1>Defining the cost function</h1>
-    What if some of our measurements are of better quality than others i.e. there's varying measurement noise variance? For example, 1 sensor is better than the other.
-
-    One way to interpret the ordinary method of least squares is to say 
-    that we are implicitly assuming that each noise term $v_i$ is an independent random variable across measurements and has an equal variance i.e. IID.
-
-    $$
-      \mathbb{E}[v^2_i] = \sigma^2\enspace (i=1,..,m)
-      \qquad \qquad R = \mathbb{E}[vv^T]=
-      \begin{bmatrix}
-      \sigma^2 & & 0 \\
-      & \ddots & \\
-      0 & & \sigma^2    
-      \end{bmatrix}
-    $$
-    
-    $\mathbb{E}$ is the expected value. The expected value of the square of the deviation from the mean (here, the mean is assumed to be the true value) is the same as the variance.
-    
-    <p>
-      If we instead assume that each noise term is independent but has a
-      different variance, we can define our noise covariance as follows.
-    </p>
-
-    $$
-      \mathbb{E}[v^2_i] = \sigma^2_i \enspace (i=1,..,m)
-      \qquad \qquad R = \mathbb{E}[vv^T]=
-      \begin{bmatrix}
-      \sigma_1^2 & & 0 \\
-      & \ddots & \\
-      0 & & \sigma_m^2    
-      \end{bmatrix}
-    $$
-
-    We can define a weighted least squares criterion as:
-    $$\begin{align*}
-      \mathcal{L}_{WLS}(x) &= e^TR^{-1}e\\
-      &= \frac{e^2_1}{\sigma^2_1} + \cdots + \frac{e^2_m}{\sigma^2_m}
-    \end{align*}$$
-    
-    Each squared error term is now weighted by the inverse of the variance 
-    associated with the corresponding measurement. In other words, the lower the variance of the noise, the more strongly it's associated error term will be weighted in the loss function. 
-    
-    <p>
-      In the case of equal variances, we get $\frac{1}{\sigma^2}$; but since the variance is constant, it will not affect the final estimate. 
-    </p>
-  </subsection>
-  
-  <subsection id="4.2"><h1>Minimising the cost function</h1>
-    Expanding the new criterion:
-
-    $$\begin{align*}
-      \mathcal{L}_{WLS}(x) &= e^TR^{-1}e\\
-      &= (y-Hx)^TR^{-1}(y-Hx)
-    \end{align*}$$
-
-    We minimise the same way as before by taking a derivative. 
-    In the general case where we have $n$ unknown parameters in our bold vector $x$, 
-    this derivative will actually be a gradient. Setting the gradient to the 0 vector, 
-    we then solve for our best or optimal parameter vector $\mathbf{\hat{x}}$. 
-    $$
-      \hat{x} = argmin_x\mathcal{L}(x) \qquad \longrightarrow \qquad
-      \frac{\partial{\mathcal L}}{\partial x}\Bigr|_{x=\hat{x}}
-      = 0 = -y^TR^{-1}H + \hat{x}^TH^TR^{-1}H
-    $$
-    This leads to another set of normal equations called the weighted normal equations. 
-    $$\begin{align*}
-      H^TR^{-1}H\hat{x}_{WLS} &= H^TR^{-1}y \\
-      \hat{x} &= (H^TR^{-1}H)^{-1} H^TR^{-1}y
-    \end{align*}$$
-
-    An individual variance is assigned to each measurement, which means that the 
-    matrix $\mathbf{R}$ (and its inverse) is $m \times m$ in size.
-  </subsection>
-  
-  <subsection id="4.3"><h1>Example</h1>
-    <figure>
-      <img style="height:70px; width:auto"
-      src="../../../figures/drone/19_wlsExample.png"/>
-    </figure>
-
-    Noise is described in standard deviations, hence why they have the units of ohms. They need to be squared to get the variances.
-
-    $$\begin{align*}
-      \hat{x} &= (H^TR^{-1}H)^{-1} H^TR^{-1}y \\
-      &=
-      \begin{bmatrix}
-        \begin{bmatrix}1 & 1 & 1 & 1\end{bmatrix} &
-        \begin{bmatrix}400&&& \\ &400&& \\ &&4& \\ &&&4 \end{bmatrix}^{-1} &
-        \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}
-      \end{bmatrix}^{-1} 
-
-      \begin{bmatrix}1 & 1 & 1 & 1\end{bmatrix}
-      \begin{bmatrix}400&&& \\ &400&& \\ &&4& \\ &&&4 \end{bmatrix}^{-1}
-      \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996\end{bmatrix} \\
-
-      &= \frac{1}{1/400 + 1/400 + 1/4 + 1/4}
-      (\frac{1068}{400} + \frac{988}{400} + \frac{1002}{4} + \frac{996}{4}) \\
-      &= 999.3\Omega
-    \end{align*}$$
-
-    Evaluating the weighted least squares solution, we can see that the 
-    final resistance value is much closer to what the more accurate multimeter 
-    measured.
-  </subsection>
-</section>
-
-<section id="5"><h1>Summary of WLS vs LS</h1>
-  By using weighted least squares, we can vary the importance of each measurement to the final estimate. Measurements can have different   variances and also, sometimes, be correlated. 
-
-  <p>
-    <table class="table2 center">
-      <tr>
-        <th></th>
-        <th>LSs</th>
-        <th>WLSs</th>
-      </tr>
-      <tr>
-        <td>Loss/Criterion</td>
-        <td>$\mathcal L_{LS}(x) = e^Te$</td>
-        <td>$\mathcal L_{WLS}(x) = e^TR^{-1}e$</td>
-      </tr>
-      <tr>
-        <td>Solution</td>
-        <td>$\hat{x}_{LS} = (H^TH)^{-1}H^Ty$</td>
-        <td>$\hat{x}_{WLS} = (H^TR^{-1}H)^{-1}H^TR^{-1}y$</td>
-      </tr>
-      <tr>
-        <td>Limitations</td>
-        <td>$m\geq n$</td>
-        <td>
-          $m \geq n$ <br>
-          $\sigma^2_i > 0$
-        </td>
-      </tr>
-    </table>
-  </p>
-
-  We derived the weighted least squares criterion and the associated weighted normal equations that can be solved to yield the weighted least squares estimate of a set of 'constant parameters'. We need to modify the method of least squares to work recursively, that is to compute an optimal estimate based on a stream of measurements without having to acquire the entire set beforehand, when we look at state estimation, or the problem of estimating quantities that change continuously over time.
-</section>
-
-<section id="6"><h1>Independent and identically distributed</h1>
-  What does it mean for a set of random variables to be independent and identically distributed?
-  <ul>
-    <li>
-      Each random variable follows the same probability distribution and the variance of 
-      any random variable does not depend on the other variables.
-    </li>
-    Close! It is true that, if the random variables all follow the same probability 
-    distribution, each must have the same variance (which is fixed). 
-    However, the term "i.i.d" refers to the statistical independence of any pair of 
-    random variables.
-    <p>
-      <li>
-        Each random variable follows the same probability distribution and all the variables 
-        are mutually independent (i.e., the cross-covariance of any pair is zero).
-      </li>
-      Right! This relationship is shown on the last slide, where the entries on the main 
-      diagonal of the matrix $R$ are the same and the off-diagonal entries are all 
-      equal to zero.
-    </p>
-  </ul>
-</section>
-
-<section id="7"><h1>Musings</h1>
+<section id="4"><h1>Musings</h1>
   <p>
     The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
     <a href="https://t.ly/EKOi">Coursera ref</a>.
@@ -486,119 +172,7 @@
       </li>
       I think it's equivalent to $y=H_1x+H_2b$
     </p>
-
-    <li>Understand the derivation of RLS</li>
-    <a href="https://t.ly/tzde">This</a> might be a good derivation.
-    <a href="https://t.ly/c-GU">This</a> could be interesting as well.
   </ul>
-</section>
-
-<section id="10"><h1>The problem with non-linearities</h1>
-  We want to infer the location of a vehicle from position measurements which are received one at a time when the vehicle is stationary. But now the measurements are noisy and a nonlinear function of the position. Maybe the measurements tell us something about the orientation.
-
-  $$
-    \tilde{y} = h(x) + v
-  $$
-  $x$ is a constant unknown state vector of length $n$.
-  <br>
-  $\tilde{y}$ is the vector of $m$ measurements (of $x$) that is actually received.
-  <br>
-  $v$ is the unknown error/noise vector with zero mean and known covariance
-  <br>
-  $h$ is the measurement function (<n>constant and known</n>, but non-linear)
-
-  <p>
-    Before we had a linear function which meant we could write the function as a matrix $H$ times $x$.
-  </p>
-
-  $h$ is now a problem. In recursive estimation, we were projecting the measurement distribution into the same state space as the estimate. We had our estimate $x$ and $p(x)$. We had some distribution of measurements $y$ and $p(y)$. The mean of the distribution was given by $Hx$ and the covariance was $R$. 
-  
-  <div class="container">
-    <figure>
-      <img style="height:180px; width:auto"
-      src="../../../figures/drone/27_relationBetweenMeasAndStateSpace.png"/>
-      <figcaption>
-        Linear relationship between the measurement and the state/parameter space
-      </figcaption>
-    </figure>
-  </div>
-  We could use the linear matrix $H$ to project Gaussian distributions in the measurement space into the state space. The fact that the measurements were related by a linear function ($H$) ensured that the projected distribution stayed Gaussian. That meant that the weighted average posterior distribution was Gaussian as well.
-
-  <div class="container">
-    <figure>
-      <img style="height:180px; width:auto"
-      src="../../../figures/drone/28_nonLinearRelationBetweenMeasAndStateSpace.png"/>
-      <figcaption>
-        Non-Linear relationship between the measurement and the state/parameter space
-      </figcaption>
-    </figure>
-  </div>
-  But if $h$ is an arbitrary function, we have no guarantees that the projected distribution of $y$ will stay Gaussian; <m>which makes it a lot harder to take a weighted average between the prior $\hat{x}_0$ and what the new measurements are telling us</m>.
-
-  <p>
-    The problem is, if we want to preserve the Gaussian to Gaussian mapping, we need to find a way to make the measurement model linear.
-  </p>
-</section>
-
-<section id="11"><h1>Calculating the Jacobian</h1>
-  A common thing to do when linearising a nonlinear function, is to take the Taylor series approximation of $h$ around the estimate $\hat{x}_0$:
-
-  $$
-    h(x) \approx h(\hat{x}_0) + H_{\hat{x}_0}(x-\hat{x}_0)
-  $$
-  
-  $H_{\hat{x}_0}$ is the first derivative of $h$ evaluated at $\hat{x}_0$.
-  <br>
-  Notice the 'approximately equal to' sign.
-
-  <p>
-    This is similar to some of the linearization done in controls. If $x$ and $y$ are scalars, then the first derivative is a scalar as well. $H_{\hat{x}_0}$ would be a simple derivative.
-  </p>
-
-  But if $x$ and $y$ are vectors of length $n$ and $m$ respectively, then from linear algebra, the first derivative is a matrix called the <i>jacobian</i>. $H_{\hat{x}_0}$ would be equal to a matrix with the individual partial derivative components in the various locations in the matrix.
-
-  $$
-    H_{\hat{x}_0} = \begin{bmatrix}
-    \frac{\partial{h_1}}{\partial{x_1}} & \cdots & 
-    \frac{\partial{h_m}}{\partial{x_1}} \\
-    \vdots & \ddots & \vdots \\
-    \frac{\partial{h_1}}{\partial{x_n}} & \cdots &
-    \frac{\partial{h_m}}{\partial{x_n}}
-    \end{bmatrix}
-  $$
-
-  Since we know both $\hat{x}_0$ and $h$, we can compute the jacobian and the function evaluated at the prior mean $h(\hat{x}_0)$, which lets us rewrite all of this in a linear form which is the form we need for a cursive estimation to work:
-
-  $$
-    h(x) \approx Ax + b
-  $$
-  
-  As a result the maximum a posteriori algorithm is basically unchanged, with just an extra step of linearization; that is constructing the jacobian.
-
-  <p>
-    Our three steps are now:
-    <ul>
-      <li>Construct the jacobian $H_{\hat{x}_0}$ to get a linear approximation of $h$ around the estimated state</li>
-
-      <p>
-        <li>Compute the posterior covariance</li>
-        $$
-          Q_1 = (Q^{-1}_0 + H^T_{\hat{x}_0}R^{-1}H_{\hat{x}_0})^{-1}
-        $$
-      </p>
-
-      <li>Compute the posterior mean estimate</li>
-      $$
-        \hat{x}_1 = \hat{x}_0 + Q_1H^T_{\hat{x}_0}R^{-1}(\tilde{y} - h(\hat{x}_0))
-      $$
-    </ul>
-  </p>
-  
-  We now have the ability to take in a series of measurements of an unknown quantity, where the measurements are non-linear function of the unknown quantity. Assuming that we have gaussian noise being injected into the system to perturb the measurements, we can still recover a reasonable estimate.
-
-  <p>
-    We'll see how specific sensors can plug into this formulation, to relax the assumption about the vehicle moving using the Kalman filter.
-  </p>
 </section>
 </chapter>
 

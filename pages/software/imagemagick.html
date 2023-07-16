@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Linux</title>
-  <meta name="Linux" content="text/html; charset=utf-8;" />
+  <title>Imagemagick</title>
+  <meta name="Imagemagick" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -53,19 +53,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Find</a>
-<a href="#1">Software installation, update, removal</a>
-<a href="#2">Useful tools</a>
+<a href="#0">Commonly used commands</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Imagemagick</h1>
-<section><h1>Commonly used commands</h1>
+<section id="0"><h1>Commonly used commands</h1>
   <ul>
     <li>Find current size of image</li>
 <pre><code class="bash">
 identify &ltimage_path&gt
 </code></pre>
     It gives the width x height.
+
+    <p>
+      <li>Changing the aspect ratio of images</li>
+<pre><code class="bash">
+convert input.jpg -resize 1500x500! output.jpg
+</code></pre>
+    </p>
   </ul>
 </section>
 
