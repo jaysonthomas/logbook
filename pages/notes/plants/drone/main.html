@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drone</title>
+  <meta name="Drone" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">The aim</a></li>
+  <li><a href="#0.1">Table of Contents</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Drone</h1>
+
+<section id="0"><h1>Overview</h1>
+  A <i>force</i> is just a <n>push or a pull</n> on an object. It is a vector that has both a magnitude and a direction. A spinning rotor produces thrust and moments. At <i>equilibrium</i>, forces and moments all balance each other out and sum to zero. We get some form of acceleration when forces do not balance. 
+
+  <p>
+    <i>Dynamics</i> is concerned with the motion of bodies under the action of forces. For a drone, understanding the dynamics involves understanding:
+    <ul>
+      <li>How the rotation of the drone's four propellers creates forces</li>
+      <li>How these forces generate motion of the vehicle</li>
+    </ul>
+  </p>
+
+  <subsection id="0.0"><h1>The aim</h1>
+    <ul>
+      <li>Understand the forces acting on a drone and how they affect motion</li>
+      <li>Implement a mathematical model of these forces in python</li>
+      <li>Use the model to advance the current state of the vehicle</li>
+      
+      <p>
+        From a control standpoint, having a good dynamics model of a vehicle allows one to intelligently influence the output of the vehicle by properly setting the inputs. For a drone, the input would be the rotation rates of the four propellers and the output would be the resulting motion of the vehicle. 
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="0.1"><h1>Table of Contents</h1>
+    <ul>
+      <li><a href="dynamics.html">Dynamics</a></li>
+    </ul>
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

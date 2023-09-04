@@ -75,7 +75,7 @@ find . -name '*station*.ipynb'
     <a href="https://bit.ly/3QU5KIU">Good link</a>.
 <pre><code class="bash">
 grep -r "file_name" /folder/path
-grep -r --include \*.{h,cpp} "file_name" /folder/path
+grep -r --include=*.{h,cpp} "file_name" /folder/path
 grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
 </code></pre>
 

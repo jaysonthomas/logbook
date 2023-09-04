@@ -6,48 +6,145 @@
 
 <body>
 <table border=0 cellspacing=10 height="100%">
-  <tr>
-    <td width="140" style="font-size:16" valign=top>
-      <a href="">
-        <img src="../figures/pendulum_with_motor.png" width=100 border=0>
-      </a>
-      
-      <p>&nbsp<p>
-      <a href="">Home</a><br>
-    </td>
-    <td rowspan=2 width="1" bgcolor="gray"></td>
-    <td rowspan=2 width="10"></td>
-    <td rowspan=2 valign=top width=620>
+<tr>
+  <td width="140" style="font-size:16" valign=top>
+    <a href="">
+      <img src="../figures/pendulum_with_motor.png" width=100 border=0>
+    </a>
+    
+    <p>&nbsp<p>
+    <a href="">Home</a><br>
+  </td>
+  <td rowspan=2 width="1" bgcolor="gray"></td>
+  <td rowspan=2 width="10"></td>
+  <td rowspan=2 valign=top width=20000>
 
-      <table>
-        <tr>
-          <td>
-            <h3>Jayson Wynne-Thomas</h3><p>
-            Robotics software engineer at Ocado
-            <p><a href="https://github.com/jaysonthomas">GitHub</a></p>
-          </td>
+    <table>
+      <tr>
+        <td>
+          <h1>Jayson Wynne-Thomas</h1><p>
+          Robotics software engineer at Ocado
+          <p><a href="https://github.com/jaysonthomas">GitHub</a></p>
+        </td>
 
-          <td width=40></td>
-          <td><img src="../figures/bio/micromouse.jpg" height="200"></td>
-        </tr>
+        <td width=40></td>
+        <td><img src="../figures/bio/micromouse.jpg" height="200"></td>
+      </tr>
+
+    </table>
+
+    <h1>Research Interests</h1>
+      I started off my career in developing proof of concepts in the embedded sensors domain. From a technical standpoint, this involved evaluation of sensors, designing the electronics (in some cases this involved mechanical design as well) around it (both analog and digital), writing firmware that allowed smooth transfer of data, designing real-time algorithms for doing useful things with the data based on the purpose of the device and post data analysis.
+
+      <p>
+        Overtime, my desire to get back into core robotics has grown. My interest, these days, center around:
+        <ul>
+          <li>Design of control systems for underactuated systems</li>
+          <li>Simultaneous localisation and mapping in unstructured environments</li>
+          <li>Path planning in unstructured environments</li>
+          <li>Computer vision</li>
+        </ul> 
+      </p>
+
+    <h1>Domains of current projects</h1>
+    <h3>Control</h3>
+    <ul>
+      <li>I go through the control for a 3D drone (with its nested loops) and a 2D robotic arm</li>
+      <li>At my job I have been working with a PID + adaptive Feedforward control scheme</li>
+    </ul>
+
+    <h3>Estimation</h3>
+    <ul>
+      <li>I have implemented a particle filter in the past. But since they are more resource intensive I have been looking into others like EKF/UKF.</li>
+    </ul>
+
+    <h3>Computer vision</h3>
+    <ul>
+      <li>Fringe patterns</li>
+      <li>Convolution of kernels to find patterns</li>
+      <li>Lucas Kanade, temporal and spatial differences</li>
+      <li>Classification</li>
+    </ul>
+    <h1>Past projects</h1>
+    <table>
+    <tr>
+      <td colspan="3">Advanced Fibreoptic Engineering Ltd.</td>
+    </tr>
+    <tr>
+      <td width="600" style="font-size:14" valign=top>
+        An optical interrogator, helpful in sensing strain or temperature differences, is useful in structural health monitoring systems. In the below project, a <i>Fiber Bragg Grating (FBG)</i> laser was used. The laser had to be swept through a range of wavelengths (40k) per second. Based on the physical property of the medium (say strain), the received optical signal peaked at different wavelengths.  
+      </td>
+
+      <td>
+        <div class="container">
+          <figure>
+            <img style="height:300px; width:auto"
+            src="../figures/bio/1_interrogator_initialStages.jpg"/>
+            <figcaption>
+              Interrogator initial stages
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img style="height:300px; width:auto"
+            src="../figures/bio/3_interrogator_finishedProduct.jpg"/>
+            <figcaption>
+              Interrogator finished product
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img style="height:300px; width:auto"
+            src="../figures/bio/2_interrogator_insideBox.jpg"/>
+            <figcaption>
+              Interrogator - inside the box
+            </figcaption>
+          </figure>
+        </div>
+      </td>
+    </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td colspan="3">Dyson</td>
+      </tr>
+      <tr>
+        <td width="600" style="font-size:14" valign=top>
+          An optical interrogator, helpful in sensing strain or temperature differences, is useful in structural health monitoring systems. In the below project, a <i>Fiber Bragg Grating (FBG)</i> laser was used. The laser had to be swept through a range of wavelengths (40k) per second. Based on the physical property of the medium (say strain), the received optical signal peaked at different wavelengths.  
+        </td>
+  
+        <td>
+          <div class="container">
+            <figure>
+              <img style="height:300px; width:auto"
+              src="../figures/bio/1_interrogator_initialStages.jpg"/>
+              <figcaption>
+                Interrogator initial stages
+              </figcaption>
+            </figure>
+  
+            <figure>
+              <img style="height:300px; width:auto"
+              src="../figures/bio/3_interrogator_finishedProduct.jpg"/>
+              <figcaption>
+                Interrogator finished product
+              </figcaption>
+            </figure>
+  
+            <figure>
+              <img style="height:300px; width:auto"
+              src="../figures/bio/2_interrogator_insideBox.jpg"/>
+              <figcaption>
+                Interrogator - inside the box
+              </figcaption>
+            </figure>
+          </div>
+        </td>
+      </tr>
       </table>
-
-      <h3>Research Interests</h3>
-      <ul>
-      <!-- I am interested in finding elegant control solutions for 
-      interesting (underactuated, stochastic, and/or difficult to model) 
-      dynamical systems that I can build and experiment with.  
-      I'm particularly interested in finding connections between mechanics 
-      (especially non-smooth mechanics) and optimization theory which 
-      enable formal analysis and control design for complex mechanical 
-      systems.  These days I am primarily interested in bringing the rigor 
-      of systems theory to robot manipulation.   -->
-      </ul>
-
-      <!-- Curriculum Vitae: <a href="russt_cv.pdf">pdf</a> ( 81K). -->
-      </ul>
-    </td>
-  </tr>
+  </td>
+</tr>
 </table>
 
 </body>

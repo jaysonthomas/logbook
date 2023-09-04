@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple pendulum</title>
+  <meta name="Simple pendulum" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+
+  <table style="width:100%;" pdf="no"><tr style="width:100%">
+    <td style="width:33%;text-align:left;">
+      <a class="previous_chapter" href="">Prev Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:center;">
+      <a href="">Root Chapter</a>
+    </td>
+    
+    <td style="width:33%;text-align:right;">
+      <a class="next_chapter" href="">Next Chapter</a>
+    </td>
+  </tr></table>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Model based on Newton's 2nd law</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Moment of inertia about the axis of rotation</a></li>
+  <li><a href="#1.1">Net moment</a></li>
+  <li><a href="#1.2">Balance of forces</a></li>
+  <li><a href="#1.3">A real world pendulum system</a></li>
+</ul>
+<a href="#2">Model based on Lagrange's equation</a>
+<a href="#3">Simulation</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Systems viewpoint</a></li>
+  <li><a href="#3.1">State space form</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
+<section id="0"><h1>Description</h1>
+  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a 'manipulator'.
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/dynamics/1_simplePendulum.png"/>
+      <figcaption>
+        Simple Pendulum
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Model based on Newton's 2nd law</h1>
+  [<a href="https://t.ly/yo9YU">Ref</a>]
+  <br>
+
+  <subsection id="1.0"><h1>Moment of inertia about the axis of rotation</h1>
+    Based on parallel axis theorem:
+    $$\begin{align*}
+      J_{CG} &= m \cdot r_{CM}^2 \\
+            &= 0 \\
+      J_0 &= \cancel{J_{CG}} + ml^2
+    \end{align*}$$
+    
+    $J_0$ is the moment of inertia about the pivot point (the axis of rotation). $l$ is the distance of the axis of rotation (the pivot point) from the centre of mass. 
+
+    <p>
+      Since the simple pendulum consists of a point mass and the string (or rod) is considered to be massless, the centre of mass of a simple pendulum is at the point mass. $r_{CM}$ is the distance of the point mass $m$ from its own center of mass, which is 0 in this case (since the mass is treated as concentrated at its own position [<a href="https://t.ly/SFPXZ">Ref</a>]).      
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Net moment</h1>
+    <div class="container">
+      <figure>
+        <img style="height:150px; width:auto"
+        src="../../../figures/dynamics/2_pendulumNewton.png"/>
+        <figcaption>
+          Forces acting on a simple pendulum
+        </figcaption>
+      </figure>
+    </div>
+
+    The forces acting on the pendulum are:
+    <ul>
+      <li>Component of gravity acting along the string</li>
+      <li>
+        Component of gravity acting tangential and opposite to the direction of the motion of the mass [<a href="https://t.ly/884vC">Ref</a>]
+      </li>        
+      <li>Tension on the string</li>
+    </ul>
+
+    Since the tension on the string is balanced by the gravity component along the string, the net moment is given as:
+    $$\begin{align*}
+      M &= F_{g_{tangential}} \cdot l \\
+        &= -mgsin(\theta) \cdot l
+    \end{align*}$$
+
+    If we were applying an external force $u$, that would get added in.
+  </subsection>
+
+  <subsection id="1.2"><h1>Balance of forces</h1>
+    The net (sum of all) moment $M$ about the axis of rotation is equal to the moment about the same axis:
+    
+    $$\begin{align*}
+      M &= J_0 \ddot{\theta} \\
+      u -mglsin(\theta) &= ml^2 \ddot{\theta}
+    \end{align*}$$
+
+    Rearranging:
+    $$
+      ml^2 \ddot{\theta} + mglsin(\theta) = u
+    $$
+  </subsection>
+
+  <subsection id="1.3"><h1>A real world pendulum system</h1>
+    $$
+      ml^2 \ddot\theta + b\dot\theta + mgl \sin\theta = u
+    $$
+
+    <ul>
+      <li>$ml^2 \ddot\theta$</li>
+      This term is a measure of the resistance of the pendulum to changes in its angular motion. $\ddot\theta$ is the angular acceleration.
+
+      <p>
+        <li>$b\dot\theta$</li>
+        The coefficient $b$ represents the damping coefficient, which characterizes the amount of damping present in the system. This term accounts for the damping force that opposes the motion of the pendulum; which arises due to various factors such as friction at the pivot point, air resistance, and other dissipative forces that cause the pendulum to lose energy over time.
+      </p>
+    </ul>
+  </subsection>
+</section>
+
+<section id="2"><h1>Model based on Lagrange's equation</h1>
+</section>
+
+<section id="3"><h1>Simulation</h1>
+  <subsection id="3.0"><h1>Systems viewpoint</h1>
+    The dynamics can be abstracted into a system for which inputs and outputs can be defined. That is, the dynamics can be abstracted as a <i>plant</i> that will output the current state $x$, given the torque  $\tau$ into the system.
+
+    <figure>
+      <div style="padding: 10px;">
+        <script type="text/javascript">
+        var system = { "name": "Simple Pendulum", 
+          "input_ports" : ["\\( \\tau \\)"],
+          "output_ports" : ["\\( x \\)"]
+          };
+        document.write(system_html(system));
+        </script> 
+      </div>
+    </figure>
+
+    The output of the system doesn't have to be the state $x$ - it can be a subset of the state, or simply some sensor attached to the pendulum! In this case we will assume full access to the state for feedback, i.e. full-state feedback. Since this system is deterministic, the future value of the system can be predicted given the current time, state, and input of the system. 
+  </subsection>
+
+  <subsection id="3.1"><h1>State space form</h1>
+    Dynamics of a pendulum in a first-order form: 
+    $$\begin{align*}
+      \dot{x} &= f(x,u) \\
+      \frac{d}{dt}\begin{bmatrix} 
+                    q \\ \dot{q} 
+                  \end{bmatrix} &= 
+      \begin{bmatrix} 
+        \dot{q} \\ \frac{-mgl\sin(q) + \tau}{ml^2}
+      \end{bmatrix}
+    \end{align*}$$
+    
+    where $x=\begin{bmatrix}q \\ \dot{q}\end{bmatrix}$ is the state vector, and $u=\tau$ is the input.
+  
+    <p>
+      In code, the dynamics function takes in $x$, $u$ and some <n>parameters</n> to return back $\dot{x}$. We only get to control $u$. $\dot{x}$ decides the next state which is then used to calculate $\dot{x}$; but the latter's value is also dependent on $u$.
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

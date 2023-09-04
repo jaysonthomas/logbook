@@ -53,10 +53,10 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Installation</a>
-<a href="#1">Temporary way of running the python version of Drake locally</a>
-<a href="#2">Learning resources</a>
-<a href="#3">Executing drake cpp examples</a>
+<a href="#0">Executing drake cpp examples</a>
+<a href="#1">Installation</a>
+<a href="#2">Temporary way of running the python version of Drake locally</a>
+<a href="#3">Learning resources</a>
 <a href="#4">Errors</a>
 <a href="#5">Drake terminology</a>
 <a href="#6">Reflected inertia tutorial in cpp</a>
@@ -65,11 +65,36 @@
   <li><a href="#6.1">Run examples from outside of the drake folder</a></li>
 </ul>
 <a href="#7">Questions & todo</a>
+<a href="#8">Drake c++ questions</a>
+<ul class="no-bullets">
+  <li><a href="#8.0">Templates: Context passed as argument</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Drake</h1>
 
-<section id="0"><h1>Installation</h1>
+<section id="0"><h1>Executing drake cpp examples</h1>
+  Using bazel as a build system for drake - 
+  <a href="https://t.ly/jRAN">ref</a>.
+
+<pre><code class="bash">
+cd drake
+bazel build //... --jobs 12
+bazel run //tools:meldis -- --open-window &
+bazel run //examples/acrobot:run_swing_up
+</code></pre>
+
+<pre><code class="bash">
+cd drake
+bazel run //tools:meldis -- --open-window &
+cd drakeCpp
+export LOCAL_DRAKE_PATH=~/P/external/drake
+bazel run //pendulum:passive_simulation
+</code></pre>
+  
+</section>
+
+<section id="1"><h1>Installation</h1>
   <ul>
     <li>Setup</li>
       Install jupyter notebook to be able to run exercises and graphviz
@@ -135,7 +160,7 @@ cp -r ~/Downloads/drake-20221116-jammy/drake/share/drake/manipulation/models/ycb
   </ul>
 </section>
 
-<section id="1"><h1>Temporary way of running the python version of Drake locally</h1>
+<section id="2"><h1>Temporary way of running the python version of Drake locally</h1>
   <ul>
     <li>Activate virtual environment</li>
 <pre><code class="python">
@@ -162,24 +187,12 @@ grep -r "index.ipynb" /folder/path
     </ul>
 </section>
 
-<section id="2"><h1>Learning resources</h1>
+<section id="3"><h1>Learning resources</h1>
   <ul>
     <li>Drake ros <a href="https://t.ly/Q1V1">github repo</a></li>
     <li><a href="https://t.ly/Xss_">Zucker notes</a></li>
     <li><a href="https://t.ly/VHqQ">C++ documentation</a></li>
   </ul> 
-</section>
-
-<section id="3"><h1>Executing drake cpp examples</h1>
-  Using bazel as a build system for drake - 
-  <a href="https://t.ly/jRAN">ref</a>.
-
-<pre><code class="bash">
-cd drake
-bazel build //... --jobs 12
-bazel run //tools:meldis -- --open-window &
-bazel run //examples/acrobot:run_swing_up
-</code></pre>
 </section>
 
 <section id="4"><h1>Errors</h1>
@@ -196,31 +209,43 @@ pip3 uninstall drake
 <section id="5"><h1>Drake terminology</h1>
   <ul>
     <li>MeshCat LCM Display Server (MeLDiS)</li>
-    Offers a MeshCat visualization server that listens for and draws 
-    Drake's legacy LCM visualization messages. The code is found in:
-    <code>bindings/pydrake/visualization/meldis.py</code>
-    which uses <code>_meldis.py</code> in the same folder.
+    A MeshCat visualization server that listens for and draws Drake's legacy LCM visualization messages. The code is found in <code>bindings/pydrake/visualization/meldis.py</code> which uses <code>_meldis.py</code> in the same folder.
 
     <p>
-      <li>MeshCat</li>
-      <a href="https://t.ly/65MQ">Github repo</a>.
-      MeshCat is a remotely-controllable 3D viewer, built on top of three.js. 
-      The MeshCat viewer runs in a browser and listens for geometry commands over WebSockets. 
-      This makes it easy to create a tree of objects and transformations by sending the 
-      appropriate commands over the websocket. 
-      
-      <p>
-        The MeshCat viewer is meant to be combined with an interface (python or julia) in the 
-        language of your choice (C++ in this case).
-      </p>
+    <li>MeshCat</li>
+    <a href="https://t.ly/65MQ">Github repo</a>.
+    MeshCat is a remotely-controllable 3D viewer, built on top of three.js. 
+    The MeshCat viewer runs in a browser and listens for geometry commands over WebSockets. 
+    This makes it easy to create a tree of objects and transformations by sending the 
+    appropriate commands over the websocket. 
+    
+    <p>
+      The MeshCat viewer is meant to be combined with an interface (python or julia) in the 
+      language of your choice (C++ in this case).
+    </p>
     </p>
 
-    <li>Lightweight Communications and Marshalling(LCM)</li>
+    <li><i>Lightweight Communications and Marshalling(LCM)</i></li>
     <a href="https://t.ly/CiKN">Discussion</a> on pros and cons of LCM.
     There's a further <a href="https://t.ly/CMi5">discussion</a> on protocol
     buffers (<code>protobuf</code>).
     <a href="https://t.ly/HWcP8">Main project page</a>.
     
+    <p>
+    <li>Geometry system</li>
+    It is responsible for managing the visual and collision geometry associated with objects in a simulation. This includes things like robot links, obstacles, and the environment. The geometry system allows users to define shapes, associate them with entities in the simulation, and specify their poses and transformations relative to other objects.
+
+    <p>
+      Geometry systems often integrate with a physics engine to provide realistic interactions between objects. They help the physics engine determine collision and contact forces.
+    </p>
+    </p>
+
+    <li>Scene graph</li>
+    It is a hierarchical data structure used to represent the spatial relationships and transformations between objects in a simulation. It helps organize and manage the positions, orientations, and other attributes of objects in a coherent manner.
+
+    <p>
+      The scene graph interacts with other components of the simulation, such as the physics engine for collision detection and the rendering engine for visualisation.
+    </p>
   </ul>
 </section>
 
@@ -281,6 +306,33 @@ bazel run //helloWorld:simple_continuous_time_system
   </ul>
 </section>
 
+<section id="8"><h1>Drake c++ questions</h1>
+  <subsection id="8.0"><h1>Templates: Context passed as argument</h1>
+    <subsubsection><h1>Called function</h1>
+<pre><code class="c++">   
+CalcTotalEnergy(const systems::Context&ltT>& context)
+</code></pre>
+
+      Which further calls:
+      <div class="container">
+        <figure>
+          <img style="height:100px; width:auto"
+          src="../../figures/software/1_templates.png"/>
+          <figcaption>
+            Templates
+          </figcaption>
+        </figure>
+      </div>    
+    </subsubsection>
+    
+    <subsubsection><h1>Calling function</h1>
+<pre><code class="c++">   
+systems::Context&ltdouble&gt& pendulum_context = diagram->GetMutableSubsystemContext(*pendulum, &simulator.get_mutable_context());
+const double initial_energy = pendulum->CalcTotalEnergy(pendulum_context);
+</code></pre>
+      
+    </subsubsection>
+</section>
 </chapter>
 
 </body>

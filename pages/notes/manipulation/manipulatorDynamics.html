@@ -53,38 +53,29 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Overview</a>
-<a href="#2">Lagrangian formulation</a>
-<a href="#3">Newton-Euler formulation</a>
-<a href="#4">Musings</a>
+<a href="#0">Overview</a>
+<a href="#1">Lagrangian formulation</a>
+<a href="#2">Newton-Euler formulation</a>
+<a href="#3">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Manipulator dynamics</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="md_derivationsandexamples.html">Derivations and examples</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Overview</h1>
-  <code>Forward dynamics</code> involves finding the joint accelerations $\ddot{\theta}$,
-  given the current joint velocities $\dot{\theta}$, positions $\theta$ and 
-  the torques $\tau$ applied at each joint. It is useful for simulation.
-
+<section id="0"><h1>Overview</h1>
   <p>
-    <code>Inverse dynamics</code> invloves finding the joint forces and torques needed to 
-    create an acceleration for given joint positions and velocities. It is useful in control 
-    of robots.
+    No matter how many links attached to revolute joints configuration, we can derive the equations of motion using the Lagrangian method. It will look like the manipulator equation. It is not important to know these equations for different robots or even to be able to derive them (which gets time consuming when the number of joints/links exceeds 2). What is important is to have an intuition of the manipulator equation works in the simple case, i.e. a 2R robot.
   </p>
 
-  We look through 2 approaches to solving the forward/inverse dynamics 
-  problems.
+  <code>Forward dynamics</code> involves finding the joint accelerations $\ddot{\theta}$, given the current joint velocities $\dot{\theta}$, positions $\theta$ and the torques $\tau$ applied at each joint. It is useful for simulation.
+
+  <p>
+    <code>Inverse dynamics</code> invloves finding the joint forces and torques needed to create an acceleration for given joint positions and velocities. It is useful in control of robots.
+  </p>
+
+  We look through 2 approaches to solving the forward/inverse dynamics problems.
 </section>
 
-<section id="2"><h1>Lagrangian formulation</h1>
+<section id="1"><h1>Lagrangian formulation</h1>
   This method is conceptually simple and is based on the kinetic and 
   potential energy of the robot.
 
@@ -93,18 +84,14 @@
       L(\theta, \dot{\theta}) = 
       \sum_{i=1}^n(K_i(\theta, \dot{\theta}) - P_i(\theta))
     $$
-    The potential energy only depends on the configuration $\theta$.
-    For a manipulator, the Lagrangian is the sum of the kinetic energies 
-    minus the potential energies of the links. A link has a motor on 1 end 
+    <n>The potential energy only depends on the configuration $\theta$</n>.
+    For a manipulator, <i>the Lagrangian</i> is the sum of the kinetic energies 
+    minus the potential energies of the links. A <i>link</i> has a motor on 1 end 
     and a mass on the other.
     
-    <p></p>
-    We won't derive the Lagrangian equations of motion, which can be found in many 
-    textbooks on mechanics. We'll just state the result: the vector of joint forces and 
-    torques $\tau$ of each joint 
-    is equal to the time derivative of the partial derivative of the Lagrangian $L$ w.r.t. 
-    $\dot{\theta}$ minus the partial derivative of $L$ w.r.t. $\theta$. In other words,
-    we can express the joint torques in terms of the derivatives of the Lagrangian. 
+    <p>
+      The derivation for Lagrangian equations of motion can be found in many textbooks on mechanics. Stating the final result: the vector of joint forces and torques $\tau$ of each joint is equal to the time derivative of the partial derivative of the Lagrangian $L$ w.r.t. $\dot{\theta}$ minus the partial derivative of $L$ w.r.t. $\theta$. In other words, we can express the joint torques in terms of the derivatives of the Lagrangian. 
+    </p>
     
     $$
       \tau_i = \frac{d}{dt}\frac{\partial{L}}{\partial{\dot{\theta_i}}} - 
@@ -115,17 +102,17 @@
     <br>
     $n$ is the total number of links.
     <br>
-    Power consumed or produced by joints $= \tau \cdot \dot{\theta}$
+    Power consumed or produced by each joint $= \tau_i \cdot \dot{\theta_i}$
   </equation>
 </section>
 
-<section id="3"><h1>Newton-Euler formulation</h1>
+<section id="2"><h1>Newton-Euler formulation</h1>
   This method relies on '$F=ma$' applied to each individual link of the robot.
   It uses some geometric tools, and it results in an efficient recursive algorithm 
   for calculating the inverse dynamics.
 </section>
 
-<section id="4"><h1>Musings</h1>
+<section id="3"><h1>Musings</h1>
   <ul>
     <li>What does it mean to subtract potential energy from kinetic energy?</li>
   </ul>

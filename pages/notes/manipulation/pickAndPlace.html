@@ -59,11 +59,12 @@
 </ul>
 <a href="#1">Notations</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Position</a></li>
-  <li><a href="#1.1">Orientation</a></li>
-  <li><a href="#1.2">Pose</a></li>
-  <li><a href="#1.3">Notation understanding check</a></li>
-  <li><a href="#1.4">Example usage</a></li>
+  <li><a href="#1.0">Frames</a></li>
+  <li><a href="#1.1">Position</a></li>
+  <li><a href="#1.2">Orientation</a></li>
+  <li><a href="#1.3">Pose</a></li>
+  <li><a href="#1.4">Notation understanding check</a></li>
+  <li><a href="#1.5">Example usage</a></li>
 </ul>
 <a href="#2">Frames for pick and place</a>
 <ul class="no-bullets">
@@ -97,11 +98,6 @@
 </ul>
 <a href="#8">Singularities</a>
 <a href="#9">Differential IK as optimisation</a>
-<ul class="no-bullets">
-  <li><a href="#9.0">Simple linear example - scalar case</a></li>
-  <li><a href="#9.1">Simple linear example - vector/matrix case</a></li>
-  <li><a href="#9.2">Adding limits/boundaries</a></li>
-</ul>
 <a href="#10">Summary of the usefulness of optimisation</a>
 <a href="#11">Example</a>
 <a href="#12">Closing remarks</a>
@@ -125,7 +121,7 @@
     </p>
 
     <li>Trajectory generation</li>
-    We'll plot the frames for the open-loop trajectory of the gripper picking up and dropping off the brick at the desired location. We forget the rest of the robot and just decide the different trajectory of poses the hand needs to go through in space at different timestamps. We start off with a sketch and then just fill it out with interpolation.
+    We'll plot the frames (the sketch) for the open-loop trajectory with the aim of the gripper picking up and dropping off a brick at a desired location. We forget the rest of the robot and just decide the different trajectory of poses the hand needs to go through in space at different timestamps; and then fill it out with interpolation.
 
     <p>
       <li>Inverse kinematics</li>
@@ -152,31 +148,19 @@
     </p>
 
     We want to convert the smooth trajectory in EE coordinates to a smooth trajectory in the joint space, avoiding kinematic sigularities.
+
+    <p>
+      Summary: Use the reference trajectory to get $V_G$. Use Jacobian to get $\dot{q}$ which helps us to get $q(t)$ (integrating our way from q(0)) which is fed in as input. We need to avoid singularities by ensuring the Jacobian is invertible.
+    </p>
   </subsection>
 </section>
 
 <section id="1"><h1>Notations</h1>
-  <subsection id="1.0"><h1>Position</h1>
-    The simplest concept is just a point in some three-dimensional space. 
-    <ul>
-      <li>$A$ is the frame or point of interest</li>
-      <li>$P^A$ - Position of $A$</li>
-      <p>
-        <li>$^BP^A$ - Position of $A$ relative to $B$</li>
-        $P$ is a vector going from point $B$ to $A$ - Imagine an arrow drawn from $B$ to $A$. Positions always have to be defined w.r.t. something.
-      </p>
-      <li>$\in\mathbb{R}^3$</li>
-      Our 3D vectors (3x1) contain 3 real numbers.
-      <p>
-        <li>$^BP^A_C$ - $C$ is the expressed in frame</li>
-        Distance between 2 people is given by $P$. But if we turn our back, the vector between the 2 points is still the same, but now they'll be expressed using different numbers w.r.t. me looking the other way.
-      </p>
-    </ul>
-
+  <subsection id="1.0"><h1>Frames</h1>
     A <i>reference frame</i> has a point at its centre. Its orientation can be represented in many ways but it is visually represented with the xyz axes. XYZ => RGB. Use the <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system). 
 
     <p>
-      We'll have lots of frames. Our aim will be to get the frames to match; because once they do, the algebra becomes trivial. For example, once the frames match, we can add positions.
+      The aim is to get the different frames to match; because once they do, the algebra becomes trivial. For example, once the frames match, we can add positions.
 
       <div class="container">
         <figure>
@@ -188,44 +172,70 @@
         </figure>
       </div>
     </p>
-    Another example, inverse flips the sign: $-^BP^A_C = ^AP^B_C$
+  </subsection>
+  
+  <subsection id="1.1"><h1>Position</h1>
+    The simplest concept is just a point in some three-dimensional space. 
+    <ul>
+      <li>$A$ is the frame or point of interest</li>
+      <li>$P^A$ - Position of $A$</li>
+      
+      <p>
+      <li><n>$^BP^A$</n> - Position of $A$ relative to $B$</li>
+      $P$ is a vector going from point $B$ to $A$ - Imagine an arrow drawn from $B$ to $A$. Positions always have to be defined w.r.t. something.
+      </p>
+      
+      <li>$\in\mathbb{R}^3$</li>
+      Our 3D vectors (3x1) contain 3 real numbers.
+      
+      <p>
+      <li>$^BP^A_C$ - $C$ is the expressed in frame</li>
+      Distance between 2 people is given by $P$. But if we turn our back, the vector between the 2 points is still the same, but now they'll be expressed using different numbers w.r.t. me looking the other way.
+      </p>
+    </ul>
+
+    Inverse flips the sign: $-^BP^A_C = ^AP^B_C$
+
+    <p>
+      $P^A$ is the same as ${^W}P^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
+      $$^GP^A \equiv {^G}P^A_G$$ 
+    </p>
   </subsection>
 
-  <subsection id="1.1"><h1>Orientation</h1>
-    There are a number of ways to represent the relative orientation: 
+  <subsection id="1.2"><h1>Orientation</h1>
+    There are a number of ways to numerically represent a relative orientation: 
     <ul>
       <li>Rotation matrix</li>
       <li>Euler angles of which there are many but the familiar ones are roll pitch yaw</li>
       <li>Quaternions</li>
     </ul>
-    There are functions that let us go back and forth in between them.  Unfortunately there's no one representation to rule them all. Different parts of the stack will use different representations. But in the spatial algebra we call the whole thing $R$. Orientation of $A$ relative to $B$:  
+    There are functions that let us go back and forth between them.  There's no one representation to rule them all. Different parts of the stack use different representations. No matter what the numerical representation, in spatial algebra an orientation is symbolically represented as $R$. Orientation of $A$ relative to $B$:  
     $$^BR^A$$ 
     
-    This orientation can be represented in any of the above formats, but we'll still call it $R$ for the actual purposes of the algebra. For orientations, we use the multiplication operator instead of the addition operator: 
+    For orientations, we use the multiplication operator instead of the addition operator: 
     $$
-      ^BR^A \cdot ^AR^C = ^BR^C
+      ^BR^A \cdot {^A}R^C = {^B}R^C
     $$
 
-    Orientations don't need an expressed-in frame. We can turn our head however we want or change the current frame, but the rotation of $A$ relative to $B$ will still be the same. Just like we had an additive inverse for addition we have a multiplicative inverse for rotations/orientations:
+    Orientations don't need an expressed-in frame. We can turn our head however we want or change the current frame, but the rotation of $A$ relative to $B$ will still be the same. There is a multiplicative inverse for rotations/orientations similar to an additive inverse for addition:
     $$
-      [^BR^A]^{-1} = ^AR^B
+      [^BR^A]^{-1} = {^A}R^B
     $$ 
 
-    If we think about $R$ as a rotation matrix, then the inverse is just the matrix inverse and life is good. We've abstracted away from the underlying numerical representation. We're just talking about the ability to go back and forth between rotations. It happens that if we have a 3x3 rotation matrix representing the orientation, then because rotation matrices are orthonormal, the transpose is the same as the inverse. 
+    If $R$ is a $3 \times 3$ rotation matrix, then:
+    <ul>
+      <li>The inverse is just the matrix inverse</li>
+      <li>Because rotation matrices are orthonormal, the transpose is the same as the inverse</li>
+    </ul>
   </subsection>
 
-  <subsection id="1.2"><h1>Pose</h1>
+  <subsection id="1.3"><h1>Pose</h1>
     The position and orientation of a frame, put together, is called the <i>pose</i> of the frame:
     $$
       ^BX^A
     $$
     
-    This is the position and orientation of frame $A$ relative to the position and orientation of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things we do in robotics, we do not need an expressed-in frame for a transform $^BX^A$. It's fine to put it in, but it's not needed. We however use the expressed-in frame for the derivative of a pose i.e. the spatial velocity $V_{6 \times 1}$.
-
-    <p>
-      $P^A$ is the same as $^WP^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
-      $$^GP^A \equiv {^GP^A_G}$$ 
-    </p>
+    This is the position and orientation of frame $A$ relative to the position and orientation of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, we do not need an expressed-in frame for a transform $^BX^A$. It's fine to put it in, but it's not needed. We however use the expressed-in frame for the derivative of a pose i.e. the <i>spatial velocity</i> $V_{6 \times 1}$.
 
     $$\begin{align*}
       ^GP^A &= ^GX^F \cdot {^FP^A} \\
@@ -233,7 +243,7 @@
             &= (^GP^F_G \cdot {^GR^F_G}) \cdot {^FP^A} \\
     \end{align*}$$
 
-    If these were all expressed in different frames, then it would not be a valid equation. The multiplication operator along with the rotation that is encoded in $X$ transforms the position of $A$ in the following way:
+    The multiplication operator along with the rotation that is encoded in $X$ transforms the position of $A$ in the following way:
     <ul>
       <li>W.r.t. $F$ to another frame, w.r.t. $G$</li>
       <li>The expressed-in frame, from $F$ to $G$</li>
@@ -243,13 +253,13 @@
     A pose also has a multiplicative inverse:  $[^GX^F]^{-1} = {^FX^G}$. A pose can be represented in different ways. This is only a notation indicating we are taking an inverse. But actually it's not just a direct matrix inverse - <m>it will be some simple function of the elements of the matrix representation</m>. A lot of times a pose is represented as a 3x4 matrix for instance.
 
     <p>
-       Pose can also be called a <i>rigid transform</i> because it only allows changing between frames in the kinematics, i.e. only positions and rotations; no scaling or shearing. <i>Homogeneous transforms</i> also allow shearing and scaling.
+       Pose can also be called a <i>rigid transform</i> because it only allows changing between frames in the kinematics, i.e. only positions and rotations; no scaling or shearing. <i>Homogeneous transforms</i> also allow shearing and scaling. Poses multiply with other poses. A set of rules are given in Chapter 3.
     </p>
 
-    Poses multiply with other poses. A set of rules are given in Chapter 3.
+    In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
   </subsection>
 
-  <subsection id="1.3"><h1>Notation understanding check</h1>
+  <subsection id="1.4"><h1>Notation understanding check</h1>
     <div class="container">
       <figure>
         <img style="height:120px; width:auto"
@@ -263,7 +273,7 @@
     For the question above, the possible answers are: (a) [.2,0,-.2], (b) [0,.3,.1], (c) [0,-.3,.1]
 
     <p>
-      $^GP^O = {^GR^W} \cdot {^WP^O}$
+      $^GP^O = {^GR^W} \cdot {{^W}P^O}$
     </p>
 
     $^WP^O$ will undergo 2 rotations to align $W$ with $G$: <code>Rotz(-90), Rotx(-45)</code>. Once it's aligned, we can see there is an offset in the Y and Z directions. Hence the answer must be (b).
@@ -272,11 +282,15 @@
       $^GP^O_W = {^WR^G} \cdot {^GP^O}$
     </p>
 
-    This is the same as $^WP^O$. We can see there is an offset in the Z and X directions. Hence the answer must be (a).
+    This is the same as ${^W}P^O$. We can see there is an offset in the Z and X directions. Hence the answer must be (a).
+
+    <p>
+      In the 2nd scenario: The object frame is expressed in the gripper frame (i.e. it's aligned w.r.t. to it) following on from problem 1. Rotate the object frame to align with the world frame. The gripper and the world frames undergo no rotations. The position of the 3 frames don't change. Now, ignore the gripper's frame. We only care about its position. In the world frame, what is the position of the object w.r.t. the gripper?
+    </p>
   </subsection>
   
-  <subsection id="1.4"><h1>Example usage</h1>
-    The is core to planning, perception, controls etc. If we had cameras mounted around a kuka, taking some depth measurements, trying to find out where things are in the scene. The data coming into each of those cameras are going to be in the associated camera's frame. For it to be usable, we'll have to convert it to a common representation - a common coordinate frame typically a world frame (or a gripper frame). The way we do that is by multiplying each camera's output by $X$. We can put them together if the frames match. 
+  <subsection id="1.5"><h1>Example usage</h1>
+    The is core to planning, perception, controls etc. Imagine a scenario where we mount depth camera around a kuka in order to help it to find where things are in the scene. The measurements given out by each of those cameras are going to be in the associated camera's frame. In order to combine (and use) measurements from the different cameras, we'll need to convert them to a common representation - a common coordinate frame typically a world frame (or a gripper frame). We can do this by multiplying each camera's output by some pose $X$. We can only combine frames together if they match. 
 
     <div class="container">
       <figure>
@@ -310,19 +324,17 @@
     </tr>
   </table>
 
-  The numerical representation used to represent a frame, say $O_{initial}$ on disk is its pose -  $^WX^{O_{initial}}$. $O$ is an example of a frame which just defines the semantics of whether we can connect two poses. But the pose $X$ is the manifestation that holds the position and orientation of a frame relative to some other frame. $O$ in some sense is absolute and can't be represented because we have to somehow make a pose relative to something else.
+  The numerical representation for a frame, say $O_{initial}$ on disk is its pose -  $^WX^{O_{initial}}$. A frame defines the semantics of whether we can connect 2 poses. But a pose is the manifestation that holds the position and orientation of a frame relative to some other frame. A frame cannot be represented because we have to somehow make a pose relative to something else.
 
   <p>
-    Representing the pose of the object relative to the gripper or vice-versa is the most simple/robust representation commonly used for picking an object.
+    Representing the pose of an object relative to the gripper or vice-versa is the most simple/robust representation commonly used for picking an object.
   </p>
 
-  We interpolate from some initial gripper pose to a pose with the right clearance above the object to guarantee we avoid any collisions.Then we do a simpler approach to the object. People do lots of interesting complicated algorithms to figure out how to move through space and just hand code the last movement often to avoid collision. 
+  We interpolate from some initial gripper pose to a pose with the right clearance above the object to guarantee any collision is avoided. People do lots of interesting complicated algorithms to figure out how to move through space and just hand code the last movement often to avoid collision. 
 
   <p>
     To define the position of the gripper to move into to pick an object, pick whatever direction (in terms of axis) is the easiest relative to the object. A similar thinking applies to orientation. For this, it would be good to know what orientation the object is in. For a little red cube, it is hard to get its orientation from a perception system because it's symmetric. Then we get our pose $^{G_{pick}}X^{O_{initial}}$. We do the same for pre/post pick etc.
   </p>
-
-  In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
 
   <subsection id="2.0"><h1>Timing between key frames</h1>
     Sometimes the time to finish a segment between going from 1 key frame to another, is absolute. Sometimes, it's scaled based on the distance between the frames. 
@@ -330,7 +342,7 @@
 </section>
 
 <section id="3"><h1>Interpolation between poses</h1>
-  We need to figure out where the gripper needs to be at all times between the pick and place frames, i.e. we need to interpolate between the key poses.
+  We need to interpolate between the key poses to figure out where the gripper needs to be at all times between the pick and place frames.
 
   <subsection id="3.0"><h1>Interpolation between positions</h1>
     <p>
@@ -771,7 +783,9 @@
 </section>
 
 <section id="9"><h1>Differential IK as optimisation</h1>
-  The Pseudo-Inverse controller is magical in the first place because it is solving an optimization problem. And we're going to solve harder optimization problems. But we'll try to understand the controller first through the lens of optimisation, then we can add in some constraints to have a more general solution. 
+  [<a href="../maths/qp.html">Ref</a>]
+  <br>
+  The Pseudo-Inverse controller is magical because it solves an optimization problem. 
 
   <p>
     Find $\dot{q}$, such that the LHS is approximately equal (as close as possible) to the RHS (spatial velocity):
@@ -784,109 +798,6 @@
   $$
       \| J^G(q)\dot{q} - V^G\|^2
   $$
-
-  <subsection id="9.0"><h1>Simple linear example - scalar case</h1>
-    The above operation is standard in linear algebra. When people write $Ax\approx b$, they want to find the best solution for $x$ such that the LHS is approximately equal to the RHS.
-
-    <div class="container">
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/50_leastSquares.png"/>
-        <figcaption>
-          $Ax \approx{b}$
-        </figcaption>
-      </figure>
-    </div>
-
-    There's only a few things that $a$, $x$ and $b$ can do. $a$ is the slope. $x^*$ is the solution we're looking for such that $ax^* = b$.
-
-    <div class="container">
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/51_leastSquaresParabola.png"/>
-        <figcaption>
-          The quadratic curve of least squares.
-        </figcaption>
-      </figure>
-    </div>
-    $\|ax-b\|^2$ indicates that we're going to score all the different options along the parabola, the quadratic form to find the lowest point on the curve. When the curve touches 0, $ax=b$. The 2 values diverge, as the curve moves farther from 0.
-
-    If the slope $a$ starts getting small, the solutions start getting worse! We need a bigger $x$ to achieve the same $b$. 
-
-    <p>
-      As the dimensions increase, we'd still like to be able to say how good any given solution is, even when the method isn't able to achieve the perfect solution. We want to be able to add constraints - the solution isn't allowed to go past a certain $x$ i.e. pick the smallest point on the curve that's within a certain regime. That's a richer class of optimizations but it's still based on the fundamental idea of first scoring all the points (on the parabola) and then finding the minimum of it. 
-    </p>
-
-    An example of this formulation would be:
-    $$
-      min_x \quad s.t. x\leq 2 \quad \|ax-b\|^2
-    $$
-
-    This equation says minimise over $x$ subject to $x$ is less than or equal to 2 (the boundary of the search, the regime, the stop condition). This would be a reasonable generalization of that optimization and it's a well-defined optimisation.
-
-    <ul>
-      <li>We've made a scoring function for all the possible $x$s</li>
-      <li>We're limiting the search to the constraint $x \leq{2}$</li>
-      <li>We find the lowest point</li>
-    </ul>
-
-    This is a more robust formulation because we're able to put more information into it. 
-  </subsection>
-
-  <subsection id="9.1"><h1>Simple linear example - vector/matrix case</h1>
-    $$
-      Ax \approx b
-    $$
-    The matrix case is only a little bit more interesting but super powerful.When things are unconstrained, the way we do the minimisation is to take the cost function (the quadratic $\|Ax-b\|^2$) and find the place where the gradient is the minimum. Since we know this is a convex bowl (with the ends) pointing up, it's enough to find any point where the gradient is zero:
-
-    $$\begin{align*}
-      \frac{\partial}{\partial x} \|Ax-b\|^2 &=
-      \frac{\partial}{\partial x} [x^T A^T Ax - b^T Ax - x^T A^T b + b^2] \\
-      &= 2x^T A^T A - 2b^T A = 0 \\
-      (x^*)^T &= b^T \underbrace{A (A^T A)^{-1}}_{\text{Transpose of the} \atop \text{pseudo-Inverse}} \\
-
-      x^* &= A^{\dagger}b
-    \end{align*}$$
-
-    $A (A^T A)^{-1}$ has no $b$ in it. That's why to take the pinv, we don't need to know $b$ to use it; because the solution is linear in $b$, we can separate out $A$ and $b$. It is kept in the form of the transposes for convenience.
-
-    <div class="container">
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/52_quadraticBowl.png"/>
-        <figcaption>
-          The generalisation of the above parabola is a quadratic bowl.
-        </figcaption>
-      </figure>
-    </div>
-
-    In higher dimensions, the parabola turns into a quadratic bowl. The axes are $x_1$, $x_2$ and the objective $\|Ax-b\|^2$. We score every value $x$ by the cost function $\|Ax-b\|^2$ and find the minimum of it. As shown above, the quadratic form is given by: $[x^T A^T Ax - b^T Ax - x^T A^T b + b^2]$ but the shape is given by $A^T A$ in $x^T A^T Ax$.
-
-    <p>
-      When $A$ starts having small singular values, the bowl starts elongating just as in the case of the parabola with smaller slopes. It can elongate more or less in some directions/dimensions. As it gets long, the minimum $x$ starts leaving it, i.e. gets bigger. 
-    </p>
-  </subsection>
-
-  <subsection id="9.2"><h1>Adding limits/boundaries</h1>
-    If we add boundaries to the problem i.e. don't go past some reasonable velocities (some linear constraints), but within those bounded solutions, find the best solution using the score function $\|Ax-b\|^2$. This not the only generalization but this is the one that is used in the lectures.
-
-    $$
-    \|Ax-b\|^2 \quad s.t. \; \underbrace{Cx = d}_{\text{Linear constraint}}
-    $$
-
-    <div class="container">
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/53_boundaries.png"/>
-        <figcaption>
-          The generalisation, but with boundaries.
-        </figcaption>
-      </figure>
-    </div>
-
-    A problem like this that has a convex quadratic objective (we know that this bowl is going up) and linear constraints is called a <i>convex quadratic program</i>. It's an important class of optimization problems. Quadratic programs are not something we think of solving with pen and paper unless they're very very small. There are very efficient algorithms for finding them that can be run in real time at high speeds.
-
-  </subsection>
 </section>
 
 <section id="10"><h1>Summary of the usefulness of optimisation</h1>

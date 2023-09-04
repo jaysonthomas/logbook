@@ -53,20 +53,270 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Pointers</a>
+<a href="#0">Topics</a>
+<a href="#1">Member initialisation</a>
+<a href="#2">Datatypes</a>
+<a href="#3">Encapsulation & abstraction</a>
+<a href="#4">Access specifier or modifier</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Members</a></li>
+  <li><a href="#4.1">Inherited access specifiers</a></li>
+</ul>
+<a href="#5">Invariants - struct vs class</a>
+<a href="#6">Getters and setters</a>
+<a href="#7">Constructor</a>
+<a href="#8">Scope resolution</a>
+<ul class="no-bullets">
+  <li><a href="#8.0">Class</a></li>
+  <li><a href="#8.1">Namespace</a></li>
+</ul>
+<a href="#9">Inheritance</a>
+<a href="#10">Friends</a>
+<a href="#11">Polymorphism</a>
+<ul class="no-bullets">
+  <li><a href="#11.0">Function overloading</a></li>
+  <li><a href="#11.1">Operator overloading</a></li>
+  <li><a href="#11.2">Overriding</a></li>
+</ul>
+<a href="#12">Generic programming</a>
+<ul class="no-bullets">
+  <li><a href="#12.0">Function templates</a></li>
+  <li><a href="#12.1">Class templates</a></li>
+</ul>
+<a href="#13">Virtual functions</a>
+<a href="#14">Default function arguments</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>C++</h1>
 
-<section id="0"><h1>Table of Contents</h1>
+<section id="0"><h1>Topics</h1>
   <ul>
-    <li><a href="#1">Pointers</a></li>
+    <li><a href="memoryManagement.html">Memory management</a></li>
+    <li><a href="pointers.html">Pointers</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Pointers</h1>
-  This <a href="https://t.ly/4kPR">link</a> seems useful.
+<section id="1"><h1>Member initialisation</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/0_memberInitialisation.cpp">Ref for struct</a>, <a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref for class</a>]
+  <br>
+  We want every member of an object to begin its life in a defined and valid state.
+</section>
+
+<section id="2"><h1>Datatypes</h1>
+  It is important to be able to create one's own datatypes else the language would have to cater to so many needs. Examples:
+
+  <ul>
+    <li><i>User defined datatypes</i></li>
+    <code>Class</code>. We can have a class sedan and instantiate multiple objects for it - a blue and a red sedan for example. And it's all about relationships amongst these classes.
+
+    <p>
+      <code>Vector</code>.
+    </p>
+    <p>
+    <li><i>Primitives</i></li>
+    These are the fundamental types. The standard library includes additional types such as <code>std::size_t</code> and <code>std::string</code>.
+
+    </p>
+  </ul>
+</section>
+
+<section id="3"><h1>Encapsulation & abstraction</h1>
+  <i>Encapsulation</i> means that:
+  <ul>
+    <li>Related properties are bundled together in a single class</li>
+    <li>These properties are protected from unauthorised or accidental modifications using <i>access modifiers</i></li>
+  </ul>
+
+  <p>
+    <i>Abstraction</i> means that users of a class only need to be familiar with its interface, they don't have to know how member data are stored or how member functions are implemented. 
+  </p>
+
+  Encapsulation and abstraction are related because encapsulation groups relevant data together in a class, while abstraction hides the details of how the data is manipulated. All the user of a class needs to know is that the data is present and there is an interface to interact with it. 
+</section>
+
+<section id="4"><h1>Access specifier or modifier</h1>
+  <subsection id="4.0"><h1>Members</h1>
+    <ul>
+      <li>Public members</li>
+      Public members can be changed <n>directly</n>, by any user of the object (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
+
+      <p>
+      <li>Private members</li>
+      [<a href="../../jlib/cppExamples/fundamentals/2_private.cpp">Ref</a>]. They are only accessible directly from within the class itself using member functions. One exception is that they are accessible from <n>friends</n>.
+      </p>
+
+      <li>Protected members</li>
+      [<a href="../../jlib/cppExamples/fundamentals/3_protectedMembers.cpp">Ref</a>]. They are accessible from member functions of the same class, from friends and also from member functions of derived classes.
+    </ul>
+  </subsection>
+
+  <subsection id="4.1"><h1>Inherited access specifiers</h1>
+    The same access modifiers also define which class members users of derived classes can access.
+
+    <ul>
+      <li>Public inheritance</li>
+      The derived class can access the public and protected members of the base class.
+
+      <p>
+        <li>Protected inheritance</li>
+        The public and protected members of the base class become protected members of the derived class.
+      </p>
+
+      <li>Private inheritance</li>
+      The public and protected members of the base class become private members of the derived class.
+    </ul>
+  </subsection>
+</section>
+
+<section id="5"><h1>Invariants - struct vs class</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/4_invariants.cpp">Ref</a>]
+  <br>
+  To access private members, typically public <i>accessor</i> and <i>mutator</i> member functions (sometimes called <i>getter</i> and <i>setter</i> functions).
+
+  <p>
+    If we're just carrying publicly accessible data where all the data members can vary independently of each other and don't really have any limitations then we might use a struct. When we need to make data members private or add limits on them (<i>invariants</i>), then the convention is typically to convert from a struct into a class. 
+  </p>
+  
+  By default, all members of a struct default to public, whereas all members of a class default to private. As a general rule, member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value.
+</section>
+
+<section id="6"><h1>Getters and setters</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/5_trivialGetterSetter.cpp">Ref</a>]
+  <br>
+  A trivial getter or setter adds no semantic value; the data item could just as well be public. A class could be made into a struct if its member variables don't need invariants i.e. they are just passive data.
+</section>
+
+<section id="7"><h1>Constructor</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
+  <br>
+  Constructors are member functions of a class or struct that initialise/construct/build an object. Typically a constructor establishes an invariant and often acquires resources needed for an object to be used (which are then typically released by a destructor).
+
+  <p>
+    All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. As a rule of thumb, the constructor should initialize the data members of the class. It's also a good idea not to have any complex logic in a constructor because you want to ensure that the constructor does not fail. It's hard to handle errors that take place within the constructor.
+  </p>
+</section>
+
+<section id="8"><h1>Scope resolution</h1>
+  :: is the scope resolution operator. It is used to specify which namespace or class (scope) to search in order to resolve an identifier (a function name or a variable name). C++ allows different identifiers to have the same name, as long as they have different scope. For example, two different functions can each declare the variable int i, because each variable only exists within the scope of its parent function.
+
+  <p>
+    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called scope resolution.
+  </p>
+
+  <subsection id="8.0"><h1>Class</h1>
+    Each class provides its own scope. The scope resolution operator becomes useful if we want to separate class declaration from class definition.
+ 
+    <p>
+      We might want to separate out the function definitions from the class declaration for various reasons. 
+      
+      <ul>
+        <li>Maybe we only want to show the interface and not the actual implementation to potential users</li>
+        <li>Maybe we want to split these into separate files</li>
+      </ul>
+    </p>
+  </subsection>
+
+  <subsection id="8.1"><h1>Namespace</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
+    <br>
+    Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. std is the namespace used by the C++ Standard Library. Classes like std::vector and functions like std::sort are defined within the std namespace.
+  </subsection>
+</section>
+
+<section id="9"><h1>Inheritance</h1>
+  Inheritance is one way that classes can relate to each other. Two classes might have a parent-child/base-derived relationship such that the child inherits members from the parent. We might have an apple class that is the child of a fruit class. Apples have their own varieties, but they also inherit members from the parent fruit class like seeds. Going further, the fruit class might be a child of the plant class and might inherit some members from the plant class like mass. The plant class has a mass, so its child, the fruit class inherits this mass member, and therefore, the apple class which is the child of the fruit class also inherits the mass member from the plant class, through the fruit class, to the apple class. 
+
+  <p>
+    The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
+  </p>
+
+</section>
+
+<section id="10"><h1>Friends</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/12_friend_1.cpp">Ref</a>]
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../figures/software/2_friendClass.png"/>
+      <figcaption>
+        Friend class
+      </figcaption>
+    </figure>
+  </div>    
+</section>
+
+<section id="11"><h1>Polymorphism</h1>
+  It means "assuming many forms". It describes a paradigm in which a function may behave differently depending on how it is called, i.e. based on its inputs. It allows an interface to work with several different types. We might have a cut function that can work with the plant, the fruit, or the apple class. In fact, the cut function might accept totally different types of objects, like a rope or a paper object. On the other hand, we might have a brews function that works with fruits and with apples, but not with plants.   
+  
+  <p>
+    Polymorphism can be achieved in two ways in C++: overloading and overriding.
+  </p>
+  
+  <subsection id="11.0"><h1>Function overloading</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/14_functionOverloading.cpp">Ref</a>]
+    <br>
+    Overloading requires that we leave the function name the same, but we modify the function signature. For example, we might define the same function name with multiple different configurations of input arguments.
+  </subsection>
+
+  <subsection id="11.1"><h1>Operator overloading</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/15_operatorOverloading.cpp">Ref1</a>, <a href="../../jlib/cppExamples/fundamentals/15_2_operatorOverloading.cpp">Ref2</a>]
+    <br>
+    In order to overload an operator, the <code>operator</code> keyword is used in the function signature. Eigen is a matrix library in cpp.
+
+  </subsection>
+
+  <subsection id="11.2"><h1>Overriding</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>
+    <br>
+    Overriding a function occurs when:
+    <ul>
+      <li>A base class declares a virtual function</li>
+      <li>A derived class overrides that virtual function by defining its own implementation with an identical function signature (i.e. the same function name and argument types)</li>
+    </ul>
+
+    Specifying a function as override is good practice, as it empowers the compiler to verify the code (if the code doesn't override some other virtual function, the compiler will generate an error), and communicates the intention of the code to future users.
+  </subsection>
+</section>
+
+<section id="12"><h1>Generic programming</h1>
+  Generic Programming is an example of polymorphism that generalises the parameters of classes and functions, i.e. using templates, one can build classes and functions that work with many different types of data. For example using the vector class from the Standard Library, we can create a vector of ints, strings or some user defined class. The aim is to create reusable code that can be reused in many different situations.
+
+  <subsection id="12.0"><h1>Function templates</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/8_templateFunction.cpp">Ref</a>]
+    <br>
+    Templates use datatypes as parameters so that the same implementation can operate on different data types. At compile time, the compiler expands the code using the types that are passed as parameters.
+
+    <p>
+      <i>Generic code</i> is the term for code that is independent of types. It is mandatory to put the <code>template&lt&gt</code> tag before the function signature to specify and mark the declaration as generic.
+    </p>
+
+    The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic type in the function prototype. The parameters that follow typename (or class) represent generic types in the function declaration.
+
+  </subsection>
+
+  <subsection id="12.1"><h1>Class templates</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/9_classTemplate.cpp">Ref</a>]
+    <br>
+    Classes are the building blocks of object oriented programming in C++. Class templates (<i>generic classes</i>) can declare and implement generic attributes for use by generic methods.
+  </subsection>
+</section>
+
+<section id="13"><h1>Virtual functions</h1>
+  Virtual functions are a polymorphic feature. These functions are declared (and possibly defined) in a base class, and can be overridden by derived classes. This approach declares an interface at the base level, but delegates the implementation of the interface to the derived classes.
+
+  <p>
+    A <i>pure virtual function</i> is a virtual function that the base class declares but does not define. It has the side effect of making its class abstract. This means that the class cannot be instantiated. Instead, only classes that derive from the abstract class and override the pure virtual function can be instantiated.
+  </p>
+
+  Virtual functions can be defined by derived classes, but this is not required. However, if we mark the virtual function with = 0 in the base class, then we are declaring the function to be a pure virtual function. This means that the base class does not define this function. A derived class must define this function, or else the derived class will be abstract.
+
+  <p>
+    We don't know how a generic animal talks. So we declare it as a virtual function which means that the derived classes can override the virtual function. <code>=0</code> means we're never going to create an object of type Animal. We're simply creating an interface such that other classes that inherit from this base class will have to implement the talk function. 
+  </p>
+</section>
+
+<section id="14"><h1>Default function arguments</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/19_defaultFuncArgs.cpp">Example</a>]
 </section>
 
 </chapter>
