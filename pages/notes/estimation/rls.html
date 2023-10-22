@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -73,34 +59,34 @@
     RLS extends the batch LS solution to work on the fly by keeping a running estimate of the optimal parameter (the LS solution) for all measurements collected up to the previous time step and then updates the estimate given the measurement at the current time step. Thus the estimate is updated incrementally as new measurements stream in. 
 
     <p>
-      RLS forms the update step of the linear Kalman filter. It is a recursive linear estimator that minimises the variance of the parameters at the current time. 
+      <n>RLS forms the update step of the linear Kalman filter</n>. It is a recursive linear estimator that minimises the variance of the parameters at the current time. 
     </p>
   </subsection>
   
   <subsection id="0.1"><h1>In mathematical form</h1>
-    Let us assume that we have our best optimal estimate of our unknown parameters at time $k-1$. At time $k$ we receive a new measurement that we will assume follows a linear measurement model with additive Gaussian noise. 
+    Let us assume that we have the best optimal estimate of some unknown parameters at time $k-1$. At time $k$ we receive a new measurement that we will assume follows a linear measurement model with additive Gaussian noise. 
   
     $$
-      \tilde{y}_k = H_kx + v_k
+      y_k = H_kx + v_k
     $$
     
-    The goal is to compute an updated optimal estimate at time $k$, given our measurement $\tilde{y}_k$ and the previous estimate $\hat{x}_{k-1}$. A linear recursive estimate is given by the following expression:
+    The goal is to compute an updated optimal estimate at time $k$, given our measurement $y_k$ and the previous estimate $\hat{x}_{k-1}$. A linear recursive estimate is given by the following expression:
     
     $$\begin{equation} \label{eq:linearRecursiveFormulation}
       \hat{x}_k = \hat{x}_{k-1} + 
       \underbrace{K_k}_{\text{Estimator} \atop \text{gain matrix}}
-      \underbrace{(\tilde{y}_k - H_k\hat{x}_{k-1})}_{\text Innovation}
+      \underbrace{(y_k - H_k\hat{x}_{k-1})}_{\text Innovation}
       \end{equation}$$
     <i>Innovation</i> quantifies how well our current measurement matches our previous best estimate. 
     
     <p>
-      We update our new state (estimate) as a linear combination of the previous estimate (<n>best guess</n>) and the current measurement <n>residual</n> (or error, difference between what we expected the measurement to be and what was actually measured), <n>weighted</n> by a gain matrix $K_k$. If the innovation were equal to $0$, we would not change our old estimate at all. 
+      We update our new state (estimate) as a linear combination of the previous estimate (<n>best guess</n>) and the current measurement <n>residual</n> (or error, difference between what we expected the measurement to be and what was actually measured), <n>weighted</n> by a gain matrix $K_k$. <n>If the innovation was equal to $0$, we would not change our old estimate at all</n>. 
     </p>
   </subsection>
 </section>
 
 <section id="1"><h1>Computing the estimator gain matrix $K_k$</h1>
-  Instead of minimising the error directly, we consider a probabilistic formulation - we minimise the expected value of the sum of squared errors of our current estimate at time step $k$ which is actually the estimator variance. The lower the variance, the more we are certain of our estimate.
+  Instead of minimising the error directly, we consider a probabilistic formulation - we minimise the sum of <n>expected value</n> of squared errors of our current estimate i.e. the sum of variances at time step $k$. The lower the variance, the more we are certain of our estimate.
 
   <p>
     For a single scalar parameter like resistance, the variance is as follows:
@@ -110,7 +96,7 @@
     &= \sigma^2_k
   \end{align*}$$
 
-  For multiple $n$ unknown parameters, this is equivalent 
+  For <n>multiple $n$ unknown parameters</n>, this is equivalent 
   to minimising the trace of the covariance matrix at time step $k$: 
   
   $$\begin{align*}
@@ -140,12 +126,12 @@
     &= (I-K_kH_k)P_{k-1}
   \end{align*}$$
   
-  The larger the gain matrix $K$, the smaller the new estimator covariance will be. 
-  Intuitively, the gain matrix balances the information we get from the 
-  prior estimate and the information we receive from the new measurement. 
+  <n>The larger the gain matrix $K$, the smaller the new estimator covariance will be</n>. Intuitively, the gain matrix balances the information we get from the prior estimate and the information we receive from the new measurement. 
 </section>
 
 <section id="2"><h1>RLS algorithm</h1>
+  <a href="rlsDerivation.html">Derivation</a>
+  
   <ul>
     <li>Initialise the estimator</li>
     Initialise the estimate of the unknown parameters and the corresponding covariance 
@@ -163,7 +149,7 @@
         Set up the measurement model, defining the Jacobian and the measurement covariance matrix
       </li>
       $$
-        \tilde{y}_k = H_kx + v_k
+        y_k = H_kx + v_k
       $$
     </p>
 
@@ -171,11 +157,11 @@
     For every measurement $k$:
     $$\begin{align*}
       K_k &= P_{k-1}H^T_k(H_kP_{k-1}H^T_k + R_k)^{-1} \\
-      \hat{x}_k &= \hat{x}_{k-1} + K_k(\tilde{y}_k - H_k\hat{x}_{k-1}) \\
+      \hat{x}_k &= \hat{x}_{k-1} + K_k(y_k - H_k\hat{x}_{k-1}) \\
       P_k &= (I-K_kH_k)P_{k-1}
     \end{align*}$$
     
-    Every time a measurement $\tilde{y}_k$ is recorded, we compute the measurement gain $K_k$ and then use it to update the estimate and the estimator covariance or uncertainty $P_k$. Every time a new measurement is taken, the uncertainty should shrink. 
+    Every time a measurement $y_k$ is recorded, we compute the measurement gain $K_k$ and then use it to update the estimate and the estimator covariance or uncertainty $P_k$. Every time a new measurement is taken, the uncertainty should shrink. 
   </ul>
 </section>
 

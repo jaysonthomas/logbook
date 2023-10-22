@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RLS derivation</title>
+  <meta name="RLS derivation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Assumptions</a>
+<a href="#1">Aim</a>
+<a href="#2">Notation introduction</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">State vector</a></li>
+  <li><a href="#2.1">Estimation error vector</a></li>
+  <li><a href="#2.2">Estimation (error) covariance matrix</a></li>
+  <li><a href="#2.3">Cost function</a></li>
+</ul>
+<a href="#3">Derivation of the gain $K_k$</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Estimation covariance propagation equation</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>RLS derivation</h1>
+<section id="0"><h1>Assumptions</h1>
+  Assume at discrete-time instant $k$, the set of measurements $y_k$ becomes available. And these measurements are related to the vector $x$ to be estimated by the following <i>measurement equation</i> or <i>measurement model</i>:
+  
+  $$\begin{equation} \label{eq:measurementModel}
+    y_k = H_kx + v_k
+  \end{equation}$$
+
+  Assume the covariance and mean of the measurement noise vector $v_k$ is:
+  $$\begin{align*}
+    E[v_kv^T_k] &= R_k \\
+    E[v_k] &= 0
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Aim</h1>
+  Our aim is to compute our estimate in the following form (<i>time propagation of the estimate</i> or the <i>estimate propagation equation</i>):
+  $$\begin{equation} \label{eq:estimatePropagation}
+    \hat{x}_k = \hat{x}_{k-1} + K_k(y_k - H_k \hat{x}_{k-1})
+  \end{equation}$$
+  <p>
+    The vector $x$ is estimated recursively based on sequentially obtained measurement data $y_0, y_1, \cdots$. We start from some initial guess of $x$, denoted by $\hat{x}_0$. When the initial measurement sample $y_0$ arrives, we update the inital estimate $\hat{x}_0$. When the next sample arrives $y_1$, it is used to update the previously computed estimate to form $\hat{x}_1$.
+  </p>
+
+  The gain matrix $K_k$ (derived below) is computed at every time instant. 
+</section>
+
+<section id="2"><h1>Notation introduction</h1>
+  <subsection id="2.0"><h1>State vector</h1>
+    If there are multiple terms in $x = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$, then the estimate $\hat{x}_k$ is partitioned as follows:
+    $$
+      \hat{x}_k = \begin{bmatrix} \hat{x}_{1,k} \\ \vdots \\ \hat{x}_{n,k} \end{bmatrix}
+    $$
+
+    <button class="accordion">Use case</button>
+    <div class="panel">
+    <p>
+      Consider a vehicle is moving from a starting position $y_0$, with initial velocity $v_0$ and acceleration $a$. From basic kinematics, the measurement equation/model is:
+      $$
+        y(t) = y_0 + v_0t + \frac{1}{2}at^2
+      $$
+
+      Our goal is to estimate $x = \begin{bmatrix}y_0 \\ v_0 \\ a\end{bmatrix}$ given a position measurement $y$ at every time step. 
+      <br>
+      Assume $\Delta{t}$ is the sampling period of the distance sensor such that $t=0, \Delta{t}, 2\Delta{t}, \cdots, k\Delta{t}$
+      <br>
+      Let $y(k\Delta{t}) := y_k$
+    </p>
+
+    <p>
+      The measurement equation is then:
+      $$
+        y_k = \underbrace{\begin{bmatrix}1 & k\Delta{t} & \frac{1}{2}(k\Delta{t})^2\end{bmatrix}}
+              _{H_k}
+              \underbrace{\begin{bmatrix}y_0 \\ v_0 \\ a\end{bmatrix}}_{x}
+              + v_k
+      $$
+
+      $x$ is composed of $x_1 := y_0$, $x_2 := v_0$ and $x_3 := a$.
+    </p>
+    </div>
+  </subsection>
+
+  <subsection id="2.1"><h1>Estimation error vector</h1>
+    $$
+      \epsilon_k = \begin{bmatrix} \epsilon_{1,k} \\ 
+                                   \epsilon_{2,k} \\ \vdots
+                                   \epsilon_{n,k}
+                   \end{bmatrix} 
+                 = x - \hat{x}_k
+                 = \begin{bmatrix}  x_1 - \hat{x}_{1,k} \\ 
+                                    x_2 - \hat{x}_{2,k} \\ \vdots
+                                    x_n - \hat{x}_{n,k}
+                    \end{bmatrix} 
+    $$
+
+    In other words, 1 element of the estimation error vector is as follows:
+    $$
+      \epsilon_{i,k} = x_i - \hat{x}_{i,k}  \quad i=1,2,\cdots, n
+    $$
+  </subsection>
+
+  <subsection id="2.2"><h1>Estimation (error) covariance matrix</h1>
+    $$\begin{align*}
+      P_k &= E[\epsilon_k \epsilon^T_k] \\
+          &=  E\left[
+                \begin{bmatrix}
+                  \epsilon_{1,k} \\
+                  \epsilon_{2,k} \\
+                  \vdots \\
+                  \epsilon_{n,k}
+                \end{bmatrix}
+
+                \begin{bmatrix}
+                  \epsilon_{1,k} &
+                  \epsilon_{2,k} &
+                  \cdots &
+                  \epsilon_{n,k}
+                \end{bmatrix}
+              \right] \\
+
+          &=  E\left[
+              \begin{bmatrix}
+                \epsilon^2_{1,k} & \epsilon_{1,k}\epsilon_{2,k} & \cdots & \epsilon_{1,k}\epsilon_{n,k} \\
+                \epsilon_{1,k}\epsilon_{2,k} & \epsilon^2_{2,k} & \cdots & \epsilon_{2,k}\epsilon_{n,k}\\
+                \vdots \\
+                \epsilon_{1,k}\epsilon_{n,k} & \epsilon_{2,k}\epsilon_{n,k} & \cdots & \epsilon^2_{n,k}
+              \end{bmatrix}
+            \right] \\
+
+          &=  \begin{bmatrix}
+                E[\epsilon^2_{1,k}]] & E[\epsilon_{1,k}\epsilon_{2,k}] & \cdots & E[\epsilon_{1,k}\epsilon_{n,k}] \\
+                E[\epsilon_{1,k}\epsilon_{2,k}] & E[\epsilon^2_{2,k}] & \cdots & E[\epsilon_{2,k}\epsilon_{n,k}]\\
+                \vdots \\
+                E[\epsilon_{1,k}\epsilon_{n,k}] & E[\epsilon_{2,k}\epsilon_{n,k}] & \cdots & E[\epsilon^2_{n,k}]
+              \end{bmatrix}
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="2.3"><h1>Cost function</h1>
+    The cost function is the sum of variances of the estimation errors:
+    $$\begin{align*}
+      W_k &= tr(P_k) \\
+          &= E[\epsilon^2_{1,k}] + E[\epsilon^2_{2,k}] + \cdots + E[\epsilon^2_{n,k}]
+    \end{align*}$$
+
+    $tr()$ is the notation for <i>matrix trace</i>.
+  </subsection>
+</section>
+
+<section id="3"><h1>Derivation of the gain $K_k$</h1>
+  <subsection id="3.0"><h1>Estimation covariance propagation equation</h1>
+    This leads us to another form of the estimation error covariance matrix, starting with 're-phrasing' the estimation error:
+
+    $$
+      \epsilon_k = x - \hat{x}_k
+    $$
+    
+    Substituting ($\ref{eq:estimatePropagation}$):
+    $$
+      \epsilon_k = x - \hat{x}_{k-1} - K_k(y_k - H_k \hat{x}_{k-1})
+    $$
+
+    Substituting ($\ref{eq:measurementModel}$):
+    $$\begin{align*}
+      \epsilon_k  &= x - \hat{x}_{k-1} - K_k(H_kx + v_k - H_k \hat{x}_{k-1}) \\
+                  &= (I - K_kH_k)(x - \hat{x}_{k-1}) - K_kv_k \\
+                  &= (I - K_kH_k)\epsilon_{k-1} - K_kv_k
+    \end{align*}$$
+
+    We end up with the following expression for the propagation of the estimation error covariance matrix:
+    $$\begin{equation}
+      P_k = (I - K_kH_k)P_{k-1}(I - K_kH_k)^T + K_kR_kK^T_k
+    \end{equation}$$
+
+
+    <button class="accordion">The derivation</button>
+    <div class="panel">
+      <p></p>
+      The square of the error:
+      $$\begin{alignat*}{2}
+        \epsilon_k\epsilon_k^T  &=\, &&((I - K_kH_k)\epsilon_{k-1} - K_kv_k)
+                                   ((I - K_kH_k)\epsilon_{k-1} - K_kv_k)^T \\
+                                &=\, &&((I - K_kH_k)\epsilon_{k-1} - K_kv_k)
+                                   (\epsilon_{k-1}^T(I - K_kH_k)^T - v_k^TK_k^T) \\
+                                &=\, && (I - K_kH_k)\epsilon_{k-1}\epsilon_{k-1}^T(I - K_kH_k)^T -
+                                   (I - K_kH_k)\epsilon_{k-1}v_k^TK_k^T - \\
+                                & \, && K_kv_k\epsilon_{k-1}^T(I - K_kH_k)^T +
+                                   K_kv_kv_k^TK_k^T
+                                   
+      \end{alignat*}$$
+    </div>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

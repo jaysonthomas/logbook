@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -59,14 +45,13 @@
   <li><a href="#1.0">Moment of inertia about the axis of rotation</a></li>
   <li><a href="#1.1">Net moment</a></li>
   <li><a href="#1.2">Balance of forces</a></li>
-  <li><a href="#1.3">A real world pendulum system</a></li>
 </ul>
-<a href="#2">Model based on Lagrange's equation</a>
-<a href="#3">Simulation</a>
+<a href="#2">Simulation</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Systems viewpoint</a></li>
-  <li><a href="#3.1">State space form</a></li>
+  <li><a href="#2.0">Systems viewpoint</a></li>
+  <li><a href="#2.1">State space form</a></li>
 </ul>
+<a href="#3">Integration</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
@@ -95,10 +80,12 @@
       J_0 &= \cancel{J_{CG}} + ml^2
     \end{align*}$$
     
-    $J_0$ is the moment of inertia about the pivot point (the axis of rotation). $l$ is the distance of the axis of rotation (the pivot point) from the centre of mass. 
+    Since the simple pendulum consists of a point mass and the string (or rod) is considered to be massless, the centre of mass of a simple pendulum is at the point mass.
 
     <p>
-      Since the simple pendulum consists of a point mass and the string (or rod) is considered to be massless, the centre of mass of a simple pendulum is at the point mass. $r_{CM}$ is the distance of the point mass $m$ from its own center of mass, which is 0 in this case (since the mass is treated as concentrated at its own position [<a href="https://t.ly/SFPXZ">Ref</a>]).      
+      $J_0$ is the moment of inertia about the pivot point (the axis of rotation). <br>
+      $l$ is the distance of the axis of rotation (the pivot point) from the centre of mass. <br>
+      $r_{CM}$ is the distance of the point mass $m$ from its own center of mass, which is 0 in this case (since the mass is treated as concentrated at its own position [<a href="https://t.ly/SFPXZ">Ref</a>]).      
     </p>
   </subsection>
 
@@ -132,22 +119,21 @@
   </subsection>
 
   <subsection id="1.2"><h1>Balance of forces</h1>
-    The net (sum of all) moment $M$ about the axis of rotation is equal to the moment about the same axis:
+    The moment $M$ about the axis of rotation is equal to the net (sum of all) moment about the same axis causing the pendulum to rotate:
     
     $$\begin{align*}
       M &= J_0 \ddot{\theta} \\
-      u -mglsin(\theta) &= ml^2 \ddot{\theta}
+      Q -mglsin\theta &= ml^2 \ddot{\theta}
     \end{align*}$$
+
+    Here, $Q$, the generalised force, models a damping torque (from friction) and a control torque input.
+    $$
+      Q = -b\dot{\theta}(t) + u(t)
+    $$
 
     Rearranging:
     $$
-      ml^2 \ddot{\theta} + mglsin(\theta) = u
-    $$
-  </subsection>
-
-  <subsection id="1.3"><h1>A real world pendulum system</h1>
-    $$
-      ml^2 \ddot\theta + b\dot\theta + mgl \sin\theta = u
+      ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
     $$
 
     <ul>
@@ -162,11 +148,8 @@
   </subsection>
 </section>
 
-<section id="2"><h1>Model based on Lagrange's equation</h1>
-</section>
-
-<section id="3"><h1>Simulation</h1>
-  <subsection id="3.0"><h1>Systems viewpoint</h1>
+<section id="2"><h1>Simulation</h1>
+  <subsection id="2.0"><h1>Systems viewpoint</h1>
     The dynamics can be abstracted into a system for which inputs and outputs can be defined. That is, the dynamics can be abstracted as a <i>plant</i> that will output the current state $x$, given the torque  $\tau$ into the system.
 
     <figure>
@@ -184,7 +167,7 @@
     The output of the system doesn't have to be the state $x$ - it can be a subset of the state, or simply some sensor attached to the pendulum! In this case we will assume full access to the state for feedback, i.e. full-state feedback. Since this system is deterministic, the future value of the system can be predicted given the current time, state, and input of the system. 
   </subsection>
 
-  <subsection id="3.1"><h1>State space form</h1>
+  <subsection id="2.1"><h1>State space form</h1>
     Dynamics of a pendulum in a first-order form: 
     $$\begin{align*}
       \dot{x} &= f(x,u) \\
@@ -202,6 +185,10 @@
       In code, the dynamics function takes in $x$, $u$ and some <n>parameters</n> to return back $\dot{x}$. We only get to control $u$. $\dot{x}$ decides the next state which is then used to calculate $\dot{x}$; but the latter's value is also dependent on $u$.
     </p>
   </subsection>
+</section>
+
+<section id="3"><h1>Integration</h1>
+  Add this section <a href="https://chat.openai.com/share/e17a9255-b2fd-45db-aa0d-6f07591c9447">Chatgpt</a>.
 </section>
 </chapter>
 

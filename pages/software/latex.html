@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -55,7 +41,8 @@
   
 <a href="#0">Alignment, numbering and Labeling</a>
 <a href="#1">Conditions on equations</a>
-<a href="#2">Mathjax</a>
+<a href="#2">Symbols</a>
+<a href="#3">Spaces and dots</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Mathjax-Latex</h1>
@@ -71,6 +58,25 @@
       </li>
     </p>
 
+    <li>Left alignment of equations</li>
+    <a href="https://bit.ly/3UUkxpd">Ref</a>. Use <code>&</code>
+    to specify the points in lines that we want aligned with each other.
+
+    <p>
+      <li>Aligning parts of the equation and adding newlines</li>
+      \begin{equation}\displaylines{  
+        \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+        s.t. \quad & |v|\leq v_{max}     
+      }\end{equation}
+  
+      <code>\quad</code> adds 4 spaces.
+      <br>
+      <code>&</code> aligns the centres of the left sides (to the ampersand symbol)
+      between themselves. Does the same to the right sides as well.
+      <br>
+      <code>\displaylines</code> takes into account <code>\\</code> to mean
+      'leave a new line'.
+    </p>
     <li>
       Place the label just before the equation line that we need to be referenced later <code>\label{eq:xxx}</code>. When referencing the equation using <code>\ref{eq:xxx}</code>, the equation number shows up as a link.
     </li>
@@ -78,6 +84,24 @@
     <p>
       <li>Numbering equations</li>
       \begin{equation}\bh(\bq) = 0.\end{equation}
+    </p>
+
+    <li>Underbrace</li>
+    $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
+    <code>\underbrace{</code>The part of the equation to be labelled
+      <code>}_{\text{</code>The label<code>}}</code>
+    <br>
+    [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
+
+    <p>
+      <li>Multiple lines in underbrace</li>
+      <a href="https://t.ly/YkN6">Ref</a>.
+      <code>\underbrace{}_{\text{} \atop \text{}}</code> works well.
+    </p>
+
+    <p>
+      <li>Including normal text with math</li>
+      <code>\text{}</code>
     </p>
   </ul>
 </section>
@@ -97,8 +121,8 @@
     $$
       \left\{
         \begin{array}{ c l }
-          \frac{x^2 - x}{2} & \quad \textrm{if } x \geq 1 \\
-          0                 & \quad \textrm{otherwise}
+          \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+          0                 & \quad \text{otherwise}
         \end{array}
       \right.
     $$
@@ -116,7 +140,7 @@
   </ul>
 </section>
 
-<section id="2"><h1>Mathjax</h1>
+<section id="2"><h1>Symbols</h1>
     <ul>
       <li>Matrix notation</li>
       $\begin{bmatrix}a & b\\c & d\end{bmatrix}$
@@ -124,77 +148,40 @@
       Rows are terminated with <i>\\\</i> and columns are separated by <i>&</i>.
       <p></p>
       
-      <li>Display lines</li>
-      <a href="https://t.ly/4pZq">The selected answer</a> works. If the equations do not be numbered use <code>\begin{align*}</code> and <code>\end{align*}</code>. 
-      <p></p>
-  
-      <li>Left alignment of equations</li>
-      <a href="https://bit.ly/3UUkxpd">Ref</a>. Use <code>&</code>
-      to specify the points in lines that we want aligned with each other.
-      <p></p>
-      
       <li><a href="t.ly/8MRnV">Good link</a> for quick reference</li>
-      
-      <p></p>
-      <li>Aligning parts of the equation and adding newlines</li>
-      \begin{equation}\displaylines{  
-        \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
-        s.t. \quad & |v|\leq v_{max}     
-      }\end{equation}
-  
-      <code>\quad</code> adds 4 spaces.
-      <br>
-      <code>&</code> aligns the centres of the left sides (to the ampersand symbol)
-      between themselves. Does the same to the right sides as well.
-      <br>
-      <code>\displaylines</code> takes into account <code>\\</code> to mean
-      'leave a new line'.
-      <p></p>
-  
-      <li>Spaces in equations</li>
-      <a href="https://t.ly/M3Q4">Ref</a>.
-      <p></p>
-  
-      <li>Underbrace</li>
-      $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
-      <code>\underbrace{</code>The part of the equation to be labelled
-        <code>}_{\text{</code>The label<code>}}</code>
-      <br>
-      [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
-  
-      <p>
-        <li>Multiple lines in underbrace</li>
-        <a href="https://t.ly/YkN6">Ref</a>.
-        <code>\underbrace{}_{\text{} \atop \text{}}</code> works well.
-      </p>
-  
   
       <li>Adding a package to mathjax</li>
       Added the cancel package to <a href="../../notes-mathjax-config.js">here</a>.
       <a href="https://t.ly/PEhT">Ref</a>.
   
       <p>
-        <li>Including normal text with math</li>
-        <code>\text{}</code>
-      </p>
-  
-      <p>
-        <li>Symbols</li>
+        <li>Random</li>
         $$
           \in \quad \mathbb{R}
         $$
       </p>
-  
-      <li>Randoms</li>
-      enspace - half of a quad
-      <br>
-      qquad - double the quad
-      <br>
-      ddots - diagonal dots (3) useful for a matrix
-      <br>
-      cdots - horizontal dots (3)
     </ul>
   </section>
+
+<section id="3"><h1>Spaces and dots</h1>
+  <ul>
+    <li>General spaces</li>
+    \enspace - half of a quad
+    <br>
+    \qquad - double the quad
+    
+    <p>
+      <li>Dots</li>
+      \ddots - diagonal dots (3) useful for a matrix
+      <br>
+      \cdots - horizontal dots (3)
+    </p>
+
+    <li>Spaces in equations</li>
+    <a href="https://t.ly/M3Q4">Ref</a>.
+  </ul>
+
+</section>
 </chapter>
 
 </body>

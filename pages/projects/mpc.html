@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Model predictive control</title>
+  <meta name="Model predictive control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
+
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">How does the controller work</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">MPC</a></li>
+  <li><a href="#1.1">Optimiser</a></li>
+</ul>
+<a href="#2">Setup</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Model predictive control</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/thUPT">Ref</a>]
+  <ul>
+    <li>Given</li>
+    <ul>
+      <li>Telemetry - position, velocity and heading</li>
+      <li>A few waypoints for the coming stretch of track</li>
+    </ul>
+
+    <li>Aim</li>
+    <ul>
+      <li>Write a good controller to reduce position error</li>
+      <li>Make the controller work given a simulated latency of 100ms seen IRL</li>
+      The latency is simulated by creating a delay of 100ms before sending out control commands.
+    </ul>
+
+    <li>Steps</li>
+    <ul>
+      <li>Find best fit curve</li>
+      Fit a curve to the provided waypoints, preferably after they've been transformed from the track coordinates to the vehicle's viewpoint to simplify future calculations.
+
+      <p>
+        <li>Find optimal trajectory</li>
+        Then the IPOPT and CPPAD packages can be used to calculate an optimal trajectory and its associated actuation commands in order to minimize error with the best fit.
+
+        <p>
+          With PID control, the vehicle is able to follow the best fit curve as perfectly as possible. But, with the benefit of knowing what's coming, the controller can plan the controls better. For example, the vehicle can't take a $90^0$ turn perfectly - it would have to make a curve around the bend.
+        </p>
+      </p>
+    </ul>
+  </ul>
+</section>
+
+<section id="1"><h1>How does the controller work</h1>
+  <subsection id="1.0"><h1>MPC</h1>
+  MPC takes a vehicle's motion model into account to plan out a path that respects a given set of constraints based on: 
+  <ul>
+    <li>Limits of the vehicle's motion</li>
+    <li>Combination of costs that define how we want the vehicle to move (such as staying close to the best fit and the desired heading, or keeping it from jerking the steering wheel too quickly)</li>
+  </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Optimiser</h1>
+    <h5>Tuning</h5>
+    The optimisation considers only a short duration's worth of waypoints, because that's all we really need to plan for as far as the actuator controls are concerned. We can tune (both are related):
+    <ul>
+      <li>
+        The number of discrete points in time that the optimiser uses in its plan
+      </li>
+      <li>
+        The time gap between them, so it can compute the best plan within a short enough time interval so that the car can be controlled in real time but within a long enough time interval so that it has enough time to compute a solution and not have to do it too often consuming valuable computing resources.
+      </li>
+    </ul>
+
+    <h5>Input</h5>
+    The optimiser requires a massive one-dimensional vector that includes:
+    <ul>
+      <li>State variables</li>
+      <li>Constraints on each for each time step in the plan</li>
+      <p>
+        Since the variables for future time steps depend on previous time steps, their constraints make use of vehicle's kinematic model.
+      </p>
+      <li>Overall cost function</li>
+    </ul>  
+    This may not be too intuitive.
+  <p>
+    The kinematic model includes the vehicle's x and y coordinates, orientation angle (psi), and velocity, as well as the cross-track error and psi error (epsi). Actuator outputs are just acceleration and delta (steering angle). The model combines the state and actuations from the previous time step to calculate the state for the current time step based on the equations below:
+  </p>
+</section>
+
+<section id="2"><h1>Setup</h1>
+  <ul>
+    <li>Downloaded udacity's <a href="https://t.ly/UNTHc">term2 sim</a></li>
+    Good documentation can be found <a href="https://t.ly/suv7h">here</a> along with a good project.
+
+    <p>
+      <li>MTDzi has some good documentation</li>
+      <a href="https://t.ly/uY8PI">mpc_to_line</a>, <a href="https://t.ly/NNaSc">mpc project writeup</a>. 
+
+      <li>Another good reference</li>
+      <a href="https://t.ly/zMAfy">Cyclist</a>
+    </p>
+
+    <li>Coinbrew</li>
+    [<a href="https://t.ly/6jSNM">Ref</a>] I used coinbrew to install <code>Ipopt</code> after installing the recommended packages.
+
+<pre><code class="bash">
+./coinbrew build Ipopt --prefix=/usr/local --test --no-prompt --verbosity=3
+</code></pre>
+  </ul>  
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trajectory optimisation</title>
+  <meta name="Trajectory optimisation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Summary of the approaches to calculate the cost to go</a></li>
+  <li><a href="#0.1">Fundamental idea of TO</a></li>
+</ul>
+<a href="#1">Basic TO formulation</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Trajectory optimisation</h1>
+<section id="0"><h1>Overview</h1>
+  <subsection id="0.0"><h1>Summary of the approaches to calculate the cost to go</h1>
+    The cost to go: $J^*(x)$
+    <ul>
+      <li>Dynamic programming</li>
+      <ul>
+        <li>On a mesh</li>
+        We can analyse its convergence but it doesn't scale well i.e. its <m>discretisation grows quickly</m> in high dimensions.
+
+        <p>
+          <li>Neural value iteration</li>
+          It has less guarantees in terms of convergence (when it will converge or fail) but scales better and can handle <m>different shapes of $J$</m>.
+        </p>
+      </ul>
+
+      <li>LQR</li>
+      It can scale to arbitrarily large dimensions but it is restricted to linear systems.
+
+      <p>
+        <li>Sums of squares approximate dynamic programming and lyapunov type methods</li>
+        SOS works on convex optimisation. 
+
+        <p>
+          <m>
+            These methods can be made to have guarantees because we can check the up and off conditions. Just having the SOS pushing up from below for the approximate cost to go, doesn't give performance guarantees. We have to bring a different version down from above in order to have performance guarantees. This set of tools are designed to be in a regime where we can be giving guarantees. They scale fairly well to definitely more than what can be done with meshes but struggle when the DOFs goes beyond 10.
+          </m>
+        </p>
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="0.1"><h1>Fundamental idea of TO</h1>
+    Apart from lqr which is for linear systems, these methods are very clean but they're restricted to relatively low dimensional systems.
+
+    <p>
+      The context for TO is that we want to fundamentally break the curse of dimensionality. The reason these methods are difficult in high dimensions is because they try to solve a very high dimensional problem; a function for all $x$ which is hard to do as the dimension of $x$ increases.
+    </p>
+    
+    In TO, instead of thinking about for all $x$, it thinks about a single initial condition and rolls out just one solution from a particular initial condition. This is now almost immune to the dimension of the state. The complexity now increases with time. So we're going to analyse single trajectories. 
+    
+    <p>
+      It has other problems. If we never look at all of the states then it's hard to say something about global optimality. We can say something about local changes to the trajectory (if it gets worse), but asking for something to be global requires looking at all of the states.
+    </p>
+
+    A humanoid has many DOFs. It would take a long time (years) to visit all of the possible states in its state space if we were to examine all of the possible configurations that the humanoid is capable of. It is too much to ask that we have to solve for all possible $x$. The TO view of the world takes it to an extreme where we're considering one (initial) state. Probably the right answer is something in between the two.
+  </subsection>
+</section>
+
+<section id="1"><h1>Basic TO formulation</h1>
+  It looks similar to the optimal dynamic programming control formulation. We have a dynamical system: $\dot{x} = f(x, u)$.
+
+  <p>
+    We need to write optimization problems that optimises some long-term objective ($0 \rightarrow t_f$) subject to some dynamic constraints.
+  </p>
+
+  $$
+  \begin{align*}
+    min \quad & \int^{t_f}_0 
+        \underbrace{l(x(t),u(t))}_{\text{Objective}}dt \\
+    s.t. \quad & \dot{x} = f(x, u)
+    \left.\right\} &\text{dynamic constraints} \\
+    \quad &
+    \left.
+      \begin{array}{ c l }
+        &\text{Collision avoidance} \\
+        &\text{Joint input limits} \\
+      \end{array}
+    \right\} &\text{additional constraints}
+  \end{align*}
+  $$
+
+  
+  
+  okay maybe some other additional
+  constraints collision avoidance joint input limits
+  but most importantly what we're going to do that breaks this curse is we're going to say exit time 0 is a particular
+  statement okay
+  and instead of saying my decision variables are somehow like a cost to go everywhere I'm going to restrict my
+  search to just the trajectories
+  which I'm in this notation I'm saying X is a continuous trajectory U is a continuous trajectory I want to find
+  over this over some class of continuous curves something that satisfies all
+  these equations right this one has to hold for all time okay
+  that's the basic formulation all of the work is going to be figuring
+  out the right way to cast that general idea into the optimization tools that we
+  we know and can you know have performance solvers for and have you know good numerical recipes
+8:17
+
+<br><br>
+  all of that is easier in discrete time so even though I want to think about this as a continuous time optimization
+  the transcription and you know in some sense the problem is more beautiful in continuous time
+  and we'll see we'll see examples for why but the transcription is easier to think about in discrete time so let me think
+  let's start with discrete time
+  that's right almost exactly that but now in in discrete time okay so the simplest
+  case of that let me even do it for linear discrete time systems
+  always makes sense to pay it makes it makes sense to think about the linear time first just
+  to if your Solutions don't work for that then there's a problem okay
+  so um in this case let me write it like this
+  now I've got a finite set of decision variables which represent X and U at particular
+  times okay I'm going to my my integral becomes a sum
+  and I'll do it over some finite Horizon
+  of L x n u n
+  okay let's just take a minute to think about that problem okay so now our decision variables we have
+  what are the decision variables here right
+  we now have X you could sort of say x0 isn't it doesn't need to be a decision variable
+  since it's fixed so I'll just say X1 to x n
+  these are just vectors there's a lot of them there's up to the Horizon of them
+  there's U from Time Zero actually only need it for n minus 1.
+  depending on what my final cost is okay
+  these the nice thing about having linear Dynamics is that the the Dynamics come
+  in as linear constraints in the optimization problem right this is certainly initial constraint
+  things like input limits are all linear convex constraints
+  okay so if I'm willing to choose some convex cost function like a something
+  that's linear is a cost function or a quadratic in the cost function then I'm in the state where even though I'm doing
+  trajectory optimization now I can I still have a convex optimization
+  problem okay so
+  I choose convex costs like
+  something like that okay then then if I have a quadratic cost and linear
+  constraints then I'm in the realm of quadratic programming right this would be a
+  quadratic program okay and honestly I mean even when you
+  get to really complicated things this rarely feels like a a huge limitation to
+  me you know I think the adding the rich enough Dynamics and constraints become limiting but this is a pretty good cost
+  function for a lot of tasks yeah
+  to electrodynamics okay so I think you're you're actually probably even thinking ahead to the next transcription
+  because it's true that you can you can actually solve away X if you know X zero
+  and you know the U's you could solve for x just kind of run the simulation forward all right and that'll be a different
+  transcription that also has some pros and cons compared to this one but certainly it's you know if you just
+  think about this from the language of of optimization I certainly can make additional decision variables they sound they seem extra to your thinking I think
+  but and but I can Define them with linear constraints is that fair yeah
+  it is true that you could solve those away and we will yeah
+  okay so um there's a couple ways to do that and it's a it's a decision you have uh
+  have to make right so if you want to say find me over the class of Curves something that absolutely gets to the
+  final condition you could put in a constraint like I want to be at this final
+  condition absolutely sometimes that's it's hard to achieve that even in even in the double
+  integrator it can be hard to achieve that because if your timing isn't perfect you might not be able to get
+  there exactly at the right time so sometimes we will put in softer constraints you could just put
+  a final cost for instance you could say that
+  L for you know if I say the nth L if I maybe I could just even add a particular one
+  just to emphasize it here if I could say this is this is the ones I use for my running cost and I just say
+  at the end time I'll add an extra big one that penalizes me from being away at xn
+  I could just have like a really steep quadratic form
+  cool yes that's true you could you could
+  certainly have q and R be different at different parts at different points of time yeah there's no limitation for them
+  there's actually there's a handful of other quad of convex costs you can pick right so you could this is a
+  quadratic you could do absolute values here you could do Max's
+  here these are the standard one Norm L Infinity Norms they all will give you
+  convex optimizations there's different choices of convex functions that can be useful to choose here
+  um I tried to mention a few of them in the notes
+  for instance if we wanted to do the minimum time problem okay like I said I always like to compare our numerical
+  solutions to the sub the handful of solutions that we actually understand right remember we understand the bang bang optimal control solution
+  can we get that out of this recipe I think that's useful to think about certainly the double integrator is a
+  linear Dynamics what's the minimum time costs look like is that a convex cost
+  in this in this world
+  it's kind of a trick question in the way I've written it and capital N
+  is fixed that's not a decision variable okay for this optimization problem is solving
+  for any fixed Horizon The Horizon is absolutely fixed okay so you can solve even a feasibility
+  problem if I were to just say l x u zero I just don't care about the cost I
+  just say can you find a solution in end steps to get to the goal that is
+  a convex optimization problem okay since it's a since it's convex optimization problems have reliable
+  numerical recipes they're guaranteed to say here's the optimal solution or no
+  optimal solution exists so if you want to solve the minimum time problem you can actually solve many
+  convex optimization problems just keep increasing and until the first one that succeeds that's
+  your minimum time you can actually do a golden section a bracket lines a clever line search to do
+  to do that too okay so let's just do that real quick to make sure we understand
+  because there's some nuances of the um the discrete formulation I will come
+  back to that in a second okay so we'll optimize the double integrator with a fixed Horizon n
+  people said in the survey that they thought it was okay it was useful to step through some of the the code to make sure it matches okay
+  so my A and B matrices for the discrete time Dynamics are just the familiar ones
+  for the um for the double integrator but then I've made a discrete time approximation right
+  so I just said that the way I made a discrete time approximation as I said
+  x n plus 1 equals x n plus DT
+  times my original ax
+  n plus bu you can do more clever things for linear integration but this is the Euler integration
+  okay so then I'm going to make a mathematical program I'm going to make a lot of
+  decision variables right I'm going to it just happens that there's only one control input in a double integrator
+  right and there's two states so I'm going to make one n minus one for you
+  to to end for x I go ahead and add the constraint that
+  x0 has to equal my my coming in coming one I could have not
+  I could have not made that decision variable that would have been fine and then I'm just going to Loop through and add those Dynamic constraints saying
+  x n plus 1 equals a DOT you know a plus b u I'm putting the input limit negative
+  one to one add the quadratic cost oh sorry I I actually added a quadratic
+  cost just to make the numerics better okay I'll show you with or without that but like I said I never let the solver
+  have I rarely just say a feasibility problem it's always better to say of all the little things you could pick in the
+  noise pick this one I'll show you the difference between those two okay and then I'm going to put the final
+  condition constraint so in this case I am doing exactly putting a final condition constraint and we'll solve
+  all right so
+  here we go so I put it in the initial condition negative two zero and you remember the solution right so
+  the bang bang Solutions in Q and Q dot where that you would take
+  maximum velocity or maximum acceleration until you hit the switching surface
+  and then you'd ride that directly back in okay and that's exactly what it well almost exactly what it found
+  okay so this is this is Q versus Q dot of the solution all right and then this is
+  the U trajectory Bang Bang almost there's a little slant there
+  right so I would expect the true optimal solution to be
+  the optimal U as a function of time
+  should really be I've got a umax and then I've got I immediately change
+  to Human right
+  and what I'm seeing there is a little bit it's pretty close to it
+  but there's a little bit of a slant to that solution
+  I can make it if I take that if I take that objective away my little
+  work away with the noise you'll see it even more glaring okay Where'd I put my objective here
+  let's just take that out okay look at that
+  so you see what happens here it's so let's just think about exactly what's happening all right but but you can see
+  the artifact here is that it's picking you you negative you you negative U Max
+  like this there's even a little bloop there okay so why is it doing that
+  do people have a guess for why it's doing that
+  what's that it's a feasible solution why not but I want Optimal Solutions right
+  yes it's true but why can't I get more this is the best I can get without if I
+  have no costs yes right so so there is no DT
+  or there's no multiple of the DT I picked that gets me exactly to the goal with the bang bang controller
+  right so what I when you what these discrete time approximations
+  is doing right is you have to think about that as it's adding an additional constraint on
+  what my salt my solution can possibly do right I have time and I have U
+  of n the parameterization I've given the controller is like it's only able to
+  pick
+  a discrete number of U's right so this is like U zero
+  U1 U2 right
+  and at each time I'm evaluating the Dynamics as if that U is fixed and I'm
+  multiplying it forward to here so that's like putting a zero order hold you might call that
+  there's various ways that people talk about going from just continuous to discrete right and zero order hold is
+  what a single processing person might call that phenomenon of actually holding that A first order hold would be a
+  linear interpolation right okay and you should think about that as putting uh it's it's a limitation of the
+  way we've parameterized the solution but you can think of it as an artificial constraint on the optimization right
+  now the real solution just if it happened to line up exactly
+  at one of the DTs I would get the perfect solution out but the optimal solution I actually let's just
+  look back at it here uh
+  nice come on
+  okay there it is this is the original derivation we did right
+  this is the bang bang solution these are the curves this is the optimal cost to go
+  okay and it has a closed form solution which in this regime
+  was the cost to go is this I picked Q equals negative two Q dot
+  equals zero so it works out to just be that the the true minimum time
+  is 2 square root of two which is what 2.83 or something like that
+  but if it was exactly 2.83 I'd get it but it's actually 2.829 or something
+  like that okay and so I'm getting close to that but somewhere here it has to make a choice
+  okay it has to use it depends it has it has a freedom to somehow use less than
+  the max or less than the Min in order to achieve that goal and get exactly to the goal okay
+  when I don't put an objective on it then I get this the solver gets to pick whatever it wants and it picked that
+  right I'm going to get a little less U for one time step a little more u a little more than and then one of these
+  to just you know make it all work but there's a whole manifold of possible ways that it could be less than bang
+  bang in order to come it takes one more time step than I wished it did and it uses less than a maximum U to get
+  there if I put that back in
+  then all I've done is say among the different solutions pick the ones where U is close to zero
+  and that's enough to say okay the one I'm going to take is this the beautiful one that's close right so that's exactly
+  what I need to say don't leave don't let the solver pick for you you should just say even if you've tried to write an
+  Optimum you know a feasibility problem go ahead and say if there's multiple Solutions I want this one yeah
+  sure yeah yeah if we said that's a good question so if I said add
+  bounding box X minus let's say
+  I got to get my numpy syntax correct here but
+  um minus 0.01 0.01 let's say
+  and plus that oh this is my initial condition I want to do it to the final condition
+  something like that let's see but let's take away the
+  you want that right I gave it even more freedom I guess so
+  that's just giving my it's like laying out the rope to hang me from
+  right but that's a good question yeah but things like that can work I think an objective on the on the end a cost on
+  the end would probably do maybe more what you're thinking yeah cool
+  okay so of course so these recipes um work for
+  you can you can write a similar version of the problem we'll think about what happens with it even if you have
+  non-linear Dynamics here and this setup is just such a popular
+  com you know Common setup then we have codes that'll set up all those for you add the decision variables for you and
+  then you can it's you have we have a rich library of constraints you can say I want to avoid collisions I want to do this I want to do this okay so we can do
+  exactly the same thing in like many less lines if I just say instead of using the mathematical
+  program directly we use the direct transcription class it looks almost the same I just say
+  direct transcription and it's even easier to add those constraints okay
+  and you can get the same Solutions out and we'll see that goes a long way it
+  works pretty hard complicated problems now it's interesting here so
+  I picked n equals 284 right which sounds but I actually did a line search first
+  to find that and then I realized oh I should know the answer I should have known that answer and then I realized it's actually it
+  should be 283 but n minus 1 so it actually works out it's exactly rounded up by one from what the analytical
+  solution was but I was more foolish I did the the manual line
+  search first and then yeah
+  yes
+  that's a good question yeah so so let me try to say it back see if I capture the essence of it right so there's going to
+  be more complicated problems where we don't know the analytical solution but maybe we can still analyze the discrete
+  to continuous artifacts is that right um so I think that is exactly right
+  um and I think this this that's what I'm trying to convey in this picture you can always think even in more complicated
+  settings of the true solution being potentially a continuous curve in you
+  and the discretization is like an artificial constraint for instance the cost will always be higher
+  because it's not free to take those arbitrary things there's it's like you've added a constraint saying You
+  must be flat every consecutive DT okay so always the cost will be higher than
+  you than you want and the solutions and there's different interpolation schemes you could do first order whatever but each of them feels like a constraint
+  that you didn't want but are stuck with because of the discretization good question
+  okay if you understand that let's just think about what what did we so this is a you know this is certainly as I've
+  written it here that is a lot like lqr right but it's doing something that lqr
+  couldn't do what's it doing that lqr couldn't do
+  right I could put input limits I could put State constraints lqr it's hard to solve for input limits
+  and state constraints for all X okay but if you pick for just one
+  initial condition then it's that's still a convex problem and in fact if you ask
+  you know a control theorist like okay what is the generalization of lqr to
+  constrain Del QR they would write down this problem this is the the known sort
+  of right solution to doing to doing constrained lqr okay
+  and it scales very well too because it's because quadratic programming solvers are awesome right
+  I think I'm occasionally electric because of my zipper
+  sorry for the static okay so if you understand that you understand the the essence of trajectory
+  optimization okay but all the rest of the work like I said is about thinking about different ways to
+  transcribe the basic Dynamic constraints into solvers okay
+  they have different numerical properties they can be interpreted the interpolation schemes are different some
+  of them have higher order accuracy for non-linear systems you know that's and and some of the solvers just perform
+  better with okay so you can go a lot further if you understand those extra transcriptions
+  but this is the really the heart of it
+  I keep using this word transcription okay that it's the common name used in
+  trajectory optimization it's a perfectly good word you want to transcribe your idea of what the trajectory optimization
+  problem is into a particular thing that the solver understands so you have to make some decision about the number the
+  decision variables the the way you're going to write your constraints right so that's the transcription
+  this one above is called the direct transcription
+  but it's not the only transcription yeah for instance you could solve away the
+  extra X's the direct transcription is the one that has these these decision variables okay
+  and you have both state and input as decision variables and you have the
+  constraints written as as direct constraints on that
+  alternative
+  would be direct shooting
+  transcriptions okay why direct there's a there's a whole
+  nother line of of solution techniques based on pantryagon's minimum principle which we might get to depending on how
+  far it goes in the in the trajectory optimization lectures okay but there there are indirect methods it's not just that I choose to prefix everything with
+  direct for for show um okay
+  in the in the direct shooting methods let's go ahead and solve a way
+  the X variables right so if I have a linear system it's particularly easy but this can be done
+  in even for non-linear systems okay so um if I have the Dynamics
+  then knowing just x0 and then all of my u's
+  should really be enough like the problem is completely defined if I know my initial conditions and the u's
+  right and in linear systems you can see exactly the effect of that
+  I can just multiply out I get you know an a to the n X zero
+  plus this famous but sort of nasty
+  um it goes to n minus 1 a of n minus K minus 1
+  b u k that's just me
+  multiplying through I'm going to solve for X1 I'm going to put X1 in solve for X2 put x2 in solve for X3 each one of
+  them gets picks up one more U that's why you get this sum from K to n minus 1
+  okay that's just the standard rule out to solve for xn as a function of X zero and
+  use and I could take this and insert this solution if I'm going to Min now just
+  over u's of the sum of N equals zero
+  to n x n transpose Q x n for instance
+  everywhere I had an x n
+  I could just insert this solution indirectly
+  to just get a bigger but still quadratic constraint that are only depends on x0 and u
+  okay and then I don't even need X as a decision variable
+  I don't need those that list of dynamic constraints I've solved the Dynamics away and I have what sounds what looks like a
+  smaller optimization problem it has less decision variables okay and it should solve the same problem and it does
+  absolutely so these are the the shooting methods I didn't actually type this one in but
+  these work too okay so
+  let's just compare the two you know
+  shooting has less decision variables right
+  that's good seems like an obvious winner
+  but there are a few things that are slightly less good about this in practice the numerix actually
+  can be worse it depends on your system your A and B matrices but
+  putting in your in the middle of your optimization problem something like a to the n
+  can be if n gets big and a is you know squarely if it's on the boundary of
+  stability or something like that then that can be a bad thing to try to hand to your solver you're handing very big
+  numbers and very small numbers to your solver here okay and that's true for non-linear systems
+  too people talk about um there's different names for it some people call it the tail wagging the dog
+  I don't like that particular expression but you might hear it okay but you might hear Vanishing gradients in Long neural
+  network training kind of things okay if you try to roll out your Dynamics too
+  far it is true that your gradients can you know the effect of your initial conditions has a very big effect on the
+  final conditions that's a real thing but it can cause numerical issues if you're going to write the Dynamics like this
+  okay in some sense by adding extra decision variables that
+  formulation avoids The Vanishing gradient problem because it each of the individual constraints is nice
+  but it uses more decision variables to get around that okay the other I mean there's a few
+  other things so this is totally this is reasonable if I'm going to insert this you know into
+  my objective but if I have like a lot of constraints that all use x at time you know 13 or
+  whatever I have to substitute that into every single one of those constraints so it can be it definitely is nicer to
+  write constraints State constraints in that version okay and um
+  not beyond the numerics this this probably problem formulation is dense like each of your your
+  objective depends on all of the parameters your constraints tend to depend on all
+  the parameters this formulation is sparse you can have lots of small can
+  objectives that all depend on just a subset of the variables and your constraints depend on a subset of the
+  variables and so some if you just trust your solvers and say the solvers should do the best thing and exploit sparsity
+  then good solvers can take a lot of advantage of that formulation so it's actually not obviously worse to have
+  more decision variables because they can exploit that sparsity if you trust your solver
+  yeah okay so what did we gain so compared to lqr we now have like the ability to do
+  uh control you know different costing constraints if we pick convex costs and constraints it's still a convex
+  optimization all right compared to value iteration like on a
+  mesh for instance we suffered even remember the double integrator solution wasn't quite right it wasn't getting one
+  because of the discretization errors in state okay the discretization is still
+  happening here but it's happening only along one dimension which is time
+  and we know a lot more about numerical recipes numerical you know for sort of
+  bounding the integration accuracy of a numerical integrator okay so everything
+  you know or don't know about uh about like error controlled integration
+  numerical recipes for like numerical integration they can all be folded in here if you know how to write a Hermit
+  Simpson you know integral in there you can put you could pop that right in and get the added accuracy that you would
+  that would be afforded there is well understood you know numerical recipes for understanding errors on meshes but
+  it gets harder and as the dimension goes up you know for 2D and 3D where people in like computational fluid dynamics
+  have worked a lot they've done like really a lot of analysis but like ND is actually less explored
+  and less mature than the 2D and 3D cases
+  yes
+  it is perfectly connected in fact the next three words on my paper are model predictive control
+  nice call so in fact yeah so if you were to ask your control theory friend what you know
+  what is the solution for constrained lqr they would probably not write the math down they would just say model predictive control
+  in the particular case of linear model predictive control they would mean that optimization okay but the idea of model
+  predictive control let me go over here because I'll leave that up for a second
+  we all call it MPC right model predictive control the idea is
+  this doesn't give me a feedback controller out of the box if I just solve this once
+  it only tells me how to how to go along from One initial condition okay but if I
+  start executing this trajectory and there's a disturbance that knocks me off the trajectory
+  then that initial solution doesn't tell me what to do
+  okay so lqr was better in that sense it gave me a whole policy this is just a trajectory
+  NPC is just simply the idea is if you can solve this optimization reliably and
+  fast enough just solve it on every time step wherever you find yourself go ahead and solve this optimization problem and that
+  gives you a feedback controller right
+  okay now we'll we'll get back to it when we cover proper feedback stabilization
+  there's a lot of interesting things to understand about model predictive control you should think of that as a as a
+  similar but slightly different optimization problem on every time step right so you've got a
+  Some Noise came in maybe you're thinking about end steps in the future you're going to think about the N plus one step
+  next time when you didn't think about it the first time okay there's all kinds of interesting things you can do to guarantee that if you had a solution on
+  one time you're guaranteed to get a solution the next time we'll talk about that soon but at the
+  high level if you have this and you want a policy if you can trust your directory optimization it can give you a policy
+  there's also interesting work called explicit model predictive control that tries to understand
+  what the solution would be for all states to try to turn that into a policy that
+  you pre-compute so you don't have to solve trajectory optimization online and that field of explicit model
+  predictive control
+  is hugely valuable but but more for the theory it gave us than the practice because basically what it
+  tells you is that the optimal control optimal policy the cost to go gets
+  really complicated really fast it's like you know remember we had for lqr we had a beautiful quadratic Bowl
+  for constrained lqr or even you have a piecewise quadratic but the
+  number of pieces is like doubly exponential in the or something like this okay so it grows really really fast and it's hard to compute
+  but yes so so oftentimes this the name for this is actually MPC just because
+  it's strong connection to the thing that people do online yeah
+  your action space is continuous explicit NPC has really good Solutions
+  like well if you could compute the all of the pieces we could exactly compute them
+  in the cases of linear Dynamics continuous actions yeah it's like yeah it's like saying there's a special case
+  of value iteration where I can solve because I know it's the solution every point is a solution to a quadratic
+  program I can map that space out instead by by iterating I can just directly solve for that space
+  yes explicit NPC is trying to solve for all
+  initial conditions the optimal trajectory from all initial
+  conditions for whatever cost function
+  right for whatever cost function if you had a quadratic uh cost at the end instead of a final cost a final
+  constraint then the solutions may not drive you exactly there
+  okay so those are two of the methods and both of them actually transition pretty
+  directly if I were to make or to change from linear Dynamics to non-linear
+  Dynamics the main thing that you lose is a convex
+  optimization problem it becomes a non-convex optimization problem and your mileage may vary okay
+  in practice we'll talk about the local Minima and everything that comes up so one thing that it would be would have
+  been super nice even in the the double integrator problem wouldn't it have been nice for instance to like say delta T
+  whatever my time step wouldn't it have been nice if that had been a decision variable
+  okay so if I had in my Dynamics
+  I have erased it at this point but if I said x n plus 1
+  is X N plus I'll call it h for my time step okay
+  if I make h a decision variable also okay then my
+  what used to be a dynamic constraint a linear constraint becomes a bilinear
+  constraint right now it becomes bilinear
+  and in general that's not a convex function but if I'm willing to to solve a
+  slightly harder optimization a nonlinear optimization that I can potentially do that
+  and just to finish the double integrator sort of recipe here this is um
+  another continue a similar transcription but this time
+  time the delta T is a decision variable and I could put a cost explicitly on
+  final time okay it's otherwise almost the same
+  okay but this time it solves something that looks good it
+  does actually still have a zero here but it comes out with the minimum time which is like very close to to what we
+  expect we wanted it to be okay it's it's and it didn't I did not involve a line search it didn't I didn't
+  have to do any I could just solve one optimization it would stretch or Shrink the um the trajectory until it satisfied
+  that final constraint yeah
+  I don't know why couldn't it have gone
+  straight down I don't know we should look we should I mean because so here's what I would do
+  to look I would um solve the same I would evaluate the optimal the same optimization problem
+  with the solution that you wanted okay and see if its cost is lower then and it's still satisfied all my
+  constraints then I would say it's found a little local minimum but that seems too clean to be a local Minima I think
+  there's probably something in my formulation that implicitly asked it to do that
+  good call okay let's see well I did end 41 in this one
+  but let's see if that matters oh look at that
+  nice 42. I'm so used to picking odd numbers because I want I typically want
+  something to go through zero good call he says he says it was an even
+  odd so sorry what exactly why did that matter the even or oddness
+  bang bang control ah I see okay I understand perfect you're saying that
+  I couldn't before I was enforcing that uh that you Min had more steps than you
+  Max it was breaking the time by putting it in the middle
+  bonus that's that's great good question good solution
+  okay so in this case the non-linear optimization just worked all right um
+  but in the more General case of you know in in this in this non-linear optimization we're into a richer class
+  of uh of optimization problems and we're going to have less guarantees okay
+  so in general once we get into the non-linear optimization we have different class of
+  solvers by the way
+  when you're when you're using mathematical program in Drake if you just like in other
+  solvers like jump and Julia or CVX or something if you add constraints and they all
+  happen to be linear and a cost that happens to be quadratic then it solves it calls a QP solver as soon as you add
+  one constraint that's non-linear it will actually call a different solver to get that it tends to call snapped if
+  you're using the binaries yeah yeah so we tend to call synops as a different solver snapped is a sqp method so
+  the solver you will tend to see is snapped which is a sequential quadratic
+  programming
+  sport is almost unusable huh should I just skip that it's so dark let me try this one
+  okay so if I have some potentially non-linear objective or non-linear constraints
+  if I have X f of x and I'm trying to minimize
+  f of x and I have some initial guess let's say
+  X star Z you know at Time Zero is something like this
+  you could do gradient descent we've sort of talked about doing gradient descent before where I could just start
+  walking downhill until I get to the optimum
+  what snapped what a sequential quadratic programming solver is going to do is at
+  your current point it's going to take the gradient possibly the second derivative okay and it's going to make a
+  local quadratic approximation of the function and it'll use the second order update to go directly to the minimum and
+  then it'll take a new quadratic approximation jump to the minimum okay
+  this one the way I've drawn it was bad but you can imagine sometimes it hops down to good Global Solutions sometimes
+  it gets stuck that's just the name nature of the game when you're playing none linear optimization
+  the nice thing about sequential quadratic programming compared to gradient descent there are
+  ways to handle constraints in gradient descent but they're handled directly in sequential quadratic programming at each
+  step it takes a quadratic approximation of the cost and a linear approximation of the constraints and it can solve the
+  constrained optimization and then repeat okay so even if my constraints which I
+  have Dynamics in them that's where I added a nonlinear constraint with this it's just going to linearize that on
+  each step solve the quadratic programming program and then re-linearize wash rinse
+  and repeat and that works fantastically well in some problems and sometimes it gets stuck in local Minima
+  Okay so
+  is the local minimum let me give you a classic example of local Minima and trajectory optimization okay
+  so imagine I have like an airplane this is a
+  gonna offend any aerodynamicists in the in the room okay but I've got an airplane that's going to fly take some
+  trajectories okay and there's some obstacles we like to
+  make polygonal obstacles even though you know trees aren't really polygonal but um buildings are I guess so there you go
+  I'll make some polygonal obstacles
+  okay you know if I'm gonna have my plane Dart through the city I could use trajectory optimization for
+  that okay but this is also one of the classic examples of a local Minima right so
+  let's say I'm trying to get over here if I am currently my solver is currently considering trajectories that look like
+  this and the optimal solution is to go this way
+  right then it's very hard for it looks a lot like
+  this in some sense right it looks like one of these local Minima because
+  the from the solver's perspective it's going to have to violate some constraints or its objective is going to have to get worse in order for it to get
+  better so it looks a lot like one of these situations where there might be a better solution to be found but I'm in a pretty
+  good one right now and locally I can't improve it okay and all of these methods that once
+  you do non-linear optimization are looking at the local conditions saying what a small change in this improve
+  snapped will tell you it's happy if it finds one of these local Minima it doesn't know better so that's what you give up when you
+  when you switch to nonlinear optimization you guys look like you've been working
+  hard so I I have a decision uh point I could either keep going with these
+  things or I'm going to let me do the slightly more fun version of the second part okay just to wake everybody up
+  you can stretch if you want real quick and then we'll we'll do something fun
+  we talked through like trajectory optimization where we want to like manipulate something like so through
+  content we're gonna we're gonna have lectures on on we're going to go through the same kind of things with with
+  contact soon yep for sure okay here's just to see where this could
+  go like people really use um I should even do it like this okay so people really use trajectory
+  optimization in practice this is like a ridiculously old sort of patent but all the autonomous driving companies if
+  you've worked at it there over the summer you might have heard about their MPC controller or their uh their
+  trajectory optimization that's deciding locally how to make decisions around to avoid cars and things like that okay it
+  is going to have local minimum it's almost exactly that problem I drew on the board actually except the cars are moving okay and you don't have a model
+  for them but uh but it's really used in practice
+  um Scott kindersma uh we gave a talk about how they do trajectory optimization for
+  Atlas you know doing parkour and everything like that you can watch their their
+  doing extremely good trajectory optimization and model predictive control and that is the heart of what
+  makes Atlas do parkour if you ask them what what makes it work does I mean he
+  publicly says this is what makes it work really really good optimization codes okay highly optimized running on the fly
+  to trajectory optimization people have done cool projects that's
+  another thing I'll talk about at the end is it's project time this is someone to trajectory optimization for dynamic
+  soaring a couple years ago okay and using beautiful trajectory optimization to make
+  um you know dynamic soaring airplanes but let me tell you my version of this story which is kind of fun I guess
+  all right so uh one of the things one of the first projects that we really
+  um benefited from the power of trajectory optimization from we started let's see I started as working on
+  walking robots right and I as a faculty candidate I came and gave my job talk at
+  MIT for instance and I was talking about walking robots but one of the great things about being a faculty candidate
+  is you meet like all the interesting people and they all pay attention to you just for one day and then you know but
+  but you have like everybody's complete attention they have great conversations and and someone said to me
+  why walking robots why not flying like a bird I was like I don't know that's what I should do next and so that wasn't a
+  thing back then you might have seen ornithopters now but there was a like a small hobby community of trying to make
+  these robotic birds and we started trying to build really big ones that could carry a computer computers were
+  bigger back then so this is actually a two meter wingspan bird it's still uh it's hanging up in my lab
+  it's actually pretty fun because it started off it had a breakaway beak
+  but it just broke away so many times that we just flew it headless for the rest of time okay but this is a big two
+  meter wingspan ornithopter and I was trying to work on I'll try to understand what could birds do that
+  planes couldn't do right A lot of people thought about flapping for efficiency or something like that but that's a hard argument
+  propellers are like really efficient I mean maybe when you get to really small skills for the Harvard folks you know I
+  think that does make sense but if you know because of friction in the propeller more than aerodynamics
+  but at a large scale I don't think birds are good in terms of efficiency until you get to Soaring and stuff
+  okay so we said that they're maneuverable these are these are it's almost like the difference between interacting with the
+  air um you know with a fully dexterous hand versus a you know having mittens on
+  so we started thinking like what kind of dexterous things could we do with robotic birds like well birds are really
+  good at landing on a perch right let's see if we can make our robotic Bird land on a perch we did eventually
+  you'll see but but actually we're like well actually could an airplane land on a purchase and really that hard for an
+  airplane to land on a perch so we actually backed up and just wanted to just so we could set the stage for the
+  perch for the flapping we started working on um you know understanding the perching problem
+  so what is the perching problem in its Essence okay when Birds land on a perch
+  you should be very impressed okay because this guy is coming in you know to land at an insane angle of attack
+  okay you can sort of see it in the Smoke Trails but his wings are fully stalled
+  right which is sort of supposed to be the scary regime right you don't want to stall your airfoils right the the
+  the airfoil stall means you know if you're at a low angle of attack your air is staying nice and attached your
+  control surfaces have Control Authority right if you go up to too high of an angle then the air basically can't bend
+  around your wing fast enough you get separated airflow and that's a bummer because your control surfaces tend to be
+  at the back of your wing right and so if you're having like turbulent air on your control surfaces then you've lost a lot
+  of Control Authority but birds seem to do that all the time right and there's always that's this is maybe what separated flow
+  can look like but even that's a fairly structured flow okay so we said could we take an airplane
+  a very simple in fact how simple could we make it a very simple airplane and try to make it land on a perch like a
+  bird right so the first thing we did is like how what let's just compare birds and planes
+  okay and actually the person who did this was heavily involved in this was Woody
+  hoberg who I'll tell you about again in a second in a minute but remember the name Woody hoberg okay so um
+  we tried to compare a fair comparison you know the right way to do these comparisons is to do a dimensionless
+  analysis or a dimensional analysis right so you have to scale out the effects of size right
+  so we say a bird or plane with mass m with wing area s in some fluid density
+  going from some distance to some distance the right way to sort of say how good of a percher are you
+  independent of size is something like a distanced average drag coefficient how how it's the
+  proportional way rate at which you're able to stop you should be impressed if somebody has if a 747 has a good
+  you know distance to average rate coefficient that's impressive if a bird has one that's impressive and it's sort
+  of more fair to compare Birds versus planes in these dimensionless numbers so a few reference
+  points okay so 747 landing at like Logan Gets A 0.16 that's that's like the
+  co-fit the distance average drag coefficient we calculated there's been super short Runway Landings
+  that have been done by thrust vectoring which are incredibly good they get like up to 0.3 right and they can stop on
+  like a carrier or some or things like this okay there was a project at the at Cornell
+  that was working on perching planes where there was really clever they actually they're doing morphing wings okay where
+  they would actually tilt their fuselage up the body up and get the drag on the body but leave your wings in attached
+  flow so you had Control Authority there and so you get a lot more drag but not as much as if you go like this right and
+  then they also move their tail down to get out of the Wake so they had Control Authority on the tail
+  and that gets you like 0.25 that's pretty good and then we went to our biologist friends and I actually it's funny Andy B
+  winter at Harvard he's just a fantastic collaborator fantastic guy I was like okay give me like the best bird you've got
+  like I want a goshawk or like something you know he's like pigeons are actually way better so he says like they come in
+  and they like steal your lunch in the city they're really maneuverable right so I was a little bummed to not have
+  like a goshawk but he we figured out what the numbers were for a common pigeon okay
+  10. okay so like the I should have put it in actually I
+  have a picture of when will I am randomly came to visit the lab and we were telling him about this and he's like pigeons are ghetto Birds they've
+  got mad stuff okay I was like that's that's a keeper yeah so um
+  but really like this like if the 747 we're gonna land on a perch like this I
+  mean its wings would pop off that's that's where it's not fair is the structural analysis has another set of dimensional numbers so a 747 couldn't do
+  that but it would have to stop in like 30 meters or something like that right to be as good as a pigeon
+  okay so um so we started trying to see how how well we could do with our flat wing
+  airplane we built a simple glider this was like the first days of mocap okay we had our one of our first motion capture
+  systems ever we were super excited about it we tried to do just flat plain plate Wings because we're going to be stalled
+  most of the time optimized airfoil isn't going to do me much good put a little dihedral in for the arrow
+  folks you know so we want it to be passively stable in in role you know so if you put your wings up just a little
+  bit then you tend to write yourself okay and then the control was off board we
+  just had used a radio as your standard radio but there was only one actuator on the tail
+  in the elevator it's a little foam plane it's important that it's foam because we broke a lot of
+  planes and we had to be able to rebuild them quickly okay and then we actually
+  um yeah we built this huge catapult it was actually intimidating like you would just fire this because we didn't have a big room so there's not even a propeller
+  on this we just like would fire it out of a cannon basically into this small motion capture Arena and then try to land on the perch
+  okay so we started off we did a bunch of system identification tried to experimentally capture the lift
+  and drag coefficient for those of you that have studied aerodynamics these are this is a very non-linear regime
+  normally you'd see a lifter drag coefficient that goes up to like stall which flat plate stall close to zero
+  actually so that's a stall right probably right there okay it's sort of weird to see an angle of attack plot
+  that goes all the way up to 140 degrees that's upside down and you know um right but we were doing this
+  experimentally we're in a very dynamic Vortex shedding kind of regime
+  all right but we got beautiful curves and we actually didn't get this in a wind tunnel we got this by firing it off
+  into the motion capture differentiating twice and and taking our data out and then we saw this on the drag
+  coefficient the the red is flat plate Theory okay the drag coefficient that we're like Ah
+  that's messy our your accelerometers must not be good but it turns out that's not messy it's
+  beautiful that's the vortex shedding you can actually plot that over time and you see the Beautiful You can actually watch
+  the vortices off the back of the wing okay and it looked like this this is how
+  we we actually built some of you who've known in lab we built some wind tunnels
+  um you know with in in various places around campus until they kicked us out and then somewhere else around campus until they kicked us
+  out we built these little wind tunnels in order to take these pictures understand the The Vortex shedding off
+  the back of a wing and yeah you did this by putting titanium tetrachloride which
+  is this terrible chemical on the Leading Edge but it it makes this beautiful white smoke and then you fire it off
+  your catapult you'd like remove anything metal from the the workspace because it will corrode instantly when it gets in
+  touch with titanium tetrachloride you try not to breathe and you take beautiful pictures right this is also
+  with a laser by the way so there's a I had to borrow a laser someone's like yes and don't shoot your eye out kid it was
+  like a pretty powerful laser okay you collimate it into a line so you light up just a
+  line of the smoke and take these pictures and yeah this is one of the places where we hit out and made our our wind tunnel
+  okay with like fans from like someone's dorm room or something uh okay and a lot
+  of drinking straws that's flow straighteners okay so now we get to under actuated
+  right so we we made a simple I actually thought this project was going to be about learning we started at saying
+  aerodynamics are hard we're not going to be able to do good models this is going to be the reinforcement learning project in the in the lab but it turns out
+  the simple models worked really well okay so we made this planar Dynamic model the
+  aerodynamics we fit from data but they were mostly the flat plate curves with just a little bit of
+  Delta um our state space was the X Y Theta of the
+  plane and then x dot y dot Theta Dot and then the propeller those are the
+  elevator is a velocity controlled so that's why we had an odd number of of
+  velocities or of States because we we commanded the velocity our our control input was fee Dot and so we had a seven
+  dimensional State space which was just a bit too big for Value iteration I would have loved to do value
+  iteration but it wasn't happening okay long story short firing it off good
+  control with trajectory optimization and you'll see in a second and some feedback control this is a high
+  speed video slowed down we had a string across the lab and we could reliably fire this thing
+  go through a post stall maneuver and land on a string yeah the entire trajectory is typically about
+  0.8 seconds we would launch it from six to seven and a half meters per second or something like that and most of the time
+  we would land on the perch okay
+  oh man this is the most of the time video
+  bummer
+  uh Poor Joe there's a video of Joe throwing the plane he's like you know
+  and it would always land on the perch okay and he worked really I was like a soul thesis so um
+  figure out their Joe I apologize internet's not good here
+  okay so um how did we do we got about a 1.1 and afterwards we found out that
+  migs were doing about a 0.9 up in the air that's a different pretty different uh business than landing on a perch but
+  up in the air doing these kind of stunt shows Maneuvers they were getting about 0.9 so we got about a 1.1
+  and at some point you need you actually need to do more in order to slow down faster right uh
+  those pigeons are they've got mad stuff okay the the the
+  workflow on this was basically trajectory optimization
+  plus trajectory stabilization which we'll tell you about plus sums of squares
+  to compute lyapanov functions around the trajectories okay so this is like a little preview of what we'll talk about
+  in the next thing but these trajectory optimization codes are going to go far right and maybe this at the time the
+  solution for thinking about not all of the state space but some tube of State
+  space was trajectory optimization codes for perching okay
+  compute local even lqr feedback works very well and then you compute the region of Attraction roughly but it's a
+  time-bearing region we'll talk we'll talk about it as a Time varying the openoff function which turned out to be
+  a certificate saying I know if I start inside this funnel then I can stay I will stay inside this
+  funnel according to my model in some worst case disturbance models okay so I would so basically what we ended up
+  doing was making a library of these controllers we'd fired off if we were inside a funnel we said I can I can use that
+  trajectory and that feedback land on the perch and got to the point where Joe could you know throw it and get to the
+  perch okay this is trajectory optimization for a flapping version
+  which still works non-linear direct transcription or direct collocation which I'll tell you more
+  about but still works this one looks I think to my eyes that looks like a I don't know a dragon attacking a castle or something
+  right okay but I think you need flapping to do
+  a little bit better let me see if I get that in here here's the flapper
+  that one occasionally landed on the perch I would say that one was never as robust as the
+  as the you know throw it from all initial conditions but mostly because those guys were we're done with their
+  thesis and moved on uh okay so that's kind of a preview of what
+  where the trajectory optimization stuff can take you um that just to come back Woody is in
+  space he just like Woody just launched into space on crew six the other day it's totally bizarre coincidence but the
+  guy who was working on the perching planes um you know just launched on crew six and he's uh he's up there yeah that's
+  him there and we he said uh he would be willing to take a Memento from the lab
+  up into space and so we printed out a little carbon perching plane and he's going to bring it back and we're going to be able to
+  say hey this was in space thanks to Woody all right good so we'll get more into
+  the details of trajectory optimization last time but it's a fun thing oh let me just say quickly the
+  projects are it's projectile this is what I was going to say first so along with the problem set that's
+  just being released uh is a project proposal in the next week there's two phases of the project proposal right uh
+  please take time to think about it in time for the first project proposal but it's that's designed as a mechanism for
+  us to give you feedback and then if your project proposal is great we'll just say you're done great just resubmit maybe to
+  keep the bookkeeping easier um but if you but if you want a lot of feedback ask us now but you'll also be
+  able to ask us through the project proposal process um so next Wednesday you'll have that and at the bottom of the website there
+  uh which is not working but at the bottom of the website you'll see some project ideas that we've put up I've
+  even put a few more up this morning so feel free to take a look there and just look through the for different
+  guidelines okay see you soon
+
+</section>
+</chapter>
+
+</body>
+</html>

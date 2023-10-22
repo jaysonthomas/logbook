@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -54,20 +40,16 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Executing drake cpp examples</a>
-<a href="#1">Installation</a>
-<a href="#2">Temporary way of running the python version of Drake locally</a>
-<a href="#3">Learning resources</a>
-<a href="#4">Errors</a>
-<a href="#5">Drake terminology</a>
-<a href="#6">Reflected inertia tutorial in cpp</a>
 <ul class="no-bullets">
-  <li><a href="#6.0">Run examples from within drake folder</a></li>
-  <li><a href="#6.1">Run examples from outside of the drake folder</a></li>
+  <li><a href="#0.0">Run examples from outside of the drake folder</a></li>
+  <li><a href="#0.1">Download texture files</a></li>
 </ul>
-<a href="#7">Questions & todo</a>
-<a href="#8">Drake c++ questions</a>
+<a href="#1">Calling python plot libraries from Drake</a>
+<a href="#2">Learning resources</a>
+<a href="#3">Drake terminology</a>
+<a href="#4">Drake c++ questions</a>
 <ul class="no-bullets">
-  <li><a href="#8.0">Templates: Context passed as argument</a></li>
+  <li><a href="#4.0">Templates: Context passed as argument</a></li>
 </ul>
 </div>
 
@@ -84,110 +66,44 @@ bazel run //tools:meldis -- --open-window &
 bazel run //examples/acrobot:run_swing_up
 </code></pre>
 
+  The extra step of running <code>MeLDiS</code> is only required if using <code>DrakeVisualizer</code> instead of the Meshcat one in cpp code. 
+
+  <subsection id="0.0"><h1>Run examples from outside of the drake folder</h1>
+    There are <a href="https://t.ly/aAcF">questions</a> on stackoverflow 
+    on how to use Drake as an external library. I found
+    <a href="https://t.ly/Ec1I">this</a> useful.
+
 <pre><code class="bash">
-cd drake
-bazel run //tools:meldis -- --open-window &
-cd drakeCpp
-export LOCAL_DRAKE_PATH=~/P/external/drake
-bazel run //pendulum:passive_simulation
-</code></pre>
-  
-</section>
+cd drakeCpp/
+bazel build //helloWorld:simple_continuous_time_system
+bazel run //helloWorld:simple_continuous_time_system
+</code></pre>    
 
-<section id="1"><h1>Installation</h1>
-  <ul>
-    <li>Setup</li>
-      Install jupyter notebook to be able to run exercises and graphviz
-      to get graphs working. Setup the virtual environment.
-<pre><code class="bash">
-pip3 install notebook
-sudo apt-get install graphviz
+    The hidden file <code>.bazelrc</code> in drakeCpp is important
+    to specify which C++ version to use.
 
-sudo apt-get install python3.10-venv
-python3 -m venv env
-env/bin/pip install --upgrade pip
+    <p>
+      There is an <a href="https://t.ly/lDoN">example</a> of how to use
+      external libraries as modules (the concept of repositories will
+      still be used but is also being retired.). More on 
+      bazel external dependencies can be found 
+      <a href="https://t.ly/z7XC">here</a>.
+    </p>
+  </subsection>
 
-which python
-python3 --version
-pip3 --version
-</code></pre>
-    Pip version is <code>pip-22.3.1</code>.    
-    <br><br>
-    
-    <li>Pip installation of <code>manipulation</code>/<code>underactuated</code></li>
-    I could have just installed drake via pip, but installing 
-    <code>manipulation</code> covers it and lots of other extra packages. Ipywidgets
-    is used with underactuated examples.
-<pre><code class="bash">
-source env/bin/activate
-pip3 install manipulation underactuated ipywidgets
-</code></pre>
-
-    <li>Test if drake's been installed</li>
-<pre><code class="bash">
-python3 -c 'import pydrake.all; print(pydrake.__file__)'
-Output: /home/jayson/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/__init__.py
-</code></pre>
-
-    <li>
-      Separate download of the <code>manipulation</code>/<code>underactuated</code> 
-      repository
-    </li>
-    I'm going directly to the source so I can stay up to date with the latest changes
-    to the pset files.
-<pre><code class="bash">
-cd ~/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/share/drake/tutorials
-mkdir manipulation; cd manipulation
-git clone https://github.com/RussTedrake/manipulation.git .
-mkdir underactuated; cd underactuated
-git clone https://github.com/RussTedrake/underactuated.git .
-</code></pre>
-
-    <li>Download texture files</li>
-    Download a tar.gz version of drake's stable release corresponding to the particular
-    linux OS from <a href="https://t.ly/-83S">here</a>. Copy over the meshes folder.
+  <subsection id="0.1"><h1>Download texture files</h1>
+    Download a tar.gz version of drake's stable release corresponding to the particular linux OS from <a href="https://t.ly/-83S">here</a>. Copy over the meshes folder.
 <pre><code class="bash">
 cp -r ~/Downloads/drake-20221116-jammy/drake/share/drake/manipulation/models/ycb/meshes ~/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/share/drake/manipulation/models/ycb/  
 </code></pre>
-    
-    <li>Run a notebook</li>
-    Open:
-    <ul>
-      <li>manipulation/force/point_finger.ipynb</li>
-      <li>manipulation/exercises/pick/robot_painter.ipynb</li>
-      <li>underactuated/intro.ipynb</li>
-    </ul>
-  </ul>
+  </subsection>
 </section>
 
-<section id="2"><h1>Temporary way of running the python version of Drake locally</h1>
-  <ul>
-    <li>Activate virtual environment</li>
-<pre><code class="python">
-source env/bin/activate
-</code></pre>
-
-    <li>Deactivate virtual environment</li>
-<pre><code class="python">
-deactivate
-</code></pre>
-
-    <li>Run drake tutorial locally</li>
-<pre><code>
-python3 -m pydrake.tutorials
-Output: Serving notebooks from local directory: /home/jayson/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/share/drake/tutorials
-</code></pre>
-    <code>index.ipynb</code> gets served at <code>http://localhost:8888/notebooks/index.ipynb#</code>.
-    <br><br>
-
-    <li>Finding <code>index.ipynb</code></li>
-<pre><code class="bash">
-grep -r "index.ipynb" /folder/path
-</code></pre>
-    </ul>
+<section id="1"><h1>Calling python plot libraries from Drake</h1>
+  <a href="https://t.ly/x3wVP">Ref</a>
 </section>
 
-<section id="3"><h1>Learning resources</h1>
+<section id="2"><h1>Learning resources</h1>
   <ul>
     <li>Drake ros <a href="https://t.ly/Q1V1">github repo</a></li>
     <li><a href="https://t.ly/Xss_">Zucker notes</a></li>
@@ -195,18 +111,7 @@ grep -r "index.ipynb" /folder/path
   </ul> 
 </section>
 
-<section id="4"><h1>Errors</h1>
-  I had the error described <a href="https://t.ly/3_lK">here</a> generated using
-  bazel instead of cmake. Did the following to resolve it:
-<pre><code class="bash">
-pip3 uninstall drake
-</code></pre>
-  I got a similar matplotlib warning. Changing the permission of just the .matplotlib directory
-  and the one before made no difference. Drake was installed to a different directory to the one
-  mentioned in the forum. Wonder how the installation paths are decided for these libraries?
-</section>
-
-<section id="5"><h1>Drake terminology</h1>
+<section id="3"><h1>Drake terminology</h1>
   <ul>
     <li>MeshCat LCM Display Server (MeLDiS)</li>
     A MeshCat visualization server that listens for and draws Drake's legacy LCM visualization messages. The code is found in <code>bindings/pydrake/visualization/meldis.py</code> which uses <code>_meldis.py</code> in the same folder.
@@ -246,68 +151,15 @@ pip3 uninstall drake
     <p>
       The scene graph interacts with other components of the simulation, such as the physics engine for collision detection and the rendering engine for visualisation.
     </p>
-  </ul>
-</section>
 
-<section id="6"><h1>Reflected inertia tutorial in cpp</h1>
-  <subsection id="6.0"><h1>Run examples from within drake folder</h1>
-    I'm aiming to understand and run 
-    <code>drake/examples/simple_discrete_time_system.cc</code>
-    outside of the drake folder.
-  
-<pre><code class="bash">
-bazel run //examples:simple_discrete_time_system
-</code></pre>
-  </subsection>
-
-  <subsection id="6.1"><h1>Run examples from outside of the drake folder</h1>
-    There are <a href="https://t.ly/aAcF">questions</a> on stackoverflow 
-    on how to use Drake as an external library. I found
-    <a href="https://t.ly/Ec1I">this</a> useful.
-
-<pre><code class="bash">
-cd drakeCpp/
-bazel build //helloWorld:simple_continuous_time_system
-bazel run //helloWorld:simple_continuous_time_system
-</code></pre>    
-
-    The hidden file <code>.bazelrc</code> in drakeCpp is important
-    to specify which C++ version to use.
-
-    <p>
-      There is an <a href="https://t.ly/lDoN">example</a> of how to use
-      external libraries as modules (the concept of repositories will
-      still be used but is also being retired.). More on 
-      bazel external dependencies can be found 
-      <a href="https://t.ly/z7XC">here</a>.
-    </p>
-  </subsection>
-</section>
-
-<section id="7"><h1>Questions & todo</h1>
-  <ul>
-    <li>
-      Understand the BUILD.bazel files in tools (look for meldis),
-      examples (look for acrobot) and acrobot (look for run_swing_up).
-    </li>
-
-    <p>
-      <li>Unable to find texture files</li>
-      I've run into the problem described <a href="https://t.ly/-Cue">here</a>.
-    </p>
-    
     <li>Context</li>
-    <p>
       Drake stores all the relevant states and parameters in the context,
       which can act like a systematic log.
-    </p>
-
-    <li>LeafSystem?</li>
   </ul>
 </section>
 
-<section id="8"><h1>Drake c++ questions</h1>
-  <subsection id="8.0"><h1>Templates: Context passed as argument</h1>
+<section id="4"><h1>Drake c++ questions</h1>
+  <subsection id="4.0"><h1>Templates: Context passed as argument</h1>
     <subsubsection><h1>Called function</h1>
 <pre><code class="c++">   
 CalcTotalEnergy(const systems::Context&ltT>& context)

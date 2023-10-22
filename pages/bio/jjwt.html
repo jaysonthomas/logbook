@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bio</title>
+  <meta name="Bio" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
+
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Intro</a>
+<a href="#1">Interests</a>
+<a href="#2">Where am I in my career</a>
+<a href="#3">Industry experience</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Advanced Fibreoptic Engineering Ltd.</a></li>
+  <li><a href="#3.1">Dyson</a></li>
+  <li><a href="#3.2">Renishaw</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Bio</h1>
+
+<section id="0"><h1>Intro</h1>
+  <div class="container">
+    <div class="text">
+      I currently work as a Software Engineer at Ocado in the bot motion control team.
+    </div>
+    <div class="image">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/micromouse.jpg"/>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="1"><h1>Interests</h1>
+  I find the following domains interesting because they make use of maths and physics to describe and solve problems.
+  <ul>
+    <li>Optimisation based methods like LQR, MPC to solve control problems</li>
+    <li>Probabilistic methods for state estimation like the different Bayes filters</li>
+    <li>Classical computer vision methods for object segmentation and detection</li>
+    Especially in the fields of manipulation and environment mapping.
+    <li>Motion (trajectory) planning</li>
+  </ul>
+
+  These interests would need to be backed up with:
+  <ul>
+    <li>Simulation</li>
+    <li>Embedded programming on hardware</li>
+    <li>Data analysis</li>
+  </ul>
+
+  I don't mention deep learning as an interest for now as it takes away the physics component for me.
+</section>
+
+<section id="2"><h1>Where am I in my career</h1>
+  I started off my career in developing proof of concepts in the embedded sensors domain. From a technical standpoint, this involved:
+  <ul>
+    <li>evaluation of sensors</li>
+    <ul>
+      <li>understanding the physical problem to be solved</li>
+      <li>the best type of sensor for the problem</li>
+      <li>evaluating off-the-shelf sensors</li>
+    </ul>
+
+    <li>designing the electronics</li>
+    both analog and digital. in some cases this involved mechanical design as well
+
+    <li>writing firmware that allowed smooth transfer of data</li>
+    <li>designing real-time algorithms for doing useful things with the data based on the purpose of the device</li>
+
+    <li>post data analysis</li>
+
+  </ul>
+
+  Overtime, my desire to get back into core robotics has grown. My interest, these days, center around:
+  <ul>
+    <li>Design of control systems for underactuated systems (includes 3D kinematics and dynamics)</li>
+    <li>Simultaneous localisation (based on bayes filters) and mapping in unstructured environments</li>
+
+    <li>Path planning in unstructured environments</li>
+    <li>Computer vision</li>
+    I haven't yet delved into deep NNs, but I am very impressed by transfer learning i.e. getting a network trained in a particular domain to work in an unrelated domain and it's something I would be keen to explore in the future.
+  </ul>
+
+  <p>
+    In my current role, I do a lot of work in the design and deployment of motion planning, control and localisation methods for fleets of bots in structured environments and I am very keen for the challenge that unstructured environments pose.
+  </p>
+</section>
+
+<section id="3"><h1>Industry experience</h1>
+  <subsection id="3.0"><h1>Advanced Fibreoptic Engineering Ltd.</h1>
+    An optical interrogator, helpful in sensing strain or temperature differences, is useful in structural health monitoring systems. In the below project, a Fiber Bragg Grating (FBG) laser was used. The laser had to be swept through a range of wavelengths (40k) per second. Based on the physical property of the medium (say strain), the received optical signal peaked at different wavelengths.
+
+    <div class="container">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/1_interrogator_initialStages.jpg"/>
+        <figcaption>
+          Initial stages of the interrogator project
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/2_interrogator_insideBox.jpg"/>
+        <figcaption>
+          Inside the box of the interrogator
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="container">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/3_interrogator_finishedProduct.jpg"/>
+        <figcaption>
+          Finished product
+        </figcaption>
+      </figure>
+    </div>
+  </subsection>
+
+  <subsection id="3.1"><h1>Dyson</h1>
+    I worked as an Embedded Electronics Engineer in the Tech Research team within the broader division of New Products Innovation. For my first project I designed a mechanical contraption (3d printed) coupled with a strain gauge (in a wheatstone bridge format) to detect deflections when moved over an object. This was a proof of concept. 
+
+    <p>
+      For my 2nd project, I was involved in evaluating different computer vision techniques for detecting gaps in materials. This involved:
+      <ul>
+        <li>Selecting the projection pattern</li>
+        Fringe lines vs IR dot pattern similar to the ones used by the iphone for face recognition. For a surface with no sharp undulations, this method provides a form of texture that help computer vision algorithms detect features in the surface.
+
+        <p>
+          <li>Decision between 2 vs 1 camera</li>
+          <li>Decision between cameras</li>
+          <li>Test of image segmentation algorithms (different kernels)</li>
+        </p>
+      </ul>
+    </p>
+
+    For my 3rd project, I worked on designing the communication interface between a new camera (not yet out in the market) and an FPGA so that we could stream videos quickly. Computer vision algorithms for object detection and segmentation were implemented by other team members over the video stream.
+
+    <p>
+      For my 4th project, I worked on 3 sensors in parallel:
+      <ul>
+        <li>Spectral sensing</li>
+        The aim was to detect change in material properties as it underwent a change in temperature. I assisted the mechanical team in the setup of the sensor (a spectral detector of a range of wavelengths) and in the post analysis of the signal. 
+
+        <p>
+          <li>Fringing electric fields</li>
+          This had to be desinged from scratch. A concept very similar to have capactive mobile touch screens work was designed using conductive plates with a thin non-conductive substrate on top. This was designed as a proof of concpet to detect moisture in materials.
+        </p>
+
+        <li>Infrared sensing</li>
+        Created a proof of concept (mechanical setup) to detect the presence or absence of moisture using infrared wavelengths. An emitter/detector setup had to be created along with a transmission medium for the light to pass through and interact with the water droplets.
+      </ul>
+    </p>
+
+    Whilst I cannot disclose any information on the projects I worked on at Dyson, I can provide pictures of a fun <a href="https://t.ly/RLTCw">comptetion</a> our team took part in. We were supposed to create a bot that can deliver cargos (small cardboard boxes) to the right locations whilst also sabotaging and avoiding getting sabotaged by other bots. I designed the 3d printed belt-gears and the CNC-cut wheels. We came second.
+
+    <div class="container">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/1_motorDriveGearAssembly.jpg"/>
+        <figcaption>
+          Motor drive gear assembly
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/2_motorDriveGearAssemblyZoomedOut.jpg"/>
+      </figure>
+    </div>
+
+    <div class="container">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/3_wheelsWith3DprintedBeltToothGear.jpg"/>
+        <figcaption>
+          Wheels with 3d printed belt tooth gear
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/4_wheelsWith3dPrintedBeltToothGear.jpg"/>
+      </figure>
+    </div>
+
+    <div class="container">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/5_parcelDeliverySystem.jpg"/>
+        <figcaption>
+          Parcel delivery system
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/6_parcelDeliverySystem.jpg"/>
+      </figure>
+
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/7_parcelDeliverySystem.jpg"/>
+      </figure>
+    </div>
+
+    <div class="container">
+      <figure>
+        <img style="height:200px; width:auto"
+        src="../../figures/bio/8_beltDriveOfTheparcelDeliverySystem.jpg"/>
+        <figcaption>
+          Belt drive of the parcel delivery system
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="container">
+      <figure>
+        <video class="video" width="300" height="200" controls>
+          <source src="../../figures/bio/9_botTest.mp4" type="video/mp4">
+        </video>
+        <figcaption>
+          First bot tests
+        </figcaption>
+      </figure>
+
+      <figure>
+        <video class="video" width="300" height="200" controls>
+          <source src="../../figures/bio/10_botTest.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </subsection>
+
+  <subsection id="3.2"><h1>Renishaw</h1>
+    I worked as an embedded software engineer in an R&D division in Scotland for 3+ years. I was responsible for designing the underlying software architecture for the interaction between an ultrasound probe and Renishaw's proprietary CMM (Coordinate Measurement Machine) controller.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Particle Filter</title>
-  <meta name="Particle Filter" content="text/html; charset=utf-8;" />
+  <title>Quick revision problems</title>
+  <meta name="Quick revision problems" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -53,16 +39,41 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Setup</a>
+<a href="#0">Overview</a>
+<a href="#1">Problems</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Quick revision problems</h1>
 <section id="0"><h1>Overview</h1>
-  At each step A* picks the node having the lowest $f$ which is a parameter equal to the sum of two other parameters:
-  <ul>
-  <li>$g$: the cost to move from the starting point to a node under consideration, following the path generated to get there</li>
-  <li>$h$: the estimated cost to move from that node to the final destination. This is referred to as the <i>heuristic</i>, which is nothing but a kind of smart guess. We don't know the actual distance until we find the path because all sorts of obstructions can be in the way. There can be many ways to calculate $h$.</li>
-  </ul>
+  Based on <a href="https://www.bigocheatsheet.com/">this cheat sheet</a>, merge sort has a worst time complexity of <n>$O(n log(n))$</n>. I don't mind <a href="https://t.ly/r4vVt">this cheat sheet</a> as well.
+</section>
+
+<section id="1"><h1>Problems</h1>
+  Create list of problems and corresponding pages.
+  Longest palindrome is on the desktop.
+  Print the Longest palindrome
+  <a href="https://t.ly/x-P1Q">Ref</a>
+
+  <p>
+    Chatgpt's complexity analysis:
+    The provided code is for finding the length of the longest palindromic substring in a given string s. Let's analyze the time complexity (Big O notation) of this code:
+
+The code starts with a loop that iterates from i = 1 to n-1, where n is the length of the input string s. This loop represents the center of the potential palindromic substrings.
+Inside this loop, there are two nested while loops, one for finding palindromic substrings of even length and the other for finding palindromic substrings of odd length.
+Both inner while loops expand outward from the center character, checking if the characters at symmetric positions are the same until they no longer form a palindrome.
+Let's break down the complexity:
+
+The outer loop runs n-1 times.
+Inside the outer loop, there are two nested while loops, each with a worst-case scenario of expanding to both ends of the string, which would require checking n characters in total.
+So, the overall time complexity can be approximated as follows:
+
+T(n) ≈ (n-1) * 2 * n
+≈ 2n^2 - 2n
+
+Therefore, the time complexity of this code is O(n^2), where 'n' is the length of the input string s.
+
+This code has a quadratic time complexity, which is more efficient than the previous code you provided for finding the longest palindromic substring. It should work reasonably well for most input strings.
+  </p>
 </section>
 </chapter>
 

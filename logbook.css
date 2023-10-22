@@ -10,9 +10,15 @@
 }
 
 .container{
-  display: flex
- }
- :root {
+  display: flex; /* Use flexbox to arrange videos horizontally */
+  justify-content: space-between; /* Add space between videos */
+}
+
+.video {
+  margin-right: 10px; /* Adjust the margin to reduce the gap size */
+}
+
+:root {
   --nav-icon-width: 50px;
   --nav-border-width: 8px;
 }
@@ -85,20 +91,22 @@
   background-color: #cccccc;
 }
 
-.sidebar1 {
+/* This is the look of the sidebar when it's still hidden */
+.sidebar1 { 
   height: 100%;
   width: 0px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  /* background-color: #111; */
   overflow-x: hidden;
   padding-top: 60px;
   white-space: nowrap;
   padding-left: 0px;
 }
 
+/* This is the look of the sidebar when the hamburger is clicked on. */
 .sidebar {
   height: 100%;
   width: 0px;

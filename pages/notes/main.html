@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -54,9 +40,9 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Manipulation</a>
-<a href="#1">Drone</a>
-<a href="#2">Estimation</a>
-<a href="#3">Dynamics modeling, Simulation & Control</a>
+<a href="#1">Estimation</a>
+<a href="#2">Dynamics modeling, Simulation & Control</a>
+<a href="#3">Optimisation</a>
 <a href="#4">Sensor fusion</a>
 <a href="#5">Miscellaneous</a>
 <a href="#6">Simulators</a>
@@ -89,23 +75,7 @@
   </ul>
 </section>
 
-<section id="1"><h1>Drone</h1>
-  <ul>
-    <li>Modeling</li>
-    <ul>
-      
-    </ul>
-    <li>Control</li>
-    <ul>
-      <li><a href="drone/controlIntro.html">Control Intro</a></li>
-      <li><a href="drone/pid.html">PID controller</a></li>
-      <li><a href="drone/full3DControl.html">Full 3D control</a></li>
-      <li><a href="drone/droneProject.html">Drone project</a></li>
-    </ul>
-  </ul>
-</section>
-
-<section id="2"><h1>Estimation</h1>
+<section id="1"><h1>Estimation</h1>
   <ul>
     <li><a href="estimation/estimationIntro.html">Estimation Intro</a></li>
     <li><a href="estimation/discreteProb.html">Discrete probability</a></li>
@@ -117,12 +87,19 @@
   </ul>
 </section>
 
-<section id="3"><h1>Dynamics modeling, Simulation & Control</h1>
+<section id="2"><h1>Dynamics modeling, Simulation & Control</h1>
   <ul>
+    <li><a href="plants/lti.html">LTI system</a></li>
     <li><a href="plants/simplePendulum.html">Simple pendulum</a></li>
     <li><a href="plants/bipedal.html">Bipedal</a></li>
     <li><a href="plants/2r.html">2R robot</a></li>
     <li><a href="plants/drone/main.html">Drone</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Optimisation</h1>
+  <ul>
+    <li><a href="optimisation/trajectory.html">Trajectory optimisation</a></li>
   </ul>
 </section>
 
@@ -150,6 +127,7 @@
 
 <section id="7"><h1>Maths</h1>
   <ul>
+    <li><a href="maths/jacobian.html">Jacobian</a></li>
     <li><a href="maths/qp.html">Quadratic Programming</a></li>
     <li><a href="maths/vectors.html">Vectors</a></li>
     <li><a href="maths/dcm.html">Direction Cosine Matrix</a></li>
@@ -158,6 +136,7 @@
     <li><a href="maths/tolerance.html">Tolerance</a></li>
     <li><a href="maths/linearAlgebra.html">Linear algebra</a></li>
     <li><a href="maths/differentiation.html">Differentiation</a></li>
+    <li><a href="maths/taylorSeries.html">Taylor series approximation</a></li>
   </ul>
 </section>
 

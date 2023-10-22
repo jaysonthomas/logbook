@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -55,10 +41,12 @@
   
 <a href="#0">Definitions</a>
 <ul class="no-bullets">
-  <li><a href="#0.0">Independent and identically distributed</a></li>
+  <li><a href="#0.0">State estimation</a></li>
+  <li><a href="#0.1">Parameter estimation</a></li>
+  <li><a href="#0.2">Independent and identically distributed</a></li>
 </ul>
-<a href="#1">Assumptions in LS</a>
-<a href="#2">Uses</a>
+<a href="#1">Overall idea of LS</a>
+<a href="#2">Assumptions in LS</a>
 <a href="#3">Branches</a>
 <a href="#4">Musings</a>
 </div>
@@ -66,17 +54,15 @@
 <chapter style="counter-reset: chapter 0"><h1>Least Squares</h1>
 
 <section id="0"><h1>Definitions</h1>
-  A <i>state</i> is a physical quantity that changes over time. <i>State estimation</i> (process of computing a state from a set of measurements) is used for localisation in autonomous driving. Position and orientation are states of a moving vehicle.
+  <subsection id="0.0"><h1>State estimation</h1>
+    A <i>state</i> is a physical quantity that changes over time. <i>State estimation</i> (process of computing a state from a set of measurements) is used for localisation in autonomous driving. Position and orientation are states of a moving vehicle.
+  </subsection>
 
-  <p>
+  <subsection id="0.1"><h1>Parameter estimation</h1>
     Related to state estimation is the idea of <i>parameter estimation</i>. A <i>parameter</i> is a physical quantity that is constant over time. The resistance of a particular resistor in the electrical sub-system of a vehicle would be a parameter.
-  </p>
+  </subsection>
 
-  Carl Friedrich Gauss' description of <code>Least Squares</code>:
-  <br>
-  The most probable value of an unknown parameter is that which minimizes the sum of squared errors between what we observe and what we expect multiplied by numbers that measure the degree of precision.
-
-  <subsection id="0.0"><h1>Independent and identically distributed</h1>
+  <subsection id="0.2"><h1>Independent and identically distributed</h1>
     What does it mean for a set of random variables to be independent and identically distributed?
     <ul>
       <li>
@@ -100,7 +86,31 @@
   </subsection>
 </section>
 
-<section id="1"><h1>Assumptions in LS</h1>
+<section id="1"><h1>Overall idea of LS</h1>
+  Carl Friedrich Gauss' description of <code>Least Squares</code>:
+  <br>
+  The most probable value of an unknown parameter is that which minimizes the sum of squared errors between what we observe and what we expect multiplied by numbers that measure the degree of precision (weights or uncertainties associated with each observation).
+
+  <p>
+    In the least squares method, we are trying to fit a mathematical model to a set of observed data points. Each data point has an associated uncertainty or error (<i>weight</i>), which represents how much that specific observation can deviate from the true value. 
+  </p>
+  
+  Gauss was suggesting that to find the most probable value of an unknown parameter, one should consider
+  <ul>
+    <li>The squared differences between the model's predictions and the observed data points</li>
+    <li>The uncertainties associated with each data point</li>
+  </ul>
+  
+  By multiplying the squared error by weights, one gives more importance to data points with lower uncertainty. This way the overall error is getting minimised whilst also taking into account the quality or reliability of each data point.
+
+  <p>
+    A weight can be thought of as the inverse of the variance (or standard deviation) associated with each data point. Data points with smaller variances (higher precision) contribute more to the parameter estimation in the least squares method. 
+  </p>
+
+  Getting the model right is hard! <m>Do we take the square root of the mean of the sum of squared errors?</m>
+</section>
+
+<section id="2"><h1>Assumptions in LS</h1>
   Things to keep in mind when making a measurement:
   <ul>
     <li>Sampling time</li>
@@ -109,7 +119,7 @@
     <li>Accuracy of the measurements</li>
   </ul>
 
-  With this in mind, the most basic least squares approach applied to estimating the state of a flying car, would make the following unrealistic assumptions:
+  The most basic least squares approach would make the following unrealistic assumptions:
 
   <ul>
     <li>The measurements come in all at once</li>
@@ -119,10 +129,6 @@
     <li>Each measurement has an equal weight in the error equation</li>
     We care about each of the measurements equally.
   </ul>
-</section>
-
-<section id="2"><h1>Uses</h1>
-  Despite the over-simplifications/assumptions above, the estimation technique is common for calibration, finding the transform between two coordinate systems or model fitting.
 </section>
 
 <section id="3"><h1>Branches</h1>
@@ -136,6 +142,7 @@
 </section>
 
 <section id="4"><h1>Musings</h1>
+  We are trying to fit a model to a set of measurements. We do this by considering the error and the reliability of each measurement. In maths, this translates to maximising the probability that the measurements match the actual state or parameter. Certain terms are independent in the probability equation and we end up with a function to maximise which is done by taking the derivative and setting it to 0. 
   <p>
     The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
     <a href="https://t.ly/EKOi">Coursera ref</a>.

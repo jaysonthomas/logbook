@@ -23,7 +23,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -32,20 +32,6 @@
       </p>
     </header>
   </div>
-
-  <table style="width:100%;" pdf="no"><tr style="width:100%">
-    <td style="width:33%;text-align:left;">
-      <a class="previous_chapter" href="">Prev Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:center;">
-      <a href="">Root Chapter</a>
-    </td>
-    
-    <td style="width:33%;text-align:right;">
-      <a class="next_chapter" href="">Next Chapter</a>
-    </td>
-  </tr></table>
   
   <div id="main" class="sidebar1">
     <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -53,23 +39,23 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Measurement equation</a>
 <a href="#1">Deriving The Maximum Likelihood Estimator</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Step 1: Find $p(y|x)$</a></li>
-  <li><a href="#1.1">Step 2: Find $\hat{x}$</a></li>
+  <li><a href="#1.0">Find $p(y|x)$ - collect measurements</a></li>
+  <li><a href="#1.1">Find $\hat{x}$ - maximise the probability</a></li>
 </ul>
 <a href="#2">Example: Fitting A Line With Linear Least Squares</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Linear Least Squares</h1>
-<section id="0"><h1>Overview</h1>
+<section id="0"><h1>Measurement equation</h1>
   [<a href="https://t.ly/mwtO">Good quick tutorial</a>].
 
   <p>
     A linear function of $x$ can be written as: $y = Ax + b$. Consider a system where we take measurements of a state (which is constant at the time of measurement) or a parameter, $x$, such that:
     $$
-      \underbrace{\tilde{y}}_{\scriptsize\text{Known}} = 
+      \underbrace{y}_{\scriptsize\text{Known}} = 
       \underbrace{H}_{\scriptsize\text{Known} \atop \scriptsize\text{Constant}}
       \underbrace{x}_{\scriptsize\text{Unknown} \atop \scriptsize\text{Constant}} 
       + \underbrace{v}_{\scriptsize\text{Unknown}}
@@ -80,34 +66,42 @@
     <li>$x$ is the constant unknown state/parameter vector of length $n$ that is to be estimated.</li>
 
     <p>
-      <li>$\tilde{y}$ is the vector of measurements of length $m$ that is actually received. The measurements are a linear function of the physical quantity perturbed by some unknown noise.</li>
+      <li>$y$ is the vector of measurements of length $m$ that is actually received</li>
+
+      <p>
+        The measurements are a <n>linear function of the physical quantity perturbed by some unknown noise</n>. We need to have more measurements than unknowns i.e. $m>n$
+      </p>
     </p>
 
-    <li>$v$ is the unknown error vector. The noise is assumed to be drawn from a Gaussian distribution with a $0$ mean and some covariance $R$, i.e. $v$ can be assumed to be some known variance times the identity matrix.</li>
-
+    <li>$v$ is the unknown error vector</li>
     <p>
-      <li>$H$ is the <i>measurement matrix</i>. It is assumed to be known. It remains constant when a measurement is being taken. It projects the state/parameter into the measurement space.</li>
+      All we can know are the statistical properties of the noise that can be estimated from the data. The noise is assumed to be drawn from a Gaussian distribution with a $0$ mean and some covariance $R$, i.e. $v$ can be assumed to be some <n>known variance</n> times the identity matrix.
     </p>
+
+    <li>$H$ is the known <i>measurement matrix</i>; also called the <i>measurement model</i></li>
+    <p>
+      It remains constant when a measurement is being taken. It projects the state/parameter into the <n>measurement space</n>.
+    </p>
+
+    $H$ is also sometimes called the <code>Jacobian matrix</code>; it contains the partial derivatives of the measurements with respect to the parameter(s) $x$ of interest. If the jacobian matrix is supposed to tell us what happens to the measurements $y$ for a change in $x$, <m>what happens if $H$ itself is changing with a constant $x$</m>? Does this happen?
   </ul>
   
   <p>
-    If the error $v$ is known, we can solve for $x$: $Hx = \tilde{y} - v$. Or if $x$ is known, we can solve for $v$. We don't know either and that's what makes this an estimation problem. We use a <i>maximum likelihood estimation</i> approach. <n>Intuitively, we look at the measurements and ask what state/parameter is the most likely to yield the particular set of measurements</n>.
+    If the error $v$ is known (we only know the distribution w.r.t. the unknown $x$), we can solve for $x$: $Hx = y - v$. Or if $x$ is known, we can solve for $v$. We don't know either and that's what makes this an estimation problem. A <i>maximum likelihood estimation</i> approach is used which, intuitively, means <n>we look at the measurements and ask what state/parameter is the most likely to yield the particular set of measurements</n>.
   </p>  
 
-  An important thing to note is that once we have the measurements $\tilde{y}$, the least squares estimation problem boils down to figuring out exactly what the measurement model $H$ looks like. Figuring out how to form $H$ for any estimation problem is often the tricky bit.
+  Once we have the measurements $y$, the least squares estimation problem boils down to figuring out the measurement model $H$ which is often the tricky bit.
 </section>
 
 <section id="1"><h1>Deriving The Maximum Likelihood Estimator</h1>
-  We want to know what state is most consistent with our measurements. Mathematically, the goal is to select our estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of our actual measurements $\tilde{y}$:
-  <br>
-  Goal: Choose $\hat{x}$ to maximise $p(y=\tilde{y} | x = \hat{x})$
+  We want to know what state is most consistent with our measurements. Mathematically, the goal is to select an estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of the actual measurements $y$ i.e. choose $\hat{x}$ to maximise $p(y| x = \hat{x})$
 
   <p>
-    There are two steps to this process:
+    There are 2 steps to this process (it is assumed the decision on what $x$ and $H$ are going to represent has been made):
   </p>
-
-  <subsection id="1.0"><h1>Step 1: Find $p(y|x)$</h1>
-    The probability density function $p(y|x)$ in this model, tells us the likelihood of the measurement y when the state is x. We assume that the distribution $p(y|x)$ is Gaussian. The parameters of the distribution can be expressed as:
+  
+  <subsection id="1.0"><h1>Find $p(y|x)$ - collect measurements</h1>
+    The probability density function $p(y|x)$ in this model, tells us the likelihood of the measurement y when the state is x. We assume that the distribution $p(y|x)$ is Gaussian - we get $Hx$ along with some gaussian noise as the measurment, which means for the same $x$ we could get a different $y$. The parameters of the distribution can be expressed as:
 
     <ul>
       <li>Mean</li>
@@ -119,30 +113,65 @@
       </p>
     </ul>
 
-    Thus, $p(y|x) = \mathcal{N}(Hx, R)$. The formula for the Gaussian:
+    Thus, $p(y|x) = \mathcal{N}(Hx, R)$. The formula for the <a href="../maths/gaussians.html">Gaussian</a>:
 
     $$
-      p(\tilde{y}|x) = \underbrace{
+      p(y|x) = \underbrace{
           \frac{1}{(2\pi)^{\frac{n}{2}}\lvert{R}\rvert^{\frac{1}{2}}}
         }_{\text{Normalizer}}
       e^
         \underbrace{
-          {-\frac{1}{2}(\tilde{y}-Hx)^TR^{-1}(\tilde{y}-Hx)}
+          {-\frac{1}{2}(y-Hx)^TR^{-1}(y-Hx)}
         }_{\text{Term to maximise}}
     $$
   </subsection>
 
-  <subsection id="1.1"><h1>Step 2: Find $\hat{x}$</h1>
-    The normalizer term does not depend on $x$ at all. To find the likelihood of the received measurements, $\tilde{y}$ given $x$ (i.e. the value of the estimate $\hat{x}$ that maximises the likelihood of the actual measurements $\tilde{y}$ given $\hat{x}$), we need to maximise the gaussian function. The specific choice of $x$ has no impact on the normalizer and can be ignored. Therefore, we need to maximise the term that's in the exponent; which means we just need to maximise the function in the exponent.
+  <subsection id="1.1"><h1>Find $\hat{x}$ - maximise the probability</h1>
+    To find the likelihood of the received measurements, $y$ given $x$ (i.e. the value of the estimate $\hat{x}$ that maximises the likelihood of the actual measurements $y$ given $\hat{x}$), we need to maximise the gaussian function. 
+    
+    <p>
+      The normalizer term does not depend on $x$ at all, i.e. the specific choice of $x$ has no impact on the normalizer and can be ignored. Therefore, we need to maximise the term that's in the exponent; which means we just need to maximise the function in the exponent.
+    </p>
 
     <p>
-      A standard way to solve for the maximum of a function is to find where its derivative is 0. If we take the derivative of the exponent, set it equal to zero, and then solve for $x$, we get the equation for the maximum likelihood estimator $\hat{x}$:
+      To maximise the function, take its derivative, set it equal to $0$ and then solve for $x$ to get the equation for the maximum likelihood estimator $\hat{x}$:
     </p>
     $$
-      \hat{x} = (H^TH)^{-1}H^T\tilde{y}
+      \hat{x} = (H^TR^{-1}H)^{-1}H^TR^{-1}y
     $$
 
-    This is a solution to the least squares estimation problem given some measurements $\tilde{y}$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that we assume we know. Using this, we can solve for the most likely estimate, $\hat{x}$. <n>The best estimate is purely a function of the measurement model $H$ and the actual measurements $\tilde{y}$</n>.
+    <button class="accordion">The derivation</button>
+    <div class="panel">
+      $$
+        -\frac{1}{2}(y-Hx)^TR^{-1}H = 0
+      $$
+      
+      Multiplying both sides by $-2$ to simplify the equation:
+      $$
+        (y-Hx)^TR^{-1}H = 0
+      $$
+
+      Expanding the transpose and rearranging the equation:
+      $$\begin{align*}
+        (y^T-x^TH^T)R^{-1}H &= 0 \\
+        y^TR^{-1}H - x^TH^TR^{-1}H &= 0 \\
+        (y^TR^{-1}H - x^TH^TR^{-1}H)^T &= 0^T \\
+        (y^TR^{-1}H)^T - (x^TH^TR^{-1}H)^T &= 0 \\
+        H^TR^{-T}y - H^T(R^{-1})^THx &= 0 \\
+      \end{align*}$$
+
+      Since $R$ is a symmetric matrix ($R=R^T$), $R^{-1}$ is also symmetric: $R^{-1} = (R^{-1})^T$
+      $$
+        H^TR^{-1}y - H^TR^{-1}Hx = 0 
+      $$
+
+      Rearranging:
+      $$
+        x = (H^TR^{-1}H)^{-1}H^TR^{-1}y
+      $$
+    </div>
+
+    This is a solution to the least squares estimation problem given some measurements $y$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that we assume we know. Using this, we can solve for the most likely estimate, $\hat{x}$. <n>The best estimate is purely a function of the measurement model $H$ and the actual measurements $y$</n>.
   </subsection>
 
 </section>
@@ -171,7 +200,7 @@
   $$
   It's the unknown $v_i$ that's perturbing the measurements from the line. The measurements are in the form of:
   $$
-    \tilde{y} = Hx + v
+    y = Hx + v
   $$
 
   We have the state vector $x$ and all the measured values: 
@@ -181,7 +210,7 @@
     \tilde{y_m}
   \end{bmatrix}$$
 
-  In order to get the vector $y_i$ to match up with the vector $\tilde{y}$, we need an $H$ that looks as follows:
+  The mapping from $x$ to $y$ is given by $H$ that looks as follows:
   $$\begin{bmatrix}
     t_1 & 1 \\
     \vdots & \vdots \\
