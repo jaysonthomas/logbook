@@ -62,14 +62,14 @@
 
   <ul>
     <li>We first found the probability density function $p(y|x)$</li>
-    <li>We selected $x$ to be the value that yielded the maximum likelihood of the measurements, $\tilde{y}$ given $\hat{x}$</li>
+    <li>We selected $x$ to be the value that yielded the maximum likelihood of the measurements, $y$ given $\hat{x}$</li>
   </ul>
 
-  Now that we have a prior, we can find the posterior estimate $p(x|\tilde{y})$. The two steps of the new process are:
+  Now that we have a prior, we can find the posterior estimate $p(x|y)$. The two steps of the new process are:
 
   <ul>
     <li>Find the probability density function $p(x|y)$</li>
-    <li>Select $\hat{x}$ to be the value that yields the maximum $p(\hat{x}|\tilde{y})$</li>
+    <li>Select $\hat{x}$ to be the value that yields the maximum $p(\hat{x}|y)$</li>
     <p>
       The output of this recursive estimate is usually referred to as the <i>Maximum A Posteriori (MAP) estimate</i>. We turn the prior into a posterior using new information from the new measurement. 
     </p>
