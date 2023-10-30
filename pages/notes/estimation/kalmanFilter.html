@@ -45,16 +45,10 @@
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Kalman Filter</h1>
-<section id="0"><h1>Intro</h1>
-  [<a href="../../../docs/Estimation_for_Quadrotors.pdf">Drone documentation</a>]. <br>
-  Kalman filters is useful when the state to be estimated is continuously changing as in the case of a moving vehicle. Kalman filters allows the integration of measurements and controls in a continuous space [and incorporate them into the state estimator] to find a continuous state estimate. For non-linear systems, the extended Kalman filter is used.
-
-  <p>
-    No matter how clever one is with noisy sensor data, it is not possible to maintain a robust and responsive estimate of a state, unless the estimator is also made aware of the controls the system is commanded. 
-  </p>
-</section>
 
 <section id="1"><h1>1D drone example</h1>
+  [<a href="../../../docs/Estimation_for_Quadrotors.pdf">Drone documentation</a>]. <br>
+
   <ul>
     <li>State variables and control input</li>
     We can only set the drone's acceleration which will influence the vertical velocity and the height, $z$. If we ignore yaw, the state variables and the control input of the system are:

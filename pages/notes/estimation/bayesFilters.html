@@ -49,8 +49,15 @@
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Bayes Filters</h1>
-<section id="0"><h1>Key ideas</h1>
-  The main aim is to maintain an accurate and responsive state estimate of a system.
+<section id="0"><h1>Overview</h1>
+  <subsection><h1>The main aim</h1>
+    The main aim is to maintain an accurate and responsive state estimate of a continuously changing system. No matter how clever one is with noisy sensor data, it is not possible to maintain a robust and responsive estimate of a state (eg. position of a moving vehicle), unless the estimator is also made aware of the controls the system is commanded. 
+
+    <p>
+      Bayes filters allow the integration of measurements and control in a continuous space, incorporating them into the state estimator to find a continuous state estimate.
+    </p>
+  </subsection>
+
   <subsection id="0.0"><h1>The 2 key steps</h1>
     Bayes Filter is a general framework for thinking about state estimation. Its key idea involves alternating between 2 steps to maintain a belief of a state:
     
