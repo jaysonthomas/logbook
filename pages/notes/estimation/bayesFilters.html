@@ -51,7 +51,7 @@
 <chapter style="counter-reset: chapter 0"><h1>Bayes Filters</h1>
 <section id="0"><h1>Key ideas</h1>
   The main aim is to maintain an accurate and responsive state estimate of a system.
-  <subsection id="0.0"><h1>Inclusion of system dynamics</h1>
+  <subsection id="0.0"><h1>The 2 key steps</h1>
     Bayes Filter is a general framework for thinking about state estimation. Its key idea involves alternating between 2 steps to maintain a belief of a state:
     
     <ul>
@@ -65,7 +65,7 @@
     </ul>
   </subsection>
 
-  <subsection id="0.1"><h1>Uncertainty in the estimate</h1>
+  <subsection id="0.1"><h1>Uncertainty in the estimate after each step</h1>
     <div class="container">
       <figure>
         <img style="height:120px; width:auto"
@@ -121,10 +121,8 @@
       We then use $u_t$ to predict the system's state in the next timestep.
 
       <p>
-        In general, calculating $\bar{bel}$ is an integral. Depending on how $\bar{bel}$ and $bel$ are represented, the integral might take a closed form. When the belief is Gaussian, this takes the form of matrix operations over the mean and covariance matrix.
+        In general, calculating $\bar{bel}$ is an integral. Depending on how $\bar{bel}$ and $bel$ are represented, the integral might take a closed form. When the belief is Gaussian, this takes the form of matrix operations over the mean and covariance matrix. <m>What does the probability term look like IRL?</m>
       </p>
-
-      <m>If both position and velocity form part of the state, then what does $(bel(x_{t-1}) \; \Delta{t})$ give? Can we then just multiply the probability to it?</m>
     </p>
 
     <li>Read sensor and measurement update</li>
@@ -136,16 +134,16 @@
       Bayes rule is used to (calculate a new distribution) incorporate the new sensor measurement with the predicted state to update our current belief. 
   </ul>
 
-  Notice the inputs to the different functions - because of the Markov property, we don't need to remember all of our previous controls and measurements. <m>How is the Markov property satisfied? What does $\eta$ represent?</m>
+  Notice the inputs to the different functions - because of the Markov property, we don't need to remember all of our previous controls and measurements. <m>What does $\eta$ represent?</m>
 </section>
 
-<section id="2"><h1>Flavours of the bayes filter</h1>
+<section id="2"><h1>Flavours of bayes filter</h1>
   <div class="container">
     <figure>
       <img style="height:100px; width:auto"
       src="../../../figures/drone/34_bayesFilterFlavours.png"/>
       <figcaption>
-        Different implementations of the bayes filter
+        Different implementations of bayes filter
       </figcaption>
     </figure>
   </div>
