@@ -88,13 +88,13 @@
     $- sin(x_{t,\phi})$ is the acceleration of the drone. $\phi$ is written as $x_{t,\phi}$ to emphasise that $\phi$ is part of the state vector $x$.
 
     <p>
-      In the 1D case, we could write $g$ as a linear equation (constant $A_t$ times $x_t$, plus constant $B_t$ times $u_t$). $sin(x_{t,\phi})$ cannot be factored into the $A$ and $B$ matrices that don't depend on the state, which means a Kalman Filter cannot be used as the estimation algorithm. To use a Kalman Filter here, we need a linear approximation of the system that's linearised around the current state of the vehicle. 
+      In the 1D case, we could write $g$ as a linear equation (constant $A_t$ times $x_t$, plus constant $B_t$ times $u_t$). $sin(x_{t,\phi})$ cannot be factored into the $A$ and $B$ matrices since they don't depend on the state, which means a Kalman Filter cannot be used as the estimation algorithm. To use a Kalman Filter here, we need a linear approximation of the system that's linearised around the current state of the vehicle. 
     </p>
     </p>
 
     <p>
     <li>Jacobian of the state transition function</li>
-    To linearise $g$, we take its Jacobian with respect to $x$, both of which are $3 \times 1$ vectors. The result will a $3 \times 3$ matrix of partial derivatives. The Jacobian tells us how each of the components of $g$ change as we change each of the components of the state vector. 
+    To linearise $g$, we take its Jacobian with respect to $x$, both of which are $3 \times 1$ vectors. The result is a $3 \times 3$ matrix of partial derivatives. The Jacobian tells us how each component of $g$ changes as each component of the state vector is changed. 
 
     $$\begin{align*}
       g'(x_t, u_t, \Delta{t}) &= 
@@ -121,10 +121,10 @@
       \end{bmatrix}
     \end{align*}$$
 
-    In the first row of the Jacobian, the partial derivatives of the $\phi$ component of $g$ is calculated with respect to each of the components of $x$
+    In the first row of the Jacobian, the partial derivatives of the $\phi$ component of $g$ is calculated with respect to each component of $x$
 
     <p>
-      In the linear 1D example, the state transition function was linear. In that case taking the derivative of $g$ with respect to $x$ just gives the $A$ matrix, and this $A$ matrix doesn't actually depend on the state of the vehicle. Here, however, the matrix changes depending on the state of the vehicle, more specifically it depends on $\phi$. In general, the Jacobian represents the best linear approximation of the state transition function near the state $x$.
+      In the linear 1D example where the state transition function is linear, the derivative of $g$ with respect to $x$ is just the $A$ matrix which doesn't depend on the vehicle's state. Here, however, the derivative matrix changes due to its dependence on the vehicle's state ($\phi$ in this case). <n>In general, the Jacobian represents the best linear approximation of the state transition function near the state $x$</n>.
     </p>
     </p>
 
@@ -140,7 +140,7 @@
       </figure>
     </div>
 
-    Imagine there is a big vertical wall at some position $wall_{y}$ and it extends infinitely upwards and downwards. The drone has a range sensor that points to the right and measures the distance to the wall. When the drone's roll angle is 0, we'd expect the sensor to give us a measured value of $wall_{y}$, minus the drone's y position, $x_{y}$. If the drone rolls by some angle $>0$, then we'd expect the sensor to return some number that's greater than $wall_{y} - x_y$. 
+    Consider a big vertical wall that extends infinitely upwards and downwards, at some position $wall_{y}$. The drone has a range sensor that points to the right and measures the distance to the wall. When the drone's roll angle is 0, the sensor should give a nominal measured value of $wall_{y}$, minus the drone's y position, $x_{y}$. If the drone rolls by some angle $>0$, then the sensor should nominally return some number greater than $wall_{y} - x_y$. 
     
     <p>
       The true sensor measurement will be noisy. The measurement model takes a state (can be the estimated one) as input and returns an expected value of what the sensor will read:
@@ -162,7 +162,7 @@
     </p>
 
     $$\begin{align*}
-      h'(x_t) &= 
+      H_t = h'(x_t) &= 
       \begin{bmatrix}
         \frac{\partial{h}}{\partial{x_{\phi}}}
         & \frac{\partial{h}}{\partial{x_{\dot{y}}}}
@@ -183,11 +183,11 @@
 <section id="1"><h1>The algorithm</h1>
   <ul>
     <li>EKF Predict</li>
-    For the Kalman filter predict function, $G_t$ was constant and just equal to the $A$ matrix. The g prime function wasn't very interesting since it actually ignored the current state of the vehicle. But with the non-linear case, we have to calculate the Jacobian every time we do the predict step; which is then used to propagate the covariance forward. 
+    For the Kalman filter predict function, $G_t$ was constant and just equal to the $A$ matrix. The g prime function wasn't very interesting since it actually ignored the current state of the vehicle. But with the non-linear case, the Jacobian is calculated in every predict step, which is then used to propagate the covariance forward. 
 
     <p>
     <li>EKF Update</li>
-    Compute $H_t$ using $h'$, which is used to compute the Kalman gain. We then compare the measurement to the expected measurement $h(\bar{\mu}_t$) similar to the KF.
+    $H_t$ is used to compute the Kalman gain which is used to compare the measurement with the expected measurement $h(\bar{\mu}_t$) similar to KF.
     </p>
   </ul>
 
