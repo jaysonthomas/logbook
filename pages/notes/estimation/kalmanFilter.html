@@ -46,9 +46,8 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Kalman Filter</h1>
 
-<section id="1"><h1>1D drone example</h1>
-  [<a href="../../../docs/Estimation_for_Quadrotors.pdf">Drone documentation</a>]. <br>
-
+<section id="1"><h1>Individual components</h1>
+  Using a 1D drone as an example.
   <ul>
     <li>State variables and control input</li>
     We can only set the drone's acceleration which will influence the vertical velocity and the height, $z$. If we ignore yaw, the state variables and the control input of the system are:
@@ -93,21 +92,21 @@
       $x_{t,\dot{z}}$ is the $\dot{z}$ component of the state variable at time $t$. The 2nd line is the matrix representation of the transition function.
     </p>
 
-    <p>
     <li>Jacobian of the State transition function</li>
     $$\begin{align*}
       g(x_t, u_t, \Delta{t}) &= A_tx_t + B_tu_t \\
-      g'(x_t, u_t, \Delta{t}) &= A_t \\
+      G_t = g'(x_t, u_t, \Delta{t}) &= A_t \\
     \end{align*}$$
 
-    The derivative of this function with respect to $x_t$ is just the $A$ matrix in the case of a Kalman filter. So even though $g'$ is written as a function of $u$ and $x$, it turns out that for the linear case, it ignores these inputs and just returns the $A$ matrix. That won't be the case when things become non-linear in EKF.
+    <p>
+      Intuitively, it is the derivative of the state transition function with respect to the state $x_t$, which is just the $A$ matrix in the case of a Kalman filter. So even though $g'$ is written as a function of $u$ and $x$, it turns out that <n>for the linear case, it ignores these inputs and just returns the $A$ matrix</n>. That won't be the case when things become non-linear in EKF. Finding the Jacobian is an overkill for the KF, but it makes the math identical to the EKF.
     </p>
 
     <p>
     <li>
       Measurement model
     </li>
-    The measurement model $h$ takes a state as input and returns the measurement we'd expect to see from a perfect sensor for that state. The 1D drone has a range sensor pointing downwards, which measures the height of the drone above the ground. 
+    The <i>measurement model</i> $h$ takes a state as input and <n>returns the measurement we'd expect to see from a perfect sensor for that state</n>. The 1D drone has a range sensor pointing downwards, which measures the height of the drone above the ground. 
 
     $$\begin{align*}
       h(x_t) &= [x_{t,z}] \\
@@ -123,15 +122,18 @@
     For a linear measurement model, the Jacobian is just the $C$ matrix.
     $$\begin{align*}
       h(x_t) &= C_t x_t \\
-      h'(x_t) &= C_t
+      H_t = h'(x_t) &= C_t
     \end{align*}$$
     </p>
+
+    <li>Kalman Gain $K_t$</li>
+    The Kalman gain, computed using the jacobian of the measurement model, helps decide how much the new measurement is trusted compared to the belief after the prediction step.
   </ul>
 
 </section>
 
 <section id="2"><h1>The algorithm</h1>
-  Since the beliefs are gaussians, we represent them using the mean $\mu$ and covariance $\Sigma$.
+  Since the <n>beliefs</n> are gaussians, they are <n>represented</n> in the form of a mean $\mu$ and a covariance $\Sigma$.
   <ul>
     <p>
     <li>Compute control</li>
@@ -142,15 +144,17 @@
 
     <p>
     <li>Kalman Predict</li>
-    $$\begin{align*}
-      \bar{\mu}_t, \bar{\Sigma}_t &= f(\mu_{t-1}, \Sigma_{t-1}, u_t, \Delta{t}) \\
-      \bar{\mu}_t &= g(\mu_{t-1}, u_t, \Delta{t})
-    \end{align*}$$
+    $$
+      \bar{\mu}_t, \bar{\Sigma}_t = f(\mu_{t-1}, \Sigma_{t-1}, u_t, \Delta{t})
+    $$
 
     Because everything is Gaussian, the integral from the bayes filter takes a closed form - the new Gaussian is computed by passing the old mean through the state transition function to get the new mean.
     
+    $$
+      \bar{\mu}_t = g(\mu_{t-1}, u_t, \Delta{t})
+    $$
     <p>
-      To update the covariance, we first calculate the Jacobian of the state transition function $G_t$. Intuitively, it is the derivative of the state transition function with respect to the state. Finding the Jacobian is an overkill for the KF, but it makes the math identical to the EKF.
+      To update the covariance, we first calculate the Jacobian $G_t$ of the state transition function. 
     </p>
 
     $$\begin{align*}
@@ -158,18 +162,16 @@
       \bar{\Sigma}_t &= G_t \Sigma_{t-1} G^T_t + Q_t
     \end{align*}$$
 
-    The new covariance always gets bigger after the prediction because some process noise $Q_t$ is added. $Q_t$ is also called the transition covariance.
+    The new covariance always gets bigger after the prediction because some <i>process noise</i> $Q_t$ is added. $Q_t$ is also called the <i>transition covariance</i>.
     </p>
 
     <p>
-    <li>Read sensor and measurement update</li>
+    <li>Compute the Kalman Gain</li>
     $$\begin{align*}
       H_t &= h'_t(\bar{\mu}_t) \\
       K_t &= \bar{\Sigma}_t \; H^T_t \; (H_t \bar{\Sigma}_t H^T_t + R_t)^{-1}
     \end{align*}$$
 
-    The Kalman gain $K_t$, computed using the jacobian of the measurement model, helps decide how much the new measurement is trusted compared to our previous belief.
-    
     <p>
       The Kalman gain calculation can be broken down into 3 steps:
       <ul>
@@ -189,13 +191,13 @@
       </ul>
     </p>
 
-    We make the measurement update as follows:
+    <li>Measurement update</li>
     $$\begin{align*}
       \mu_t &= \bar{\mu}_t + K_t(z_t - h_t (\bar{\mu}_t)) \\
       \Sigma_t &= (I - K_tH_t)\bar{\Sigma}_t
     \end{align*}$$
 
-    The new mean (state estimate) is just the old mean, plus the Kalman gain, multiplied by the difference between the actual measurement, and the measurement we would have expected based on my measurement model. This moves the estimate in the direction of the new measurement by an amount that's dictated by the Kalman gain. The new covariance is computed by some math that takes into account the Kalman gain.
+    The new mean (state estimate) is just the old mean, plus the Kalman gain, multiplied by the difference between the actual measurement, and the measurement we would have expected based on the measurement model. This moves the estimate in the direction of the new measurement by an amount that's dictated by the Kalman gain. The new covariance is computed by some math that takes into account the Kalman gain.
 
     </p>
   </ul>
