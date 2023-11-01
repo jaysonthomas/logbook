@@ -54,7 +54,7 @@
       u_t = [\phi]
     $$
 
-    The physics is heavily simplified to allow for simpler math. Instead of thinking of forces and moments, we're just going to have one control input which lets us set the roll angle directly; i.e. the drone just teleports to the commanded $\phi$. 
+    The physics is simplified to allow for simpler math - instead of thinking of forces and moments, we're just going to have one control input which sets the roll angle directly $\phi$. 
 
     <div class="container">
       <figure>
@@ -66,7 +66,7 @@
       </figure>
     </div>
 
-    The thrust we assume is constant and equal to 1 as is the mass. So, if we want to accelerate the drone to the right, we set some roll angle that's tilted correctly, and some portion of the thrust equal to the $sin(\phi)$ will cause the vehicle to accelerate.
+    The thrust is assumed to be constant and equal to 1 as is the mass. To accelerate to the right, we set some roll angle, and some portion of the thrust equal to $sin(\phi)$ will cause the vehicle to accelerate. The new $\phi$ is whatever we set the control input to be i.e. the phi component of the control input. In this example, the control input has just the 1 component.
 
     <p>
     <li>State transition function</li>
@@ -85,10 +85,10 @@
           \end{bmatrix}
     $$
 
-    The new $\phi$ is whatever we set the control input to be i.e. the phi component of the control input. In this example, the control input just has the 1 component. $- sin(x_{t,\phi})$ is the acceleration of the drone. $\phi$ is written as $x_{t,\phi}$ to emphasise that $\phi$ is part of the state vector $x$.
+    $- sin(x_{t,\phi})$ is the acceleration of the drone. $\phi$ is written as $x_{t,\phi}$ to emphasise that $\phi$ is part of the state vector $x$.
 
     <p>
-      In the 1D case, we could write $g$ as a linear equation (constant $A_t$ times $x_t$, plus constant $B_t$ times $u_t$). But, we can't factor $sin(x_{t,\phi})$ into the $A$ and $B$ matrices that don't depend on the state, which means we won't be able to use a Kalman Filter as our estimation algorithm for this system. To use a Kalman Filter here, we need a linear approximation of the system that's linearized around the current state of the vehicle. 
+      In the 1D case, we could write $g$ as a linear equation (constant $A_t$ times $x_t$, plus constant $B_t$ times $u_t$). $sin(x_{t,\phi})$ cannot be factored into the $A$ and $B$ matrices that don't depend on the state, which means a Kalman Filter cannot be used as the estimation algorithm. To use a Kalman Filter here, we need a linear approximation of the system that's linearised around the current state of the vehicle. 
     </p>
     </p>
 
