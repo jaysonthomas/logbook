@@ -85,19 +85,21 @@
 <section id="1"><h1>Member initialisation</h1>
   [<a href="../../jlib/cppExamples/fundamentals/0_memberInitialisation.cpp">Ref for struct</a>, <a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref for class</a>]
   <br>
-  We want every member of an object to begin its life in a defined and valid state.
+  Every member of an object needs to begin its life in a defined and valid state.
 </section>
 
 <section id="2"><h1>Datatypes</h1>
-  It is important to be able to create one's own datatypes else the language would have to cater to so many needs. Examples:
+  A language needs to allow creation of one's own datatypes else the it would have to cater to so many needs. Examples:
 
   <ul>
     <li><i>User defined datatypes</i></li>
-    <code>Class</code>. We can have a class sedan and instantiate multiple objects for it - a blue and a red sedan for example. And it's all about relationships amongst these classes.
+    <ul>
+      <li>
+        <code>Class</code>. We can have a class sedan and instantiate multiple objects for it - a blue and a red sedan for example. <n>And it's all about relationships amongst these classes</n>.
+      </li>
+      <li><code>Vector</code></li>
+    </ul>
 
-    <p>
-      <code>Vector</code>.
-    </p>
     <p>
     <li><i>Primitives</i></li>
     These are the fundamental types. The standard library includes additional types such as <code>std::size_t</code> and <code>std::string</code>.
@@ -124,11 +126,11 @@
   <subsection id="4.0"><h1>Members</h1>
     <ul>
       <li>Public members</li>
-      Public members can be changed <n>directly</n>, by any user of the object (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
+      Public members can be changed <n>directly</n>, by any user of the <i>object</i> (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
 
       <p>
       <li>Private members</li>
-      [<a href="../../jlib/cppExamples/fundamentals/2_private.cpp">Ref</a>]. They are only accessible directly from within the class itself using member functions. One exception is that they are accessible from <n>friends</n>.
+      [<a href="../../jlib/cppExamples/fundamentals/2_private.cpp">Ref</a>]. They are only accessible directly from within the class itself using member functions. One exception is that they are accessible from <n>friends</n>. 
       </p>
 
       <li>Protected members</li>
@@ -156,37 +158,45 @@
 
 <section id="5"><h1>Invariants - struct vs class</h1>
   [<a href="../../jlib/cppExamples/fundamentals/4_invariants.cpp">Ref</a>]
-  <br>
-  To access private members, typically public <i>accessor</i> and <i>mutator</i> member functions (sometimes called <i>getter</i> and <i>setter</i> functions).
 
   <p>
-    If we're just carrying publicly accessible data where all the data members can vary independently of each other and don't really have any limitations then we might use a struct. When we need to make data members private or add limits on them (<i>invariants</i>), then the convention is typically to convert from a struct into a class. 
+    If we're just carrying publicly accessible data where all data members can vary independently of each other and don't really have any limitations, then a struct is preferred. When we need to make data members private or add limits on them (<i>invariants</i>), then the convention is typically to convert from a struct into a class. 
   </p>
   
-  By default, all members of a struct default to public, whereas all members of a class default to private. As a general rule, member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value.
-</section>
+  By default, all members of a struct default to public, whereas all members of a class default to private. 
 
-<section id="6"><h1>Getters and setters</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/5_trivialGetterSetter.cpp">Ref</a>]
-  <br>
-  A trivial getter or setter adds no semantic value; the data item could just as well be public. A class could be made into a struct if its member variables don't need invariants i.e. they are just passive data.
+  <subsection><h1>When to be private</h1>
+    As a general rule, <n>member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value</n>.
+
+    <p>
+      To access private members, typically public <i>accessor</i> and <i>mutator</i> member functions (also called <i>getter</i> and <i>setter</i> functions) are used. A trivial getter or setter adds no semantic value; the data item could just as well be public [<a href="../../jlib/cppExamples/fundamentals/5_trivialGetterSetter.cpp">Ref</a>].
+    </p>
+  </subsection>
 </section>
 
 <section id="7"><h1>Constructor</h1>
   [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
   <br>
-  Constructors are member functions of a class or struct that initialise/construct/build an object. Typically a constructor establishes an invariant and often acquires resources needed for an object to be used (which are then typically released by a destructor).
-
+  Constructors are member functions of a class or struct that initialise/construct/build an object. All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. 
+  
   <p>
-    All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. As a rule of thumb, the constructor should initialize the data members of the class. It's also a good idea not to have any complex logic in a constructor because you want to ensure that the constructor does not fail. It's hard to handle errors that take place within the constructor.
+    Typically a constructor:
+    <ul>
+      <li>Initialises data members</li>
+      <li>Establishes an invariant</li>
+      <li>Acquires resources needed for an object to be used</li>
+      (which are then typically released by a destructor)
+    </ul>
   </p>
+
+  It is not good to have any complex logic in a constructor in order to ensure that the constructor does not fail. It's hard to handle errors that take place within the constructor.
 </section>
 
 <section id="8"><h1>Scope resolution</h1>
-  :: is the scope resolution operator. It is used to specify which namespace or class (scope) to search in order to resolve an identifier (a function name or a variable name). C++ allows different identifiers to have the same name, as long as they have different scope. For example, two different functions can each declare the variable int i, because each variable only exists within the scope of its parent function.
+  C++ allows different identifiers to have the same name, as long as they have different scope. For example, two different functions can each declare the variable int i, because each variable only exists within the scope of its parent function.
 
   <p>
-    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called scope resolution.
+    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class (scope) to search in order to resolve an identifier (a function name or a variable name).
   </p>
 
   <subsection id="8.0"><h1>Class</h1>
@@ -205,15 +215,15 @@
   <subsection id="8.1"><h1>Namespace</h1>
     [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
     <br>
-    Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. std is the namespace used by the C++ Standard Library. Classes like std::vector and functions like std::sort are defined within the std namespace.
+    Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. <code>std</code> is the namespace used by the C++ Standard Library. Classes like <code>std::vector</code> and functions like <code>std::sort</code> are defined within the std namespace.
   </subsection>
 </section>
 
 <section id="9"><h1>Inheritance</h1>
-  Inheritance is one way that classes can relate to each other. Two classes might have a parent-child/base-derived relationship such that the child inherits members from the parent. We might have an apple class that is the child of a fruit class. Apples have their own varieties, but they also inherit members from the parent fruit class like seeds. Going further, the fruit class might be a child of the plant class and might inherit some members from the plant class like mass. The plant class has a mass, so its child, the fruit class inherits this mass member, and therefore, the apple class which is the child of the fruit class also inherits the mass member from the plant class, through the fruit class, to the apple class. 
-
+  The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
+  
   <p>
-    The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
+    Example: An apple class can be made the child of a fruit class. Apples have their own varieties, but they also inherit members from the parent fruit class like seeds. Going further, the fruit class might be a child of the plant class and might inherit some members from the plant class like mass. The plant class has a mass, so its child, the fruit class inherits this mass member, and therefore, the apple class which is the child of the fruit class also inherits the mass member from the plant class, through the fruit class, to the apple class.   
   </p>
 
 </section>
@@ -232,10 +242,10 @@
 </section>
 
 <section id="11"><h1>Polymorphism</h1>
-  It means "assuming many forms". It describes a paradigm in which a function may behave differently depending on how it is called, i.e. based on its inputs. It allows an interface to work with several different types. We might have a cut function that can work with the plant, the fruit, or the apple class. In fact, the cut function might accept totally different types of objects, like a rope or a paper object. On the other hand, we might have a brews function that works with fruits and with apples, but not with plants.   
+  It means "assuming many forms". It describes a paradigm in which a function may behave differently depending on how it is called, i.e. based on its inputs. It allows an interface to work with several different types. We might have a cut function that can work with the plant, the fruit, or the apple class. On the other hand, we might have a brews function that works with fruits and with apples, but not with plants.   
   
   <p>
-    Polymorphism can be achieved in two ways in C++: overloading and overriding.
+    Polymorphism can be achieved in two ways: overloading and overriding.
   </p>
   
   <subsection id="11.0"><h1>Function overloading</h1>
@@ -257,10 +267,10 @@
     Overriding a function occurs when:
     <ul>
       <li>A base class declares a virtual function</li>
-      <li>A derived class overrides that virtual function by defining its own implementation with an identical function signature (i.e. the same function name and argument types)</li>
+      <li>A derived class overrides the virtual function by defining its own implementation with an identical function signature (i.e. the same function name and argument types)</li>
     </ul>
 
-    Specifying a function as override is good practice, as it empowers the compiler to verify the code (if the code doesn't override some other virtual function, the compiler will generate an error), and communicates the intention of the code to future users.
+    Specifying a function as override is good practice, as it empowers the compiler to verify the code (if the code doesn't override the virtual function, the compiler will generate an error), and communicates the intention of the code to future users.
   </subsection>
 </section>
 

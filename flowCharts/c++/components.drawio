@@ -1,0 +1,52 @@
+<mxfile host="Electron" modified="2023-11-06T10:36:44.265Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="fg7VWM8FndwxHBgquJef" version="22.0.3" type="device">
+  <diagram name="Page-1" id="HNYZKfiPQVPJqZJRvPU6">
+    <mxGraphModel dx="2234" dy="1255" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n6Ccjh8QE3eLmOjlMwEh-1" value="Datatypes" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="274" y="-146" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n6Ccjh8QE3eLmOjlMwEh-2" value="Member initialisation" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="274" y="-67" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="D6RZGJaK25wuzyMA6K7w-2" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-21" y="168" as="sourcePoint" />
+            <mxPoint x="-28" y="-160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D6RZGJaK25wuzyMA6K7w-1" value="Encapsulation&lt;br&gt;Abstraction" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-84" y="-70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="D6RZGJaK25wuzyMA6K7w-3" value="User interface" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-54" y="-197" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-6" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;dashed=1;" edge="1" parent="1" source="D6RZGJaK25wuzyMA6K7w-4" target="ZgRLeYDq9o32f6SUCcQa-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="D6RZGJaK25wuzyMA6K7w-4" value="Relationships&lt;br&gt;Between an object and its internals&lt;br&gt;Between an object and other objects of other classes" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-218" y="78" width="395" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-1" value="class or struct" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="416" y="-70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-2" value="Constructor" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="277" y="12" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-4" value="Scope resolution" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="-67" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-5" value="Inheritance" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="78" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-8" value="Friends" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="175" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgRLeYDq9o32f6SUCcQa-9" value="Polymorphism" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="263" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
