@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Memory management in C++</title>
-  <meta name="Memory management in C++" content="text/html; charset=utf-8;" />
+  <title>RAII</title>
+  <meta name="RAII" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -39,33 +39,36 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">New vs Malloc</a>
+<a href="#0">Overview</a>
+<a href="#1">Acquiring and releasing resources</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Memory management in C++</h1>
+<chapter style="counter-reset: chapter 1"><h1>RAII</h1>
+<section id="0"><h1>Overview</h1>
+  <i>Resource Acquisition Is Initialization</i>. The idea is to put a management class around a resource (the resource is entirely managed within the class) while providing third-party access through well-defined interfaces only. This can be used to protect a resource such as a file stream, a network connection or a block of memory. It is implemented by smart pointers.
 
-<section id="0"><h1>New vs Malloc</h1>
-  <ul>
-    <li>Constructors/destructors</li>
-    Unlike <code>malloc(sizeof(MyClass))</code>, the call <code>new MyClass()</code> calls the constructor. Similarly, delete calls the destructor.
-    <p>
-      <li>Type safety</li>
-      malloc returns a void pointer, which needs to be cast into the appropriate data type it points to. This is not type safe, as one can freely vary the pointer type without any warnings or errors from the compiler as in the following small example: 
-<pre><code class="c++">
-MyObject *p = (MyObject*)malloc(sizeof(int));
-</code></pre>  
-
-      In C++, new returns the correct type automatically - it is thus type-safe.
-<pre><code class="c++">      
-MyObject *p = new MyObject()
-</code></pre>
-    </p>
-
-    <li>Operator overloading</li>
-    As malloc and free are functions defined in a library, their behaviour can not be changed easily. The new and delete operators however can be overloaded by a class in order to include optional proprietary behaviour. 
-  </ul>
+  <p>
+    The overall goal is to have allocation and deallocation disappear from the surface level of the code.
+  </p>
 </section>
 
+<section id="1"><h1>Acquiring and releasing resources</h1>
+  <h4>Example scenarios</h4>
+  <ul>
+    <li>Allocate/free memory</li>
+    <li>Open/close a file or network connection</li>
+    <li>Protect synchronisation primitives such as atomic operations, memory barriers, monitors or critical sections, which must be released to allow other threads to obtain them</li>
+  </ul>
+
+  <h4>Problems</h4>
+  <ul>
+    <li>The program might throw an exception during resource use and thus the point of release might never be reached</li>
+    <p>
+      <li>There might be several points where the resource could potentially be released, making it hard for a programmer to keep track of all eventualities</li>
+    </p>
+    <li>We might simply forget to release the resource again</li>
+  </ul>
+</section>
 </chapter>
 
 </body>

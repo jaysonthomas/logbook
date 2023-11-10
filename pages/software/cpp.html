@@ -49,36 +49,32 @@
   <li><a href="#4.1">Inherited access specifiers</a></li>
 </ul>
 <a href="#5">Invariants - struct vs class</a>
-<a href="#6">Getters and setters</a>
-<a href="#7">Constructor</a>
-<a href="#8">Scope resolution</a>
 <ul class="no-bullets">
-  <li><a href="#8.0">Class</a></li>
-  <li><a href="#8.1">Namespace</a></li>
+  <li><a href="#5.0">When to be private</a></li>
 </ul>
-<a href="#9">Inheritance</a>
-<a href="#10">Friends</a>
-<a href="#11">Polymorphism</a>
+<a href="#6">Constructor</a>
+<a href="#7">Scope resolution</a>
 <ul class="no-bullets">
-  <li><a href="#11.0">Function overloading</a></li>
-  <li><a href="#11.1">Operator overloading</a></li>
-  <li><a href="#11.2">Overriding</a></li>
+  <li><a href="#7.0">Class</a></li>
+  <li><a href="#7.1">Namespace</a></li>
 </ul>
-<a href="#12">Generic programming</a>
-<ul class="no-bullets">
-  <li><a href="#12.0">Function templates</a></li>
-  <li><a href="#12.1">Class templates</a></li>
-</ul>
-<a href="#13">Virtual functions</a>
-<a href="#14">Default function arguments</a>
+<a href="#8">Inheritance</a>
+<a href="#9">Friends</a>
+<a href="#10">Miscellaneous</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>C++</h1>
 
 <section id="0"><h1>Topics</h1>
   <ul>
-    <li><a href="memoryManagement.html">Memory management</a></li>
-    <li><a href="pointers.html">Pointers</a></li>
+    <li>Memory management</li>
+    <ul>
+      <li><a href="beforeSmartPointers.html">Before smart pointers</a></li>
+      <li><a href="raii.html">RAII</a></li>
+      <li><a href="rawPointers.html">Raw pointers</a></li>
+      <li><a href="smartPointers.html">Smart pointers</a></li>
+    </ul>
+    <li><a href="polymorphism.html">Polymorphism</a></li>    
   </ul>
 </section>
 
@@ -139,6 +135,7 @@
   </subsection>
 
   <subsection id="4.1"><h1>Inherited access specifiers</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/11_inheritedAccessSpecifiers.cpp">Ref</a>] <br>
     The same access modifiers also define which class members users of derived classes can access.
 
     <ul>
@@ -165,7 +162,7 @@
   
   By default, all members of a struct default to public, whereas all members of a class default to private. 
 
-  <subsection><h1>When to be private</h1>
+  <subsection id="5.0"><h1>When to be private</h1>
     As a general rule, <n>member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value</n>.
 
     <p>
@@ -174,7 +171,7 @@
   </subsection>
 </section>
 
-<section id="7"><h1>Constructor</h1>
+<section id="6"><h1>Constructor</h1>
   [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
   <br>
   Constructors are member functions of a class or struct that initialise/construct/build an object. All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. 
@@ -192,14 +189,14 @@
   It is not good to have any complex logic in a constructor in order to ensure that the constructor does not fail. It's hard to handle errors that take place within the constructor.
 </section>
 
-<section id="8"><h1>Scope resolution</h1>
+<section id="7"><h1>Scope resolution</h1>
   C++ allows different identifiers to have the same name, as long as they have different scope. For example, two different functions can each declare the variable int i, because each variable only exists within the scope of its parent function.
 
   <p>
     In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class (scope) to search in order to resolve an identifier (a function name or a variable name).
   </p>
 
-  <subsection id="8.0"><h1>Class</h1>
+  <subsection id="7.0"><h1>Class</h1>
     Each class provides its own scope. The scope resolution operator becomes useful if we want to separate class declaration from class definition.
  
     <p>
@@ -212,14 +209,14 @@
     </p>
   </subsection>
 
-  <subsection id="8.1"><h1>Namespace</h1>
+  <subsection id="7.1"><h1>Namespace</h1>
     [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
     <br>
     Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. <code>std</code> is the namespace used by the C++ Standard Library. Classes like <code>std::vector</code> and functions like <code>std::sort</code> are defined within the std namespace.
   </subsection>
 </section>
 
-<section id="9"><h1>Inheritance</h1>
+<section id="8"><h1>Inheritance</h1>
   The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
   
   <p>
@@ -228,7 +225,7 @@
 
 </section>
 
-<section id="10"><h1>Friends</h1>
+<section id="9"><h1>Friends</h1>
   [<a href="../../jlib/cppExamples/fundamentals/12_friend_1.cpp">Ref</a>]
   <div class="container">
     <figure>
@@ -241,80 +238,18 @@
   </div>    
 </section>
 
-<section id="11"><h1>Polymorphism</h1>
-  It means "assuming many forms". It describes a paradigm in which a function may behave differently depending on how it is called, i.e. based on its inputs. It allows an interface to work with several different types. We might have a cut function that can work with the plant, the fruit, or the apple class. On the other hand, we might have a brews function that works with fruits and with apples, but not with plants.   
-  
-  <p>
-    Polymorphism can be achieved in two ways: overloading and overriding.
-  </p>
-  
-  <subsection id="11.0"><h1>Function overloading</h1>
-    [<a href="../../jlib/cppExamples/fundamentals/14_functionOverloading.cpp">Ref</a>]
-    <br>
-    Overloading requires that we leave the function name the same, but we modify the function signature. For example, we might define the same function name with multiple different configurations of input arguments.
-  </subsection>
-
-  <subsection id="11.1"><h1>Operator overloading</h1>
-    [<a href="../../jlib/cppExamples/fundamentals/15_operatorOverloading.cpp">Ref1</a>, <a href="../../jlib/cppExamples/fundamentals/15_2_operatorOverloading.cpp">Ref2</a>]
-    <br>
-    In order to overload an operator, the <code>operator</code> keyword is used in the function signature. Eigen is a matrix library in cpp.
-
-  </subsection>
-
-  <subsection id="11.2"><h1>Overriding</h1>
-    [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>
-    <br>
-    Overriding a function occurs when:
-    <ul>
-      <li>A base class declares a virtual function</li>
-      <li>A derived class overrides the virtual function by defining its own implementation with an identical function signature (i.e. the same function name and argument types)</li>
-    </ul>
-
-    Specifying a function as override is good practice, as it empowers the compiler to verify the code (if the code doesn't override the virtual function, the compiler will generate an error), and communicates the intention of the code to future users.
-  </subsection>
-</section>
-
-<section id="12"><h1>Generic programming</h1>
-  Generic Programming is an example of polymorphism that generalises the parameters of classes and functions using templates. The aim is to create code (classes and functions) that can be reused with many different types of data. For example using the vector class from the Standard Library, a vector of ints, strings or some user defined class can be created. 
-
-  <subsection id="12.0"><h1>Function templates</h1>
-    [<a href="../../jlib/cppExamples/fundamentals/8_templateFunction.cpp">Ref</a>]
-    <br>
-    Templates use datatypes as parameters so that the same implementation can operate on different data types. At compile time, the compiler expands the code using the types that are passed as parameters.
+<section id="10"><h1>Miscellaneous</h1>
+  <ul>
+    <li>Default function arguments</li>
+    [<a href="../../jlib/cppExamples/fundamentals/19_defaultFuncArgs.cpp">Example</a>]
 
     <p>
-      <i>Generic code</i> is the term for code that is independent of types. It is mandatory to put the <code>template&lt&gt</code> tag before the function signature to specify and mark the declaration as generic.
+      <li><code>const</code> in a function declaration</li>
+      [<a href="../../jlib/cppExamples/fundamentals/13_virtualFunction.cpp">Ref</a>] <br>
+      It is a way to indicate that calling the function won't alter the internal data members of the object. It is a promise made by the function that it won't modify any non-static data members of the class it belongs to. A const member function can only call other const member functions and read data members of the object. It cannot modify the object's state in any way.
     </p>
-
-    The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic type in the function prototype. The parameters that follow typename (or class) represent generic types in the function declaration.
-
-  </subsection>
-
-  <subsection id="12.1"><h1>Class templates</h1>
-    [<a href="../../jlib/cppExamples/fundamentals/9_classTemplate.cpp">Ref</a>]
-    <br>
-    Classes are the building blocks of object oriented programming in C++. Class templates (<i>generic classes</i>) can declare and implement generic attributes for use by generic methods.
-  </subsection>
+  </ul>
 </section>
-
-<section id="13"><h1>Virtual functions</h1>
-  Virtual functions are a polymorphic feature. These functions are declared (and possibly defined) in a base class, and can be overridden by derived classes. This approach declares an interface at the base level, but delegates the implementation of the interface to the derived classes.
-
-  <p>
-    A <i>pure virtual function</i> is a virtual function that the base class declares but does not define. It has the side effect of making its class abstract. This means that the class cannot be instantiated. Instead, only classes that derive from the abstract class and override the pure virtual function can be instantiated.
-  </p>
-
-  Virtual functions can be defined by derived classes, but this is not required. However, if we mark the virtual function with = 0 in the base class, then we are declaring the function to be a pure virtual function. This means that the base class does not define this function. A derived class must define this function, or else the derived class will be abstract.
-
-  <p>
-    We don't know how a generic animal talks. So we declare it as a virtual function which means that the derived classes can override the virtual function. <code>=0</code> means we're never going to create an object of type Animal. We're simply creating an interface such that other classes that inherit from this base class will have to implement the talk function. 
-  </p>
-</section>
-
-<section id="14"><h1>Default function arguments</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/19_defaultFuncArgs.cpp">Example</a>]
-</section>
-
 </chapter>
 
 </body>

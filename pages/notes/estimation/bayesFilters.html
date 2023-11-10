@@ -39,18 +39,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Key ideas</a>
+<a href="#0">Overview</a>
 <ul class="no-bullets">
-  <li><a href="#0.0">Inclusion of system dynamics</a></li>
-  <li><a href="#0.1">Uncertainty in the estimate</a></li>
+  <li><a href="#0.0">The main aim</a></li>
+  <li><a href="#0.1">The 2 key steps</a></li>
+  <li><a href="#0.2">Uncertainty in the estimate after each step</a></li>
 </ul>
 <a href="#1">The algorithm</a>
-<a href="#2">Flavours of the bayes filter</a>
+<a href="#2">Flavours of bayes filter</a>
+<a href="#3">References</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Bayes Filters</h1>
 <section id="0"><h1>Overview</h1>
-  <subsection><h1>The main aim</h1>
+  <subsection id="0.0"><h1>The main aim</h1>
     The main aim is to maintain an accurate and responsive state estimate of a continuously changing system. No matter how clever one is with noisy sensor data, it is not possible to maintain a robust and responsive estimate of a state (eg. position of a moving vehicle), unless the estimator is also made aware of the controls the system is commanded. 
 
     <p>
@@ -58,7 +60,7 @@
     </p>
   </subsection>
 
-  <subsection id="0.0"><h1>The 2 key steps</h1>
+  <subsection id="0.1"><h1>The 2 key steps</h1>
     Bayes Filter is a general framework for thinking about state estimation. Its key idea involves alternating between 2 steps to maintain a belief of a state:
     
     <ul>
@@ -72,7 +74,7 @@
     </ul>
   </subsection>
 
-  <subsection id="0.1"><h1>Uncertainty in the estimate after each step</h1>
+  <subsection id="0.2"><h1>Uncertainty in the estimate after each step</h1>
     <div class="container">
       <figure>
         <img style="height:120px; width:auto"
@@ -179,7 +181,7 @@
   </ul>
 </section>
 
-<section><h1>References</h1>
+<section id="3"><h1>References</h1>
   <ul>
     <li>
       <a href="https://t.ly/6k8fn">The Unscented Kalman Filter for Nonlinear Estimation</a> is a short paper (6 pages) that does a great job explaining UKF.

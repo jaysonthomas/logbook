@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Before smart pointers</title>
+  <meta name="Before smart pointers" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
+
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">New vs Malloc</a>
+<a href="#1">Error-prone memory management with new and delete</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Before smart pointers</h1>
+
+<section id="0"><h1>New vs Malloc</h1>
+  "New" and "Delete" are extensions of malloc and free in the C++ world.
+  <ul>
+    <li>Constructors/destructors</li>
+    Unlike <code>malloc(sizeof(MyClass))</code>, the call <code>new MyClass()</code> calls the constructor. Similarly, delete calls the destructor.
+    <p>
+      <li>Type safety</li>
+      malloc returns a void pointer, which needs to be cast into the appropriate data type it points to. This is not <i>type-safe</i>, as one can freely vary the pointer type without any warnings or errors from the compiler as in the following small example: 
+<pre><code class="c++">
+MyObject *p = (MyObject*)malloc(sizeof(int));
+</code></pre>  
+
+      In C++, new returns the correct type automatically - it is thus type-safe.
+<pre><code class="c++">      
+MyObject *p = new MyObject()
+</code></pre>
+    </p>
+
+    <li>Operator overloading</li>
+    As malloc and free are functions defined in a library, their behaviour can not be changed easily. The new and delete operators however can be overloaded by a class in order to include optional proprietary behaviour. 
+  </ul>
+</section>
+
+<section id="1"><h1>Error-prone memory management with new and delete</h1>
+  Dynamically allocated memory on the heap using malloc/free or new/delete is extremely powerful, as it allows for a fine-grained control over the precious memory resource. However, the correct use of these concepts requires some degree of skill and experience (and concentration) from the programmer. If they are not handled correctly, bugs will quickly be introduced into the code. A major source of error is that the details around memory management with new/delete are completely left to the programer. The aspects that hold for new/delete also apply to malloc/free.
+
+  <ul>
+    <li>Proper pairing of new and delete</li>
+    Every dynamically allocated object that is created with <code>new</code> must be followed by a manual deallocation at a <n>proper</n> place in the program. If the programer forgets to call <code>delete</code> or if it is done at an "inappropriate" position, memory leaks will occur which might clog up a large portion of memory.
+
+    <p>
+      <li>Correct operator pairing</li>
+      A dynamically allocated <n>array</n> initialised with <code>new[]</code> may only be deleted with the operator <code>delete[]</code>. If the wrong operator is used, program behavior will be undefined.
+    </p>
+
+    <li>Memory ownership</li>
+    If a third-party function returns a pointer to a data structure, the only way of knowing who is responsible for resource deallocation is by looking into either the code or the documentation. If both are not available (as is often the case), there is no way to infer the ownership from the return type. If for some reason the programer does not know this, he or she might call delete and thus interfere with the inner workings of the library.
+
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
