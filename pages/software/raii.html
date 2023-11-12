@@ -50,6 +50,16 @@
   <p>
     The overall goal is to have allocation and deallocation disappear from the surface level of the code.
   </p>
+
+  <h4>The main advantages</h4>
+  <ul>
+    <li>
+      Using class destructors to perform resource clean-up tasks when the RAII object gets out of scope, helps to manage ownership and lifetime of dynamically allocated objects
+    </li>
+    <li>
+      Implement encapsulation and information hiding due to resource acquisition and release being performed within the same object
+    </li>
+  </ul>
 </section>
 
 <section id="1"><h1>Acquiring and releasing resources</h1>
@@ -68,6 +78,39 @@
     </p>
     <li>We might simply forget to release the resource again</li>
   </ul>
+</section>
+
+<section><h1>Example of an RAII class</h1>
+  <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Example 1</a>
+
+  <p>
+    There are 3 parts to an RAII class:
+    <ul>
+      <li>A resource is allocated in the constructor</li>
+      <li>A resource is de-allocated in the destructor</li>
+      <li>All instances of the RAII class are allocated on the stack to reliably control the lifetime via the object scope</li>
+    </ul>
+  </p>
+
+  In the example code, the resource allocation takes place in 2 steps:
+  <ul>
+    <li>
+      The part <code>new int(i)</code> creates a new block of memory on the heap and initialises it with the value of <code>i</code>. It returns the address of the block of memory.
+    </li>
+    <p>
+      <li>
+        The part <code>MyInt en(…)</code> calls the constructor of class <code>MyInt</code>, passing the address of the valid memory block as a parameter.
+      </li>
+    </p>
+
+    After creating an object of class <code>MyInt</code> on the stack, which, internally, created an integer on the heap, the dereference operator is overloaded allowing it to be used in the same manner as with raw pointers to retrieve the value to which the internal raw pointer is pointing. Because the <code>MyInt</code> object <code>en</code> lives on the stack, it is automatically deallocated after each loop cycle - which automatically calls the destructor to release the heap memory. The programer, therefore, doesn't need to think about calling <code>delete</code>.
+
+    <p>
+      In <a href="../../jlib/cppExamples/fundamentals/20b_raii.cpp">Example 2</a>, the destructor of <code>MyInt</code> would never be called, hence causing a memory leak with each loop iteration.
+    </p>
+  </ul>
+
+
 </section>
 </chapter>
 

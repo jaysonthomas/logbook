@@ -67,7 +67,7 @@ void foo(int x) {}
 </code></pre>
   </p>
 
-  Both p and foo have the same type, i.e. <code>void (*)(int)</code>. [<a href="../../jlib/cExamples/funcPointer.c">Example</a>].
+  Both p and foo have the same type, i.e. <code>void (*)(int)</code>. [<a href="../../jlib/cExamples/funcPointer.c">Example</a>, <a href="../../jlib/cppExamples/fundamentals/18_functionPointer.cpp">Another fun example</a>]. 
 </section>  
   
 <section id="1"><h1>Function argument pointers</h1>
@@ -136,10 +136,6 @@ int const * const ptr
   This <a href="https://t.ly/4kPR">link</a> seems useful.
 </section>
 
-<section id="4"><h1>Function pointers</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/18_functionPointer.cpp">Example</a>]
-</section>
-
 <section id="5"><h1>Pointer variables</h1>
 <pre><code class="C++">
 int x = 42;
@@ -157,6 +153,17 @@ int &ref = y; // 'ref' is a reference to 'y'
   The address of <code>ref</code> is made the same as that of <code>y</code>. Printing <code>ref</code> outputs 10. A reference is a way of creating an alias for an existing variable; the same data can be referred to using a different name.
 </section>
 
+<section><h1>Mishandling of pointers</h1>
+  <a href="https://t.ly/uBJNS">Ref</a>
+
+  <subsection><h1>Dangling pointer</h1>
+    A dangling pointer situation occurs when a pointer refers to a memory that is no longer allocated.
+  </subsection>
+
+  <subsection><h1>Memory leak</h1>
+    Memory leaks happen when we lose the pointer that is pointing to a memory block, making it impossible to free that block anymore.
+  </subsection>
+</section>
 </chapter>
 
 </body>

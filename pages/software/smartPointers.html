@@ -44,7 +44,23 @@
 
 <chapter style="counter-reset: chapter 1"><h1>Smart pointers</h1>
 <section id="0"><h1>Overview</h1>
-  When a smart pointer is no longer needed (which is the case as soon as it goes out of scope), the memory to which it points is automatically deallocated. In essence, smart pointers are classes that are wrapped around raw pointers. By overloading the <code>-></code> and <code>*</code> operators, it is possible to use smart pointers with the same syntax as raw pointers. As soon as a smart pointer goes out of scope, its destructor is called and the block of memory to which the internal raw pointer refers is properly deallocated. The technique of wrapping a management class around a resource is called <i>RAII</i>. 
+  When a smart pointer is no longer needed (which is the case as soon as it goes out of scope), the memory to which it points is automatically deallocated. In essence, smart pointers are classes that are wrapped around raw pointers. By overloading the <code>-></code> and <code>*</code> operators, it is possible to use smart pointers with the same syntax as raw pointers. As soon as a smart pointer goes out of scope, its destructor is called and the block of memory to which the internal raw pointer refers is properly deallocated. The technique of wrapping a management class (in other words an object of a class) around a resource that smart pointers build on is called <i>RAII</i>. 
+
+  <p>
+    With smart pointers, resource acquisition occurs at the same time that the object is initialised. In modern C++, raw pointers managed with new and delete should only be used in small blocks of code with limited scope, where performance is critical (such as with placement new) and ownership rights of the memory resource are clear. There are 3 types of smart pointers.
+  </p>
+</section>
+
+<section><h1>Unique pointer</h1>
+  <code>std::unique_ptr</code> is a smart pointer which exclusively owns a dynamically allocated resource on the heap. There must not be a second unique pointer to the same resource. Unique pointers are useful when working with a temporary heap resource that is no longer needed once it goes out of scope.
+</section>
+
+<section><h1>Shared pointer</h1>
+  <code>std::shared_ptr</code> points to a heap resource but does not explicitly own it. There may even be several shared pointers to the same resource, each of which will increase an internal reference count. As soon as this count reaches zero, the resource will automatically be deallocated.
+</section>
+
+<section><h1>Weak pointer</h1>
+  <code>std::weak_ptr</code> behaves similar to the shared pointer but does not increase the reference counter.
 </section>
 </chapter>
 
