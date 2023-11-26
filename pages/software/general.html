@@ -53,9 +53,8 @@
   <li><a href="#1.0">Good examples</a></li>
 </ul>
 <a href="#2">Json</a>
-<a href="#3">Webpage</a>
-<a href="#4">Drawio</a>
-<a href="#5">Git</a>
+<a href="#3">Drawio</a>
+<a href="#4">Git</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>General software related notes</h1>
@@ -149,80 +148,7 @@ To convert this into a dataframe:
 Use <code>json.load()</code> to read a json file.
 </section>
 
-<section id="3"><h1>Webpage</h1>
-  <ul>
-    <li>Details</li>
-    [<a href="https://t.ly/cJkC">Ref</a>] Just the details tag. The summary tag provides the summary.
-
-    <p>
-    <li>Linking to a specific sentence or equation in a page</li>
-<pre><code class="xml">
-&lt;a id="eq1">Whatever is in between&lt;/a&gt;
-<br>
-Linking to the equation from elsewhere.
-&lt;a href="#eq1">The equation over here&lt;/a&gt;
-</code></pre>
-    </p>
-    
-    <li>The other way to reference equations</li>
-    Just <n>before</n> <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
-    <br>
-    To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
-    <br><br>
-
-    <li>Creating block diagrams in a page</li>
-    <figure>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-        var system = { "name": "PidController", 
-          "input_ports" : ["estimated_state", "desired_state"],
-          "output_ports" : ["generalized_force"]
-          };
-        document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_pid_controller.html"));
-        </script> 
-      </div>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-          var system = { "name": "InverseDynamicsController", 
-            "input_ports" : ["estimated_state", "desired_state", '<span style="color:gray">desired_acceleration</span>'],
-            "output_ports" : ["generalized_force"]
-            };
-          document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_inverse_dynamics_controller.html"));
-        </script>
-      </div>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-        var system = { "name": "Simple Pendulum", 
-          "input_ports" : ["\\( \\tau \\)"],
-          "output_ports" : ["\\( x \\)"]
-          };
-        document.write(system_html(system));
-        </script> 
-      </div>
-    </figure>
-
-    <li>Placing figures side-by-side</li>
-    <div class="container">
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../figures/drone/12_wideGaussian.png"/>
-        <figcaption>
-          Wide gaussian
-        </figcaption>
-      </figure>
-  
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../figures/drone/13_thinGaussian.png"/>
-        <figcaption>
-          Thin gaussian
-        </figcaption>
-      </figure>
-    </div>
-  </ul>
-</section>
-
-<section id="4"><h1>Drawio</h1>
+<section id="3"><h1>Drawio</h1>
   <ul>
   <li>
     To type mathematical equations, enable 
@@ -235,7 +161,7 @@ Linking to the equation from elsewhere.
   </ul>
 </section>
 
-<section id="5"><h1>Git</h1>
+<section id="4"><h1>Git</h1>
   <ul>
     <li>Submodules</li>
     <a href="https://t.ly/VMEV">Ref</a>.
