@@ -50,77 +50,81 @@
 <chapter style="counter-reset: chapter 3"><h1>Gyroscope</h1>
 
 <section id="0"><h1>Basics</h1>
-  A gyroscope measures the angular rotation about an axis by measuring the Coriolis Force. The Coriolis Force is something that shows up when you try to do physics in a rotating frame of reference. We are not going to get into the math behind this force, but we can try to understand it intuitively.
+  A gyroscope measures the angular rotation about an axis by measuring the Coriolis Force. <n>The coriolis force only shows up when the measurement device is in a rotating reference frame</n>.
+
+  <p>
+    The most common gyros are small <i>Microelectromechanical Systems (MEMS)</i>  sensors called <i>Vibrating Structure Gyroscopes</i>. A different gyro in the form of a large ball or wheel that mechanically spins could also be attached to a vehicle. Changes to its motions can be measured as the vehicle rotates. But, these large mechanical systems are impractical for smaller vehicles.
+  </p>  
 </section>
 
 <section id="1"><h1>Coriolis force</h1>
-  <subsection id="1.0"><h1>Description</h1>
-    Imagine looking from above at a big spinning disk (like a merry-go-round) that's rotating with some angular velocity $\omega$. What would happen if someone standing in the middle of the disc tried to throw a ball at the triangular target shown below:
+  Imagine looking from above at a big spinning disk (like a merry-go-round) that's rotating with some angular velocity $\omega$. Imagine someone standing in the middle of the disc tried to throw a ball at the triangular target shown below:
 
-    <div class="container">
-      <figure>
-        <img style="height:120px; width:auto"
-        src="../../../figures/physics/3_coriolisForceExplanation_target.png"/>
-        <figcaption>
-          The target
-        </figcaption>
-      </figure>
-    </div>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/physics/3_coriolisForceExplanation_target.png"/>
+      <figcaption>
+        The target
+      </figcaption>
+    </figure>
+  </div>
 
-    The ball doesn't care that the disk is rotating - it would move in a straight line and by the time it got to the edge of the disk, the target would have rotated far away from where it originally was. Here, the motion is observed from the world frame, which is an inertial frame. In this frame, there is no Coriolis Force.
+  The ball doesn't care that the disk is rotating - it would move in a straight line and by the time it got to the edge of the disk, the target would have rotated far away from where it originally was. Here, the motion is observed from the world frame, which is an inertial frame. In this frame, there is no Coriolis Force.
 
-    <div class="container">
-      <figure>
-        <img style="height:120px; width:auto"
-        src="../../../figures/physics/4_inertialVsRotatingFrame.png"/>
-        <figcaption>
-          Inertial vs Rotating frame of reference
-        </figcaption>
-      </figure>
-    </div>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/physics/4_inertialVsRotatingFrame.png"/>
+      <figcaption>
+        Inertial vs Rotating frame of reference
+      </figcaption>
+    </figure>
+  </div>
 
-    What happens when we transition into a rotating frame? Imagine standing on the triangular target and observing the motion of the ball. From this point of view (rotating frame of reference), the ball would take a curved path. It would seem like the ball is being pushed sideways by some force, the Coriolis Force $F_c$.
-  </subsection>
+  Imagine standing on the triangular target and observing the motion of the ball. From this point of view (a rotating frame of reference), the ball would take a curved path. It would seem like the ball is being pushed sideways by some force, the <i>Coriolis Force</i> $F_c$.
+</section>
 
-  <subsection id="1.1"><h1>Measurement model</h1>
-    We can measure the effect of the coriolis force - the size of the force is a function of the rotational speed of the rotating frame. So, we can use a measurement of $F_c$ to infer the rotation rate, $\omega$ of the rotating reference frame.
+<section><h1>Physical working</h1>
+  Gyros work by having two tiny masses called <i>Proof Masses</i> that vibrate in opposite directions. When there is no rotation, these masses just move along a horizontal line i.e. they will have some horizontal velocity.
 
-    $$
-      |F_c| = f(\omega)
-    $$
+  <div class="container">
+    <figure>
+      <img style="height:70px; width:auto"
+      src="../../../figures/physics/5_memsGyroVibratingMassesHorizontal.png"/>
+      <figcaption>
+        Vibrating proof masses of a gyro that's not rotating
+      </figcaption>
+    </figure>
+  </div>
 
-    The Coriolis Force is a force that can actually be measured, but it shows up only when the thing doing the measurement is in a rotating reference frame.
-  </subsection>
-It turns out there are
-several gyroscope implementations that have been used on flying vehicles.
-Some of these rely on mechanically spinning some large view of ball
-and then measuring the changes to its motions as the vehicle itself rotates.
-But these large mechanical systems unpractical for smaller vehicles.
-The gyros you're likely work with are called Vibrating Structure Gyroscopes.
-These gyroscopes are small MEMS sensors,
-and they are by far the most common gyro.
-MEMS stands for Microelectromechanical Systems.
-They work by having two tiny masses called Proof Masses,
-which vibrate in opposite directions.
-When there is no rotation these masses just move along a horizontal line.
-Now, we can imagine a rotation Omega,
-and you should think of this rotation axis as going into the screen.
-And if we pause the motion here,
-we can see that the mass on the right has some velocity to the right.
-This rotation vector points into the screen so that those two vectors are orthogonal.
-This is going to lead to a Coriolis Force which points upwards.
-Note that this force is orthogonal to both the velocity and the rotation axis.
-For the mass on the left,
-the force is going to point down at this moment.
-If you follow this logic,
-as the mass vibrates,
-the resulting motion of the proof masses is no longer going to be exactly horizontal,
-but will instead have a vertical component as well.
-By measuring this deflection in the vertical direction for both proof masses,
-you can actually infer the rotational rate Omega of the sensor.
-Now that we know how gyroscopes measure rotational rates,
-we need to know how accurate these measurements are.
-To know that, it will help to develop what's called a measurement model for gyroscope.
+  Imagine the sensor is rotating about an axis (through the centre of the sensor, into and perpendicular to the screen) with velocity $\omega$. If we paused the rotation of the sensor for an instant and captured its state (see below), the rotation vector and the horizontal velocity vectors being orthogonal to each other leads to a Coriolis Force pointing upwards on the right mass and one pointing downwards on the left mass. At any given time, the 2 masses move opposite to each other and hence experience forces in opposite directions.
+  
+  <p>
+    This force is orthogonal to both the velocity and the rotation axis. The resulting motion of the proof masses will have a horizontal and a vertical component. 
+  </p>
+  
+  <div class="container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../figures/physics/6_rotatingMemsGyro.png"/>
+      <figcaption>
+        Vibrating proof masses of a gyro that's rotating
+      </figcaption>
+    </figure>
+  </div>
+
+  By measuring this deflection in the vertical direction for both proof masses, the rotational rate of the sensor can be inferred.
+</section>
+
+<section id="1.1"><h1>Measurement model</h1>
+  We can measure the effect of the coriolis force - the size of the force is a function of the rotational speed of the rotating reference frame, i.e. we can use a measurement of $F_c$ to infer $\omega$.
+
+  $$
+    |F_c| = f(\omega)
+  $$
+
+  A <i>measurement model</i> should also include a measure of how accurate the measurements are; in this case, that of $\omega$.
 </section>
 </chapter>
 
