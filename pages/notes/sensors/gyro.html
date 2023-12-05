@@ -41,10 +41,8 @@
   
 <a href="#0">Basics</a>
 <a href="#1">Coriolis force</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Description</a></li>
-  <li><a href="#1.1">Measurement model</a></li>
-</ul>
+<a href="#2">Physical working</a>
+<a href="#3">Measurement model</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Gyroscope</h1>
@@ -85,7 +83,7 @@
   Imagine standing on the triangular target and observing the motion of the ball. From this point of view (a rotating frame of reference), the ball would take a curved path. It would seem like the ball is being pushed sideways by some force, the <i>Coriolis Force</i> $F_c$.
 </section>
 
-<section><h1>Physical working</h1>
+<section id="2"><h1>Physical working</h1>
   Gyros work by having two tiny masses called <i>Proof Masses</i> that vibrate in opposite directions. When there is no rotation, these masses just move along a horizontal line i.e. they will have some horizontal velocity.
 
   <div class="container">
@@ -117,7 +115,7 @@
   By measuring this deflection in the vertical direction for both proof masses, the rotational rate of the sensor can be inferred.
 </section>
 
-<section id="1.1"><h1>Measurement model</h1>
+<section id="3"><h1>Measurement model</h1>
   We can measure the effect of the coriolis force - the size of the force is a function of the rotational speed of the rotating reference frame, i.e. we can use a measurement of $F_c$ to infer $\omega$.
 
   $$
