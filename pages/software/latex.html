@@ -94,10 +94,14 @@
     [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
 
     <p>
-      <li>Multiple lines in underbrace</li>
+      <li>Multiple lines (only 2) in underbrace</li>
       <a href="https://t.ly/YkN6">Ref</a>.
       <code>\underbrace{}_{\text{} \atop \text{}}</code> works well.
     </p>
+
+    <li>Another way of doing multiple lines ($>2$)</li>
+    Add <code>scripsize</code> to make the text font smaller:
+    $$\underbrace{M}_{\scriptsize\substack{\text{t1}\\\text{t2}\\\text{t3}}}$$
 
     <p>
       <li>Including normal text with math</li>
@@ -148,7 +152,9 @@
       Rows are terminated with <i>\\\</i> and columns are separated by <i>&</i>.
       <p></p>
       
-      <li><a href="t.ly/8MRnV">Good link</a> for quick reference</li>
+      <li>
+        <a href="https://t.ly/8MRnV">Ref1</a>, <a href="https://t.ly/B3GD_">Ref2</a> - links for quick reference
+      </li>
   
       <li>Adding a package to mathjax</li>
       Added the cancel package to <a href="../../notes-mathjax-config.js">here</a>.
@@ -165,6 +171,9 @@
       $$
         \cdot
       $$
+
+      <li>Fancy N</li>
+      $\mathcal{N}$
     </ul>
   </section>
 

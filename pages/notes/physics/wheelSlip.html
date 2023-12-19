@@ -43,6 +43,7 @@
 <ul class="no-bullets">
   <li><a href="#0.0">Static friction</a></li>
   <li><a href="#0.1">Kinetic friction</a></li>
+  <li><a href="#0.2">Static vs kinetic friction</a></li>
 </ul>
 <a href="#1">Wheel slip</a>
 <a href="#2">Questions & todo</a>
@@ -52,39 +53,43 @@
 
 <section id="0"><h1>Types of friction</h1>
   <subsection id="0.0"><h1>Static friction</h1>
-    If an object is at rest w.r.t. a surface, we can apply horizontal forces 
-    up to a certain threshold force and the object will still remain static. 
-    Experiments show this threshold force is a constant times the normal force. The coefficient is called the <i>coefficient of static friction</i>.
+    If an object is at rest w.r.t. a surface, horizontal forces up to a certain threshold force can be applied to the object and it will still remain static. Experiments show this threshold force is a constant (<i>coefficient of static friction</i>) times the normal force.
 
     $$\begin{align*}
       F_s \, > \, &\mu_s N \\
       \frac{1}{3} \, \lt \, &\mu_s \lt 1
     \end{align*}$$
 
-    This means that the force required to move the object horizontally is always less than the force with which gravity pulls the object down.
+    <n>This means that the force required to move the object horizontally is always less than the force with which gravity pulls the object down</n>.
 
     <p>
-      The mass of the bot is accounted for in the normal force. In real life,
-      the threshold to start moving can never be smaller than $\frac{1}{3}$ of the normal force even on a very slippery surface (?). <m>Does $\mu_s$ depend on the materials of the interacting surfaces?</m> 
+      The mass of the bot is accounted for in the normal force. IRL, the threshold to start moving can never be smaller than $\frac{1}{3}$rd of the normal force even on a very slippery surface.
     </p>
   </subsection>
 
   <subsection id="0.1"><h1>Kinetic friction</h1>
-    We need to apply a certain force to keep the object going at a constant velocity. This force is the same as the force of friction. From experiments, it is a constant (<i>coefficient for kinetic friction</i>) times the normal force (here, gravity).
+    A certain force needs to be applied to keep an object moving at a constant velocity. <n>This force is the same as the force of friction</n>. From experiments, it is a constant (<i>coefficient for kinetic friction</i>) times the normal force (here, gravity).
 
     $$
       F_k = \mu_k N
     $$
 
     $F_k$ is not a threshold force.
+  </subsection>
 
+  <subsection id="0.2"><h1>Static vs kinetic friction</h1>
+    To make braking easier, it is more efficient to design a system where $\mu_s$ is larger than $\mu_k$, i.e. more force is required to get an object to start moving from rest compared to keeping it moving at a constant velocity. In other words, less force is required to stop an object when it is in the static regime (<m>wheels stick more or have more instantaneous moments of stickiness?</m>) or more force is required to stop an object when it is moving with some constant velocity.
+      
     <p>
-      For braking $\mu_s$ tends to be larger than $\mu_k$. Normally, $\mu_k \lt \lt \frac{1}{4}\mu_s$. We want to apply the maximum amount of friction which is found in the static regime, because $\mu_s > \mu_k$. What we need to prevent is the <i>locking of wheels</i>. When a wheel stays locked, it's sliding on the ground (it's moving with the momentum we already built up), and we're in the regime of kinetic friction.
+      Normally, $\mu_k \lt \lt \frac{1}{4}\mu_s$. To brake quicker, the maximum amount of friction (which is found in the static regime) needs to be applied because $\mu_s > \mu_k$. 
     </p>
+
+    However, the <i>locking of wheels</i> needs to be prevented. When a wheel stays locked, it slides on the ground (it moves with the momentum already built up), thereby staying in the regime of kinetic friction.
   </subsection>
 </section>
 
 <section id="1"><h1>Wheel slip</h1>
+  [<a href="https://t.ly/iwDgU">Good video on balance of forces on a wheel</a>]<br>
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"

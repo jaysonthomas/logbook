@@ -56,11 +56,10 @@
 <chapter style="counter-reset: chapter 0"><h1>Continuous Probability</h1>
 
 <section id="0"><h1>Continuous samples space</h1>
-  An example of a continuous samples space is the real value position of a robot: <a href="https://t.ly/_1lN">Slide 11</a>.
-  Random variables become extremely powerful in this case.
+  The real value position of a robot is an example of a continuous sample space: <a href="https://t.ly/_1lN">Slide 11</a>. Random variables become extremely powerful in this case.
 
   <p>
-    When dealing with a continuous sample space, we can no longer say anything about the probability that a vehicle is at some specific location, because for a continuous sample space, the probability of any particular value will always be 0. We can only give the probability that the vehicle is in some region.
+    For a continuous sample space, the probability of any particular value will always be 0. For example, nothing can be said about the probability of a vehicle being at some specific location. Instead, probability that the vehicle is in some region is given more importance.
   </p>
 </section>
 
@@ -78,37 +77,24 @@
     F_x(u) = p(x \leq u)
   $$
 
-  The function describes the probability that a random variable $x$ is less than or equal
-  to $u$. 
+  The function describes the probability that a random variable $x$ is less than or equal to $u$. 
   
   <p>
-    A <code>limit</code> is a value toward which an expression converges as one or more 
-    variables approach certain values.
+    A <code>limit</code> is a value toward which an expression converges as one or more variables approach certain values.
   </p>
 
-  <p>
-    $F$ will be monotonically increasing.
-    The limit of $F$ as $u$ goes to $-\infty$ is $0$,
-    and the limit as $u$ goes to $+\infty$ is $1$.
-    It's important to understand that the index to the function is $u$,
-    but it is sub-scripted by $x$ to indicate which random variable we're characterizing by
-    the probability that the value of that random variable is less than $u$ or not.
-  </p>
+  $F$ will be monotonically increasing. The limit of $F$ as $u$ goes to $-\infty$ is $0$, and the limit as $u$ goes to $+\infty$ is $1$. The index to the function is $u$, but it is sub-scripted by $x$ to indicate which random variable is being characterizing by the probability that the value of that random variable is less than $u$ or not.
 </section>
   
 <section id="2"><h1>Probability density function</h1>
-  [<a href="https://t.ly/L1RY">Great ref</a>]
-  <br>
-  [<a href="https://t.ly/WqWw">Ref</a>] I like the different probability distributions described here. Not sure the definition for PDF is accurate.
-  <p>
-    <a href="https://t.ly/1iwF">Ref</a> - why is it referred to as density?!
-    <br>
-    Refer to <code>uniformDist</code> in <a href="../../../jlib/docs/leastSquaresEstimation.html">Jlib docs</a>.
-  </p>
   $$
     f_x(u) = \frac{d}{du}F_x(u)
   $$
-  It's the derivative of a CDF w.r.t. its index.
+  It's the derivative of a CDF w.r.t. its index. 
+
+  $$
+    \text{Probability density} = \text{Slope of CDF} = \frac{\text{Probability of interval}}{\text{Interval length}}
+  $$
 
   <figure>
     <img style="height:100px; width:auto"
@@ -119,27 +105,36 @@
   </figure>
 
   <p>
-    Consider this uniform PDF for the position $x$ of a vehicle.
-    It has the value 0.5 between $x$ equals zero and two, and zero everywhere else.
-    The probability that the vehicle is in the region between 0 and 2 is found
-    by calculating the area under the curve which would be $2*0.5$.
-    In fact, the probability that a random variable will take a value between 
-    $x_1$ and $x_2$, is given by the integral of the probability 
-    density function from $x_1$ to $x_2$.
+    From the image, the vehicle has a probabiliy density of $0.5$ for $0 \leq x \geq 2$, and $0$ everywhere else. The probability that the vehicle is in the region between 0 and 2 is found by calculating the area under the curve which would be $2*0.5$.
+  </p>
+  
+  The probability that a random variable will take a value between $x_1$ and $x_2$ is given by the integral of the probability density function from $x_1$ to $x_2$:
 
-    $$
-      p(x_1 < x < x_2) = \int^{x_2}_{x_1}f_x(x)dx = \int^{x_2}_{x_1}p(x)dx
-    $$
-  </p>
+  $$
+    p(x_1 &lt x &lt x_2) = \int^{x_2}_{x_1}f_x(x)dx = \int^{x_2}_{x_1}p(x)dx
+  $$
+
   <p>
-    $f_x(x)$ isn't the probability, and it can easily be greater than $1$.
-    But we do often write this density function as $p(x)$.
-    This changes our notion of what it means to be a proper distribution.
-    To be a proper density, $f_x(u)$ has to be greater than or equal to $0$,
-    and the integral under the distribution has to be equal to $1$.
-    <i>Normalization</i> implies finding a constant multiplier in
-    front of this density function to make it integrate to $1$.
+    $f_x(x)$ isn't the probability, and it can be greater than $1$. This density function is often written as $p(x)$. To be a <i>proper density</i>, $f_x(u)$ has to be greater than or equal to $0$, and the integral under the distribution has to be equal to $1$. <i>Normalization</i> implies finding a constant multiplier in front of this density function to make it integrate to $1$.
   </p>
+
+  <button class="accordion">References</button>
+  <div class="panel">
+    <ul>
+      <li><a href="https://t.ly/L1RY">Great ref</a></li>
+      <li>
+        <a href="https://t.ly/WqWw">Ref</a> - I like the different probability distributions described here. Not sure the definition for PDF is accurate.
+      </li>
+      <p>
+        <li>
+          <a href="https://t.ly/1iwF">Ref</a> - why is it referred to as density?!
+        </li>
+        <li>
+          Refer to <code>uniformDist</code> in <a href="../../../jlib/docs/leastSquaresEstimation.html">Jlib docs</a>.
+        </li>
+      </p>    
+    </ul>
+  </div>
 </section>
 
 <section id="3"><h1>Parameters of a distribution</h1>

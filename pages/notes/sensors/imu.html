@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gyroscope</title>
+  <meta name="Gyroscope" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Basics</a>
+<a href="#1">Coriolis force</a>
+<a href="#2">Physical working</a>
+<a href="#3">Measurement model</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>IMU</h1>
+<section><h1>Sources of errors mentioned in a datasheet</h1>
+  Understanding the error sources that corrupt measurements is the best way to correct them.
+
+  <subsection><h1>Resolution</h1>
+    <ul>
+      <li>Digital resolution</li>
+      Since an IMU is a digital sensor, it has a limited resolution. Eg: 16-bit.
+
+      <li>Resolution</li>
+      The lowest value the accelerometer/gyro can measure. The resolution is expressed in:
+      <ul>
+        <li>$mg$ (milli $g$) (A)</li>
+        <li>$^0/s$ (G)</li>
+      </ul>
+    </ul>
+  </subsection>
+
+  <subsection><h1>Bias</h1>
+    <ul>
+      <li><i>Zero offset</i></li>
+      Example: 
+      <ul>
+        <li>$\pm 30mg$ (A)</li>
+        <li>$\pm 1^0/s$ (G)</li>
+      </ul>
+
+      <p>
+        It is the voltage output of the accelerometer when it is subject to zero acceleration. When the accelerometer is at rest and not experiencing any external forces, it should ideally output a signal corresponding to zero acceleration. However, due to manufacturing variations and environmental factors, the accelerometer may output a non-zero value (an inherent offset) even when there is no acceleration. This <i>bias offset</i> can be determined by placing the accelerometer in a stable, motionless environment and recording the output. This can then be used to correct subsequent measurements.
+      </p>
+
+      The bias offset for a gyro can be big - from the example, $1^0/s$ can add up over time.
+
+      <p>
+        <li><i>Temperature calibration offset (TCO)</i></li>
+        It gives an indication of how the bias of the sensor can change with temperature. 
+
+        Example: 
+        <ul>
+          <li>$\pm 0.2mg/K$ (A)</li>
+          <li>$\pm 0.015^0/s/K$ (G)</li>
+        </ul>
+      </p>
+    </ul>
+  </subsection>
+  <subsection><h1>Random noise</h1>
+    It is also referred to as <i>Noise density</i> in the datasheet.
+    Example: 
+    <ul>
+      <li>$230 \mu g/\sqrt{Hz}$ (A)</li>
+      <li>$0.014^0/s/\sqrt{Hz}$ (G)</li>
+    </ul>
+
+    To get the noise standard deviation, this value is multiplied by the square root of the cut-off frequency of the low pass filter that is used to filter the measurement signal:
+
+    $$
+      \sigma_{noise} = \frac{\mu g}{\sqrt{Hz}} * \sqrt{\text{Cut off frequency} \atop \text{of LPF}}
+    $$
+
+    The cut off frequency of the low pass filter should at least be $0.5$ times the sampling rate. The more the signal is low-pass filtered, the more the noise is reduced. For example, with a sampling rate of $200Hz$, the noise density would have to be multiplied by $10$. 
+  </subsection>
+</section>
+
+<section><h1>Typical sensor model</h1>
+  $$
+    \underbrace{\tilde{x}}_{\text{Measured} \atop \text{sensor value}} 
+    = \underbrace{b}_{\text{Bias}} +
+    (\underbrace{I}_{\text{Identity} \atop \text{matrix}} +
+    \underbrace{M}_{\scriptsize\substack{\text{Scaling and}\\\text{cross-coupling}\\\text{matrix}}})
+    \underbrace{x}_{\text{True} \atop \text{value}} +
+    \underbrace{\eta}_{\text{Random} \atop \text{noise}}
+
+  $$
+
+  The bias $b$, an offset in a measurement value, is modeled as a random walk: 
+
+  $$
+    b_t = b_{t-1} + \underbrace{\eta_{b,t}}_{\text{Random} \atop \text{noise}}
+  $$
+  
+  From the image, typical biases don't have any upwards or downwards pattern, but they do generally tend to move away from zero.
+
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/physics/8_bias.png"/>
+      <figcaption>
+        Example of some typical biases plotted over time
+      </figcaption>
+    </figure>
+  </div>
+
+  If the scaling and cross-coupling matrix is $0$, then there is only bias and random noise. If it is non-zero, then:
+  <ul>
+    <li>The diagonal terms indicate that there's a slope error</li>
+    Example: instead of measuring 1, we measure 1.1, and instead of measuring 2, we measure 2.2.
+
+    <li>The off-diagonal terms indicates some coupling</li>
+    Example: If this were a 3-axis accelerometer, this could indicate
+    <ul>
+      <li>The X accelerometer is influencing the Y accelerometer or</li>
+      <li>There is some misalignment between the sensor and the vehicle body coordinate frames</li>
+    </ul>
+  </ul>
+
+  The random noise $\eta$ has no correlation between past and future noise/measurement values. Usually, this is assumed to be a zero mean Gaussian with some covariance:
+  $$
+    \eta \sim N(0, \Sigma)
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

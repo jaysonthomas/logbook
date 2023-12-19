@@ -116,13 +116,43 @@
 </section>
 
 <section id="3"><h1>Measurement model</h1>
-  We can measure the effect of the coriolis force - the size of the force is a function of the rotational speed of the rotating reference frame, i.e. we can use a measurement of $F_c$ to infer $\omega$.
+  <subsection><h1>Overview</h1>
+    The effect of the coriolis force can be measured. This measured size can then be used to infer the rotational speed of the rotating reference frame since $F_c$ is a function of $\omega$:
 
-  $$
-    |F_c| = f(\omega)
-  $$
+    $$
+      |F_c| = f(\omega)
+    $$
 
-  A <i>measurement model</i> should also include a measure of how accurate the measurements are; in this case, that of $\omega$.
+    The value (eg: rotation rate) that a sensor (eg: gyroscope) reports is unlikely to be the correct one. The role of a <i>measurement model</i> of a sensor is to help make sense of the imperfect measurements. It should include a measure of how accurate a sensor's measurements are; in this case, that of the inferred quantity $\omega$.
+  </subsection>
+
+  <subsection><h1>Details</h1>
+    Gyro measurements can be used to estimate the body rate of a vehicle, which can then be integrated to get the actual attitude. A simple measurement model for a gyroscope: 
+
+    $$
+      \tilde{\omega} = \underbrace{\omega}_{\text{True angular} \atop \text{velocity}} + \underbrace{b}_{\text{Bias}} + \underbrace{\eta}_{\text{Additive noise}} \qquad
+
+      \eta \sim N(0, \sigma^2_{gyro})
+    $$
+    
+    The measured rotation rate $\tilde{\omega}$ is equal to the true angular velocity which gets corrupted by some kind of bias (that needs to be identified ahead of time) and some additive zero mean Gaussian noise. The noise changes for every measurement. The bias might be temperature dependent and might change slowly, but it's something that stays constant at least for some amount of time.
+
+    <p>
+      This measurement is used to track the rotation angle and the uncertainty from time step to time step.
+
+      $$
+        \theta_t = \theta_{t-1} + \tilde{\omega}\Delta{t} + \underbrace{\epsilon}_{\text{Approximation} \atop \text{error}}
+      $$
+    </p>
+    Because this is a discrete approximation for computing the integral, in reality, there would also be an approximation error which can be ignored for now. It can also be assumed that any potential bias is calibrated and removed from the Gyro measurements. The equations become:
+
+    $$\begin{align*}
+      \tilde{\omega} &= \omega + \eta \\
+      \theta_t &= \theta_{t-1} + \tilde{\omega}\Delta{t}
+    \end{align*}$$
+    
+    The initial angle $\theta_0$ would need to be known. This type of navigation-by-integration is called <i>dead reckoning</i>. <i>Inertial navigation </i> that is navigation based on inertial sensors only is purely based on dead reckoning. They are highly susceptible to drift.
+  </subsection>
 </section>
 </chapter>
 
