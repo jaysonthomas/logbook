@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Gyroscope</title>
-  <meta name="Gyroscope" content="text/html; charset=utf-8;" />
+  <title>IMU</title>
+  <meta name="IMU" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,17 +39,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Basics</a>
-<a href="#1">Coriolis force</a>
-<a href="#2">Physical working</a>
-<a href="#3">Measurement model</a>
+<a href="#0">Sources of errors mentioned in a datasheet</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Resolution</a></li>
+  <li><a href="#0.1">Bias</a></li>
+  <li><a href="#0.2">Random noise</a></li>
+</ul>
+<a href="#1">Typical sensor model</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>IMU</h1>
-<section><h1>Sources of errors mentioned in a datasheet</h1>
+<section id="0"><h1>Sources of errors mentioned in a datasheet</h1>
   Understanding the error sources that corrupt measurements is the best way to correct them.
 
-  <subsection><h1>Resolution</h1>
+  <subsection id="0.0"><h1>Resolution</h1>
     <ul>
       <li>Digital resolution</li>
       Since an IMU is a digital sensor, it has a limited resolution. Eg: 16-bit.
@@ -63,7 +66,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Bias</h1>
+  <subsection id="0.1"><h1>Bias</h1>
     <ul>
       <li><i>Zero offset</i></li>
       Example: 
@@ -90,7 +93,7 @@
       </p>
     </ul>
   </subsection>
-  <subsection><h1>Random noise</h1>
+  <subsection id="0.2"><h1>Random noise</h1>
     It is also referred to as <i>Noise density</i> in the datasheet.
     Example: 
     <ul>
@@ -108,7 +111,7 @@
   </subsection>
 </section>
 
-<section><h1>Typical sensor model</h1>
+<section id="1"><h1>Typical sensor model</h1>
   $$
     \underbrace{\tilde{x}}_{\text{Measured} \atop \text{sensor value}} 
     = \underbrace{b}_{\text{Bias}} +

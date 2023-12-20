@@ -43,6 +43,10 @@
 <a href="#1">Coriolis force</a>
 <a href="#2">Physical working</a>
 <a href="#3">Measurement model</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Overview</a></li>
+  <li><a href="#3.1">Details</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Gyroscope</h1>
@@ -116,7 +120,7 @@
 </section>
 
 <section id="3"><h1>Measurement model</h1>
-  <subsection><h1>Overview</h1>
+  <subsection id="3.0"><h1>Overview</h1>
     The effect of the coriolis force can be measured. This measured size can then be used to infer the rotational speed of the rotating reference frame since $F_c$ is a function of $\omega$:
 
     $$
@@ -126,7 +130,7 @@
     The value (eg: rotation rate) that a sensor (eg: gyroscope) reports is unlikely to be the correct one. The role of a <i>measurement model</i> of a sensor is to help make sense of the imperfect measurements. It should include a measure of how accurate a sensor's measurements are; in this case, that of the inferred quantity $\omega$.
   </subsection>
 
-  <subsection><h1>Details</h1>
+  <subsection id="3.1"><h1>Details</h1>
     Gyro measurements can be used to estimate the body rate of a vehicle, which can then be integrated to get the actual attitude. A simple measurement model for a gyroscope: 
 
     $$
