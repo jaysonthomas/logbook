@@ -53,15 +53,15 @@
 <chapter style="counter-reset: chapter 0"><h1>Bayes Filters</h1>
 <section id="0"><h1>Overview</h1>
   <subsection id="0.0"><h1>The main aim</h1>
-    The main aim is to maintain an accurate and responsive state estimate of a continuously changing system. No matter how clever one is with noisy sensor data, it is not possible to maintain a robust and responsive estimate of a state (eg. position of a moving vehicle), unless the estimator is also made aware of the controls the system is commanded. 
+    The main aim is to maintain an accurate and responsive state estimate of a continuously changing system. It is not possible to maintain a robust and responsive estimate of a state (eg. position of a moving vehicle) with noisy sensor data, unless the estimator is also made aware of the controls the system is commanded. 
 
     <p>
-      Bayes filters allow the integration of measurements and control in a continuous space, incorporating them into the state estimator to find a continuous state estimate.
+      Bayes filters incorporate measurements as well as control into the state estimator in continuous space. Bayes Filter is a general framework for thinking about state estimation - it updates and maintains a belief of a state.
     </p>
   </subsection>
 
   <subsection id="0.1"><h1>The 2 key steps</h1>
-    Bayes Filter is a general framework for thinking about state estimation. Its key idea involves alternating between 2 steps to maintain a belief of a state:
+    The key idea of Bayes filters involves alternating between 2 steps:
     
     <ul>
       <li>Prediction step</li>
@@ -97,10 +97,10 @@
     
     <ul>
       <li>After the prediction step</li>
-      The current state is projected forward based on the control input. This prediction will be noisy because of <n>imperfections in the system model</n>, causing an increase in the uncertainty and hence our belief to spread out.
+      The current state is projected forward based on the control input. This prediction will be noisy because of <n>imperfections in the system model</n>, causing an increase in the uncertainty and hence the belief to spread out.
 
       <p>
-        If we had a perfect transition model with no noise, we could predict forever without the need to make any measurements. However, because there is noise, if we predicted forever, the transition noise would keep increasing after each step.
+        If a perfect transition model with no noise was used, one could predict forever without the need to make any measurements. However, because there is noise, if the prediction step was carried out forever, the transition noise would keep increasing after each step.
       </p>
 
       <li>After the measurement step</li>
@@ -110,7 +110,7 @@
 </section>
 
 <section id="1"><h1>The algorithm</h1>
-  The algorithm as described here makes the assumption that the system is run in simulation i.e. we can execute a control action and receive a measurement of the system after the control is applied in the same time step. At the end of every timestep, we have a belief of the system's state. In terms of computing the input control, we need both a reference trajectory and the system's state at the end of the previous timestep.
+  The algorithm as described here makes the assumption that the system is run in simulation i.e. a control action can be applied and a measurement can be received from the system in the same time step. At the end of every timestep, the belief of the system's state is updated. At every step, the input control is computed using the reference trajectory and the system's state at the end of the previous timestep.
 
   <ul>
     <li>Compute control</li>
