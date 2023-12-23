@@ -41,6 +41,17 @@
   
 <a href="#0">Definitions</a>
 <a href="#1">Aim</a>
+<a href="#2">Common forces</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Gravity</a></li>
+  <li><a href="#2.1">Drag</a></li>
+</ul>
+<a href="#3">Translational Equilibrium</a>
+<a href="#4">Acceleration (Unbalanced forces)</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Linear translational acceleration</a></li>
+  <li><a href="#4.1">Rotational acceleration</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Dynamics overview</h1>
@@ -66,6 +77,69 @@
   </ul>
 
   From a control standpoint, having a good dynamics model of a robot allows one to intelligently influence the output of its actuators by properly setting the inputs. 
+
+  <p>
+    The aim is to control the magnitude and direction of the forces created by the actuators. For a quadrotor, it would be the thrust vectors created by the rotors for example.
+  </p>
+</section>
+
+<section id="2"><h1>Common forces</h1>
+  <subsection id="2.0"><h1>Gravity</h1>
+    The force of gravity always points straight downwards toward the centre of the earth. Its strength is given by:
+    $$
+      mg
+    $$
+    $m$ is the mass of the object. <br>
+    $g$ is the acceleration due to gravity, which is $~9.81 m/s^2$. This is the rate at which an object will accelerate downwards when it's dropped on earth.
+
+    <div class="container">
+      <figure>
+        <img style="height:60px; width:auto"
+        src="../../../../figures/drone/29_gravity.png"/>
+        <figcaption>
+          Direction of gravity
+        </figcaption>
+      </figure>
+    </div>
+  </subsection>
+
+  <subsection id="2.1"><h1>Drag</h1>
+    <i>Drag</i> is a friction force (due to air resistance) experienced by a body moving through a fluid such as air, caused by the difference in velocity between the vehicle body and the fluid.
+  </subsection>
+</section>
+
+<section id="3"><h1>Translational Equilibrium</h1>
+  A vehicle is in a state of <i>translational equilibrium</i> when it is not experiencing any translational acceleration (net force is 0). A <i>translation</i> is any non-rotational motion. So, zero translational acceleration means an object isn't accelerating towards the left or right, up or down and forward or backward.
+</section>
+
+<section id="4"><h1>Acceleration (Unbalanced forces)</h1>
+  <subsection id="4.0"><h1>Linear translational acceleration</h1>
+    When an object experiences an unbalanced force, it accelerates in the direction of the net force.
+
+    $$
+      F = ma
+    $$
+    $F$ is the <n>net</n> force acting on the object.<br> 
+    $a$ is acceleration measured in an <i>inertial frame</i>, i.e. a reference frame that is not accelerating, like the world frame.
+
+    <p>
+      $F$ and $a$ are vectors and can be analysed on a pure direction basis. 
+    </p>
+  </subsection>
+
+  <subsection id="4.1"><h1>Rotational acceleration</h1>
+    Unbalanced moments cause rotational acceleration.
+
+    $$
+      \tau = I \alpha
+    $$
+    
+    $\tau$ is the net torque [used interchangeably with moment] around a given axis. <br>
+    $\alpha$ [$\frac{rad}{sec^2}$] is the angular acceleration about the same axis; it gives an indication of how fast the rotational speed is changing. Both are vectors.
+    
+    <p>
+      $I$, the <i>Moment of Inertia</i>, is a measure of how hard it is to change an object's <n>rotational velocity</n> about a particular axis. It can be different for each axis.
+  </subsection>
 </section>
 </chapter>
 
