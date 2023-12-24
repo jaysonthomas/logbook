@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2023-12-24T16:53:57.737Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.11 Chrome/114.0.5735.289 Electron/25.9.8 Safari/537.36" etag="etr2P_Tx72bo5qq-8xjU" version="22.1.11" type="device">
+  <diagram id="EGJNes0i60z-JK1KFXsS" name="Page-1">
+    <mxGraphModel dx="1195" dy="735" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-2" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="cUcM5UsywRj8lb4amaYQ-3" target="cUcM5UsywRj8lb4amaYQ-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-3" value="Switch configuration&lt;br&gt;&lt;br&gt;`u_1, u_2, u_3, u_4`" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="82" y="131" width="131" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-4" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="cUcM5UsywRj8lb4amaYQ-5" target="cUcM5UsywRj8lb4amaYQ-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-5" value="Voltage applied across coil" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="256" y="161" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-6" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="cUcM5UsywRj8lb4amaYQ-7" target="cUcM5UsywRj8lb4amaYQ-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-7" value="Current flowing through coil" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="412" y="161" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cUcM5UsywRj8lb4amaYQ-8" value="Magnetic field produced around coil" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="560" y="161" width="164" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

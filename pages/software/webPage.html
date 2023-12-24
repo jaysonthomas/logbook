@@ -42,9 +42,10 @@
 <a href="#0">Symbols</a>
 <a href="#1">Linking equations</a>
 <a href="#2">Figures</a>
-<a href="#3">Linking code</a>
-<a href="#4">Adding a collapsable section</a>
-<a href="#5">Miscellaneous</a>
+<a href="#3">Block diagrams</a>
+<a href="#4">Linking code</a>
+<a href="#5">Adding a collapsable section</a>
+<a href="#6">Miscellaneous</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Web page</h1>
@@ -87,14 +88,46 @@
   </ul>
 </section>
 
-<section id="3"><h1>Linking code</h1>
+<section id="3"><h1>Block diagrams</h1>
+  <figure>
+    <div style="padding: 10px;">
+      <script type="text/javascript">
+      var system = { "name": "PidController", 
+        "input_ports" : ["estimated_state", "desired_state"],
+        "output_ports" : ["generalized_force"]
+        };
+      document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_pid_controller.html"));
+      </script> 
+    </div>
+    <div style="padding: 10px;">
+      <script type="text/javascript">
+        var system = { "name": "InverseDynamicsController", 
+          "input_ports" : ["estimated_state", "desired_state", '<span style="color:gray">desired_acceleration</span>'],
+          "output_ports" : ["generalized_force"]
+          };
+        document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_inverse_dynamics_controller.html"));
+      </script>
+    </div>
+    <div style="padding: 10px;">
+      <script type="text/javascript">
+      var system = { "name": "Simple Pendulum", 
+        "input_ports" : ["\\( \\tau \\)"],
+        "output_ports" : ["\\( x \\)"]
+        };
+      document.write(system_html(system));
+      </script> 
+    </div>
+  </figure>
+</section>
+
+<section id="4"><h1>Linking code</h1>
   <ul>
     <li>From github</li>
     If the local code is in <code>logbook/jlib/code/estimation/x.py</code>, then the github code is in <code>https://github.com/jaysonthomas/jlib/blob/main/code/estimation/leastSquares.py</code>
   </ul>
 </section>
 
-<section id="4"><h1>Adding a collapsable section</h1>
+<section id="5"><h1>Adding a collapsable section</h1>
   <button class="accordion">Test</button>
   <div class="panel">
     <ul>
@@ -106,7 +139,7 @@
   </div>
 </section>
 
-<section id="5"><h1>Miscellaneous</h1>
+<section id="6"><h1>Miscellaneous</h1>
   <ul>
     <li>Details</li>
     [<a href="https://t.ly/cJkC">Ref</a>] Just the details tag. The summary tag provides the summary.
@@ -126,37 +159,6 @@ Linking to the equation from elsewhere.
     <br>
     To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
     <br><br>
-
-    <li>Creating block diagrams in a page</li>
-    <figure>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-        var system = { "name": "PidController", 
-          "input_ports" : ["estimated_state", "desired_state"],
-          "output_ports" : ["generalized_force"]
-          };
-        document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_pid_controller.html"));
-        </script> 
-      </div>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-          var system = { "name": "InverseDynamicsController", 
-            "input_ports" : ["estimated_state", "desired_state", '<span style="color:gray">desired_acceleration</span>'],
-            "output_ports" : ["generalized_force"]
-            };
-          document.write(system_html(system, "https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1controllers_1_1_inverse_dynamics_controller.html"));
-        </script>
-      </div>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-        var system = { "name": "Simple Pendulum", 
-          "input_ports" : ["\\( \\tau \\)"],
-          "output_ports" : ["\\( x \\)"]
-          };
-        document.write(system_html(system));
-        </script> 
-      </div>
-    </figure>
   </ul>
 </section>
 </chapter>
