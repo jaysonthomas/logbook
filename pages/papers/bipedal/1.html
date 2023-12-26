@@ -45,8 +45,45 @@
 <chapter style="counter-reset: chapter 0"><h1>Bipedal paper 1</h1>
 <section id="0"><h1>Overview</h1>
   The paper: <a href="https://t.ly/dmPJG">Planar Bipedal Locomotion with Nonlinear Model Predictive Control: Online Gait Generation using Whole-Body Dynamics</a>
+
+  <p>
+    Previous methods have all involved some form of prior gait synthesis. <i>Gaits</i> are dynamically stable reference trajectories.
+  </p>
 </section>
 
+<section><h1>Non MPC approaches to gait synthesis</h1>
+  <ul>
+    <li>Condensed stability conditions</li>
+    Example: <i>Zero-Moment Point (ZMP)</i>
+
+    <p>
+      <li>Reduced-order models that simplify elements such as leg mass</li>
+    </p>
+
+    <li>Hybrid Zero Dynamics (HZD)</li>
+      <ul>
+        <li>
+          It accounts for the underactuated and hybrid nature of the full system dynamics.
+        </li>
+        <li>
+          It provides formal stability guarantees as well as works very well IRL.
+        </li>
+        <li>
+          It has high computational requirements that limits to offline use.
+        </li>
+      </ul>
+
+    <li>Using a library of gaits</li>
+      The limitations are:
+      <ul>
+        <li>Only periodic gaits</li>
+        <li>Requires complex engineering solutions for gait transitions</li>
+        <li>Constraint satisfaction during execution is hard</li>
+      </ul>
+     
+  </ul>
+
+</section>
 <section><h1>Musings</h1>
   <subsection><h1>Dynamics</h1>
     <ul>
@@ -57,9 +94,8 @@
       without the need for continuous external energy inputs. 
       <i>Passive</i> refers to the fact that the motion of a biped is primarily governed by its mechanical structure and interactions with the environment without the need for continuous external energy inputs to achieve this motion.
 
-      The use of "nonlinear" implies that the mathematical description of the robot's motion involves complex relationships that may not follow simple, linear patterns. 
       <p>
-        <i>Nonlinear dynamics</i> indicates that the behavior of the system is described by nonlinear equations, i.e. the system exhibits complex behaviors, including sensitivity to initial conditions and the potential for chaotic motion.
+        <i>Nonlinear</i> indicates that the mathematical description of the robot's motion involves complex relationships/behaviours (nonlinear equations) including sensitivity to initial conditions and the potential for chaotic motion.
       </p>
     </ul>
   </subsection>
