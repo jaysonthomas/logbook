@@ -60,7 +60,7 @@
       <li>Reduced-order models that simplify elements such as leg mass</li>
     </p>
 
-    <li>Hybrid Zero Dynamics (HZD)</li>
+    <li><i>Hybrid Zero Dynamics (HZD)</i></li>
       <ul>
         <li>
           It accounts for the underactuated and hybrid nature of the full system dynamics.
@@ -84,6 +84,87 @@
   </ul>
 
 </section>
+
+<section><h1>Online gait synthesis or motion planning</h1>
+  <subsection><h1>Non-MPC</h1>
+    <ul>
+      <li>Required ZMP conditions</li>
+      <li>
+        Used simplified template models for planning and whole-body tracking
+        controllers
+      </li>
+      <li>
+        Used whole-body planning only for non-walking tasks such as reaching
+      </li>
+    </ul>
+  </subsection>
+
+  <subsection><h1>Using MPC</h1>
+    Advantages:
+    <ul>
+      <li>
+        Environmental parameters can be incorporated into dynamic motion planning; which then allows for
+      </li>
+      <li>
+        Aperiodic trajectories
+      </li>
+    </ul>
+  
+    Working:
+    <ul>
+      <li>Optimises directly over contact forces</li>
+    </ul>
+    
+    Whole-body motion planning results for bipedal walking:
+    <ul>
+      <li>Have been mainly implemented in simulation</li>
+      <li>Have cancelled nonlinear dynamics through feedback-linearization before planning</li>
+    </ul>
+  </subsection>
+</section>
+
+<section><h1>Challenges with whole-body motion planning</h1>
+  In order to keep the computation requirements low, whole-body motion planners need to balance the trade-off between:
+  <ul>
+    <li>Horizon length</li>
+    Producing stable locomotion requires optimising over a sufficiently long hori-
+zon.
+
+    <p>
+      <li>Model complexity</li>
+      The methods for quadrupeds typically exploit low leg inertia to neglect leg dynamics, reducing the state dimension in the optimisation. Transferring this reduction to bipedal systems is difficult, however, as the legs compose a relatively high fraction of the system's total inertia. At the same time, simultaneously considering both leg and torso dynamics results in many degrees of freedom, making optimisation over long time horizons computationally intensive.
+    </p>
+    <li>Planning frequency</li>
+    The narrow stance width and high center of mass of bipeds necessitate a high planning frequency to counteract disturbances in underactuated dimensions.
+  </ul>
+</section>
+
+<section><h1>Paper's contributions</h1>
+  <ul>
+    <li>
+      A nonlinear MPC approach for online whole-body motion planning of bipedal robotic locomotion based on existing methods used for quadrupedal locomotion is proposed. 
+      
+      <p>
+        This has achieved a wide range of stable behaviors with a planning horizon of 2 s and update frequency of up to 270 Hz.
+      </p>
+    </li>
+
+    <p>
+      <li>
+        To reduce the computational burden of online whole-body planning, a stable walking gait synthesized offline via Hybrid Zero Dynamics (HZD) is incorporated into the nonlinear optimisation problem. 
+        
+        <p>
+          This information permits robust walking while optimizing over shorter horizon lengths (0.2 s) that require less computational effort and allow rapid re-planning (850 Hz) which is important for achieving whole-body planning on 3D walking systems.          
+        </p>
+      </li>
+    </p>
+
+    <li>
+      This paper is the first experimental demonstration of online whole-body motion planning for bipedal walking.
+    </li>
+  </ul>
+</section>
+
 <section><h1>Musings</h1>
   <subsection><h1>Dynamics</h1>
     <ul>
