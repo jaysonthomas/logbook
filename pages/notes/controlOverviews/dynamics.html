@@ -53,6 +53,7 @@
   <li><a href="#4.0">Linear translational acceleration</a></li>
   <li><a href="#4.1">Rotational acceleration</a></li>
 </ul>
+<a href="#5">Making use of the dynamics in simulation</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Dynamics overview</h1>
@@ -146,6 +147,30 @@
       $I$, the <i>Moment of Inertia</i>, is a measure of how hard it is to change an object's <n>rotational velocity</n> about a particular axis. It can be different for each axis.
   </subsection>
 </section>
+
+<section id="5"><h1>Making use of the dynamics in simulation</h1>
+  Steps:
+  <ul>
+    <li>
+      Understand the accelerations and rotational acceleration affecting the system at any given time instant.
+    </li>
+
+    <li>
+      Use the acceleration to update the associated velocities.
+    </li>
+
+    <li>
+      Use the velocity to update the associated position.
+    </li>
+  </ul>
+
+  Mathematically, change is accumulated by numerically approximating the integral, i.e. changes in velocity is approximated and added for a period of time to find the position at the end of the period. 
+  
+  <p>
+    Because, acceleration is integrated twice to understand how it influences the motion (position), most systems are <i>Second order systems</i> or a <i>Double integrator</i>. For such a system, the equations that govern how it evolves with time includes second derivatives. Example: for a vehicle moving in the vertical direction, $F=m\ddot{z}$ just says that forces directly influence the second derivative of position. 
+  </p>
+</section>
+
 </chapter>
 
 </body>

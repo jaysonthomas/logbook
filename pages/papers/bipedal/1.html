@@ -40,6 +40,18 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Non MPC approaches to gait synthesis</a>
+<a href="#2">Online gait synthesis or motion planning</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Non-MPC</a></li>
+  <li><a href="#2.1">Using MPC</a></li>
+</ul>
+<a href="#3">Challenges with whole-body motion planning</a>
+<a href="#4">Paper's contributions</a>
+<a href="#5">Musings</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Dynamics</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Bipedal paper 1</h1>
@@ -51,7 +63,7 @@
   </p>
 </section>
 
-<section><h1>Non MPC approaches to gait synthesis</h1>
+<section id="1"><h1>Non MPC approaches to gait synthesis</h1>
   <ul>
     <li>Condensed stability conditions</li>
     Example: <i>Zero-Moment Point (ZMP)</i>
@@ -85,8 +97,8 @@
 
 </section>
 
-<section><h1>Online gait synthesis or motion planning</h1>
-  <subsection><h1>Non-MPC</h1>
+<section id="2"><h1>Online gait synthesis or motion planning</h1>
+  <subsection id="2.0"><h1>Non-MPC</h1>
     <ul>
       <li>Required ZMP conditions</li>
       <li>
@@ -99,7 +111,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Using MPC</h1>
+  <subsection id="2.1"><h1>Using MPC</h1>
     Advantages:
     <ul>
       <li>
@@ -123,7 +135,7 @@
   </subsection>
 </section>
 
-<section><h1>Challenges with whole-body motion planning</h1>
+<section id="3"><h1>Challenges with whole-body motion planning</h1>
   In order to keep the computation requirements low, whole-body motion planners need to balance the trade-off between:
   <ul>
     <li>Horizon length</li>
@@ -139,7 +151,7 @@ zon.
   </ul>
 </section>
 
-<section><h1>Paper's contributions</h1>
+<section id="4"><h1>Paper's contributions</h1>
   <ul>
     <li>
       A nonlinear MPC approach for online whole-body motion planning of bipedal robotic locomotion based on existing methods used for quadrupedal locomotion is proposed. 
@@ -165,8 +177,8 @@ zon.
   </ul>
 </section>
 
-<section><h1>Musings</h1>
-  <subsection><h1>Dynamics</h1>
+<section id="5"><h1>Musings</h1>
+  <subsection id="5.0"><h1>Dynamics</h1>
     <ul>
       <li>Dynamically stable</li>
       <li>Phases of underactuation</li>

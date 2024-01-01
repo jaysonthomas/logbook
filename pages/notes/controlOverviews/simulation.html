@@ -39,9 +39,9 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Advancing the state of the vehicle</a>
+<a href="#0">Advancing a system's state</a>
 <ul class="no-bullets">
-  <li><a href="#0.0">Functions</a></li>
+  <li><a href="#0.0">Software implementation</a></li>
   <li><a href="#0.1">State variables</a></li>
   <li><a href="#0.2">Plots</a></li>
 </ul>
@@ -49,14 +49,12 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Simulation overview</h1>
 
-<section id="0"><h1>Advancing the state of the vehicle</h1>
-  When all the forces impacting the motion of a vehicle, i.e. the dynamics of a system are understood, it is possible to implement a function that advances the state of the vehicle forward in time.
-
-  <subsection id="0.0"><h1>Functions</h1>
-    Typically, the function is written in 2 stages:
+<section id="0"><h1>Advancing a system's state</h1>
+  <subsection id="0.0"><h1>Software implementation</h1>
+    When all the forces impacting the motion of a vehicle, i.e. the dynamics are understood, it is possible to implement a function that advances the state of the vehicle forward in time. Typically, the software function is written in 2 stages:
     <ul>
       <li>Uncontrolled motion</li>
-      The actuators aren't energised and the vehicle is purely under the influence of external forces. For example: a drone under the influence of gravity whose rotors are not spinning.
+      The actuators aren't energised and the vehicle is purely under the influence of external forces. For example: a drone whose rotors are not spinning, is purely under the influence of gravity.
 
       <p>
         <li>Controlled motion</li>
@@ -65,7 +63,7 @@
   </subsection>
 
   <subsection id="0.1"><h1>State variables</h1>
-    Forces directly affect the acceleration of the system. Any kind of acceleration advances the state forward in time by $dt$ seconds. It first changes the velocity which changes the position. So, these 2 variables need to be part of the state.
+    Forces directly affect the acceleration of the system. Any kind of acceleration advances the state forward in time by $dt$ seconds. It first changes the velocity which changes the position. To montior changes in the state over time, these 2 variables need to be tracked and thus become part of the state.
 
     <p>
       If the rotors are spinning, there would be rotational velocity and angle included in the state variables.
