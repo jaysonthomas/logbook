@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trajectory optimisation</title>
+  <meta name="Trajectory optimisation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Summary of the approaches to calculate the cost to go</a></li>
+  <li><a href="#0.1">Fundamental idea of TO</a></li>
+</ul>
+<a href="#1">Basic TO formulation</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>LQR</h1>
+<section><h1>Overview</h1>
+  $$\begin{align}
+  \underbrace{\begin{bmatrix}\dot{x}_{1} \\ \dot{x}_{2} \end{bmatrix}}_{\dot{\mathbf{x}}} &= \underbrace{\begin{bmatrix} 0 & 1\\ -\frac{k_{s}}{m} & -\frac{k_{d}}{m} \end{bmatrix}}_{A} \underbrace{\begin{bmatrix}x_{1} \\ x_{2} \end{bmatrix}}_{x}+\underbrace{\begin{bmatrix} 0 \\ \frac{1}{m}\end{bmatrix}}_{B}\underbrace{F}_{u} \\
+  \dot{\mathbf{x}}& =A\mathbf{x}+B\mathbf{u}
+  \label{SSmodelNew1}
+  \end{align}
+  $$
+</section>
+</chapter>
+
+</body>
+</html>
