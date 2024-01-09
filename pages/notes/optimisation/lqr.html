@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Trajectory optimisation</title>
-  <meta name="Trajectory optimisation" content="text/html; charset=utf-8;" />
+  <title>LQR</title>
+  <meta name="LQR" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -40,21 +40,37 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<ul class="no-bullets">
-  <li><a href="#0.0">Summary of the approaches to calculate the cost to go</a></li>
-  <li><a href="#0.1">Fundamental idea of TO</a></li>
-</ul>
-<a href="#1">Basic TO formulation</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>LQR</h1>
-<section><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
+ 
   $$\begin{align}
   \underbrace{\begin{bmatrix}\dot{x}_{1} \\ \dot{x}_{2} \end{bmatrix}}_{\dot{\mathbf{x}}} &= \underbrace{\begin{bmatrix} 0 & 1\\ -\frac{k_{s}}{m} & -\frac{k_{d}}{m} \end{bmatrix}}_{A} \underbrace{\begin{bmatrix}x_{1} \\ x_{2} \end{bmatrix}}_{x}+\underbrace{\begin{bmatrix} 0 \\ \frac{1}{m}\end{bmatrix}}_{B}\underbrace{F}_{u} \\
   \dot{\mathbf{x}}& =A\mathbf{x}+B\mathbf{u}
   \label{SSmodelNew1}
   \end{align}
   $$
+
+  Error variables:
+  $$\begin{align}
+    \tilde{\mathbf{x}}=\mathbf{x}-\mathbf{x}_{D},\;\; => \;\; \mathbf{x} = \tilde{\mathbf{x}} + \mathbf{x}_{D} \\
+    \tilde{\mathbf{u}}=\mathbf{u}-\mathbf{u}_{D},\;\; => \;\; \mathbf{u} = \tilde{\mathbf{u}} + \mathbf{u}_{D}
+    \label{errorVariables}
+  \end{align}$$
+
+  Differentiating:
+  $$\begin{align}
+    \dot{\mathbf{x}}= \dot{\tilde{\mathbf{x}}}+ \dot{\mathbf{x}}_{D}=A(\tilde{\mathbf{x}}+ \mathbf{x}_{D}) +B(\tilde{\mathbf{u}}+\mathbf{u}_{D})
+    \label{StateDerivation}
+    \end{align}
+  $$
+
+  Cost function:
+  $$\begin{align}
+    J(\tilde{\mathbf{u}})=\int_{t=0}^{t=\infty}\Big(\mathbf{\tilde{x}}^{T}Q \mathbf{\tilde{x}} + \mathbf{\tilde{u}}^{T}R \mathbf{\tilde{u}} +2 \mathbf{\tilde{x}}^{T}N \mathbf{\tilde{u}} \Big) \; dt
+    \label{costFunctionLQR}
+  \end{align}$$
 </section>
 </chapter>
 

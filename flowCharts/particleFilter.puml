@@ -1,0 +1,36 @@
+@startuml
+simulator -> declareGlobals
+declareGlobals -> init
+init -> scan
+scan -[#green]> ultraScan
+scan --> correctShift
+correctShift --> assignWeights
+
+state declareGlobals {
+  setMap --> pad
+  pad --> genParticlePos
+  genParticlePos --> drawMap
+}
+
+state init {
+  drawBot --> generateScanConfig
+  generateScanConfig --> drawParticles
+}
+
+state simulator {
+}
+
+state ultraScan {
+  updateScanLines --> intersection
+  intersection --> findNearestCP
+}
+
+scan:\
+  18 deg gap-scans\n\
+Get crossing points & distances\nalong scan lines for robot & particles
+
+correctShift:\
+Correct each particle's orientation\nto match more closely to the bot's.
+
+assignWeights:gaussmf
+@enduml

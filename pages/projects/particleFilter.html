@@ -40,6 +40,7 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Setup</a>
+<a href="#1">Scan</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Particle Filter</h1>
@@ -47,8 +48,31 @@
 <pre><code class="bash">
 cd ~/matlab/bin
 ./matlab  
+/home/jayson/nonGitlab/bin/R/robotics_presentation/4_code/robotics/assg1/actual/sub/simulator/script.m
 </code></pre>  
   
+</section>
+
+<section id="1"><h1>Scan</h1>
+  Rotation matrix based on bot angle:
+
+  $$
+    \begin{bmatrix}
+      1 & 0 & x_{bot} \\
+      0 & 1 & y_{bot} \\
+      0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      c\theta & -s\theta & 0 \\
+      s\theta & c\theta & 0 \\
+      0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & x_{offset} \\
+      0 & 1 & y_{offset} \\
+      0 & 0 & 1
+    \end{bmatrix}
+  $$
 </section>
 </chapter>
 
