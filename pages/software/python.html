@@ -76,7 +76,50 @@ def greet(name: str) -> str:
   return temp + ", " + name
 </code></pre>
 
-Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
+  Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
+
+  <subsection><h1>Stub files</h1>
+    In Python, stub files with a .pyi extension are used for type hinting without providing the actual implementation code. These stub files contain type information for functions, classes, and modules, allowing static type checkers and IDEs to analyze code for potential type-related issues without the need for the full implementation.
+
+    <p>
+      For example, a module called example.py, you might have a corresponding stub file named example.pyi.
+    </p>
+
+<pre><code class="python">
+# example.py
+def add(x: int, y: int) -> int:
+  return x + y
+
+# example.pyi
+def add(x: int, y: int) -> int: ...
+</code></pre>  
+
+    The ellipsis <code>...</code> is used to indicate that this is a stub and doesn't include the actual function implementation.
+  </subsection>
+</section>
+
+<section><h1>Python configuration</h1>
+  [<a href="https://t.ly/dMtsd">Ref</a>] <br>
+  To see the options:
+<pre><code class="bash">
+sudo update-alternatives --config python
+</code></pre>
+
+  If there are no errors:
+<pre><code class="bash">
+update-alternatives: error: no alternatives for python3  
+</code></pre>
+    
+  To install alternatives:
+<pre><code class="bash">
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.4 1
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2  
+</code></pre>
+  
+  To set an alternative (can also use the config option):
+<pre><code class="bash">
+sudo update-alternatives  --set python /usr/bin/python3.6  
+</code></pre>
 </section>
 
 <section><h1>Operators</h1>
