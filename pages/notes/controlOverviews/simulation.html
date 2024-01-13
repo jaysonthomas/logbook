@@ -39,40 +39,92 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Advancing a system's state</a>
-<ul class="no-bullets">
-  <li><a href="#0.0">Software implementation</a></li>
-  <li><a href="#0.1">State variables</a></li>
-  <li><a href="#0.2">Plots</a></li>
-</ul>
+<a href="#0">Overview</a>
+<a href="#1">Software implementation</a>
+<a href="#2">State variables</a>
+<a href="#3">Forward euler method</a>
+<a href="#4">Backward Euler method</a>
+<a href="#5">Plots</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simulation overview</h1>
 
-<section id="0"><h1>Advancing a system's state</h1>
-  <subsection id="0.0"><h1>Software implementation</h1>
-    When all the forces impacting the motion of a vehicle, i.e. the dynamics are understood, it is possible to implement a function that advances the state of the vehicle forward in time. Typically, the software function is written in 2 stages:
-    <ul>
-      <li>Uncontrolled motion</li>
-      The actuators aren't energised and the vehicle is purely under the influence of external forces. For example: a drone whose rotors are not spinning, is purely under the influence of gravity.
+<section id="0"><h1>Overview</h1>
+  Simulation is all about advancing a system's state forward in time.
+</section>
 
-      <p>
-        <li>Controlled motion</li>
-      </p>
-    </ul>
-  </subsection>
-
-  <subsection id="0.1"><h1>State variables</h1>
-    Forces directly affect the acceleration of the system. Any kind of acceleration advances the state forward in time by $dt$ seconds. It first changes the velocity which changes the position. To montior changes in the state over time, these 2 variables need to be tracked and thus become part of the state.
+<section id="1"><h1>Software implementation</h1>
+  When all the forces impacting the motion of a vehicle, i.e. the dynamics are understood, it is possible to implement a function that advances the state of the vehicle forward in time. Typically, the software function is written in 2 stages:
+  <ul>
+    <li>Uncontrolled motion</li>
+    The actuators aren't energised and the vehicle is purely under the influence of external forces. For example: a drone whose rotors are not spinning, is purely under the influence of gravity.
 
     <p>
-      If the rotors are spinning, there would be rotational velocity and angle included in the state variables.
+      <li>Controlled motion</li>
     </p>
-  </subsection>
+  </ul>
+</section>
 
-  <subsection id="0.2"><h1>Plots</h1>
-    Plot position/velocity vs time curve!
-  </subsection>
+<section id="2"><h1>State variables</h1>
+  Forces directly affect the acceleration of the system. Any kind of acceleration advances the state forward in time by $dt$ seconds. It first changes the velocity which changes the position. To montior changes in the state over time, these 2 variables need to be tracked and thus become part of the state.
+
+  <p>
+    If the rotors are spinning, there would be rotational velocity and angle included in the state variables.
+  </p>
+</section>
+
+<section id="3"><h1>Forward euler method</h1>
+  Consider a linear system with its system output $y$ as below:
+  $$\begin{align*}
+    \dot{x} &= Ax + Bu \\
+    y &= Cx
+  \end{align*}$$
+
+  A state sequence is discretised using the Forward Euler method as follows:
+  $$
+    \dot{x} \approx \frac{x_{k+1} - x_k}{h}
+  $$
+  $h$ is a discretisation time constant (a small real number) <br>
+  $k$ denotes a discrete time instant after $kh$ time steps. $k = 0,1,2,..$ <br>
+  $x_k$ is an approximation of the state vector at the time instant $kh$, that is an approximation of $x(kh)$ <br>
+  $x(0)$ is assumed to be known.
+
+  <p>
+    The state-space model becomes:
+
+    $$\begin{align}
+      \label{eq:fEuler}
+      x_{k+1} &= \underbrace{(I + hA)}_{A_f}x_k + \underbrace{hB}_{B_f}u_k \\
+      y_k &= Cx_k \nonumber
+    \end{align}$$
+
+    $y_k, u_k$ are defined in the same manner as the discretised state variable $x_k$.
+  </p>
+
+  The discretised state sequence $x_1, x_2...$ is obtained by propagating \ref{eq:fEuler} from the initial condition $x_0$ using the control input sequence $u_0, u_1, u_2,\ldots$.
+
+  <p>
+    This approach might produce numerical instabilities within the discretised state vector $x_k$ where the state vector might diverge to infinity.
+  </p>
+</section>
+
+<section id="4"><h1>Backward Euler method</h1>
+  To overcome the numerical instability problem within the Forward Euler approach, it is preferable to discretise a state sequence using the Backward Euler method as follows:
+
+  $$
+    \dot{x} \approx \frac{x_{k} - x_{k-1}}{h}
+  $$
+
+  The state model that helps propagate the state forward from the initial condition $x_0$ using some control sequence becomes:
+  $$
+    x_k = \underbrace{(I - hA)^{-1}}_{A_b}x_{k-1} +
+    \underbrace{h(I - hA)^{-1}B}_{B_b}u_k
+  $$
+</section>
+
+<section id="5"><h1>Plots</h1>
+  Plot position/velocity vs time curve!
+</section>
 </section>
 </chapter>
 

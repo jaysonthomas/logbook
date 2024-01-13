@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamics of a mass spring damper system</title>
+  <meta name="Dynamics of a mass spring damper system" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">FBD analysis</a>
+<a href="#1">Solution</a>
+<a href="#2">State space model</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">State variables</a></li>
+  <li><a href="#2.1">State propagation</a></li>
+  <li><a href="#2.2">System output</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Dynamics of a mass spring damper system</h1>
+<section id="0"><h1>FBD analysis</h1>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/dynamics/3a_msd.png"/>
+      <figcaption>
+        Mass spring damper
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/dynamics/3b_msdFreeBody.png"/>
+      <figcaption>
+        Free body diagram
+      </figcaption>
+    </figure>
+  </div>
+  
+  At equilibrium, there is no horizontal force acting on the spring. A spring force $F_s$ acts in the oppposite direction to the direction of displacement from the equilibrium point and is proportional to it. For a positive displacment, the spring expands and the spring force tends to bring the object to its equilibrium position.
+
+  $$
+    F_s = -k_sd_{em}
+  $$
+
+  The damper dampens any mechanical oscillations. It is proportional to and acts opposite to the direction of movement.
+
+  $$
+    F_d = -k_d\dot{d}_{em}
+  $$
+
+  The dynamics is governed by Newton's second law:
+
+  $$\begin{align}
+    &ma = \sum_{i=1}^{n}F_i \nonumber \\
+    &m\ddot{d}_{em} = F - k_d\dot{d}_{em} - k_sd_{em} \nonumber \\
+    \label{eq:msd} &m\ddot{d}_{em} + k_d\dot{d}_{em} + k_sd_{em} = F
+  \end{align}$$
+
+  The equation is a second-order, linear ODE:
+  <ul>
+    <li>
+      Linear because $d_{em}, \dot{d}_{em}, \ddot{d}_{em}$ appear as linear functions
+    </li>
+
+    <li>
+      Second order because it is the order of the highest derivative
+    </li>
+  </ul>
+</section>
+
+<section id="1"><h1>Solution</h1>
+  The analytical solution to equation \ref{eq:msd} is given by:
+  $$
+    d_{em} = d_{em}(t, d_{em}(0), \dot{d}_{em}(0), F(t))
+  $$
+
+  $d_{em}(0), \dot{d}_{em}(0)$ are the initial position and velocity. The goal is to numerically solve \ref{eq:msd} instead of using the analytical form.
+</section>
+
+<section id="2"><h1>State space model</h1>
+  To arrive at a numerical solution, the system is written as a series of first-order ODEs, defined collectively as a <i>state space model</i> of the system. More generally, an n-th order ODE can be written as a system of n first-order ODEs.
+
+  <subsection id="2.0"><h1>State variables</h1>
+    $$\begin{align*}
+      x_1 &= d_{em} \\
+      x_2 &= \dot{d}_{em}
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="2.1"><h1>State propagation</h1>
+    Differentiating the equations for the state variables:
+    $$\begin{align*}
+      \dot{x}_1 &= \dot{d}_{em} = x_2 \\
+      \dot{x}_2 &= \ddot{d}_{em} \\
+        &= -\frac{k_d}{m} \dot{d}_{em} - \frac{k_s}{m}d_{em} + \frac{1}{m}F \\
+        &= -\frac{k_d}{m} x_2 - \frac{k_s}{m}x_1 + \frac{1}{m}F
+    \end{align*}$$
+
+    In vector form:
+    $$
+      \underbrace{\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix}}_{\dot{x}} = 
+
+      \underbrace{
+      \begin{bmatrix} 
+        0 & 1 \\ 
+        -\frac{k_s}{m} & -\frac{k_d}{m} 
+      \end{bmatrix}}_{A}
+
+      \underbrace{\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}}_{x} +
+
+      \underbrace{\begin{bmatrix} 0 \\ \frac{1}{m}\end{bmatrix}}_{B}
+      \underbrace{F}_{u}
+    $$
+
+    $u$ is the control input, $A,B$ are system matrices and $x$ is the state vector.
+  </subsection>
+
+  <subsection id="2.2"><h1>System output</h1>
+    The output equation maps the state vector into the output vector (here, a scalar). A system output is a system variable or a function of system variables whose dynamical behavior we want to track (using sensors).  The output equation:
+
+    $$
+      y = \underbrace{\begin{bmatrix} 1 & 0\end{bmatrix}}_{C} x
+    $$
+    The state $x_1$ is tracked, i.e. the displacement from the equilibrium position.
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>
