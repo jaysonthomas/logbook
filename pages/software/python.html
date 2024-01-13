@@ -64,7 +64,33 @@ pip3 show drake
 pip3 install drake==1.10.0  
 pip3 install test.whl --force-reinstall
 pip3 --version
+python3.10 -m pip install ###
+python3 --version
 </code></pre>
+</section>
+
+<section><h1>Type hinting</h1>
+<pre><code class="python">
+def greet(name: str) -> str:
+  temp : str | None = "Hello"
+  return temp + ", " + name
+</code></pre>
+
+Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
+</section>
+
+<section><h1>Operators</h1>
+  <ul>
+    <li><code>Set Union</code></li>
+<pre><code class="python">
+s1 = {'a', 'b'}
+s2 = {'c', 'b'}
+s = s1 | s2
+print(s)  
+</code></pre>    
+
+    The operator <code>|</code> returns a new set that consists of distinct elements from both set1 and set2. Output: {'b', 'c', 'a'}
+  </ul>
 </section>
 
 <section id="1"><h1>Structure</h1>
