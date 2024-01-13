@@ -56,7 +56,8 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
 <section id="0"><h1>Description</h1>
-  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a 'manipulator'.
+  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a 'manipulator'. Another <a href="https://t.ly/yo9YU">Ref</a>.
+
   <div class="container">
     <figure>
       <img style="height:80px; width:auto"
@@ -68,84 +69,80 @@
   </div>
 </section>
 
-<section id="1"><h1>Model based on Newton's 2nd law</h1>
-  [<a href="https://t.ly/yo9YU">Ref</a>]
+<section id="1.0"><h1>Moment of inertia about the axis of rotation</h1>
+  Based on <a href="../physics/definitions.html">parallel axis theorem</a>:
+  $$\begin{align*}
+    J_{CG} &= m \cdot r_{CM}^2 \\
+          &= 0 \\
+    J_0 &= \cancel{J_{CG}} + ml^2
+  \end{align*}$$
+  
+  Since the simple pendulum consists of a <n>point</n> mass (the mass is not spread out, hence $r_{CM} = 0$) and the string (or rod) is considered to be massless, the centre of mass of a simple pendulum is at the point mass.
 
-  <subsection id="1.0"><h1>Moment of inertia about the axis of rotation</h1>
-    Based on <a href="../physics/definitions.html">parallel axis theorem</a>:
-    $$\begin{align*}
-      J_{CG} &= m \cdot r_{CM}^2 \\
-            &= 0 \\
-      J_0 &= \cancel{J_{CG}} + ml^2
-    \end{align*}$$
-    
-    Since the simple pendulum consists of a <n>point</n> mass (the mass is not spread out, hence $r_{CM} = 0$) and the string (or rod) is considered to be massless, the centre of mass of a simple pendulum is at the point mass.
+  <p>
+    $J_{CG}$ is the moment of inertia about the point mass <br>
+    $J_0$ is the moment of inertia about the pivot point (the axis of rotation). <br>
+    $l$ is the distance of the axis of rotation (the pivot point) from the centre of mass. <br>
+    $r_{CM}$ is the distance of the point mass $m$ from its own centre of mass, which is 0 in this case (since the mass is treated as concentrated at its own position [<a href="https://t.ly/SFPXZ">Ref</a>]).      
+  </p>
+</section>
+
+<section id="1.1"><h1>Net (sum of all) moment</h1>
+  <div class="container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../figures/dynamics/2_pendulumNewton.png"/>
+      <figcaption>
+        Forces acting on a simple pendulum
+      </figcaption>
+    </figure>
+  </div>
+
+  The forces acting on the pendulum are:
+  <ul>
+    <li>Component of gravity acting along the string</li>
+    <li>
+      Component of gravity acting tangential and opposite to the direction of the motion of the mass [<a href="https://t.ly/884vC">Ref</a>]
+    </li>        
+    <li>Tension on the string balanced by the gravity component along the string</li>
+  </ul>
+
+  The net moment:
+  $$\begin{align*}
+    M &= F_{g_{tangential}} \cdot l \\
+      &= -mgsin(\theta) \cdot l
+  \end{align*}$$
+
+  Any further external force would get added in as additional torque $u$.
+</section>
+
+<section id="1.2"><h1>Balance of moments</h1>
+  From newton's 2nd law, the moment about the axis of rotation is equal to the net moment $M$ about the same axis causing the pendulum to rotate:
+  
+  $$\begin{align*}
+    M &= J_0 \ddot{\theta} \\
+    Q -mglsin\theta &= ml^2 \ddot{\theta}
+  \end{align*}$$
+
+  $Q$ models a damping torque (from friction) and a control torque input.
+  $$
+    Q = -b\dot{\theta}(t) + u(t)
+  $$
+
+  Rearranging:
+  $$
+    ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
+  $$
+
+  <ul>
+    <li>$ml^2 \ddot\theta$</li>
+    This term is a measure of the resistance of the pendulum to changes in its angular motion. $\ddot\theta$ is the angular acceleration.
 
     <p>
-      $J_{CG}$ is the moment of inertia about the point mass <br>
-      $J_0$ is the moment of inertia about the pivot point (the axis of rotation). <br>
-      $l$ is the distance of the axis of rotation (the pivot point) from the centre of mass. <br>
-      $r_{CM}$ is the distance of the point mass $m$ from its own centre of mass, which is 0 in this case (since the mass is treated as concentrated at its own position [<a href="https://t.ly/SFPXZ">Ref</a>]).      
+      <li>$b\dot\theta$</li>
+      $b$ represents the damping coefficient which characterizes the amount of damping present in the system due to various factors such as friction at the pivot point, air resistance, and other dissipative forces that cause the pendulum to lose energy over time. It accounts for the damping force that opposes the motion of the pendulum.
     </p>
-  </subsection>
-
-  <subsection id="1.1"><h1>Net moment</h1>
-    <div class="container">
-      <figure>
-        <img style="height:150px; width:auto"
-        src="../../../figures/dynamics/2_pendulumNewton.png"/>
-        <figcaption>
-          Forces acting on a simple pendulum
-        </figcaption>
-      </figure>
-    </div>
-
-    The forces acting on the pendulum are:
-    <ul>
-      <li>Component of gravity acting along the string</li>
-      <li>
-        Component of gravity acting tangential and opposite to the direction of the motion of the mass [<a href="https://t.ly/884vC">Ref</a>]
-      </li>        
-      <li>Tension on the string balanced by the gravity component along the string</li>
-    </ul>
-
-    The <i>net</i> (sum of all) moment:
-    $$\begin{align*}
-      M &= F_{g_{tangential}} \cdot l \\
-        &= -mgsin(\theta) \cdot l
-    \end{align*}$$
-
-    Any further external force would get added in as additional torque $u$.
-  </subsection>
-
-  <subsection id="1.2"><h1>Balance of moments</h1>
-    The moment about the axis of rotation is equal to the net moment $M$ about the same axis causing the pendulum to rotate:
-    
-    $$\begin{align*}
-      M &= J_0 \ddot{\theta} \\
-      Q -mglsin\theta &= ml^2 \ddot{\theta}
-    \end{align*}$$
-
-    $Q$ models a damping torque (from friction) and a control torque input.
-    $$
-      Q = -b\dot{\theta}(t) + u(t)
-    $$
-
-    Rearranging:
-    $$
-      ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
-    $$
-
-    <ul>
-      <li>$ml^2 \ddot\theta$</li>
-      This term is a measure of the resistance of the pendulum to changes in its angular motion. $\ddot\theta$ is the angular acceleration.
-
-      <p>
-        <li>$b\dot\theta$</li>
-        $b$ represents the damping coefficient which characterizes the amount of damping present in the system due to various factors such as friction at the pivot point, air resistance, and other dissipative forces that cause the pendulum to lose energy over time. It accounts for the damping force that opposes the motion of the pendulum.
-      </p>
-    </ul>
-  </subsection>
+  </ul>
 </section>
 
 <section id="2"><h1>Simulation</h1>
