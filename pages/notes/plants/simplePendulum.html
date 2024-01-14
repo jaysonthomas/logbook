@@ -40,18 +40,15 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Description</a>
-<a href="#1">Model based on Newton's 2nd law</a>
+<a href="#1">Moment of inertia about the axis of rotation</a>
+<a href="#2">Net (sum of all) moment</a>
+<a href="#3">Balance of moments</a>
+<a href="#4">Simulation</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Moment of inertia about the axis of rotation</a></li>
-  <li><a href="#1.1">Net moment</a></li>
-  <li><a href="#1.2">Balance of forces</a></li>
+  <li><a href="#4.0">Systems viewpoint</a></li>
+  <li><a href="#4.1">State space form</a></li>
 </ul>
-<a href="#2">Simulation</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Systems viewpoint</a></li>
-  <li><a href="#2.1">State space form</a></li>
-</ul>
-<a href="#3">Integration</a>
+<a href="#5">Integration</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
@@ -69,7 +66,7 @@
   </div>
 </section>
 
-<section id="1.0"><h1>Moment of inertia about the axis of rotation</h1>
+<section id="1"><h1>Moment of inertia about the axis of rotation</h1>
   Based on <a href="../physics/definitions.html">parallel axis theorem</a>:
   $$\begin{align*}
     J_{CG} &= m \cdot r_{CM}^2 \\
@@ -87,7 +84,7 @@
   </p>
 </section>
 
-<section id="1.1"><h1>Net (sum of all) moment</h1>
+<section id="2"><h1>Net (sum of all) moment</h1>
   <div class="container">
     <figure>
       <img style="height:150px; width:auto"
@@ -98,25 +95,31 @@
     </figure>
   </div>
 
-  The forces acting on the pendulum are:
+  Forces acting on the pendulum:
   <ul>
     <li>Component of gravity acting along the string</li>
     <li>
       Component of gravity acting tangential and opposite to the direction of the motion of the mass [<a href="https://t.ly/884vC">Ref</a>]
     </li>        
     <li>Tension on the string balanced by the gravity component along the string</li>
+    <li>
+      Damping forces such as friction at the pivot point and air resistance
+    </li>
+    <li>
+      Any applied external force
+    </li>
   </ul>
 
   The net moment:
-  $$\begin{align*}
-    M &= F_{g_{tangential}} \cdot l \\
-      &= -mgsin(\theta) \cdot l
-  \end{align*}$$
+  $$
+    M = \underbrace{-b\dot{\theta}(t) + u(t)}_{Q} 
+      \underbrace{-mgsin(\theta)}_{F_{g_{tangential}}} \cdot l
+  $$
 
-  Any further external force would get added in as additional torque $u$.
+  $Q$ models a damping torque (from friction) and a control torque input. $b$ represents the damping coefficient which characterizes the amount of damping present in the system
 </section>
 
-<section id="1.2"><h1>Balance of moments</h1>
+<section id="3"><h1>Balance of moments</h1>
   From newton's 2nd law, the moment about the axis of rotation is equal to the net moment $M$ about the same axis causing the pendulum to rotate:
   
   $$\begin{align*}
@@ -124,29 +127,17 @@
     Q -mglsin\theta &= ml^2 \ddot{\theta}
   \end{align*}$$
 
-  $Q$ models a damping torque (from friction) and a control torque input.
-  $$
-    Q = -b\dot{\theta}(t) + u(t)
-  $$
-
   Rearranging:
   $$
     ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
   $$
 
-  <ul>
-    <li>$ml^2 \ddot\theta$</li>
-    This term is a measure of the resistance of the pendulum to changes in its angular motion. $\ddot\theta$ is the angular acceleration.
+  $ml^2 \ddot\theta$ is a measure of the resistance of the pendulum to changes in its angular motion. $\ddot\theta$ is the angular acceleration.
 
-    <p>
-      <li>$b\dot\theta$</li>
-      $b$ represents the damping coefficient which characterizes the amount of damping present in the system due to various factors such as friction at the pivot point, air resistance, and other dissipative forces that cause the pendulum to lose energy over time. It accounts for the damping force that opposes the motion of the pendulum.
-    </p>
-  </ul>
 </section>
 
-<section id="2"><h1>Simulation</h1>
-  <subsection id="2.0"><h1>Systems viewpoint</h1>
+<section id="4"><h1>Simulation</h1>
+  <subsection id="4.0"><h1>Systems viewpoint</h1>
     The dynamics can be abstracted into a system for which inputs and outputs can be defined. That is, the dynamics can be abstracted as a <i>plant</i> that will output the current state $x$, given the torque  $\tau$ into the system.
 
     <figure>
@@ -164,7 +155,7 @@
     The output of the system doesn't have to be the state $x$ - it can be a subset of the state, or simply some sensor attached to the pendulum! In this case we will assume full access to the state for feedback, i.e. full-state feedback. Since this system is deterministic, the future value of the system can be predicted given the current time, state, and input of the system. 
   </subsection>
 
-  <subsection id="2.1"><h1>State space form</h1>
+  <subsection id="4.1"><h1>State space form</h1>
     Dynamics of a pendulum in a first-order form: 
     $$\begin{align*}
       \dot{x} &= f(x,u) \\
@@ -184,7 +175,7 @@
   </subsection>
 </section>
 
-<section id="3"><h1>Integration</h1>
+<section id="5"><h1>Integration</h1>
   Add this section <a href="https://chat.openai.com/share/e17a9255-b2fd-45db-aa0d-6f07591c9447">Chatgpt</a>.
 </section>
 </chapter>
