@@ -46,19 +46,22 @@
 
 <chapter style="counter-reset: chapter 1"><h1>RAII</h1>
 <section id="0"><h1>Overview</h1>
-  <i>Resource Acquisition Is Initialization</i>. The idea is to put a management class around a resource (the resource is entirely managed within the class) while providing third-party access through well-defined interfaces only. This can be used to protect a resource such as a file stream, a network connection or a block of memory. It is implemented by smart pointers.
-
-  <p>
-    The overall goal is to have allocation and deallocation disappear from the surface level of the code.
-  </p>
+  <i>Resource Acquisition Is Initialization</i>. The goal is to have allocation and deallocation disappear from the surface level of the code thereby protecting resources such as a file stream, a network connection or a block of memory. This is achieved by:
+  
+  <ul>
+    <li>
+      Wrapping a management class around a resource (the resource is entirely managed within the class) while providing third-party access through well-defined interfaces only
+    </li>
+    <li>Smart pointers</li>
+  </ul>
 
   <h4>The main advantages</h4>
   <ul>
     <li>
-      Using class destructors to perform resource clean-up tasks when the RAII object gets out of scope, helps to manage ownership and lifetime of dynamically allocated objects
+      Helps to <n>manage ownership and lifetime of dynamically allocated objects</n> since class destructors perform resource clean-up tasks when the RAII object gets out of scope 
     </li>
     <li>
-      Implement encapsulation and information hiding due to resource acquisition and release being performed within the same object
+      Helps to implement encapsulation and information hiding easily since resource acquisition and release gets done within the same object
     </li>
   </ul>
 </section>
@@ -71,49 +74,61 @@
     <li>Protect synchronisation primitives such as atomic operations, memory barriers, monitors or critical sections, which must be released to allow other threads to obtain them</li>
   </ul>
 
-  <h4>Problems</h4>
+  <h4>General problems</h4>
   <ul>
     <li>The program might throw an exception during resource use and thus the point of release might never be reached</li>
     <p>
       <li>There might be several points where the resource could potentially be released, making it hard for a programmer to keep track of all eventualities</li>
     </p>
-    <li>We might simply forget to release the resource again</li>
+    <li>It is easy to forget to release a resource</li>
+  </ul>
+</section>
+
+<section><h1>RAII management class</h1>
+  There are 3 parts to an RAII class:
+  <ul>
+    <li>A resource is allocated in the constructor</li>
+    <li>A resource is de-allocated in the destructor</li>
+    <li>All instances of the RAII class are allocated on the stack to reliably control the lifetime via the object scope</li>
   </ul>
 </section>
 
 <section id="2"><h1>Example of an RAII class</h1>
-  <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Example 1</a>
+  <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Code</a>
 
-  <p>
-    There are 3 parts to an RAII class:
+  <subsection><h1>Resource allocation/deallocation</h1>
+    In the example code, the resource allocation takes place in 2 steps:
     <ul>
-      <li>A resource is allocated in the constructor</li>
-      <li>A resource is de-allocated in the destructor</li>
-      <li>All instances of the RAII class are allocated on the stack to reliably control the lifetime via the object scope</li>
-    </ul>
-  </p>
-
-  In the example code, the resource allocation takes place in 2 steps:
-  <ul>
-    <li>
-      The part <code>new int(i)</code> creates a new block of memory on the heap and initialises it with the value of <code>i</code>. It returns the address of the block of memory.
-    </li>
-    <p>
       <li>
-        The part <code>MyInt en(…)</code> calls the constructor of class <code>MyInt</code>, passing the address of the valid memory block as a parameter.
+        <code>new int(i)</code> creates a new block of memory on the heap and initialises it with the value of <code>i</code>. It returns the address of the block of memory.
       </li>
-    </p>
+      <p>
+        <li>
+          <code>MyInt en(…)</code> creates an object of class <code>MyInt</code> on the stack, which internally creates an integer on the heap. The constructor of class <code>MyInt</code> gets called with the address of a valid heap memory block as a parameter.
+        </li>
+      </p>    
+    </ul>
 
-    After creating an object of class <code>MyInt</code> on the stack, which, internally, created an integer on the heap, the dereference operator is overloaded allowing it to be used in the same manner as with raw pointers to retrieve the value to which the internal raw pointer is pointing. Because the <code>MyInt</code> object <code>en</code> lives on the stack, it is automatically deallocated after each loop cycle - which automatically calls the destructor to release the heap memory. The programer, therefore, doesn't need to think about calling <code>delete</code>.
+    Because the <code>MyInt</code> object <code>en</code> lives on the stack, it is automatically deallocated after each loop cycle - which automatically calls the destructor to release the heap memory. The programer, therefore, doesn't need to think about calling <code>delete</code>.
+  </subsection>
+
+  <subsection><h1>Resource utilisation</h1>
+<pre><code class="cpp">
+int &operator*() { return *_p; }  
+</code></pre>
+
+    The dereference operator is overloaded allowing it to be used in the same manner as with raw pointers to retrieve the value to which the internal raw pointer is pointing. 
 
     <p>
-      In <a href="../../jlib/cppExamples/fundamentals/20b_raii.cpp">Example 2</a>, the destructor of <code>MyInt</code> would never be called, hence causing a memory leak with each loop iteration.
+      Using <code>int &</code> along with returning <code>*_p</code>, the function returns the address of the value the pointer is pointing to.
     </p>
-  </ul>
+  </subsection>
 
-
+  <subsection><h1>How not to do it</h1>
+    In <a href="../../jlib/cppExamples/fundamentals/20b_raii.cpp">Example 2</a>, the destructor of <code>MyInt</code> would never be called, hence causing a memory leak with each loop iteration.
+  </subsection>
 </section>
-</chapter>
 
+</chapter>
 </body>
 </html>
