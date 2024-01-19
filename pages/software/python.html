@@ -72,6 +72,8 @@ pip3 install test.whl --force-reinstall
 pip3 --version
 python3.10 -m pip install ###
 python3 --version
+python -m pip install --upgrade pip
+python -m pip install --upgrade black==23.12.1
 </code></pre>
 </section>
 
@@ -479,6 +481,68 @@ Output: type
 <pre><code class="python">
 python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
 </code></pre>  
+</section>
+
+<section><h1>Relationships</h1>
+  <subsection><h1>Extension (Inheritance)</h1>
+    Inheritance is a mechanism by which a class inherits properties and behaviors (attributes and methods) from another class. It is used to model an "is-a" relationship, where a derived class is a specialized version of the base class.
+
+<pre><code class="python">
+class Animal:
+  def speak(self):
+      pass
+
+class Dog(Animal):
+  def speak(self):
+      return "Woof!"
+</code></pre>    
+  </subsection>
+
+  <subsection><h1>Composition</h1>
+    Composition is a design principle where a class contains objects of other classes as part of its attributes, to achieve some functionality, and the relationship is referred to as a "has-a" relationship.
+<pre><code class="python">
+class Engine:
+  def start(self):
+      pass
+
+class Car:
+  def __init__(self):
+      self.engine = Engine()
+
+  def start_engine(self):
+      self.engine.start()
+</code></pre>    
+      
+  </subsection>
+
+  <subsection><h1>Aggregation</h1>
+    Aggregation is similar to composition but with a key difference - the contained objects have an independent lifecycle, can exist outside the container and can be shared among multiple containers. It represents a "has-a" relationship without strong ownership.
+
+<pre><code class="python">
+class Department:
+  def __init__(self, name):
+      self.name = name
+
+class University:
+  def __init__(self):
+      self.departments = []
+
+  def add_department(self, department):
+      self.departments.append(department)
+</code></pre>    
+      
+  </subsection>
+</section>
+
+<section><h1>Set</h1>
+  A set is an unordered collection of unique elements defined using <code>{}</code> or the <code>set()</code> constructor. Sets do not allow duplicate elements, and the order of elements is not guaranteed, i.e. they don't support indexing and hence indices cannot be used to access elements in a set. The presence of an element within a set can be checked using the <code>in</code> keyword.
+
+<pre><code class="python">
+my_set = {1, 2, 3, 4, 5}
+element_to_check = 3
+if element_to_check in my_set:
+  print('True')
+</code></pre>
 </section>
 
 <section id="14"><h1>Musings</h1>
