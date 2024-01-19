@@ -40,27 +40,25 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Topics</a>
-<a href="#1">Member initialisation</a>
-<a href="#2">Datatypes</a>
-<a href="#3">Encapsulation & abstraction</a>
-<a href="#4">Access specifier or modifier</a>
+<a href="#1">Encapsulation & abstraction</a>
+<a href="#2">Access specifier or modifier</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Members</a></li>
-  <li><a href="#4.1">Inherited access specifiers</a></li>
+  <li><a href="#2.0">Members</a></li>
+  <li><a href="#2.1">Inherited access specifiers</a></li>
 </ul>
-<a href="#5">Invariants - struct vs class</a>
+<a href="#3">Invariants - struct vs class</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">When to be private</a></li>
+  <li><a href="#3.0">When to be private</a></li>
 </ul>
-<a href="#6">Constructor</a>
-<a href="#7">Scope resolution</a>
+<a href="#4">Constructor</a>
+<a href="#5">Scope resolution</a>
 <ul class="no-bullets">
-  <li><a href="#7.0">Class</a></li>
-  <li><a href="#7.1">Namespace</a></li>
+  <li><a href="#5.0">Class</a></li>
+  <li><a href="#5.1">Namespace</a></li>
 </ul>
-<a href="#8">Inheritance</a>
-<a href="#9">Friends</a>
-<a href="#10">Miscellaneous</a>
+<a href="#6">Inheritance</a>
+<a href="#7">Friends</a>
+<a href="#8">Miscellaneous</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>C++</h1>
@@ -88,7 +86,7 @@
   </ul>
 </section>
 
-<section id="3"><h1>Encapsulation & abstraction</h1>
+<section id="1"><h1>Encapsulation & abstraction</h1>
   <i>Encapsulation</i> means that:
   <ul>
     <li>Related properties are bundled together in a single class</li>
@@ -102,8 +100,8 @@
   Encapsulation and abstraction are related because encapsulation groups relevant data together in a class, while abstraction hides the details of how the data is manipulated. All the user of a class needs to know is that the data is present and there is an interface to interact with it. 
 </section>
 
-<section id="4"><h1>Access specifier or modifier</h1>
-  <subsection id="4.0"><h1>Members</h1>
+<section id="2"><h1>Access specifier or modifier</h1>
+  <subsection id="2.0"><h1>Members</h1>
     <ul>
       <li>Public members</li>
       Public members can be changed <n>directly</n>, by any user of the <i>object</i> (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
@@ -118,7 +116,7 @@
     </ul>
   </subsection>
 
-  <subsection id="4.1"><h1>Inherited access specifiers</h1>
+  <subsection id="2.1"><h1>Inherited access specifiers</h1>
     [<a href="../../jlib/cppExamples/fundamentals/11_inheritedAccessSpecifiers.cpp">Ref</a>] <br>
     The same access modifiers also define which class members users of derived classes can access.
 
@@ -137,7 +135,7 @@
   </subsection>
 </section>
 
-<section id="5"><h1>Invariants - struct vs class</h1>
+<section id="3"><h1>Invariants - struct vs class</h1>
   [<a href="../../jlib/cppExamples/fundamentals/4_invariants.cpp">Ref</a>]
 
   <p>
@@ -146,7 +144,7 @@
   
   By default, all members of a struct default to public, whereas all members of a class default to private. 
 
-  <subsection id="5.0"><h1>When to be private</h1>
+  <subsection id="3.0"><h1>When to be private</h1>
     As a general rule, <n>member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value</n>.
 
     <p>
@@ -155,7 +153,7 @@
   </subsection>
 </section>
 
-<section id="6"><h1>Constructor</h1>
+<section id="4"><h1>Constructor</h1>
   [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
   <br>
   Constructors are member functions of a class or struct that initialise/construct/build an object. All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. 
@@ -173,14 +171,14 @@
   It is not good to have any complex logic in a constructor in order to ensure that the constructor does not fail. It's hard to handle errors that take place within the constructor.
 </section>
 
-<section id="7"><h1>Scope resolution</h1>
+<section id="5"><h1>Scope resolution</h1>
   C++ allows different identifiers to have the same name, as long as they have different scope. For example, two different functions can each declare the variable int i, because each variable only exists within the scope of its parent function.
 
   <p>
     In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class (scope) to search in order to resolve an identifier (a function name or a variable name).
   </p>
 
-  <subsection id="7.0"><h1>Class</h1>
+  <subsection id="5.0"><h1>Class</h1>
     Each class provides its own scope. The scope resolution operator becomes useful if we want to separate class declaration from class definition.
  
     <p>
@@ -193,14 +191,14 @@
     </p>
   </subsection>
 
-  <subsection id="7.1"><h1>Namespace</h1>
+  <subsection id="5.1"><h1>Namespace</h1>
     [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
     <br>
     Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. <code>std</code> is the namespace used by the C++ Standard Library. Classes like <code>std::vector</code> and functions like <code>std::sort</code> are defined within the std namespace.
   </subsection>
 </section>
 
-<section id="8"><h1>Inheritance</h1>
+<section id="6"><h1>Inheritance</h1>
   The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
   
   <p>
@@ -209,7 +207,7 @@
 
 </section>
 
-<section id="9"><h1>Friends</h1>
+<section id="7"><h1>Friends</h1>
   [<a href="../../jlib/cppExamples/fundamentals/12_friend_1.cpp">Ref</a>]
   <div class="container">
     <figure>
@@ -222,7 +220,7 @@
   </div>    
 </section>
 
-<section id="10"><h1>Miscellaneous</h1>
+<section id="8"><h1>Miscellaneous</h1>
   <ul>
     <li>Default function arguments</li>
     [<a href="../../jlib/cppExamples/fundamentals/19_defaultFuncArgs.cpp">Example</a>]

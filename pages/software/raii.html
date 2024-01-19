@@ -41,7 +41,13 @@
   
 <a href="#0">Overview</a>
 <a href="#1">Acquiring and releasing resources</a>
-<a href="#2">Example of an RAII class</a>
+<a href="#2">RAII management class</a>
+<a href="#3">Example of an RAII class</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Resource allocation/deallocation</a></li>
+  <li><a href="#3.1">Resource utilisation</a></li>
+  <li><a href="#3.2">How not to do it</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>RAII</h1>
@@ -84,7 +90,7 @@
   </ul>
 </section>
 
-<section><h1>RAII management class</h1>
+<section id="2"><h1>RAII management class</h1>
   There are 3 parts to an RAII class:
   <ul>
     <li>A resource is allocated in the constructor</li>
@@ -93,10 +99,10 @@
   </ul>
 </section>
 
-<section id="2"><h1>Example of an RAII class</h1>
+<section id="3"><h1>Example of an RAII class</h1>
   <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Code</a>
 
-  <subsection><h1>Resource allocation/deallocation</h1>
+  <subsection id="3.0"><h1>Resource allocation/deallocation</h1>
     In the example code, the resource allocation takes place in 2 steps:
     <ul>
       <li>
@@ -112,7 +118,7 @@
     Because the <code>MyInt</code> object <code>en</code> lives on the stack, it is automatically deallocated after each loop cycle - which automatically calls the destructor to release the heap memory. The programer, therefore, doesn't need to think about calling <code>delete</code>.
   </subsection>
 
-  <subsection><h1>Resource utilisation</h1>
+  <subsection id="3.1"><h1>Resource utilisation</h1>
 <pre><code class="cpp">
 int &operator*() { return *_p; }  
 </code></pre>
@@ -124,11 +130,12 @@ int &operator*() { return *_p; }
     </p>
   </subsection>
 
-  <subsection><h1>How not to do it</h1>
+  <subsection id="3.2"><h1>How not to do it</h1>
     In <a href="../../jlib/cppExamples/fundamentals/20b_raii.cpp">Example 2</a>, the destructor of <code>MyInt</code> would never be called, hence causing a memory leak with each loop iteration.
   </subsection>
 </section>
 
 </chapter>
+
 </body>
 </html>
