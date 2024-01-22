@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matrix/vector operations related to robotic arms</title>
+  <meta name="Matrix/vector operations related to robotic arms" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Cross product of $\mathbb{R}^3$ vectors</a>
+<a href="#1">Cross product of $\mathbb{R}^{3 \times 3}$ matrices</a>
+<a href="#2">Cross product of $\mathbb{R}^6$ vectors</a>
+<a href="#3">Cross product of $\mathbb{R}^{4 \times 4}$ matrices</a>
+<a href="#4">se(3) representation</a>
+<a href="#5">Adjoint representation</a>
+<a href="#6">Special orthogonal group SO(3)</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Matrix/vector operations related to robotic arms</h1>
+
+<section id="0"><h1>Cross product of $\mathbb{R}^3$ vectors</h1>
+  $$\begin{align*}
+    x \times y &= \begin{bmatrix} x \end{bmatrix} y &\in \mathbb{R}^3 \\
+    x &= \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} &\in \mathbb{R}^3 \\
+    \begin{bmatrix} x \end{bmatrix} &= 
+    \begin{bmatrix} 
+      0 & -x_3 & x_2 \\ 
+      x_3 & 0 & -x_1 \\ 
+      -x_2 & x_1 & 0 
+    \end{bmatrix} \\
+    \begin{bmatrix} x \end{bmatrix} &= -\begin{bmatrix} x \end{bmatrix}^T
+  \end{align*}$$
+
+  The set of all <i>$3 \times 3$ skew-symmetric real matrices</i> is called <i>so(3)</i>.
+</section>
+
+<section id="1"><h1>Cross product of $\mathbb{R}^{3 \times 3}$ matrices</h1>
+  $$
+    [x \times y] = [x][y] - [y][x] \in so(3)
+  $$
+</section>
+
+<section id="2"><h1>Cross product of $\mathbb{R}^6$ vectors</h1>
+  The <i>Lie bracket</i> of $V_1$ and $V_2$:
+  $$\begin{align*}
+    [ad_{V_1}]V_2 &\in R^6 \\
+
+    [ad_V] &= \begin{bmatrix}
+                [\omega] & 0 \\
+                [v] & [\omega]
+              \end{bmatrix} \in \mathbb{R}^{6 \times 6}
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Cross product of $\mathbb{R}^{4 \times 4}$ matrices</h1>
+  Matrix form of lie bracket:
+
+  $$
+    [V_1][V_2] - [V_2][V_1] \in se(3)
+  $$
+</section>
+
+<section id="4"><h1>se(3) representation</h1>
+  The set of all $4 \times 4$ real matrices with a $3 \times 3$ so(3) matrix at the top left and four 0s in the bottom row is called <i>se(3)</i>.
+
+  <p>
+    This representation is used to represent a $6 \times 1$ twist matrix as a $4 \times 4$ matrix:
+
+    $$
+      [V_b] = \begin{bmatrix} 
+                [\omega_b] & v_b \\
+                0 & 0
+              \end{bmatrix} \in se(3)
+    $$
+  </p>
+</section>
+
+<section id="5"><h1>Adjoint representation</h1>
+  Since a twist is a 6-element vector and a transformation matrix is a $4 \times 4$, in order to transform a twist from 1 frame of reference to another, a $6 \times 6$ representation of a transformation matrix is required which is the <i>adjoint representation</i>.
+
+  $$\begin{align*}
+    T &= \begin{bmatrix}
+          R & p \\
+          0 & 1
+        \end{bmatrix} \\
+    
+    [Ad_T] &= \begin{bmatrix}
+                R & 0 \\
+                [p]R & R
+              \end{bmatrix} \in \mathbb{R}^{6 \times 6} \\
+
+    V_a &= [Ad_{T_{ab}}] V_b            
+
+  \end{align*}$$
+</section>
+
+<section id="6"><h1>Special orthogonal group SO(3)</h1>
+  It is the set of all $3 \times 3$ real matrices $R$ satisfying:
+  <ul>
+    <li>$R^TR = I$</li>
+    <li>$\lvert{R}\rvert = 1$</li>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

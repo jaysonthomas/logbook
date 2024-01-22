@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Linearisation</title>
+  <meta name="Linearisation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Linear vs Non-linear equations</a>
+<a href="#1">Definition</a>
+<a href="#2">How to linearise</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Linearisation</h1>
+<section id="0"><h1>Linear vs Non-linear equations</h1>
+  <p>
+    A second order <i>linear differential equation</i> is of the form:
+
+    $$
+      \ddot{y} = c_1u_1 + c_2u_2 + c_3\phi + \cdots
+    $$
+
+    $c_1, c_2, \cdots$ are constants. There is no sine, cosine or multiplication of input and state (eg: $u \cdot phi$). A plot of LHS as a function of $u_1$ or $\phi$ or any of the variables, would be a straight line. 
+  </p>
+
+  Benefits of linear equations:
+  <ul>
+    <li>The tool set of linear control techniques is large</li>
+    <li>Stability can be proven in a straightforward way</li>
+  </ul>
+
+  Benefits of non-linear equations:
+  <ul>
+    <li>
+      They capture the true physics of the system because of which they can make accurate predictions about how the systems will change in time.
+    </li>
+    <li>
+      These equations work at any angle for any control input. They don't break down when numbers get too big or too small.
+    </li>
+  </ul>
+</section>
+  
+<section id="1"><h1>Definition</h1>
+  <i>Linearisation</i> is a useful mathematical tool that's used to tame the math when it becomes hard to work with. For a 2D drone, it helps decouple the dynamics in the $y,z,\phi$ directions, which enables thinking about each of the directions completely separately.
+
+  <p>
+    The fundamental idea is to approximate a non-linear equation locally by a linear one using the equation:
+
+    $$
+      f_{lin}(x) = f(x_{op}) + f'(x)\Bigr|_{x=x_{op}} \Delta{x}
+    $$
+
+    This says that the equation of the best linear approximation of a function around an operating point is the value of the original function plus its slope around the operating point, times the deviation from the operating point. 
+  </p>
+  
+  <button class="accordion">Example</button>
+  <div class="panel">
+    <div>
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../figures/drone/41_linearisation.png"/>
+        <figcaption>
+          The curve is approximately: $f(x) = x^2$
+        </figcaption>
+      </figure>
+    </div>
+
+    To linearise a quadratic function as above around a (<i>operating</i>) point, say $x = 1$, a straight line that best approximates the function at the point needs to be found. This means the line has to pass through the point and also have the same slope as the function at the point. 
+  
+    <p>
+      The solution is the tangent line at the operating point. The slope of the parabola at the operating point can be found using calculus and will match that of the tangent line. Zooming into the operating point, visually, the tangent and the parabola are very close to each other. This confirms the tangent is a good linear approximation of the parabola in the region. 
+    </p>
+
+    The linear equation that gives a good approximation of $f(x) = x^2$ when $x$ is close to 1 ends up being:
+    $$\begin{align*}
+      f_{lin}(x) &= 2x -1 \\
+                 &= 1 + 2(x-1)
+    \end{align*}$$
+
+    Break down of the solution equation:
+    <ul>
+      <li>$x-1$</li>
+      This is $\Delta{x}$. It tells how far $x$ is from the operating point. When $x=0 \rightarrow -1$, when $x=1 \rightarrow 0$. 
+
+      <li>$1$</li>
+      It's the value of the original function at the operating point of $x = 1$.
+
+      <li>$2$</li>
+      It is the slope/derivative of the original function at the operating point.
+    </ul>
+  </div>
+</section>
+
+<section id="2"><h1>How to linearise</h1>
+  
+</section>
+</chapter>
+
+</body>
+</html>

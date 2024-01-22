@@ -402,7 +402,9 @@ subsection > h1 {
 }
 subsubsection > h1 {
   /* display: inline; */
-  font-size: medium;
+  font-size: 14px;
+  font-style: oblique;  /*italic*/
+  font-weight: 100;     /*100: Thin, 400: Normal, 700: Bold*/
 }
 definition > h1 {
   display: inline;
