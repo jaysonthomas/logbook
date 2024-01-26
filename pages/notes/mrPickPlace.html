@@ -125,65 +125,70 @@
 </section>
 
 <section id="2"><h1>Simulation</h1>
-    <p>
-        What is the state of the bot in the next time step, assuming we know the current state.
-    </p>
-    <p><i>Input</i>
-      <ul>
-        <li>Current <i>configuration</i> of the robot</li>
-            12-vector representing positions (angles) of
-            chassis (3, $x,y,\theta$),
-            arm joints (5) and wheels (4)
-        <li>Controls</li>
-            9-vector representing speeds of joints (5, $\dot{\theta}$) and wheels (4, $u$).
-        <li>Timestep $\Delta{t}$</li> 
-        <li>Max angular speed of joints and wheels</li>
-      </ul>
-    </p>
-    <p><i>Output</i>
-        <br>
-        12-vector representing the robot's configuration after $\Delta{t}$.
-    </p>
-    <p><i>Method</i>
-      <ul>
-        <li>A first order euler step is used for both wheels and joints.</li>
-        $newAngle = oldAngle + (speed * \Delta{t})$
-        <li>Chassis configuration is obtained via odometry.</li>
-      </ul>
-    </p>
-    <p><i>Tests</i>
-      <ul>
-        <li>Set the all the wheels to constant speed for $10*\Delta{t}$</li>
-        The bot should just move forward in whatever direction it's facing.
-        <li>Set max speed and repeat step 1 with a larger than max speed.</li>
-      </ul>
-    </p>
+  The aim is to generate the state of the bot in the next time step given the current state.
+
+  <p><i>Input</i>
+    <ul>
+      <li>Current <i>configuration</i> of the robot</li>
+          12-vector representing positions (angles) of
+          chassis (3, $x,y,\theta$),
+          arm joints (5) and wheels (4)
+      <li>Controls</li>
+          9-vector representing speeds of joints (5, $\dot{\theta}$) and wheels (4, $u$).
+      <li>Timestep $\Delta{t}$</li> 
+      <li>Max angular speed of joints and wheels</li>
+    </ul>
+  </p>
+  <p><i>Output</i>
+      <br>
+      12-vector representing the robot's configuration after $\Delta{t}$.
+  </p>
+  <p><i>Method</i>
+    <ul>
+      <li>A first order euler step is used for both wheels and joints.</li>
+      $newAngle = oldAngle + (speed * \Delta{t})$
+      <li>Chassis configuration is obtained via odometry.</li>
+    </ul>
+  </p>
+  <p><i>Tests</i>
+    <ul>
+      <li>Set the all the wheels to constant speed for $10*\Delta{t}$</li>
+      The bot should just move forward in whatever direction it's facing.
+      <li>
+        Set max speed and repeat step 1 with a larger than max speed.
+      </li>
+      <li>
+        <m>Uncontrolled state: What happens when no control is provided, does the arm just fall under the influence of gravity?</m>
+      </li>
+    </ul>
+  </p>
 </section>
 
 <section id="3"><h1>Reference trajectory generation</h1>
-    <p><i>Timing</i>
+  <subsubsection><h1>Timing</h1>
+    <ul>
+      <li>Controller feedback loop</li>
+      <p>
+        The final animation will output a snapshot every $t_{anim}=$<i>0.01s</i> (<i>10ms</i>, <i>100Hz</i>).
+        <br>
+        The controller will run at a higher frequency, say <i>1kHz</i> ($t_{controller}=$<i>1ms</i>).
+        Therefore, the number of segments $k$, per $t_{anim}$ is $\frac{t_{anim}}{t_{controller}}$. This is the number of motor feedback cycles.
+        <br>
+        Total time to complete the task, $t_{total}=$ <i>30s</i>
+        <br>
+        Total number of sequential reference trajectories generated will be 
+        $N=\frac{t_{total}}{\frac{t_{anim}}{k}}=$ <i>30,000</i>
+      </p>
+      <li>Trajectory segment</li>
+      Ideally, the duration would be:
       <ul>
-        <li>Controller feedback loop</li>
-        <p>
-          The final animation will output a snapshot every $t_{anim}=$<i>0.01s</i> (<i>10ms</i>, <i>100Hz</i>).
-          <br>
-          The controller will run at a higher frequency, say <i>1kHz</i> ($t_{controller}=$<i>1ms</i>).
-          Therefore, the number of segments $k$, per $t_{anim}$ is $\frac{t_{anim}}{t_{controller}}$.
-          It is the number of motor feedback cycles we will have.
-          <br>
-          Total time to complete the task, $t_{total}=$ <i>30s</i>
-          <br>
-          Total number of sequential reference trajectories generated will be 
-          $N=\frac{t_{total}}{\frac{t_{anim}}{k}}=$ <i>30,000</i>
-        </p>
-        <li>Trajectory segment</li>
-        Ideally, the duration would be:
-        <ul>
-          <li>An integer multiple of $t_{anim}$</li>
-          <li>Not so short as to require unreasonable joint and wheel speeds</li>
-        </ul>
+        <li>An integer multiple of $t_{anim}$</li>
+        <li>
+          <m>Not so short as to require unreasonable joint and wheel speeds</m>
+        </li>
       </ul>
-    </p>
+    </ul>
+  </subsubsection>
 
   <p><i>Input</i>
     <br>
@@ -207,22 +212,19 @@
     </ul>
   </p>
 
-  <p><i>Notes</i>
-    <p>
-      Gripper takes <i>0.625s</i> to open or close so the reference configurations involving 
-      opening/closing the gripper should keep {e} stationary.
-    </p>
+  <subsubsection><h1>Notes</h1>
+    The reference configurations involving 
+    opening/closing the gripper should keep {e} stationary for the duration that the gripper takes to open or close, which is <i>0.625s</i>.
 
     <p>
-      The following ee way point configurations will be provided:
+      The following ee way point configurations is used to create in-between reference trajectory configurations which the feedback controller would aim to track:
       <br>
       start > initial standoff > initial grasp > grasp
       > initial standoff > final standoff > final grasp > grasp
       <br>
-      The feedback controller needs ee configurations to track between these
-      way points. We are working in the ee or task space.
+      The feedback controller would be working in the ee or <i>task space</i>.
     </p>
-  </p>
+  </subsubsection>
 
   <p><i>Method</i>
     <br>
