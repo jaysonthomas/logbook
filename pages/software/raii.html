@@ -40,19 +40,20 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Acquiring and releasing resources</a>
-<a href="#2">RAII management class</a>
-<a href="#3">Example of an RAII class</a>
+<a href="#1">Examples of acquiring and releasing resources</a>
+<a href="#2">Problems that RAII tries to solve</a>
+<a href="#3">RAII management class</a>
+<a href="#4">Example of an RAII class</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Resource allocation/deallocation</a></li>
-  <li><a href="#3.1">Resource utilisation</a></li>
-  <li><a href="#3.2">How not to do it</a></li>
+  <li><a href="#4.0">Resource allocation/deallocation</a></li>
+  <li><a href="#4.1">Resource utilisation</a></li>
+  <li><a href="#4.2">How not to do it</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>RAII</h1>
 <section id="0"><h1>Overview</h1>
-  <i>Resource Acquisition Is Initialization</i>. The goal is to have allocation and deallocation disappear from the surface level of the code thereby protecting resources such as a file stream, a network connection or a block of memory. This is achieved by:
+  <i>Resource Acquisition Is Initialisation</i>. The goal is to have allocation and deallocation disappear from the surface level of the code thereby protecting resources such as a file stream, a network connection or a block of memory. This is <n>achieved by</n>:
   
   <ul>
     <li>
@@ -63,34 +64,42 @@
 
   <h4>The main advantages</h4>
   <ul>
-    <li>
-      Helps to <n>manage ownership and lifetime of dynamically allocated objects</n> since class destructors perform resource clean-up tasks when the RAII object gets out of scope 
-    </li>
-    <li>
-      Helps to implement encapsulation and information hiding easily since resource acquisition and release gets done within the same object
-    </li>
+    <li>Manages ownership</li>
+    <li>Manages lifetime of dynamically allocated objects since class destructors perform resource clean-up tasks when the RAII object gets out of scope. This also leads to better abstraction since details around resource acquisition and release is hidden.</li>
   </ul>
 </section>
 
-<section id="1"><h1>Acquiring and releasing resources</h1>
-  <h4>Example scenarios</h4>
+<section id="1"><h1>Examples of acquiring and releasing resources</h1>
   <ul>
     <li>Allocate/free memory</li>
     <li>Open/close a file or network connection</li>
     <li>Protect synchronisation primitives such as atomic operations, memory barriers, monitors or critical sections, which must be released to allow other threads to obtain them</li>
   </ul>
+</section>
 
-  <h4>General problems</h4>
+<section id="2"><h1>Problems that RAII tries to solve</h1>
+  Dynamically allocated memory on the heap using malloc/free or new/delete is extremely powerful, as it allows for fine-grained control over precious memory resource. However, the correct use of these concepts requires some degree of skill, experience and concentration from the programer. The aspects that hold for new/delete as described below also apply to malloc/free; it applies to any kind of resource management.
+
   <ul>
-    <li>The program might throw an exception during resource use and thus the point of release might never be reached</li>
+    <li>Pairing</li>
+    Every dynamically allocated object that is created with <code>new</code> must be followed by a manual deallocation. If <code>delete</code> is not called <m>or if it is done at an inappropriate position in the code</m>, memory leaks will occur which might clog up a large portion of memory. There might be several points where the resource could potentially be released, making it hard to keep track of all eventualities
+
     <p>
-      <li>There might be several points where the resource could potentially be released, making it hard for a programmer to keep track of all eventualities</li>
+      <li>Correct operator pairing</li>
+      A dynamically allocated <n>array</n> initialised with <code>new[]</code> may only be deleted with the operator <code>delete[]</code>. If the wrong operator is used, the program behaviour will be undefined.
     </p>
-    <li>It is easy to forget to release a resource</li>
+
+    <li>Exceptions</li>
+    The program might throw an exception during resource use and thus the point of release might never be reached.
+
+    <p>
+      <li>Memory ownership</li>
+      If a third-party function returns a pointer to a data structure, the only way of knowing who is responsible for resource deallocation is by looking into either the code or the documentation. If both are not available (as is often the case), there is no way to infer the ownership from the return type. If for some reason the programer does not know this, he or she might call delete and thus interfere with the inner workings of the library.
+    </p>
   </ul>
 </section>
 
-<section id="2"><h1>RAII management class</h1>
+<section id="3"><h1>RAII management class</h1>
   There are 3 parts to an RAII class:
   <ul>
     <li>A resource is allocated in the constructor</li>
@@ -99,14 +108,14 @@
   </ul>
 </section>
 
-<section id="3"><h1>Example of an RAII class</h1>
+<section id="4"><h1>Example of an RAII class</h1>
   <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Code</a>
 
-  <subsection id="3.0"><h1>Resource allocation/deallocation</h1>
+  <subsection id="4.0"><h1>Resource allocation/deallocation</h1>
     In the example code, the resource allocation takes place in 2 steps:
     <ul>
       <li>
-        <code>new int(i)</code> creates a new block of memory on the heap and initialises it with the value of <code>i</code>. It returns the address of the block of memory.
+        <code>new int(i)</code> creates a new block of memory on the heap and initialises it with the value of <code>i</code>. <n>It returns the address of the block of memory</n>.
       </li>
       <p>
         <li>
@@ -115,22 +124,25 @@
       </p>    
     </ul>
 
-    Because the <code>MyInt</code> object <code>en</code> lives on the stack, it is automatically deallocated after each loop cycle - which automatically calls the destructor to release the heap memory. The programer, therefore, doesn't need to think about calling <code>delete</code>.
+    Because the <code>MyInt</code> object <code>en</code> lives on the stack, it is automatically deallocated after each loop cycle - which automatically calls the destructor (which in turn calls <code>delete</code>) to release the heap memory.
   </subsection>
 
-  <subsection id="3.1"><h1>Resource utilisation</h1>
+  <subsection id="4.1"><h1>Resource utilisation</h1>
 <pre><code class="cpp">
-int &operator*() { return *_p; }  
+int& operator*() 
+{ 
+  return *_p; 
+}  
 </code></pre>
 
     The dereference operator is overloaded allowing it to be used in the same manner as with raw pointers to retrieve the value to which the internal raw pointer is pointing. 
 
     <p>
-      Using <code>int &</code> along with returning <code>*_p</code>, the function returns the address of the value the pointer is pointing to.
+      Using <code>int&</code> along with returning <code>*_p</code>, the function returns the address of the value the pointer is pointing to. <m>Return by reference as <a href="../../jlib/cppExamples/fundamentals/25_returnByRef.cpp">here</a> is still a mystery</m>.
     </p>
   </subsection>
 
-  <subsection id="3.2"><h1>How not to do it</h1>
+  <subsection id="4.2"><h1>How not to do it</h1>
     In <a href="../../jlib/cppExamples/fundamentals/20b_raii.cpp">Example 2</a>, the destructor of <code>MyInt</code> would never be called, hence causing a memory leak with each loop iteration.
   </subsection>
 </section>

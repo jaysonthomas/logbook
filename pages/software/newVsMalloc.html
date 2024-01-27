@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS</title>
-  <meta name="ROS" content="text/html; charset=utf-8;" />
+  <title>New vs Malloc</title>
+  <meta name="New vs Malloc" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -39,15 +39,35 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Resources</a>
+<a href="#0">C++ features</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>ROS</h1>
+<chapter style="counter-reset: chapter 1"><h1>New vs Malloc</h1>
 
-<section id="0"><h1>Resources</h1>
-  Simple arm mover: <a href="https://t.ly/jEesK">code 1</a>. <br>
-  Another one: <a href="https://t.ly/BsnS0">2</a>.
+<section id="0"><h1>C++ features</h1>
+  New and Delete are extensions of (and better than) malloc and free in the C++ world.
+  <ul>
+    <li>Constructors/destructors</li>
+    Unlike <code>malloc(sizeof(MyClass))</code>, the call <code>new MyClass()</code> calls the constructor. Similarly, delete calls the destructor.
+    
+    <p>
+      <li>Type safety</li>
+      malloc returns a void pointer, which needs to be cast into the appropriate data type it points to. This is not <i>type-safe</i>, as one can freely vary the pointer type without any warnings or errors from the compiler as in the following example: 
+<pre><code class="c++">
+MyObject *p = (MyObject*)malloc(sizeof(int));
+</code></pre>  
+
+      In C++, new returns the correct type automatically - it is thus type-safe.
+<pre><code class="c++">      
+MyObject *p = new MyObject()
+</code></pre>
+    </p>
+
+    <li>Operator overloading</li>
+    As malloc and free are functions defined in a library, their behaviour cannot be changed easily. The new and delete <n>operators</n> however can be overloaded by a class in order to include optional proprietary behaviour. 
+  </ul>
 </section>
+
 </chapter>
 
 </body>

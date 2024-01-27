@@ -44,11 +44,82 @@
 
 <chapter style="counter-reset: chapter 3"><h1>A*</h1>
 <section id="0"><h1>Overview</h1>
-  At each step A* picks the node having the lowest $f$ which is a parameter equal to the sum of two other parameters:
+  At each step, A* picks the node having the lowest $f$ which is a parameter equal to the sum of two other parameters:
   <ul>
-  <li>$g$: the cost to move from the starting point to a node under consideration, following the path generated to get there</li>
-  <li>$h$: the estimated cost to move from that node to the final destination. This is referred to as the <i>heuristic</i>, which is nothing but a kind of smart guess. We don't know the actual distance until we find the path because all sorts of obstructions can be in the way. There can be many ways to calculate $h$.</li>
+  <li>
+    $g$ is the cost to move from the starting point to a node under consideration, following the path generated to get there
+  </li>
+  <li>
+    $h$ is the estimated cost to move from that node to the final destination. This is referred to as the <i>heuristic</i>, which is essentially a smart guess. The actual distance to the goal cannot be determined with certainty until the goal has been reached because all sorts of obstructions could be in the way. There can be many ways to calculate $h$.</li>
   </ul>
+
+  <div>
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../figures/navigation/3_Astar.png"/>
+      <figcaption>
+        $H$ is the heuristic, $G$ is the cost from the start. The brown box is an obstacle.  
+      </figcaption>
+    </figure>
+  </div>
+
+  The costs ($=h+g$) for different plans from the first starting point would be:
+  <ul>
+    <li>Plan 1 = [start, x9]  = 6</li>
+    <li>Plan 2 = [start, x15] = 6</li>
+    <li>Plan 3 = [start, x23] = 6</li>
+    <li>Plan 4 = [start, x17] = 4</li>
+  </ul>
+
+  We have our heuristic function,
+which is an underestimate of the remaining cost to
+get from the last state of a partial plan to the goal.
+Let's call that H. If we add those two quantities together,
+will say F equals G plus H,
+we get an estimate of the total cost of the plan from the start all the way to the goal.
+Even though we don't know exactly how to get all the way to the goal yet.
+Because we're adding costs together,
+we need to add one more property to the heuristic in addition to being admissible.
+The heuristic function has to obey the triangle inequality theorem,
+which states that for any three points, x1, x2,
+and x3, the heuristic estimate for x1 to x3 has to be
+less than the heuristic estimate from x1 to x2 plus the heuristic estimate from x2 to x3.
+A heuristic that obeys the triangle inequality theorem is said to be consistent.
+To use my heuristic in combination with a cost of the actions taken so far,
+I have to have a heuristic that is admissible, consistent.
+If for each partial plan,
+I add that heuristic to the cost function to get
+a value for each plan is F equals G plus H,
+then I can use that information to decide which plan to expand next.
+Let's go back to our example.
+I'll show the heuristic estimate for each cell.
+In this case, I'm using the Manhattan distance.
+I'll start at the start state and expand all the neighboring states to the left,
+right, up, and down.
+I can label each one of those partial plans with a total cost of the actions G. For now,
+let's just say the actual cost is still just one.
+That means the G value of each of these partial plans is equal to one,
+but the heuristic is very different.
+The value of H at the start position is four, moving to the left,
+up or down where the heuristic value is five is actually moving me away from the goal.
+Moving right has the lowest total cost,
+so that is the direction I'll choose to expand in next
+and then if I were to consider expanding my partial plan to the right,
+again, I see that that's infeasible.
+Moving up or down have equal total costs
+and either one of those would be a valid choice for the next expansion.
+This process of expanding the partial plan that has
+the lowest total cost in terms of the sum of the actual cost of the actions
+in the partial plan plus the heuristic from the last day
+in a partial plan is the famous algorithm known as A-star.
+This algorithm has two very useful properties.
+The first is that it's guaranteed to find the lowest cost plan first before any others,
+just like uniform cost search.
+Secondly, A-star doesn't suffer the inefficiencies of breadth-first search,
+where the list of partial plans can get unwieldy.
+This last property is dependent on the quality of your heuristic.
+The better your heuristic,
+the better your A-star implementation will perform.
 </section>
 </chapter>
 

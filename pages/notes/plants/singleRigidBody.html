@@ -40,10 +40,12 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Forces</a>
+<a href="#2">Moments</a>
+<a href="#3">Definitions</a>
 <ul class="no-bullets">
-  <li><a href="#0.0">Aim</a></li>
+  <li><a href="#3.0">Twist</a></li>
 </ul>
-<a href="#1">Twist</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Dynamics of a single rigid body</h1>
@@ -66,14 +68,64 @@
   $$
 </section>
 
-<section id="1"><h1>Twist</h1>
-  A twist is a 6-vector consisting of a 3-vector expressing the angular velocity and a 3-vector expressing the linear velocity. Both of these are written in coordinates of the same frame, and the linear velocity refers to the linear velocity of a point at the origin (belonging to the reference frame) of that frame. Both the body twist and the spatial twist represent the same motion, just in different coordinate frames. The body twist is not affected by the choice of the space frame, and the spatial twist is not affected by the choice of the body frame. 
-
+<section id="1"><h1>Forces</h1>
+  The twist of the body is given as:
   $$
     V_b = \begin{bmatrix}
-      \omega_b \\ v_b
-    \end{bmatrix}
+            \omega_b \\
+            v_b    
+          \end{bmatrix}
   $$
+
+  where the acceleration is given as $\dot{V}_b$.
+
+  <p>
+    The velocity and acceleration of each point is given as:
+    $$\begin{align*}
+      \dot{p}_i &= v_b + \omega_b \times p_i \\
+      \ddot{p}_i &= \dot{v}_b + \dot{\omega}_b \times p_i + \omega_b \times \dot{p}_i \\
+      \ddot{p}_i &= \dot{v}_b + \dot{\omega}_b \times p_i + \omega_b \times (v_b + \omega_b \times p_i)
+    \end{align*}$$
+
+    The velocity product terms include $\omega_b \times v_b$ and $\omega_b \times \omega_b$.
+  </p>
+
+  The total force on the body is given as:
+  $$\begin{align*}
+    F_b &= \sum_i F_i \\
+        &= \sum_i m_i \ddot{p}_i \\
+        &= \sum_i m_i \dot{v}_b + 
+          \cancel{(\dot{\omega}_b \times \sum_i m_i p_i)} +
+          (\sum_i m_i \omega_b \times v_b) + 
+          \cancel{(\omega_b \times \omega_b \sum_i m_i p_i)} \\
+        &= m(\dot{v}_b + [\omega_b]v_b)
+
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Moments</h1>
+  $$\begin{align*}
+  M_b &= \sum_i M_i \\
+      &= \sum_i p_i m_i \ddot{p}_i \\
+      &= \sum_i m_i \dot{v}_b + 
+        \cancel{(\dot{\omega}_b \times \sum_i m_i p_i)} +
+        (\sum_i m_i \omega_b \times v_b) + 
+        \cancel{(\omega_b \times \omega_b \sum_i m_i p_i)} \\
+      &= m(\dot{v}_b + [\omega_b]v_b)
+
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Definitions</h1>
+  <subsection id="3.0"><h1>Twist</h1>
+    A twist is a 6-vector consisting of a 3-vector expressing the angular velocity and a 3-vector expressing the linear velocity. Both of these are written in coordinates of the same frame, and the linear velocity refers to the linear velocity of a point at the origin (belonging to the reference frame) of that frame. Both the body twist and the spatial twist represent the same motion, just in different coordinate frames. The body twist is not affected by the choice of the space frame, and the spatial twist is not affected by the choice of the body frame. 
+
+    $$
+      V_b = \begin{bmatrix}
+        \omega_b \\ v_b
+      \end{bmatrix}
+    $$
+  </subsection>
 </section>
 </chapter>
 
