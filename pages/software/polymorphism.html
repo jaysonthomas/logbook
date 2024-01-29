@@ -131,7 +131,7 @@ X&ltint&gt(5, 6);
   
 <section id="4"><h1>Virtual functions</h1>
   [<a href="../../jlib/cppExamples/fundamentals/13_virtualFunction.cpp">Ref</a>]<br>
-  Virtual functions are a polymorphic feature. These functions are declared (and possibly defined) in a base class, and can be overridden by derived classes. This approach declares an interface at the base level, but delegates the implementation of the interface to the derived classes.
+  Virtual functions are a polymorphic feature. These functions are declared (and possibly defined) in a base class, and can be overridden by derived classes. This approach declares an <n>interface at the base level</n>, but delegates the implementation of the interface to the derived classes.
 
   <p>
     Virtual functions can be defined by derived classes, but this is not required. However, if we mark the virtual function with <code>=0</code> in the base class, then the function becomes a <i>pure virtual function</i>. This means that the base class declares but does not define the function. It has the side effect of making its class <i>abstract</i> meaning the class cannot be instantiated. A derived class must define the function, or else the derived class will be abstract.
