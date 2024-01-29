@@ -122,6 +122,33 @@
 </section>
 
 <section id="3"><h1>Industry experience</h1>
+  <subsection><h1>Ocado</h1>
+    <ul>
+      <li>
+        Proposed a real-time method to adaptively tune the feed-forward coeﬃcients for a ﬂeet of bots. This was then successfully tested as a proof of concept and its implementation seen through till production.
+      </li>
+
+      <p>
+        <li>
+          Improved the real-time trajectory generator for fast movements along linear axis.
+        </li>
+      </p>
+
+      <li>
+        Carried out detailed analysis and improved the localisation method using simple IR sensors.
+      </li>
+      The grid is made of cells of supposedly fixed lengths, but they are not always accurate. The bots have IR sensors on all 4 sides that point downwards and can be used to detect cell-crossings (movement from gap to track to gap etc). But, they are not always mounted correctly. The bots have a passive fifth wheel which should give an estimate of the bot's position, but it is not always accurate due to indentations on the tracks. With some filtering (exponential smoothing, jitter compensation, disturbance rejection, low-pass filtering) and non-volatile memory retention, the 2 sensors can be used to estimate the position of the bot at any given time.
+
+      <p>
+        <li>Helped in the initial modeling of a hoist system.</li>
+      </p>
+
+      <li>
+        Heavily involved in performance investigations and rearchitecture of the ﬁrmware code.
+      </li>
+    </ul>
+  </subsection>
+
   <subsection id="3.0"><h1>Advanced Fibreoptic Engineering Ltd.</h1>
     An <i>optical interrogator</i>, helpful in sensing strain or temperature differences, is useful in structural health monitoring systems. In the below project, a Fiber Bragg Grating (FBG) laser was used. The laser had to be swept through a range of wavelengths (40k) per second. Based on the physical property of the medium (say strain), the received optical signal peaked at different wavelengths.
 
