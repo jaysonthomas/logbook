@@ -40,11 +40,48 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Single Responsibility</a>
+<a href="#2">Open/Closed</a>
+<a href="#3">Liskov substitution</a>
+<a href="#4">Interface Segregation</a>
+<a href="#5">Dependency of inversion</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>SOLID design principles</h1>
 <section id="0"><h1>Overview</h1>
-  <a href="https://t.ly/ddOKr">Ref</a>.
+  <a href="https://t.ly/ddOKr">Ref</a>, <a href="https://t.ly/qKSwX">Good site</a>.
+</section>
+
+<section id="1"><h1>Single Responsibility</h1>
+  A class should have only one reason to change. 
+</section>
+
+<section id="2"><h1>Open/Closed</h1>
+  The principle dictates the software modules are open for extension but closed for modification. This allows new functionality to be added without changing existing source code.
+
+  <p>
+    Polymorphism is the best way to achieve this - with the use of abstract interfaces, we can extend a class and specialise its behaviour without making changes to the parent. This principle allows for reusable and maintainable software.
+  </p>
+</section>
+
+<section id="3"><h1>Liskov substitution</h1>
+  Subtypes must be substitutable for their base types without altering the correctness of the program. This states that a parent class (say when passed as an argument to a function) should be substitutable by any of its derived classes. This principle ensures that inheritance is used correctly.
+</section>
+
+<section id="4"><h1>Interface Segregation</h1>
+  Clients should not be forced to depend on interfaces that they do not use. This principle advocates for the creation of small and atomic interfaces. Abstractions/interfaces should be designed in such a way that the clients that are using the exposed methods do not have to get the whole pie. Clients should not have to carry the burden of implementing methods that they don't actually need.
+</section>
+
+<section id="5"><h1>Dependency of inversion</h1>
+  <ul>
+    <li>
+      High-level modules should not depend on low-level modules. Both should depend on abstractions.
+    </li>
+    <li>
+      Abstractions should not depend on details. Details should depend on abstractions.
+    </li>
+  </ul>
+  High-level modules orchestrate low-level modules in an application. Whilst low-level modules are more specific to components that are then used by the high-level modules.
 </section>
 </chapter>
 

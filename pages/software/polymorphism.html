@@ -97,11 +97,35 @@
     <br>
     <n><i>Templates</i> use datatypes as parameters</n> so that the same implementation can operate on different data types. At compile time, the compiler expands the code using the types that are passed as parameters.
 
-    <p>
-      <i>Generic code</i> is the term for code that is independent of types. A <code>template&lt&gt</code> tag is placed before the function/class signature to specify and mark the declaration as generic.
-    </p>
+    <p></p>
+    <button class="accordion">Syntax</button>
+    <div class="panel">
+<pre><code class="cpp">
+// If a class
+template &lttypename dataType1, typename datatype2&gt
+class X {
+  X(datatype1 key, datatype2 value)
+  {
+    // Constructor
+  }
+};
 
-    The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic (data)type which the parameter that follows it, takes on.
+// Calling the class
+X&ltsting, int&gt("age", 3);
+
+// If a function
+template &lttypename datatype&gt
+datatype X(datatype input1, datatype input2)
+{
+
+}
+
+// Calling the function
+X&ltint&gt(5, 6);
+  </code></pre>
+    </div>
+
+    <i>Generic code</i> is the term for code that is independent of types. A <code>template&lt&gt</code> tag is placed before the function/class signature to specify and mark the declaration as generic. The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic (data)type which the <n>parameter</n> that follows it, takes on.
   </subsection>
 </section>
   

@@ -47,10 +47,10 @@
 <chapter style="counter-reset: chapter 1"><h1>Unique Pointers</h1>
 
 <section id="0"><h1>Introduction</h1>
-  <code>std::unique_ptr</code> is a smart pointer which exclusively owns a dynamically allocated resource on the heap. There must not be a second unique pointer to the same resource. The underlying internal raw pointer pointer to the particular resource is owned by a single RAII class. Unique pointers are useful when working with a temporary heap resource that is no longer needed once it goes out of scope.
+  <code>std::unique_ptr</code> is a smart pointer which exclusively owns a dynamically allocated resource on the heap. There must not be a second unique pointer to the same resource. The underlying internal raw pointer pointing to the particular resource is owned by a single RAII class. 
 
   <p>
-    Unique pointers should be the default choice unless we know for certain that sharing is required at a later stage. Internally, the unique pointer uses th rule of five and move semantics along with RAII to encapsulate a resource (the raw pointer) and transfer it between pointer objects when either the move assignment operator or the move constructor are called. Also, a key feature of a unique pointer, which makes it so well-suited as a return type for many functions, is the possibility to convert it to a shared pointer.
+    Unique pointers should be the default choice unless it is known for certain that sharing would be required at a later stage. Internally, a unique pointer uses the rule of five and move semantics along with RAII to encapsulate a resource (the raw pointer) and transfer it between pointer objects when either the move assignment operator or the move constructor are called. Also, a key feature of a unique pointer, which makes it so well-suited as a return type for many functions, is the possibility to convert it to a shared pointer.
   </p>
   <div class="container">
     <figure>
@@ -66,9 +66,11 @@
 
   <p>
     A unique pointer is constructed using the following syntax:
-<pre><code class="C++">
+<pre><code class="Cpp">
 // p is allocated on the stack and new Type is allocated on the heap.
 std::unique_ptr&ltType&gt p(new Type);
+// or
+auto p = make_unique&ltType&gt ();
 </code></pre>
   </p>
 </section>    
