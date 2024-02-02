@@ -50,48 +50,47 @@
 <section id="0"><h1>Definition</h1>
   Navigation refers to the broader process of guiding a robot from its current location to a specified goal location in its environment. It involves higher-level decision-making processes, such as path planning, localization, and map interpretation.
 
-  <p>
-    The main goal is to determine the path or trajectory that the robot should follow to reach its destination while avoiding obstacles, following any specific constraints and optimising for specific factors like:
+  A planner might not know the state of the world ahead of time. It might have to consider contingencies and take into account various uncertainities. The problem of navigation also involves mission level decisions like when to return to a particular location to recharge. 
+</section>
 
+<section><h1>Higher level reasoning</h1>
+  This involves executing a plan within a finite state machine.
+</section>
+
+<section><h1>Representation</h1>
+  This involves representing the vehicle and the world appropriately.
+</section>
+
+<section><h1>Mapping & Localisation</h1>
+  This involves setting up a search space and then conducting a search through that space.
+</section>
+
+<section id="1"><h1>Motion planning</h1>
+  Motion planning is a specific component of navigation that is concerned with converting a high-level path plan into specific motor commands to get to a goal safely and efficiently. Mathematically, the aim is to convert an initial state into a goal state. 
+
+  <subsection><h1>Path planning</h1>
+    Assumption: The environment is mapped out. The bot is localised.
+  
+    <p>
+      Path planning involves waypoint generation. This includes planning to avoid obstacles. The aim is to get to a goal, optimising for constraints such as time.
+    </p>
+  </subsection>
+  
+  <subsection><h1>Trajectory Generation</h1>
+    Trajectory generation involves creating a sequence of target velocity, acceleration and jerk inputs that can then be turned into actuator commands by a lower level controller. The aim is to get from 1 way point to another. It involves optimising for:
     <ul>
       <li>Energy efficiency</li>
       <li>Speed</li>
       <li>
         Taking the smoothest path to reduce jerks or sharp curves to ensure comfort
       </li>
-    </ul>
-  </p>
-
-  A planner might not know the state of the world ahead of time. It might have to consider contingencies and take into account various uncertainities. The problem of navigation also involves mission level decisions like when to return to a particular location to recharge. 
-</section>
-
-<section id="1"><h1>Motion planning</h1>
-  Motion planning is a specific component of navigation that is concerned with converting the high-level path plan into specific motor commands to get to a goal safely and efficiently. Mathematically, the aim is to convert an initial state into a goal state. It involves lower-level considerations such as:
-  
-  <ul>
-    <li>Trajectory generation</li>
-    Generating a sequence of actions that the robot's actuators need to execute to follow a given path whilst taking into account the physical constraints of the robot such as its kinematics and dynamics.
-
-    <p>
-      <li>Velocity control</li>
       <li>
-        Obstacle avoidance at a more detailed level
+        Physical constraints of the robot by accounting for its kinematics and dynamics; since a bot cannot move in arbitrary ways.
       </li>
-    </p>
-  </ul>
-
-  Solving the planning problem boils down to setting up the search space and then conducting a search through that space.
-
-  <p>
-    3D motion planning involves:
-    <ul>
-      <li>Representing the vehicle and the world appropriately</li>
-      <li>Integrating vehicle's dynamic constraints into the planner since vehicles cannot always move in arbitrary ways</li>
-      <li>Executing a plan within a finite state machine</li>
-    </ul>
-  </p>
+    </ul>  
+  </subsection>
 </section>
-
+  
 <section id="2"><h1>Representation of the planning problem</h1>
   To represent the planning problem and define the search space, the following is required:
 
