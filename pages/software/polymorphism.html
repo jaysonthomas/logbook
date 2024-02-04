@@ -78,15 +78,15 @@
 </section>
 
 <section id="2"><h1>Overriding</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>
+  [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>]
   <br>
   Overriding a function occurs when:
   <ul>
     <li>A base class declares a virtual function</li>
-    <li>A derived class overrides the virtual function by defining its own implementation with an identical function signature (i.e. the same function name and argument types)</li>
+    <li>A derived class can override the virtual function by defining its own implementation with an identical function signature</li>
   </ul>
 
-  Specifying a function as override is good practice, as it empowers the compiler to verify the code (if the code doesn't override the virtual function, the compiler will generate an error), and communicates the intention of the code to future users.
+  Specifying a function as <code>override</code> in the derived class is good practice, as it empowers the compiler to verify that the function signature in the derived class matches that in the base class.
 </section>
 
 <section id="3"><h1>Generic programming</h1>

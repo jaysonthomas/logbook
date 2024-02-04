@@ -39,18 +39,40 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Example</a>
+<a href="#0">Definitions</a>
 <a href="#1">Theory</a>
+<a href="#2">Example</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Transformation of a basis vector</h1>
-<section id="0"><h1>Example</h1>
-  [<a href="https://t.ly/DwPCd">Ref</a>] <br>
+<section id="0"><h1>Definitions</h1>
+  A <i>coordinate system</i> is an arrangement of reference lines or curves used to identify the location of points in space. In 2D, the most common system is the <i>Cartesian system</i>.
 </section>
 
 <section id="1"><h1>Theory</h1>
   [<a href="https://t.ly/gEhRW">Ref</a>] <br>
+  If a non-linear transformation is applied to a bunch of vectors within a coordinate system (i.e. points in space), it would look very linear when zoomed in on a point. If the location of a point is a factor in the transformation, then each point would scale based on how far it is from the origin. For example, a transformation applied at (-2,1) would be much smaller than at (-100, 50) for a transformation given by $\begin{bmatrix} x + sin(y) \\ y + sin(x)\end{bmatrix}$.
+  
+  <p>
+    Local effects of any transformation might look non-linear globally, but will look linear locally if the scaling due to the location of any point from the origin is removed. The effects of a local linear transformation can be found by taking partial derivatives of the non-linear transformation function and turning it into a matrix (for convenience) called the <i>Jacobian matrix</i>:
+
+    $$\begin{bmatrix}
+      \frac{\partial{f_x}}{\partial{x}} & \frac{\partial{f_x}}{\partial{y}} \\
+      \frac{\partial{f_y}}{\partial{x}} & \frac{\partial{f_y}}{\partial{y}}      
+    \end{bmatrix}$$
+
+    $\partial{f_x}, \partial{f_y}$ represents the x,y components of the transformation matrix respecitvely. In the 1st column, the effect of a transformation on the x component of a point in both the x and y directions is considered. The changes caused by the transformation is divided by $\partial{x}$ to nornalise the change i.e. the aim is to understand the change caused by the transformation irrespective of the point it is applied to, i.e. ignoring any scaling.
+  </p>
+
+  Similarly, the 2nd column represents the normalised changes caused by the transformation to the y component of a point in both the x and y directions.
 </section>
+
+<section id="2"><h1>Example</h1>
+  [<a href="https://t.ly/DwPCd">Ref</a>] <br>
+  Consider a transformation $\begin{bmatrix} x + sin(y) \\ y + sin(x)\end{bmatrix}$ applied at the point (-2,1) which can be rewritten as 
+  $\begin{bmatrix} -2 & 0 \\ 0 & 1\end{bmatrix}$ where the columns represent the x and the y coordinates respectively.
+</section>
+
 </chapter>
 
 </body>
