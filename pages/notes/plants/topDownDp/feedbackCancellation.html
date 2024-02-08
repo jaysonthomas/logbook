@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback cancelling control</title>
+  <meta name="Feedback cancelling control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Feedback cancelling control</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Example</a></li>
+  <li><a href="#0.1">Limitations</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Feedback cancelling control</h1>
+<section id="0"><h1>Feedback cancelling control</h1>
+  Given the system as written in (1), if we have $u$ as an input so we can apply 
+  torques at both of the joints; and if we know $M$, $C$, $\tau$(the gravity forces), 
+  then we can write a controller that changes the effective dynamics of the robot 
+  to anything we want. This is powerful idea is called 
+  <i>feedback cancelling control</i>.
+  If we write the right controller and have enough control authority 
+  (at some point we'll have torque limits or other problems)
+  then we can overwrite the dynamics of our system; even make
+  the pendulum defy gravity.
+    
+  <subsection id="0.0"><h1>Example</h1>
+    As an example to show how this approach is limiting, let's replace the dynamics 
+    of the two-link pendulum and make it act like a one-link pendulum. 
+    There's only two degrees of freedom so we can't make it act like a four-linked 
+    pendulum but we can impose whatever two link dynamics we like.
+
+    <p>
+      This would be equivalent to saying we'd like the accelerations of the 2-link 
+      pendulum to behave like the dynamics of a single pendulum for which the equations 
+      are easier. 
+    </p>
+
+    $$
+      \ddot{q}^d = 
+        \begin{bmatrix} \ddot{\theta}_1^d \\\ddot{\theta}_2^d \end{bmatrix}, 
+        =\begin{bmatrix} -\frac{g}{l}sin\theta_1 - b\dot{\theta}_1\\0\end{bmatrix}
+    $$
+    The $b$ term is present to account for damping. We would have to cancel any effects that 
+    are coming from $\theta_2$ moving around so that $\theta_1$ moves like a 
+    single simple pendulum.
+
+    <p>
+      Let's pretend the acceleration of joint 2 is 0. In practice if it doesn't 
+      start straight (this is the configuration when $\theta_2=0$), we would put 
+      a little feedback control to make it go straight. Making it swing like a 
+      single pendulum is not the natural physics of this DP. But we can do this 
+      algebraically. If were to apply the following controller which exactly cancels
+      out the terms in our EoM/plant specified by (1), into the closed loop system,
+    </p>
+    $$
+      u = C(q,\dot{q})-\tau_g(q) + M(q)\ddot{q}^d
+    $$
+
+    then $C$ and $\tau$ cancels and we get:
+    $$M(q)\ddot{q} = M(q)\ddot{q}^d$$
+
+    The world knows that mass is always positive; even in the mass matrix form, 
+    mass matrices are always positive definite or semi-definite depending on the system. 
+    In general we're going to say in these cases it's safe to do $M^{-1}(q)$; 
+    the inverse exists. It implies that: 
+    $$\ddot{q} = \ddot{q}^d$$
+  </subsection>
+
+  <subsection id="0.1"><h1>Limitations</h1>
+    <ul>
+      <li>This works only in the case of a known robot arm</li>
+      This method is very dependent on our ability to estimate the torques, masses, 
+      coriolis and the gravitational terms accurately. People do this! It's interesting 
+      to run the sensitivity analysis and check how sensitive we are to our mass matrix 
+      estimate and the like.
+
+      <p>
+        <li>A manipulation system is an underactuated system</li>
+        If we are to write the dynamics of a full manipulation problem where the 
+        equations of motion include both the (masses of) robot and the manipuland, 
+        then we can't write (1) with just $u$ in it anymore because we cannot apply torque 
+        directly to the objects; the torques are applied to the robot joints. So we can't 
+        directly overwrite the dynamics of the objects in the world. 
+      </p>
+      $$M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu$$
+
+      We introduce the $B$ matrix and it becomes low rank because we can't directly 
+      affect the objects in the world. That's why a <i>manipulation system</i> 
+      (which includes both the world and the robot) is an <i>underactuated system</i>. 
+
+      <p>
+        <li>Limitations in the robot</li>
+        if to follow some dynamics it requires ridiculous amounts of torque and we have 
+        torque limits, then it becomes an underactuated system.
+      </p>
+    </ul>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

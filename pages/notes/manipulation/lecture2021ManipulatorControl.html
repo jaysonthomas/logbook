@@ -39,191 +39,38 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Overview</a>
-<a href="#2">Simple double pendulum</a>
+<a href="#0">Overview</a>
+<a href="#1">Stiffness control implemented using feedback cancellation</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Setup</a></li>
+  <li><a href="#1.0">Example: Double pendulum - joint stiffness control</a></li>
+  <li><a href="#1.1">Benefit of having gravity compensation</a></li>
 </ul>
-<a href="#3">Feedback cancelling control</a>
+<a href="#2">Joint impedance control</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Example</a></li>
-  <li><a href="#3.1">Limitations</a></li>
+  <li><a href="#2.0">Example: Iiwa</a></li>
+  <li><a href="#2.1">Example: Opening a dishwasher door</a></li>
 </ul>
-<a href="#4">Stiffness control implemented using feedback cancellation</a>
+<a href="#3">Stiffness control in end-effector coordinates</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Example: Double pendulum - joint stiffness control</a></li>
-  <li><a href="#4.1">Benefit of having gravity compensation</a></li>
+  <li><a href="#3.0">Change of coordinates</a></li>
+  <li><a href="#3.1">Is (\ref{eq:opSpaceForm}) invertible?</a></li>
+  <li><a href="#3.2">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
 </ul>
-<a href="#5">Joint impedance control</a>
-<ul class="no-bullets">
-  <li><a href="#5.0">Example: Iiwa</a></li>
-  <li><a href="#5.1">Example: Opening a dishwasher door</a></li>
-</ul>
-<a href="#6">Stiffness control in end-effector coordinates</a>
-<ul class="no-bullets">
-  <li><a href="#6.0">Change of coordinates</a></li>
-  <li><a href="#6.1">Is (\ref{eq:opSpaceForm}) invertible?</a></li>
-  <li><a href="#6.2">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
-</ul>
-<a href="#7">Side notes</a>
-<a href="#8">Questions & todo</a>
+<a href="#4">Side notes</a>
+<a href="#5">Questions & todo</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Manipulator control</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Overview</a></li>
-    <li><a href="#2">Simple double pendulum</a></li>
-    <li><a href="#3">Feedback cancelling control</a></li>
-    <li><a href="#4">
-      Stiffness control implemented using feedback cancellation
-    </a></li>
-    <li><a href="#5">Joint impedance control</a></li>
-    <li><a href="#6">Stiffness control in end-effector coordinates</a></li>
-    <li><a href="#9">Side notes</a></li>
-    <li><a href="#10">Questions & todo</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Overview</h1>
-  In the <a href=lecture2021ForceControl.html>force control chapter</a>, 
-  we assumed that the robot was a point. We'll now add the rest of the robot. 
-  There are aspects of manipulator control that require executing trajectories at high 
-  speeds with very high accuracy possibly with uncertain payloads. But we'll focus 
-  on the force control aspects of manipulator control. 
+<section id="0"><h1>Overview</h1>
+  In <a href=lecture2021ForceControl.html>force control</a>, the robot was assumed to be a point. Here, the whole robot is considerd focusing on the force control aspects of manipulator control. 
 
   <p>
-    For the pushing-a-book-on-a-table task, there is a sweet spot where we need to 
-    apply just the right amount of force to maintain frictional contact between the hand 
-    and the book and also between the book and the table such that the book is still 
-    able to slide on the table but the hand isn't sliding on the book.
+    For the pushing-a-book-on-a-table task, there is a sweet spot where the right amount of force needs to be applied to maintain frictional contact between the hand and the book so that the hand doesn't slide away on the book; but the downward force cannot be too high preventing the book from being able to slide on the table.
   </p>
 </section>
 
-<section id="2"><h1>Simple double pendulum</h1>
-  To explain all the concepts (for say writing on the board) we can describe the 
-  behaviour of a 7-joint robot arm with a simple double pendulum 
-  (simple because it uses point masses for the dynamics). 
-  We'll think of the double pendulum as hanging down from the top. 
-  A kuka is bolted on the bottom. That's no big deal.
-  
-  <subsection id="2.0"><h1>Setup</h1>
-    <figure>
-      <img style="height:70px; width:auto"
-      src="../../../figures/manipulation/16_simpleDP.png"/>
-      <figcaption>
-        Double pendulum parameterisation
-      </figcaption>
-    </figure> 
-
-    The DP is parameterized with just 2 angles, $\theta_1$ and $\theta_2$. 
-    The end point, 
-    which we'll call the end effector, is where we want to make contact 
-    (we'll use it for our kinematics). We'll have motors and therefore torques 
-    at both the joints. The mass is distributed. It's got the standard manipulator 
-    equation of motion 
-    form plus potentially any contact forces which we'll add later. If you just 
-    do lumped masses then the terms come out particularly easy (derived in the notes). 
-    
-    $$\begin{equation}M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + u\end{equation}$$
-    $$
-      q=\begin{bmatrix} \theta_1\\\theta_2 \end{bmatrix}, 
-      u=\begin{bmatrix} \tau_1\\\tau_2 \end{bmatrix}
-    $$
-
-    Our goal is to figure out what torques to apply to achieve some force control 
-    or program the interaction at the contact point. 
-  </subsection>
-</section>
-
-<section id="3"><h1>Feedback cancelling control</h1>
-  Given the system as written in (1), if we have $u$ as an input so we can apply 
-  torques at both of the joints; and if we know $M$, $C$, $\tau$(the gravity forces), 
-  then we can write a controller that changes the effective dynamics of the robot 
-  to anything we want. This is powerful idea is called 
-  <i>feedback cancelling control</i>.
-  If we write the right controller and have enough control authority 
-  (at some point we'll have torque limits or other problems)
-  then we can overwrite the dynamics of our system; even make
-  the pendulum defy gravity.
-    
-  <subsection id="3.0"><h1>Example</h1>
-    As an example to show how this approach is limiting, let's replace the dynamics 
-    of the two-link pendulum and make it act like a one-link pendulum. 
-    There's only two degrees of freedom so we can't make it act like a four-linked 
-    pendulum but we can impose whatever two link dynamics we like.
-
-    <p>
-      This would be equivalent to saying we'd like the accelerations of the 2-link 
-      pendulum to behave like the dynamics of a single pendulum for which the equations 
-      are easier. 
-    </p>
-
-    $$
-      \ddot{q}^d = 
-        \begin{bmatrix} \ddot{\theta}_1^d \\\ddot{\theta}_2^d \end{bmatrix}, 
-        =\begin{bmatrix} -\frac{g}{l}sin\theta_1 - b\dot{\theta}_1\\0\end{bmatrix}
-    $$
-    The $b$ term is present to account for damping. We would have to cancel any effects that 
-    are coming from $\theta_2$ moving around so that $\theta_1$ moves like a 
-    single simple pendulum.
-
-    <p>
-      Let's pretend the acceleration of joint 2 is 0. In practice if it doesn't 
-      start straight (this is the configuration when $\theta_2=0$), we would put 
-      a little feedback control to make it go straight. Making it swing like a 
-      single pendulum is not the natural physics of this DP. But we can do this 
-      algebraically. If were to apply the following controller which exactly cancels
-      out the terms in our EoM/plant specified by (1), into the closed loop system,
-    </p>
-    $$
-      u = C(q,\dot{q})-\tau_g(q) + M(q)\ddot{q}^d
-    $$
-
-    then $C$ and $\tau$ cancels and we get:
-    $$M(q)\ddot{q} = M(q)\ddot{q}^d$$
-
-    The world knows that mass is always positive; even in the mass matrix form, 
-    mass matrices are always positive definite or semi-definite depending on the system. 
-    In general we're going to say in these cases it's safe to do $M^{-1}(q)$; 
-    the inverse exists. It implies that: 
-    $$\ddot{q} = \ddot{q}^d$$
-  </subsection>
-
-  <subsection id="3.1"><h1>Limitations</h1>
-    <ul>
-      <li>This works only in the case of a known robot arm</li>
-      This method is very dependent on our ability to estimate the torques, masses, 
-      coriolis and the gravitational terms accurately. People do this! It's interesting 
-      to run the sensitivity analysis and check how sensitive we are to our mass matrix 
-      estimate and the like.
-
-      <p>
-        <li>A manipulation system is an underactuated system</li>
-        If we are to write the dynamics of a full manipulation problem where the 
-        equations of motion include both the (masses of) robot and the manipuland, 
-        then we can't write (1) with just $u$ in it anymore because we cannot apply torque 
-        directly to the objects; the torques are applied to the robot joints. So we can't 
-        directly overwrite the dynamics of the objects in the world. 
-      </p>
-      $$M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu$$
-
-      We introduce the $B$ matrix and it becomes low rank because we can't directly 
-      affect the objects in the world. That's why a <i>manipulation system</i> 
-      (which includes both the world and the robot) is an <i>underactuated system</i>. 
-
-      <p>
-        <li>Limitations in the robot</li>
-        if to follow some dynamics it requires ridiculous amounts of torque and we have 
-        torque limits, then it becomes an underactuated system.
-      </p>
-    </ul>
-  </subsection>
-</section>
-
-<section id="4"><h1>Stiffness control implemented using feedback cancellation</h1>
+<section id="1"><h1>Stiffness control implemented using feedback cancellation</h1>
   Locally, within reason, if we want to change our dynamics a bit then 
   feedback cancelling control is an incredibly practical powerful idea.
   Inspired by the force cancellation philosophy, our goal is to make the big complicated 
@@ -238,7 +85,7 @@
     it has some desired mechanical response. 
   </p>
 
-  <subsection id="4.0"><h1>Example: Double pendulum - joint stiffness control</h1>
+  <subsection id="1.0"><h1>Example: Double pendulum - joint stiffness control</h1>
     There's a bunch of different controllers we could write here - torque control and 
     position control. If we were to write a position controller for this we might write a 
     PD control:
@@ -292,7 +139,7 @@
     <i>Impedance control</i> is the more general term for the whole set of concepts.
   </subsection>
 
-  <subsection id="4.1"><h1>Benefit of having gravity compensation</h1>
+  <subsection id="1.1"><h1>Benefit of having gravity compensation</h1>
     In practice, the difference in having a controller with just PD control and no 
     gravity compensation is huge. In DP, if we wanted to hold the pendulum in a horizontal 
     position (i.e. choose a stiffness that allows us to do that) where gravity is pulling down; 
@@ -320,14 +167,14 @@
   </subsection>
 </section>
 
-<section id="5"><h1>Joint impedance control</h1>
+<section id="2"><h1>Joint impedance control</h1>
   We chose our desired dynamics to use the initial mass and coriollis terms. $M$ and $C$ 
   always go together (even in reality). We chose not to change them. Think of them as 
   $ma$ in $F=ma$. It typically requires high bandwidth to cancel out $M$ and $C$ and 
   to achieve good accuracy of our mass. When we decide to change $M$ and $C$, 
   the control method is called <i>joint impedance control</i>.
 
-  <subsection id="5.0"><h1>Example: Iiwa</h1>
+  <subsection id="2.0"><h1>Example: Iiwa</h1>
     In reality, compared to (5), Iiwa does much more than just GC. 
     When we run iiwa in joint-impedance control mode, it also does 
     friction compensation and some subtle stuff at the actuator level to cancel out the 
@@ -343,7 +190,7 @@
     </p>
   </subsection>
 
-  <subsection id="5.1"><h1>Example: Opening a dishwasher door</h1>
+  <subsection id="2.1"><h1>Example: Opening a dishwasher door</h1>
     <p>
       The joint trajectory that iiwa is programmed to follow during the opening motion 
       is going to deviate significantly depending on how accurately we have modelled and 
@@ -364,7 +211,7 @@
   </subsection>
 </section>
 
-<section id="6"><h1>Stiffness control in end-effector coordinates</h1>
+<section id="3"><h1>Stiffness control in end-effector coordinates</h1>
   How do we go from implementing the controller at the joints to implementing it just 
   at the end effector? So instead of affecting the dynamics in $q$ we want to write 
   the dynamics at the EE. We want the fingertip to act like a MSD.
@@ -384,7 +231,7 @@
     \end{equation}$$
   </p>
 
-  <subsection id="6.0"><h1>Change of coordinates</h1>
+  <subsection id="3.0"><h1>Change of coordinates</h1>
     We have our joint angles in $q$ coordinates and we have to somehow change to $p$
     coordinates in order to achieve our goal. 
 
@@ -428,7 +275,7 @@
     just do feedback cancellation in this lower space.
   </subsection>
 
-  <subsection id="6.1"><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
+  <subsection id="3.1"><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
     What are the conditions that would be required for the matrix in (\ref{eq:opSpaceForm}) 
     be invertible? 
 
@@ -461,7 +308,7 @@
     </p>
   </subsection>
 
-  <subsection id="6.2"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
+  <subsection id="3.2"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
     If we write a controller that tells the robot to act like a certain dynamics in the 
     xyz configuration, but say the robot has 7 DOF, then we've still got to specify 
     something for the joints (so that the joints don't get into an odd configuration and 
@@ -495,7 +342,7 @@
   </subsection>
 </section>
 
-<section id="7"><h1>Side notes</h1>
+<section id="4"><h1>Side notes</h1>
   The papers on how control is implemented in Iiwa are great. They are linked in the notes.
   <ul>
     <li>Abu Ahafer and Christian Ott about impedance control of elastic joint robots</li>
@@ -504,7 +351,7 @@
   </ul>
 </section>
 
-<section id="8"><h1>Questions & todo</h1>
+<section id="5"><h1>Questions & todo</h1>
   <ul>
     <li>
       I think the code to turn a DP into a single one is 
