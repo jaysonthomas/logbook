@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Robotic Arm</title>
-  <meta name="Robotic Arm" content="text/html; charset=utf-8;" />
+  <title>Forward/Inverse Dynamics</title>
+  <meta name="Forward/Inverse Dynamics" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,19 +39,35 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Inverse Dynamics</a>
+<a href="#1">Forward Dynamics</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Robotic Arm</h1>
-<section id="0"><h1>Overview</h1>
-  [<a href="https://t.ly/FZ73K">Ref</a>] <br>
-  The robotic system presented in the paper consists of:
-  <ul>
-    <li>A variable-stiffness manipulator arm</li>
-    The <i>variable compliance</i> enables the robot manipulator to work in a semistructured environment without damaging itself, the crop, or the surrounding.
-    <li>A soft robot gripper</li>
-    <li>Different types of sensors that are used to identify and locate in 3D and pick the tomatoes</li>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Forward/Inverse Dynamics</h1>
+<section id="0"><h1>Inverse Dynamics</h1>
+  The equation of motion of a robot also called the <i>Inverse dynamics</i> equation is given as:
+
+  $$\begin{align*}
+    \tau &= M(q)\ddot{q} + C(q, \dot{q}) + G(q) \\
+         &= ID(q, \dot{q}, \ddot{q})
+  \end{align*}$$
+
+  where $M$ is the joint-space inertia matrix, $C$ is the vector of Coriolis and centrifugal forces and $G$ is the gravity vector in the joint space. $M$ is a positive definite symmetric matrix. $C$ has $\dot{q}$ in every term so $C = 0$ if $\dot{q}=0$.
+
+  <p>
+    An inverse dynamics function gets $q, \dot{q}, \ddot{q}$ as inputs and computes the torques required to achieve a desired trajectory. It is used for control
+  </p>
+</section>
+
+<section id="1"><h1>Forward Dynamics</h1>
+  A forward dynamics function gets $q, \dot{q}, \tau$ as inputs and computes $\ddot{q}$ as an output by first computing $M, C, G$:
+
+  $$\begin{align*}
+    \ddot{q} &= M^{-1} (\tau - C(q, \dot{q}) - G(q)) \\
+             &= FD(q, \dot{q}, \tau)
+  \end{align*}$$
+
+  FD is used for simulation purposes. FD outputs joint accelerations due to some applied torques which can then be integrated over time to compute the evolution of $q$.
 </section>
 </chapter>
 

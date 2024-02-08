@@ -40,10 +40,17 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Definition</a>
-<a href="#1">Motion planning</a>
-<a href="#2">Representation of the planning problem</a>
-<a href="#3">Search 'state' space</a>
-<a href="#4">Action space</a>
+<a href="#1">Higher level reasoning</a>
+<a href="#2">Representation</a>
+<a href="#3">Mapping & Localisation</a>
+<a href="#4">Motion planning</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Path planning</a></li>
+  <li><a href="#4.1">Trajectory Generation</a></li>
+</ul>
+<a href="#5">Representation of the planning problem</a>
+<a href="#6">Search 'state' space</a>
+<a href="#7">Action space</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Navigation overview</h1>
@@ -53,22 +60,22 @@
   A planner might not know the state of the world ahead of time. It might have to consider contingencies and take into account various uncertainities. The problem of navigation also involves mission level decisions like when to return to a particular location to recharge. 
 </section>
 
-<section><h1>Higher level reasoning</h1>
+<section id="1"><h1>Higher level reasoning</h1>
   This involves executing a plan within a finite state machine.
 </section>
 
-<section><h1>Representation</h1>
+<section id="2"><h1>Representation</h1>
   This involves representing the vehicle and the world appropriately.
 </section>
 
-<section><h1>Mapping & Localisation</h1>
+<section id="3"><h1>Mapping & Localisation</h1>
   This involves setting up a search space and then conducting a search through that space.
 </section>
 
-<section id="1"><h1>Motion planning</h1>
+<section id="4"><h1>Motion planning</h1>
   Motion planning is a specific component of navigation that is concerned with converting a high-level path plan into specific motor commands to get to a goal safely and efficiently. Mathematically, the aim is to convert an initial state into a goal state. 
 
-  <subsection><h1>Path planning</h1>
+  <subsection id="4.0"><h1>Path planning</h1>
     Assumption: The environment is mapped out. The bot is localised.
   
     <p>
@@ -76,7 +83,7 @@
     </p>
   </subsection>
   
-  <subsection><h1>Trajectory Generation</h1>
+  <subsection id="4.1"><h1>Trajectory Generation</h1>
     Trajectory generation involves creating a sequence of target velocity, acceleration and jerk inputs that can then be turned into actuator commands by a lower level controller. The aim is to get from 1 way point to another. It involves optimising for:
     <ul>
       <li>Energy efficiency</li>
@@ -91,7 +98,7 @@
   </subsection>
 </section>
   
-<section id="2"><h1>Representation of the planning problem</h1>
+<section id="5"><h1>Representation of the planning problem</h1>
   To represent the planning problem and define the search space, the following is required:
 
   <ul>
@@ -108,7 +115,7 @@
   </ul>
 </section>
 
-<section id="3"><h1>Search 'state' space</h1>
+<section id="6"><h1>Search 'state' space</h1>
   A motion path from start to goal could be done as a continuous curve. In this case, a vehicle would be confronted with infinitely many decisions/actions at any given time which would be hard to solve given constraints on time and computational resources.
 
   <p>
@@ -136,7 +143,7 @@
   </div>
 </section>
 
-<section id="4"><h1>Action space</h1>
+<section id="7"><h1>Action space</h1>
   This describes how the vehicle moves from state to state. The choice of state space and action space are closely connected. To each type of action, a cost is assigned which describes how desirable or easy actions are relative to one another.
 </section>
 

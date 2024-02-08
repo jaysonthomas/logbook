@@ -45,7 +45,8 @@
 <a href="#3">Block diagrams</a>
 <a href="#4">Linking code</a>
 <a href="#5">Adding a collapsable section</a>
-<a href="#6">Miscellaneous</a>
+<a href="#6">Referencing</a>
+<a href="#7">Miscellaneous</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Web page</h1>
@@ -139,12 +140,8 @@
   </div>
 </section>
 
-<section id="6"><h1>Miscellaneous</h1>
+<section id="6"><h1>Referencing</h1>
   <ul>
-    <li>Details</li>
-    [<a href="https://t.ly/cJkC">Ref</a>] Just the details tag. The summary tag provides the summary.
-
-    <p>
     <li>Linking to a specific sentence or equation in a page</li>
 <pre><code class="xml">
 &lt;a id="eq1">Whatever is in between&lt;/a&gt;
@@ -152,17 +149,34 @@
 Linking to the equation from elsewhere.
 &lt;a href="#eq1">The equation over here&lt;/a&gt;
 </code></pre>
+
+    <p>
+      <li>The other way to reference equations</li>
+      Just <n>before</n> <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
+      
+      <p>
+        To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
+      </p>  
     </p>
-    
-    <li>The other way to reference equations</li>
-    Just <n>before</n> <code>\end{equation}</code> add <code>\label{eq:nameToBeUsedLater}</code>.
-    <br>
-    To reference the equation, use <code>\ref{eq:nameToBeUsedLater}</code>
-    <br><br>
 
     <li>Referencing code in github</li>
     If there is code in say <code>../jlib/cppExamples/fundamentals/16_overriding.cpp</code>. This would be replaced by: <br>
     <code>https://github.com/jaysonthomas/jlib/blob/main/cppExamples/fundamentals/16_overriding.cpp</code>
+
+    <p>
+      <li>Referencing an equation from another page</li>
+<pre><code class="html">
+# Within a href
+"webpage.html#mjx-eqn:eq:equationReferenceName"
+</code></pre>
+    </p>
+  </ul>
+</section>
+
+<section id="7"><h1>Miscellaneous</h1>
+  <ul>
+    <li>Details</li>
+    [<a href="https://t.ly/cJkC">Ref</a>] Just the details tag. The summary tag provides the summary.
   </ul>
 </section>
 </chapter>
