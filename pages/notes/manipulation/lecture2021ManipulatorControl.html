@@ -71,36 +71,28 @@
 </section>
 
 <section id="1"><h1>Stiffness control implemented using feedback cancellation</h1>
-  Locally, within reason, if we want to change our dynamics a bit then 
-  feedback cancelling control is an incredibly practical powerful idea.
-  Inspired by the force cancellation philosophy, our goal is to make the big complicated 
-  robot act like it's a point robot at the end such that we can apply forces or 
-  program the interaction at the end. 
-
-  <p>
-    Let's generalise or implement a version of this idea to make a robot arm act 
-    like a stiffness controller. So if we want to program the interactions, we'll 
-    start by programming them at the joint level. Instead of having the DP act like a 
-    simple pendulum, let's make it act like a system such that when it is pushed 
-    it has some desired mechanical response. 
-  </p>
+  Feedback cancelling control is a practical powerful idea to change a system's dynamics, if the change is:
+  <ul>
+    <li>Local, within reason</li>
+    <li>Small</li>
+  </ul>
+  
+  Inspired by the force cancellation philosophy, the goal is to make the big complicated robot act like a point robot at the end using a <i>stiffness controller</i>, where in the end-effector's interactions to external forces can be programed.
 
   <subsection id="1.0"><h1>Example: Double pendulum - joint stiffness control</h1>
-    There's a bunch of different controllers we could write here - torque control and 
-    position control. If we were to write a position controller for this we might write a 
-    PD control:
-    $$\begin{equation}
-      u = K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
-    \end{equation}$$
-
-    The philosophy in stiffness control though is not to have just a rigid position 
-    but to actually program the response. We want the pendulum to not act like a simple 
-    pendulum but like a different mechanical system which has a particular response to 
-    torque perturbations. Say, we'd like it to act like a pendulum that has some rotary 
-    springs at joint 2 of a certain stiffnes $k$, and maybe some damping.
+    Starting at the joint level, instead of the DP acting like a simple one, the aim is to configure it so that it has a desired mechanical response when pushed.
 
     <p>
-      The goal is for the system to have the following behaviour/interaction:
+      If a PD position controller is used, it would look like:
+      $$\begin{equation}
+        u = K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
+      \end{equation}$$
+    </p>
+
+    The tiffness control philosophy is to have a programed response instead of a rigid position control, for which the pendulum would need to act like a different mechanical system with a particular response to torque perturbations. 
+
+    <p>
+      Say, the goal is for the double pendulum to act like it has some rotary springs at joint 2 of a certain stiffnes $k$, and some damping. The behaviour/interaction would look like:
       $$\begin{equation}
         M(q)\ddot{q} + C(q,\dot{q}) + K_p(q-q^d) + K_d(\dot{q}^d-\dot{q}) = \tau_{ext}
       \end{equation}$$
