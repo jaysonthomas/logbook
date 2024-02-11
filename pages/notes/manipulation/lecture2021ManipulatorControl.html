@@ -83,32 +83,26 @@
     Starting at the joint level, instead of the DP acting like a simple one, the aim is to configure it so that it has a desired mechanical response when pushed.
 
     <p>
-      If a PD position controller is used, it would look like:
+      If a PD position controller was used, it would look like:
       $$\begin{equation}
         u = K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
       \end{equation}$$
     </p>
 
-    The tiffness control philosophy is to have a programed response instead of a rigid position control, for which the pendulum would need to act like a different mechanical system with a particular response to torque perturbations. 
+    The stiffness control philosophy is to have a programed response instead of a rigid position control, for which the pendulum would need to act like a different mechanical system with a particular response to torque perturbations. 
 
     <p>
-      Say, the goal is for the double pendulum to act like it has some rotary springs at joint 2 of a certain stiffnes $k$, and some damping. The behaviour/interaction would look like:
+      Say, the goal is for the double pendulum to act like it has some rotary springs of a certain stiffnes $k$, and some damping at joint 2. The behaviour/interaction would look like:
       $$\begin{equation}
         M(q)\ddot{q} + C(q,\dot{q}) + K_p(q-q^d) + K_d(\dot{q}^d-\dot{q}) = \tau_{ext}
       \end{equation}$$
 
-      The coordinates of this equation are in torques. If we push on the pendulum, i.e. 
-      give a torque perturbation or if the arm runs into something  (we represent 
-      this interaction in torque coordinates), we'd like it to respond gracefully as if 
-      it were a <i>Mass-Spring-Damper</i> system (taught in 
-      <a href="https://t.ly/wj9h">MIT 18.03</a>):
+      The units of this equation/interaction are in torques. 
+      
+      If the pendulum is pushed i.e. given a torque perturbation or if it runs into something, the goal is for it to respond gracefully as if it were a <i>Mass-Spring-Damper</i> system [<a href="https://t.ly/wj9h">Ref</a>]:
       $$\begin{equation}
         m\ddot{x} + b\dot{x} + kx = f
       \end{equation}$$ 
-
-      (4) is the general form of which (3) is the joint version. In (3), the reason why
-      we don't write the $K_p$ term as $-K_p(q^d-q)$ is because we want to think of the
-      term as representing stiffness $kx$.
     </p>
 
     <p>
