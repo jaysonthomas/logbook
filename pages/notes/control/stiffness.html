@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quaternions</title>
-  <meta name="Quaternions" content="text/html; charset=utf-8;" />
+  <title>Stiffness control</title>
+  <meta name="Stiffness control" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,18 +39,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Resources</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Quaternions</h1>
-<section id="0"><h1>Resources</h1>
-  Quaternions and axis angles are quite similar.
+<chapter style="counter-reset: chapter 0"><h1>Stiffness control</h1>
+<section id="0"><h1>Overview</h1>
+  The philosophy is for a robot to have a programed response to torque perturbations (if it was pushed or if it ran into something), instead of a rigid position control. A robot can be made to respond gracefully as if it were a different mechanical system, say a mass-spring-damper system:
 
-  Videos:
-  <ul>
-    <li><a href="https://t.ly/pSzRi">3blue1brown</a></li>
-  </ul>
+  $$\begin{equation}
+    m\ddot{x} + b\dot{x} + kx = f
+  \end{equation}$$
+
+  This control technique is also referred to as <i>simple impedance control</i>. <i>Impedance control</i> is the more general term for the whole set of concepts.
 </section>
+
 </chapter>
 
 </body>

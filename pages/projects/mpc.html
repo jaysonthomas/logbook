@@ -39,17 +39,25 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">How does the controller work</a>
+<a href="#0">Resources</a>
+<a href="#1">Overview</a>
+<a href="#2">How does the controller work</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">MPC</a></li>
-  <li><a href="#1.1">Optimiser</a></li>
+  <li><a href="#2.0">MPC</a></li>
+  <li><a href="#2.1">Optimiser</a></li>
 </ul>
-<a href="#2">Setup</a>
+<a href="#3">Setup</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Model predictive control</h1>
-<section id="0"><h1>Overview</h1>
+<section id="0"><h1>Resources</h1>
+  Code:
+  <ul>
+    <li><a href="https://t.ly/I_LQj">Looks like good documentation</a></li>
+    
+  </ul>
+</section>
+<section id="1"><h1>Overview</h1>
   [<a href="https://t.ly/thUPT">Ref</a>, <a href="https://t.ly/ABavV">Ref 2</a>, <a href="https://t.ly/0oXvv">mpc_to_line run time error</a>]
   <ul>
     <li>Given</li>
@@ -82,8 +90,8 @@
   </ul>
 </section>
 
-<section id="1"><h1>How does the controller work</h1>
-  <subsection id="1.0"><h1>MPC</h1>
+<section id="2"><h1>How does the controller work</h1>
+  <subsection id="2.0"><h1>MPC</h1>
   MPC takes a vehicle's motion model into account to plan out a path that respects a given set of constraints based on: 
   <ul>
     <li>Limits of the vehicle's motion</li>
@@ -91,7 +99,7 @@
   </ul>
   </subsection>
 
-  <subsection id="1.1"><h1>Optimiser</h1>
+  <subsection id="2.1"><h1>Optimiser</h1>
     <h5>Tuning</h5>
     The optimisation considers only a short duration's worth of waypoints, because that's all we really need to plan for as far as the actuator controls are concerned. We can tune (both are related):
     <ul>
@@ -119,7 +127,7 @@
   </p>
 </section>
 
-<section id="2"><h1>Setup</h1>
+<section id="3"><h1>Setup</h1>
   <ul>
     <li>Downloaded udacity's <a href="https://t.ly/UNTHc">term2 sim</a></li>
     Good documentation can be found <a href="https://t.ly/suv7h">here</a> along with a good project.

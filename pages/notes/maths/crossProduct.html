@@ -39,31 +39,42 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Cross product of $\mathbb{R}^3$ vectors</a>
+<a href="#0">Special orthogonal group</a>
 <a href="#1">Cross product of $\mathbb{R}^{3 \times 3}$ matrices</a>
 <a href="#2">Cross product of $\mathbb{R}^6$ vectors</a>
 <a href="#3">Cross product of $\mathbb{R}^{4 \times 4}$ matrices</a>
 <a href="#4">se(3) representation</a>
 <a href="#5">Adjoint representation</a>
-<a href="#6">Special orthogonal group SO(3)</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Matrix/vector operations related to robotic arms</h1>
+<section id="0"><h1>Special orthogonal group</h1>
+  <button class="accordion">so(3) makes cross products easier</button>
+  <div class="panel">
+    Cross product of $\mathbb{R}^3$ vectors
+    $$\begin{align*}
+      x \times y &= \begin{bmatrix} x \end{bmatrix} y &\in \mathbb{R}^3 \\
+      x &= \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} &\in \mathbb{R}^3 \\
+      \begin{bmatrix} x \end{bmatrix} &= 
+      \begin{bmatrix} 
+        0 & -x_3 & x_2 \\ 
+        x_3 & 0 & -x_1 \\ 
+        -x_2 & x_1 & 0 
+      \end{bmatrix} \\
+      \begin{bmatrix} x \end{bmatrix} &= -\begin{bmatrix} x \end{bmatrix}^T
+    \end{align*}$$
 
-<section id="0"><h1>Cross product of $\mathbb{R}^3$ vectors</h1>
-  $$\begin{align*}
-    x \times y &= \begin{bmatrix} x \end{bmatrix} y &\in \mathbb{R}^3 \\
-    x &= \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} &\in \mathbb{R}^3 \\
-    \begin{bmatrix} x \end{bmatrix} &= 
-    \begin{bmatrix} 
-      0 & -x_3 & x_2 \\ 
-      x_3 & 0 & -x_1 \\ 
-      -x_2 & x_1 & 0 
-    \end{bmatrix} \\
-    \begin{bmatrix} x \end{bmatrix} &= -\begin{bmatrix} x \end{bmatrix}^T
-  \end{align*}$$
-
-  The set of all <i>$3 \times 3$ skew-symmetric real matrices</i> is called <i>so(3)</i>.
+    The set of all <i>$3 \times 3$ skew-symmetric real matrices</i> is called <i>so(3)</i>.
+  </div>
+  <p></p>
+  <button class="accordion">SO(3) helps describe points in space</button>
+  <div class="panel">
+    It is the set of all $3 \times 3$ real matrices $R$ satisfying:
+    <ul>
+      <li>$R^TR = I$</li>
+      <li>$\lvert{R}\rvert = 1$</li>
+    </ul>
+  </div>
 </section>
 
 <section id="1"><h1>Cross product of $\mathbb{R}^{3 \times 3}$ matrices</h1>
@@ -126,13 +137,7 @@
   \end{align*}$$
 </section>
 
-<section id="6"><h1>Special orthogonal group SO(3)</h1>
-  It is the set of all $3 \times 3$ real matrices $R$ satisfying:
-  <ul>
-    <li>$R^TR = I$</li>
-    <li>$\lvert{R}\rvert = 1$</li>
-  </ul>
-</section>
+
 
 </chapter>
 

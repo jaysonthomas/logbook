@@ -40,24 +40,14 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Stiffness control implemented using feedback cancellation</a>
+<a href="#1">Stiffness control in end-effector coordinates</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Example: Double pendulum - joint stiffness control</a></li>
-  <li><a href="#1.1">Benefit of having gravity compensation</a></li>
+  <li><a href="#1.0">Change of coordinates</a></li>
+  <li><a href="#1.1">Is (\ref{eq:opSpaceForm}) invertible?</a></li>
+  <li><a href="#1.2">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
 </ul>
-<a href="#2">Joint impedance control</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Example: Iiwa</a></li>
-  <li><a href="#2.1">Example: Opening a dishwasher door</a></li>
-</ul>
-<a href="#3">Stiffness control in end-effector coordinates</a>
-<ul class="no-bullets">
-  <li><a href="#3.0">Change of coordinates</a></li>
-  <li><a href="#3.1">Is (\ref{eq:opSpaceForm}) invertible?</a></li>
-  <li><a href="#3.2">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
-</ul>
-<a href="#4">Side notes</a>
-<a href="#5">Questions & todo</a>
+<a href="#2">Side notes</a>
+<a href="#3">Questions & todo</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Manipulator control</h1>
@@ -70,134 +60,7 @@
   </p>
 </section>
 
-<section id="1"><h1>Stiffness control implemented using feedback cancellation</h1>
-  Feedback cancelling control is a practical powerful idea to change a system's dynamics, if the change is:
-  <ul>
-    <li>Local, within reason</li>
-    <li>Small</li>
-  </ul>
-  
-  Inspired by the force cancellation philosophy, the goal is to make the big complicated robot act like a point robot at the end using a <i>stiffness controller</i>, where in the end-effector's interactions to external forces can be programed.
-
-  <subsection id="1.0"><h1>Example: Double pendulum - joint stiffness control</h1>
-    Starting at the joint level, instead of the DP acting like a simple one, the aim is to configure it so that it has a desired mechanical response when pushed.
-
-    <p>
-      If a PD position controller was used, it would look like:
-      $$\begin{equation}
-        u = K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
-      \end{equation}$$
-    </p>
-
-    The stiffness control philosophy is to have a programed response instead of a rigid position control, for which the pendulum would need to act like a different mechanical system with a particular response to torque perturbations. 
-
-    <p>
-      Say, the goal is for the double pendulum to act like it has some rotary springs of a certain stiffnes $k$, and some damping at joint 2. The behaviour/interaction would look like:
-      $$\begin{equation}
-        M(q)\ddot{q} + C(q,\dot{q}) + K_p(q-q^d) + K_d(\dot{q}^d-\dot{q}) = \tau_{ext}
-      \end{equation}$$
-
-      The units of this equation/interaction are in torques. 
-      
-      If the pendulum is pushed i.e. given a torque perturbation or if it runs into something, the goal is for it to respond gracefully as if it were a <i>Mass-Spring-Damper</i> system [<a href="https://t.ly/wj9h">Ref</a>]:
-      $$\begin{equation}
-        m\ddot{x} + b\dot{x} + kx = f
-      \end{equation}$$ 
-    </p>
-
-    <p>
-      Using the same philosophy from feedback cancellation, we can achieve our 
-      goal controller (3) by:
-      <ul>
-        <li>Cancelling out the dynamics of the plant that we don't like and</li>
-        The gravity compensation term $\tau_g$; we will keep the $M$ and $C$ terms.
-        <li>Inserting the dynamics we do like</li>
-        i.e. our PD control given in (2).
-      </ul>   
-      $$\begin{equation}
-        u = -\tau_g(q) + K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
-      \end{equation}$$
-    </p>
-
-    This control removes the effect of gravity (i.e. <i>gravity compensation</i>)
-    and replaces it with the stiffness kind of interaction seen in (3). This type
-    of control is called <i>stiffness control</i> or <i>simple impedance control</i>.
-    <i>Impedance control</i> is the more general term for the whole set of concepts.
-  </subsection>
-
-  <subsection id="1.1"><h1>Benefit of having gravity compensation</h1>
-    In practice, the difference in having a controller with just PD control and no 
-    gravity compensation is huge. In DP, if we wanted to hold the pendulum in a horizontal 
-    position (i.e. choose a stiffness that allows us to do that) where gravity is pulling down; 
-    if we don't have GC, the $K_p$ term will need to do the work of cancelling out gravity and 
-    hence will have a large value.
-
-    <p>
-      If we want to hold the DP at an offset from the horizontal position, we would still 
-      need to keep $K_p$ very large in the PD controller. If the DP were in the downward 
-      position, we wouldn't have required a large $K_p$ to get a reasonable performance 
-      compared to the horizontal position. But, we end up with an excessive value all over
-      the workspace.
-    </p>
-
-    So, if we want reasonable performance all over the state space with just a 
-    PD controller, we have to choose $K_p$ to be very large and $K_d$ to be very large 
-    as well just to damp the effect of having a large $K_p$ term. If we subtract out gravity 
-    i.e. we use GC in our controller, then we can choose $K_p$, $K_d$ to be much lower 
-    and we can be much more responsive. In practice when people are running controllers 
-    without GC and we bump into the robot, 
-    it may trigger a fault and power down. If we do it with GC, it will be soft enough 
-    to get out of the way.
-
-
-  </subsection>
-</section>
-
-<section id="2"><h1>Joint impedance control</h1>
-  We chose our desired dynamics to use the initial mass and coriollis terms. $M$ and $C$ 
-  always go together (even in reality). We chose not to change them. Think of them as 
-  $ma$ in $F=ma$. It typically requires high bandwidth to cancel out $M$ and $C$ and 
-  to achieve good accuracy of our mass. When we decide to change $M$ and $C$, 
-  the control method is called <i>joint impedance control</i>.
-
-  <subsection id="2.0"><h1>Example: Iiwa</h1>
-    In reality, compared to (5), Iiwa does much more than just GC. 
-    When we run iiwa in joint-impedance control mode, it also does 
-    friction compensation and some subtle stuff at the actuator level to cancel out the 
-    effective dynamics of the arm.  
-
-    <p>
-      It does some amount of mass cancellation but actually it only compensates for the 
-      masses of the rotors and not for the whole robot. It's actually a very subtle, carefully 
-      designed control - they are technically changing $M$, $C$ a little bit but not in the way 
-      of making a different effective mass. It's very similar to the feedback cancellation 
-      story but it's trying to do a little bit less (because it's not cancelling $M$,$C$ of 
-      the whole robot) and it's even more robust because of it.
-    </p>
-  </subsection>
-
-  <subsection id="2.1"><h1>Example: Opening a dishwasher door</h1>
-    <p>
-      The joint trajectory that iiwa is programmed to follow during the opening motion 
-      is going to deviate significantly depending on how accurately we have modelled and 
-      captured the location of the dishwasher door. Even to open the hinge of the dishwasher, 
-      we can imagine that if we're trying to move down exactly based on some kinematic 
-      constraint given by the door of the dishwasher, if we're a little bit off (i.e. the 
-      door doesn't open the way we thought it would or the door handle isn't where we thought 
-      it would be) then it pays a lot to be flexible enough to just follow whatever contour 
-      is given by the actual position of the dishwasher and not by our course approximation.
-    </p> 
-
-    <p>
-      Whilst opening the door, our fingers will slip off if we're in too stiff of a mode. 
-      Similarly when we push down on the door (to lay it flat when open) it's still in a 
-      joint impedance mode and it's not tracking the position trajectory super accurately 
-      but it's accomplishing the task. 
-    </p>
-  </subsection>
-</section>
-
-<section id="3"><h1>Stiffness control in end-effector coordinates</h1>
+<section id="1"><h1>Stiffness control in end-effector coordinates</h1>
   How do we go from implementing the controller at the joints to implementing it just 
   at the end effector? So instead of affecting the dynamics in $q$ we want to write 
   the dynamics at the EE. We want the fingertip to act like a MSD.
@@ -217,7 +80,7 @@
     \end{equation}$$
   </p>
 
-  <subsection id="3.0"><h1>Change of coordinates</h1>
+  <subsection id="1.0"><h1>Change of coordinates</h1>
     We have our joint angles in $q$ coordinates and we have to somehow change to $p$
     coordinates in order to achieve our goal. 
 
@@ -261,7 +124,7 @@
     just do feedback cancellation in this lower space.
   </subsection>
 
-  <subsection id="3.1"><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
+  <subsection id="1.1"><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
     What are the conditions that would be required for the matrix in (\ref{eq:opSpaceForm}) 
     be invertible? 
 
@@ -294,7 +157,7 @@
     </p>
   </subsection>
 
-  <subsection id="3.2"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
+  <subsection id="1.2"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
     If we write a controller that tells the robot to act like a certain dynamics in the 
     xyz configuration, but say the robot has 7 DOF, then we've still got to specify 
     something for the joints (so that the joints don't get into an odd configuration and 
@@ -328,7 +191,7 @@
   </subsection>
 </section>
 
-<section id="4"><h1>Side notes</h1>
+<section id="2"><h1>Side notes</h1>
   The papers on how control is implemented in Iiwa are great. They are linked in the notes.
   <ul>
     <li>Abu Ahafer and Christian Ott about impedance control of elastic joint robots</li>
@@ -337,7 +200,7 @@
   </ul>
 </section>
 
-<section id="5"><h1>Questions & todo</h1>
+<section id="3"><h1>Questions & todo</h1>
   <ul>
     <li>
       I think the code to turn a DP into a single one is 
