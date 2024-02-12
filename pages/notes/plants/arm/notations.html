@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basics of pick and place</title>
+  <meta name="Basics of pick and place" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Basic strategy</a></li>
+</ul>
+<a href="#1">Notations</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Frames</a></li>
+  <li><a href="#1.1">Position</a></li>
+  <li><a href="#1.2">Orientation</a></li>
+  <li><a href="#1.3">Pose</a></li>
+  <li><a href="#1.4">Notation understanding check</a></li>
+  <li><a href="#1.5">Example usage</a></li>
+</ul>
+<a href="#2">Frames for pick and place</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Timing between key frames</a></li>
+</ul>
+<a href="#3">Interpolation between poses</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Interpolation between positions</a></li>
+  <li><a href="#3.1">Problems faced when interpolating between orientations</a></li>
+  <li><a href="#3.2">The right way to interpolate between orientations</a></li>
+</ul>
+<a href="#4">Forward kinematics problem</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Description</a></li>
+  <li><a href="#4.1">Computing the pose of the EE using FK</a></li>
+  <li><a href="#4.2">Defining $q$</a></li>
+  <li><a href="#4.3">Drake implementation</a></li>
+</ul>
+<a href="#5">Inverse kinematics</a>
+<a href="#6">Differential IK</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Description</a></li>
+  <li><a href="#6.1">Spatial velocity</a></li>
+  <li><a href="#6.2">Geometric jacobian</a></li>
+  <li><a href="#6.3">Joint velocity</a></li>
+  <li><a href="#6.4">Inverse Jacobian</a></li>
+</ul>
+<a href="#7">The controller</a>
+<ul class="no-bullets">
+  <li><a href="#7.0">Limitations</a></li>
+</ul>
+<a href="#8">Singularities</a>
+<a href="#9">Differential IK as optimisation</a>
+<a href="#10">Summary of the usefulness of optimisation</a>
+<a href="#11">Example</a>
+<a href="#12">Closing remarks</a>
+<ul class="no-bullets">
+  <li><a href="#12.0">QP formulation 1</a></li>
+  <li><a href="#12.1">QP formulation 2</a></li>
+  <li><a href="#12.2">Comparison of the 2 formulations</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Arm notations</h1>
+
+<section id="1.0"><h1>Frames</h1>
+  A <i>reference frame</i> has a point at its centre. Its orientation can be represented in many ways but it is visually represented with the xyz axes. XYZ => RGB. Use the <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system). 
+
+  <p>
+    The aim is to get the different frames to match; because once they do, the algebra becomes trivial. For example, once the frames match, we can add positions.
+
+    <div class="container">
+      <figure>
+        <img style="height:60px; width:auto"
+        src="../../../figures/manipulation/34_vectorAddition.png"/>
+        <figcaption>
+          $^BP^E_C = ^BP^A_C + ^AP^E_C$
+        </figcaption>
+      </figure>
+    </div>
+  </p>
+</section>
+
+<section id="1.1"><h1>Position</h1>
+  The simplest concept is just a point in some three-dimensional space. 
+  <ul>
+    <li>$A$ is the frame or point of interest</li>
+    <li>$P^A$ - Position of $A$</li>
+    
+    <p>
+    <li><n>$^BP^A$</n> - Position of $A$ relative to $B$</li>
+    $P$ is a vector going from point $B$ to $A$ - Imagine an arrow drawn from $B$ to $A$. Positions always have to be defined w.r.t. something.
+    </p>
+    
+    <li>$\in\mathbb{R}^3$</li>
+    Our 3D vectors (3x1) contain 3 real numbers.
+    
+    <p>
+    <li>$^BP^A_C$ - $C$ is the expressed in frame</li>
+    Distance between 2 people is given by $P$. But if we turn our back, the vector between the 2 points is still the same, but now they'll be expressed using different numbers w.r.t. me looking the other way.
+    </p>
+  </ul>
+
+  Inverse flips the sign: $-^BP^A_C = ^AP^B_C$
+
+  <p>
+    $P^A$ is the same as ${^W}P^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
+    $$^GP^A \equiv {^G}P^A_G$$ 
+  </p>
+</section>
+
+<section id="1.2"><h1>Orientation</h1>
+  There are a number of ways to numerically represent a relative orientation: 
+  <ul>
+    <li>Rotation matrix</li>
+    <li>Euler angles of which there are many but the familiar ones are roll pitch yaw</li>
+    <li>Quaternions</li>
+  </ul>
+  There are functions that let us go back and forth between them.  There's no one representation to rule them all. Different parts of the stack use different representations. No matter what the numerical representation, in spatial algebra an orientation is symbolically represented as $R$. Orientation of $A$ relative to $B$:  
+  $$^BR^A$$ 
+  
+  For orientations, we use the multiplication operator instead of the addition operator: 
+  $$
+    ^BR^A \cdot {^A}R^C = {^B}R^C
+  $$
+
+  Orientations don't need an expressed-in frame. We can turn our head however we want or change the current frame, but the rotation of $A$ relative to $B$ will still be the same. There is a multiplicative inverse for rotations/orientations similar to an additive inverse for addition:
+  $$
+    [^BR^A]^{-1} = {^A}R^B
+  $$ 
+
+  If $R$ is a $3 \times 3$ rotation matrix, then:
+  <ul>
+    <li>The inverse is just the matrix inverse</li>
+    <li>Because rotation matrices are orthonormal, the transpose is the same as the inverse</li>
+  </ul>
+</section>
+
+<section id="1.3"><h1>Pose</h1>
+  The <i>pose</i> of a frame contains both position and orientation of that frame relative to another. $^BX^A$ represents the position and orientation of frame $A$ relative to that of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, an expressed-in frame for a transform $^BX^A$ is not required. It is however used for the derivative of a pose i.e. <i>spatial velocity</i> $V_{6 \times 1}$.
+
+  $$\begin{align*}
+    ^GP^A &= ^GX^F \cdot {^FP^A} \\
+          &= (^GP^F \cdot {^GR^F}) \cdot {^FP^A} \\
+          &= (^GP^F_G \cdot {^GR^F_G}) \cdot {^FP^A} \\
+  \end{align*}$$
+
+  The multiplication operator along with the rotation that is encoded in $X$ transforms the position of $A$ in the following way:
+  <ul>
+    <li>W.r.t. $F$ to another frame, w.r.t. $G$</li>
+    <li>The expressed-in frame, from $F$ to $G$</li>
+    <n>The basic operation of a rotation matrix is to take a position and change its expressed-in frame</n>.
+  </ul>
+  
+  A pose also has a multiplicative inverse:  $[^GX^F]^{-1} = {^FX^G}$. A pose can be represented in different ways. This is only a notation indicating we are taking an inverse. But actually it's not just a direct matrix inverse - <m>it will be some simple function of the elements of the matrix representation</m>. A lot of times a pose is represented as a 3x4 matrix for instance.
+
+  <p>
+      Pose can also be called a <i>rigid transform</i> because it only allows changing between frames in the kinematics, i.e. only positions and rotations; no scaling or shearing. <i>Homogeneous transforms</i> also allow shearing and scaling. Poses multiply with other poses. A set of rules are given in Chapter 3.
+  </p>
+
+  In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
+</section>
+
+<section id="1.4"><h1>Notation understanding check</h1>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/manipulation/38_poseQuestion.png"/>
+      <figcaption>
+        What is $^GP^O$ and $^GP^O_W$?
+      </figcaption>
+    </figure>
+  </div>
+
+  For the question above, the possible answers are: (a) [.2,0,-.2], (b) [0,.3,.1], (c) [0,-.3,.1]
+
+  <p>
+    $^GP^O = {^GR^W} \cdot {{^W}P^O}$
+  </p>
+
+  $^WP^O$ will undergo 2 rotations to align $W$ with $G$: <code>Rotz(-90), Rotx(-45)</code>. Once it's aligned, we can see there is an offset in the Y and Z directions. Hence the answer must be (b).
+
+  <p>
+    $^GP^O_W = {^WR^G} \cdot {^GP^O}$
+  </p>
+
+  This is the same as ${^W}P^O$. We can see there is an offset in the Z and X directions. Hence the answer must be (a).
+
+  <p>
+    In the 2nd scenario: The object frame is expressed in the gripper frame (i.e. it's aligned w.r.t. to it) following on from problem 1. Rotate the object frame to align with the world frame. The gripper and the world frames undergo no rotations. The position of the 3 frames don't change. Now, ignore the gripper's frame. We only care about its position. In the world frame, what is the position of the object w.r.t. the gripper?
+  </p>
+</section>
+
+<section id="1.5"><h1>Example usage</h1>
+  The is core to planning, perception, controls etc. Imagine a scenario where we mount depth camera around a kuka in order to help it to find where things are in the scene. The measurements given out by each of those cameras are going to be in the associated camera's frame. In order to combine (and use) measurements from the different cameras, we'll need to convert them to a common representation - a common coordinate frame typically a world frame (or a gripper frame). We can do this by multiplying each camera's output by some pose $X$. We can only combine frames together if they match. 
+
+  <div class="container">
+    <figure>
+      <img style="height:50px; width:auto"
+      src="../../../figures/manipulation/35_notationUsage.png"/>
+      <figcaption>
+        Notation usage example in multi-camera scenario
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+</chapter>
+</body>
+</html>

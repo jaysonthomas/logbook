@@ -96,6 +96,12 @@
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
 
+<section><h1>Topics</h1>
+  <ul>
+    <li><a href="notations.html">Notations</a></li>
+    <li><a href="fk.html">Forward Kinematics</a></li>
+  </ul>
+</section>
 <section id="0"><h1>Overview</h1>
   <ul>
     <li>Getting the notations right</li>
@@ -216,12 +222,7 @@
   </subsection>
 
   <subsection id="1.3"><h1>Pose</h1>
-    The position and orientation of a frame, put together, is called the <i>pose</i> of the frame:
-    $$
-      ^BX^A
-    $$
-    
-    This is the position and orientation of frame $A$ relative to the position and orientation of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, we do not need an expressed-in frame for a transform $^BX^A$. It's fine to put it in, but it's not needed. We however use the expressed-in frame for the derivative of a pose i.e. the <i>spatial velocity</i> $V_{6 \times 1}$.
+    The <i>pose</i> of a frame contains both position and orientation of that frame relative to another. $^BX^A$ represents the position and orientation of frame $A$ relative to that of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, an expressed-in frame for a transform $^BX^A$ is not required. It is however used for the derivative of a pose i.e. <i>spatial velocity</i> $V_{6 \times 1}$.
 
     $$\begin{align*}
       ^GP^A &= ^GX^F \cdot {^FP^A} \\
@@ -451,87 +452,6 @@
     </ul>
   </subsection>
 
-</section>
-
-<section id="4"><h1>Forward kinematics problem</h1>
-  <subsection id="4.0"><h1>Description</h1>
-    $$
-      X^B = f^B_{kin}(q)
-    $$  
-
-    In this mathematical equation (actual implementation in code is different):
-    <br>
-    $q$ is the vector of positions.
-    <br>
-    $X$ is the pose in the world.
-    <br>
-    $f_{kin}$ is the FK of the body.
-    <br>
-    $B$ stands for body.
-    <br>
-    $G$ stands for gripper if it was used instead of $B$.    
-    
-    <p>
-      The mapping from joint angles to poses is called the <i>Forward Kinematics problem</i>. Looking at the 2D rotation matrix above:
-      $$
-        R(\theta) = \begin{bmatrix}
-        c & -s \\
-        s & c     
-        \end{bmatrix}
-      $$
-    </p>
-
-    If we have joint angle $\theta$ and we want to turn it into a rotation or a pose then it is almost always going to be a nonlinear map from the joint angles into the poses. The matrix above is maybe the simplest example of it.
-  </subsection>
-
-  <subsection id="4.1"><h1>Computing the pose of the EE using FK</h1>
-    Given that we've set all the joint angles:
-    <ul>
-      <li>Compute pose of the EE relative to the wrist</li>
-      We find the rotation matrix for the rotation joint which is just a relative pose.
-
-      <p>
-        <li>Chain it backwards all the way to the world coordinates</li>
-      </p>
-    </ul>
-
-    The math is simple because each individual joint is just describing a small rotation matrix kind of operation on a relative transform from right before the robot's joint until right after the robot's joint. That's how robots are specified in robot description files as relative poses of each link - 6 numbers: x, y, z, roll, pitch, yaw. Joints are just operations that will make a transformation from the pre joint frame to the post-joint frame. 
-
-  </subsection>
-
-  <subsection id="4.2"><h1>Defining $q$</h1>
-    <p>
-      $q$ should be defined in such a way so as to be sufficient to tell us where all the attached bodies are in the world. In iiwa that's bolted down, all we need are 7 numbers of the different rotations of the different joints. But if we have a red brick on the table, we need enough something in $q$ to be able to eventually pull out the pose. 
-    </p>
-
-    In code, we define a $3\times 3$ rotation matrix for each joint based on the corresponding joint angle. We can then go through a series of frame transformations (through all the joints) to get the full kinematics. 
-    <ul>
-      <li>Iiwa</li>
-      In iiwa, it's a $7\times 1$ vector of rotational joint angles representing the revolute joints. It's 7 because we choose to use quaternions in the coordinate representation to avoid gimbal locks and singularities.
-
-      <p>
-        <li>Allegro hand</li>
-        It has 4 fingers with 4 links per finger. Total number of joint angles is 16. Plus, 7 numbers to configure its position in space. 
-      </p>
-
-      <li>Allegro hand picking up a brick</li>
-      23 numbers for the hand and 7 for the brick. The kinematics problem then becomes going from the 30 numbers (representing q) to some pose of the brick and hand.
-    </ul>
-  </subsection>
-
-  <subsection id="4.3"><h1>Drake implementation</h1>
-    To compute the FK in drake, we need to specify the frames to get the pose of the desired frame relative to some other frame expressed in some other frame.
-
-    <p>
-      The context is taken as the argument instead of $q$ because the kinematics can be parameterized. If we were designing a robot and we wanted to optimise the length of a link for instance. Then we'd like the kinematics to also be a function of the link lengths or some other quantities. Hence, this is useful.
-    </p>
-
-    The <i>context</i> is just state + parameters + time; it's just the structure that wraps it. 
-
-    <p>
-      Very often, quaternions is used to represent the position/orientation and rotation matrix is used to represent the pose $X$.
-    </p>
-  </subsection>
 </section>
 
 <section id="5"><h1>Inverse kinematics</h1>
