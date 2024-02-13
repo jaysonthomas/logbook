@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basics of pick and place</title>
-  <meta name="Basics of pick and place" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Arm: Forward Kinematics</title>
+  <meta name="Arm: Forward Kinematics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,64 +39,15 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<ul class="no-bullets">
-  <li><a href="#0.0">Basic strategy</a></li>
-</ul>
-<a href="#1">Notations</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Frames</a></li>
-  <li><a href="#1.1">Position</a></li>
-  <li><a href="#1.2">Orientation</a></li>
-  <li><a href="#1.3">Pose</a></li>
-  <li><a href="#1.4">Notation understanding check</a></li>
-  <li><a href="#1.5">Example usage</a></li>
-</ul>
-<a href="#2">Frames for pick and place</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Timing between key frames</a></li>
-</ul>
-<a href="#3">Interpolation between poses</a>
-<ul class="no-bullets">
-  <li><a href="#3.0">Interpolation between positions</a></li>
-  <li><a href="#3.1">Problems faced when interpolating between orientations</a></li>
-  <li><a href="#3.2">The right way to interpolate between orientations</a></li>
-</ul>
-<a href="#4">Forward kinematics problem</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Description</a></li>
-  <li><a href="#4.1">Computing the pose of the EE using FK</a></li>
-  <li><a href="#4.2">Defining $q$</a></li>
-  <li><a href="#4.3">Drake implementation</a></li>
-</ul>
-<a href="#5">Inverse kinematics</a>
-<a href="#6">Differential IK</a>
-<ul class="no-bullets">
-  <li><a href="#6.0">Description</a></li>
-  <li><a href="#6.1">Spatial velocity</a></li>
-  <li><a href="#6.2">Geometric jacobian</a></li>
-  <li><a href="#6.3">Joint velocity</a></li>
-  <li><a href="#6.4">Inverse Jacobian</a></li>
-</ul>
-<a href="#7">The controller</a>
-<ul class="no-bullets">
-  <li><a href="#7.0">Limitations</a></li>
-</ul>
-<a href="#8">Singularities</a>
-<a href="#9">Differential IK as optimisation</a>
-<a href="#10">Summary of the usefulness of optimisation</a>
-<a href="#11">Example</a>
-<a href="#12">Closing remarks</a>
-<ul class="no-bullets">
-  <li><a href="#12.0">QP formulation 1</a></li>
-  <li><a href="#12.1">QP formulation 2</a></li>
-  <li><a href="#12.2">Comparison of the 2 formulations</a></li>
-</ul>
+<a href="#0">Description</a>
+<a href="#1">Computing the pose of the EE using FK</a>
+<a href="#2">Defining $q$</a>
+<a href="#3">Drake implementation</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Arm: Forward Kinematics</h1>
 
-<section id="4.0"><h1>Description</h1>
+<section id="0"><h1>Description</h1>
   $$
     X^B = f^B_{kin}(q)
   $$  
@@ -126,7 +77,7 @@
   If we have joint angle $\theta$ and we want to turn it into a rotation or a pose then it is almost always going to be a nonlinear map from the joint angles into the poses. The matrix above is maybe the simplest example of it.
 </section>
 
-<section id="4.1"><h1>Computing the pose of the EE using FK</h1>
+<section id="1"><h1>Computing the pose of the EE using FK</h1>
   Given that we've set all the joint angles:
   <ul>
     <li>Compute pose of the EE relative to the wrist</li>
@@ -141,7 +92,7 @@
 
 </section>
 
-<section id="4.2"><h1>Defining $q$</h1>
+<section id="2"><h1>Defining $q$</h1>
   <p>
     $q$ should be defined in such a way so as to be sufficient to tell us where all the attached bodies are in the world. In iiwa that's bolted down, all we need are 7 numbers of the different rotations of the different joints. But if we have a red brick on the table, we need enough something in $q$ to be able to eventually pull out the pose. 
   </p>
@@ -161,7 +112,7 @@
   </ul>
 </section>
 
-<section id="4.3"><h1>Drake implementation</h1>
+<section id="3"><h1>Drake implementation</h1>
   To compute the FK in drake, we need to specify the frames to get the pose of the desired frame relative to some other frame expressed in some other frame.
 
   <p>
@@ -176,5 +127,6 @@
 </section>
 
 </chapter>
+
 </body>
 </html>

@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Arm: Differential Inverse Kinematics</title>
+  <meta name="Arm: Differential Inverse Kinematics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Spatial velocity</a>
+<a href="#2">Geometric jacobian</a>
+<a href="#3">Joint velocity</a>
+<a href="#4">Inverse Jacobian</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">The problem</a></li>
+  <li><a href="#4.1">Pseudo Inverse Jacobian</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Arm: Differential Inverse Kinematics</h1>
+
+<section id="0"><h1>Description</h1>
+  In order to encourage smoothness between joint angles instead of IK we use the differential form of the kinematics where we examine how an incremental change in $q$ makes an incremental change in the pose $X$. If we want to make a relatively small change in a certain direction to the current pose, we figure out the incremental change in $q$ we need to make. Differential IK isn't defined perfectly everywhere but partial derivatives exist everywhere. 
+
+  $$\begin{align*}
+    \underbrace{dX^B}_{\text{Incremental change} \atop \text{in pose}} &= 
+    \frac{\partial{f^B}(q)}{\partial{q}}
+    
+    \underbrace{dq}_{\text{Incremental change} \atop \text{in joint angle}} \\
+
+    \underbrace{V^B}_{\text{Spatial} \atop \text{velocity}} 
+    &= \underbrace{J^B(q)}_{\text{Jacobian}} \quad \dot{q} \\
+
+  \end{align*}$$ 
+
+  The Jacobian is a function of the current joint angles. 
+</section>
+
+<section id="1"><h1>Spatial velocity</h1>
+  In order to start thinking about differential quantities (like the Jacobian), we'll need to know the joint velocity ($\frac{dq}{dt}$) and some pose velocity.
+
+  <p>
+    Just like we have spatial algebra for positions and orientations, we have it for velocities called <i>spatial velocity</i> which has a translation component and an orientation component:
+
+    $$\begin{bmatrix}
+      \omega \\ v
+    \end{bmatrix}$$
+
+    $\omega$ is the <i>angular velocities</i>, a $3 \times 1$ vector 
+    <br>
+    $v$ is the <i>translational velocities</i>, a $3 \times 1$ vector 
+    <br>
+    Spatial velocity is a $6 \times 1$ vector 
+  </p>
+
+  In pose, there's no canonical choice. In orientation, for example, we have problems based on the chosen representation. That's why we constantly move between representations. However there is a canonical choice for angular velocity. It is 3 numbers which are the rotations around the major axes. This notion of angular velocity simplifies everything once we get to velocities and spatial accelerations. 
+</section>
+
+<section id="2"><h1>Geometric jacobian</h1>
+  <p>
+    Geometric jacobian is always a function of $q$. It is a position dependent matrix.
+  </p>
+  Purely in terms of <n>representation</n> of spatial velocity, we have a canonical choice. The problem is that because we have so many different choices for $q$ and $X$, we have many different possible Jacobians to determine how we're going to go from joint angles/velocities to some spatial velocity. 
+  
+  <p>
+    A <i>geometric jacobian</i> takes joint velocities and maps that to spatial velocity vectors. It's not quite $\frac{\partial{f^B}(q)}{\partial q}$. It's this plus the change of coordinates into the spatial vectors. The analytic jacobian is the true partial derivative. But it's not recommended as much. There are cases where we might want that but almost always spatial velocities is recommended. 
+  </p>
+
+  Floating Allegro hand + brick: 30 numbers, 23 positions but only 22 velocities. For example, we'll have an extra term if we use the quaternion representation. But, this needs to turn into the $6 \times 1$ spatial velocity vector. So, there is a change of representation that takes place.
+</section>
+
+<section id="3"><h1>Joint velocity</h1>
+    How do we represent $\dot{q}$? The joint position vector (because of say quaternion representation) is often bigger than the joint velocity vector. And the spatial joint velocity can only take 6 numbers. Joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. We can map between them though. 
+</section>
+
+<section id="4"><h1>Inverse Jacobian</h1>
+  <subsection id="4.0"><h1>The problem</h1>
+    $$
+      \dot{q}_{\scriptscriptstyle{7 \times 1}} = 
+      [J^B_{\scriptscriptstyle{6\times{7}}}(q)]^{-1} 
+      V^B_{\scriptscriptstyle{6\times{1}}}
+    $$
+    The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. However, we can't take the inverse of a non-square matrix. Hence, this equation only represents what we would like to do conceptually.
+  </subsection>
+
+  <subsection id="4.1"><h1>Pseudo Inverse Jacobian</h1>
+    $$\begin{equation}
+      \label{eq:pseudoInverseJacobian}
+      \dot{q} = [J^B(q)]^{\dagger}V^B
+    \end{equation}$$
+    We actually do a pseudo inverse. It has magical properties. It works (i.e. it's well-defined)even if the matrix isn't square. When things are not square, we could have infinitely many or no solutions. <code>pinv</code> does the right thing. 
+
+    <p>
+      In the infinitely many solutions case, it will pick the one that's minimum norm in the least squares norm. It'll find the smallest solution. In this case it'd be the smallest joint velocities that achieve the desired velocity. If there are no solutions then it doesn't just fail it actually does its best effort and tries to find $\dot{q}$ that is as close to matching the equality as possible. The pseudo inverse is awesome. It just outputs a matrix.
+    </p>
+
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

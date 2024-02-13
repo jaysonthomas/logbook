@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basics of pick and place</title>
-  <meta name="Basics of pick and place" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Arm notations</title>
+  <meta name="Arm notations" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,64 +39,17 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<ul class="no-bullets">
-  <li><a href="#0.0">Basic strategy</a></li>
-</ul>
-<a href="#1">Notations</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Frames</a></li>
-  <li><a href="#1.1">Position</a></li>
-  <li><a href="#1.2">Orientation</a></li>
-  <li><a href="#1.3">Pose</a></li>
-  <li><a href="#1.4">Notation understanding check</a></li>
-  <li><a href="#1.5">Example usage</a></li>
-</ul>
-<a href="#2">Frames for pick and place</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Timing between key frames</a></li>
-</ul>
-<a href="#3">Interpolation between poses</a>
-<ul class="no-bullets">
-  <li><a href="#3.0">Interpolation between positions</a></li>
-  <li><a href="#3.1">Problems faced when interpolating between orientations</a></li>
-  <li><a href="#3.2">The right way to interpolate between orientations</a></li>
-</ul>
-<a href="#4">Forward kinematics problem</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Description</a></li>
-  <li><a href="#4.1">Computing the pose of the EE using FK</a></li>
-  <li><a href="#4.2">Defining $q$</a></li>
-  <li><a href="#4.3">Drake implementation</a></li>
-</ul>
-<a href="#5">Inverse kinematics</a>
-<a href="#6">Differential IK</a>
-<ul class="no-bullets">
-  <li><a href="#6.0">Description</a></li>
-  <li><a href="#6.1">Spatial velocity</a></li>
-  <li><a href="#6.2">Geometric jacobian</a></li>
-  <li><a href="#6.3">Joint velocity</a></li>
-  <li><a href="#6.4">Inverse Jacobian</a></li>
-</ul>
-<a href="#7">The controller</a>
-<ul class="no-bullets">
-  <li><a href="#7.0">Limitations</a></li>
-</ul>
-<a href="#8">Singularities</a>
-<a href="#9">Differential IK as optimisation</a>
-<a href="#10">Summary of the usefulness of optimisation</a>
-<a href="#11">Example</a>
-<a href="#12">Closing remarks</a>
-<ul class="no-bullets">
-  <li><a href="#12.0">QP formulation 1</a></li>
-  <li><a href="#12.1">QP formulation 2</a></li>
-  <li><a href="#12.2">Comparison of the 2 formulations</a></li>
-</ul>
+<a href="#0">Frames</a>
+<a href="#1">Position</a>
+<a href="#2">Orientation</a>
+<a href="#3">Pose</a>
+<a href="#4">Notation understanding check</a>
+<a href="#5">Example usage</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Arm notations</h1>
 
-<section id="1.0"><h1>Frames</h1>
+<section id="0"><h1>Frames</h1>
   A <i>reference frame</i> has a point at its centre. Its orientation can be represented in many ways but it is visually represented with the xyz axes. XYZ => RGB. Use the <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system). 
 
   <p>
@@ -105,7 +58,7 @@
     <div class="container">
       <figure>
         <img style="height:60px; width:auto"
-        src="../../../figures/manipulation/34_vectorAddition.png"/>
+        src="../../../../figures/manipulation/34_vectorAddition.png"/>
         <figcaption>
           $^BP^E_C = ^BP^A_C + ^AP^E_C$
         </figcaption>
@@ -114,7 +67,7 @@
   </p>
 </section>
 
-<section id="1.1"><h1>Position</h1>
+<section id="1"><h1>Position</h1>
   The simplest concept is just a point in some three-dimensional space. 
   <ul>
     <li>$A$ is the frame or point of interest</li>
@@ -142,7 +95,7 @@
   </p>
 </section>
 
-<section id="1.2"><h1>Orientation</h1>
+<section id="2"><h1>Orientation</h1>
   There are a number of ways to numerically represent a relative orientation: 
   <ul>
     <li>Rotation matrix</li>
@@ -169,7 +122,7 @@
   </ul>
 </section>
 
-<section id="1.3"><h1>Pose</h1>
+<section id="3"><h1>Pose</h1>
   The <i>pose</i> of a frame contains both position and orientation of that frame relative to another. $^BX^A$ represents the position and orientation of frame $A$ relative to that of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, an expressed-in frame for a transform $^BX^A$ is not required. It is however used for the derivative of a pose i.e. <i>spatial velocity</i> $V_{6 \times 1}$.
 
   $$\begin{align*}
@@ -194,11 +147,11 @@
   In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
 </section>
 
-<section id="1.4"><h1>Notation understanding check</h1>
+<section id="4"><h1>Notation understanding check</h1>
   <div class="container">
     <figure>
       <img style="height:120px; width:auto"
-      src="../../../figures/manipulation/38_poseQuestion.png"/>
+      src="../../../../figures/manipulation/38_poseQuestion.png"/>
       <figcaption>
         What is $^GP^O$ and $^GP^O_W$?
       </figcaption>
@@ -224,13 +177,13 @@
   </p>
 </section>
 
-<section id="1.5"><h1>Example usage</h1>
+<section id="5"><h1>Example usage</h1>
   The is core to planning, perception, controls etc. Imagine a scenario where we mount depth camera around a kuka in order to help it to find where things are in the scene. The measurements given out by each of those cameras are going to be in the associated camera's frame. In order to combine (and use) measurements from the different cameras, we'll need to convert them to a common representation - a common coordinate frame typically a world frame (or a gripper frame). We can do this by multiplying each camera's output by some pose $X$. We can only combine frames together if they match. 
 
   <div class="container">
     <figure>
       <img style="height:50px; width:auto"
-      src="../../../figures/manipulation/35_notationUsage.png"/>
+      src="../../../../figures/manipulation/35_notationUsage.png"/>
       <figcaption>
         Notation usage example in multi-camera scenario
       </figcaption>
@@ -239,5 +192,6 @@
 </section>
 
 </chapter>
+
 </body>
 </html>

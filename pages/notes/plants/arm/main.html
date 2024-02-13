@@ -4,9 +4,9 @@
 <head>
   <title>Basics of pick and place</title>
   <meta name="Basics of pick and place" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,18 +39,10 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Topics</a>
+<a href="#1">Overview</a>
 <ul class="no-bullets">
-  <li><a href="#0.0">Basic strategy</a></li>
-</ul>
-<a href="#1">Notations</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Frames</a></li>
-  <li><a href="#1.1">Position</a></li>
-  <li><a href="#1.2">Orientation</a></li>
-  <li><a href="#1.3">Pose</a></li>
-  <li><a href="#1.4">Notation understanding check</a></li>
-  <li><a href="#1.5">Example usage</a></li>
+  <li><a href="#1.0">Basic strategy</a></li>
 </ul>
 <a href="#2">Frames for pick and place</a>
 <ul class="no-bullets">
@@ -62,47 +54,34 @@
   <li><a href="#3.1">Problems faced when interpolating between orientations</a></li>
   <li><a href="#3.2">The right way to interpolate between orientations</a></li>
 </ul>
-<a href="#4">Forward kinematics problem</a>
+<a href="#4">The controller</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Description</a></li>
-  <li><a href="#4.1">Computing the pose of the EE using FK</a></li>
-  <li><a href="#4.2">Defining $q$</a></li>
-  <li><a href="#4.3">Drake implementation</a></li>
+  <li><a href="#4.0">Limitations</a></li>
 </ul>
-<a href="#5">Inverse kinematics</a>
-<a href="#6">Differential IK</a>
+<a href="#5">Singularities</a>
+<a href="#6">Differential IK as optimisation</a>
+<a href="#7">Summary of the usefulness of optimisation</a>
+<a href="#8">Example</a>
+<a href="#9">Closing remarks</a>
 <ul class="no-bullets">
-  <li><a href="#6.0">Description</a></li>
-  <li><a href="#6.1">Spatial velocity</a></li>
-  <li><a href="#6.2">Geometric jacobian</a></li>
-  <li><a href="#6.3">Joint velocity</a></li>
-  <li><a href="#6.4">Inverse Jacobian</a></li>
-</ul>
-<a href="#7">The controller</a>
-<ul class="no-bullets">
-  <li><a href="#7.0">Limitations</a></li>
-</ul>
-<a href="#8">Singularities</a>
-<a href="#9">Differential IK as optimisation</a>
-<a href="#10">Summary of the usefulness of optimisation</a>
-<a href="#11">Example</a>
-<a href="#12">Closing remarks</a>
-<ul class="no-bullets">
-  <li><a href="#12.0">QP formulation 1</a></li>
-  <li><a href="#12.1">QP formulation 2</a></li>
-  <li><a href="#12.2">Comparison of the 2 formulations</a></li>
+  <li><a href="#9.0">QP formulation 1</a></li>
+  <li><a href="#9.1">QP formulation 2</a></li>
+  <li><a href="#9.2">Comparison of the 2 formulations</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
 
-<section><h1>Topics</h1>
+<section id="0"><h1>Topics</h1>
   <ul>
     <li><a href="notations.html">Notations</a></li>
     <li><a href="fk.html">Forward Kinematics</a></li>
+    <li><a href="ik.html">Inverse Kinematics</a></li>
+    <li><a href="diffIk.html">Differential Inverse Kinematics</a></li>
   </ul>
 </section>
-<section id="0"><h1>Overview</h1>
+
+<section id="1"><h1>Overview</h1>
   <ul>
     <li>Getting the notations right</li>
     Even in deep neural networks (say to calculate pose estimation), we're going to have a kinematics problem at some point and we're going to have a bug where the vectors are pointing the wrong way etc. If we get the notations right, spatial algebra will protect us.
@@ -121,7 +100,7 @@
     </p>
   </ul>
 
-  <subsection id="0.0"><h1>Basic strategy</h1>
+  <subsection id="1.0"><h1>Basic strategy</h1>
     We have designed the gripper poses as a function of time using a trajectory generator and our aim is obtain corresponding joint positions as a function of time:
 
     $$
@@ -144,150 +123,6 @@
     <p>
       Summary: Use the reference trajectory to get $V_G$. Use Jacobian to get $\dot{q}$ which helps us to get $q(t)$ (integrating our way from q(0)) which is fed in as input. We need to avoid singularities by ensuring the Jacobian is invertible.
     </p>
-  </subsection>
-</section>
-
-<section id="1"><h1>Notations</h1>
-  <subsection id="1.0"><h1>Frames</h1>
-    A <i>reference frame</i> has a point at its centre. Its orientation can be represented in many ways but it is visually represented with the xyz axes. XYZ => RGB. Use the <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system). 
-
-    <p>
-      The aim is to get the different frames to match; because once they do, the algebra becomes trivial. For example, once the frames match, we can add positions.
-
-      <div class="container">
-        <figure>
-          <img style="height:60px; width:auto"
-          src="../../../figures/manipulation/34_vectorAddition.png"/>
-          <figcaption>
-            $^BP^E_C = ^BP^A_C + ^AP^E_C$
-          </figcaption>
-        </figure>
-      </div>
-    </p>
-  </subsection>
-  
-  <subsection id="1.1"><h1>Position</h1>
-    The simplest concept is just a point in some three-dimensional space. 
-    <ul>
-      <li>$A$ is the frame or point of interest</li>
-      <li>$P^A$ - Position of $A$</li>
-      
-      <p>
-      <li><n>$^BP^A$</n> - Position of $A$ relative to $B$</li>
-      $P$ is a vector going from point $B$ to $A$ - Imagine an arrow drawn from $B$ to $A$. Positions always have to be defined w.r.t. something.
-      </p>
-      
-      <li>$\in\mathbb{R}^3$</li>
-      Our 3D vectors (3x1) contain 3 real numbers.
-      
-      <p>
-      <li>$^BP^A_C$ - $C$ is the expressed in frame</li>
-      Distance between 2 people is given by $P$. But if we turn our back, the vector between the 2 points is still the same, but now they'll be expressed using different numbers w.r.t. me looking the other way.
-      </p>
-    </ul>
-
-    Inverse flips the sign: $-^BP^A_C = ^AP^B_C$
-
-    <p>
-      $P^A$ is the same as ${^W}P^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
-      $$^GP^A \equiv {^G}P^A_G$$ 
-    </p>
-  </subsection>
-
-  <subsection id="1.2"><h1>Orientation</h1>
-    There are a number of ways to numerically represent a relative orientation: 
-    <ul>
-      <li>Rotation matrix</li>
-      <li>Euler angles of which there are many but the familiar ones are roll pitch yaw</li>
-      <li>Quaternions</li>
-    </ul>
-    There are functions that let us go back and forth between them.  There's no one representation to rule them all. Different parts of the stack use different representations. No matter what the numerical representation, in spatial algebra an orientation is symbolically represented as $R$. Orientation of $A$ relative to $B$:  
-    $$^BR^A$$ 
-    
-    For orientations, we use the multiplication operator instead of the addition operator: 
-    $$
-      ^BR^A \cdot {^A}R^C = {^B}R^C
-    $$
-
-    Orientations don't need an expressed-in frame. We can turn our head however we want or change the current frame, but the rotation of $A$ relative to $B$ will still be the same. There is a multiplicative inverse for rotations/orientations similar to an additive inverse for addition:
-    $$
-      [^BR^A]^{-1} = {^A}R^B
-    $$ 
-
-    If $R$ is a $3 \times 3$ rotation matrix, then:
-    <ul>
-      <li>The inverse is just the matrix inverse</li>
-      <li>Because rotation matrices are orthonormal, the transpose is the same as the inverse</li>
-    </ul>
-  </subsection>
-
-  <subsection id="1.3"><h1>Pose</h1>
-    The <i>pose</i> of a frame contains both position and orientation of that frame relative to another. $^BX^A$ represents the position and orientation of frame $A$ relative to that of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, an expressed-in frame for a transform $^BX^A$ is not required. It is however used for the derivative of a pose i.e. <i>spatial velocity</i> $V_{6 \times 1}$.
-
-    $$\begin{align*}
-      ^GP^A &= ^GX^F \cdot {^FP^A} \\
-            &= (^GP^F \cdot {^GR^F}) \cdot {^FP^A} \\
-            &= (^GP^F_G \cdot {^GR^F_G}) \cdot {^FP^A} \\
-    \end{align*}$$
-
-    The multiplication operator along with the rotation that is encoded in $X$ transforms the position of $A$ in the following way:
-    <ul>
-      <li>W.r.t. $F$ to another frame, w.r.t. $G$</li>
-      <li>The expressed-in frame, from $F$ to $G$</li>
-      <n>The basic operation of a rotation matrix is to take a position and change its expressed-in frame</n>.
-    </ul>
-    
-    A pose also has a multiplicative inverse:  $[^GX^F]^{-1} = {^FX^G}$. A pose can be represented in different ways. This is only a notation indicating we are taking an inverse. But actually it's not just a direct matrix inverse - <m>it will be some simple function of the elements of the matrix representation</m>. A lot of times a pose is represented as a 3x4 matrix for instance.
-
-    <p>
-       Pose can also be called a <i>rigid transform</i> because it only allows changing between frames in the kinematics, i.e. only positions and rotations; no scaling or shearing. <i>Homogeneous transforms</i> also allow shearing and scaling. Poses multiply with other poses. A set of rules are given in Chapter 3.
-    </p>
-
-    In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
-  </subsection>
-
-  <subsection id="1.4"><h1>Notation understanding check</h1>
-    <div class="container">
-      <figure>
-        <img style="height:120px; width:auto"
-        src="../../../figures/manipulation/38_poseQuestion.png"/>
-        <figcaption>
-          What is $^GP^O$ and $^GP^O_W$?
-        </figcaption>
-      </figure>
-    </div>
-
-    For the question above, the possible answers are: (a) [.2,0,-.2], (b) [0,.3,.1], (c) [0,-.3,.1]
-
-    <p>
-      $^GP^O = {^GR^W} \cdot {{^W}P^O}$
-    </p>
-
-    $^WP^O$ will undergo 2 rotations to align $W$ with $G$: <code>Rotz(-90), Rotx(-45)</code>. Once it's aligned, we can see there is an offset in the Y and Z directions. Hence the answer must be (b).
-
-    <p>
-      $^GP^O_W = {^WR^G} \cdot {^GP^O}$
-    </p>
-
-    This is the same as ${^W}P^O$. We can see there is an offset in the Z and X directions. Hence the answer must be (a).
-
-    <p>
-      In the 2nd scenario: The object frame is expressed in the gripper frame (i.e. it's aligned w.r.t. to it) following on from problem 1. Rotate the object frame to align with the world frame. The gripper and the world frames undergo no rotations. The position of the 3 frames don't change. Now, ignore the gripper's frame. We only care about its position. In the world frame, what is the position of the object w.r.t. the gripper?
-    </p>
-  </subsection>
-  
-  <subsection id="1.5"><h1>Example usage</h1>
-    The is core to planning, perception, controls etc. Imagine a scenario where we mount depth camera around a kuka in order to help it to find where things are in the scene. The measurements given out by each of those cameras are going to be in the associated camera's frame. In order to combine (and use) measurements from the different cameras, we'll need to convert them to a common representation - a common coordinate frame typically a world frame (or a gripper frame). We can do this by multiplying each camera's output by some pose $X$. We can only combine frames together if they match. 
-
-    <div class="container">
-      <figure>
-        <img style="height:50px; width:auto"
-        src="../../../figures/manipulation/35_notationUsage.png"/>
-        <figcaption>
-          Notation usage example in multi-camera scenario
-        </figcaption>
-      </figure>
-    </div>
   </subsection>
 </section>
 
@@ -348,21 +183,21 @@
     <div class="container">
       <figure>
         <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/39a_positionInterpolation.png"/>
+        src="../../../../figures/manipulation/39a_positionInterpolation.png"/>
         <figcaption>
           Key frames between pick and place times
         </figcaption>
       </figure>
       <figure>
         <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/39b_positionInterpolation.png"/>
+        src="../../../../figures/manipulation/39b_positionInterpolation.png"/>
         <figcaption>
           First order interpolation
         </figcaption>
       </figure>
       <figure>
         <img style="height:80px; width:auto"
-        src="../../../figures/manipulation/39c_positionInterpolation.png"/>
+        src="../../../../figures/manipulation/39c_positionInterpolation.png"/>
         <figcaption>
           Zero order hold
         </figcaption>
@@ -417,14 +252,14 @@
       <div class="container">
         <figure>
           <img style="height:80px; width:auto"
-          src="../../../figures/manipulation/40a_0rotation.png"/>
+          src="../../../../figures/manipulation/40a_0rotation.png"/>
           <figcaption>
             Rotation of a unit frame <code>Rotz(0)</code>
           </figcaption>
         </figure>
         <figure>
           <img style="height:80px; width:auto"
-          src="../../../figures/manipulation/40b_90rotation.png"/>
+          src="../../../../figures/manipulation/40b_90rotation.png"/>
           <figcaption>
             Rotation of a unit frame <code>Rotz(90)</code>
           </figcaption>
@@ -454,104 +289,11 @@
 
 </section>
 
-<section id="5"><h1>Inverse kinematics</h1>
-  We want to go from poses in the world to joint positions.
-  $$
-    q = (f^B)^{-1}(X^B)
-  $$
-  
-  This is a nonlinear complicated function called <i>inverse kinematics</i>. It's not necessarily a unique mapping - there can be multiple $q$s that get the same pose in the world. There could also be no solutions. Going the other way is more straight forward.   
-  
-  <p>
-    Sometimes we use the IK directly but oftentimes we do not because if our IK engine gives us slightly different answers for very similar poses, then it might involve crazy arm movements to achieve it. We want to send smooth commands to the robot so that it's not jumping around to different solutions. When we specify IK, we normally also specify additional requirements for continuity/smoothness/centering etc. An example: if we had enough DOF in an arm and there were multiple solutions for joint angles given a fixed pose for the hand, then the IK engine could ask for different joint angles (for the same hand pose) every 0.0001 seconds. That wouldn't be good. 
-  </p>
-</section>
-
-<section id="6"><h1>Differential IK</h1>
-  <subsection id="6.0"><h1>Description</h1>
-    In order to encourage smoothness between joint angles instead of IK we use the differential form of the kinematics where we examine how an incremental change in $q$ makes an incremental change in the pose $X$. If we want to make a relatively small change in a certain direction to the current pose, we figure out the incremental change in $q$ we need to make. Differential IK isn't defined perfectly everywhere but partial derivatives exist everywhere. 
-
-    $$\begin{align*}
-      \underbrace{dX^B}_{\text{Incremental change} \atop \text{in pose}} &= 
-      \frac{\partial{f^B}(q)}{\partial{q}}
-      
-      \underbrace{dq}_{\text{Incremental change} \atop \text{in joint angle}} \\
-
-      \underbrace{V^B}_{\text{Spatial} \atop \text{velocity}} 
-      &= \underbrace{J^B(q)}_{\text{Jacobian}} \quad \dot{q} \\
-
-    \end{align*}$$ 
-
-    The Jacobian is a function of the current joint angles. 
-  </subsection>
-  
-  <subsection id="6.1"><h1>Spatial velocity</h1>
-    In order to start thinking about differential quantities (like the Jacobian), we'll need to know the joint velocity ($\frac{dq}{dt}$) and some pose velocity.
-
-    <p>
-      Just like we have spatial algebra for positions and orientations, we have it for velocities called <i>spatial velocity</i> which has a translation component and an orientation component:
-
-      $$\begin{bmatrix}
-        \omega \\ v
-      \end{bmatrix}$$
-
-      $\omega$ is the <i>angular velocities</i>, a $3 \times 1$ vector 
-      <br>
-      $v$ is the <i>translational velocities</i>, a $3 \times 1$ vector 
-      <br>
-      Spatial velocity is a $6 \times 1$ vector 
-    </p>
-
-    In pose, there's no canonical choice. In orientation, for example, we have problems based on the chosen representation. That's why we constantly move between representations. However there is a canonical choice for angular velocity. It is 3 numbers which are the rotations around the major axes. This notion of angular velocity simplifies everything once we get to velocities and spatial accelerations. 
-  </subsection>
-
-  <subsection id="6.2"><h1>Geometric jacobian</h1>
-    <p>
-      Geometric jacobian is always a function of $q$. It is a position dependent matrix.
-    </p>
-    Purely in terms of <n>representation</n> of spatial velocity, we have a canonical choice. The problem is that because we have so many different choices for $q$ and $X$, we have many different possible Jacobians to determine how we're going to go from joint angles/velocities to some spatial velocity. 
-    
-    <p>
-      A <i>geometric jacobian</i> takes joint velocities and maps that to spatial velocity vectors. It's not quite $\frac{\partial{f^B}(q)}{\partial q}$. It's this plus the change of coordinates into the spatial vectors. The analytic jacobian is the true partial derivative. But it's not recommended as much. There are cases where we might want that but almost always spatial velocities is recommended. 
-    </p>
-
-    Floating Allegro hand + brick: 30 numbers, 23 positions but only 22 velocities. For example, we'll have an extra term if we use the quaternion representation. But, this needs to turn into the $6 \times 1$ spatial velocity vector. So, there is a change of representation that takes place.
-  </subsection>
-
-  <subsection id="6.3"><h1>Joint velocity</h1>
-     How do we represent $\dot{q}$? The joint position vector (because of say quaternion representation) is often bigger than the joint velocity vector. And the spatial joint velocity can only take 6 numbers. Joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. We can map between them though. 
-  </subsection>
-
-  <subsection id="6.4"><h1>Inverse Jacobian</h1>
-    <subsubsection><h1>The problem</h1>
-      $$
-        \dot{q}_{\scriptscriptstyle{7 \times 1}} = 
-        [J^B_{\scriptscriptstyle{6\times{7}}}(q)]^{-1} 
-        V^B_{\scriptscriptstyle{6\times{1}}}
-      $$
-      The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. However, we can't take the inverse of a non-square matrix. Hence, this equation only represents what we would like to do conceptually.
-    </subsubsection>
-
-    <subsubsection><h1>Pseudo Inverse Jacobian</h1>
-      $$\begin{equation}
-        \label{eq:pseudoInverseJacobian}
-        \dot{q} = [J^B(q)]^{\dagger}V^B
-      \end{equation}$$
-      We actually do a pseudo inverse. It has magical properties. It works (i.e. it's well-defined)even if the matrix isn't square. When things are not square, we could have infinitely many or no solutions. <code>pinv</code> does the right thing. 
-
-      <p>
-        In the infinitely many solutions case, it will pick the one that's minimum norm in the least squares norm. It'll find the smallest solution. In this case it'd be the smallest joint velocities that achieve the desired velocity. If there are no solutions then it doesn't just fail it actually does its best effort and tries to find $\dot{q}$ that is as close to matching the equality as possible. The pseudo inverse is awesome. It just outputs a matrix.
-      </p>
-
-    </subsubsection>
-  </subsection>
-</section>
-
-<section id="7"><h1>The controller</h1>
+<section id="4"><h1>The controller</h1>
   <div class="container">
     <figure>
       <img style="height:60px; width:auto"
-      src="../../../figures/manipulation/41_pseudoInverseController.png"/>
+      src="../../../../figures/manipulation/41_pseudoInverseController.png"/>
       <figcaption>
         $\dot{q}^d$ is desired IIWA velocities, $V^{G^d}$ is desired spatial velocities.
       </figcaption>
@@ -577,7 +319,7 @@
     The manipulation station outputs the actual/measured iiwa positions. The trajectory generator converts the planned sketch into a spatial velocity trajectory. It feed into the PIC, which feeds into the integrator which feeds the manipualtion station.
   </p>
 
-  <subsection id="7.0"><h1>Limitations</h1>
+  <subsection id="4.0"><h1>Limitations</h1>
     The chapter's notebook has sliders that rotates the joints of the arm which then changes the Jacobian, which is printed.
 
     <p>
@@ -615,7 +357,7 @@
   </subsection>
 </section>
 
-<section id="8"><h1>Singularities</h1>
+<section id="5"><h1>Singularities</h1>
   Refer to <code>two_link_singularities.py</code>. It's a simple example of a two-link pendulum. It runs through a simple trajectory where it will get fully extended along the way. The pendulum is walking in and out of singularity with no problems. There's nothing blowing up but the Jacobian does go singular.
 
   <p>
@@ -625,7 +367,7 @@
   <div class="container">
     <figure>
       <img style="height:80px; width:auto"
-      src="../../../figures/manipulation/43_singularityExample2Link.png"/>
+      src="../../../../figures/manipulation/43_singularityExample2Link.png"/>
       <figcaption>
         2 link pendulum. $\theta_1$ will be negative since right-hand coordinate system is used.
       </figcaption>
@@ -688,7 +430,7 @@
   </p>
 </section>
 
-<section id="9"><h1>Differential IK as optimisation</h1>
+<section id="6"><h1>Differential IK as optimisation</h1>
   [<a href="../maths/qp.html">Ref</a>]
   <br>
   The Pseudo-Inverse controller is magical because it solves an optimization problem. 
@@ -706,7 +448,7 @@
   $$
 </section>
 
-<section id="10"><h1>Summary of the usefulness of optimisation</h1>
+<section id="7"><h1>Summary of the usefulness of optimisation</h1>
   To get more robust Jacobian based controllers, we need to use a richer language (i.e. give it more details of the robot). For example, we say, find the desired spatial velocity that is as close as possible to the minimum but respects the joint/acceleration/velocity limits of the robot. 
 
   <p>
@@ -730,7 +472,7 @@
   </ul> 
 </section>
 
-<section id="11"><h1>Example</h1>
+<section id="8"><h1>Example</h1>
   In <code>qp_diff_ik.ipynb</code>, the Kuka is turned into a 2d version. Only 2 joints are active to make it as similar as possible to the 2 link pendulum example. It plots the quadratic cost function in the 2 variables (in green) which is the optimization problem given by the Jacobian $\|J^{G}(q) \dot{q}-V^G\|^2$ subject to a few constraints on velocities. The constraints are in red. The optimal solution is represented by a green blob. 
 
   <p>
@@ -738,7 +480,7 @@
   </p>
 </section>
 
-<section id="12"><h1>Closing remarks</h1>
+<section id="9"><h1>Closing remarks</h1>
   Q: What if the actual constraints are not linear? We can choose to solve a harder optimisation problem but the standard choice is linear. For instance the joint limits actually would be a nonlinear function in general. But we approximate it with an euler approximation which makes it a linear constraint. Position and acceleration limits are actually linear for any euler kind of integration step. Torque limits are not linear. The linearization for the latter is a bit tricky but we tend to not do torque limits. 
 
   <p>
@@ -751,7 +493,7 @@
     For instance, the way that we actually run the robot is we don't run it to be as close as possible to our desired velocity in the least squares sense. We actually do a slightly different objective. We have some desired velocity. We pick joint angles that will move the hand in the direction of that velocity. When a limit is hit we scale down the whole velocity but keep the direction the same; because we don't want our robot walking away from the desired trajectory. This is a richer formulation but we can still make it work as a quadratic program. 
   </p>
 
-  <subsection id="12.0"><h1>QP formulation 1</h1>
+  <subsection id="9.0"><h1>QP formulation 1</h1>
     Find $\dot{q}$ such that $J^G(q)\dot{q} \approx V^G$.
 
     $$\begin{align*}
@@ -761,7 +503,7 @@
     \end{align*}$$
   </subsection>
 
-  <subsection id="12.1"><h1>QP formulation 2</h1>
+  <subsection id="9.1"><h1>QP formulation 2</h1>
     This is a slightly different formulation which says constrain the arm to move only in the desired direction of the gripper. We're going to maximise a linear objective. This is actually a simpler program.
 
     $$\begin{align*}
@@ -784,7 +526,7 @@
     </p>
   </subsection>
 
-  <subsection id="12.2"><h1>Comparison of the 2 formulations</h1>
+  <subsection id="9.2"><h1>Comparison of the 2 formulations</h1>
     Between the 2 methods, we only changed what we want as a degradation in performance. When we have to give up performance, we can choose what we give up. In the 1st case we are after a spatial velocity as output that's as close as possible in the least squares sense to the desired spatial velocity. In the 2nd case we are willing for it to be less close in the numbers as long as it stays constrained in the right direction. So it's just a different choice of how we are okay for it to degrade when it can't satisfy the constraints perfectly. 
 
     <p>
