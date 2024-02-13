@@ -52,7 +52,37 @@
     <li><a href="basisVector.html">Transformation of a basis vector</a></li>
     <li><a href="twoLinkArm.html">Two-link Arm</a></li>
   </ul>
+</section>
+
+<section><h1>Description</h1>
+  Each point in an ($n$ dimensional) output space is created by $m$ contributing vectors (of $n$ dimensions each). Each of these vectors is uniquely influenced by one input space variable. There are $m$ input space variables.
+
+  <p>
+    A Jacobian captures how a change in any input space variable affects the output space. Each column of the Jacobian captures how a change in an input space variable affects its corresponding (influenced) $n-dimensional$ vector in the output space. So, a Jacobian has $n$ rows and $m$ columns.
+  </p>
+
+  For example, consider a planar 1R Arm. The input space would consist of angle $\theta$ and the output space would consist of 1 2-dimensional point in $x, y$. The Jacobian would be given by:
   
+  $$\begin{bmatrix}
+    \frac{\partial{f_x(\theta)}}{\partial{\theta}} \\
+    \frac{\partial{f_y(\theta)}}{\partial{\theta}}
+  \end{bmatrix}$$
+
+  $f_x(\theta), f_y(\theta)$ alone could give the change in the output space due to a change in an input space variable, but it is divided/normalised by the change in the input space variable ($\partial{\theta}$) to find simply the <n>constant</n> change that is not scaled by the amount of change in the input space.
+  
+  <p>
+    If the input space consisted of 2 variables $\theta_1, \theta_2$, then the Jacobian would be:
+
+    $$\begin{bmatrix}
+      \frac{\partial{f_x}}{\partial{\theta_1}} & 
+      \frac{\partial{f_x}}{\partial{\theta_2}} \\
+      \frac{\partial{f_y}}{\partial{\theta_1}} &
+      \frac{\partial{f_y}}{\partial{\theta_2}}
+    \end{bmatrix}$$
+  </p>
+</section>
+
+<section><h1>Alternate statements</h1>
   <subsection id="0.0"><h1>Statement 1</h1>
     The <code>Jacobian matrix</code>, $H$, contains the partial derivatives of the measurement equation with respect to the parameter(s) of interest.
 
