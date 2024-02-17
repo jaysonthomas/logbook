@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Stiffness control implemented using feedback cancellation</title>
-  <meta name="Stiffness control implemented using feedback cancellation" content="text/html; charset=utf-8;" />
+  <title>Joint stiffness control implemented using feedback cancellation</title>
+  <meta name="Joint stiffness control implemented using feedback cancellation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,36 +39,28 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Example: Double pendulum - joint stiffness control</a>
-<a href="#2">Benefit of having gravity compensation</a>
+<a href="#0">The new behaviour</a>
+<a href="#1">Benefit of having gravity compensation</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Stiffness control implemented using feedback cancellation</h1>
-<section id="0"><h1>Overview</h1>
-  Feedback cancelling control is a practical powerful idea to change a system's dynamics, if the change is:
-  <ul>
-    <li>Local, within reason</li>
-    <li>Small</li>
-  </ul>
-  
-  A big complicated robot can be made to act like a point robot at the end using a <i>stiffness controller</i>, wherein the end-effector's interactions to external forces are programed. 
-</section>
+<chapter style="counter-reset: chapter 0"><h1>Joint stiffness control implemented using feedback cancellation</h1>
 
-<section id="1"><h1>Example: Double pendulum - joint stiffness control</h1>
+<section id="0"><h1>The new behaviour</h1>
   Starting at the joint level, a PD position controller for a DP would look like:
   $$\begin{equation}
-    u = K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
+    u = K_p(q^d-q) + K_d(\dot{q}^d-\dot{q})
   \end{equation}$$
 
   <p>
-    The behaviour/interaction of say joint 2 within a DP can be configured such that it would seem like it has rotary springs of a certain stiffnes $k$, and damping $b$ when perturbed (the unit of each term is in torque):      
+    The behaviour/interaction of say joint 2 within a DP can be configured to seem like it has rotary springs of a certain stiffnes $k$, and damping $b$ when perturbed (the unit of each term is in torque):      
     $$\begin{equation}
-      M(q)\ddot{q} + C(q,\dot{q}) + K_p(q-q^d) + K_d(\dot{q}^d-\dot{q}) = \tau_{ext}
+      \underbrace{M(q)\ddot{q} + C(q,\dot{q})}_{m\ddot{x}} + 
+      \underbrace{K_d(\dot{q}-\dot{q}^d)}_{b\dot{x}} +
+      \underbrace{K_p(q-q^d)}_{kx} = \tau_{ext}
     \end{equation}$$
   </p>
 
-  Using the same philosophy from feedback cancellation, the controller can be achieved by:
+  Using feedback cancellation, the controller can be achieved by:
   <ul>
     <li>Cancelling out the dynamics that are not desired</li>
     Cancel the gravity compensation term $\tau_g$ but retain $M, C$ terms.
@@ -79,35 +71,16 @@
   
   The controller would look like:
   $$\begin{equation}
-    u = -\tau_g(q) + K_p(q^d-q) - K_d(\dot{q}^d-\dot{q})
+    u = -\tau_g(q) + K_p(q^d-q) + K_d(\dot{q}^d-\dot{q})
   \end{equation}$$
-
-  This control replaces the effect of gravity (i.e. <i>gravity compensation</i>) with a stiffness interaction.
 </section>
 
-<section id="2"><h1>Benefit of having gravity compensation</h1>
-  In practice, the difference in having a controller with just PD control and no 
-  gravity compensation is huge. In DP, if we wanted to hold the pendulum in a horizontal 
-  position (i.e. choose a stiffness that allows us to do that) where gravity is pulling down; 
-  if we don't have GC, the $K_p$ term will need to do the work of cancelling out gravity and 
-  hence will have a large value.
+<section id="1"><h1>Benefit of having gravity compensation</h1>
+  To hold a DP in a horizontal position where gravity is pulling down, without GC, the $K_p$ term would need to do the work of cancelling out gravity and hence would have a large value.
 
   <p>
-    If we want to hold the DP at an offset from the horizontal position, we would still 
-    need to keep $K_p$ very large in the PD controller. If the DP were in the downward 
-    position, we wouldn't have required a large $K_p$ to get a reasonable performance 
-    compared to the horizontal position. But, we end up with an excessive value all over
-    the workspace.
+    To hold the pendulum at an offset from the horizontal position (between downward and horizontal), $K_p$ would still need to be very large. To hold the DP in the downward position, $K_p$ would not need to be so large to get a reasonable performance compared to the horizontal position, but still ends up having an excessive value for the sake of the rest of the workspace.
   </p>
-
-  So, if we want reasonable performance all over the state space with just a 
-  PD controller, we have to choose $K_p$ to be very large and $K_d$ to be very large 
-  as well just to damp the effect of having a large $K_p$ term. If we subtract out gravity 
-  i.e. we use GC in our controller, then we can choose $K_p$, $K_d$ to be much lower 
-  and we can be much more responsive. In practice when people are running controllers 
-  without GC and we bump into the robot, 
-  it may trigger a fault and power down. If we do it with GC, it will be soft enough 
-  to get out of the way.
 </section>
 
 </chapter>

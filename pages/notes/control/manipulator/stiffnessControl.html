@@ -4,9 +4,9 @@
 <head>
   <title>Stiffness control</title>
   <meta name="Stiffness control" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -40,6 +40,7 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Benefit of having gravity compensation</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Stiffness control</h1>
@@ -51,6 +52,26 @@
   \end{equation}$$
 
   This control technique is also referred to as <i>simple impedance control</i>. <i>Impedance control</i> is the more general term for the whole set of concepts.
+</section>
+
+<section id="1"><h1>Overview</h1>
+  [<a href="../../plants/topDownDp/stiffnessControlUsingFbCancellation.html">Example</a>] <br>
+
+  A big complicated robot can be made to act like a point robot at the end using a <i>stiffness controller</i>, wherein the end-effector's interactions to external forces are programed. 
+
+  <p>
+    This control replaces the effect of gravity (i.e. <i>gravity compensation</i>) with a mass-spring-damper like stiffness interaction.
+  </p>
+</section>
+
+<section id="2"><h1>Benefit of having gravity compensation</h1>
+  In practice, the difference in having a controller with just PD control and no gravity compensation is huge. 
+  
+  <p>
+    If reasonable performance is desired without gravity compensation all over a system's state space with just a PD controller, $K_p$ would have to be very large. A large $K_d$ would also be needed to damp the effect of having a large $K_p$. If gravity is subtracted i.e. GC is used in the controller, then $K_p, K_d$ can be chosen to be much lower and the system can be much more responsive. 
+  </p>
+  
+  In practice when a robot not running GC gets bumped into, it may trigger a fault and power down. Using GC, would make the robot react soft enough to get out of the way.
 </section>
 
 </chapter>
