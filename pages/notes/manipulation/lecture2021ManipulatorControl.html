@@ -40,14 +40,8 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Stiffness control in end-effector coordinates</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Change of coordinates</a></li>
-  <li><a href="#1.1">Is (\ref{eq:opSpaceForm}) invertible?</a></li>
-  <li><a href="#1.2">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
-</ul>
-<a href="#2">Side notes</a>
-<a href="#3">Questions & todo</a>
+<a href="#1">Side notes</a>
+<a href="#2">Questions & todo</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Manipulator control</h1>
@@ -60,138 +54,7 @@
   </p>
 </section>
 
-<section id="1"><h1>Stiffness control in end-effector coordinates</h1>
-  How do we go from implementing the controller at the joints to implementing it just 
-  at the end effector? So instead of affecting the dynamics in $q$ we want to write 
-  the dynamics at the EE. We want the fingertip to act like a MSD.
-
-  <p>
-    This is sometimes also called <i>cartesian/EE stiffness control</i>. So how do we 
-    take those basic equations and impose a dynamics in the EE. We have the end position 
-    of the arm given by some kinematic function of $q$: 
-    $$
-      p^c = f_{kin}(q)
-    $$
-    The end contact point is determined by the joint angles. This is the relationship 
-    we get to work with and we would like to impose/achieve the following goal:
-    $$\begin{equation}
-      m\ddot{p}^c + b\dot{p}^c + k(p^c-p^{c_d}) = f^c_{ext}
-    \label{eq:goal2}
-    \end{equation}$$
-  </p>
-
-  <subsection id="1.0"><h1>Change of coordinates</h1>
-    We have our joint angles in $q$ coordinates and we have to somehow change to $p$
-    coordinates in order to achieve our goal. 
-
-    <p>
-      It's very easy in the derivation (starting from the initial eqs.) to end up at a dead end. 
-      But the following method which uses the right way to change coordinates 
-      (i.e. using the Jacobian) will get us there:
-    </p>
-    <equation><h1>The right way to change from joint to position coordinates</h1>
-      $$\begin{equation}
-        M_c(q) = (J^c(q)M^{-1}(q)J^{c^T}(q))^{-1}
-      \label{eq:opSpaceForm}
-      \end{equation}$$
-      $M_c$ is the EE mass or the effective mass.
-      <br>
-      $M$ is the mass of the original system.
-      <br><br>
-
-      This transformation is often called <i>operation space form of the dynamics</i>. 
-      Super useful! 
-      It's not surprising that we use the Jacobian to change coordinates.
-      The Jacobian $J^c(q)$ is given by:
-      $$
-        \dot{p}^c = J^c(q)\dot{q}
-      $$
-      Looking at (\ref{eq:opSpaceForm}), what's maybe a little surprising is that we can 
-      write the equations of 
-      motion in the EE frame as a function of the original coordinates and the Jacobian.
-    </equation>
-
-    We get a new set of equations with an altered mass matrix, an altered coriolis matrix 
-    on the LHS (which still depends on $q$ and $\dot{q}$), an altered torque matrix 
-    ($F$) plus $u$ in the new coordinates plus external forces. 
-    $$\begin{equation}
-      M_c(q)\ddot{p}^c + C_c(q,\dot{q}) = F^c_g(q) + u_c + f^c_{ext}
-    \label{eq:resultOpSpaceForm}
-    \end{equation}$$
-
-    (\ref{eq:opSpaceForm}) was the magic step we needed. Now if we start working with 
-    the new dynamics (\ref{eq:resultOpSpaceForm}) in the operation/EE space then we can 
-    just do feedback cancellation in this lower space.
-  </subsection>
-
-  <subsection id="1.1"><h1>Is (\ref{eq:opSpaceForm}) invertible?</h1>
-    What are the conditions that would be required for the matrix in (\ref{eq:opSpaceForm}) 
-    be invertible? 
-
-    <p>
-      In general we'd expect $(AA^T)^{-1}$ to exist if $A$ has full row rank. 
-      So let's first ask does the Jacobian have full row rank? We can certainly find 
-      singular configurations where it doesn't (when the arm is stretched out). 
-      But in all reasonable parts of the workspace, $J$ tends to be. 
-      For instance it could be: $J(q)=3\times nq$ if we're trying to do EE stuff; 
-      it tends to be full row rank and low column rank because it's a long short matrix. 
-      The mass matrix is positive definite so that is going to be well conditioned too.
-    </p>
-
-    So, the matrix should have an inverse as long as $J$ doesn't go singular; which is as 
-    it should be intuitively. If we just try to start jamming $J$ transpose in our EoM
-    we'll get stuck. But it must be the case that if we were to push on the EE of a 
-    physical contraption it will push back on us with some physical force. The force that 
-    it pushes back with is configuration (LHS of (\ref{eq:resultOpSpaceForm})) dependent 
-    - there will be some big complicated set of mass which will more or less work 
-    against me in each axis depending on the configuration of the mass.
-
-    <p>
-      What is the ability of the arm to produce force at the EE in a singular configuration? 
-      The controller can't produce force in the direction the arm is stretched out 
-      instantaneously but it can produce a forced dot. So we have to be careful if we start 
-      writing controllers similar to (\ref{eq:resultOpSpaceForm}) in such singular 
-      configurations - people tend to write it in a constrained least squares form and 
-      put some boundaries on it. Try not to take the inverse of the Jacobian as in 
-      (\ref{eq:opSpaceForm}) in singular conditions or be careful about it. 
-    </p>
-  </subsection>
-
-  <subsection id="1.2"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
-    If we write a controller that tells the robot to act like a certain dynamics in the 
-    xyz configuration, but say the robot has 7 DOF, then we've still got to specify 
-    something for the joints (so that the joints don't get into an odd configuration and 
-    bump somewhere for example). The same way in our Jacobian based controller, we talked 
-    about putting a secondary objective in the null space (something for instance to stay 
-    in a comfortable joint configuration, example: EE position is fixed, but joints are moving) 
-    we need to do something similar to stabilise the null space of this controller too.
-
-    <p>
-      So choose $u_c$ such that (\ref{eq:resultOpSpaceForm}) almost 
-      equals (\ref{eq:goal2}):
-
-      $$
-        M_c(q)\ddot{p}^c + C(q, \dot{q}) + K_p(p^c - p^{c^d}) + .. = 
-      $$
-      And I think, also add in nullspace stabilisation to the mix.
-    </p>
-
-    The fact that we tend to not change $M$, $C$ and that they are configuration dependent, 
-    means that, instantaneously, we can make our robot act like a MSD system. The mass 
-    that it acts like though will be configuration dependent. Almost always! In the 
-    quasi-static analysis case, if the accelerations are small, if we're going to push 
-    and see how far the robot deflects (i.e. how much we can push it) before it hits a 
-    new steady state and stops, the mass doesn't matter there; the inertial terms 
-    don't matter in the static analysis. But in the dynamic analysis, if we start trying to 
-    understand the dynamics of our robot then $M$ and $C$ are going to be notable; 
-    maybe not hugely important. It would be beautiful and clean to make them somehow constant, 
-    a function of $q$ but we tend to not do that. There are theoretical limits on how 
-    much we can change the mass before we write a controller that is unstable. 
-    Neville Hogan has some great surveys on that.
-  </subsection>
-</section>
-
-<section id="2"><h1>Side notes</h1>
+<section id="1"><h1>Side notes</h1>
   The papers on how control is implemented in Iiwa are great. They are linked in the notes.
   <ul>
     <li>Abu Ahafer and Christian Ott about impedance control of elastic joint robots</li>
@@ -200,7 +63,7 @@
   </ul>
 </section>
 
-<section id="3"><h1>Questions & todo</h1>
+<section id="2"><h1>Questions & todo</h1>
   <ul>
     <li>
       I think the code to turn a DP into a single one is 
