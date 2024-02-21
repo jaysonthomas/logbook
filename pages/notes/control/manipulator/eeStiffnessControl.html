@@ -95,35 +95,27 @@
   </p>
 
   This transformation is often called <i>operation space form of the dynamics</i>. It is now possible to use feedback cancellation with this new dynamics in the operation/EE space.
+
+  <p>
+    Depending on the configuration of the robot mass in each axis, it is possible to control an arm to push back (hence acting more or less against the external push) when a physical force is applied on the EE on any of its axes.
+  </p>
 </section>
 
 <section id="2"><h1>Validity of the dynamics in the operation space</h1>
   <subsection id="2.0"><h1>Is $M_c(q)$ invertible?</h1>
-    In general, $(AA^T)^{-1}$ exists if $A$ has full row rank. For $(J M^{-1} J^T)^{-1}$ to be invertible, $J$ would have to be full row rank. There are singular configurations like when the arm is stretched out, where it does not. But in all reasonable parts of the workspace, $J$ tends to be. 
+    In general, $(AA^T)^{-1}$ exists if $A$ has full row rank. For $(J M^{-1} J^T)^{-1}$ to be invertible, $J$ would have to be full row rank. In all reasonable parts of a robot arm's workspace, $J$ tends to be full row rank. 
 
     <p>
-      For instance it could be: $J(q)=3\times nq$ if we're trying to do EE stuff; 
-      it tends to be full row rank and low column rank because it's a long short matrix. 
-      The mass matrix is positive definite so that is going to be well conditioned too.
+      For instance, in most cases $J(q) \in \mathbb{R}^{3 \times n}$ where $n>3$, so $J$ is full row rank. The mass matrix is positive definite so that is well conditioned too.
     </p>
 
-    So, the matrix should have an inverse as long as $J$ doesn't go singular; which is as 
-    it should be intuitively. If we just try to start jamming $J$ transpose in our EoM
-    we'll get stuck. But it must be the case that if we were to push on the EE of a 
-    physical contraption it will push back on us with some physical force. The force that 
-    it pushes back with is configuration (LHS of (\ref{eq:resultOpSpaceForm})) dependent 
-    - there will be some big complicated set of mass which will more or less work 
-    against me in each axis depending on the configuration of the mass.
-
+    There are however singular configurations like when an arm is stretched out, where the Jacobian is not invertible. 
+    
     <p>
-      What is the ability of the arm to produce force at the EE in a singular configuration? 
-      The controller can't produce force in the direction the arm is stretched out 
-      instantaneously but it can produce a forced dot. So we have to be careful if we start 
-      writing controllers similar to (\ref{eq:resultOpSpaceForm}) in such singular 
-      configurations - people tend to write it in a constrained least squares form and 
-      put some boundaries on it. Try not to take the inverse of the Jacobian as in 
-      (\ref{eq:opSpaceForm}) in singular conditions or be careful about it. 
+      In a singular configuration like the stretched out arm, the controller cannot produce force instantaneously at the end-effector in the direction the arm is stretched out in. <m>But, it can produce a force dot</m>, i.e. the arm can move backwards (by bending its elbow) from the singular configuration. 
     </p>
+      
+    Care must be taken when writing cartesian stiffness controllers in such singular configurations. Usually, they are written in a constrained least squares form with some boundaries on it - either the inverse of the Jacobian is not taken in singular conditions or much care is taken when doing it. 
   </subsection>
 
   <subsection id="2.1"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
