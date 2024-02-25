@@ -44,7 +44,7 @@
 <a href="#2">Validity of the dynamics in the operation space</a>
 <ul class="no-bullets">
   <li><a href="#2.0">Is $M_c(q)$ invertible?</a></li>
-  <li><a href="#2.1">Null space of the controller (\ref{eq:resultOpSpaceForm})</a></li>
+  <li><a href="#2.1">Null space of a controller</a></li>
 </ul>
 </div>
 
@@ -118,37 +118,28 @@
     Care must be taken when writing cartesian stiffness controllers in such singular configurations. Usually, they are written in a constrained least squares form with some boundaries on it - either the inverse of the Jacobian is not taken in singular conditions or much care is taken when doing it. 
   </subsection>
 
-  <subsection id="2.1"><h1>Null space of the controller (\ref{eq:resultOpSpaceForm})</h1>
-    If we write a controller that tells the robot to act like a certain dynamics in the 
-    xyz configuration, but say the robot has 7 DOF, then we've still got to specify 
-    something for the joints (so that the joints don't get into an odd configuration and 
-    bump somewhere for example). The same way in our Jacobian based controller, we talked 
-    about putting a secondary objective in the null space (something for instance to stay 
-    in a comfortable joint configuration, example: EE position is fixed, but joints are moving) 
-    we need to do something similar to stabilise the null space of this controller too.
+  <subsection id="2.1"><h1>Null space of a controller</h1>
+    For a robot arm having 7 joints that acts like a certain dynamics in the xyz configuration, extra conditions/constraints need to be enforced on the joints so that they don't get into an odd configuration and bump somewhere. This is required to stabilise the null space of the controller.
 
     <p>
-      So choose $u_c$ such that (\ref{eq:resultOpSpaceForm}) almost 
-      equals (\ref{eq:goal2}):
-
-      $$
-        M_c(q)\ddot{p}^c + C(q, \dot{q}) + K_p(p^c - p^{c^d}) + .. = 
-      $$
-      And I think, also add in nullspace stabilisation to the mix.
+      This is similar to having a secondary objective in the null space of a Jacobian based controller, controlling a robot arm to stay in a comfortable joint configuration whilst its EE position is fixed and its joints are still moving.
     </p>
 
-    The fact that we tend to not change $M$, $C$ and that they are configuration dependent, 
-    means that, instantaneously, we can make our robot act like a MSD system. The mass 
-    that it acts like though will be configuration dependent. Almost always! In the 
-    quasi-static analysis case, if the accelerations are small, if we're going to push 
-    and see how far the robot deflects (i.e. how much we can push it) before it hits a 
-    new steady state and stops, the mass doesn't matter there; the inertial terms 
-    don't matter in the static analysis. But in the dynamic analysis, if we start trying to 
-    understand the dynamics of our robot then $M$ and $C$ are going to be notable; 
-    maybe not hugely important. It would be beautiful and clean to make them somehow constant, 
-    a function of $q$ but we tend to not do that. There are theoretical limits on how 
-    much we can change the mass before we write a controller that is unstable. 
-    Neville Hogan has some great surveys on that.
+    Whilst, $u_c$ needs to be chosen such that the operation space dynamics looks similar to that of a MSD, nullspace stabilisation should also be added into the mix:
+
+    $$
+      M_c(q)\ddot{p}^c + C_c(q, \dot{q}) + K_p(p^c - p^{c^d}) + 
+      \scriptsize {\text{Null space} \atop \text{Stabilisation}} = 
+      f^c_{ext}
+    $$
+
+    The fact that $M, C$ tend to not be changed and that they are configuration dependent, means that a robot can be made to act like a MSD system only instantaneously. The mass that it acts like will be configuration dependent. 
+    
+    <p>
+      In the quasi-static analysis case, if the accelerations are small, if a robot is pushed against to see how far it deflects, i.e. how much it can be pushed before it hits a new steady state and stops, the mass doesn't matter there. Inertial terms don't matter in static analysis. 
+    </p>
+
+    But in dynamic analysis, $M, C$ are going to be important to understand the dynamics of the robot. It may not be hugely important though. It would be beautiful and clean to make them somehow constant or a function of $q$. But, there are theoretical limits on how much a controller can be changed before it starts to get unstable. Neville Hogan has some great surveys on it.
   </subsection>
 </section>
 </chapter>

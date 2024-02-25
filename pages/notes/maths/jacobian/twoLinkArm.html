@@ -39,39 +39,18 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Forward Kinematics</a>
-<a href="#1">The Jacobian</a>
-<a href="#2">Analytical Jacobian</a>
-<a href="#3">Geometric Jacobian</a>
-<a href="#4">Force-torque relationship</a>
-<a href="#5">Pseudo-inverse Jacobian</a>
+<a href="#0">The Jacobian</a>
+<a href="#1">Analytical Jacobian</a>
+<a href="#2">Geometric Jacobian</a>
+<a href="#3">Force-torque relationship</a>
+<a href="#4">Pseudo-inverse Jacobian</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">Different conditions</a></li>
+  <li><a href="#4.0">Different conditions</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Two-link Arm</h1>
-<section id="0"><h1>Forward Kinematics</h1>
-  <div class="container">
-    <figure>
-      <img style="height:140px; width:auto"
-      src="../../../../figures/arm/1_2Link.png"/>
-      <figcaption>
-        Two-link Arm
-      </figcaption>
-    </figure>
-  </div>
-
-  The end-effector position is given as:
-  $$\begin{align*}
-    x &= f_x(l_1, l_2, \theta_1, \theta_2) \\
-      &= l_1\,\cos(\theta_1) + l_2\,\cos(\theta_1+\theta_2) \\
-    y &= f_y(l_1, l_2, \theta_1, \theta_2) \\
-      &= l_1\,\sin(\theta_1) + l_2\,\sin(\theta_1+\theta_2)
-  \end{align*}$$
-</section>  
-
-<section id="1"><h1>The Jacobian</h1>
+<section id="0"><h1>The Jacobian</h1>
   The Jacobian defines the relationship between operational space (end-effector) and joint space (joint angle) velocities. 
 
   $$\begin{align*}
@@ -97,7 +76,7 @@
   \end{align*}$$
 </section>
 
-<section id="2"><h1>Analytical Jacobian</h1>
+<section id="1"><h1>Analytical Jacobian</h1>
   Given the forward kinematics equation $x = FK(q)$, the relationship between operational space and joint space velocities is computed by taking the time derivative of the $FK$ function. This can also be written as:
 
   $$
@@ -106,7 +85,7 @@
   where $J_a$ is the <i>analytical Jacobian</i>.
 </section>
 
-<section id="3"><h1>Geometric Jacobian</h1>
+<section id="2"><h1>Geometric Jacobian</h1>
   Geometric Jacobian maps the joint velocities to the end-effector's linear and angular velocities. It is computed through an iterative method which calculates the link velocities from the base to the end-effector. Each column of the geometric Jacobian specifies the contribution of the corresponding joint velocity to the end-effector's velocities.
 
   <p>
@@ -114,7 +93,7 @@
   </p>
 </section>
 
-<section id="4"><h1>Force-torque relationship</h1>
+<section id="3"><h1>Force-torque relationship</h1>
   Assuming a virtual movement at the robot's end-effector ($\Delta{x}$) due to a force at the end-effector, due to conservation of energy/power:
 
   $$
@@ -126,14 +105,14 @@
   $$
 </section>
 
-<section id="5"><h1>Pseudo-inverse Jacobian</h1>
+<section id="4"><h1>Pseudo-inverse Jacobian</h1>
   Given $\dot{x} = J\dot{q}$, to find $\dot{q}$ from $\dot{x}$, the pseudo-inverse of $J$ needs to be computed since $J$ is not always <i>invertible</i>, i.e. it may be <i>rectangular</i>, having an unequal number of rows and columns. 
 
   <p>
     The pseudo-inverse is a rectangular matrix. Assuming that $x$ is $m$-dimensional and $q$ is $n$-dimensional, $J^\dagger$ is $n\times m$.
   </p>
 
-  <subsection id="5.0"><h1>Different conditions</h1>
+  <subsection id="4.0"><h1>Different conditions</h1>
     If $n=m$, the psuedo-inverse is a square matrix and is the <n>inverse</n> of $J$. It means that if there is any solution for the joint space it is a unique solution. 
 
     <p>

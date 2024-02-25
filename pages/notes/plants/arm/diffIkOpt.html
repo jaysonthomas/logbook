@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Two-link arm</title>
-  <meta name="Two-link arm" content="text/html; charset=utf-8;" />
+  <title>Differential IK as optimisation</title>
+  <meta name="Differential IK as optimisation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,40 +39,26 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
-<a href="#1">References</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Two-link arm</h1>
-<section id="0"><h1>Topics</h1>
-  A 2-link arm can also be considered to be a 2R robot or a top-down double pendulum.
-  <ul>
-    <li>Kinematics</li>
-    <ul>
-      <li><a href="kinematicsOverview.html">Overview</a></li>
-      <li><a href="fk.html">Forward Kinematics</a></li>
-    </ul>  
-    <li>Dynamics</li>
-    <ul>
-      <li><a href="dynamics.html">Overview</a></li>
-      <li><a href="fdid.html">Forward/Inverse Dynamics</a></li>
-    </ul>  
-    
-    <li>Control techniques</li>
-    <ul>
-      <li><a href="feedbackCancellation.html">Feedback cancelling control</a></li>
-      <li><a href="jointStiffnessControlUsingFbCancellation.html">Joint stiffness control implemented using feedback cancellation</a></li>
-    </ul>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 3"><h1>Differential IK as optimisation</h1>
 
-<section id="1"><h1>References</h1>
-  <ul>
-    <li>Studywolf</li>
-    [ <a href="https://t.ly/0q_8q">Ref1</a>, 
-      <a href="https://t.ly/cytJt">Ref2</a>,
-      <a href="https://t.ly/4JjRn">Jacobian Ref</a>]
-  </ul>
+<section id="0"><h1>Overview</h1>
+  [<a href="../../maths/qp.html">Ref</a>] <br>
+  The Pseudo-Inverse controller is magical because it solves an optimization problem. 
+
+  <p>
+    The problem is to find $\dot{q}$, such that the LHS is approximately equal (as close as possible) to the RHS (spatial velocity):
+    $$
+      J^G(q)\dot{q} \approx V^G
+    $$
+  </p>
+
+  The optimisation aims to minimise the least squares error:
+  $$
+      \| J^G(q)\dot{q} - V^G\|^2
+  $$
 </section>
 </chapter>
 

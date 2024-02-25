@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basics of pick and place</title>
-  <meta name="Basics of pick and place" content="text/html; charset=utf-8;" />
+  <title>Arm kinematics</title>
+  <meta name="Arm kinematics" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -58,42 +58,33 @@
 <ul class="no-bullets">
   <li><a href="#4.0">Limitations</a></li>
 </ul>
-<a href="#5">Singularities</a>
-<a href="#6">Differential IK as optimisation</a>
-<a href="#7">Summary of the usefulness of optimisation</a>
-<a href="#8">Example</a>
-<a href="#9">Closing remarks</a>
+<a href="#5">Summary of the usefulness of optimisation</a>
+<a href="#6">Example</a>
+<a href="#7">Closing remarks</a>
 <ul class="no-bullets">
-  <li><a href="#9.0">QP formulation 1</a></li>
-  <li><a href="#9.1">QP formulation 2</a></li>
-  <li><a href="#9.2">Comparison of the 2 formulations</a></li>
+  <li><a href="#7.0">QP formulation 1</a></li>
+  <li><a href="#7.1">QP formulation 2</a></li>
+  <li><a href="#7.2">Comparison of the 2 formulations</a></li>
 </ul>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Basics of pick and place</h1>
+<chapter style="counter-reset: chapter 3"><h1>Arm kinematics</h1>
 
 <section id="0"><h1>Topics</h1>
   <ul>
     <li><a href="notations.html">Notations</a></li>
+    <li><a href="spatialVelocity.html">Spatial Velocity</a></li>
     <li><a href="fk.html">Forward Kinematics</a></li>
-    <li><a href="ik.html">Inverse Kinematics</a></li>
     <li><a href="diffIk.html">Differential Inverse Kinematics</a></li>
+    <ul>
+      <li><a href="pinv.html">Pseudo Inverse Jacobian</a></li>
+      <li><a href="diffIkOpt.html">Differential IK as optimisation</a></li>
+    </ul>
+    <li><a href="singularities.html">Singularities</a></li>
   </ul>
 </section>
 
 <section id="1"><h1>Overview</h1>
-  <ul>
-    <li>General intro till 5:37</li>
-    <li>Why IK is hard till 5:49 but can be solved with Optimisation tools.</li>
-    Definitely make a note of this. This is different from Diff IK.
-    <p>
-      <li>Overview of Diff IK 6:30 to 9:36</li>
-      <li>3d rotations 10 to 28:55</li>
-      <li>Derivatives of rotation 30:12 (some diffIK details in between)</li>
-      <li>DiffIK 42:34</li>
-    </p>
-
-  </ul>
   <ul>
     <li>Getting the notations right</li>
     Even in deep neural networks (say to calculate pose estimation), we're going to have a kinematics problem at some point and we're going to have a bug where the vectors are pointing the wrong way etc. If we get the notations right, spatial algebra will protect us.
@@ -369,98 +360,7 @@
   </subsection>
 </section>
 
-<section id="5"><h1>Singularities</h1>
-  Refer to <code>two_link_singularities.py</code>. It's a simple example of a two-link pendulum. It runs through a simple trajectory where it will get fully extended along the way. The pendulum is walking in and out of singularity with no problems. There's nothing blowing up but the Jacobian does go singular.
-
-  <p>
-    People talk a lot about singularities and they can be mysterious, but they need not be. We can derive the Jacobian for the example. Are there good solutions the controller could make or is it just hopeless?  We start by deriving the short version of the kinematics. 
-  </p>
-
-  <div class="container">
-    <figure>
-      <img style="height:80px; width:auto"
-      src="../../../../figures/manipulation/43_singularityExample2Link.png"/>
-      <figcaption>
-        2 link pendulum. $\theta_1$ will be negative since right-hand coordinate system is used.
-      </figcaption>
-    </figure>
-  </div>
-
-  The pendulum follows a simple open loop trajectory. It's designed so that the horizontal position of the EE is a sine wave and the vertical position (y axis) is always 0:
-
-  $$
-    P^G(t) = \begin{bmatrix}
-      2c(1-t) \\
-      0       \\
-    \end{bmatrix}
-  $$
-
-  The position of the gripper is given by:
-  $$
-    P^G = \begin{bmatrix}
-      c\theta_1 + c(\theta_1 + \theta_2) \\
-      s\theta_1 + s(\theta_1 + \theta_2) \\
-    \end{bmatrix}
-  $$
-
-  The first row is the x component. The first part of the first row is the contribution of link 1 and after the plus sign is the contribution of link 2. Taking the Jacobian is relatively simple. Here, in translational coordinates, there is no change of variables; no weird orientations; it really is just the partial derivative of this matrix.
-
-  $$
-    J^G = \begin{bmatrix}
-      -s\theta_1 - s(\theta_1 + \theta_2) & -s(\theta_1 + \theta_2) \\
-       c\theta_1 + c(\theta_1 + \theta_2) & c(\theta_1 + \theta_2)  \\
-    \end{bmatrix}
-  $$
-
-  When the arm is fully extended, the sine of both angles go to 0 (in row 1) and the whole row goes to zero; The matrix drops rank.
-
-  <p>
-    Things could get bad with a pseudo inverse controller, but the aim is to understand why/how they get bad and how we can predict it. So singularities are real. It really is that the mapping between the EE positions and the joint angles gets into a terrible situation. But it does not mean the robot is helpless. So what does it mean?
-  </p>
-
-  If the arm is stretched out (in the forward direction), how do we control it to move it back (like in the <a href="https://shorturl.at/ghrW0">animation</a>)? Is there any velocity that we can command at the joint angles? If we have a desired velocity at the EE, how do we map to a desired velocity of the joints? We can't! The only possible velocity at the joints is zero. That's real, we can't move with a velocity instantaneously but we can accelerate backwards. By choosing a joint angle that is not instantaneously achieving the velocity objective, we can move out, start accelerating and get to a position where we can start commanding velocities. 
-
-  <p>
-    So thinking about things only in the EE velocity space does have foibles, some quirks but it does not mean the robot is helpless. It just means we have to be a little more clever. 
-  </p>
-
-  Q: If we move everything up to acceleration space have we just deferred the problem to the next set of variables? No. It's actually better in acceleration space. Now we'd have to think about exactly what the acceleration based controller would be to give a great answer. We can accelerate instantaneously but we cannot command a velocity instantaneously.
-
-  <p>
-    In practice, the thing to worry about is running the Jacobian based controller very close to dropping rank (similar to the pendulum example with the sine of angle being 0) because maybe we don't actually want the robot to be at its very end. But if we're just innocently choosing some trajectories we can get close to singularity (0) and we might start commanding ridiculous velocities ($\dot q$ is the output of the pseudo inverse (\ref{eq:pseudoInverseJacobian})). Even worse, the robot will be velocity limited and that velocity cap method will not be aware of the overall control objectives. There's a downstream part of the robot that might clip a joint's velocity even if a higher velocity was commanded. And it's not going to clip it nicely. It's just going to saturate or get into a fault.
-  </p>
-
-  So our solutions start getting arbitrarily wrong or we've commanded something bad. The pseudo inverse is a beautiful mathematical object. If we want to do our best effort knowing that there are limitations of the robot like velocity/joint limits and other things, the pseudo inverse doesn't have a chance if we haven't given it these extra bits of information. So we need a richer version of the pseudo-inverse that can consume more information about the problem specification. 
-
-  <p>
-    Q: If we have a singularity, aren't we also going to struggle to compute a torque? 
-    $$
-      \tau = J^{-1}(q)f
-    $$
-
-    Yes. Any jacobian-based approach is going to struggle. Is it true that we can't compute a torque for an arbitrary force? We can't produce a force instantaneously, but we can accelerate our joints in such a way, producing zero force that gets us out of the singularity. That is absolutely true but it's the differential version that gets us out. Just like it's bad to command velocities for an arm stretched out, it's also bad to ask for forces. That is just real - you cannot instantaneously produce a force.
-  </p>
-</section>
-
-<section id="6"><h1>Differential IK as optimisation</h1>
-  [<a href="../maths/qp.html">Ref</a>]
-  <br>
-  The Pseudo-Inverse controller is magical because it solves an optimization problem. 
-
-  <p>
-    Find $\dot{q}$, such that the LHS is approximately equal (as close as possible) to the RHS (spatial velocity):
-    $$
-      J^G(q)\dot{q} \approx V^G
-    $$
-  </p>
-
-  We're going to minimise over $\dot{q}$ the least squares error:
-  $$
-      \| J^G(q)\dot{q} - V^G\|^2
-  $$
-</section>
-
-<section id="7"><h1>Summary of the usefulness of optimisation</h1>
+<section id="5"><h1>Summary of the usefulness of optimisation</h1>
   To get more robust Jacobian based controllers, we need to use a richer language (i.e. give it more details of the robot). For example, we say, find the desired spatial velocity that is as close as possible to the minimum but respects the joint/acceleration/velocity limits of the robot. 
 
   <p>
@@ -484,7 +384,7 @@
   </ul> 
 </section>
 
-<section id="8"><h1>Example</h1>
+<section id="6"><h1>Example</h1>
   In <code>qp_diff_ik.ipynb</code>, the Kuka is turned into a 2d version. Only 2 joints are active to make it as similar as possible to the 2 link pendulum example. It plots the quadratic cost function in the 2 variables (in green) which is the optimization problem given by the Jacobian $\|J^{G}(q) \dot{q}-V^G\|^2$ subject to a few constraints on velocities. The constraints are in red. The optimal solution is represented by a green blob. 
 
   <p>
@@ -492,7 +392,7 @@
   </p>
 </section>
 
-<section id="9"><h1>Closing remarks</h1>
+<section id="7"><h1>Closing remarks</h1>
   Q: What if the actual constraints are not linear? We can choose to solve a harder optimisation problem but the standard choice is linear. For instance the joint limits actually would be a nonlinear function in general. But we approximate it with an euler approximation which makes it a linear constraint. Position and acceleration limits are actually linear for any euler kind of integration step. Torque limits are not linear. The linearization for the latter is a bit tricky but we tend to not do torque limits. 
 
   <p>
@@ -505,7 +405,7 @@
     For instance, the way that we actually run the robot is we don't run it to be as close as possible to our desired velocity in the least squares sense. We actually do a slightly different objective. We have some desired velocity. We pick joint angles that will move the hand in the direction of that velocity. When a limit is hit we scale down the whole velocity but keep the direction the same; because we don't want our robot walking away from the desired trajectory. This is a richer formulation but we can still make it work as a quadratic program. 
   </p>
 
-  <subsection id="9.0"><h1>QP formulation 1</h1>
+  <subsection id="7.0"><h1>QP formulation 1</h1>
     Find $\dot{q}$ such that $J^G(q)\dot{q} \approx V^G$.
 
     $$\begin{align*}
@@ -515,7 +415,7 @@
     \end{align*}$$
   </subsection>
 
-  <subsection id="9.1"><h1>QP formulation 2</h1>
+  <subsection id="7.1"><h1>QP formulation 2</h1>
     This is a slightly different formulation which says constrain the arm to move only in the desired direction of the gripper. We're going to maximise a linear objective. This is actually a simpler program.
 
     $$\begin{align*}
@@ -538,7 +438,7 @@
     </p>
   </subsection>
 
-  <subsection id="9.2"><h1>Comparison of the 2 formulations</h1>
+  <subsection id="7.2"><h1>Comparison of the 2 formulations</h1>
     Between the 2 methods, we only changed what we want as a degradation in performance. When we have to give up performance, we can choose what we give up. In the 1st case we are after a spatial velocity as output that's as close as possible in the least squares sense to the desired spatial velocity. In the 2nd case we are willing for it to be less close in the numbers as long as it stays constrained in the right direction. So it's just a different choice of how we are okay for it to degrade when it can't satisfy the constraints perfectly. 
 
     <p>

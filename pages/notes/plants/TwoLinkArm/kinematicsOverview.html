@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Arm: Inverse Kinematics</title>
-  <meta name="Arm: Inverse Kinematics" content="text/html; charset=utf-8;" />
+  <title>Two-link arm: Kinematics overview</title>
+  <meta name="Two-link arm: Kinematics overview" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,12 +39,42 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Description</a>
+<a href="#0">Forward Kinematics</a>
+<a href="#1">Inverse Kinematics</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Arm: Inverse Kinematics</h1>
+<chapter style="counter-reset: chapter 0"><h1>Two-link arm: Kinematics overview</h1>
+<section id="0"><h1>Forward Kinematics</h1>
+  $$
+    X^B = f^B_{kin}(q)
+  $$  
 
-<section id="0"><h1>Description</h1>
+  In this mathematical equation (actual implementation in code is different):
+  <br>
+  $q$ is the vector of positions.
+  <br>
+  $X$ is the pose in the world.
+  <br>
+  $f_{kin}$ is the FK of the body.
+  <br>
+  $B$ stands for body.
+  <br>
+  $G$ stands for gripper if it was used instead of $B$.    
+  
+  <p>
+    The mapping from joint angles to poses is called the <i>Forward Kinematics problem</i>. Looking at the 2D rotation matrix above:
+    $$
+      R(\theta) = \begin{bmatrix}
+      c & -s \\
+      s & c     
+      \end{bmatrix}
+    $$
+  </p>
+
+  If we have joint angle $\theta$ and we want to turn it into a rotation or a pose then it is almost always going to be a nonlinear map from the joint angles into the poses. The matrix above is maybe the simplest example of it.
+</section>
+
+<section id="1"><h1>Inverse Kinematics</h1>
   <i>Inverse kinematics</i> is a nonlinear complicated function that helps to go from poses in the world to joint positions.
   $$
     q = (f^B)^{-1}(X^B)
@@ -59,7 +89,6 @@
   An example: if an arm had multiple joint angle solutions for a given pose for the hand, then the IK engine could ask for different joint angles (for the same hand pose) every 0.0001 seconds which wouldn't be good. 
   
 </section>
-
 </chapter>
 
 </body>

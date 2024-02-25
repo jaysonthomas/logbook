@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple top-down double pendulum</title>
-  <meta name="Simple top-down double pendulum" content="text/html; charset=utf-8;" />
+  <title>Two-link arm: Dynamics</title>
+  <meta name="Two-link arm: Dynamics" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,29 +40,10 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Setup</a>
-<a href="#2">Dynamics</a>
-<a href="#3">Control techniques</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple top-down double pendulum</h1>
+<chapter style="counter-reset: chapter 0"><h1>Two-link arm: Dynamics</h1>
 <section id="0"><h1>Overview</h1>
-  A simple double pendulum hanging down from the top is <i>simple</i> because it uses <i>lumped</i> masses for the dynamics, which means the entire mass of each pendulum is concentrated or "lumped" at a single point, at the end of the pendulum. 
-</section>
-  
-<section id="1"><h1>Setup</h1>
-  A DP is parameterised with just 2 angles, $\theta_1, \theta_2$. The desired contact is to be made at the end point or the end effector. Each joint is actuated using a motor and therefore torques are produced at both the joints. 
-  
-  <figure>
-    <img style="height:70px; width:auto"
-    src="../../../../figures/manipulation/16_simpleDP.png"/>
-    <figcaption>
-      Double pendulum parameterisation
-    </figcaption>
-  </figure> 
-</section>
-
-<section id="2"><h1>Dynamics</h1>
   For a distributed mass, the standard manipulator equation of motion is given by:
   
   $$\begin{equation}
@@ -80,13 +61,6 @@
   $$
 
   For lumped masses, the terms come out particularly easy (derived in the notes). 
-</section>
-
-<section id="3"><h1>Control techniques</h1>
-  <ul>
-    <li><a href="feedbackCancellation.html">Feedback cancelling control</a></li>
-    <li><a href="stiffnessControlUsingFbCancellation.html">Joint stiffness control implemented using feedback cancellation</a></li>
-  </ul>
 </section>
 </chapter>
 

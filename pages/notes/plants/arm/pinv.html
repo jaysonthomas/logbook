@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Jacobians</title>
-  <meta name="Jacobians" content="text/html; charset=utf-8;" />
+  <title>Pseudo Inverse Jacobian</title>
+  <meta name="Pseudo Inverse Jacobian" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,16 +40,29 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1"></a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Jacobians</h1>
+<chapter style="counter-reset: chapter 3"><h1>Pseudo Inverse Jacobian</h1>
+
 <section id="0"><h1>Overview</h1>
-  [<a href="https://t.ly/4JjRn">Ref</a>] <br>
+  $$\begin{equation}
+    \label{eq:pseudoInverseJacobian}
+    \dot{q} = [J^B(q)]^{\dagger}V^B
+  \end{equation}$$
+  
+  A pseudo inverse has magical properties. It is well-defined even if the matrix isn't square. When a matrix is not square, the inverse could have infinitely many or no solutions. <code>pinv</code> does the right thing:
+
+  <ul>
+    <li>Infinitely many solutions case</li>
+    It will pick the one that's <n>minimum norm in the least squares norm</n>. It'll find the smallest solution. In this case, it would be the smallest joint velocities that achieve the desired spatial velocity.
+
+    <p>
+      <li>No solutions</li>
+      It does its best effort to find a $\dot{q}$ that achieves the nearest possible match to the desired spatial velocity.
+    </p>
+  </ul>
 </section>
 
-<section id="1"><h1></h1>
-</section>
 </chapter>
 
 </body>

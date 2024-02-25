@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Two-link arm</title>
-  <meta name="Two-link arm" content="text/html; charset=utf-8;" />
+  <title>Spatial Velocity</title>
+  <meta name="Spatial Velocity" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,40 +39,26 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
-<a href="#1">References</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Two-link arm</h1>
-<section id="0"><h1>Topics</h1>
-  A 2-link arm can also be considered to be a 2R robot or a top-down double pendulum.
-  <ul>
-    <li>Kinematics</li>
-    <ul>
-      <li><a href="kinematicsOverview.html">Overview</a></li>
-      <li><a href="fk.html">Forward Kinematics</a></li>
-    </ul>  
-    <li>Dynamics</li>
-    <ul>
-      <li><a href="dynamics.html">Overview</a></li>
-      <li><a href="fdid.html">Forward/Inverse Dynamics</a></li>
-    </ul>  
-    
-    <li>Control techniques</li>
-    <ul>
-      <li><a href="feedbackCancellation.html">Feedback cancelling control</a></li>
-      <li><a href="jointStiffnessControlUsingFbCancellation.html">Joint stiffness control implemented using feedback cancellation</a></li>
-    </ul>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 3"><h1>Spatial Velocity</h1>
+<section id="0"><h1>Overview</h1>
+  Spatial algebra for velocities called <i>spatial velocity</i> is similar to spatial algebra for positions and orientations. It has a translation and an orientation component:
 
-<section id="1"><h1>References</h1>
-  <ul>
-    <li>Studywolf</li>
-    [ <a href="https://t.ly/0q_8q">Ref1</a>, 
-      <a href="https://t.ly/cytJt">Ref2</a>,
-      <a href="https://t.ly/4JjRn">Jacobian Ref</a>]
-  </ul>
+  $$\begin{bmatrix}
+    \omega \\ v
+  \end{bmatrix}$$
+
+  $\omega$ is the <i>angular velocities</i>, a $3 \times 1$ vector 
+  <br>
+  $v$ is the <i>translational velocities</i>, a $3 \times 1$ vector 
+  <br>
+  Spatial velocity is a $6 \times 1$ vector 
+
+  <p>
+    There is no standard/canonical choice of representation for a pose. Based on the chosen representation, an orientation (which part of a pose), can have various problems hence the need for constantly moving between representations. However there is a canonical choice for angular velocity, consisting of 3 numbers representing the rotation rates around the major axes.
+  </p>
 </section>
 </chapter>
 

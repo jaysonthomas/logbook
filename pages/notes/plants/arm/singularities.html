@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Arm: Singularities</title>
+  <meta name="Arm: Singularities" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Setup</a>
+<a href="#2">Forward Kinematics</a>
+<a href="#3">Singularity condition</a>
+<a href="#4">Solution</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Arm: Singularities</h1>
+
+<section id="0"><h1>Overview</h1>
+  Are there good solutions a controller could make when the Jacobian gets singular or is it just hopeless?
+</section>
+
+<section id="1"><h1>Setup</h1>
+  Refer to <code>two_link_singularities.py</code>. It runs through a simple trajectory where a two-link pendulum moves into a singularity configuration by getting fully extended, but also moves out of it with no problem. Nothing blows up even when the Jacobian goes singular.
+
+  The pendulum follows a simple open loop trajectory where the reference horizontal position of the EE is a sine wave and the vertical position (y axis) is always 0:
+
+  $$
+    P^G(t) = \begin{bmatrix}
+      2c(1-t) \\
+      0       \\
+    \end{bmatrix}
+  $$
+</section>
+
+<section id="2"><h1>Forward Kinematics</h1>
+  The position of the gripper is given by:
+  $$
+    P^G = \begin{bmatrix}
+      c\theta_1 + c(\theta_1 + \theta_2) \\
+      s\theta_1 + s(\theta_1 + \theta_2) \\
+    \end{bmatrix}
+  $$
+
+  The first row is the x component. The first part of the first row is the contribution of link 1 and after the plus sign is the contribution of link 2. Taking the Jacobian is relatively simple. Here, in translational coordinates, there is no change of variables; no weird orientations; it really is just the partial derivative of this matrix.
+
+  $$
+    J^G = \begin{bmatrix}
+      -s\theta_1 - s(\theta_1 + \theta_2) & -s(\theta_1 + \theta_2) \\
+        c\theta_1 + c(\theta_1 + \theta_2) & c(\theta_1 + \theta_2)  \\
+    \end{bmatrix}
+  $$
+</section>
+
+<section id="3"><h1>Singularity condition</h1>
+  When the arm is fully extended, the sine of both angles go to 0 (in row 1) and the whole row goes to zero; The matrix drops rank.
+
+  <p>
+    Things could get bad with a pseudo inverse controller, but the aim is to understand why/how they get bad and how we can predict it. So singularities are real. It really is that the mapping between the EE positions and the joint angles gets into a terrible situation. But it does not mean the robot is helpless. So what does it mean?
+  </p>
+</section>
+  
+<section id="4"><h1>Solution</h1>
+  If the arm is stretched out (in the forward direction), how do we control it to move it back (like in the <a href="https://shorturl.at/ghrW0">animation</a>)? Is there any velocity that we can command at the joint angles? If we have a desired velocity at the EE, how do we map to a desired velocity of the joints? We can't! The only possible velocity at the joints is zero. That's real, we can't move with a velocity instantaneously but we can accelerate backwards. By choosing a joint angle that is not instantaneously achieving the velocity objective, we can move out, start accelerating and get to a position where we can start commanding velocities. 
+
+  <p>
+    So thinking about things only in the EE velocity space does have foibles, some quirks but it does not mean the robot is helpless. It just means we have to be a little more clever. 
+  </p>
+
+  Q: If we move everything up to acceleration space have we just deferred the problem to the next set of variables? No. It's actually better in acceleration space. Now we'd have to think about exactly what the acceleration based controller would be to give a great answer. We can accelerate instantaneously but we cannot command a velocity instantaneously.
+</section>
+
+
+
+
+
+
+  <p>
+    In practice, the thing to worry about is running the Jacobian based controller very close to dropping rank (similar to the pendulum example with the sine of angle being 0) because maybe we don't actually want the robot to be at its very end. But if we're just innocently choosing some trajectories we can get close to singularity (0) and we might start commanding ridiculous velocities ($\dot q$ is the output of the pseudo inverse (\ref{eq:pseudoInverseJacobian})). Even worse, the robot will be velocity limited and that velocity cap method will not be aware of the overall control objectives. There's a downstream part of the robot that might clip a joint's velocity even if a higher velocity was commanded. And it's not going to clip it nicely. It's just going to saturate or get into a fault.
+  </p>
+
+  So our solutions start getting arbitrarily wrong or we've commanded something bad. The pseudo inverse is a beautiful mathematical object. If we want to do our best effort knowing that there are limitations of the robot like velocity/joint limits and other things, the pseudo inverse doesn't have a chance if we haven't given it these extra bits of information. So we need a richer version of the pseudo-inverse that can consume more information about the problem specification. 
+
+  <p>
+    Q: If we have a singularity, aren't we also going to struggle to compute a torque? 
+    $$
+      \tau = J^{-1}(q)f
+    $$
+
+    Yes. Any jacobian-based approach is going to struggle. Is it true that we can't compute a torque for an arbitrary force? We can't produce a force instantaneously, but we can accelerate our joints in such a way, producing zero force that gets us out of the singularity. That is absolutely true but it's the differential version that gets us out. Just like it's bad to command velocities for an arm stretched out, it's also bad to ask for forces. That is just real - you cannot instantaneously produce a force.
+  </p>
+</chapter>
+
+</body>
+</html>
