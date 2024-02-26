@@ -62,7 +62,7 @@
   $G$ stands for gripper if it was used instead of $B$.    
   
   <p>
-    The mapping from joint angles to poses is called the <i>Forward Kinematics problem</i>. Looking at the 2D rotation matrix above:
+    The mapping from joint positions to end-effector poses is called the <i>Forward Kinematics problem</i>. In the case of revolute joints, this mapping from joint angles to ee pose is non-linear. Perhaps, the simplest example of it is provided below (just the rotation part of the pose):
     $$
       R(\theta) = \begin{bmatrix}
       c & -s \\
@@ -70,17 +70,19 @@
       \end{bmatrix}
     $$
   </p>
-
-  If we have joint angle $\theta$ and we want to turn it into a rotation or a pose then it is almost always going to be a nonlinear map from the joint angles into the poses. The matrix above is maybe the simplest example of it.
 </section>
 
 <section id="1"><h1>Inverse Kinematics</h1>
-  <i>Inverse kinematics</i> is a nonlinear complicated function that helps to go from poses in the world to joint positions.
+  <i>Inverse kinematics</i> is a nonlinear complicated function that helps to go from poses in the world to joint positions. Going the other way is more straight forward.
   $$
     q = (f^B)^{-1}(X^B)
   $$
   
-  It is not necessarily a unique mapping - there can be multiple $q$s that get the same pose in the world. There could also be no solutions. Going the other way is more straight forward.   
+  It is not necessarily a unique mapping:
+  <ul>
+    <li>There can be multiple solutions ($q$) that get the same pose in the world.</li>
+    <li>There could also be no solutions.</li>
+  </ul>
   
   <p>
     IK is oftentimes not used directly since if the IK engine gives slightly different answers for very similar poses, then it might involve arm movements that jump around to different solutions. It is normally used with additional requirements for continuity/smoothness/centering etc.
