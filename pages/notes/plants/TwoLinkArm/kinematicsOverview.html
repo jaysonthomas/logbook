@@ -73,23 +73,25 @@
 </section>
 
 <section id="1"><h1>Inverse Kinematics</h1>
-  <i>Inverse kinematics</i> is a nonlinear complicated function that helps to go from poses in the world to joint positions. Going the other way is more straight forward.
+  <i>Inverse kinematics</i> is a nonlinear complicated function that helps to go from poses in the world to joint positions. 
   $$
     q = (f^B)^{-1}(X^B)
   $$
   
-  It is not necessarily a unique mapping:
+  FK is easier since the mapping in IK is not always unique:
   <ul>
     <li>There can be multiple solutions ($q$) that get the same pose in the world.</li>
     <li>There could also be no solutions.</li>
   </ul>
   
-  <p>
-    IK is oftentimes not used directly since if the IK engine gives slightly different answers for very similar poses, then it might involve arm movements that jump around to different solutions. It is normally used with additional requirements for continuity/smoothness/centering etc.
-  </p>
-
-  An example: if an arm had multiple joint angle solutions for a given pose for the hand, then the IK engine could ask for different joint angles (for the same hand pose) every 0.0001 seconds which wouldn't be good. 
-  
+  IK is oftentimes not used directly since the IK engine could give slightly different answers:
+  <ul>
+    <li>For very similar poses</li>
+    <li>
+      When there are multiple joint angle solutions for the same ee pose
+    </li>
+  </ul>
+  Both cases would involve arm movements that jump around to different solutions in very short time spans, for e.g. every 0.0001 seconds which wouldn't be good. IK is normally used with additional requirements for continuity/smoothness/centering etc.
 </section>
 </chapter>
 
