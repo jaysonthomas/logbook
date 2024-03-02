@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Two-link arm: Kinematics overview</title>
-  <meta name="Two-link arm: Kinematics overview" content="text/html; charset=utf-8;" />
+  <title>Two-link arm: Inverse Kinematics</title>
+  <meta name="Two-link arm: Inverse Kinematics" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,46 +39,21 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Forward Kinematics</a>
-<a href="#1">Inverse Kinematics</a>
+<a href="#0">Intro</a>
+<a href="#1">Differential IK</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Inverse Jacobian</a></li>
+</ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Two-link arm: Kinematics overview</h1>
-<section id="0"><h1>Forward Kinematics</h1>
-  $$
-    X^B = f^B_{kin}(q)
-  $$  
-
-  In this mathematical equation (actual implementation in code is different):
-  <br>
-  $q$ is the vector of positions.
-  <br>
-  $X$ is the pose in the world.
-  <br>
-  $f_{kin}$ is the FK of the body.
-  <br>
-  $B$ stands for body.
-  <br>
-  $G$ stands for gripper if it was used instead of $B$.    
-  
-  <p>
-    The mapping from joint positions to end-effector poses is called the <i>Forward Kinematics problem</i>. In the case of revolute joints, this mapping from joint angles to ee pose is non-linear. Perhaps, the simplest example of it is provided below (just the rotation part of the pose):
-    $$
-      R(\theta) = \begin{bmatrix}
-      c & -s \\
-      s & c     
-      \end{bmatrix}
-    $$
-  </p>
-</section>
-
-<section id="1"><h1>Inverse Kinematics</h1>
+<chapter style="counter-reset: chapter 0"><h1>Two-link arm: Inverse Kinematics</h1>
+<section id="0"><h1>Intro</h1>
   <i>Inverse kinematics</i> is a nonlinear complicated function that helps to go from poses in the world to joint positions. 
   $$
     q = (f^B)^{-1}(X^B)
   $$
   
-  FK is easier since the mapping in IK is not always unique:
+  IK is harder than FK since the mapping in IK is not always unique:
   <ul>
     <li>There can be multiple solutions ($q$) that get the same pose in the world.</li>
     <li>There could also be no solutions.</li>
@@ -92,6 +67,36 @@
     </li>
   </ul>
   Both cases would involve arm movements that jump around to different solutions in very short time spans, for e.g. every 0.0001 seconds which wouldn't be good. IK is normally used with additional requirements for continuity/smoothness/centering etc.
+</section>
+
+<section id="1"><h1>Differential IK</h1>
+  To achieve smoothness when moving between joint angles, instead of the pure form, the differential form of the inverse kinematics is used. <i>Differential IK</i> helps in computing the necessary incremental change in $q$ to achieve a desired (known) small/incremental change in pose in a desired direction. 
+
+  $$\begin{align*}
+    \frac{\partial{f^B}(q)}{\partial{q}}
+    \underbrace{dq}_{\text{Incremental change} \atop \text{in joint angle}} 
+    &= 
+    \underbrace{dX^B}_{\text{Incremental change} \atop \text{in pose}}  
+    \\
+
+    \underbrace{J^B(q)}_{\text{Jacobian}} \quad \dot{q}
+    &=
+    \underbrace{V^B}_{\text{Spatial} \atop \text{velocity}} 
+    \\
+
+    \dot{q} &= [J^B(q)]^{-1} V^B
+  \end{align*}$$  
+
+  The differential IK solution isn't defined perfectly everywhere, i.e. the inverse Jacobian is not defined everywhere, but partial derivatives exist everywhere. 
+
+  <subsection id="1.0"><h1>Inverse Jacobian</h1>
+    $$
+      \dot{q}_{\scriptscriptstyle{7 \times 1}} = 
+      [J^B_{\scriptscriptstyle{6\times{7}}}(q)]^{-1} 
+      V^B_{\scriptscriptstyle{6\times{1}}}
+    $$
+    The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. The problem with simply taking the inverse of a jacobian is that in most cases, a jacobian is not a square matrix and it is not possible to take the inverse of a non-square matrix. Hence, this equation is only a conceptual representation.
+  </subsection>
 </section>
 </chapter>
 

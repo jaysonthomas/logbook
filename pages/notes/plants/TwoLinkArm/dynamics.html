@@ -40,6 +40,7 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Force-torque relationship</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Two-link arm: Dynamics</h1>
@@ -61,6 +62,18 @@
   $$
 
   For lumped masses, the terms come out particularly easy (derived in the notes). 
+</section>
+
+<section id="1"><h1>Force-torque relationship</h1>
+  Assuming a virtual movement at the robot's end-effector ($\Delta{x}$) due to a force at the end-effector, due to conservation of energy/power:
+
+  $$
+    F^T \Delta{x} = \tau^T \Delta{q}
+  $$
+  where $\tau$ represents the joint torques. Since $\Delta{x} = J \Delta{q}$:
+  $$
+    F^T J \Delta{q} = \tau^T \Delta{q}  \; \implies \; F^T J = \tau^T \; \implies \; \tau = J^TF
+  $$
 </section>
 </chapter>
 

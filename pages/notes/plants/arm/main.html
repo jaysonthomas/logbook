@@ -54,18 +54,6 @@
   <li><a href="#3.1">Problems faced when interpolating between orientations</a></li>
   <li><a href="#3.2">The right way to interpolate between orientations</a></li>
 </ul>
-<a href="#4">The controller</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Limitations</a></li>
-</ul>
-<a href="#5">Summary of the usefulness of optimisation</a>
-<a href="#6">Example</a>
-<a href="#7">Closing remarks</a>
-<ul class="no-bullets">
-  <li><a href="#7.0">QP formulation 1</a></li>
-  <li><a href="#7.1">QP formulation 2</a></li>
-  <li><a href="#7.2">Comparison of the 2 formulations</a></li>
-</ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Arm kinematics</h1>
@@ -75,12 +63,6 @@
     <li><a href="notations.html">Notations</a></li>
     <li><a href="spatialVelocity.html">Spatial Velocity</a></li>
     <li><a href="fk.html">Forward Kinematics</a></li>
-    <li><a href="diffIk.html">Differential Inverse Kinematics</a></li>
-    <ul>
-      <li><a href="pinv.html">Pseudo Inverse Jacobian</a></li>
-      <li><a href="diffIkOpt.html">Differential IK as optimisation</a></li>
-    </ul>
-    <li><a href="singularities.html">Singularities</a></li>
   </ul>
 </section>
 
@@ -292,164 +274,6 @@
 
 </section>
 
-<section id="4"><h1>The controller</h1>
-  <div class="container">
-    <figure>
-      <img style="height:60px; width:auto"
-      src="../../../../figures/manipulation/41_pseudoInverseController.png"/>
-      <figcaption>
-        $\dot{q}^d$ is desired IIWA velocities, $V^{G^d}$ is desired spatial velocities.
-      </figcaption>
-    </figure>
-  </div>
-
-  To compute the desired velocities, the pseudo inverse controller (PIC) needs:
-  <ul>
-    <li>a model of the robot (inside the block)</li>
-    <li>current positions of the robot $q$</li>
-    We could use the commanded/desired or the measured position. The latter could be noisy so it's more stable to use the former.
-
-    <p>
-      If actual positions were used instead, even in simulation, we'd get a good solution but then in the <i>null space</i> (in the multiple solution dimension) the elbow will walk around a little. It's a subtlety of the way these things feedback with the numerical precision of the integrator.
-    </p>
-
-    <li>commanded desired spatial velocities $V^{G^d}$</li>
-  </ul>
-
-  PIC takes in commanded poses and outputs commanded joint positions (integrator included). The manipulation station takes in desired position commands (not velocities), so we need an integration step to turn desired velocities into position commands. The initial conditions of the integrator need to match that of the robot, else the robot will go to a very bad initial condition at time zero. 
-
-  <p>
-    The manipulation station outputs the actual/measured iiwa positions. The trajectory generator converts the planned sketch into a spatial velocity trajectory. It feed into the PIC, which feeds into the integrator which feeds the manipualtion station.
-  </p>
-
-  <subsection id="4.0"><h1>Limitations</h1>
-    The chapter's notebook has sliders that rotates the joints of the arm which then changes the Jacobian, which is printed.
-
-    <p>
-      If there are no solutions, the controller will come up with the best possible solution. It will find the minimum norm. When is it not enough? At a singularity. What does a singularity mean? 
-    </p>
-
-    <button class="accordion">Matrix rank</button>
-    <div class="panel">
-      <p></p>
-      The <i>rank of a matrix</i> is the maximum number of linearly independent rows or columns in that matrix. In robotics, the <i>rank of a matrix</i> is used to determine the <i>manipulability</i> or <i>controllability</i> of a robot arm. It indicates the number of independent directions in which the end-effector of the arm can move. The <i>rank of the Jacobian matrix</i>, which relates the joint velocities to the end-effector velocities, provides valuable information about the arm's mobility and its ability to reach different positions and orientations in its workspace.
-
-      <p>
-        If the rank of the Jacobian matrix is equal to the number of DOF of the robot arm, it means that the arm can move freely in all possible directions within its workspace. This implies that the robot arm is fully controllable and can reach any desired position and orientation within its reachable workspace.
-      </p>
-      
-      On the other hand, if the rank of the Jacobian matrix is less than the number of DOF, it suggests that the arm is kinematically constrained. This can occur when certain joints of the arm are mechanically linked or when there are other physical limitations that restrict the arm's movement. In such cases, the arm may have limited mobility and may not be able to reach all desired positions and orientations in its workspace.
-
-      <p>
-        In summary, the rank of a matrix, particularly the Jacobian matrix, provides insight into the controllability and mobility of a robot arm. A higher rank indicates greater freedom of movement, while a lower rank suggests constraints or limitations on the arm's motion.
-      </p>
-    </div>
-
-    When the arm changes from having good solutions to having no or infinite solutions, there is the possibility of the rank of the matrix $[J^B(q)]^{-1}_{\scriptscriptstyle{6\times{7}}}$ to drop. Since we are trying to find $q$, we only care about the row rank. It is a good case, when we have 7 $\dot{q}$s and only 6 desired velocities, since we have multiple solutions. We never want the rank to drop below 6.
-
-    <p>
-      A robot will break before it drops rank. What actually happens is, as the robot approaches losing rank the inverse gets poorly conditioned and we'll get very big commanded velocities out which will cause the robot to hit a joint or velocity limit and it'll shut down.
-    </p>
-
-    The relative distance (numerically) between the smallest and largest singular value is not what matters. If the smallest singular value gets close to 0, we'd get large velocities on inverting the matrix. So it's useful to plot the smallest singular value. 
-    
-    <p>
-      One easy way to get the arm in a singular state is to straighten it. There could be other singularities. When an arm is pretty extended and we try to extend it more, things are going to get bad.
-    </p>
-
-  </subsection>
-</section>
-
-<section id="5"><h1>Summary of the usefulness of optimisation</h1>
-  To get more robust Jacobian based controllers, we need to use a richer language (i.e. give it more details of the robot). For example, we say, find the desired spatial velocity that is as close as possible to the minimum but respects the joint/acceleration/velocity limits of the robot. 
-
-  <p>
-    The 3 main pieces of drake:
-    <ul>
-      <li>The systems framework</li>
-      <li>The multibody plant</li>
-      <li>Mathematical programs</li>
-    </ul>
-
-    Mathematical programs make it really easy to write optimisation problems and connect it to the other two pieces. Drake is a language that provides this framework - we can say I'm going to make a new optimization problem or a mathematical program. <i>Mathematical programs</i> are slightly bigger than optimisation. It doesn't need to have an objective. If it's a feasibility problem with no objective you can study mathematically. 
-    
-  </p>
-
-  For an optimisation problem, in drake, we can:
-  <ul>
-    <li>Declare the decision variables $x$</li>
-    <li>Add constraints</li>
-    <li>Add cost function</li>
-    <li>Solve to get the solution as the output</li>
-  </ul> 
-</section>
-
-<section id="6"><h1>Example</h1>
-  In <code>qp_diff_ik.ipynb</code>, the Kuka is turned into a 2d version. Only 2 joints are active to make it as similar as possible to the 2 link pendulum example. It plots the quadratic cost function in the 2 variables (in green) which is the optimization problem given by the Jacobian $\|J^{G}(q) \dot{q}-V^G\|^2$ subject to a few constraints on velocities. The constraints are in red. The optimal solution is represented by a green blob. 
-
-  <p>
-    The arm moves back and forth through the singularity. When the arm is straight, the bowl goes completely flat (if our viewing angle is set correctly, we can see it). It goes flat depending on how quickly the code integrates, but it gets broader and broader. Already in this configuration, the solution looks a little dicey up against the velocity limit. The arm has a tilt to it too, so the optimal solution would have been a very large velocity but the constraints keep us safe. 
-  </p>
-</section>
-
-<section id="7"><h1>Closing remarks</h1>
-  Q: What if the actual constraints are not linear? We can choose to solve a harder optimisation problem but the standard choice is linear. For instance the joint limits actually would be a nonlinear function in general. But we approximate it with an euler approximation which makes it a linear constraint. Position and acceleration limits are actually linear for any euler kind of integration step. Torque limits are not linear. The linearization for the latter is a bit tricky but we tend to not do torque limits. 
-
-  <p>
-    The idea of optimisation and quadratic programming is such a powerful framework and we're going to use it more. This is just a quick introduction. 
-  </p>
-
-  The worst case is when the robot is up against a limit on one joint. For instance, the second joint moves along as if nothing happened and the first joint changes which means the hand is going off in the wrong direction. We're going to eventually have feedback loops coming through this whole system and that's what's going to save us. But even in this open loop framework because we know about where the limits are, we can plan for them without any direct feedback and we can at least do a better best effort in the beginning. 
-
-  <p>
-    For instance, the way that we actually run the robot is we don't run it to be as close as possible to our desired velocity in the least squares sense. We actually do a slightly different objective. We have some desired velocity. We pick joint angles that will move the hand in the direction of that velocity. When a limit is hit we scale down the whole velocity but keep the direction the same; because we don't want our robot walking away from the desired trajectory. This is a richer formulation but we can still make it work as a quadratic program. 
-  </p>
-
-  <subsection id="7.0"><h1>QP formulation 1</h1>
-    Find $\dot{q}$ such that $J^G(q)\dot{q} \approx V^G$.
-
-    $$\begin{align*}
-      min_{\dot{q}} \quad &\|J^G(q)\dot{q} - V^G\|^2 \\
-      s.t. \quad & \|\dot{q}\| \leq \dot{q}_{max} \\
-          & \text{joint/acceleration limits etc.}
-    \end{align*}$$
-  </subsection>
-
-  <subsection id="7.1"><h1>QP formulation 2</h1>
-    This is a slightly different formulation which says constrain the arm to move only in the desired direction of the gripper. We're going to maximise a linear objective. This is actually a simpler program.
-
-    $$\begin{align*}
-      max_{\dot{q}, \alpha} \; & \alpha \\
-      s.t. \quad & J^G(q)\dot{q} = \alpha V^G \\
-          & 0 \leq \alpha \leq 1 \\
-          & \text{joint velocity/acceleration/position limits}
-    \end{align*}$$
-
-    $\dot{q}$ (vector), $\alpha$ (scalar) are the decision variables. The objective though is only in terms of one of the decision variables; the aim is to make the scalar $\alpha$ as big as possible (maximise) subject to the above conditions. The desired spatial velocity is a vector which is allowed to be scaled by $\alpha$, but we must choose a $\dot{q}$ on the LHS that matches some scaled version of that vector. 
-
-    <p>
-      Even though $\dot{q}$ is not part of the objective, we still need to define a solution for it because it enters in via the equality constraint. So $\dot{q}$ can only live on the set of possible $\dot{q}$s such that $\dot{q}$ times the current Jacobian (LHS) moves the EE in the direction of the desired spatial velocity (RHS)! If $\alpha$ is arbitrary, then if we have one $\dot{q}$ that's a solution, we could multiply it by two and it would still be a solution. 
-    </p>
-
-    So basically, we take the $\dot{q}$ that will achieve the objective without any constraints and then scale it down - shrink all of the joint velocities by the same scaling in order to satisfy the constraints. So now the arm will always move in the desired direction - it would rather stop completely when deviating.
-
-    <p>
-      This is what's happening inside the differential IK. This differential IK controller was used in the first teleop notebook. One will get a lot of mileage out of this method in the class. It takes in poses, does the differentiation and integration and runs this kind of control. 
-    </p>
-  </subsection>
-
-  <subsection id="7.2"><h1>Comparison of the 2 formulations</h1>
-    Between the 2 methods, we only changed what we want as a degradation in performance. When we have to give up performance, we can choose what we give up. In the 1st case we are after a spatial velocity as output that's as close as possible in the least squares sense to the desired spatial velocity. In the 2nd case we are willing for it to be less close in the numbers as long as it stays constrained in the right direction. So it's just a different choice of how we are okay for it to degrade when it can't satisfy the constraints perfectly. 
-
-    <p>
-      What happens if there were no constraints? In the 2nd case, it's going to choose $\alpha = 1$ and it's going to make $\dot{q}$ exactly equal to the spatial velocity. So it'll solve the problem exactly. And as the constraints become active because the arm might be running up against them, then $\alpha$ will have to shrink and that can be considered as a very graceful degradation.
-    </p>
-
-    In the 1st case if there are no limits, again it'll find $\dot{q}$ exactly to drive the objective to zero. As the constraints come on, it will find a different velocity but it might make the arm move in the wrong direction. We get to specify how we want it to degrade. 
-  </subsection>
-
-</section>
-</details>
 </chapter>
 
 </body>

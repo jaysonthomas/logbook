@@ -40,7 +40,8 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Setup</a>
-<a href="#1">Description</a>
+<a href="#1">Forward Kinematics</a>
+<a href="#2">Jacobian</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Two-link arm: Forward Kinematics</h1>
@@ -69,15 +70,65 @@
   
   A DP is parameterised with just 2 angles, $\theta_1, \theta_2$. The desired contact is to be made at the end point or the end effector. Each joint is actuated using a motor and therefore torques are produced at both the joints. 
 </section>
-<section id="1"><h1>Description</h1>
-  The end-effector position is given as:
+
+<section id="1"><h1>Forward Kinematics</h1>
+  The end-effector/gripper position is given as:
   $$\begin{align*}
     x &= f_x(l_1, l_2, \theta_1, \theta_2) \\
       &= l_1\,\cos(\theta_1) + l_2\,\cos(\theta_1+\theta_2) \\
     y &= f_y(l_1, l_2, \theta_1, \theta_2) \\
-      &= l_1\,\sin(\theta_1) + l_2\,\sin(\theta_1+\theta_2)
+      &= l_1\,\sin(\theta_1) + l_2\,\sin(\theta_1+\theta_2) \\
+    
+    P^G = \begin{bmatrix} x \\ y \end{bmatrix}
+      &= \begin{bmatrix}
+            l_1c_1 + l_2c_{12} \\
+            l_1s_1 + l_2s_{12} \\
+          \end{bmatrix} 
   \end{align*}$$
-</section> 
+</section>
+
+<section id="2"><h1>Jacobian</h1>
+  In translational coordinates, the Jacobian can be found by directly taking the partial derivative of the FK equation; there is no change of representations since there are no weird orientations.
+
+  $$\begin{align*}
+  \dot{x} &= \frac{df(x)}{dt} \\
+          &= \frac{\partial{f_x}}{\partial{\theta_1}}
+             \frac{d\theta_1}{dt} +
+             \frac{\partial{f_x}}{\partial{\theta_2}}
+             \frac{d\theta_2}{dt} \\
+          &= -(l_1 s_1 + l_2 s_{12})\dot{\theta}_1 - l_2 s_{12} \dot{\theta}_2
+  \end{align*}$$
+
+  A similar equation can be written for $\dot{y}$. $\frac{d}{dt}cos = -sin$
+  $$\begin{align*}
+    \begin{bmatrix} \dot{x} \\ \dot{y} \end{bmatrix} &= 
+    \begin{bmatrix} 
+      \frac{\partial{f_x}}{\partial{\theta_1}}  & 
+      \frac{\partial{f_x}}{\partial{\theta_2}} \\
+      \frac{\partial{f_y}}{\partial{\theta_1}}  & 
+      \frac{\partial{f_y}}{\partial{\theta_2}} \\
+    \end{bmatrix} 
+    \begin{bmatrix} \dot{\theta}_1 \\ \dot{\theta}_2 \end{bmatrix} \\
+
+    &= 
+    \begin{bmatrix}
+      -(l_1s_1 + l_2s_{12}) & -l_2s_{12} \\
+        l_1c_1 + l_2c_{12} & l_2c_{12}  \\
+    \end{bmatrix}
+    \begin{bmatrix} \dot{\theta}_1 \\ \dot{\theta}_2 \end{bmatrix} \\
+
+    &=
+    \begin{bmatrix} 
+      -y  & -l_2 s_{12} \\
+      x & l_2 c_{12}
+    \end{bmatrix} 
+    \begin{bmatrix} \dot{\theta}_1 \\ \dot{\theta}_2 \end{bmatrix} \\
+
+    &= J \begin{bmatrix} \dot{\theta}_1 & \dot{\theta}_2 \end{bmatrix} ^T
+  \end{align*}$$
+
+  $J == J^G$
+</section>
 </chapter>
 
 </body>
