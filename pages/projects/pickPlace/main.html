@@ -39,8 +39,8 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">References</a>
-<a href="#1">Overview</a>
+<a href="#0">Overview</a>
+<a href="#1">Background</a>
 <a href="#2">Simulation</a>
 <a href="#3">Reference trajectory generation</a>
 <a href="#4">Feedback control</a>
@@ -71,30 +71,11 @@
   <li><a href="#8.3">Handling joint singularities</a></li>
   <li><a href="#8.4">Miscellaneous</a></li>
 </ul>
+<a href="#9">References</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Pick and place</h1>
-<section id="0"><h1>References</h1>
-  Lectures
-  <ul>
-    <li><a href="https://t.ly/SGoD_">MR lectures</a></li>
-  </ul>
-
-  Reading
-  <ul>
-    <li><a href="https://t.ly/CeTgf">MR project links</a></li>
-    <li><a href="https://t.ly/d1SI_">CoppeliaSim scenes</a></li>
-  </ul>
-
-  Code:
-  <ul>
-    <li><a href="https://t.ly/bBzwo">MR c++ library</a></li>
-    <li><a href="https://t.ly/N1KIH">Capstone project</a></li>
-    <li><a href="https://t.ly/6_BxY">Nsidn</a></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   <p>
     Generate a reference trajectory. The program then loops through the $N$ reference
     configurations, $N-1$ times. For the $i^{th}$ iteration, the controller uses
@@ -128,6 +109,15 @@
     in such a way so as to drive all initial error to zero by the end of the first trajectory segment; otherwise, 
     your grasp operation may fail.
   </p>
+</section>
+
+<section id="1"><h1>Background</h1>
+  <ul>
+    <li><a href="overallStrategy.html">Overall strategy</a></li>
+    <li><a href="notations.html">Notations</a></li>
+    <li><a href="keyFrames.html">Key frames</a></li>
+    <li><a href="interpolatingBwPoses.html">Interpolation between poses</a></li>
+  </ul>
 </section>
 
 <section id="2"><h1>Simulation</h1>
@@ -522,6 +512,26 @@
       </p>
     </ul>
   </subsection>
+</section>
+
+<section id="9"><h1>References</h1>
+  Lectures
+  <ul>
+    <li><a href="https://t.ly/SGoD_">MR lectures</a></li>
+  </ul>
+
+  Reading
+  <ul>
+    <li><a href="https://t.ly/CeTgf">MR project links</a></li>
+    <li><a href="https://t.ly/d1SI_">CoppeliaSim scenes</a></li>
+  </ul>
+
+  Code:
+  <ul>
+    <li><a href="https://t.ly/bBzwo">MR c++ library</a></li>
+    <li><a href="https://t.ly/N1KIH">Capstone project</a></li>
+    <li><a href="https://t.ly/6_BxY">Nsidn</a></li>
+  </ul>
 </section>
 
 </chapter>

@@ -43,6 +43,7 @@
 <a href="#1">Software installation, update, removal</a>
 <a href="#2">Useful tools</a>
 <a href="#3">Images</a>
+<a href="#4">Creating symbolic links</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Linux</h1>
@@ -130,6 +131,13 @@ stat -c '%y' /home/random.file
 <pre><code class="bash">
 convert {1.jpg,2.jpg} -compress jpeg -quality 50 output.pdf
 convert 1.jpg -quality 100 output.pdf
+</code></pre>
+</section>
+
+<section id="4"><h1>Creating symbolic links</h1>
+  Create a symbolic link in <code>/usr/include/</code> for a numpy library for example.
+<pre><code class="bash">
+sudo ln -s /home/jayson/.local/lib/python3.10/site-packages/numpy/core/include/numpy/ /usr/include/numpy
 </code></pre>
 </section>
 </chapter>

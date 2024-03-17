@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pick & place - Key frames</title>
+  <meta name="Pick & place - Key frames" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Moving between frames</a>
+<a href="#2">Approaching an object</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Pick & place - Key frames</h1>
+<section id="0"><h1>Overview</h1>
+  The numerical representation for a frame, say $O_{initial}$, on disk is its pose - $^WX^{O_{initial}}$. A <i>frame</i> defines the semantics of how to connect 2 poses. A <i>pose</i> is the manifestation that holds the position and orientation of a frame relative to some other frame. A frame cannot be represented - only a representation that is relative (pose) can be represented on disk.
+
+  <p>
+    <table class="table1 center">
+      <tr>
+        <th>Object frames</th>
+        <th>Gripper frames</th>
+      </tr>
+      <tr>
+        <td>$O_{initial}$, $O_{goal}$</td>
+        <td>$G_{initial}$, $G_{pick}$
+          <br>
+          $G_{prepick}$, $G_{postpick}$
+          <br>
+          $G_{place}$
+          <br>
+          $G_{preplace}$, $G_{postplace}$
+          <br>
+          $G_{clearance}$</td>
+      </tr>
+    </table>
+  </p>
+
+  Representing the pose of an object relative to the gripper or vice-versa is the most simple/robust representation commonly used for picking an object. 
+</section>
+
+<section id="1"><h1>Moving between frames</h1>
+  Poses in between the initial gripper pose and the pose with the right clearance above the object (to guarantee any collision is avoided), are interpolated. People do lots of interesting complicated algorithms to figure out how to move through space and just hand code the last movement often, between the clearance pose and the object itself, to avoid collision.
+
+  <p>
+    Sometimes the time to finish a segment between key frames, is absolute. Sometimes, it's scaled based on the distance between the frames. 
+  </p>
+</section>
+
+<section id="2"><h1>Approaching an object</h1>
+  To define the position of a gripper to move into, to pick an object, the easiest direction (in terms of axis) relative to the object, is picked. A similar thinking applies to orientation. 
+  
+  <p>
+    Orientation of the object needs to be known. For a little red cube, it is hard to get its orientation from a perception system because it's symmetric. 
+  </p>
+
+  Once the above two information is known, a pose to approach the object $^{G_{pick}}X^{O_{initial}}$ can be computed.
+</section>
+</chapter>
+
+</body>
+</html>

@@ -108,6 +108,17 @@
       <li>Including normal text with math</li>
       <code>\text{}</code>
     </p>
+
+    <li>Aligning descriptions of equations to the left</li>
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{cclc} 
+        \omega_{c} &:& \text{Cutoff frequency of filter} & [Hz] \\ 
+        t_c = \frac{1}{\omega_c} &:& \text{Decay time} & [s] \\
+        T_{s} &:& \text{Sampling period} & [s]
+      \end{array}$$
+    </div>
+    
+    <code>{cclc}</code> defines a table with four columns, where the 1st, 2nd, and 4th columns are center-aligned, and the 3rd column is left-aligned. The 2nd column is in between the 2 <code>&</code>s.
   </ul>
 </section>
 
@@ -187,6 +198,9 @@
         <li>Implies</li>
         $\implies$
       </p>
+
+      <li>Sum of</li>
+      $$\sum^p_{i=1}$$
     </ul>
   </section>
 

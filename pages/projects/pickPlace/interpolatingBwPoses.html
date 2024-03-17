@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pick & place - Interpolating between poses</title>
+  <meta name="Pick & place - Interpolating between poses" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Interpolation between positions</a>
+<a href="#2">Problems faced when interpolating between orientations</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Choice of representation</a></li>
+  <li><a href="#2.1">Simple linear interpolation for orientations is not possible</a></li>
+  <li><a href="#2.2">Why are such problems not seen with angular velocities</a></li>
+</ul>
+<a href="#3">The right way to interpolate between orientations</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Pick & place - Interpolating between poses</h1>
+<section id="0"><h1>Overview</h1>
+  To figure out where the gripper needs to be at all times between pick and place frames, interpolation needs to be done between key poses.
+</section>
+
+<section id="1"><h1>Interpolation between positions</h1>
+  Consider the following plot:
+  <ul>
+    <li>X-axis: Time</li>
+    When a gripper should pass through the key frames, can be specified.
+
+    <p>
+      <li>Y-axis: ${^WP^G_{W_x}}$</li>
+      Only the x component of the gripper position in the world frame is considered in the below figures.
+    </p>
+  </ul>
+
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/manipulation/39a_positionInterpolation.png"/>
+      <figcaption>
+        Key frames between pick and place times
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/manipulation/39b_positionInterpolation.png"/>
+      <figcaption>
+        First order interpolation
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/manipulation/39c_positionInterpolation.png"/>
+      <figcaption>
+        Zero order hold
+      </figcaption>
+    </figure>
+  </div>
+
+  There are different ways of interpolating:
+  <ul>
+    <li><i>First order hold</i></li>
+    It's called first order because the line joining 2 points has 1DOF i.e. the slope of the line. It's a simple straight line interpolation. Doing a first order interpolation for orientation requires a bit more care compared to doing it for positions.
+
+    <p>
+      <li><i>Zero order hold</i></li>
+      If there was no interpolation between points and a staircase form of hold was implemented. It is not safe to run this on a robot.
+    </p>
+    
+    <li>Higher order interpolations</li>
+    They give nice curves between key poses.
+  </ul>
+</section>
+
+<section id="2"><h1>Problems faced when interpolating between orientations</h1>
+  <subsection id="2.0"><h1>Choice of representation</h1>
+    Some representations look simple to interpolate but then blow up - could potentially go through bad states in the middle. 
+
+    <p>
+      There are roll pitch yaw values that represent very similar orientations but are actually very far in values. Trying to go between roll pitch yaw values might take the robot through extremely large numbers. This goes along with gimbal lock. 
+    </p>
+  </subsection>
+
+  <subsection id="2.1"><h1>Simple linear interpolation for orientations is not possible</h1>
+    Consider a 2D rotation matrix example, written as a function of some angle $\theta$, which can rotate a $2 \times 1$ vector by $\theta$ degrees:
+    $$
+      R(\theta) = \begin{bmatrix}
+      c\theta & -s\theta \\
+      s\theta & c\theta
+      \end{bmatrix}
+    $$
+
+    Consider 2 rotation matrices for rotating by $90^0$ and the other by $0^0$.
+    $$
+      R(0) = \begin{bmatrix}
+      1 & 0 \\
+      0 & 1
+      \end{bmatrix} \quad
+      R(\frac{\pi}{2}) = \begin{bmatrix}
+      0 & -1 \\
+      1 & 0
+      \end{bmatrix}
+    $$
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/40a_0rotation.png"/>
+        <figcaption>
+          Rotation of a unit frame <code>Rotz(0)</code>
+        </figcaption>
+      </figure>
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../figures/manipulation/40b_90rotation.png"/>
+        <figcaption>
+          Rotation of a unit frame <code>Rotz(90)</code>
+        </figcaption>
+      </figure>
+    </div>
+    
+    Linearly interpolating between the 2 angles, will not give $45^0$. The result would be a rotation matrix filled with $\frac{1}{2}$s instead of $\frac{1}{\sqrt{2}}$s. It is not possible to do simple linear interpolations between orientations.
+  </subsection>
+
+  <subsection id="2.2"><h1>Why are such problems not seen with angular velocities</h1>
+    Angles wrap around every $2\pi$ and velocities don't. A rotation by $\pi$, $-\pi$ or $3\pi$, leads to the same angle. But $100rad/s$, for example, is different from every other positive radian per second.
+
+    <p>
+      In 2D, everything can be represented with a scalar value, a single rotation. When the wrapping effect is seen, flipping back from polar or rectangular coordinates can always help figure out the angles between two locations. In 2d, a rotation can be thought of as moving a point around a unit sphere, for which the angular velocity is just the tangent at the point and it's well behaved.
+    </p>
+
+    In 3d, there are rotations/angles that can be got to from many paths and picking a unique inverse of it can be messy. 
+  </subsection>
+</section>
+
+<section id="3"><h1>The right way to interpolate between orientations</h1>
+  People typically use:
+  <ul>
+    <li>The quaternion representation to get around gimbal lock</li>
+    <li><i>SLERP (Spherical linear interpolation)</i> to get a smooth first order interpolation</li>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>
