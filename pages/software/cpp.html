@@ -66,6 +66,7 @@
 <section id="0"><h1>Topics</h1>
   <a href="https://t.ly/gnulS">New C++ features</a>.
   <ul>
+    <li><a href="codeArchitecture.html">A C++ code architecture</a></li>
     <li>Memory (resource)</li>
     <ul>
       <li><a href="members.html">Memory/Member types and initialisation</a></li>
@@ -87,73 +88,6 @@
 
     <li><a href="solid.html">SOLID design principles</a></li>
   </ul>
-</section>
-
-<section id="1"><h1>Encapsulation & abstraction</h1>
-  <i>Encapsulation</i> means that:
-  <ul>
-    <li>Related properties are bundled together in a single class</li>
-    <li>These properties are protected from unauthorised or accidental modifications using <i>access modifiers</i></li>
-  </ul>
-
-  <p>
-    <i>Abstraction</i> means that users of a class only need to be familiar with its interface, they don't have to know how member data are stored or how member functions are implemented. 
-  </p>
-
-  Encapsulation and abstraction are related because encapsulation groups relevant data together in a class, while abstraction hides the details of how the data is manipulated. All the user of a class needs to know is that the data is present and there is an interface to interact with it. 
-</section>
-
-<section id="2"><h1>Access specifier or modifier</h1>
-  <subsection id="2.0"><h1>Members</h1>
-    <ul>
-      <li>Public members</li>
-      Public members can be changed <n>directly</n>, by any user of the <i>object</i> (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
-
-      <p>
-      <li>Private members</li>
-      [<a href="../../jlib/cppExamples/fundamentals/2_private.cpp">Ref</a>]. They are only accessible directly from within the class itself using member functions. One exception is that they are accessible from <n>friends</n>. 
-      </p>
-
-      <li>Protected members</li>
-      [<a href="../../jlib/cppExamples/fundamentals/3_protectedMembers.cpp">Ref</a>]. They are accessible from member functions of the same class, from friends and also from member functions of derived classes.
-    </ul>
-  </subsection>
-
-  <subsection id="2.1"><h1>Inherited access specifiers</h1>
-    [<a href="../../jlib/cppExamples/fundamentals/11_inheritedAccessSpecifiers.cpp">Ref</a>] <br>
-    The same access modifiers also define which class members users of derived classes can access.
-
-    <ul>
-      <li>Public inheritance</li>
-      The derived class can access the public and protected members of the base class.
-
-      <p>
-        <li>Protected inheritance</li>
-        The public and protected members of the base class become protected members of the derived class.
-      </p>
-
-      <li>Private inheritance</li>
-      The public and protected members of the base class become private members of the derived class.
-    </ul>
-  </subsection>
-</section>
-
-<section id="3"><h1>Invariants - struct vs class</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/4_invariants.cpp">Ref</a>]
-
-  <p>
-    If we're just carrying publicly accessible data where all data members can vary independently of each other and don't really have any limitations, then a struct is preferred. When we need to make data members private or add limits on them (<i>invariants</i>), then the convention is typically to convert from a struct into a class. 
-  </p>
-  
-  By default, all members of a struct default to public, whereas all members of a class default to private. 
-
-  <subsection id="3.0"><h1>When to be private</h1>
-    As a general rule, <n>member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value</n>.
-
-    <p>
-      To access private members, typically public <i>accessor</i> and <i>mutator</i> member functions (also called <i>getter</i> and <i>setter</i> functions) are used. A trivial getter or setter adds no semantic value; the data item could just as well be public [<a href="../../jlib/cppExamples/fundamentals/5_trivialGetterSetter.cpp">Ref</a>].
-    </p>
-  </subsection>
 </section>
 
 <section id="4"><h1>Constructor</h1>
