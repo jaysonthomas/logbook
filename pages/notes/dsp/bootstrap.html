@@ -120,12 +120,12 @@
 <section><h1>Scipy code</h1>
   The following is a 2nd order low pass butterworth filter with a cut-off frequency of 20Hz and a sampling frequency of 500Hz. $n, d$ are the coefficients of the numerator and denominator polynomials of the IIR filter, in decreasing negative powers order of z (as in $c + bz^{-1} + az^{-2}$). $n = \left[c_n, b_n, a_n\right]$ and $d = \left[c_d, b_d, a_d\right]$
 
-<code><pre class="python">
+<pre><code class="python">
 import scipy
 from scipy import signal
 n, d = signal.butter(1, 20, 'lp', fs=200, output='ba')
 y = scipy.signal.lfilter(b, a, y)
-</pre></code>
+</code></pre>
 </section>
 </chapter>
 
