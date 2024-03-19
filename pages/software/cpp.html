@@ -104,28 +104,22 @@
       (which are then typically released by a destructor)
     </ul>
   </p>
-
-  It is not good to have any complex logic in a constructor in order to ensure that the constructor does not fail. It's hard to handle errors that take place within the constructor.
 </section>
 
 <section id="5"><h1>Scope resolution</h1>
-  C++ allows different identifiers to have the same name, as long as they have different scope. For example, two different functions can each declare the variable int i, because each variable only exists within the scope of its parent function.
+  C++ allows <i>identifiers</i> (a function name or a variable name) to have the same name, as long as they have different scope. 
 
   <p>
-    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class (scope) to search in order to resolve an identifier (a function name or a variable name).
+    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class to search, in order to resolve an identifier.
   </p>
 
   <subsection id="5.0"><h1>Class</h1>
-    Each class provides its own scope. The scope resolution operator becomes useful if we want to separate class declaration from class definition.
- 
-    <p>
-      We might want to separate out the function definitions from the class declaration for various reasons. 
-      
-      <ul>
-        <li>Maybe we only want to show the interface and not the actual implementation to potential users</li>
-        <li>Maybe we want to split these into separate files</li>
-      </ul>
-    </p>
+    Each class provides its own scope. The scope resolution operator becomes useful if a class definition needs to be separated from its declaration. The need to separate the 2 arises when:
+       
+    <ul>
+      <li>Only the interface needs to be shown to users and not the actual implementation</li>
+      <li>The declaration and the definition needs to be split into separate files</li>
+    </ul>
   </subsection>
 
   <subsection id="5.1"><h1>Namespace</h1>
