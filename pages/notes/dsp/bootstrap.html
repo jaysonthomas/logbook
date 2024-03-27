@@ -47,14 +47,6 @@
 
 <chapter style="counter-reset: chapter 0"><h1>DSP bootstrap</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Definitions</a></li>
-    <li><a href="#2">Fourier transform</a></li>
-    <li><a href="#10">Musings</a></li>
-  </ul>
-</section>
-
 <section id="1"><h1>Definitions</h1>
   <ul>
     <li>
@@ -123,6 +115,17 @@
       the 1000Hz wave doesn't attain it.
     </li>
   </ul>
+</section>
+
+<section><h1>Scipy code</h1>
+  The following is a 2nd order low pass butterworth filter with a cut-off frequency of 20Hz and a sampling frequency of 500Hz. $n, d$ are the coefficients of the numerator and denominator polynomials of the IIR filter, in decreasing negative powers order of z (as in $c + bz^{-1} + az^{-2}$). $n = \left[c_n, b_n, a_n\right]$ and $d = \left[c_d, b_d, a_d\right]$
+
+<pre><code class="python">
+import scipy
+from scipy import signal
+n, d = signal.butter(1, 20, 'lp', fs=200, output='ba')
+y = scipy.signal.lfilter(b, a, y)
+</code></pre>
 </section>
 </chapter>
 
