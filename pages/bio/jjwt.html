@@ -126,22 +126,41 @@
   <subsection id="3.0"><h1>Ocado</h1>
     <ul>
       <li>
-        Proposed a real-time method to adaptively tune the feed-forward coeﬃcients for a ﬂeet of bots. This was then successfully tested as a proof of concept and its implementation seen through till production.
+        Proposed a real-time method to adaptively tune the feed-forward torque contribution for a ﬂeet of bots. This was then successfully tested as a proof of concept and its implementation seen through till production.
       </li>
 
       <p>
         <li>
-          Improved the real-time trajectory generator for fast movements along linear axis.
+          Improved the real-time trajectory generator for fast movements along linear axis, in terms of limited precision of floating point arithmetic on 32 bit hardware.
         </li>
       </p>
 
       <li>
         Carried out detailed analysis and improved the localisation method using simple IR sensors.
       </li>
-      The grid is made of cells of supposedly fixed lengths, but they are not always accurate. The bots have IR sensors on all 4 sides that point downwards and can be used to detect cell-crossings (movement from gap to track to gap etc). But, they are not always mounted correctly. The bots have a passive fifth wheel which should give an estimate of the bot's position, but it is not always accurate due to indentations on the tracks. With some filtering (exponential smoothing, jitter compensation, disturbance rejection, low-pass filtering) and non-volatile memory retention, the 2 sensors can be used to estimate the position of the bot at any given time.
+      <ul>
+        <li>
+          The grid is made of cells of supposedly fixed lengths, but they are not always accurate.
+        </li>
+
+        <p>
+          <li>
+            The bots have IR sensors on all 4 sides that point downwards and can be used to detect cell-crossings (movement from gap to track to gap etc). But, they are not always mounted correctly.
+          </li>
+        </p>
+
+        <li>
+          The bots have a passive fifth wheel which should give an estimate of the bot's position, but it is not always accurate due to indentations on the tracks. 20 encoder counts is not always equivalent to 1mm.
+        </li>
+      </ul>
 
       <p>
-        <li>Helped in the initial modeling of a hoist system.</li>
+        With some filtering (exponential smoothing, jitter compensation, disturbance rejection, low-pass filtering) and non-volatile memory retention, the 2 sensors can be used to estimate the position of the bot at any given time.
+      </p>
+      
+      <p>
+        <li>Helped in the modeling and tuning of a hoist system.</li>
+        The hoist system consists of a motor attached via belt mechanisms to 4 steel tapes that spool and unspool as the motor rotates clockwise and anticlockwise. Attached to the tapes is a tote-gripper mechanism that can be engaged/disengaged to pick up or drop a tote.
       </p>
 
       <li>

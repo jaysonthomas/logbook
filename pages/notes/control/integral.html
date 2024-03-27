@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PID control</title>
-  <meta name="PID control" content="text/html; charset=utf-8;" />
+  <title>PID: Integral</title>
+  <meta name="PID: Integral" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,27 +39,17 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Integral</a>
+<a href="#0">Integral</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Description</a></li>
-  <li><a href="#1.1">Anti-windup</a></li>
+  <li><a href="#0.0">Description</a></li>
 </ul>
+<a href="#1">Anti-windup</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>PID control</h1>
-<section id="0"><h1>Overview</h1>
-  <a href="https://t.ly/UMwqd">6th chapter</a>.
-  <ul>
-    <li><a href="integral.html">Integral</a></li>
-  </ul>
-</section>
-
-
-
-<section id="1"><h1>Integral</h1>
+<chapter style="counter-reset: chapter 0"><h1>PID: Integral</h1>
+<section id="0"><h1>Integral</h1>
   [<a href="https://t.ly/cKyZH">anti-windup github lib</a>, <a href="https://t.ly/uSkt4">anti-reset windup python</a>, <a href="https://t.ly/RTW2Z">anti-windup python control systems library</a>, <a href="https://t.ly/xxXpR">anti-windup NCSS youtube</a>, <a href="https://t.ly/hI3xr">Brian Douglas youtube</a>]
-  <subsection id="1.0"><h1>Description</h1>
+  <subsection id="0.0"><h1>Description</h1>
     The <i>integral</i> of a function is the area under the curve. The integral of an error over time, is a useful tool for accumulating error, to then adjust the system to counter this accumulation and reach a target as shown in the second image on the right below. 
 
     <div class="container">
@@ -72,18 +62,19 @@
       </figure>
     </div>
   </subsection>
-
-  <subsection id="1.1"><h1>Anti-windup</h1>
-    [<a href="https://t.ly/4aFzC">More on saturation</a>] <br>
-    Actuators are not linear systems - they have physical limitations and cannot entirely follow the commands given to them. Linear systems on the other hand have virtually no limitations and respond linearly to any command.
-
-    <p>
-      Anti-windup schemes like clamping, back-calculation, conditional integration, or dynamic feedback can prevent the integral term from accumulating when saturation occurs.
-    </p>
-
-    [<a href="https://t.ly/G_eEO">Dangers of derivative action</a>]
-  </subsection>
 </section>
+
+<section id="1"><h1>Anti-windup</h1>
+  [<a href="https://t.ly/4aFzC">More on saturation</a>] <br>
+  Actuators are not linear systems - they have physical limitations and cannot entirely follow the commands given to them. Linear systems on the other hand have virtually no limitations and respond linearly to any command.
+
+  <p>
+    Anti-windup schemes like clamping, back-calculation, conditional integration, or dynamic feedback can prevent the integral term from accumulating when saturation occurs.
+  </p>
+
+  There's some advice <a href="https://t.ly/1jn9v">here</a> on when to use back calculation method, which leads to the concept of what is a system's time constant. Tutorial <a href="https://rb.gy/k9tn69">apmonitor</a>. Chatgpt link on time constant - ignore first 2 questions - <a href="https://rb.gy/it19ou">here</a>. <a href="https://rb.gy/pvr2sv">Paper</a> on integral saturation.
+</section>
+
 </chapter>
 
 </body>
