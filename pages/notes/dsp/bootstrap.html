@@ -39,15 +39,15 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Definitions</a>
-<a href="#2">Fourier Transform</a>
-<a href="#3">Musings</a>
+<a href="#0">Definitions</a>
+<a href="#1">Fourier Transform</a>
+<a href="#2">Musings</a>
+<a href="#3">Scipy code</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>DSP bootstrap</h1>
 
-<section id="1"><h1>Definitions</h1>
+<section id="0"><h1>Definitions</h1>
   <ul>
     <li>
       <code>Frequency</code> is the number of times a wave repeats a second.
@@ -72,7 +72,7 @@
   </ul>
 </section>
 
-<section id="2"><h1>Fourier Transform</h1>
+<section id="1"><h1>Fourier Transform</h1>
   <a href="https://t.ly/kwzo">Ref</a>.
   
   <p>
@@ -97,7 +97,7 @@
   <code>Inverse Fourier Transform</code> converts the signal from frequency back to time domain.
 </section>
 
-<section id="3"><h1>Musings</h1>
+<section id="2"><h1>Musings</h1>
   <ul>
     <li>
       Why is it that when I set the sampling rate to 2.5kHz and the frequency of the signal is 1kHz,
@@ -117,7 +117,7 @@
   </ul>
 </section>
 
-<section><h1>Scipy code</h1>
+<section id="3"><h1>Scipy code</h1>
   The following is a 2nd order low pass butterworth filter with a cut-off frequency of 20Hz and a sampling frequency of 500Hz. $n, d$ are the coefficients of the numerator and denominator polynomials of the IIR filter, in decreasing negative powers order of z (as in $c + bz^{-1} + az^{-2}$). $n = \left[c_n, b_n, a_n\right]$ and $d = \left[c_d, b_d, a_d\right]$
 
 <pre><code class="python">

@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback control</title>
+  <meta name="Feedback control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Input</a>
+<a href="#1">Output</a>
+<a href="#2">Method</a>
+<a href="#3">Tests</a>
+<a href="#4">Handling joint singularities</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">What are these singularities?</a></li>
+  <li><a href="#4.1">Choosing joint limits</a></li>
+  <li><a href="#4.2">Code implementation</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Feedback control</h1>
+<section id="0"><h1>Input</h1>
+  <ul>
+    <li>Current actual ee configuration</li>
+    <li>Current reference ee configuration</li>
+    <li>Ee reference configuration in the next timestep</li>
+    <li>PI gain matrices</li>
+    <li>Timestep $\Delta{t}$ between reference configurations</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Output</h1>
+  The commanded ee twist $V$ expressed in ${e}$.
+</section>
+
+<section id="2"><h1>Method</h1>
+  Find the following:
+  <ul>      
+    <li>Error twist</li>
+    $[V_{err}]=log(X^{-1}X_{d})$
+    <br>
+    $X$ is the current configuration of {e} w.r.t. {s}.
+    <br>
+    $X_{d}$ is the desired/reference configuration of {e} w.r.t. {s}.
+    
+    <p>
+      <li>Feedforward reference twist</li>
+      $[V_{d}] = \frac{1}{\Delta{t}}log(X^{-1}_{d} X_{d,next})$
+
+      <p>
+        A logarithm typically represents an instantaneous change to go between 2 configurations $X_{d}$ to $X_{d,next}$; a change that is so small that it can be considered to occur over an infinitely small period of time. This is called an <i>infinitesimal motion</i>. In order to map the instantaneous motion to a motion that occurs over a finite period of time $\Delta{t}$, the output of the logarithm is divided/scaled by $\Delta{t}$. The resulting velocity is kept constant for the time interval: $v\Delta{t} = \Delta{X}$
+      </p>
+    </p>
+
+    <p>
+      <li>Commanded ee twist</li>
+      $V_{ee} = FF + P + I$
+      <br>
+      $V(t)=[Ad_{X^{-1}X_{d}}]V_{d}(t)+K_{p}X_{err}(t)+K_{i}\int_{0} ^{t}X_{err}dt$
+      <br>
+      $FF$ consists of the reference twist after mapping it
+      to the current frame of the ee.
+      <br>
+      The error twist is used in the P and I terms.
+
+      <p>
+        <m>What if the twist to go from $X$ to $X_d$ wasn't considered in the FF term; i.e. leave the PI terms to take care of the error?</m>
+      </p>
+    </p>
+    
+    <li>Commanded wheel and joint speeds</li>
+    $V_{ee}$ needs to be expressed in the wheel and joint space
+    using the pseudoinverse of the mobile manipulator jacobian.
+    <br>
+    $\begin{bmatrix}u\\\dot{\theta}\end{bmatrix} = J^{\dagger}_{e}(\theta)V$
+  </ul>
+</section>
+
+<section id="3"><h1>Tests</h1>
+  <ul>
+    <p>
+      <li>
+        Given current, desired and the next desired configurations, find
+        $V_{d}$, $[Ad_{X^{-1}X_{d}}]V_{d}$, $V_{ee}$, $V_{err}$, $J_{e}$ and $(u,\dot{\theta})$
+      </li>
+      <p>
+        Between$X_{d}$ to $X_{d,next}$, the orientation is the same; just the linear components change.
+        Keep one larger than the others and the velocity (the FF term) should reflect the same. 
+        There should be no angular velocity.
+      </p>
+      <p>
+        With $X_{err}$, correction only needs to be applied to the ee's orientation in the y direction.
+        And some translation error needs to applied which will lead to the bot moving with constant speed
+        in all wheels. This can be checked by confirming $(u,\dot{\theta})$.
+      </p>
+      <p>
+        These tests show how I can keep the tests simple by setting certain parameters of the bot, constant.
+      </p>
+    </p>
+  </ul>
+</section>
+
+<section id="4"><h1>Handling joint singularities</h1>
+  <subsection id="4.0"><h1>What are these singularities?</h1>
+    <p>
+      If the <i>6x9</i> jacobian matrix $J_{e}$ is singular or nearly singular
+      in a particular direction,
+      the pseudoinverse algorithm $J^{\dagger}_{e}$ will generate unreasonably large
+      entries which will lead to unacceptably large commanded joint speeds even if we 
+      ask for a small twist in that direction. The jacobian matrix is singular when its rank
+      drops below 6. This will only be seen in the joint space.
+    </p>
+    <p>
+      An option is to ignore commanded twist components (in $V_{ee}$) that the near-singularity
+      renders difficult to achieve. Set a tolerance; if a value is lower than the tolerance value
+      (so, the value is even closer to 0), then treat the component as 0. In any case, place
+      reasonable limits on the maximum joint/wheel speeds to mimic limitation of a real robot.
+    </p>
+    <p>
+      <i>Why does the robot arm always seem to approach a singularity at the start?</i>
+      <br>
+      The controller tends to make the robot arm approach a singularity (e.g. straighten out)
+      before the wheels move much to help move the ee. This has something to do with the
+      properties of the pseudoinverse; the way it extracts a single solution
+      ($x=A^{\dagger}b$ for the equation $Ax=b$) when there are many solutions for $x$.
+    </p>
+    <p>
+      Would things change if the wheels had a much larger radius?
+    </p>
+    <p>
+      Source for the following: <a href="rebrand.ly/l8bxnj1">this mit paper</a>.
+      <br>
+      A recurring problem in tracking target positions, 
+      is that when the target positions are too distant, the multibody's
+      arms stretch out to try to reach the target position. Once the multibody is
+      extended in this way, it usually is near a singularity (that is, the Jacobian
+      very sensitive to small changes in joint angles), and the multibody will often
+      shake or jitter, attempting unsuccessfully to reach the distant target.
+    </p>
+    <p>
+      At a singularity, the Jacobian matrix no longer has full row
+      rank, corresponding to the fact that there is a direction of movement of the
+      end effectors which is not achievable. If the configuration is exactly at a
+      singularity, then the pseudoinverse method will not attempt to move in an
+      impossible direction, and the pseudoinverse will be well-behaved. However,
+      if the configuration is close to a singularity, then the pseudoinverse method
+      will lead to very large changes in joint angles, even for small movements in
+      the target position.
+    </p>
+  </subsection>
+  
+  <subsection id="4.1"><h1>Choosing joint limits</h1>
+    <p>
+      Joint limits are needed to avoid self collisions and singularities.
+      For example, constraints can be added to joints 3 and 4 to always be
+      less than 0.2 radians. Thus the arm will avoid singularities occurring
+      when joints 3 or 4 are at the zero angle. Use the joint angle sliders to
+      approximately find the joint-angle combinations that avoid self-collisions [Scene 3].
+    </p>
+    <p>
+      But it should not be so conservative that the arm's workspace is overly constrained, 
+      preventing the robot from doing useful work.
+    </p>
+  </subsection>
+  
+  <subsection id="4.2"><h1>Code implementation</h1>
+    <p>
+      Write a function to return a list of joints that violate the limits 
+      given the robot arm's current configuration.
+    </p>
+    <p>
+      <ul>
+        <li>Initial configuration must satisfy joint limits.</li>
+        <li>
+          Each time ($u,\dot{\theta}$) is found, check the new
+          configuration (after $\Delta{t}$) does not violate the joint limits.
+        </li>
+        <p>
+          <li>If yes, recalculate the controls.</li>
+          <p>
+            Change each column of $J_{e}$ corresponding to an offending joint
+            to all zeros. The pseudoinverse solution will not request any motion from these joints.
+          </p>
+        </p>
+      </ul>
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

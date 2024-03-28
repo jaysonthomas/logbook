@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Members</title>
-  <meta name="Members" content="text/html; charset=utf-8;" />
+  <title>A C++ code architecture</title>
+  <meta name="A C++ code architecture" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -39,12 +39,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Datatypes</a>
-<a href="#1">Member initialisation</a>
+<a href="#0">Encapsulation & abstraction</a>
+<a href="#1">Access specifier or modifier</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Members</a></li>
+  <li><a href="#1.1">Inherited access specifiers</a></li>
+</ul>
+<a href="#2">Invariants - struct vs class</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">When to be private</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>A C++ code architecture</h1>
-<section id="1"><h1>Encapsulation & abstraction</h1>
+<section id="0"><h1>Encapsulation & abstraction</h1>
   <i>Encapsulation</i> means that:
   <ul>
     <li>Related properties are bundled together in a single class</li>
@@ -58,8 +66,8 @@
   Encapsulation and abstraction are related because encapsulation groups relevant data together in a class, while abstraction hides the details of how the data is manipulated. All the user of a class needs to know is that the data is present and there is an interface to interact with it. 
 </section>
 
-<section id="2"><h1>Access specifier or modifier</h1>
-  <subsection id="2.0"><h1>Members</h1>
+<section id="1"><h1>Access specifier or modifier</h1>
+  <subsection id="1.0"><h1>Members</h1>
     <ul>
       <li>Public members</li>
       Public members can be changed <n>directly</n>, by any user of the <i>object</i> (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
@@ -74,7 +82,7 @@
     </ul>
   </subsection>
 
-  <subsection id="2.1"><h1>Inherited access specifiers</h1>
+  <subsection id="1.1"><h1>Inherited access specifiers</h1>
     [<a href="../../jlib/cppExamples/fundamentals/11_inheritedAccessSpecifiers.cpp">Ref</a>] <br>
     The same access modifiers also define which class members users of derived classes can access.
 
@@ -93,7 +101,7 @@
   </subsection>
 </section>
 
-<section id="3"><h1>Invariants - struct vs class</h1>
+<section id="2"><h1>Invariants - struct vs class</h1>
   [<a href="../../jlib/cppExamples/fundamentals/4_invariants.cpp">Ref</a>]
 
   <p>
@@ -109,7 +117,7 @@
   
   By default, all members of a struct default to public, whereas all members of a class default to private. 
 
-  <subsection id="3.0"><h1>When to be private</h1>
+  <subsection id="2.0"><h1>When to be private</h1>
     As a general rule, <n>member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value</n>.
 
     <p>

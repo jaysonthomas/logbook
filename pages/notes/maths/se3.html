@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Special Euclidean Group</title>
+  <meta name="Special Euclidean Group" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Big se(3)</a>
+<a href="#1">Little se(3)</a>
+<a href="#2">Mapping between big and little se(3)</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Special Euclidean Group</h1>
+<section id="0"><h1>Big se(3)</h1>
+  Make notes w.r.t. <a href="https://t.ly/RJM_8">page 17</a>. 
+  $$\begin{align*}
+    T &= \begin{bmatrix}
+          R & p \\
+          0 & 1
+        \end{bmatrix} \\
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Little se(3)</h1>
+  Make notes w.r.t. <a href="https://t.ly/RJM_8">page 21</a>. 
+  $$\begin{align*}
+    \left[ V_b\right] &= T^{-1}\dot{T} &= 
+      \begin{bmatrix}
+        \left[\omega_b\right] & v_b \\
+        0 & 0 
+      \end{bmatrix} \in se(3) \\
+
+    \left[ V_s\right] &= \dot{T}T^{-1} &= 
+      \begin{bmatrix}
+        \left[\omega_s\right] & v_s \\
+        0 & 0 
+      \end{bmatrix} \in se(3) \\
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Mapping between big and little se(3)</h1>
+  Explain <code>MatrixLog6(T)</code> which converts SE(3) to se(3). The very end of <a href="https://chat.openai.com/share/724d3275-1cb9-4239-b9f7-ab203a8d9ecc">this chat</a> seems to suggest a conversion from position to linear velocity. Also, look into <code>MatrixLog3</code> to fully understand how to get the angular velocity from a rotation matrix.
+</section>
+
+</chapter>
+
+</body>
+</html>

@@ -40,25 +40,15 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Topics</a>
-<a href="#1">Encapsulation & abstraction</a>
-<a href="#2">Access specifier or modifier</a>
+<a href="#1">Constructor</a>
+<a href="#2">Scope resolution</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Members</a></li>
-  <li><a href="#2.1">Inherited access specifiers</a></li>
+  <li><a href="#2.0">Class</a></li>
+  <li><a href="#2.1">Namespace</a></li>
 </ul>
-<a href="#3">Invariants - struct vs class</a>
-<ul class="no-bullets">
-  <li><a href="#3.0">When to be private</a></li>
-</ul>
-<a href="#4">Constructor</a>
-<a href="#5">Scope resolution</a>
-<ul class="no-bullets">
-  <li><a href="#5.0">Class</a></li>
-  <li><a href="#5.1">Namespace</a></li>
-</ul>
-<a href="#6">Inheritance</a>
-<a href="#7">Friends</a>
-<a href="#8">Miscellaneous</a>
+<a href="#3">Inheritance</a>
+<a href="#4">Friends</a>
+<a href="#5">Miscellaneous</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>C++</h1>
@@ -90,7 +80,7 @@
   </ul>
 </section>
 
-<section id="4"><h1>Constructor</h1>
+<section id="1"><h1>Constructor</h1>
   [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
   <br>
   Constructors are member functions of a class or struct that initialise/construct/build an object. All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. 
@@ -106,14 +96,14 @@
   </p>
 </section>
 
-<section id="5"><h1>Scope resolution</h1>
+<section id="2"><h1>Scope resolution</h1>
   C++ allows <i>identifiers</i> (a function name or a variable name) to have the same name, as long as they have different scope. 
 
   <p>
     In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class to search, in order to resolve an identifier.
   </p>
 
-  <subsection id="5.0"><h1>Class</h1>
+  <subsection id="2.0"><h1>Class</h1>
     Each class provides its own scope. The scope resolution operator becomes useful if a class definition needs to be separated from its declaration. The need to separate the 2 arises when:
        
     <ul>
@@ -122,14 +112,14 @@
     </ul>
   </subsection>
 
-  <subsection id="5.1"><h1>Namespace</h1>
+  <subsection id="2.1"><h1>Namespace</h1>
     [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
     <br>
     Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. <code>std</code> is the namespace used by the C++ Standard Library. Classes like <code>std::vector</code> and functions like <code>std::sort</code> are defined within the std namespace.
   </subsection>
 </section>
 
-<section id="6"><h1>Inheritance</h1>
+<section id="3"><h1>Inheritance</h1>
   The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
   
   <p>
@@ -138,7 +128,7 @@
 
 </section>
 
-<section id="7"><h1>Friends</h1>
+<section id="4"><h1>Friends</h1>
   [<a href="../../jlib/cppExamples/fundamentals/12_friend_1.cpp">Ref</a>]
   <div class="container">
     <figure>
@@ -151,7 +141,7 @@
   </div>    
 </section>
 
-<section id="8"><h1>Miscellaneous</h1>
+<section id="5"><h1>Miscellaneous</h1>
   <ul>
     <li>Default function arguments</li>
     [<a href="../../jlib/cppExamples/fundamentals/19_defaultFuncArgs.cpp">Example</a>]

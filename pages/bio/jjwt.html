@@ -128,7 +128,18 @@
       <li>
         Proposed a real-time method to adaptively tune the feed-forward torque contribution for a ﬂeet of bots. This was then successfully tested as a proof of concept and its implementation seen through till production.
       </li>
-
+      <p>
+        A feedforward demand can be broken down into zero-order, velocity, acceleration and deceleration feedforward demands. The latter 3 demands are proportional to:
+        <ul>
+          <li>
+            The target velocity, acceleration and deceleration respectively
+          </li>
+          <li>
+            The payload mass a bot is carrying
+          </li>
+        </ul> 
+      </p>
+      
       <p>
         <li>
           Improved the real-time trajectory generator for fast movements along linear axis, in terms of limited precision of floating point arithmetic on 32 bit hardware.
