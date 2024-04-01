@@ -47,17 +47,17 @@
 <chapter style="counter-reset: chapter 3"><h1>Arm: Forward Kinematics</h1>
 
 <section id="0"><h1>Computing the pose of the EE using FK</h1>
-  Given that we've set all the joint angles:
+  Given that the joint angles are known:
   <ul>
     <li>Compute pose of the EE relative to the wrist</li>
-    We find the rotation matrix for the rotation joint which is just a relative pose.
+    The rotation matrix for the rotation joint is just a relative pose.
 
     <p>
-      <li>Chain it backwards all the way to the world coordinates</li>
+      <li>Chain it backwards all the way to the world frame</li>
     </p>
   </ul>
 
-  The math is simple because each individual joint is just describing a small rotation matrix kind of operation on a relative transform from right before the robot's joint until right after the robot's joint. That's how robots are specified in robot description files as relative poses of each link - 6 numbers: x, y, z, roll, pitch, yaw. Joints are just operations that will make a transformation from the pre joint frame to the post-joint frame. 
+  The math is simple because each individual joint is just describing a small rotation operation from right before the robot's joint until right after the robot's joint. This is how robots are specified in robot description files as relative poses of each link - 6 numbers: x, y, z, roll, pitch, yaw. <i>Joints</i> are just operations that will make a transformation from the pre joint frame to the post-joint frame. 
 
 </section>
 

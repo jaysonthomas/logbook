@@ -46,9 +46,9 @@
 <chapter style="counter-reset: chapter 0"><h1>Joint stiffness control implemented using feedback cancellation</h1>
 
 <section id="0"><h1>The new behaviour</h1>
-  Starting at the joint level, a PD position controller for a DP would look like:
+  Starting at the joint level, a PD position controller with gravity compensation for a DP would look like:
   $$\begin{equation}
-    u = K_p(q^d-q) + K_d(\dot{q}^d-\dot{q})
+    u = -\tau_g(q) + K_p(q^d-q) + K_d(\dot{q}^d-\dot{q})
   \end{equation}$$
 
   <p>
@@ -68,11 +68,6 @@
     <li>Inserting new desired dynamics</li>
     i.e. PD control.
   </ul>   
-  
-  The controller would look like:
-  $$\begin{equation}
-    u = -\tau_g(q) + K_p(q^d-q) + K_d(\dot{q}^d-\dot{q})
-  \end{equation}$$
 </section>
 
 <section id="1"><h1>Benefit of having gravity compensation</h1>

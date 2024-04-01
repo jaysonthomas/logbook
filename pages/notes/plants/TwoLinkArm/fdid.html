@@ -55,7 +55,7 @@
   where $M$ is the joint-space inertia matrix, $C$ is the vector of Coriolis and centrifugal forces and $G$ is the gravity vector in the joint space. $M$ is a positive definite symmetric matrix. $C$ has $\dot{q}$ in every term so $C = 0$ if $\dot{q}=0$.
 
   <p>
-    An inverse dynamics function gets $q, \dot{q}, \ddot{q}$ as inputs and computes the torques required to achieve a desired trajectory. It is used for control
+    An inverse dynamics function gets $q, \dot{q}, \ddot{q}$ as inputs and computes the torques required to achieve a desired trajectory. <n>It is used for control</n>.
   </p>
 </section>
 
@@ -67,7 +67,7 @@
              &= FD(q, \dot{q}, \tau)
   \end{align*}$$
 
-  FD is used for simulation purposes. FD outputs joint accelerations due to some applied torques which can then be integrated over time to compute the evolution of $q$.
+  <n>FD is used for simulation purposes</n>. FD outputs joint accelerations due to some applied torques which can then be integrated over time to compute the evolution of $q$.
 </section>
 </chapter>
 

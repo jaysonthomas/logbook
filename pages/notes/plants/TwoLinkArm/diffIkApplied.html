@@ -90,7 +90,7 @@
 </section>
   
 <section id="2"><h1>Solution</h1>
-  If an arm is stretched out (in the forward direction), how can it be controlled to move back as in the <a href="https://shorturl.at/ghrW0">animation</a>? A desired velocity at the EE cannot be mapped to a desired velocity of the joints in this configuration. The only possible velocity at the joints is $0$. That's real! It is not possible to move with a velocity instantaneously but it is possible to accelerate backwards. By choosing a joint angle that is not instantaneously achieving the velocity objective, it is possible to start accelerating out of the configuration and get to a position where the controller can start demanding velocities. 
+  If an arm is stretched out (in the forward direction), how can it be controlled to move back as in the <a href="https://shorturl.at/ghrW0">animation</a>? A desired velocity at the EE cannot be mapped to a desired velocity of the joints in this configuration. <n>The only possible velocity at the joints is $0$</n>. That's real! <n>It is not possible to move with a velocity instantaneously but it is possible to accelerate backwards</n>. By choosing a joint angle that is not instantaneously achieving the velocity objective, it is possible to start accelerating out of the configuration and get to a position where the controller can start demanding velocities. 
 
   <p>
     Moving everything up to acceleration space does not mean the problem has been deferred to the next set of variables. It is actually better in acceleration space. It is possible to accelerate instantaneously but not possible to command a velocity instantaneously.
@@ -102,7 +102,7 @@
       \tau = J^{-1}(q)f
     $$
   
-    It is not possible to produce a force instantaneously, but it is possible to accelerate joints in such a way so as to produce zero force that gets an arm out of singularity. <m>That is absolutely true but it's the differential version that gets a controller out of a singularity situation</m>. Just like it's bad to command velocities for an arm stretched out, it's also bad to ask for forces. 
+    <n>It is not possible to produce a force instantaneously, but it is possible to accelerate joints in such a way so as to produce zero force that gets an arm out of singularity</n>. That is absolutely true but it's the differential version that gets a controller out of a singularity situation. Just like it's bad to command velocities for an arm stretched out, it's also bad to ask for forces. 
   </subsection>
 </section>
 

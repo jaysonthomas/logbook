@@ -45,7 +45,7 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Feedback cancelling control</h1>
 <section id="0"><h1>Description</h1>
-  [<a href="../../plants/topDownDp/feedbackCancellation.html">Example</a>] <br>
+  [<a href="../../plants/TwoLinkArm/feedbackCancellation.html">Example</a>] <br>
   Given the standard manipulator equation of motion, if $M, C, \tau_g$ are known, then a controller that changes or overwrites a system's effective dynamics can be written if the change is:
   <ul>
     <li>Local, within reason</li>
@@ -67,7 +67,7 @@
 
       $$M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu$$
 
-      A $B$ matrix would have to be introduced to indicate to what joints/actuators/objects, torque can be directly applied. $B$ would be low rank since torque cannot be applied directly to objects in the environment. For this reason a <i>manipulation system</i> (which includes both the world and the robot) is an <i>underactuated system</i>.
+      $B$ is a matrix indicating to what joints/actuators/objects, torque is directly applied. $B$ is low rank since torque cannot be applied directly to objects in the environment. For this reason a <i>manipulation system</i> (which includes both the world and the robot) is an <i>underactuated system</i>.
     </p>
 
     <li>Limitations in the robot</li>

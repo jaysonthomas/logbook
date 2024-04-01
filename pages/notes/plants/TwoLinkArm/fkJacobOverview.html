@@ -66,7 +66,7 @@
   $G$ stands for gripper if it was used instead of $B$.    
   
   <p>
-    The mapping from joint positions to end-effector poses is called the <i>Forward Kinematics problem</i>. In the case of revolute joints, this mapping from joint angles to ee pose is non-linear. Perhaps, the simplest example of it is provided below (just the rotation part of the pose):
+    The mapping from joint positions to end-effector poses is called the <i>Forward Kinematics problem</i>. In the case of revolute joints, this mapping from joint angles to ee pose is non-linear due to the rotation part of the pose. A simple example:
     $$
       R(\theta) = \begin{bmatrix}
       c & -s \\
@@ -78,7 +78,7 @@
 
 <section id="1"><h1>The Jacobian</h1>
   [<a href="https://t.ly/1SjD9">Ref1</a>, <a href="https://t.ly/M7pDR">Ref2</a>] <br>
-  A Jacobian in the context of an arm, defines the relationship between operational space (end-effector) and joint space (joint angle) spatial velocities (linear and angular velocities). It is computed through an iterative method which calculates velocities from the base to the end-effector. Each column of the Jacobian specifies the contribution of the corresponding joint velocity to the end-effector's velocities. It is a position dependent matrix, hence a function of the joint angles $q$ at any given time.
+  A Jacobian in the context of an arm, defines the relationship between operational space (end-effector) and joint space (joint angle) spatial velocities. It is computed through an <n>iterative method</n> which calculates velocities from the base to the end-effector. <n>Each column of the Jacobian specifies the contribution of the corresponding joint velocity to the end-effector's velocities</n>. It is a <n>position dependent matrix</n>, hence a function of the joint angles $q$ at any given time.
 
   <subsection id="1.0"><h1>Geometric Jacobian</h1>
     A <i>geometric jacobian</i> has the extra step of mapping joint velocities to spatial velocity vectors. It is $\frac{\partial{f^B}(q)}{\partial q}$ plus any change of coordinates into the spatial vectors. Geometric Jacobian gives the angular velocities in the base frame.

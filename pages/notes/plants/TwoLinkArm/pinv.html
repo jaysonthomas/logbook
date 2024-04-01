@@ -52,7 +52,7 @@
 <chapter style="counter-reset: chapter 3"><h1>Pseudo Inverse Jacobian</h1>
 
 <section id="0"><h1>Overview</h1>
-  Given $\dot{q} = [J^B(q)]^{-1} V^B$, to find $\dot{q}$, the pseudo-inverse of $J$ needs to be computed since $J$ is not always <i>invertible</i>, i.e. it may be <i>rectangular</i>, having an unequal number of rows and columns. 
+  Given $\dot{q} = [J^B(q)]^{-1} V^B$, to find $\dot{q}$, the pseudo-inverse of $J$ is computed since $J$ is not always <i>invertible</i>, i.e. it may be <i>rectangular</i>, having an unequal number of rows and columns. 
 
   $$
     \dot{q} = [J^B(q)]^{\dagger}V^B
@@ -65,7 +65,7 @@
   Assuming $V$ is $m$-dimensional and $q$ is $n$-dimensional, $J^\dagger$ is $n\times m$. 
   
   <subsection id="1.0"><h1>$n=m$</h1>
-    The psuedo-inverse is a square matrix and is the <n>inverse</n> of $J$. It means that if there is any solution for the joint space it is a unique solution.
+    The psuedo-inverse is a square matrix and is equivalent to the <n>inverse</n> of $J$. It means that if there is any solution for the joint space it is a unique solution.
   </subsection>
 
   <subsection id="1.1"><h1>$n &lt m$</h1>

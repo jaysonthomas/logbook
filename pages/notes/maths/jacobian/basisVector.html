@@ -54,7 +54,7 @@
   If a non-linear transformation is applied to a bunch of vectors within a coordinate system (i.e. points in space), it would look very linear when zoomed in on a point. If the location of a point is a factor in the transformation, then each point would scale based on how far it is from the origin. For example, a transformation applied at (-2,1) would be much smaller than at (-100, 50) for a transformation given by $\begin{bmatrix} x + sin(y) \\ y + sin(x)\end{bmatrix}$.
   
   <p>
-    Local effects of any transformation might look non-linear globally, but will look linear locally if the scaling due to the location of any point from the origin is removed. The effects of a local linear transformation can be found by taking partial derivatives of the non-linear transformation function and turning it into a matrix (for convenience) called the <i>Jacobian matrix</i>:
+    Effects of any transformation might look non-linear globally, but will look linear locally if the scaling due to the location of any point from the origin is removed. The effects of a local linear transformation can be found by taking partial derivatives of the non-linear transformation function and turning it into a matrix (for convenience) called the <i>Jacobian matrix</i>:
 
     $$\begin{bmatrix}
       \frac{\partial{f_x}}{\partial{x}} & \frac{\partial{f_x}}{\partial{y}} \\

@@ -53,10 +53,10 @@
     q = (f^B)^{-1}(X^B)
   $$
   
-  IK is harder than FK since the mapping in IK is not always unique:
+  IK is harder than FK since the mapping in IK is <n>not always unique</n>:
   <ul>
     <li>There can be multiple solutions ($q$) that get the same pose in the world.</li>
-    <li>There could also be no solutions.</li>
+    <li>There can also be no solutions.</li>
   </ul>
   
   IK is oftentimes not used directly since the IK engine could give slightly different answers:
@@ -95,7 +95,7 @@
       [J^B_{\scriptscriptstyle{6\times{7}}}(q)]^{-1} 
       V^B_{\scriptscriptstyle{6\times{1}}}
     $$
-    The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. The problem with simply taking the inverse of a jacobian is that in most cases, a jacobian is not a square matrix and it is not possible to take the inverse of a non-square matrix. Hence, this equation is only a conceptual representation.
+    The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. The problem with simply taking the inverse of a jacobian is that in most cases, a jacobian is not a square matrix and <n>it is not possible to take the inverse of a non-square matrix</n>. Hence, this equation is only a conceptual representation.
   </subsection>
 </section>
 </chapter>

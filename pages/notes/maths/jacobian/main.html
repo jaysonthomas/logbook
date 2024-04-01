@@ -59,10 +59,10 @@
   Each point in an ($n$ dimensional) output space is created by $m$ contributing vectors (of $n$ dimensions each). Each of these vectors is uniquely influenced by one input space variable. There are $m$ input space variables.
 
   <p>
-    A Jacobian captures how a change in any input space variable affects the output space. Each column of the Jacobian captures how a change in an input space variable affects its corresponding (influenced) $n-dimensional$ vector in the output space. So, a Jacobian has $n$ rows and $m$ columns.
+    A Jacobian captures how a change in an input space variable affects the output space. Each column of the Jacobian captures how a change in an input space variable affects its corresponding (influenced) $n$-dimensional vector in the output space. So, a Jacobian has $n$ rows and $m$ columns.
   </p>
 
-  For example, consider a planar 1R Arm. The input space would consist of angle $\theta$ and the output space would consist of 1 2-dimensional point in $x, y$. The Jacobian would be given by:
+  For example, consider a planar 1R Arm. The input space would consist of angle $\theta$ and the output space would consist of one 2-dimensional point in $x, y$. The Jacobian would be given by:
   
   $$\begin{bmatrix}
     \frac{\partial{f_x(\theta)}}{\partial{\theta}} \\

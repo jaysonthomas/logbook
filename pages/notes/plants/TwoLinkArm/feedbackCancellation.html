@@ -43,14 +43,14 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Feedback cancelling control</h1>
 
-Feedback cancellation can be used to replace the dynamics of 2-link pendulum to make it act like a one-link pendulum. There are only 2 degrees of freedom so it cannot be made to act like a 4-linked pendulum.
+Feedback cancellation can be used to replace the dynamics of a 2-link pendulum to make it act like a one-link pendulum. There are only 2 degrees of freedom so it cannot be made to act like a 4-link pendulum.
 
 <p>
   To behave like the dynamics of a single pendulum, the accelerations of the 2-link pendulum are easier: 
 
   $$
     \ddot{q}^d = 
-      \begin{bmatrix} \ddot{\theta}_1^d \\\ddot{\theta}_2^d \end{bmatrix}, 
+      \begin{bmatrix} \ddot{\theta}_1^d \\\ddot{\theta}_2^d \end{bmatrix} 
       =\begin{bmatrix} -\frac{g}{l}sin\theta_1 - b\dot{\theta}_1\\0\end{bmatrix}
   $$
 

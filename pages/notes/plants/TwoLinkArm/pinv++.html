@@ -51,7 +51,7 @@
 <chapter style="counter-reset: chapter 3"><h1>Two-link Arm: Richer formulation of the pseudo inverse optimisation problem</h1>
 
 <section id="0"><h1>Context</h1>
-  While following a trajectory, a jacobian based controller can get very close to dropping rank (singularity). In such situations, the controller may command ridiculous joint velocities. Even worse, most robots will have some form of velocity limitation imposed further downstream; this velocity cap method will not be aware of the overall control objectives - the velocity would get saturated with the controller continuing to demand higher velocities and the robot may eventaully get into a fault state.
+  While following a trajectory, a jacobian based controller can get very close to dropping rank (<i>singularity</i>). In such situations, the controller may command ridiculous joint velocities. Even worse, most robots will have some form of velocity limitation imposed further downstream; this velocity cap method will not be aware of the overall control objectives - the velocity would get saturated with the controller continuing to demand higher velocities and the robot may eventaully get into a fault state.
 
   <p>
     The pseudo-inverse can be made richer (giving it a better chance to pick the best solution possible) by specifying/making it aware of velocity/joint limits. The idea of optimisation and quadratic programming is a powerful framework.

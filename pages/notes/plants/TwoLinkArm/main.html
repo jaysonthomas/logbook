@@ -48,13 +48,15 @@
   A 2-link arm can also be considered to be a 2R robot or a top-down double pendulum.
   <ul>
     <li>Forward kinematics & Jacobian</li>
+    The aim is to map joint space angles/velocities to end-effector configuration/velocity.
     <ul>
       <li><a href="fk.html">Forward Kinematics (sort)</a></li>
       <li><a href="spatialVelocity.html">Spatial Velocity</a></li>
       <li><a href="fkJacobOverview.html">Overview</a></li>
       <li><a href="fkJacobApplied.html">Applied</a></li>
     </ul>  
-    <li>Inverse kinematics</li>
+    <li>Inverse Kinematics</li>
+    IK can yield multiple joint solutions leading to discontinuity. Diff IK is used instead but a Jacobian is not always a square matrix; hence taking the inverse becomes a problem. Pseudo-inverse Jacobian can be rectangular; it tries to solve an optimisation problem to find the minimum joint angles that can achieve the desired ee spatial velocity, as close as possible. Example of moving in and out of singularity by accelerating.
     <ul>
       <li><a href="ikOverview.html">Overview</a></li>
       <li><a href="pinv.html">Pseudo Inverse Jacobian</a></li>
@@ -62,12 +64,14 @@
       <li><a href="pinv++.html">Richer formulation of the pseudo inverse optimisation problem</a></li>
       <li><a href="pinv++Applied.html">Richer formulation applied</a></li>
     </ul>  
-    <li>Dynamics</li>
-    <ul>
-      <li><a href="dynamics.html">Overview</a></li>
-      <li><a href="fdid.html">Forward/Inverse Dynamics</a></li>
-    </ul>  
-    
+    <p>
+      <li>Dynamics</li>
+      Equations of motion for a manipulator. Force-Torque relationship.
+      <ul>
+        <li><a href="dynamics.html">Overview</a></li>
+        <li><a href="fdid.html">Forward/Inverse Dynamics</a></li>
+      </ul>  
+    </p>
     <li>Control techniques</li>
     <ul>
       <li><a href="pseduoInverseController.html">Pseduo Inverse Controller</a></li>

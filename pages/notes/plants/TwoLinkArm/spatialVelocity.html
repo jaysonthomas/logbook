@@ -44,20 +44,18 @@
 
 <chapter style="counter-reset: chapter 3"><h1>Spatial Velocity</h1>
 <section id="0"><h1>Overview</h1>
-  Spatial algebra for velocities called <i>spatial velocity</i> is similar to spatial algebra for positions and orientations. It has a translation and an orientation component:
+  Spatial algebra for velocities called <i>spatial velocity</i> $\mathbb{R}^{6 \times 1}$ is similar to spatial algebra for positions and orientations. It has a translation and an orientation component:
 
   $$\begin{bmatrix}
     \omega \\ v
   \end{bmatrix}$$
 
-  $\omega$ is the <i>angular velocities</i>, a $3 \times 1$ vector 
+  $\omega$ is the <i>angular velocities</i> $\mathbb{R}^{3 \times 1}$
   <br>
-  $v$ is the <i>translational velocities</i>, a $3 \times 1$ vector 
-  <br>
-  Spatial velocity is a $6 \times 1$ vector 
+  $v$ is the <i>translational velocities</i> $\mathbb{R}^{3 \times 1}$
 
   <p>
-    There is no standard/canonical choice of representation for a pose. Based on the chosen representation, an orientation (which part of a pose), can have various problems hence the need for constantly moving between representations. However there is a canonical choice for angular velocity, consisting of 3 numbers representing the rotation rates around the major axes.
+    There is no standard/canonical choice of representation for a pose. Based on a chosen representation, an orientation (which is part of a pose), can have various problems hence the need for constantly moving between representations. However there is a canonical choice for angular velocity, consisting of 3 numbers representing the rotation rates around the major axis.
   </p>
 </section>
 </chapter>
