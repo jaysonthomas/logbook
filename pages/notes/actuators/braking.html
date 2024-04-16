@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Actuators: Braking</title>
+  <meta name="Actuators: Braking" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Motoring</a></li>
+  <li><a href="#0.1">Generating</a></li>
+  <li><a href="#0.2">Examples</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Actuators: Braking</h1>
+<section id="0"><h1>Overview</h1>
+  <subsection id="0.0"><h1>Motoring</h1>
+    To spin a motor, current needs to be applied via the inverter to the motor coils to generate a magnetic field which attracts the rotor's magnet. By constantly moving the applied current to the coils in a certain direction, the motor can be made to spin.
+
+    <ul>
+      <li>Positive current equates to positive torque being produced; thus a positive direction of motion</li>
+      <li>Negative current equates to negative torque being produced; thus a negative direction of motion</li>
+    </ul>
+
+    When the system is moving/rotating in some direction and the applied torque (current) favours that direction, it means energy is being spent, i.e. the system is <i>motoring</i>.
+  </subsection>
+
+  <subsection id="0.1"><h1>Generating</h1>
+    A spinning motor can be made to generate energy, by:
+    <ul>
+      <li>Not applying currents via the inverter to the coils</li>
+      <li>Allowing the generated currents in the coils created by the spinning motor to flow back into the battery via the high side of the inverter. <m>Is any current applied to the coils, say in the negative Q direction etc to encourage this braking?</m></li>
+    </ul>
+
+    In this mode, the motion of the motor is opposed (slowed down) by converting some of the kinetic energy to electricity. The motor spins in say the positive direction but generates negative torque.
+
+    <p>
+      When the system is moving/rotating in some direction and the applied torque (current) is in the opposite direction, it means energy is being generated.
+    </p>
+  </subsection>
+
+  <subsection id="0.2"><h1>Examples</h1>
+    Regenerative braking in an electric car works in exactly the same way: "negative" torque is applied to the drivetrain (to slow down the car), despite the fact the car is moving in the positive direction.
+
+    <p>
+      It is not possible to keep generating forever, the system will come to a stop. In a wind turbine, the rotor keeps moving because the controller balances the energy extraction against the kinetic energy produced by the effect of the wind - if the controller is not very good then it may try to extract too much, causing the rotor to slow down too much.
+    </p>
+
+    The same effect can be seen in a brushed DC motor i.e. if a positive voltage is applied to achieve a positive speed (i.e. "motoring") and then if the supply voltage is instantaneously inverted to become negative, the motor will not instantaneously reverse direction - the negative voltage causes it to slow down first ("generating") and then, once it crosses zero speed, starts rotating in the negative direction ("motoring" again).
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<mxfile host="Electron" modified="2024-04-14T16:20:39.643Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="-7nFZEM4Y_xhK0tSCSI_" version="24.1.0" type="device">
+  <diagram name="Page-1" id="Kc3sxgqC57umPV27lOBg">
+    <mxGraphModel dx="956" dy="570" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#000000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0VuuExyDOjFATBZTGwv4-4" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;startArrow=classicThin;startFill=1;" edge="1" parent="1" source="0VuuExyDOjFATBZTGwv4-1" target="0VuuExyDOjFATBZTGwv4-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0VuuExyDOjFATBZTGwv4-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="544" y="151" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0VuuExyDOjFATBZTGwv4-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="400" y="340" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0VuuExyDOjFATBZTGwv4-5" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;startArrow=classicThin;startFill=1;" edge="1" parent="1" source="0VuuExyDOjFATBZTGwv4-3" target="0VuuExyDOjFATBZTGwv4-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0VuuExyDOjFATBZTGwv4-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="239" y="151" width="80" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
