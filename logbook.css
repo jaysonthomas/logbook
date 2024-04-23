@@ -165,7 +165,7 @@ main .sidebar{
 /* Collapsible section */
 .collapsible {
   background-color: rgb(57, 57, 57);
-  color: white;
+  /* color: white; */
   cursor: pointer;
   padding: 5px;
   width: 640px;
@@ -207,7 +207,7 @@ button.accordion.active, button.accordion:hover {
 /* Somehow this puts the plus sign at the end. */
 button.accordion:after {
   content: '\002B';
-  color: white;
+  /* color: white; */
   font-weight: bold;
   float: right;
   margin-left: 5px;
@@ -228,11 +228,11 @@ button.accordion.active:after {
 */
 div.panel {
   padding: 0 5px;
-  background-color: #f1f1f1;
+  background-color: #555;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-  color:black;
+  color:white;
 }
 /* End of collapsible accordion */
 
