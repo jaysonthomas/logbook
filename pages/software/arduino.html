@@ -42,15 +42,24 @@
 <a href="#0">Resources</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>ROS</h1>
+<chapter style="counter-reset: chapter 1"><h1>Arduino</h1>
 
-<section id="0"><h1>Resources</h1>
-  Simple arm mover: <a href="https://t.ly/jEesK">code 1</a>. <br>
-  Another one: <a href="https://t.ly/BsnS0">2</a>.
+<section id="0"><h1>Installation</h1>  
+  <subsubsection><h1>Creating a shortcut</h1>
+    Save the following in a file <code>/home/jthomas/.local/share/applications/arduino.desktop</code>.
+<pre><code class="bash">
+[Desktop Entry]
+Type=Application
+Name=Arduino IDE 2.3.2
+Exec=/home/jthomas/Arduino/arduino-ide
+</code></pre>
+  </subsubsection>
+
+  In <code>File-Preferences-Settings</code>, set <code>Sketchbook location</code> to /home/jthomas/arduinoSketches. From <code>Sketch-Include Library</code>, download Rosserial arduino library. It should get downloaded to the selected sketches folder.
 </section>
 
-<section><h1>Installation</h1>
-  Installation of Ros Noetic in Ubuntu 20.04 Focal, following <a href="https://t.ly/hH6hc">this guide</a>. Make sure to source the bash script <code>source /opt/ros/noetic/setup.bash</code> in every bash terminal or set it up to be called automatically whenever a new terminal is opened.
+<section><h1>Rosserial</h1>
+  Had to make the changes mentioned <a href="https://t.ly/PGXh8">here</a> in <code>ros/msg.h</code> for the code to compile.
 </section>
 </chapter>
 
