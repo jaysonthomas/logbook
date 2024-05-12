@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Double Integrator</title>
+  <meta name="Double Integrator" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">State space form</a>
+<a href="#2">Steps</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Double Integrator</h1>
+
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/9E1jc">Ref1</a>] <br>
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/dynamics/6_doubleIntegrator.png"/>
+      <figcaption>
+        The goal is to apply a force $u$ to move a mass $m=1$ over a frictionless surface, to the origin, where position of the mass $q = 0$ and its velocity needs to be $0$.
+      </figcaption>
+    </figure>
+  </div>
+
+  There are many ways to achieve the goal. $q$ is used to denote the kinematics and $x$ is used as the state vector.
+</section>
+
+<section id="1"><h1>State space form</h1>
+  $$\begin{align*}
+    \text{State, }x &= \begin{bmatrix}q \\\dot{q}\end{bmatrix} \\
+    \dot{x} &= Ax + Bu \\
+            &= \begin{bmatrix}0 & 1 \\
+                              0 & 0
+               \end{bmatrix}x + \begin{bmatrix} 0 \\ 1\end{bmatrix}u \\
+    \begin{bmatrix}\dot{q} \\\ddot{q}\end{bmatrix} &= 
+                \begin{bmatrix}0 & 1 \\
+                               0 & 0
+                \end{bmatrix}\begin{bmatrix}q \\\dot{q}\end{bmatrix}
+                + \begin{bmatrix} 0 \\ 1\end{bmatrix}u \\
+  \end{align*}$$
+
+  Expanding results in 2 equations:
+  $$\begin{align*}
+    \dot{q} &= \dot{q} + 0u \\
+    \ddot{q} &= u
+  \end{align*}$$
+
+  $F=\ddot{q}$, since $m=1$.
+</section>
+
+<section id="2"><h1>Steps</h1>
+  <ul>
+    <li>FBD and state space form of dynamics</li>
+    <li>Solution of the dynamics using eigenvalues</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

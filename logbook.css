@@ -549,6 +549,4 @@ chapter.appendix algorithm > h1:before {
 chapter.appendix figcaption:before {
   content: "Figure " counter(chapter, upper-alpha) "." counter(figure) " - ";
 }
-
-
 /* end counters*/

@@ -51,10 +51,27 @@
 
 <section id="0"><h1>Overview</h1>
   Simulation is all about advancing a system's state forward in time.
+
+  <p>
+    When all the forces impacting an object's motion, i.e. the dynamics, are understood, it is possible to implement a function that advances the state forward in time. The dynamics can be abstracted as a <i>plant</i> that will output the current state $x$, given the torque $\tau$ into the system.
+
+    <div class="container">
+      <figure>
+        <img style="height:30px; width:auto"
+        src="../../../figures/dynamics/1_simplePendulumSimulation.png"/>
+        <figcaption>
+          An example of abstraction of a system's dynamics: Simple pendulum        
+        </figcaption>
+      </figure>
+    </div>
+  </p>
+
+  This abstraction allows more easily a <i>system viewpoint</i>. The output of the system doesn't have to be the state $x$ - it can be a subset of the state, or simply some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input of the system.
 </section>
 
 <section id="1"><h1>Software implementation</h1>
-  When all the forces impacting the motion of a vehicle, i.e. the dynamics are understood, it is possible to implement a function that advances the state of the vehicle forward in time. Typically, the software function is written in 2 stages:
+  Typically, the software function is written in 2 stages:
+
   <ul>
     <li>Uncontrolled motion</li>
     The actuators aren't energised and the vehicle is purely under the influence of external forces. For example: a drone whose rotors are not spinning, is purely under the influence of gravity.

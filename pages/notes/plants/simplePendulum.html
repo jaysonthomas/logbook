@@ -45,25 +45,24 @@
 <a href="#3">Balance of moments</a>
 <a href="#4">Simulation</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Systems viewpoint</a></li>
-  <li><a href="#4.1">State space form</a></li>
+  <li><a href="#4.0">State space form</a></li>
 </ul>
 <a href="#5">Integration</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
 <section id="0"><h1>Description</h1>
-  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a 'manipulator'. Another <a href="https://t.ly/yo9YU">Ref</a>.
+  A simple pendulum consists of:
+  <ul>
+    <li>
+      A <n>point</n> mass $m$, i.e. the mass is not spread out
+    </li>
+    <li>
+      A massless string (or rod)
+    </li>
+  </ul>
 
-  <div class="container">
-    <figure>
-      <img style="height:80px; width:auto"
-      src="../../../figures/dynamics/1_simplePendulum.png"/>
-      <figcaption>
-        Simple Pendulum
-      </figcaption>
-    </figure>
-  </div>
+  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a 'manipulator'. Another <a href="https://t.ly/yo9YU">Ref</a>.
 </section>
 
 <section id="1"><h1>Moment of inertia about the axis of rotation</h1>
@@ -74,24 +73,37 @@
     J_0 &= \cancel{J_{CG}} + ml^2
   \end{align*}$$
   
-  Since the simple pendulum consists of a <n>point</n> mass (the mass is not spread out, hence $r_{CM} = 0$) and the string (or rod) is considered to be massless, the centre of mass of a simple pendulum is at the point mass.
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      CG \text{ or } CM &:& \text{Centre of mass} \\ 
+      J_{CG} &:& \text{Moment of inertia about } CM \\ 
+      J_0 &:& \text{Moment of inertia about the pivot point (the axis of rotation)} \\
+      l &:& \text{Distance between the axis of rotation (the pivot point) and } CM
+    \end{array}$$
+  </div>
 
-  <p>
-    $J_{CG}$ is the moment of inertia about the point mass <br>
-    $J_0$ is the moment of inertia about the pivot point (the axis of rotation). <br>
-    $l$ is the distance of the axis of rotation (the pivot point) from the centre of mass. <br>
-    $r_{CM}$ is the distance of the point mass $m$ from its own centre of mass, which is 0 in this case (since the mass is treated as concentrated at its own position [<a href="https://t.ly/SFPXZ">Ref</a>]).      
-  </p>
+  The centre of mass of a simple pendulum is at the point mass. $r_{CM}$ is the distance of the point mass $m$ from the centre of mass, which is 0 in this case since the mass is treated as concentrated at a single position [<a href="https://t.ly/SFPXZ">Ref</a>].    
 </section>
 
 <section id="2"><h1>Net (sum of all) moment</h1>
   <div class="container">
     <figure>
-      <img style="height:150px; width:auto"
+      <img style="height:130px; width:auto"
       src="../../../figures/dynamics/2_pendulumNewton.png"/>
       <figcaption>
         Forces acting on a simple pendulum
       </figcaption>
+    </figure>
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../figures/dynamics/2_gravitySimplePendulum.png"/>
+      <figcaption>
+        Gravity pulls the pendulum in the opposite direction to the applied torque
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../figures/dynamics/2_gravityTrig.png"/>
     </figure>
   </div>
 
@@ -132,30 +144,11 @@
     ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
   $$
 
-  $ml^2 \ddot\theta$ is a measure of the resistance of the pendulum to changes in its angular motion. $\ddot\theta$ is the angular acceleration.
-
+  $ml^2 \ddot\theta$ is a measure of the <n>resistance of the pendulum to changes</n> in its angular motion. $\ddot\theta$ is the angular acceleration.
 </section>
 
 <section id="4"><h1>Simulation</h1>
-  <subsection id="4.0"><h1>Systems viewpoint</h1>
-    The dynamics can be abstracted into a system for which inputs and outputs can be defined. That is, the dynamics can be abstracted as a <i>plant</i> that will output the current state $x$, given the torque  $\tau$ into the system.
-
-    <figure>
-      <div style="padding: 10px;">
-        <script type="text/javascript">
-        var system = { "name": "Simple Pendulum", 
-          "input_ports" : ["\\( \\tau \\)"],
-          "output_ports" : ["\\( x \\)"]
-          };
-        document.write(system_html(system));
-        </script> 
-      </div>
-    </figure>
-
-    The output of the system doesn't have to be the state $x$ - it can be a subset of the state, or simply some sensor attached to the pendulum! In this case we will assume full access to the state for feedback, i.e. full-state feedback. Since this system is deterministic, the future value of the system can be predicted given the current time, state, and input of the system. 
-  </subsection>
-
-  <subsection id="4.1"><h1>State space form</h1>
+  <subsection id="4.0"><h1>State space form</h1>
     Dynamics of a pendulum in a first-order form: 
     $$\begin{align*}
       \dot{x} &= f(x,u) \\

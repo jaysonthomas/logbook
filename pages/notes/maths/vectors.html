@@ -41,7 +41,9 @@
   
 <a href="#0">Dimension of a vector space</a>
 <a href="#1">Determinant</a>
-<a href="#2">Eigenvectors and Eigenvalues</a>
+<a href="#2">Linear Transformation</a>
+<a href="#3">Basis vectors</a>
+<a href="#4">Span</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Vectors</h1>
@@ -57,92 +59,55 @@
   [<a href="https://t.ly/Ug0a">Ref</a>] The <i>determinant</i> gives an idea of how much an area (in 2D and volume in 3D) is being squished, scaled or flipped.
 </section>
 
-<section id="2"><h1>Eigenvectors and Eigenvalues</h1>
-  A linear transformation described by a matrix can be thought of as the landing spots it moves the basis vectors to.
+<section id="2"><h1>Linear Transformation</h1>
+  A linear transformation described by a matrix $A$ can be thought of as the landing spots it moves the basis vectors to.
 
   <div class="container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../figures/maths/5_3_LinearTransformation.png"/>
+    </figure>
+    <figure>
+      <img style="height:50px; width:auto"
+      src="../../../figures/maths/4_linearTransformation.png"/>
+    </figure>
     <figure>
       <img style="height:120px; width:auto"
       src="../../../figures/maths/1_linearTransformation.png"/>
       <figcaption>
-        Linear transformation, $A = \begin{bmatrix}3 & 1\\0 & 2\end{bmatrix}$
-        applied on the basis vectors $\begin{bmatrix}1 & 0\\0 & 1\end{bmatrix}$
+        Example of $A$ applied on basis vectors
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="3"><h1>Basis vectors</h1>
+  The red and green arrows in the following image are the basis vectors of the coordinate system (the grid in the background).
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/maths/5_1_basisVectors.png"/>
+    </figure>
+  </div>
+
+  The basis vectors are fixed to the coordinate system. If the latter is stretched or rotated (transformed), the basis vectors also end up being transformed. From here on, the coordinate system will not be drawn. Any transformation of the basis vectors implies a transformation to its corresponding coordinate system.
+</section>
+
+<section id="4"><h1>Span</h1>
+  The span of a vector is a line passing through the origin of a coordinate system and the end or tip of the vector. The pink line in the above image is the span of the yellow vector.
+
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/maths/5_2_spanOfVector.png"/>
+      <figcaption>
+        The yellow vector gets knocked off its original span (pink line) after a linear transformation of the coordinate system.
       </figcaption>
     </figure>
   </div>
 
-  A better way to find what a linear transformation does, that is less dependent on the chosen coordinate system, is to find the eigenvectors and eigenvalues.
-
-  $$
-    A\vec{v} = \lambda\vec{v}
-  $$
-
-$A$ - matrix representing some transformation.<br>
-$\vec{v}$ - eigenvector.<br>
-$\lambda$ - scalar value; the corresponding eigenvalue.
-
-<p>
-  This expression says that the matrix-vector product (LHS) gives the same result as just scaling the eigenvector (RHS). So finding the eigenvectors and their eigenvalues <n>of a matrix $A$</n> comes down to finding the values of $\vec{v}$ and $\lambda$ that make this expression true.
-</p>
-
-We rewrite RHS as a matrix-vector multiplication to match the LHS (instead of being a scalar-vector multiplication). We can only manipulate the equation if both sides are of the same kind. We use a matrix, which has the effect of scaling any vector by a factor of $\lambda$. The columns of such a matrix will represent what happens to each basis vector, and each basis vector is simply times $\lambda$. So this matrix will have the number $\lambda$ down the diagonal with $0$'s everywhere else. The common way to write this is as follows using the identity matrix:
-
-$$\begin{bmatrix}
-  \lambda & 0 & 0 \\
-   0 & \lambda & 0 \\
-   0 & 0 & \lambda
-\end{bmatrix} 
-= \lambda \begin{bmatrix}
-            1 & 0 & 0 \\
-            0 & 1 & 0 \\
-            0 & 0 & 1
-          \end{bmatrix} 
-= \lambda I
-$$
-
-$$\begin{align*}
-  A\vec{v} &= \lambda\vec{v} \\
-  A\vec{v} &= (\lambda I)\vec{v} \\
-  (A - \lambda I)\vec{v} &= 0 \\
-\end{align*}$$
-
-This expression will always be true if $\vec{v}$ itself is the zero vector, but that's boring. What we want is a non-zero eigenvector.
-
-<p>
-  We can treat $(A - \lambda I)$ as a transformation matrix. The only way for the product of a matrix with a non-zero vector to be $0$ is if the transformation associated with that matrix squishes space into a lower dimension. And this squishification corresponds to a zero determinant for the matrix. Using the linear transformation matrix as above as an example:
-
-  $$\begin{align*}
-    det(A - \lambda I) &= 0 \\
-    det \left( \begin{bmatrix}
-      3-\lambda & 1 \\
-      0 & 2-\lambda
-    \end{bmatrix} \right) &= 0
-  \end{align*}$$
-
-  An <a href="https://t.ly/c7PJ">example</a>. As $k$ goes to 3 or 2, the 2D planar area gets squished to a 1D line of a certain length.
-</p>
-
-
-
-To be concrete, let's say your matrix a has columns (2, 1) and (2, 3),
-
-  Application - to find the axis of rotation. Determinant = 1.
-  Does a vector remain on its span or get knocked off.
-  Think of stretching or squishing the whole space.
-
-  In linear algebra, a right eigenvector of a square matrix A is a non-zero vector v that satisfies the equation:
-
-Av = λv
-
-where λ is a scalar known as the eigenvalue corresponding to the eigenvector v.
-
-Geometrically, a right eigenvector of a matrix A is a vector that, when multiplied by A, is simply scaled by a factor λ, with the direction of the vector remaining unchanged.
-
-The term "right" refers to the fact that the eigenvector is multiplied on the right-hand side of the matrix A, as opposed to a left eigenvector, which would be multiplied on the left-hand side of A.
-
-Right eigenvectors are important in many areas of mathematics and physics, as they play a fundamental role in the diagonalization of matrices, which is a powerful technique for studying the behavior of linear transformations and systems of linear equations. Additionally, right eigenvectors can be used to decompose a matrix into simpler components, such as a diagonal matrix and a set of eigenvectors.
+  Normally, vectors get knocked off (rotated by some amount from) their original span under the influence of a linear transformation as shown above.
 </section>
-
 </chapter>
 
 </body>
