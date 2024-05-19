@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS</title>
-  <meta name="ROS" content="text/html; charset=utf-8;" />
+  <title>Arduino</title>
+  <meta name="Arduino" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -39,12 +39,13 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Resources</a>
+<a href="#0">Installation</a>
+<a href="#1">Rosserial</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Arduino</h1>
 
-<section id="0"><h1>Installation</h1>  
+<section id="0"><h1>Installation</h1>
   <subsubsection><h1>Creating a shortcut</h1>
     Save the following in a file <code>/home/jthomas/.local/share/applications/arduino.desktop</code>.
 <pre><code class="bash">
@@ -58,7 +59,7 @@ Exec=/home/jthomas/Arduino/arduino-ide
   In <code>File-Preferences-Settings</code>, set <code>Sketchbook location</code> to /home/jthomas/arduinoSketches. From <code>Sketch-Include Library</code>, download Rosserial arduino library. It should get downloaded to the selected sketches folder.
 </section>
 
-<section><h1>Rosserial</h1>
+<section id="1"><h1>Rosserial</h1>
   Had to make the changes mentioned <a href="https://t.ly/PGXh8">here</a> in <code>ros/msg.h</code> for the code to compile.
 </section>
 </chapter>
