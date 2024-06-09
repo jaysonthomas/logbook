@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DP: Minimum Time Problem</title>
+  <meta name="DP: Minimum Time Problem" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Solution</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">The Optimal solution</a></li>
+  <li><a href="#1.1">Finding the solution</a></li>
+</ul>
+<a href="#2">Discrete representation of a system's dynamics</a>
+<a href="#3">Steps</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>DP: Minimum Time Problem</h1>
+<section id="0"><h1>Overview</h1>
+  Refer to double integrator plant <a href="../plants/doubleIntegrator.html">here</a>.
+
+  <subsubsection><h1>Goal</h1>
+    The goal is to apply a force $u$ to move a mass $m=1$ over a frictionless surface, to the origin, where its position $q$ and velocity needs to be $0$.
+
+    <p>
+      In other words:
+      <ul>
+        <li>
+          To find a control action $u$ that drives the system to stop at the origin in as little time as possible or
+        </li>
+        <li>
+          To design some feedback law (<i>control policy, $\pi$</i>) which is a function of $x$:
+          $$
+            u = \pi(x)
+          $$
+        </li>
+        <li>
+          To find the cost/reward function or value function or cost-to-go function
+        </li>
+      </ul>
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Restriction</h1>
+    $|u| \leq 1$
+  </subsubsection> 
+</section>
+
+<section id="1"><h1>Solution</h1>
+  <subsection id="1.0"><h1>The Optimal solution</h1>
+    Go as fast as possible. At the last possible second, slam on the brakes and skid into the parking spot. This is with a stopped initial condition. It's called a <i>bang-bang control</i> where the limits are slammed at all times. It's a non-smooth controller. There could be an initial condition where the brakes are hit immediately.
+
+    <p>
+      Generalisation of the bang-bang control: no matter what the initial condition of $x$, the decision needs to be made whether to accelerate or decelerate.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Finding the solution</h1>
+    How can bang-bang control be obtained from an algorithm? Minimum time as an optimization problem is closely related to finding the <i>shortest path</i> in computer science.
+  </subsection>
+</section>
+
+<section id="2"><h1>Discrete representation of a system's dynamics</h1>
+  A system's dynamics can be approximated with grid points, from each of which, a small number of edges, that represent different control decisions (like u=+1,-1,0), can be taken. The discrete grid point is just an approximation of a continuous state in the discrete grid - it won't be exactly equal to the equivalent continuous state.
+
+  <p>
+
+  </p>
+
+
+
+</section>
+
+<section id="3"><h1>Steps</h1>
+  <ul>
+    <li>FBD and state space form of dynamics</li>
+    <li>Solution of the dynamics using eigenvalues</li>
+    <p>
+      <li>
+        The main aim for going through the Double integrator is because it seems to be the simplest dynamical system to try trajectory optimisation on. I think it's also referred to by Zach. So, might be good to try Julia on.
+      </li>
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
