@@ -193,7 +193,7 @@ main .sidebar{
 /* Collapsible accordion */
 /* Defines the box itself */
 button.accordion {
-  background-color: rgb(57, 57, 57);
+  background-color: rgb(42, 42, 42);
   color: white;
   cursor: pointer;
   padding: 5px;
@@ -206,7 +206,7 @@ button.accordion {
 
 /* Hover behaviour */
 button.accordion.active, button.accordion:hover {
-  background-color: #555;
+  background-color: #363535;
 }
 
 /* Somehow this puts the plus sign at the end. */
@@ -233,7 +233,7 @@ button.accordion.active:after {
 */
 div.panel {
   padding: 0 5px;
-  background-color: #555;
+  background-color: #1e1d1d;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;

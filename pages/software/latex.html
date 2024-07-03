@@ -119,6 +119,27 @@
     </div>
     
     <code>{cclc}</code> defines a table with four columns, where the 1st, 2nd, and 4th columns are center-aligned, and the 3rd column is left-aligned. The 2nd column is in between the 2 <code>&</code>s.
+
+    <p>
+      <li>Placing equations side-by-side</li>
+      $$\begin{array}{ccc}
+        \begin{aligned}
+          \frac{d^3}{dx^3}\cos(x)\bigg|_{x=0} &= \sin(0) \\ 
+                                            &= 0 \\
+          \frac{d^3}{dx^3}P(x)\bigg|_{x=0} &= 6c_3 \\
+                                &= 0 \\
+                            c_3  &= 0
+        \end{aligned}
+        &&
+        \begin{aligned}
+          \frac{d^4}{dx^4}\cos(x)\bigg|_{x=0} &= \cos(0) \\ 
+                                              &= 1 \\
+          \frac{d^4}{dx^4}P(x) \bigg|_{x=0} &= 24c_4 \\
+                                &= 1 \\
+                            c_4  &= \frac{1}{24} 
+        \end{aligned}
+      \end{array}$$
+    </p>
   </ul>
 </section>
 
@@ -231,6 +252,15 @@
 
     <li>Arrow</li>
     <code>\rightarrow</code>
+
+    <p>
+      <li>Using colours</li>
+      $$
+        \frac{d}{dx}P(x) = c_1 + 2c_2x + \textcolor{red}3c_3x^2
+      $$
+
+      Colouring everything after: $P(x) = c_1 + \color{red}3c_3x^2$
+    </p>
   </ul>
 </section>
 </chapter>

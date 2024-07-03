@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Estimation: Usecase - Simple Kinematics </title>
+  <meta name="Estimation: Usecase - Simple Kinematics " content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">State to be estimated</a>
+<a href="#1">Measurement model</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Estimation: Usecase - Simple Kinematics </h1>
+<section id="0"><h1>State to be estimated</h1>
+  Consider an object is moving from a starting position $p_0$, with initial velocity $v_0$ and acceleration $a$. The goal is to estimate $x$ given a position measurement $y$ at every time step. 
+  $$
+    x = \begin{bmatrix}x_1 \\ x_2 \\ x_3\end{bmatrix} 
+      = \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
+  $$
+
+  <m>There are 3 unknowns - tricky!</m>
+</section>
+
+<section id="1"><h1>Measurement model</h1>
+  From basic kinematics, the measurement equation/model is:
+  $$
+    y(t) = p_0 + v_0t + \frac{1}{2}at^2
+  $$
+
+
+  If $\Delta{t}$ is the sampling period of the distance sensor such that $t=0, \Delta{t}, 2\Delta{t}, \cdots, k\Delta{t}$, the measurement equation is then:
+  $$
+    y_k = y(k\Delta{t}) = 
+      \underbrace{
+        \begin{bmatrix}1 & k\Delta{t} & \frac{1}{2}(k\Delta{t})^2\end{bmatrix}
+      }_{H_k}
+      \underbrace{
+        \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
+      }_{x}
+      + v_k
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

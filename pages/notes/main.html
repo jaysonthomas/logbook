@@ -40,7 +40,7 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Manipulation</a>
-<a href="#1">Estimation</a>
+<a href="#1"><a href="estimation/main.html">Estimation</a></a>
 <a href="#2">Dynamics modeling, Simulation & Control</a>
 <ul class="no-bullets">
   <li><a href="#2.0">Plants</a></li>
@@ -82,9 +82,8 @@
   </ul>
 </section>
 
-<section id="1"><h1>Estimation</h1>
+<section id="1"><h1><a href="estimation/main.html">Estimation</a></h1>
   <ul>
-    <li><a href="estimation/estimationIntro.html">Estimation Intro</a></li>
     <li><a href="estimation/discreteProb.html">Discrete probability</a></li>
     <li><a href="estimation/continuousProb.html">Continuous probability</a></li>
     <li><a href="estimation/multivariateDistributions.html">Multivariate distributions</a></li>
@@ -98,18 +97,25 @@
   <subsection id="2.0"><h1>Plants</h1>
     <ul>
       <li><a href="plants/intro.html">Intro</a></li>
-      <li><a href="plants/doubleIntegrator.html">Double integrator</a></li>
-      <li><a href="plants/singleRigidBody.html">Single Rigid Body</a></li>
-      <li><a href="plants/msd.html">Mass spring damper</a></li>
-      <li><a href="plants/lti.html">LTI system</a></li>
       <li><a href="plants/bipedal.html">Bipedal</a></li>
+      <li><a href="plants/doubleIntegrator.html">Double integrator</a></li>
       <li><a href="plants/drone/main.html">Drone</a></li>
+      <li><a href="plants/lti.html">LTI system</a></li>
+      <li>Mass spring damper</li>
+      <ul>
+        <li><a href="plants/singleMass.html">Single mass</a></li>
+        <li><a href="plants/twoMassSingleSpring.html">Two masses with a single spring</a></li> 
+      </ul>
+      <p>
       <li>Robotic arm</li>
       <ul>
         <li><a href="plants/simplePendulum.html">Simple pendulum</a></li>
         <li><a href="plants/2r.html">2R robot (Sort)</a></li>
         <li><a href="plants/TwoLinkArm/main.html">Two-Link Arm</a></li>  
       </ul>
+      </p>
+
+      <li><a href="plants/singleRigidBody.html">Single Rigid Body</a></li>
     </ul>
   </subsection>
 

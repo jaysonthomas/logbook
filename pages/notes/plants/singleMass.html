@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dynamics of a mass spring damper system</title>
-  <meta name="Dynamics of a mass spring damper system" content="text/html; charset=utf-8;" />
+  <title>MSD Dynamics: Single mass</title>
+  <meta name="MSD Dynamics: Single mass" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -49,9 +49,10 @@
 </ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Dynamics of a mass spring damper system</h1>
+<chapter style="counter-reset: chapter 0"><h1>MSD Dynamics: Single mass</h1>
 <section id="0"><h1>FBD analysis</h1>
-  [<a href="https://t.ly/wj9h">Ref</a>]
+  [<a href="https://t.ly/wj9h">18.03 website (delete?)</a>,
+  <a href="https://t.ly/EDPt_">Some pointers in google doc</a>]
   
   <div class="container">
     <figure>
@@ -71,7 +72,7 @@
     </figure>
   </div>
   
-  At equilibrium, there is no horizontal force acting on the spring. A spring force $F_s$ acts in the oppposite direction to the direction of displacement from the equilibrium point and is proportional to it. For a positive displacment, the spring expands and the spring force tends to bring the object to its equilibrium position.
+  At equilibrium, there is no horizontal force acting on the spring. A spring force $F_s$ acts in the oppposite direction to the <n>direction of displacement</n> from the equilibrium point and is proportional to it. For a positive displacment, the spring expands and the spring force tends to bring the object to its equilibrium position.
 
   $$
     F_s = -k_sd_{em}
@@ -113,7 +114,7 @@
 </section>
 
 <section id="2"><h1>State space model</h1>
-  To arrive at a numerical solution, the system is written as a series of first-order ODEs, defined collectively as a <i>state space model</i> of the system. More generally, an n-th order ODE can be written as a system of n first-order ODEs.
+  To arrive at a numerical solution, the system is written as a series of first-order ODEs, defined collectively as a <i>state space model</i> of the system. More generally, <n>an $n^{th}$ order ODE can be written as a system of $n$ first-order ODEs</n>.
 
   <subsection id="2.0"><h1>State variables</h1>
     $$\begin{align*}
@@ -133,7 +134,7 @@
 
     In vector form:
     $$
-      \underbrace{\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix}}_{\dot{x}} = 
+      \underbrace{\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix}}_{\color{orange}{\dot{x}}} = 
 
       \underbrace{
       \begin{bmatrix} 

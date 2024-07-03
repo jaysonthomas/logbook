@@ -87,34 +87,6 @@
     $$
       \hat{x}_k = \begin{bmatrix} \hat{x}_{1,k} \\ \vdots \\ \hat{x}_{n,k} \end{bmatrix}
     $$
-
-    <button class="accordion">Use case</button>
-    <div class="panel">
-    <p>
-      Consider a vehicle is moving from a starting position $y_0$, with initial velocity $v_0$ and acceleration $a$. From basic kinematics, the measurement equation/model is:
-      $$
-        y(t) = y_0 + v_0t + \frac{1}{2}at^2
-      $$
-
-      Our goal is to estimate $x = \begin{bmatrix}y_0 \\ v_0 \\ a\end{bmatrix}$ given a position measurement $y$ at every time step. 
-      <br>
-      Assume $\Delta{t}$ is the sampling period of the distance sensor such that $t=0, \Delta{t}, 2\Delta{t}, \cdots, k\Delta{t}$
-      <br>
-      Let $y(k\Delta{t}) := y_k$
-    </p>
-
-    <p>
-      The measurement equation is then:
-      $$
-        y_k = \underbrace{\begin{bmatrix}1 & k\Delta{t} & \frac{1}{2}(k\Delta{t})^2\end{bmatrix}}
-              _{H_k}
-              \underbrace{\begin{bmatrix}y_0 \\ v_0 \\ a\end{bmatrix}}_{x}
-              + v_k
-      $$
-
-      $x$ is composed of $x_1 := y_0$, $x_2 := v_0$ and $x_3 := a$.
-    </p>
-    </div>
   </subsection>
 
   <subsection id="2.1"><h1>Estimation error vector</h1>
