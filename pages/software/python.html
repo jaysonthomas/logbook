@@ -443,6 +443,15 @@ Output: type
 
 <section id="12"><h1>Dictionary</h1>
   <ul>
+    <li>Creation</li>
+    Create a dictionary from empty lists with particular column names.
+<pre><code class="python">
+  dict = {key: [] for key in ['lu', 'm', 'r', 'a', 'tau_f', 'tau_lower']}
+</code></pre>    
+
+    Data can now be appended to individual lists via their correspoding dictionary keys, example: <code>dict['lu'].append(3)</code>. A pandas dataframe can then be created from the dictionary using <code>df = pd.DataFrame(dict)</code>.
+
+    <p></p>
     <li>.items()</li>
 <pre><code class="python">
   a = {'t1':0, 't2':1, 't3':2}
