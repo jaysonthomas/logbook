@@ -39,31 +39,41 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Measurement model</a>
+<a href="#1">Mathematical model of noise</a>
+<a href="#2">Dimensions</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation: Commonality in approaches</h1>
-
+<section id="0"><h1>Measurement model</h1>
+  A measurement model/equation/function $H$:
   <ul>
-    <li>Measurement model $H$</li>
-    A measurement model/equation/function:
-    <ul>
-      <li>Projects a state into measurement space or</li>
-      <li>Maps a state to a measurement</li>
-    </ul>
-
-    <p>
-      <li>Mathematical model of noise $v$</li>
-      Since measurements are imperfect, a model of the measurement noise $v$ is required. It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled.
-  
-      $$
-        v \sim N(0, R)
-      $$
-      
-      Generally, noise is modeled as a $0$ mean Gaussian with some covariance $R$. To each measurement, some zero mean Gaussian noise is added.
-    </p>
-
-    <li>$m$ measurements $y$ are collected of true state $x$ of dimension $n$</li>
+    <li>Projects a state into measurement space or</li>
+    <li>Maps a state to a measurement</li>
   </ul>
+
+  <p>
+    In the simplest form, a measurement model can look like:
+    $$
+      y = Hx + v
+    $$
+  </p>
+</section>
+
+<section id="1"><h1>Mathematical model of noise</h1>
+  It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled. Generally, the noise distribution is modeled as or assumed to be a zero-mean gaussian with some covariance $R$. To each measurement, a noise $v$, sampled from this gaussian $\mathcal{N}(0, R)$, is added.
+
+  $$
+    v \sim \mathcal{N}(0, R)
+  $$
+</section>
+
+<section id="2"><h1>Dimensions</h1>
+  <ul>
+    <li>$x$ is the unknown state vector to be estimated of size $n$</li>
+    <li>$y$ is the vector of $m$ noisy measurements - <n>the estimate $\hat{x}$ becomes more accurate with more measurement samples.</n></li>
+  </ul>
+</section>
 </chapter>
 
 </body>
