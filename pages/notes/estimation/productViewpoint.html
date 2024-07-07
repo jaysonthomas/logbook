@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Estimation</title>
-  <meta name="Estimation" content="text/html; charset=utf-8;" />
+  <title>Estimation: Product viewpoint</title>
+  <meta name="Estimation: Product viewpoint" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -44,13 +44,11 @@
   <li><a href="#0.0">Definition</a></li>
   <li><a href="#0.1">The need for estimation</a></li>
   <li><a href="#0.2">Applications</a></li>
-  <li><a href="#0.3">How to create an estimator</a></li>
 </ul>
-<a href="#1">The problem of control with noisy measurements</a>
-<a href="#2">Musings</a>
+<a href="#1">Musings</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
+<chapter style="counter-reset: chapter 0"><h1>Estimation: Product viewpoint</h1>
 <section id="0"><h1>Introduction</h1>
   <subsection id="0.0"><h1>Definition</h1>
     The goal of estimation is to come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors. Estimation:
@@ -127,72 +125,9 @@
     E.g. estimation is what makes GPS work so well, Apollo spacecraft, 
     how the phone screen orients itself.
   </subsection>
-
-  <subsection id="0.3"><h1>How to create an estimator</h1>
-    We use <code>Bayes rule</code> which is a method:
-    <ul>
-      <li>To integrate data over time</li>
-      <li>
-        To take multiple sources of information, and come up with a distribution 
-        that is the best reflection of what the state might be
-      </li>
-    </ul>
-    Bayes rule relies on probability at its core to quantify uncertainty.
-    There are other ways, such as confidence scores, fuzzy logic etc.
-  </subsection>
 </section>
 
-<section id="1"><h1>The problem of control with noisy measurements</h1>
-  We can capture the imperfections in a sensor using a <i>measurement model</i> which tells us $p(z|x)$:
-
-  <p>
-    $p(z|x)$ - The likelihood of making measurement $z$ given that we're in state $x$. Often, these measurement models are Gaussian. The most likely measurement is centred on the true value of whatever the sensor measures with some covariance.
-  </p>
-
-  We respect the <i>Markov Assumption</i> when our updated estimate only depends on the current observation and the previous estimate, i.e. it doesn't depend on all the previous observations used to find the previous estimate. 
-
-  <p>
-    We can use recursive averaging to compute the estimate. Recursive averaging would be better than taking batch averages because it requires less memory and we don't have to wait till we have all the measurements to make an estimate. But as $t$ gets bigger, new measurements are going to cause the estimate to change less and less, i.e. make the system less responsive. This method would be bad for a drone that hovers in place for a long time and then decides to move. The motion would take a long time to get incorporated into the estimate.
-  </p>  
-
-  $$\begin{align*}
-    \hat{x}_t &= f(\hat{x}_{t-1}, z_t) \\
-    \hat{x}_t &= \frac{t-1}{t}\hat{x}_{t-1} + \frac{1}{t}z_t
-  \end{align*}$$
-  
-  A better technique would be the <i>exponential moving average</i>:
-
-  $$\begin{align*}
-    &\hat{x}_t = (\alpha)\hat{x}_{t-1} + (1-\alpha)z_t \quad\quad 0 \leq \alpha \leq 1
-  \end{align*}$$
-
-  <p>
-    $x_t$ is the unknown state at timestep $t$. For a 1D drone, the state contains 2 elements: $x_t = \begin{bmatrix}z \\ \dot{z} \end{bmatrix}$
-    <br>
-    $\hat{x}_t$ is the estimate of the state at time $t$.
-    <br>
-    $z_t$ represents an observation or the measurement that we get at timestep $t$.
-  </p>
-
-  With exponential moving average, we have to make a trade-off (Imagine the drone-hover-then-move example and not just in terms of stationary measurements with small changes). If $\alpha$ is close to 1, i.e. $\alpha \approx 1$:
-  <ul>
-    <li>Trust previous estimate over new observations</li>
-    <li>Robust against bad measurements</li>
-    This leads to smooth estimates of state, which is good if the state actually is smooth. But when the state is not constant, this breaks down and the estimate is slow to respond to new measurements.
-    <p>
-      <li>Not responsive for fast motion</li>
-    </p>
-  </ul>
-
-  If $\alpha \approx 0$:
-  <ul>
-    <li>Trust measurements over previous estimate</li>
-    <li>Responsive to state changes</li>
-    <li>Not robust against bad measurements</li>
-  </ul>
-</section>
-
-<section id="2"><h1>Musings</h1>
+<section id="1"><h1>Musings</h1>
   <ul>
     <li>Normalisation of data</li>
     <a href="https://t.ly/C0lw">Ref1</a>, 

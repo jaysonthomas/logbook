@@ -42,6 +42,7 @@
 <a href="#0">Measurement model</a>
 <a href="#1">Mathematical model of noise</a>
 <a href="#2">Dimensions</a>
+<a href="#3">State</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation: Commonality in approaches</h1>
@@ -58,14 +59,20 @@
       y = Hx + v
     $$
   </p>
+
+  $z_t$ or $y_t$ represents an observation or a measurement made at timestep $t$.
 </section>
 
 <section id="1"><h1>Mathematical model of noise</h1>
-  It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled. Generally, the noise distribution is modeled as or assumed to be a zero-mean gaussian with some covariance $R$. To each measurement, a noise $v$, sampled from this gaussian $\mathcal{N}(0, R)$, is added.
+  It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled. A <i>noise distribution</i> captures the imperfections in a sensor, by modeling the likelihood of making measurement $z$ given the system is in state $x$, $p(z|x)$. 
 
-  $$
-    v \sim \mathcal{N}(0, R)
-  $$
+  <p>
+    Noise distributions are often modeled as or assumed to be a zero-mean gaussian with some covariance $R$. To each measurement, a noise $v$ is added, sampled from the gaussian $\mathcal{N}(0, R)$. The most likely measurement is centred on the true value of whatever the sensor measures with some covariance.
+
+    $$
+      v \sim \mathcal{N}(0, R)
+    $$
+  </p>
 </section>
 
 <section id="2"><h1>Dimensions</h1>
@@ -73,6 +80,10 @@
     <li>$x$ is the unknown state vector to be estimated of size $n$</li>
     <li>$y$ is the vector of $m$ noisy measurements - <n>the estimate $\hat{x}$ becomes more accurate with more measurement samples.</n></li>
   </ul>
+</section>
+
+<section id="3"><h1>State</h1>
+  $x_t$ is the unknown state at timestep $t$. $\hat{x}_t$ is the estimate of the state at time $t$.
 </section>
 </chapter>
 

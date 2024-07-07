@@ -41,6 +41,9 @@
   
 <a href="#0">Assuming constant state</a>
 <a href="#1">Adapting to changes in a state</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Bayes rule</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation: Approaches - Introduction</h1>
@@ -64,6 +67,17 @@
 
 <section id="1"><h1>Adapting to changes in a state</h1>
   To incorporate a vehicle's motion, for example, into the state estimation process, the Kalman filter and its variants called extended and unscented kalman filters can be used. 
+
+  <subsection id="1.0"><h1>Bayes rule</h1>
+    <i>Bayes rule</i> is a method:
+    <ul>
+      <li>To integrate data over time</li>
+      <li>
+        To come up with a distribution that is the best reflection of what the state might be, by considering multiple sources of information
+      </li>
+    </ul>
+    Bayes rule relies on probability at its core to quantify uncertainty. There are other ways, such as confidence scores, fuzzy logic etc.
+  </subsection>
 </section>
 </chapter>
 

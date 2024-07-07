@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Estimation Background: Variance</title>
+  <meta name="Estimation Background: Variance" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Definition</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Equation deepdive</a></li>
+</ul>
+<a href="#1">Sample variance</a>
+<a href="#2">Covariance</a>
+<a href="#3">Expected value</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Estimation Background: Variance</h1>
+
+<section id="0"><h1>Definition</h1>
+  <p>
+    [<a href="https://t.ly/CUyG">J's question</a> on stackexchange. <a href="https://t.ly/jWCR">Code example</a>.]
+  </p>
+  
+  When drawing from a distribution over and over again, the <i>variance</i> gives an indication of how spread out the numbers or <i>samples</i> (the values being drawn) will be from the mean (the expected value need not be
+  equal to the mean). The variance is not a measure of how well the mean is known, but how much the samples vary.
+
+  $$
+    \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
+  $$
+
+  $\sigma$ is the <i>standard deviation</i> which is the square root of variance. 
+
+  <p>
+    When the probability of every outcome $P(x_i)$ is $\frac{1}{N}$, the variance 
+    is just the average of the squared differences from the mean.
+
+    $$
+      \sigma^2 = \sum_{i=1}^{N}\frac{(x_i-\mu)^2}{N}
+    $$
+  </p>
+  
+  <subsection id="0.0"><h1>Equation deepdive</h1>
+    Subtracting the mean makes the mean the zero point. It is a shift operation. All sample values can now be represented w.r.t the mean as simple <n>deviations</n> as shown <a href="https://t.ly/dipKw">here</a>. Squaring the deviations as opposed to taking the raw or absolute value, helps to amplify the deviations of samples from the mean which is helpful when comparing 2 different distributions.
+  </subsection>  
+</section>
+
+<section id="1"><h1>Sample variance</h1>
+  Assuming the probability of every observation is the same, in calculating <i>sample variance</i>, $N-1$ is used in the division instead of $N$:
+
+  $$
+    \sigma^2 = \sum_{i=1}^{N}\frac{(x_i-\mu)^2}{N-1}
+  $$
+  Dividing by $N - 1$ adjusts for the fact that the sample mean is itself an estimate based on the data, and is not known with certainty. This adjustment reduces the bias in the estimate of the population variance, making it an <i>unbiased estimator</i> of the population variance.
+
+  <p>
+    When dividing by $N$, the resulting estimate is biased low, meaning it tends to underestimate the population variance. This bias can be substantial for small samples, but becomes negligible as the sample size increases.
+  </p>
+</section>
+
+<section id="2"><h1>Covariance</h1>
+  A <i>covariance matrix</i> is a square matrix that summarises the pairwise correlations between variables in a dataset. It is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
+</section>
+
+<section id="3"><h1>Expected value</h1>
+  It is not the most likely, but the average value a random variable converges to if a value was continuously drawn from a distribution. It gives the <n>long-run average</n> value of a <n>repeated</n> probabilistic experiment.
+  $$
+    E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
+  $$
+  It's the value of the random variable, times the likelihood of each of 
+  those outcomes all summed together. When the probability of each event is
+  $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
+
+  <p>
+    The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. But in the example above, where the underlying events (final position of the bot) are numeric events, the expected value gives an idea of the value of the random variable at any given time. 
+  </p>
+
+  $$
+    E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
+  $$
+
+  $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
+</section>
+</chapter>
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Estimation</title>
-  <meta name="Estimation" content="text/html; charset=utf-8;" />
+  <title>Estimation background: Probability</title>
+  <meta name="Estimation background: Probability" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,42 +39,28 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Description</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Continuous samples space</a></li>
+</ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
+<chapter style="counter-reset: chapter 0"><h1>Estimation background: Probability</h1>
 
-<section id="0"><h1>Contents</h1>
-  <ul>
-    <li>Background</li>
-    <ul>
-      <li><a href="productViewpoint.html">Product viewpoint</a></li>
-      <li><a href="probability.html">Probability</a></li>
-      <li><a href="variance.html">Variance</a></li>
-      <li><a href="probFunctions.html">Probability Funcitons</a></li>
-      <li><a href="discreteProb.html">Discrete probability</a></li>
-      <li><a href="continuousProb.html">Continuous probability</a></li>
-      <li><a href="multivariateDistributions.html">Multivariate distributions</a></li>  
-    </ul>
+<section id="0"><h1>Description</h1>
+  $$
+    P(\text{of a particular event}) = \frac{\text{Frequency of the particular event occurring}}{\text{Total number of events}}
+  $$
+
+  The total number of events includes all occurrences, not just unique ones.
+
+  <subsection id="0.0"><h1>Continuous samples space</h1>
+    The real value position of a robot is an example of a continuous sample space: <a href="https://t.ly/_1lN">Slide 11</a>. Random variables become extremely powerful in this case.
+  
     <p>
-      <li>Usecases</li>
-      <ul>
-        <li><a href="simpleKinematics.html">Simple kinematics</a></li>
-        <li><a href="2dDrone.html">2D Drone</a></li>
-      </ul>
+      For a continuous sample space, the probability of any particular value will always be 0. For example, nothing can be said about the probability of a vehicle being at some specific location. Instead, probability that the vehicle is in some region is given more importance.
     </p>
-
-    <li>Approaches</li>
-    Each approach makes slightly different assumptions about the measurements and the underlying measurement/noise model.
-    <ul>
-      <li><a href="overview.html">Overview</a></li>
-      <li><a href="commonality.html">Commonality</a></li>
-      <li><a href="averages.html">Averages</a></li>
-      <li><a href="leastSquares.html">Least squares</a></li>
-      <li><a href="mapEstimation.html">Maximum A posteriori Estimation</a></li>
-      <li><a href="bayesFilters.html">Bayes filters</a></li>
-    </ul>
-  </ul>
+  </subsection>
 </section>
 
 </chapter>
