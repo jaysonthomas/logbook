@@ -45,7 +45,8 @@
   <li><a href="#0.1">The need for estimation</a></li>
   <li><a href="#0.2">Applications</a></li>
 </ul>
-<a href="#1">Musings</a>
+<a href="#1">What does a distribution have to do with robotics?</a>
+<a href="#2">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation: Product viewpoint</h1>
@@ -127,7 +128,21 @@
   </subsection>
 </section>
 
-<section id="1"><h1>Musings</h1>
+<section id="1"><h1>What does a distribution have to do with robotics?</h1>
+  Solving estimation problems often boils down to using data from sensors which are imperfect.
+
+  <p>
+    For example, a range finder pointed at a wall 1m away will most likely give measurements that are slightly different than 1 meter like 0.992, 1.001... etc. But if this measurement is repeated many times, on average, the sensor will yield the correct distance plus or minus some error. This error is called <i>sensor noise</i> and it's often best modeled as a Gaussian random variable with some mean ideally $0$, and some standard deviation.
+  </p>
+
+  Therefore, in order to use a sensor more effectively, an accurate estimate of what the parameters of its output distribution are, i.e. a <i>sensor model</i> is required. <n>It is not possible to know the exact values of the parameters of a distribution given some data</n>, but an estimate can be computed.
+  
+  <p>
+    A good sensor will have a small variance. A bad sensor will have a large variance. Before we put a sensor on a robot we need to estimate what this variance is.
+  </p>
+</section>
+
+<section id="2"><h1>Musings</h1>
   <ul>
     <li>Normalisation of data</li>
     <a href="https://t.ly/C0lw">Ref1</a>, 

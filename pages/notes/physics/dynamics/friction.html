@@ -40,6 +40,11 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Velocity dependent friction models</a>
+<a href="#1">Mass dependent friction models</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Static friction</a></li>
+  <li><a href="#1.1">Kinetic friction</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Friction</h1>
@@ -47,7 +52,7 @@
   [<a href="https://t.ly/7Nv1o">Modern robotics</a>, <a href="https://shorturl.at/gnwAJ">Drake</a>, <a href="https://t.ly/Wg0bV">Mathworks</a>] 
   
   <br>
-  Other factors may contribute to the friction at a joint, including the loading of the joint bearings, the time the joint has been at rest, the temperature, etc. Friction in a gearhead often increases as the gear ratio increases.
+  Other factors may contribute to the friction at a joint, including loading of a joint's bearings, time a joint has been at rest, temperature, etc. Friction in a gearhead often increases as the gear ratio increases.
 
   <subsubsection><h1>Viscous</h1>
     <div class="container">
@@ -138,6 +143,33 @@
       </figure>
     </div>
   </subsubsection>
+</section>
+
+<section id="1"><h1>Mass dependent friction models</h1>
+  <subsection id="1.0"><h1>Static friction</h1>
+    If an object is at rest, horizontal forces up to a certain threshold force can be applied to the object and it will still remain static. <n>Experiments</n> show this threshold force is a constant (<i>coefficient of static friction</i>) times the normal force.
+
+    $$\begin{align*}
+      F_s \, > \, &\mu_s N \\
+      \frac{1}{3} \, \lt \, &\mu_s \lt 1
+    \end{align*}$$
+
+    <n>This means that the force required to move an object horizontally is always less than the force with which gravity pulls it down</n>. IRL, the threshold to start moving can never be smaller than $\frac{1}{3}$rd of the normal force even on a very slippery surface.
+
+    <p>
+      $b_{static}$ could be considered to be $\mu_s N$ multiplied by a radius to get $\tau_{fric}$.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Kinetic friction</h1>
+    A certain force needs to be applied to keep an object moving at a constant velocity. <n>This force is the same as the force of friction</n>. From experiments, it is a constant (<i>coefficient for kinetic friction</i>) times the normal force (here, gravity).
+
+    $$
+      F_k = \mu_k N
+    $$
+
+    $F_k$ is not a threshold force. $b_{kinetic}$ could be considered to be $\mu_k N$ multiplied by a radius to get $\tau_{fric}$.
+  </subsection>  
 </section>
 </chapter>
 

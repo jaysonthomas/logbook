@@ -79,8 +79,13 @@
       'leave a new line'.
     </p>
     <li>
-      Place the label just before the equation line that we need to be referenced later <code>\label{eq:xxx}</code>. When referencing the equation using <code>\ref{eq:xxx}</code>, the equation number shows up as a link.
+      Place <code>\label{eq:xxx}</code> just after the equation, on the same line, before the newline character <code>\\</code>. Use <code>\ref{eq:xxx}</code> to reference the equation.
     </li>
+      $$\begin{align}
+        \sigma &= \alpha \mu \nonumber \\
+        1-\frac{v}{r_e \omega} &= \alpha \frac{F}{F_N}  \label{eq:linearVelocityFromSlip}
+      \end{align}$$
+    From $\ref{eq:linearVelocityFromSlip}$
 
     <p>
       <li>Numbering equations</li>

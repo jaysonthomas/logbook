@@ -57,7 +57,7 @@
 
     <p>
     <li>Recursive least squares</li>
-    With the recursive estimator, since measurements come in one at a time, $H$ will just be a vector, not a matrix. $H$ will map a state to a single measurement.
+    Having a batch of stored measurements is computationally intensive, since the amount of computational resources needed to solve the normal equations grow with the measurement vector size. With a recursive estimator, since measurements come in one at a time, $H$ will just be a vector, not a matrix. $H$ will map a state to a single measurement.
     </p>
 
     <li>Non-linear leasts squares</li>

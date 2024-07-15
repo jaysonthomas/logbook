@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RLS derivation</title>
-  <meta name="RLS derivation" content="text/html; charset=utf-8;" />
+  <title>RLS: An even more simplified form of the estimation error covariance</title>
+  <meta name="RLS: An even more simplified form of the estimation error covariance" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -41,18 +41,30 @@
   
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>RLS derivation</h1>
-  <ul>
-    <li><a href="estimationPropEq.html">Estimation propagation equation</a></li>
-    <li>Estimation error covariance matrix</li>
-    <ul>
-      <li><a href="estimationErrorCovariance.html">Basic form</a></li>
-      <li><a href="estCovPropEq.html">Estimation covariance propagation equation</a></li>
-    </ul>
+<chapter style="counter-reset: chapter 0"><h1>RLS: An even more simplified form of the estimation error covariance</h1>
+  Using the gain matrix derived <a href="costFunction.html">here</a>:
+  $$\begin{align*}
+    K_k &= P_{k-1}H_k^TL_k^{-1} \\
+    \text{where,} \qquad L_k &= H_kP_{k-1}H_k^T + R_k
+  \end{align*}$$
 
-    <li><a href="costFunction.html">Gain matrix</a></li>
-    <li>An even more <a href="simplifiedEstErrorCovariance.html">simplified form</a> of the estimation error covariance</li>
-  </ul>
+  $L_k$ and its inverse are symmetric. Therefore:
+  $$\begin{align*}
+    L_k &= L_k^T \\
+    (L_k^{-1})^T &= L_k^{-1}
+  \end{align*}$$
+
+  Substituting the expressions for $K_k$ and $L_k$ into the <a href="estCovPropEq.html#mjx-eqn:eq:estCovPropEqExpanded">expanded version of the estimation error covariance propagation equation</a>:
+  $$\begin{align*}
+    P_k &= P_{k-1} - K_kH_kP_{k-1} - P_{k-1}H_k^TK_k^T + K_kH_kP_{k-1}H_k^TK_k^T + K_kR_kK^T_k \\
+        &= P_{k-1} - P_{k-1}H_k^TL_k^{-1}H_kP_{k-1} - P_{k-1}H_k^TL_k^{-1}H_kP_{k-1} + 
+           K_k(\underbrace{H_kP_{k-1}H_k^T + R_k}_{L_k})K^T_k \\
+        &= P_{k-1} - 2P_{k-1}H_k^TL_k^{-1}H_kP_{k-1} + P_{k-1}H_k^TL_k^{-1}H_kP_{k-1}\\
+        &= P_{k-1} - \underbrace{P_{k-1}H_k^TL_k^{-1}}_{K_k}H_kP_{k-1}\\
+        &= P_{k-1} - K_kH_kP_{k-1}\\
+        &= (I - K_kH_k)P_{k-1}\\
+  \end{align*}$$
+</section>
 </chapter>
 
 </body>

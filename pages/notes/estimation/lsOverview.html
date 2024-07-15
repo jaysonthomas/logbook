@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least Squares</title>
-  <meta name="Least Squares" content="text/html; charset=utf-8;" />
+  <title>Least Squares Overview</title>
+  <meta name="Least Squares Overview" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -47,11 +47,10 @@
 </ul>
 <a href="#1">Overall idea of LS</a>
 <a href="#2">Assumptions in LS</a>
-<a href="#3">Branches</a>
-<a href="#4">Musings</a>
+<a href="#3">Musings</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Least Squares</h1>
+<chapter style="counter-reset: chapter 0"><h1>Least Squares Overview</h1>
 
 <section id="0"><h1>Definitions</h1>
   <subsection id="0.0"><h1>State estimation</h1>
@@ -131,17 +130,7 @@
   </ul>
 </section>
 
-<section id="3"><h1>Branches</h1>
-  <ul>
-    <li><a href="lls.html">Linear least squares</a></li>
-    <li><a href="batchLs.html">Batch linear least squares</a></li>
-    <li><a href="wls.html">Weighted batch least squares</a></li>
-    <li><a href="rls.html">Recursive least squares</a></li>
-    <li><a href="nls.html">Non linear least squares</a></li>
-  </ul>
-</section>
-
-<section id="4"><h1>Musings</h1>
+<section id="3"><h1>Musings</h1>
   We are trying to fit a model to a set of measurements. We do this by considering the error and the reliability of each measurement. In maths, this translates to maximising the probability that the measurements match the actual state or parameter. Certain terms are independent in the probability equation and we end up with a function to maximise which is done by taking the derivative and setting it to 0. 
   <p>
     The <a href="../../fundamentals/maths.html">fundamental maths</a> for this chapter.
