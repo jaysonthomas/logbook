@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Two-link arm: Forward Kinematics</title>
+  <meta name="Two-link arm: Forward Kinematics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Intro</a>
+<a href="#1">The Jacobian</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Geometric Jacobian</a></li>
+  <li><a href="#1.1">Analytical Jacobian</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Two-link arm: Forward Kinematics</h1>
+<section id="0"><h1>Intro</h1>
+  $$
+    X^B = f^B_{kin}(q)
+  $$  
+
+  In this mathematical equation (actual implementation in code is different):
+  <br>
+  $q$ is the vector of positions.
+  <br>
+  $X$ is the pose in the world.
+  <br>
+  $f_{kin}$ is the FK of the body.
+  <br>
+  $B$ stands for body.
+  <br>
+  $G$ stands for gripper if it was used instead of $B$.    
+  
+  <p>
+    The mapping from joint positions to end-effector poses is called the <i>Forward Kinematics problem</i>. In the case of revolute joints, this mapping from joint angles to ee pose is non-linear due to the rotation part of the pose. A simple example:
+    $$
+      R(\theta) = \begin{bmatrix}
+      c & -s \\
+      s & c     
+      \end{bmatrix}
+    $$
+  </p>
+</section>
+
+<section id="1"><h1>The Jacobian</h1>
+  [<a href="https://t.ly/1SjD9">Ref1</a>, <a href="https://t.ly/M7pDR">Ref2</a>] <br>
+  A Jacobian in the context of an arm, defines the relationship between operational space (end-effector) and joint space (joint angle) spatial velocities. It is computed through an <n>iterative method</n> which calculates velocities from the base to the end-effector. <n>Each column of the Jacobian specifies the contribution of the corresponding joint velocity to the end-effector's velocities</n>. It is a <n>position dependent matrix</n>, hence a function of the joint angles $q$ at any given time.
+
+  <subsection id="1.0"><h1>Geometric Jacobian</h1>
+    A <i>geometric jacobian</i> has the extra step of mapping joint velocities to spatial velocity vectors. It is $\frac{\partial{f^B}(q)}{\partial q}$ plus any change of coordinates into the spatial vectors. Geometric Jacobian gives the angular velocities in the base frame.
+
+    $$
+      V^E = \begin{bmatrix} v_E \\ \omega_E \end{bmatrix}
+          = J(q) \dot{q} 
+    $$
+
+    <p>
+      Since there are different ways of representing $q$ and $X$, there are different possible Jacobians to determine how to go from joint angles to some spatial velocity. Because of say the quaternion representation, a joint position vector $q$ is often bigger than a joint velocity vector. A spatial joint or end-effector velocity only needs 6 numbers; hence, joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. It is possible to map between them though. 
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Analytical Jacobian</h1>
+    Given the forward kinematics equation $x(q) = FK(q)$, the analytical Jacobian maps the operational space and joint space velocities by computing the time derivative of the $FK$ function:
+  
+    $$
+      \dot{x}(q) = J_a \dot{q}
+    $$
+  
+    Analytical Jacobian gives the time derivatives of Euler angles and is the true partial derivative. It is not recommended as much. 
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

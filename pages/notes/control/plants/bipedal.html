@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bipedal</title>
+  <meta name="Bipedal" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Resources</a>
+<a href="#1">Temp</a>
+<a href="#2">Starting trouble</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Bipedal</h1>
+<section id="0"><h1>Resources</h1>
+  <ul>
+    <li><a href="https://t.ly/9SpO5">Blog post on the equations of motion</a></li>
+    <li><a href="https://t.ly/rd7sm">Github code on Linear inverted pendulum</a></li>
+    <li><a href="https://t.ly/Nu3dO">Underactuated notes</a></li>
+    <li><a href="https://t.ly/e4LrH">Matlab talk</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Temp</h1>
+  <ul>
+    <li>Dynamics of contact</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Starting trouble</h1>
+  I should be able to understand the spacecraft model with its constraints and how that maps to a bipedal. What is a centroidal momentum matrix? Understand the impact dynamics.
+
+  <p>
+    Read just section 5.2.2 tomorrow until the aside.
+    Read the above bits again.
+  </p>
+
+  <a href="../../papers/bipedal/1.html">Notes</a> on a bipedal paper.
+</section>
+</chapter>
+
+</body>
+</html>

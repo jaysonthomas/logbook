@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>System ID: Overview</title>
+  <meta name="System ID: Overview" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Methods</a>
+<a href="#1">A need for alternate mathematical model representations</a>
+<a href="#2">A choice</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>System ID: Overview</h1>
+<section id="0"><h1>Methods</h1>
+  <i>White box method </i> involves writing out equations of motion in the form of differential equations of motion. <i>Black box method</i> involves conducting system tests in order to find unknown variables.
+</section>
+  
+<section id="1"><h1>A need for alternate mathematical model representations</h1>
+  A differential equation is great for solving for the response of a system but it doesn't lend itself very well to
+  <ul>
+    <li>Analysing how a system naturally behaves</li>
+    <li>Manipulating a system so it behaves a desired way</li>
+  </ul>
+
+  The two most popular alternate representations are:
+  <ul>
+    <li><i>Transfer functions</i></li>
+    They are a Laplace domain representation of the system and are associated with the era of control techniques labeled classical control theory.
+    <p>
+      <li><i>State space representation</i></li>
+      It is a time domain representation, packaged in matrix form, associated with the era labeled modern control theory.
+    </p>
+  </ul>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../figures/control/2_stateSpaceVsTransferFuncs.png"/>
+      <figcaption>
+        State space vs Transfer function representation
+      </figcaption>
+    </figure>
+</section>
+
+<section id="2"><h1>A choice</h1>
+  In modeling a system (i.e. using mathematical operations to map a system's inputs to outputs), the engineer gets to decide:
+  <ul>
+    <li>What behaviours of the system to represent</li>
+    <li>How complex the representation should be</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

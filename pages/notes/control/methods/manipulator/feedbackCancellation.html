@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback cancelling control</title>
+  <meta name="Feedback cancelling control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Limitations</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Feedback cancelling control</h1>
+<section id="0"><h1>Description</h1>
+  [<a href="../../plants/TwoLinkArm/feedbackCancellation.html">Example</a>] <br>
+  Given the standard manipulator equation of motion, if $M, C, \tau_g$ are known, then a controller that changes or overwrites a system's effective dynamics can be written if the change is:
+  <ul>
+    <li>Local, within reason</li>
+    <li>Small</li>
+  </ul>
+
+  This idea of cancelling the natural dynamics of a system is called <i>feedback cancelling control</i>. For example, a 2 link pendulum can be made to defy gravity. This is not always possible since unlimited control authority is seldom available.
+</section>    
+
+<section id="1"><h1>Limitations</h1>
+  <ul>
+    <li>This works only in the case of a known system</li>
+    This method is dependent on being able to estimate the torques, masses, 
+    coriolis and gravitational terms accurately. People do this! A sensitivity analysis can be done to check how sensitive the controller is to the mass matrix estimate and the like.
+
+    <p>
+      <li>A manipulation system is an underactuated system</li>
+      For the dynamics of a full manipulation problem which include both the masses of the robot and the manipuland, the equations of motion cannot be written with just $u$ anymore because direct torque cannot be applied to objects in a robot's environment; the torques are applied to the robot joints. Therefore, dynamics of the objects in the world cannot be directly overwritten. 
+
+      $$M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu$$
+
+      $B$ is a matrix indicating to what joints/actuators/objects, torque is directly applied. $B$ is low rank since torque cannot be applied directly to objects in the environment. For this reason a <i>manipulation system</i> (which includes both the world and the robot) is an <i>underactuated system</i>.
+    </p>
+
+    <li>Limitations in the robot</li>
+    To follow any arbitrary dynamics, may require an unreasonable amount of torque which may be beyond a robot's torque limits. These limits would make a system <i>underactuated</i>.
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

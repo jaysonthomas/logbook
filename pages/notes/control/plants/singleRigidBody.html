@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamics of a single rigid body</title>
+  <meta name="Dynamics of a single rigid body" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Forces</a>
+<a href="#2">Moments</a>
+<a href="#3">Definitions</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Twist</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Dynamics of a single rigid body</h1>
+
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/eUfY4">Transport theorem</a>]
+  <div>
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/dynamics/singleRigidBody/1_centreOfMass.png"/>
+      <figcaption>
+        Centre of Mass
+      </figcaption>
+    </figure>
+  </div>
+
+  A rigid body is a collection of point masses that are rigidly attached to each other. The center of mass is defined to be the unique point at the centroid of the mass distribution with a frame {b} attached to it. The sum of mass-weighted vectors from the centre of mass to all the point masses will be $0$:
+
+  $$
+    \sum_i {m_i p_i} = 0
+  $$
+</section>
+
+<section id="1"><h1>Forces</h1>
+  The twist of the body is given as:
+  $$
+    V_b = \begin{bmatrix}
+            \omega_b \\
+            v_b    
+          \end{bmatrix}
+  $$
+
+  where the acceleration is given as $\dot{V}_b$.
+
+  <p>
+    The velocity and acceleration of each point is given as:
+    $$\begin{align*}
+      \dot{p}_i &= v_b + \omega_b \times p_i \\
+      \ddot{p}_i &= \dot{v}_b + \dot{\omega}_b \times p_i + \omega_b \times \dot{p}_i \\
+      \ddot{p}_i &= \dot{v}_b + \dot{\omega}_b \times p_i + \omega_b \times (v_b + \omega_b \times p_i)
+    \end{align*}$$
+
+    The velocity product terms include $\omega_b \times v_b$ and $\omega_b \times \omega_b$.
+  </p>
+
+  The total force on the body is given as:
+  $$\begin{align*}
+    F_b &= \sum_i F_i \\
+        &= \sum_i m_i \ddot{p}_i \\
+        &= \sum_i m_i \dot{v}_b + 
+          \cancel{(\dot{\omega}_b \times \sum_i m_i p_i)} +
+          (\sum_i m_i \omega_b \times v_b) + 
+          \cancel{(\omega_b \times \omega_b \sum_i m_i p_i)} \\
+        &= m(\dot{v}_b + [\omega_b]v_b)
+
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Moments</h1>
+  $$\begin{align*}
+  M_b &= \sum_i M_i \\
+      &= \sum_i p_i m_i \ddot{p}_i \\
+      &= \sum_i m_i \dot{v}_b + 
+        \cancel{(\dot{\omega}_b \times \sum_i m_i p_i)} +
+        (\sum_i m_i \omega_b \times v_b) + 
+        \cancel{(\omega_b \times \omega_b \sum_i m_i p_i)} \\
+      &= m(\dot{v}_b + [\omega_b]v_b)
+
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Definitions</h1>
+  <subsection id="3.0"><h1>Twist</h1>
+    A twist is a 6-vector consisting of a 3-vector expressing the angular velocity and a 3-vector expressing the linear velocity. Both of these are written in coordinates of the same frame, and the linear velocity refers to the linear velocity of a point at the origin (belonging to the reference frame) of that frame. Both the body twist and the spatial twist represent the same motion, just in different coordinate frames. The body twist is not affected by the choice of the space frame, and the spatial twist is not affected by the choice of the body frame. 
+
+    $$
+      V_b = \begin{bmatrix}
+        \omega_b \\ v_b
+      \end{bmatrix}
+    $$
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

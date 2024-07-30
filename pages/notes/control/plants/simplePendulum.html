@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple pendulum</title>
+  <meta name="Simple pendulum" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Moment of inertia about the axis of rotation</a>
+<a href="#2">Net (sum of all) moment</a>
+<a href="#3">Balance of moments</a>
+<a href="#4">Simulation</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">State space form</a></li>
+</ul>
+<a href="#5">Integration</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
+<section id="0"><h1>Description</h1>
+  A simple pendulum consists of:
+  <ul>
+    <li>
+      A <n>point</n> mass $m$, i.e. the mass is not spread out
+    </li>
+    <li>
+      A massless string (or rod)
+    </li>
+  </ul>
+
+  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a 'manipulator'. Another <a href="https://t.ly/yo9YU">Ref</a>.
+</section>
+
+<section id="1"><h1>Moment of inertia about the axis of rotation</h1>
+  Based on <a href="../physics/definitions.html">parallel axis theorem</a>:
+  $$\begin{align*}
+    J_{CG} &= m \cdot r_{CM}^2 \\
+          &= 0 \\
+    J_0 &= \cancel{J_{CG}} + ml^2
+  \end{align*}$$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      CG \text{ or } CM &:& \text{Centre of mass} \\ 
+      J_{CG} &:& \text{Moment of inertia about } CM \\ 
+      J_0 &:& \text{Moment of inertia about the pivot point (the axis of rotation)} \\
+      l &:& \text{Distance between the axis of rotation (the pivot point) and } CM
+    \end{array}$$
+  </div>
+
+  The centre of mass of a simple pendulum is at the point mass. $r_{CM}$ is the distance of the point mass $m$ from the centre of mass, which is 0 in this case since the mass is treated as concentrated at a single position [<a href="https://t.ly/SFPXZ">Ref</a>].    
+</section>
+
+<section id="2"><h1>Net (sum of all) moment</h1>
+  <div class="container">
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../figures/dynamics/2_pendulumNewton.png"/>
+      <figcaption>
+        Forces acting on a simple pendulum
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../figures/dynamics/2_gravitySimplePendulum.png"/>
+      <figcaption>
+        Gravity pulls the pendulum in the opposite direction to the applied torque
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../figures/dynamics/2_gravityTrig.png"/>
+    </figure>
+  </div>
+
+  Forces acting on the pendulum:
+  <ul>
+    <li>Component of gravity acting along the string</li>
+    <li>
+      Component of gravity acting tangential and opposite to the direction of the motion of the mass [<a href="https://t.ly/884vC">Ref</a>]
+    </li>        
+    <li>Tension on the string balanced by the gravity component along the string</li>
+    <li>
+      Damping forces such as friction at the pivot point and air resistance
+    </li>
+    <li>
+      Any applied external force
+    </li>
+  </ul>
+
+  The net moment:
+  $$
+    M = \underbrace{-b\dot{\theta}(t) + u(t)}_{Q} 
+      \underbrace{-mgsin(\theta)}_{F_{g_{tangential}}} \cdot l
+  $$
+
+  $Q$ models a damping torque (from friction) and a control torque input. $b$ represents the damping coefficient which characterizes the amount of damping present in the system
+</section>
+
+<section id="3"><h1>Balance of moments</h1>
+  From newton's 2nd law, the moment about the axis of rotation is equal to the net moment $M$ about the same axis causing the pendulum to rotate:
+  
+  $$\begin{align*}
+    M &= J_0 \ddot{\theta} \\
+    Q -mglsin\theta &= ml^2 \ddot{\theta}
+  \end{align*}$$
+
+  Rearranging:
+  $$
+    ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
+  $$
+
+  $ml^2 \ddot\theta$ is a measure of the <n>resistance of the pendulum to changes</n> in its angular motion. $\ddot\theta$ is the angular acceleration.
+</section>
+
+<section id="4"><h1>Simulation</h1>
+  <subsection id="4.0"><h1>State space form</h1>
+    Dynamics of a pendulum in a first-order form: 
+    $$\begin{align*}
+      \dot{x} &= f(x,u) \\
+      \frac{d}{dt}\begin{bmatrix} 
+                    q \\ \dot{q} 
+                  \end{bmatrix} &= 
+      \begin{bmatrix} 
+        \dot{q} \\ \frac{-mgl\sin(q) + \tau}{ml^2}
+      \end{bmatrix}
+    \end{align*}$$
+    
+    where $x=\begin{bmatrix}q \\ \dot{q}\end{bmatrix}$ is the state vector, and $u=\tau$ is the input.
+  
+    <p>
+      In code, the dynamics function takes in $x$, $u$ and some <n>parameters</n> to return back $\dot{x}$. We only get to control $u$. $\dot{x}$ decides the next state which is then used to calculate $\dot{x}$; but the latter's value is also dependent on $u$.
+    </p>
+  </subsection>
+</section>
+
+<section id="5"><h1>Integration</h1>
+  Add this section <a href="https://chat.openai.com/share/e17a9255-b2fd-45db-aa0d-6f07591c9447">Chatgpt</a>.
+</section>
+</chapter>
+
+</body>
+</html>

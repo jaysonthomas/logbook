@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manipulator control</title>
+  <meta name="Manipulator control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Aim</a>
+<a href="#2">Control techniques</a>
+<a href="#3">References</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Manipulator control</h1>
+<section id="0"><h1>Overview</h1>
+  Some tasks are more naturally/robustly specified using the language of force or stiffness or some generalization of this. Manipulator control can be simplified by assuming the robot to be a point. Here, the whole robot is considerd, focusing on the force control aspects of manipulator control. 
+
+  <p>
+    For the pushing-a-book-on-a-table task, there is a sweet spot where the right amount of force needs to be applied to maintain frictional contact between the hand and the book so that the hand doesn't slide away across the book; but the downward force cannot be too high preventing the book from being able to slide on the table.
+  </p>
+</section>
+
+<section id="1"><h1>Aim</h1>
+  [<a href="https://t.ly/E1nnJ">Ref</a>] <br>
+  The goal is to figure out what joint torques are needed in a 7 DOF robotic arm to achieve the following at the end contact point of its end-effector:
+  <ul>
+    <li>Some force control or</li>
+    <li>A programed interaction to external forces</li>
+  </ul>
+
+  The behaviour of a 7-joint robot arm can be simplified with a simple double pendulum hanging down from the top. More info <a href="../../plants/TwoLinkArm/main.html">here</a>.
+</section>
+
+<section id="2"><h1>Control techniques</h1>
+  <ul>
+    <li><a href="feedbackCancellation.html">Feedback cancelling control</a></li>
+    <li><a href="stiffnessControl.html">Stiffness control</a></li>
+    <ul>
+      <li><a href="../../plants/TwoLinkArm/jointStiffnessControlUsingFbCancellation.html">In joint coordinates</a></li>
+      <li><a href="eeStiffnessControl.html">In end-effector coordinates</a></li>
+    </ul>
+    <li><a href="jointImpedance.html">Joint impedance control</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>References</h1>
+  The papers on how control is implemented in Iiwa are great. They are linked in the notes.
+  <ul>
+    <li>Abu Ahafer and Christian Ott about impedance control of elastic joint robots</li>
+    <li>Alessandro de Luca has some great notes too</li>
+    <li>Mark Spong did some early work</li>
+  </ul>
+</section>
+  
+</chapter>
+
+</body>
+</html>

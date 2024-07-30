@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Model predictive control</title>
+  <meta name="Model predictive control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">General terminology</a>
+<a href="#2">Optimiser</a>
+<a href="#3">Example</a>
+<a href="#4">MPC design parameters</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Controller sample time</a></li>
+  <li><a href="#4.1">Control horizon</a></li>
+  <li><a href="#4.2">Weights</a></li>
+  <li><a href="#4.3">Prediction horizon</a></li>
+  <li><a href="#4.4">Cost function</a></li>
+  <li><a href="#4.5">Constraints</a></li>
+  <li><a href="#4.6">Recommendations</a></li>
+</ul>
+<a href="#5">Control step</a>
+<a href="#6">References</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Model predictive control</h1>
+<section id="0"><h1>Overview</h1>
+  The MPC algorithm solves an online optimisation problem at each time step. At each time step, the MPC controller makes predictions about the future plant output, and the optimizer finds the optimal sequence of control inputs that drives the predicted plant output as close to the setpoint as possible.
+</section>
+
+<section id="1"><h1>General terminology</h1>
+  The signals computed by an MPC controller and sent to the plant are referred to as <i>manipulated variables</i> (control inputs). The plant outputs are called <i>output variables</i> (physical states that can be measured). If the states of a system cannot be directly measured, a state estimator is included in the feedback to the controller.
+</section>
+
+<section id="2"><h1>Optimiser</h1>
+  It ensures that the predicted future output states of the model tracks the desired reference. 
+
+  <ul>
+    <li><a href="optimisation.html">Optimisation problem</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Example</h1>
+  Consider an autonomous car controlled by an MPC controller to keep it in the middle of a lane. MPC can handle MIMO systems like this one, but for simplicity, the following assumptions are made:
+  <ul>
+    <li>The accelerator is fixed, therefore, the longitudinal speed is constant</li>
+    <li>The steering wheel angle can be adjusted to control the lateral position of the car</li>
+  </ul>
+</section>
+
+
+<section id="4"><h1>MPC design parameters</h1>
+  Proper selection of the design parameters affect the computational complexity and performance of the MPC algorithm.
+
+  <subsection id="4.0"><h1>Controller sample time</h1>
+    The sample time determines the rate at which the controller executes the control algorithm.
+    <ul>
+      <li>
+        If it is too big, when a disturbance comes in, the controller won't be able to react to the disturbance fast enough.
+      </li>
+      <li>
+        If the sample time is too small, the controller can react much faster to disturbances and setpoint changes, but this causes an excessive computational load.
+      </li>
+    </ul>
+  </subsection>
+
+  <subsection id="4.1"><h1>Control horizon</h1>
+    Given the prediction time steps $p$, the number of control moves associated with the prediction horizon, up to some time step $m$, where $m < p$ is called the <i>control horizon</i>. The rest of the inputs are held constant. 
+    
+    <p>
+      Each control move in the control horizon can be thought of as a free variable that needs to be computed by the optimiser.
+    
+      <ul>
+        <li>
+          Increasing the control horizon allows for better predictions, resulting in better maneuvers, but at the cost of increasing complexity. 
+        </li>
+
+        <p>
+          <li>
+            The control horizon can be made the same as the prediction horizon. However, usually only the first couple of control moves have a significant effect on the predicted output behavior. Therefore, choosing a really large control horizon only increases the number of computations. 
+          </li>
+        </p>
+      </ul>
+    </p>
+  </subsection>
+
+  <subsection id="4.2"><h1>Weights</h1>
+    MPC can have multiple goals.
+    <ul>
+      <li>
+        It may need the outputs to track as close as possible to their setpoints.
+      </li>
+      <li>
+        But at the same time, it may want to have smooth control moves/inputs to avoid aggressive control maneuvers.
+      </li>
+    </ul>
+    
+    The way to achieve a balanced performance between these competing goals is to weigh the input rates and outputs relative to each other. MPC can not only weigh these two groups relative to each other but also adjust
+    relative weights within the groups as well.
+  </subsection>
+
+  <subsection id="4.3"><h1>Prediction horizon</h1>
+    The MPC controller uses the car model to simulate:
+    <ul>
+      <li>
+        The car's path for the next $p$ time steps for a given sequence of control inputs (change in steering angle between time steps)
+      </li>
+      <li>
+        Multiple paths as a result of different sequences of control inputs in a systematic way using an optimiser
+      </li>
+    </ul>
+    
+    $p$ is a measure of how far ahead MPC predicts into the future and is referred to as the <i>prediction horizon</i>. It is represented by the length of time into the future or the number of future time steps.
+
+    <ul>
+      <li>
+        The prediction horizon should be long enough to cover the significant dynamics of the system. 
+      </li>
+      <li>
+        It should not be too long as disturbances change over time and cannot be always be planned for ahead of time.
+      </li>
+    </ul>
+
+    <button class="accordion">Examples</button>
+    <div class="panel">
+      <p></p>
+      <subsubsection><h1>Example of a prediction horizon being too short</h1>
+        While going at 50 mph, it takes a car 5 seconds to stop (the significant dynamics of the system in this case) from when the brake pedal is pressed. If the prediction horizon is 2 seconds, there won't be enough time for the controller to react to traffic lights and stop in time.
+      </subsubsection>
+
+      <subsubsection><h1>Example of selecting too long a horizon</h1>
+        Say, the car's speed has been predicted far into the future in order to try to get to a destination on time. Unexpected things can happen, such as boxes falling from the back of a truck, pedestrians crossing the road, or a change in the road profile; these all may affect the speed and may create the need to throw away a significant part of the prior planning, wasting computations.
+      </subsubsection>
+      <p></p>
+    </div>
+  </subsection>
+
+  <subsection id="4.4"><h1>Cost function</h1>
+    By solving an optimisation problem, the controller tries to:
+    <ul>
+      <li>
+        Minimise the error between the reference and predicted path of the car
+      </li>
+      <li>
+        Minimise the change in the steering wheel angle from one time step to the next
+      </li>
+      If the steering wheel is turned sharply, the ride may become uncomfortable for the passengers.
+    </ul>
+
+    The cost function $J$ of this optimisation problem includes both these terms and is represented as a weighted squared sum of the predicted errors and steering wheel angle increments. 
+
+    $$
+      J = \sum^p_{i=1} w_e e^2_{k+i} 
+        + \sum^{p-1}_{i=0} w_{\Delta{u}} {\Delta{u}}^2_{k+i}
+    $$
+
+    The optimiser aims to find the best option out of all the simulated paths within the prediction horizon, given the cost function. The predicted path with the smallest $J$ gives the optimal solution (in terms of control input and position error), and therefore determines the optimal steering wheel angle sequence that will get the car as close as possible to the reference.
+  </subsection>
+   
+  <subsection id="4.5"><h1>Constraints</h1>
+    MPC also makes sure that the steering wheel angle and car's position stays within prescribed limits called <i>constraints</i>. In this case, the constraints are as follows:
+
+    <ul>
+      <li>How far the steering wheel can be turned</li>
+      <li>Car's position - to prevent accidents, the car is supposed to stay within a lane without going off the road.</li>
+    </ul>
+
+    At the current time step, an MPC controller needs to solve the optimisation problem over the prediction horizon while satisfying the constraints. 
+
+    <p>
+      MPC can incorporate constraints on the inputs, the rate of change of inputs, and the outputs. These can be either soft or hard constraints. Hard constraints cannot be violated, whereas soft constraints can be violated.
+    </p>
+      
+    It may also be desirable to enforce the speed to stay between certain values. However, having hard constraints on both inputs and outputs is not a good idea because these constraints may conflict with each other, leading to an unfeasible solution for the optimization problem.
+
+    <p>
+      To keep violation of a soft constraint small, the optimiser minimises amount of violation it does.
+    </p>
+      
+    <button class="accordion">Example</button>
+    <div class="panel">
+      <p></p>
+      <subsubsection><h1>Hard constraint</h1>
+        Say an MPC controller controls the speed of a car by adjusting the gas pedal. Since there's a physical limit on how much the gas pedal can be moved, this is represented as a hard constraint so that the gas pedal position stays within its range.
+      </subsubsection>
+      
+      <subsubsection><h1>Conflicting constraints</h1>
+        As an example, assume the car is going at a certain speed on a highway. When the car starts climbing a hill, its speed will decrease. The controller will apply more throttle to increase the speed. But due to the heavy load on top of the car, the speed will keep decreasing even though the controller applies full throttle. So, if the speed constraint (min and max limits) is hard, the optimizer won't be able to find a feasible solution that meets both input and output constraints.
+
+        <p>
+          However, if the speed constraint is soft, the controller will allow violating it until the car overcomes the hill and the conflict won't occur.
+        </p>
+      </subsubsection>
+      <p></p>
+    </div>
+  </subsection>
+
+  <subsection id="4.6"><h1>Recommendations</h1>
+    <ul>
+      <li>Controller sample time</li>
+      To find the right balance between performance and computational effort, the recommendation is to fit 10 to 20 samples within the rise time of the open-loop system response.
+
+      <p>
+        <li>Prediction horizon</li>
+        Have 20 to 30 samples covering the open-loop transient system response.
+      </p>
+
+      <li>Control horizon</li>
+      Set it to 10 to 20% of the prediction horizon, having a minimum of 2-3 steps.  
+      
+      <p>
+        <li>Constraints</li>
+        The recommendation is to set output constraints as soft and avoid having hard constraints both on the inputs and the rate of change of the inputs.
+      </p>
+    </ul>
+  </subsection>
+</section>
+
+<section id="5"><h1>Control step</h1>
+  At the current time step, MPC applies only the first step of the optimal sequence to the car and disregards the rest. Based on the applied steering wheel angle, the car travels some distance. At the next time step, the controller gets a new measurement of the car's lateral position. It might be slightly different than what the MPC controller predicted due to some unmeasured disturbance acting on the car, eg: wind or slippery road surface.
+
+  <p>
+    The prediction horizon shifts forward by one time step and the controller repeats the same cycle of calculations to compute the optimal steering wheel angle for the next time step.
+  </p>
+
+  Because of the forward-moving nature of the prediction horizon, MPC is also referred to as <i>receding horizon control</i>.
+</section>
+
+<section id="6"><h1>References</h1>
+  [<a href="https://t.ly/yaZPZ">Potentially good reference</a>, <a href="https://t.ly/vuBhd">Github code</a>, <a href="https://t.ly/l7mQZ">Matlab talks</a>]
+</section>
+</chapter>
+
+</body>
+</html>

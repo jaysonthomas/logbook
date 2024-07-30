@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>System thinking: Example</title>
+  <meta name="System thinking: Example" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Setup</a>
+<a href="#1">Input-Output</a>
+<a href="#2">System representation</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>System thinking: Example</h1>
+<section id="0"><h1>Setup</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../figures/control/3_invertedBowlExample.png"/>
+    </figure>
+  </div> 
+
+  The aim is to design a control system that will keep a ball on top of an inverted bowl. The first step is to understand the behaviour of the entire system i.e. how is the estimated ball position affected by a command applied to the fan.
+</section>
+
+<section id="1"><h1>Input-Output</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/control/4_invertedBowlInputOutput.png"/>
+    </figure>
+  </div> 
+
+  <subsubsection><h1>Fan dynamics</h1>
+    If a step command <n>input</n> is applied to the fan, for example, to go from off to half of its max speed:
+
+    <ul>
+      <li>
+        [<n>timing</n>] There will be a delay as the fan has to accelerate over some time period to get to the required speed.
+      </li>
+      <li>
+        After which there will be some variation in fan speed due to <n>physical disturbances</n> in the system. 
+      </li>
+      <li>
+        The output of the fan system is air velocity which is subsequently the input into the inverted bowl dynamics.   
+      </li>
+    </ul>
+  </subsubsection>
+ 
+  <subsubsection><h1>Inverted bowl dynamics</h1>
+    The bowl dynamics system calculates the force on the ball from the air and uses that force to determine how the ball moves. 
+ </subsubsection>
+
+ <subsubsection><h1>Radar sensor dynamics</h1>
+    The true ball position is then sent to the radar sensor model which produces a relative distance to the radar gun. The radar system introduces:
+    
+    <ul>
+      <li>More delay</li>
+      <li>Errors in the measurement</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>Ball position estimator</h1>
+    The relative ball position is then used to estimate where the ball is in the bowl frame which is the final output of the system.
+  </subsubsection>
+</section>
+
+<section id="2"><h1>System representation</h1>
+  Differential equations could be used for the entire end-to-end system which relates fan commands to estimated ball positions, but this would be difficult to do because of how complex each of the parts are individually.
+
+  <p>
+    The aim would then be to break the system down to manageable parts (simpler mathematical models) where each part is represented separately in isolation, allowing engineers to work on the different parts simultaneously.
+  </p>
+
+  The final step would be to pull the model together and design the control system for it.
+</section>
+</chapter>
+
+</body>
+</html>

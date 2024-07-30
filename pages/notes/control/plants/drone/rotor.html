@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rotor dynamics</title>
+  <meta name="Rotor dynamics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Forces</a>
+<a href="#1">Moments</a>
+<a href="#2">Lift constants</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Rotor dynamics</h1>
+
+<section id="0"><h1>Forces</h1>
+  Each spinning rotor produces a thrust force upwards given by:
+  $$\begin{align*}
+    F &\propto \omega^2 \\
+    &= k_f \omega^2 \\
+  \end{align*}$$
+
+  The constant of proportionality, $k_f$ is the <i>thrust coefficient</i>.
+  When the rotation speed of a rotor is doubled, the thrust increases by a factor of 4.
+
+  <p>
+    In addition to the same quantities as the lift constants beleow, the strength/magnitude of the thrust vector also depends on how fast the rotors spin. The direction is always perpendicular to the plane that the rotor spins in.
+  </p>
+  
+  <div class="container">
+    <figure>
+      <img style="height:50px; width:auto"
+      src="../../../../figures/drone/30_thrust.png"/>
+      <figcaption>
+        Direction of thrust
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Moments</h1>
+  The torque/moment produced by a spinning rotor is proportional to $\omega^2$:
+
+  $$\begin{align*}
+    M &\propto \omega^2 \\
+    &= k_m \omega^2
+  \end{align*}$$
+  
+  $k_m$ is the <i>angular torque coefficient</i>. $\omega$ represents the rotation rate of a rotor in $\frac{rad}{s}$. When $\omega = 2\pi$, the rotor does one rotation per second. 
+</section>
+
+<section id="2"><h1>Lift constants</h1>
+  The actual values of the constants ($k_f, k_m$) depend on the:
+  <ul>
+    <li>Size and shape of the plates</li>
+    <li>Specific motors used</li>
+    <li>Density of the surrounding air they operate in</li>
+  </ul> 
+  
+  In practice, these values are obtained empirically. The motor and propeller are mounted on a load cell and the force and moment are measured for different motor speeds. The graph below shows a simulation of the data to be expected from such an experiment.
+
+  <div class="container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../../figures/drone/33_liftConstants.png"/>
+      <figcaption>
+        Lift constants empirical data
+      </figcaption>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

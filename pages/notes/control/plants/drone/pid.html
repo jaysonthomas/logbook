@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drone control</title>
+  <meta name="Drone control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">What causes a drone to accelerate?</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Drone control</h1>
+
+<section id="0"><h1>What causes a drone to accelerate?</h1>
+  Torques generated in the rotors affect their rotation rates which creates forces and moments on the drone which in turn cause translational and rotational accelerations.
+
+  <figure>
+    <img style="height:auto; width:70%"
+    src="../../../../figures/drone/introToControl1.png"/>
+  </figure>
+
+  But for now, let's just focus on accelerations. 
+  So for our purposes, we have direct control over acceleration but not 
+  velocity or position. If we want to change those quantities, 
+  we have to do so through acceleration. 
+  We use the variable U to represent a thrust or torque control input to the drone.
+  <figure class="left">
+    <img style="height:auto; width:35%"
+    src="../../../../figures/drone/IntroToControl2.png"/>
+  </figure>
+  <figure class="right">
+    <img style="height:auto; width:7%"
+    src="../../../../figures/drone/IntroToControl3.png"/>
+  </figure>
+</section>
+</chapter>
+
+</body>
+</html>

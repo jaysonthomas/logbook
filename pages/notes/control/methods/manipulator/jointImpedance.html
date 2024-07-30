@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Joint impedance control</title>
+  <meta name="Joint impedance control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Examples</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Iiwa</a></li>
+  <li><a href="#1.1">Opening a dishwasher door</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Joint impedance control</h1>
+<section id="0"><h1>Overview</h1>
+  Most controllers choose to use the initial mass and coriollis terms in their desired dynamics. $M, C$ always go together (even in reality) and are similar to the $ma$ in $F=ma$. To cancel out $M, C$ requires good accuracy of the mass, which in turn requires high bandwidth. A control method that involves changing $M, C$ is called <i>joint impedance control</i>.
+</section>
+
+<section id="1"><h1>Examples</h1>
+  <subsection id="1.0"><h1>Iiwa</h1>
+    Iiwa does much more than just GC. In joint-impedance control mode, Iiwa also does friction compensation and some subtle stuff at the actuator level to cancel out the effective dynamics of the arm.  
+
+    <subsubsection><h1>Mass cancellation</h1>
+      Iiwa only compensates for the masses of the rotors and not for the whole robot. It's a very subtle, carefully designed control - $M$, $C$ are technically changed but not in the way of making a different effective mass. It's very similar to the feedback cancellation story but it's trying to do a little bit less (because it's not cancelling $M$,$C$ of the whole robot) and it's even more robust because of it.
+    </subsubsection>
+  </subsection>
+
+  <subsection id="1.1"><h1>Opening a dishwasher door</h1>
+    While opening a dishwasher door, a robot arm can deviate significantly from its joint trajectory depending on how accurately the location of the dishwasher door is modelled and captured.
+    
+    <subsubsection><h1>Opening the hinge of the dishwasher</h1>
+      If the arm is trying to move down exactly based on some kinematic constraint given by the door of the dishwasher, if any of the models is even a little bit off (i.e. the door doesn't open the way it is modeled or the door handle isn't in the same place the model expects) then it pays a lot to be flexible enough to follow whatever contour is given by the actual position of the dishwasher and not by the model's course approximation.
+    </subsubsection>
+
+    <subsubsection><h1>Whilst opening the door</h1>
+      The fingers will slip off if the arm is in too stiff of a mode. When the door is pushed down (to lay it flat when open) the arm should ideally still be in a joint impedance mode - it wouldn't be tracking the position trajectory accurately but it would still be able to accomplish the task. 
+    </subsubsection>
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>
