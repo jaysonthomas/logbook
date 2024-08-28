@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Impulse function</title>
+  <meta name="Impulse function" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Mathematical representation</a>
+<a href="#2">Application example</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Setup</a></li>
+  <li><a href="#2.1">Use of the integral of a dirac delta function</a></li>
+  <li><a href="#2.2">Use of the properties of an LTI system</a></li>
+  <li><a href="#2.3">Observing the overall behaviour of the system</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Impulse function</h1>
+<section id="0"><h1>Overview</h1>
+  An LTI system can be fully characterized by knowing how a system behaves when <n>an impulse is applied to it</n>. An <i>impulse</i> is a force that has infinite magnitude, applied over an infinitesimally short time window. The resulting <n>change in velocity over time (acceleration)</n> is the <i>impulse response</i> of a system.
+</section>
+
+<section id="1"><h1>Mathematical representation</h1>
+  Mathematically, an impulse force is represented by an <i>impulse function</i> or a <i>Dirac Delta function</i>.
+
+  <p>
+    Since it is impossible to draw a line that is infinitesimally thin and infinitely tall, a Dirac Delta function is represented as an arrow pointing up at the time an impulse is applied.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../figures/control/9_diracDelta.png"/>
+      </figure>
+    </div>
+  </p>
+
+  The function returns a value of positive infinity at time zero and a value of zero at all other times.
+  $$
+    \delta(t) = 
+    \left\{
+      \begin{array}{ c l }
+        +\infty & \quad t = 0 \\
+        0       & \quad t \neq 0
+      \end{array}
+    \right.
+  $$
+
+  <subsubsection><h1>Integral of an impulse function</h1>
+    While an impulse function is idealized, it can be approximated by a rectangular pulse with:
+    <ul>
+      <li>A width that is very small</li>
+      <li>A height that is adjusted to maintain an area of 1</li>
+    </ul>
+    
+    As the width approaches zero, the height approaches infinity, but the area remains constant at 1:
+    $$
+        \int^\infty_{-\infty} \delta(t)dt = 1
+    $$
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Application example</h1>
+  <subsection id="2.0"><h1>Setup</h1>
+    Imagine a block sitting on a table is struck with a hammer. This would be very close to an impulse because the hammer would apply a very large force to the block over a very short period of time. The block would move with an instantaneous initial velocity and start sliding across the table. It would slow down over time due to friction and would eventually stop.
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/control/10_impulsePhysicalApplication.png"/>
+        <figcaption>
+          The physical system
+        </figcaption>
+      </figure>
+      
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/control/11_impulseBlockDiagram.png"/>
+        <figcaption>
+          Block diagram of an impulse being applied to a system
+        </figcaption>
+      </figure>
+    </div>
+
+    When the mass comes to rest, it is hit again but with a lower force.
+  </subsection>
+
+  <subsection id="2.1"><h1>Use of the integral of a dirac delta function</h1>
+    If an infinite force is applied to an object, it would experience infinite acceleration which is not a useful result. 
+    $$\begin{align*}
+      a(t) &= \frac{F(t)}{m} \\
+          &= \frac{\delta(t)}{1 \scriptsize\text{ kg}} = \infty
+    \end{align*}$$
+
+    However, if the acceleration is integrated over time, it would yield the object's velocity which is a more useful result. Here, the definition of the integral of an impulse function becomes handy.
+    $$\begin{align*}
+      v(t) &= \int^\infty_{-\infty}  a(t)dt \\
+          &= \int^\infty_{-\infty}  \frac{\delta(t)}{1 \text{ kg}}dt \\
+          &= 1 \scriptsize\text{ m\s}
+    \end{align*}$$
+
+    An impulse function can be used to change the state of the system in zero time, or in this case, mathematically give the mass an initial velocity of 1 m/s.
+  </subsection>
+
+  <subsection id="2.2"><h1>Use of the properties of an LTI system</h1>
+    Assuming the above hammer system behaves like an LTI system, then:
+    <ul>
+      <li>Time invariant</li>
+      If the impulse is shifted by time $T$, then the impulse response is also shifted by $T$.
+
+      <p>
+        <li>Homogeneity</li>
+        Scaling the input results in an output that is scaled.
+      </p>
+
+      <li>Superposition</li>
+      The motion of the block is the summation of the first impulse response and the second impulse response.
+    </ul>
+
+    <div class="img-container">
+      <figure>
+        <img style="height:130px; width:auto"
+        src="../../../../figures/control/12_impulseLTI.png"/>
+      </figure>
+    </div>
+  </subsection>
+
+  <subsection id="2.3"><h1>Observing the overall behaviour of the system</h1>
+    <div class="img-container">
+      <figure>
+        <img style="height:160px; width:auto"
+        src="../../../../figures/control/13_overallBehavourImpulse.png"/>
+      </figure>
+    </div>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

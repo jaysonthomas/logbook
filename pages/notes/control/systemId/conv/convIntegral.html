@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Convolution Integral</title>
+  <meta name="Convolution Integral" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Motivation</a>
+<a href="#1">Definition</a>
+<a href="#2">Time shift notation</a>
+<a href="#3">Integral limits in the real world</a>
+<a href="#4">Example: Multiplication of 2 polynomials</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Convolution Integral</h1>
+<section id="0"><h1>Motivation</h1>
+  How is a system's impulse response useful in predicting its behaviour to arbitrary inputs, since infinitely high and infinitesimally thin input forces are physically impossible to create.
+
+  <p>
+    <i>Convolution</i> gives the ability to determine an LTI system's response to any arbitrary input as long as the impulse response of the system is known.
+  </p>
+</section>
+
+<section id="1"><h1>Definition</h1>
+  <i>Convolution integral</i> is a mathematical operation typically performed using 2 functions:
+
+  $$
+    (f*g)(t) = \int^\infty_{-\infty}f(\tau)g(t-\tau)d\tau
+  $$
+
+  The equation:
+  <ul>
+    <li>Shifts the system's response $g(t)$ through all of time</li>
+    <li>Multiplies the shifted $g(t)$ by the input $f(t)$</li>
+    <li>Sums the product over all of time</li>
+  </ul>
+
+  <div class="container">
+    <figure>
+      <img style="height:40px; width:auto"
+      src="../../../../figures/control/14a_convolution.png"/>
+    </figure>
+    <figure>
+      <img style="height:40px; width:auto"
+      src="../../../../figures/control/14b_convolution.png"/>
+      <figcaption>
+        Convolution returns the area under the product of the 2 curves as the input $g(t)$ is shifted across $f(t)$
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="2"><h1>Time shift notation</h1>
+  <subsubsection><h1>Analogy</h1>
+    Imagine a race where the starting line is the origin. If runner A starts at the starting line ($t = 0$), and runner B starts $T$ seconds later, then at any given time $t$, runner B will have been running for $t - T$ seconds.
+  </subsubsection>
+
+  <subsubsection><h1>Context</h1>
+    In the context of an impulse function, the independent variable $t$ represents the <n>time elapsed</n> since the <n>origin or reference point</n>. $\delta(t)$ is defined as an impulse occurring at $t = 0$.
+
+    <p>
+      If a new impulse occurs $T$ seconds after another, to make it the new reference, a new representation would need to be used. In the new representation, the time at $t=T$ is represented as $t'=0$ by shifting the time frame for all signals, $t' = t - T$. When $t=0$, $-T$ seconds would have elapsed since the new reference, i.e. $t=0$  happened before $t=T$. At $t=T$, 0 seconds have elapsed w.r.t. the reference time $T$.
+    </p>    
+  </subsubsection>
+</section>
+
+<section id="3"><h1>Integral limits in the real world</h1>
+  In practical applications, signals start at time zero. Since there is no signal between negative infinity and zero, there is no need to perform integration over the region. Whereas a pure mathematical function does go from negative to positive infinity.
+</section>
+
+<section id="4"><h1>Example: Multiplication of 2 polynomials</h1>
+  Polynomial multiplication involves multiplying every term of 1 polynomial with every term of the other and summing like units.
+
+  <p>
+    Consider $x^2 + 2x + 3$ and $3x^2 + 1$. The answer is $3x^4 + 6x^3 + 10x^2 + 2x + 3$. 
+  </p>
+
+  If the 2 polynomials are defined by the vectors $f(t) = [1,2,3]$ and $g(t) = [3,0,1]$, the discrete convolution would sweep $g(t)$ across $f(t)$ and sum the product of the two.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../../figures/control/16_convPolynomialExample.png"/>
+      <figcaption>
+        $(f*g)(t)$
+      </figcaption>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

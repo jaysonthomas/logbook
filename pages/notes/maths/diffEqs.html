@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Control: Steps</title>
-  <meta name="Control: Steps" content="text/html; charset=utf-8;" />
+  <title>Differential equations</title>
+  <meta name="Differential equations" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,31 +39,32 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Definition</a>
+<a href="#1">Types</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Control: Steps</h1>
-  Solving a control problem also involves solving the following problems:
+<chapter style="counter-reset: chapter 3"><h1>Differential equations</h1>
+<section id="0"><h1>Definition</h1>
+  A differential equation is a general term that refers to any equation involving derivatives of a function. <n>It describes how a particular function changes based on its derivatives</n>. 
 
-  <subsubsection><h1>System thinking</h1>
-    <ul>
-      <li>Inputs-Outputs: Forces acting on an actuator and on a system via the actuator; what is the end result</li>
-      <li>What is being measured (the end result above), errors, timing delays</li>
-    </ul>
+  <p>
+    In the real world, many physical parameters are related to each other through differential equations.
+  </p>
+</section>
+
+<section id="1"><h1>Types</h1>
+  <subsubsection><h1>Ordinary DE</h1>
+    It is a differential equation that involves derivatives with respect to only one independent variable
+
+    <p>
+      For LTI systems, physical parameters are related to each other strictly through ODEs.
+    </p>
   </subsubsection>
 
-  <subsubsection><h1>System identification</h1>
-    <ul>
-      <li>What parts of a system to represent</li>
-      <li>What representation to use</li>
-      <ul>
-        <li>Transfer functions vs State-Space vs Differential equations</li>
-        <li>LTI systems or not</li>
-      </ul>
-    </ul>
+  <subsubsection><h1>Partial DE</h1>
+    It involves partial derivatives with respect to multiple independent variables (e.g., both time and position).
   </subsubsection>
-  
-  <subsubsection><h1>Simulation</h1>
-  </subsubsection>
+</section>
 </chapter>
 
 </body>

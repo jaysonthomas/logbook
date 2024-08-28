@@ -344,7 +344,7 @@ equation {
   display: block;
   border: 1px solid;
   border-radius: 0px;
-  background-color: rgb(242,242,242); /* light gray */
+  /* background-color: rgb(242,242,242); */
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 5px;
@@ -517,7 +517,7 @@ algorithm > h1:after {
 }
 figcaption:before {
   /* content: "Figure " counter(chapter) "." counter(figure) " - "; */
-  content: "Figure " counter(sect1) "." counter(figure) " - ";
+  content: "Figure " counter(sect1) "." counter(figure) ": ";
 }
 
 /* Appendix versions */
@@ -552,6 +552,6 @@ chapter.appendix algorithm > h1:before {
   content: "Algorithm " counter(chapter, upper-alpha) "." counter(algorithm) " (";
 }
 chapter.appendix figcaption:before {
-  content: "Figure " counter(chapter, upper-alpha) "." counter(figure) " - ";
+  content: "Figure " counter(chapter, upper-alpha) "." counter(figure) ": ";
 }
 /* end counters*/

@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LTI: Physical parameters interaction</title>
+  <meta name="LTI: Physical parameters interaction" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Allowable operations</a>
+<a href="#1">Solution of an LTI ODE</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>LTI: Physical parameters interaction</h1>
+<section id="0"><h1>Allowable operations</h1>
+  If an LTI system is modeled with the below 6 operations, then assertions can be made about how the output of the system will change based on changes to the input, i.e. the system will behave in predictable ways.
+
+  <ul>
+    <li>Multiply or divide the input by a constant</li>
+    $$\begin{align*}
+      a \cdot x(t) \\
+      \frac{1}{a} \cdot x(t)
+    \end{align*}$$
+
+    <li>Integrate or differentiate the input</li>
+    $$\begin{align*}
+      \int{x(t)} \\
+      \frac{dx(t)}{dt}
+    \end{align*}$$
+
+    <li>Add or subtract multiple inputs</li>
+    $$\begin{align*}
+      x_1(t) + x_2(t) \\
+      x_1(t) - x_2(t)
+    \end{align*}$$
+  </ul>
+</section>
+
+<section id="1"><h1>Solution of an LTI ODE</h1>
+  In the real world, many physical parameters are related to each other through differential equations, and for LTI systems those become ODEs [<a href="../../../maths/diffEqs.html">Ref</a>]. 
+  
+  <p>
+    The solution of an ODE that is used to model an LTI system, can only consist of sinusoids and exponentials; since they are the only wave forms that don't change shape when subjected to any combination of the six legal operations.
+  </p>
+
+  Example: The derivative of a sinusoid is still a sinusoid. The integral of an exponential is still an exponential. Hence, the two wave forms would be the solution to equations that have the form:
+  $$
+    ẍ + ẋ + x = 0
+  $$
+
+  The integral of a square wave, for example, is a sloping step pattern and not another square wave. Hence, defining an LTI system's impulse response in terms of sinusoids and exponentials, makes sense.
+
+  <p>
+    The ubiquity of these types of physical relationships is why the Laplace transform is one of the most important techniques in system analysis.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

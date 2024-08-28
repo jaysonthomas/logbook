@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Integration</title>
+  <meta name="Integration" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Double integral</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Integration</h1>
+<section id="0"><h1>Double integral</h1>
+  Taking the fourier transform of the convolution integral:
+  $$
+    \mathcal{F}((f*g)(t)) = \int^\infty_{-\infty}
+      \left[
+            \int^\infty_{-\infty}f(\tau)g(t-\tau)d\tau
+      \right] e^{-j\omega t} dt
+  $$
+
+  <subsubsection><h1>Rearranging the limits</h1>
+    Here, the summation of the inner integral is done w.r.t. $\tau$ and that of the outer integral is done w.r.t. $t$. A double integral can be integrated in either order as long as the integration limits are transformed appropriately. 
+    
+    <p>
+      Here, the limits are both from $-\infty$ to $\infty$, so rearranging the integrals is just a matter of pulling $e^{-j\omega t}dt$ in and $d\tau$ out.
+    </p>
+
+    $$
+      \mathcal{F}((f*g)(t)) = \int^\infty_{-\infty}
+        \left[
+              \int^\infty_{-\infty}f(\tau)g(t-\tau) e^{-j\omega t} dt
+        \right] d\tau
+    $$
+
+    $f(\tau)$ of the inner integral can be moved out since it is a function of $\tau$ and hence a constant when integrated w.r.t. $t$.
+    $$
+      \mathcal{F}((f*g)(t)) = \int^\infty_{-\infty}
+        \left[
+          f(\tau)\int^\infty_{-\infty}g(t-\tau) e^{-j\omega t} dt
+        \right] d\tau
+    $$
+
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

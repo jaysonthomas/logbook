@@ -39,19 +39,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">FBD analysis</a>
-<a href="#1">General form</a>
+<a href="#0">Setup</a>
+<a href="#1">FBD analysis</a>
+<a href="#2">General form</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Single mass: Mathematical model</h1>
-<section id="0"><h1>FBD analysis</h1>
+<section id="0"><h1>Setup</h1>
   [<a href="https://t.ly/wj9h">18.03 website (delete?)</a>,
   <a href="https://t.ly/EDPt_">Some pointers in google doc</a>]
   
   <div class="container">
     <figure>
       <img style="height:120px; width:auto"
-      src="../../../../figures/dynamics/3a_msd.png"/>
+      src="../../../../../figures/dynamics/3a_msd.png"/>
       <figcaption>
         Mass spring damper
       </figcaption>
@@ -59,63 +60,73 @@
 
     <figure>
       <img style="height:120px; width:auto"
-      src="../../../../figures/dynamics/5a_CartSystem.png"/>
+      src="../../../../../figures/dynamics/5a_CartSystem.png"/>
       <figcaption>
         Wheeled cart attached to a wall with a spring and damper, rolling without friction on a floor.
       </figcaption>
     </figure>
-
-
   </div>
-  
-  At equilibrium, there is no horizontal force acting on the spring. A spring force $F_s$ acts in the oppposite direction to the <n>direction of displacement</n> from the equilibrium point and is proportional to it. For a positive displacment, the spring expands and the spring force tends to bring the object to its equilibrium position.
+</section>
 
-  $$
-    F_s = -k_sd_{em}
-  $$
-
+<section id="1"><h1>FBD analysis</h1>
   <div class="img-container">
     <figure>
       <img style="height:100px; width:auto"
-      src="../../../../figures/dynamics/3b_msdFreeBody.png"/>
+      src="../../../../../figures/dynamics/3b_msdFreeBody.png"/>
       <figcaption>
         Free body diagram
       </figcaption>
     </figure>
   </div>
 
-  The damper dampens any mechanical oscillations. It is proportional to the velocity and acts opposite to the direction of movement.
+  <subsubsection><h1>Equilibrium point</h1>
+    At equilibrium, there is no horizontal force acting on the spring - the system is at rest. 
+  </subsubsection>
 
-  $$
-    F_d = -k_d\dot{d}_{em}
-  $$
+  <subsubsection><h1>Spring force</h1>
+    A spring force $F_s$ acts in the oppposite direction to the <n>direction of displacement</n> from the equilibrium point and is proportional to it. For a positive displacment, the spring expands and the spring force tends to bring the object to its equilibrium position.
 
-  The dynamics is governed by Newton's second law:
+    $$
+      F_s = -k_sd_{em}
+    $$
+  </subsubsection>
 
-  $$\begin{align}
-    &ma = \sum_{i=1}^{n}F_i \nonumber \\
-    &m\ddot{d}_{em} = F - k_d\dot{d}_{em} - k_sd_{em} \nonumber \\
-    \label{eq:msd} &m\ddot{d}_{em} + k_d\dot{d}_{em} + k_sd_{em} = F
-  \end{align}$$
+  <subsubsection><h1>Damping force</h1>
+    The damper dampens any mechanical oscillations. It is proportional to the velocity and acts opposite to the direction of movement.
 
-  The equation of motion is a second-order, linear ODE:
-  <ul>
-    <li>
-      Linear because $d_{em}, \dot{d}_{em}, \ddot{d}_{em}$ appear as linear functions
-    </li>
+    $$
+      F_d = -k_d\dot{d}_{em}
+    $$
+  </subsubsection>
 
-    <li>
-      Second order because it is the order of the highest derivative
-    </li>
-  </ul>
+  <subsubsection><h1>Overall dynamics</h1>
+    The dynamics is governed by Newton's second law:
+
+    $$\begin{align}
+      &ma = \sum_{i=1}^{n}F_i \nonumber \\
+      &m\ddot{d}_{em} = F - k_d\dot{d}_{em} - k_sd_{em} \nonumber \\
+      \label{eq:msd} &m\ddot{d}_{em} + k_d\dot{d}_{em} + k_sd_{em} = F
+    \end{align}$$
+
+    The equation of motion is a second-order, linear ODE:
+    <ul>
+      <li>
+        Linear because $d_{em}, \dot{d}_{em}, \ddot{d}_{em}$ appear as linear functions
+      </li>
+
+      <li>
+        Second order because it is the order of the highest derivative
+      </li>
+    </ul>
+  </subsubsection>
 </section>
 
-<section id="1"><h1>General form</h1>
+<section id="2"><h1>General form</h1>
   In general, the differential equation of motion can be written as:
   
   $$\begin{align*}
     m\ddot{x}(t) &= F_{input}(t) - F_{damper}(t) - F_{spring}(t) \\
-    m\ddot{x}(t) &+ b\dot{x}(t) + kx(t) - F_{input}(t) = 0 \\
+    m\ddot{x}(t) &+ b\dot{x}(t) + kx(t) - f(t) = 0 \\
   \end{align*}$$
 
   Given an external input or an excitation into the model, i.e. a force applied to the system, the ODE can be solved to get the position of the mass over time $x(t)$. Unknown terms (mass, spring constant and damping coefficient) are written as variables.
@@ -123,7 +134,7 @@
   <div class="img-container">
     <figure>
       <img style="height:60px; width:auto"
-      src="../../../../figures/dynamics/5b_cartSystemModel.png"/>
+      src="../../../../../figures/dynamics/5b_cartSystemModel.png"/>
       <figcaption>
         Mathematical model of the cart system
       </figcaption>

@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TF: Example</title>
+  <meta name="TF: Example" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Setup</a>
+<a href="#1">Finding the impulse response</a>
+<a href="#2">Intuition</a>
+<a href="#3">Step response</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>TF: Example</h1>
+<section id="0"><h1>Setup</h1>
+  Consider a MSD system on wheels as described <a href="../../plants/msd/singleMassMathModel.html">here</a>. 
+
+  <p>
+    The system model is a perfect candidate to convert into a transfer function, since:
+    <ul>
+      <li>It is an LTI system</li>
+      <li>There is a single input $F_{input}$ and a single output $x$</li>
+    </ul>
+  </p>
+</section>
+
+<section id="1"><h1>Finding the impulse response</h1>
+  To find the impulse response of the system, the single input is set to an impulse function, $F_{input}(t)=\delta(t)$ and solved for the response $x(t)$:
+
+  $$
+    m\ddot{x}(t) + b\dot{x}(t) + 
+    k\overbrace{x(t)}^{\text{Impulse response} \atop \text{in the time domain}} - 
+    \underbrace{\delta(t)}_{\scriptsize\text{Impulse input force}} = 0 \\
+  $$
+
+  However, solving linear ODEs in the time domain can be time consuming. The task can be made easier by solving for the impulse response in the s domain, by taking the Laplace transform of the entire differential equation, one term at a time as shown <a href="../lt/calculations.html">here</a>. The transfer function or the laplace transform of the impulse response of the system would be:
+  $$
+    X(s) = \frac{1}{ms^2 + bs + k}
+  $$
+</section>
+
+<section id="2"><h1>Intuition</h1>
+  Here, the transfer function represents the dynamics of the cart system and it can be used to predict how the cart will move when subjected to arbitrary forces, i.e. the impulse response is same as the cart dynamics.
+
+  <subsubsection><h1>Applying an impulse</h1>
+    An impulse can be applied to a transfer function by representing the input in the s domain and multiplying it with the transfer function. An impulse function in the s domain is 1 and therefore the impulse response is $1$ times the transfer function.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:40px; width:auto"
+        src="../../../../../figures/control/28_systemDynamics.png"/>
+      </figure>
+      <figcaption>
+        Transfer function representing the cart dynamics
+      </figcaption>
+    </div>
+  </subsubsection>
+</section>
+
+<section id="3"><h1>Step response</h1>
+  To find the step response of the system, a step input needs to be applied. To create a step input, an <a href="example2.html">integrator</a> is used.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:40px; width:auto"
+      src="../../../../../figures/control/29_tfMsdStepResponse.png"/>
+    </figure>
+  </div>
+
+  An impulse input produces a step output through the integrator transfer function, which is then applied to the cart dynamics to produce the step response of the cart system.
+
+  <p>
+    The total transfer function for the system's response to the step input is the two transfer functions multiplied together. The definition of a transfer function is still retained, i.e. an impulse input is applied and an impulse response comes out - in this case the impulse response of the system is the step response.
+  </p>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:40px; width:auto"
+      src="../../../../../figures/control/29a_tfMsdStepResponse.png"/>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

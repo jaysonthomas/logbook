@@ -42,6 +42,11 @@
 <a href="#0">Setup</a>
 <a href="#1">Input-Output</a>
 <a href="#2">System representation</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Differential equations</a></li>
+  <li><a href="#2.1">Pure convolution</a></li>
+</ul>
+<a href="#3">Control system</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>System thinking: Example</h1>
@@ -99,14 +104,26 @@
 </section>
 
 <section id="2"><h1>System representation</h1>
-  Differential equations could be used for the entire end-to-end system which relates fan commands to estimated ball positions, but this would be difficult to do because of how complex each of the parts are individually.
+  The aim would then be to break the system down to manageable parts (simpler mathematical models) where each part is represented separately in isolation, allowing engineers to work on the different parts simultaneously.
 
-  <p>
-    The aim would then be to break the system down to manageable parts (simpler mathematical models) where each part is represented separately in isolation, allowing engineers to work on the different parts simultaneously.
-  </p>
+  <subsection id="2.0"><h1>Differential equations</h1>
+    Differential equations could be used for the entire end-to-end system which relates fan commands to estimated ball positions, but this would be difficult to do because of how complex each of the parts are individually.
+  </subsection>
 
+  <subsection id="2.1"><h1>Pure convolution</h1>
+    The fan commands would first be convolved with the impulse response of the fan. The output, the air velocity, would then be convolved with the impulse response of the inverted bowl system. The output, the true ball position, would be convolved with the impulse response of the radar sensor to generate the measured ball's position. This output would then, finally, be convolved the estimator's impulse response to get the estimated position that results from the initial fan commands.
+
+    <p>
+      Performing integration multiple times becomes expensive in terms of time and computation. Convolution also doesn't allow combination of several systems into a single large system. 
+    </p>
+  </subsection>
+</section>
+
+<section id="3"><h1>Control system</h1>
   The final step would be to pull the model together and design the control system for it.
 </section>
+
+
 </chapter>
 
 </body>

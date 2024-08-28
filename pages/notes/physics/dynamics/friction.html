@@ -39,16 +39,21 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Velocity dependent friction models</a>
-<a href="#1">Mass dependent friction models</a>
+<a href="#0">Practical implication</a>
+<a href="#1">Velocity dependent friction models</a>
+<a href="#2">Mass dependent friction models</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Static friction</a></li>
-  <li><a href="#1.1">Kinetic friction</a></li>
+  <li><a href="#2.0">Static friction</a></li>
+  <li><a href="#2.1">Kinetic friction</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Friction</h1>
-<section id="0"><h1>Velocity dependent friction models</h1>
+<section id="0"><h1>Practical implication</h1>
+  In real life, a system will always have some loss of energy - usually from friction which <n>generates heat which then leaves the system through convection, conduction, and radiation</n>.
+</section>
+
+<section id="1"><h1>Velocity dependent friction models</h1>
   [<a href="https://t.ly/7Nv1o">Modern robotics</a>, <a href="https://shorturl.at/gnwAJ">Drake</a>, <a href="https://t.ly/Wg0bV">Mathworks</a>] 
   
   <br>
@@ -145,8 +150,8 @@
   </subsubsection>
 </section>
 
-<section id="1"><h1>Mass dependent friction models</h1>
-  <subsection id="1.0"><h1>Static friction</h1>
+<section id="2"><h1>Mass dependent friction models</h1>
+  <subsection id="2.0"><h1>Static friction</h1>
     If an object is at rest, horizontal forces up to a certain threshold force can be applied to the object and it will still remain static. <n>Experiments</n> show this threshold force is a constant (<i>coefficient of static friction</i>) times the normal force.
 
     $$\begin{align*}
@@ -161,7 +166,7 @@
     </p>
   </subsection>
 
-  <subsection id="1.1"><h1>Kinetic friction</h1>
+  <subsection id="2.1"><h1>Kinetic friction</h1>
     A certain force needs to be applied to keep an object moving at a constant velocity. <n>This force is the same as the force of friction</n>. From experiments, it is a constant (<i>coefficient for kinetic friction</i>) times the normal force (here, gravity).
 
     $$
