@@ -40,28 +40,33 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Datatypes</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">User defined datatypes</a></li>
+  <li><a href="#0.1">Primitives</a></li>
+</ul>
 <a href="#1">Member initialisation</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Members</h1>
 <section id="0"><h1>Datatypes</h1>
-  A language needs to allow creation of one's own datatypes else it would have to cater to so many needs. Examples:
+  A language needs to allow creation of one's own datatypes else it would have to cater to so many needs. 
 
-  <ul>
-    <li><i>User defined datatypes</i></li>
+  <subsection id="0.0"><h1>User defined datatypes</h1>
     <ul>
-      <li>
-        <code>Class</code>. We can have a class sedan and instantiate multiple objects for it - a blue and a red sedan for example. <n>And it's all about relationships amongst these classes</n>.
-      </li>
+      <li><code>Class</code></li>
+      A class sedan can be instantiated with multiple objects for it - a blue and a red sedan for example. <n>It's all about relationships amongst classes</n>.
+
       <li><code>Vector</code></li>
     </ul>
+  </subsection>
 
+  <subsection id="0.1"><h1>Primitives</h1>
+    These are the fundamental types. 
+    
     <p>
-    <li><i>Primitives</i></li>
-    These are the fundamental types. The standard library includes additional types such as <code>std::size_t</code> [<a href="https://t.ly/qhDtc">Ref</a>] and <code>std::string</code>.
-
+      The standard library includes additional types such as <code>std::size_t</code> [<a href="https://t.ly/qhDtc">Ref</a>] and <code>std::string</code>.
     </p>
-  </ul>
+  </subsection>
 </section>
   
 <section id="1"><h1>Member initialisation</h1>

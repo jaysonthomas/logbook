@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Estimation background: Probability</title>
-  <meta name="Estimation background: Probability" content="text/html; charset=utf-8;" />
+  <title>Cmake Commands: Regular target</title>
+  <meta name="Cmake Commands: Regular target" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,38 +39,27 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Description</a>
-<ul class="no-bullets">
-  <li><a href="#0.0">Continuous samples space</a></li>
-</ul>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Estimation background: Probability</h1>
+<chapter style="counter-reset: chapter 0"><h1>Cmake Commands: Regular target</h1>
 
-<section id="0"><h1>Description</h1>
-  $$
-    P(\text{of a particular event}) = \frac{\text{Frequency of the particular event occurring}}{\text{Total occurrences of all events}}
-  $$
-
-  The total occurrences includes not just unique ones.
-
-  <subsection id="0.0"><h1>Continuous samples space</h1>
-    The real value position of a robot, represented by a random variable, is an example of a continuous sample space.
-  
-    <div class="img-container">
-      <figure>
-        <img style="height:100px; width:auto"
-        src="../../../figures/estimation/1_continuousStateExample.png"/>
-        <figcaption>
-          [<a href="https://t.ly/_1lN">Ref</a>] Position of a robot
-        </figcaption>
-      </figure>
-    </div>
-
-    For a continuous sample space, the probability of any particular value will always be 0. For example, probability that a vehicle is in some region is given more importance than any specific location.
-  </subsection>
+<section id="0"><h1>Overview</h1>
+  <ul>
+    <li><code>add_library()</code></li>
+    Adds a library to the project using the specified source files.
+    <p>
+      <li><code>target_link_libraries()</code></li>
+      Specifies libraries to use when linking a given target/executable.
+    </p>
+    <li><code>target_include_directories()</code></li>
+    Specifies the include directories to use when compiling a given target.
+    <p>
+      <li><code>add_executable()</code></li>
+      Add an executable to the project using the specified source files.
+    </p>
+  </ul>
 </section>
-
 </chapter>
 
 </body>

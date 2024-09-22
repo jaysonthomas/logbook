@@ -40,8 +40,9 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Definitions</a>
-<a href="#1">Theory</a>
-<a href="#2">Example</a>
+<a href="#1">Input space</a>
+<a href="#2">Theory</a>
+<a href="#3">Example</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Transformation of a basis vector</h1>
@@ -49,7 +50,17 @@
   A <i>coordinate system</i> is an arrangement of reference lines or curves used to identify the location of points in space. In 2D, the most common system is the <i>Cartesian system</i>.
 </section>
 
-<section id="1"><h1>Theory</h1>
+<section id="1"><h1>Input space</h1>
+  <ul>
+    <li>$m \times n$ basis vectors or</li>
+    <li>$m$ input space variables</li>
+  </ul>
+  <p>
+    The big difference between the 2R example and the basis vectors are the latter is scaled and rotated. 2R arms can't be scaled.
+  </p>
+</section>
+
+<section id="2"><h1>Theory</h1>
   [<a href="https://t.ly/gEhRW">Ref</a>] <br>
   If a non-linear transformation is applied to a bunch of vectors within a coordinate system (i.e. points in space), it would look very linear when zoomed in on a point. If the location of a point is a factor in the transformation, then each point would scale based on how far it is from the origin. For example, a transformation applied at (-2,1) would be much smaller than at (-100, 50) for a transformation given by $\begin{bmatrix} x + sin(y) \\ y + sin(x)\end{bmatrix}$.
   
@@ -67,7 +78,7 @@
   Similarly, the 2nd column represents the normalised changes caused by the transformation to the y component of a point in both the x and y directions.
 </section>
 
-<section id="2"><h1>Example</h1>
+<section id="3"><h1>Example</h1>
   [<a href="https://t.ly/DwPCd">Ref</a>] <br>
   Consider a transformation $\begin{bmatrix} x + sin(y) \\ y + sin(x)\end{bmatrix}$ applied at the point (-2,1) which can be rewritten as 
   $\begin{bmatrix} -2 & 0 \\ 0 & 1\end{bmatrix}$ where the columns represent the x and the y coordinates respectively.

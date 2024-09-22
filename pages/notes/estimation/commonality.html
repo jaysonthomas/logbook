@@ -63,14 +63,14 @@
 </section>
 
 <section id="1"><h1>Measurement model</h1>
-  A measurement model/equation/function $H$:
+  A measurement model encapsulated in the Jacobian $H$:
   <ul>
-    <li>Projects a state into measurement space or</li>
+    <li>Projects a state into its measurement space or</li>
     <li>Maps a state to a measurement</li>
   </ul>
 
   <p>
-    In the simplest form, a measurement model can look like:
+    In the simplest form, a measurement equation looks like:
     $$
       y = Hx + v
     $$
@@ -93,8 +93,8 @@
 
 <section id="3"><h1>Dimensions</h1>
   <ul>
-    <li>$x$ is the unknown state vector to be estimated of size $n$</li>
-    <li>$y$ is the vector of $m$ noisy measurements</li>
+    <li>$x$ is the unknown state vector to be estimated of size $m$</li>
+    <li>$y$ is the vector of $k$ noisy measurements</li>
   </ul>
 </section>
 
@@ -107,11 +107,11 @@
     The estimation covariance matrix $P$ represents the uncertainty in the estimated state variables. It quantifies how much the estimated state variables are expected to vary from their true values due to uncertainties in the system model and the measurements.
 
     <p>
-      It helps in determining how much weight should be given to the new measurements versus the current state estimate. A larger $P$ means higher uncertainty in the current state estimate, which results in giving more weight to the new measurements.
+      It helps in determining how much weight should be given to new measurements versus the current state estimate. A larger $P$ means higher uncertainty in the current state estimate, which results in giving more weight to new measurements.
     </p>
   </subsection>
   <subsection id="5.1"><h1>Computation</h1>
-    In the Kalman filter, $P$ is updated recursively based on the process model and the measurement update. It combines information from both the model predictions and the measurements to give an overall uncertainty of the state estimate.
+    In Kalman filter, $P$ is updated recursively based on the process model and the measurement update. It combines information from both the model predictions and the measurements to give an overall uncertainty of the state estimate.
   </subsection>
 </section>
 
@@ -120,11 +120,11 @@
     The measurement noise covariance matrix represents the uncertainty in the measurement process itself. It quantifies the expected variance and correlation of the measurement noise.
 
     <p>
-      It influences how much trust should be placed on the measurements. Higher values in $R$ indicate higher measurement noise, which means less trust in the measurements and more reliance on the model prediction.
+      It influences how much trust should be placed on measurements. Higher values in $R$ indicate higher measurement noise, which means less trust in measurements and more reliance on the model prediction.
     </p>
   </subsection>
   <subsection id="6.1"><h1>Computation</h1>
-    $R$ is usually specified based on the known characteristics of the measurement sensors or systems. It is often assumed to be constant or known a priori.
+    $R$ is usually specified based on known characteristics of measurement sensors or systems. It is often assumed to be constant or known a priori.
   </subsection>
 </section>
 

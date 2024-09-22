@@ -40,57 +40,114 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Intro</a>
-<a href="#1">Vector value functions</a>
-<a href="#2">Multivariate Gaussian and its parameter estimates</a>
-<a href="#3">Example of a two dimensional covariance</a>
-<a href="#4">Joint distribution</a>
-<a href="#5">Marginal</a>
-<a href="#6">Independence</a>
-<a href="#7">Correlation</a>
+<a href="#1">Scalar value functions</a>
+<a href="#2">Vector value functions</a>
+<a href="#3">Multivariate Gaussian and its parameter estimates</a>
+<a href="#4">Example of a two dimensional covariance</a>
+<a href="#5">Joint distribution</a>
+<a href="#6">Marginal</a>
+<a href="#7">Independence</a>
+<a href="#8">Correlation</a>
 <ul class="no-bullets">
-  <li><a href="#7.0">Pearson Product-Moment Correlation</a></li>
-  <li><a href="#7.1">Application of the correlation test</a></li>
+  <li><a href="#8.0">Pearson Product-Moment Correlation</a></li>
+  <li><a href="#8.1">Application of the correlation test</a></li>
 </ul>
-<a href="#8">Relationship of Correlation with Covariance</a>
-<a href="#9">Conditional distribution</a>
+<a href="#9">Relationship of Correlation with Covariance</a>
+<a href="#10">Conditional distribution</a>
 <ul class="no-bullets">
-  <li><a href="#9.0">Chain rule</a></li>
-  <li><a href="#9.1">Bayes' rule</a></li>
+  <li><a href="#10.0">Chain rule</a></li>
+  <li><a href="#10.1">Bayes' rule</a></li>
 </ul>
-<a href="#10">Applying Bayes' rule</a>
+<a href="#11">Applying Bayes' rule</a>
 <ul class="no-bullets">
-  <li><a href="#10.0">Properties of the equation for the mean of the posterior distribution</a></li>
+  <li><a href="#11.0">Properties of the equation for the mean of the posterior distribution</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Multivariate distributions</h1>
 
 <section id="0"><h1>Intro</h1>
-  What if our random variable is a vector $x=[x_1,x_2,..,x_n]$, and not a scalar. The vehicle position isn't going to be given by a single variable x, but by x, y and z. And if we include attitude as well, $x$ becomes a six dimensional vector. And we'd like to have a distribution over these variables.
+  Consider a random variable that is:
+  <ul>
+    <li>A vector and not a scalar</li>
+    $x=[x_1,x_2,..,x_n]$
+
+    <p>
+      <li>Multi-dimensional</li>
+      Considering x,y,z dimensions and attitude as well, an object's state vector becomes six dimensional.
+    </p>
+  </ul>
+  
+  The aim is to have a distribution over all the variables of a multi-dimensional vector. Treating each one separately, implicitly, makes a strong assumption about each one's independence.
   
   <p>
-    If we treat each one separately, then we're making some strong assumptions about independence. But, we can define vector value functions and the same concepts used for scalar values over the vector value inputs.
+     The same concepts used for scalar values can also be used with vectors.
   </p>
 </section>
 
-<section id="1"><h1>Vector value functions</h1>
-  <figure>
-    <img style="height:200px; width:80%"
-    src="../../../figures/drone/15_vectorValueFunctions.png">
-  </figure>
+<section id="1"><h1>Scalar value functions</h1>
   <ul>
+    <li>Scalar Variable</li>
+    $$
+      x
+    $$
+
     <li>Normalisation</li>
-    The integral still has to come to one. In this case, the normalization constant 
-    that makes this come to 1 would be the integral of $f(x)$, $dx_1$, $dx_2$ up to $dx_n$.
+    $$
+      \int^\infty_{-\infty} f(x)dx = 1
+    $$
+    $f(x)$ is the probability density function with a constant multiplier in front to make the integral go to 1. $f(x)dx$ gives the probability of $x$ for the interval $dx$.
 
     <p>
-      <li>Spread</li>
-      [It should be $\sigma^2$ in the image] Instead of a variance, we have a <code>covariance</code>, $\Sigma$. It is going to be a matrix, because the outer product, $(x-\mu)(x-\mu)^T$, is going to result in a matrix. The covariance is going to be a <code>symmetric matrix</code> and <code>positive semi definite</code> (i.e. there are no negative eigenvalues).
+      <li>Mean</li>
+      $$
+        \mu = \int^\infty_{-\infty} xf(x)dx
+      $$
     </p>
+
+    <li>Variance or spread</li>
+    $$
+      \sigma^2 = \int^\infty_{-\infty} (x-\mu)^2f(x)dx
+    $$
   </ul>
 </section>
+
+<section id="2"><h1>Vector value functions</h1>
+  <ul>
+    <li>Vector Variable</li>
+    $$
+      x = [x_1, x_2, \cdots, x_n]
+    $$
+
+    <li>Normalisation</li>
+    $$
+      \int^\infty_{-\infty} \cdots \int^\infty_{-\infty} f(x)dx_1 \cdots dx_n = 1
+    $$
+
+    <li>Mean</li>
+    $$
+      \mu = \int^\infty_{-\infty} \cdots \int^\infty_{-\infty} xf(x)dx_1 \cdots dx_n
+    $$
   
-<section id="2"><h1>Multivariate Gaussian and its parameter estimates</h1>
+    <li>Variance or spread</li>
+    $$
+      \Sigma = \int^\infty_{-\infty} \cdots \int^\infty_{-\infty} (x-\mu) (x-\mu)^T f(x)dx_1 \cdots dx_n
+    $$
+
+    Variance is replaced by a <i>covariance matrix</i>, $\Sigma$. It is a matrix because the outer product, $(x-\mu)(x-\mu)^T$, results in a matrix. 
+    
+    <p>
+      The covariance matrix is going to be
+      <ul>
+        <li><i>symmetric</i> and</li>
+        <li><i>positive semi definite</i></li>
+        That is, there are no negative eigenvalues.
+      </ul>
+    </p>
+  </ul> 
+</section>
+
+<section id="3"><h1>Multivariate Gaussian and its parameter estimates</h1>
   <figure>
     <img style="height:40%; width:30%"
     src="../../../figures/drone/16_multivariateGaussian.png">
@@ -109,7 +166,7 @@
   taking care to do the vector math correctly.
 </section>
 
-<section id="3"><h1>Example of a two dimensional covariance</h1>
+<section id="4"><h1>Example of a two dimensional covariance</h1>
   <div class="container">
     <figure>
       <img style="height:200px; width:auto"
@@ -131,7 +188,7 @@
   </p>
 </section>  
 
-<section id="4"><h1>Joint distribution</h1>
+<section id="5"><h1>Joint distribution</h1>
   A lot of the times, knowing the value of one field in our vector tells us something about the other fields. For instance, if a vehicle has a distribution over a state x, y, z, knowing the altitude of the vehicle may tell us something about its lateral position or vice versa. We can't treat those probabilities separately and differently.
 
   <p>
@@ -145,7 +202,7 @@
   </p>
 </section>
 
-<section id="5"><h1>Marginal</h1>
+<section id="6"><h1>Marginal</h1>
   To find the probability over $x_1$ from the joint distribution, we compute the <i>marginal</i> by integrating $x_2$ out of the density function:
   $$
     p(x_1) = \int{p(x_1,x_2)dx_2}
@@ -154,7 +211,7 @@
   <m>If we have many variables in our vector, we can integrate out all the variables we don't want, to get a marginal over any subset of variables we do want</m>.
 </section>
 
-<section id="6"><h1>Independence</h1>
+<section id="7"><h1>Independence</h1>
   The system that we're estimating may have more than two variables. A flying vehicle may have variables for x, y, z, roll, pitch, yaw and perhaps even for their derivatives which takes it to 12. We might have variables that track what's happening in the environment - example, states (12 each) of other drones. This distribution can get unwieldy very quickly.
 
   <p>
@@ -191,7 +248,7 @@
   The idea of independence is that knowing the value of one variable has no effect on the other random variable, i.e. knowing the value of $x_1$ tells us nothing about $x_2$.
 </section>
 
-<section id="7"><h1>Correlation</h1>
+<section id="8"><h1>Correlation</h1>
   How to know if 2 variables are independent? How can we tell if a random variable such as whether the vehicle is working is independent of whether the payload is working? If the data are discrete and we have a probability mass function also known as having <i>categorical data</i>, then a <i>chi-square test</i> is a type of statistical test that can be used to determine the degree to which the differences between variables are due to chance or if they're actually correlated in some way. For continuous data, we can examine what's known as <i>correlation</i>.
 
   <p>
@@ -209,7 +266,7 @@
   </div>
   This is fine for a qualitative understanding of whether the correlation is positive, negative, or zero. But to precisely quantify the correlation, we need a correlation function.
 
-  <subsection id="7.0"><h1>Pearson Product-Moment Correlation</h1>
+  <subsection id="8.0"><h1>Pearson Product-Moment Correlation</h1>
     There are many different choices for correlation functions. One common choice is the <i>Pearson Product-Moment Correlation</i>.
     $$
       \rho_{1,2} = \frac{cov(x_1,x_2)}{\rho_{x_1}\rho_{x_2}}
@@ -231,7 +288,7 @@
     </p>
   </subsection>
 
-  <subsection id="7.1"><h1>Application of the correlation test</h1>
+  <subsection id="8.1"><h1>Application of the correlation test</h1>
     Imagine we had 2 random variables constructed from some other random variable that itself is distributed from $0$ to $2\pi$.
 
     $$\begin{align*}
@@ -255,7 +312,7 @@
 </section>
 
 
-<section id="8"><h1>Relationship of Correlation with Covariance</h1>
+<section id="9"><h1>Relationship of Correlation with Covariance</h1>
   When two random variables are <i>correlated</i>, knowledge of one provides some information about the other. For example, the position of a vehicle now and the position of a vehicle in one second are correlated random variables: knowledge of one should give me some insight into the value of the other.
 
   <p>
@@ -265,10 +322,10 @@
   <i>Covariance</i> is a measure of the joint variability of two random variables. If one variable tends to be big when the other is big, then the covariance is positive. The <i>correlation coefficient</i> is simply the <n>normalized version</n> of the covariance.
 </section>
 
-<section id="9"><h1>Conditional distribution</h1>
+<section id="10"><h1>Conditional distribution</h1>
   Another useful property of joint random variables is that it's often of extreme interest to find a density of one of the unknown random variables given specific knowledge of other random variables. For instance, is a vehicle moving, given the current state of the propulsion system.
 
-  <subsection id="9.0"><h1>Chain rule</h1>
+  <subsection id="10.0"><h1>Chain rule</h1>
     $$
       p(x|y) = \frac{p(x,y)}{p(y)}
     $$
@@ -280,7 +337,7 @@
     $p(y)$ is the marginal of the conditioning variable.
   </subsection>
 
-  <subsection id="9.1"><h1>Bayes' rule</h1>
+  <subsection id="10.1"><h1>Bayes' rule</h1>
     A really useful application is sometimes we want to reverse our conditional probabilities. When we do estimation for a flying vehicle, we generally have access to measurements $y$ (example: GPS which will always have some noise) and we want to know the probability of $x$ given those measurements. So we want to calculate the conditional probability $p(x|y)$.
     
     <p>
@@ -293,7 +350,7 @@
   </subsection>
 </section>
 
-<section id="10"><h1>Applying Bayes' rule</h1>
+<section id="11"><h1>Applying Bayes' rule</h1>
   How can we use Bayes' rule?
   <ul>
     <li>We start with <i>prior</i> belief</li>
@@ -358,7 +415,7 @@
     $$
   </div>
 
-  <subsection id="10.0"><h1>Properties of the equation for the mean of the posterior distribution</h1>
+  <subsection id="11.0"><h1>Properties of the equation for the mean of the posterior distribution</h1>
     $$
       \mu = \underbrace{\mu_x}_{\text{Initial estimate}} + 
       \underbrace{\frac{\sigma^2_x}{\sigma^2_x + \sigma^2_v}}_{\text{Trade off of trust} \atop \text{Measurement vs prior}}

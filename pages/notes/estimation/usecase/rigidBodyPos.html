@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Estimation usecase - Position of a rigid body</title>
+  <meta name="Estimation usecase - Position of a rigid body" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">State to be estimated</a>
+<a href="#1">Measurement model</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Measurement equation</a></li>
+  <li><a href="#1.1">The Jacobian</a></li>
+  <li><a href="#1.2">Matrix/Vector form</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Estimation usecase - Position of a rigid body</h1>
+<section id="0"><h1>State to be estimated</h1>
+  Consider an object moving from a starting position $p_0$, with initial velocity $v_0$ and constant acceleration $a$. The goal is to estimate $x$ given a position measurement $y$ at every time step (inverse kinematics?). 
+  $$
+    x = \begin{bmatrix}x_1 \\ x_2 \\ x_3\end{bmatrix} 
+      = \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
+  $$
+
+  <m>There are 3 unknowns - tricky!</m>
+</section>
+
+<section id="1"><h1>Measurement model</h1>
+  <subsection id="1.0"><h1>Measurement equation</h1>
+    Let $\Delta{t}$ be the sampling period of the distance sensor such that:
+    $$
+      t=0, \Delta{t}, 2\Delta{t}, \cdots, k\Delta{t}
+    $$
+
+    From <a href="../../control/plants/rigidBody/kinematics.html">rigid body kinematics</a>, the measurement equation/model is:
+    $$\begin{align*}
+      y(t) &= p_0 + v_0t + \frac{1}{2}at^2 \\
+      y(k\Delta{t}) &= p_0 + v_0k\Delta{t} + \frac{1}{2}a(k\Delta{t})^2
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="1.1"><h1>The Jacobian</h1>
+    [<a href="../../maths/jacobian/main.html">Ref</a>]<p></p>
+
+    From a kinematics standpoint, there are 3 input variables represented in the state; therefore $m=3$. From an estimation viewpoint, $y(t)$ is the input. 
+
+    <p>
+      The Jacobian is given as:
+      $$\begin{align*}
+        H_k &= 
+          \begin{bmatrix}
+            \frac{\partial{y(k\Delta{t})}}{\partial{p_0}} &
+            \frac{\partial{y(k\Delta{t})}}{\partial{v_0}} &
+            \frac{\partial{y(k\Delta{t})}}{\partial{a}}
+          \end{bmatrix} \\
+          &= \begin{bmatrix}1 & k\Delta{t} & \frac{1}{2}(k\Delta{t})^2\end{bmatrix}
+
+      \end{align*}$$
+    </p>
+  </subsection>
+  
+  <subsection id="1.2"><h1>Matrix/Vector form</h1>
+  The measurement equation is rewritten as:
+  $$
+    y_k = y(k\Delta{t}) = 
+      \underbrace{
+        \begin{bmatrix}1 & k\Delta{t} & \frac{1}{2}(k\Delta{t})^2\end{bmatrix}
+      }_{H_k}
+      \underbrace{
+        \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
+      }_{x}
+      + v_k
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Probability Distribution: Parameters</title>
-  <meta name="Probability Distribution: Parameters" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>PD: Parameters</title>
+  <meta name="PD: Parameters" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,13 +39,13 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Parameters of a distribution</a>
+<a href="#0">Description</a>
 <a href="#1">Estimating parameters from data</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Probability Distribution: Parameters</h1>
-<section id="0"><h1>Parameters of a distribution</h1>
-  $\theta$ is used to collectively refer to parameters that describe a particular distribution. For example, a continuous distribution like a Gaussian, can be fully described by two parameters $\mu$ and $\sigma^2$.
+<chapter style="counter-reset: chapter 0"><h1>PD: Parameters</h1>
+<section id="0"><h1>Description</h1>
+  $\theta$ is used to collectively refer to parameters that describe a distribution. For example, a continuous distribution like a Gaussian, can be fully described by two parameters $\mu$ and $\sigma^2$.
 
   <p>
     $p$ of $x$ given $\theta$ is not the same as the function that describes the density of $x$, parameterized by $\theta$.
@@ -61,7 +61,7 @@
   <div class="img-container">
     <figure>
       <img style="height:80px; width:auto"
-      src="../../../figures/drone/14_estimatingParametersExample.png"/>
+      src="../../../../figures/drone/14_estimatingParametersExample.png"/>
       <figcaption>
         Samples in turquoise, repeatedly drawn from a gaussian distribution
       </figcaption>
@@ -72,8 +72,6 @@
 
   $$\hat{x} = \frac{1}{n} \sum^n_{i=1}x_i$$
   $$\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (x_i-\hat{x})^2$$
-
-  It's quite convenient that the mean of the distribution matches the expected value, and the variance of the distribution matches that variance.
 </section>
 </chapter>
 

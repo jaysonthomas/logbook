@@ -45,8 +45,6 @@
   <li><a href="#0.1">The need for estimation</a></li>
   <li><a href="#0.2">Applications</a></li>
 </ul>
-<a href="#1">What does a distribution have to do with robotics?</a>
-<a href="#2">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation: Product viewpoint</h1>
@@ -56,33 +54,30 @@
     <ul>
       <li>Is a temporal process - things need to be integrated over time.</li>
       <li>
-        It's a process of managing uncertainty. It is not 100% certain to know where an object is for example.
+        Is a process of managing uncertainty. It is not 100% certain to know where an object is for example.
       </li>
     </ul> 
   </subsection>
 
   <subsection id="0.1"><h1>The need for estimation</h1>
     To quantify uncertainty. The goal is to make a very tight distribution, 
-    so that a robot is more certain of its state.
-    The real world (bot and environment) is uncertain in the following ways:
-    <ul>
-      <li>
-        It is stochastic. The effect of actions can have 
-        uncertain outcomes due to intrinsic or extrinsic factors.
-      </li>
-      We might intend for a vehicle to follow a certain path, but it might
-      get blown to one side by a gust of wind or suddenly stop working.
-      This change in state is a source of uncertainty, we never know when it's 
-      going to happen.
-      <br><br>
+    so that a robot is more certain of its state. The real world (bot and environment) is uncertain in the following ways:
+    
+    <subsubsection><h1>Stochastic</h1>
+      The effect of actions can have uncertain outcomes due to intrinsic or extrinsic factors.
 
-      <li>
-        It is only partially observable. There is uncertainty about 
-        the current state of the world.
-      </li>
-      Where is the vehicle? What's behind that building over there? We can't
-      know everything about the world.
-    </ul>
+      <p>
+        A vehicle intending to follow a certain path might get blown to one side by a gust of wind or suddenly stop working. It is not possible to know when an uncertain event could occur that could then cause a state change. 
+      </p>
+    </subsubsection>
+
+    <subsubsection><h1>Partially observable</h1>
+      The real worl is only partially observable. There is uncertainty about the current state of the world. 
+      
+      <p>
+        Where is the vehicle? What's behind a particular object? It is hard to know everything about the world.
+      </p>
+    </subsubsection>
   </subsection>
 
   <subsection id="0.2"><h1>Applications</h1>
@@ -127,32 +122,6 @@
     how the phone screen orients itself.
   </subsection>
 </section>
-
-<section id="1"><h1>What does a distribution have to do with robotics?</h1>
-  Solving estimation problems often boils down to using data from sensors which are imperfect.
-
-  <p>
-    For example, a range finder pointed at a wall 1m away will most likely give measurements that are slightly different than 1 meter like 0.992, 1.001... etc. But if this measurement is repeated many times, on average, the sensor will yield the correct distance plus or minus some error. This error is called <i>sensor noise</i> and it's often best modeled as a Gaussian random variable with some mean ideally $0$, and some standard deviation.
-  </p>
-
-  Therefore, in order to use a sensor more effectively, an accurate estimate of what the parameters of its output distribution are, i.e. a <i>sensor model</i> is required. <n>It is not possible to know the exact values of the parameters of a distribution given some data</n>, but an estimate can be computed.
-  
-  <p>
-    A good sensor will have a small variance. A bad sensor will have a large variance. Before we put a sensor on a robot we need to estimate what this variance is.
-  </p>
-</section>
-
-<section id="2"><h1>Musings</h1>
-  <ul>
-    <li>Normalisation of data</li>
-    <a href="https://t.ly/C0lw">Ref1</a>, 
-    <a href="https://t.ly/q8JJ">Ref3</a>.
-    <li>Absolute vs relative tolerance</li>
-  </ul>
-
-  <a href="https://t.ly/WRZn">Great resource</a> on Kalman and bayesian filters. There is also an introduction to statistics course on Udacity.
-</section>
-
 </chapter>
 
 </body>

@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rigid Body: Kinematics</title>
+  <meta name="Rigid Body: Kinematics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Using acceleration</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Definition</a></li>
+  <li><a href="#1.1">Integrating w.r.t. time</a></li>
+  <li><a href="#1.2">Finding the integration constant</a></li>
+</ul>
+<a href="#2">Using velocity</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Definition</a></li>
+  <li><a href="#2.1">Integrating w.r.t. time</a></li>
+  <li><a href="#2.2">Finding the integration constant</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Rigid Body: Kinematics</h1>
+<section id="0"><h1>Overview</h1>
+  By integrating acceleration once w.r.t. time to find velocity and integrating the velocity once w.r.t. time and incorporating the intial conditions at each step, the final position can be found.
+</section>
+
+<section id="1"><h1>Using acceleration</h1>
+  <subsection id="1.0"><h1>Definition</h1>
+    Assuming acceleration is constant:
+    $$
+      a = \frac{dv(t)}{dt}
+    $$
+  </subsection>
+
+  <subsection id="1.1"><h1>Integrating w.r.t. time</h1>
+    Integrating both sides with respect to time:
+    $$\begin{align}
+      \int a dt &= \int \frac{dv(t)}{dt} dt \nonumber \\
+      at + C &= v(t) \label{eq:integrateAccel}
+    \end{align}$$
+
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        v(t) &:& \text{Velocity is the rate of change of position w.r.t. time.}\\ 
+        C &:& \text{Integration constant}
+      \end{array}$$
+    </div>
+  </subsection>
+  <subsection id="1.2"><h1>Finding the integration constant</h1>
+    Substituting the initial condition defined by $t=0$ and $v(0) = v_0$, in \ref{eq:integrateAccel}:
+
+    $$\begin{align*}
+      a \cdot 0 + C &= v(0) \\
+      C &= v_0
+    \end{align*}$$
+
+    \ref{eq:integrateAccel} becomes:
+    $$
+      v(t) = v_0 + at
+    $$
+  </subsection>
+</section>
+
+<section id="2"><h1>Using velocity</h1>
+  <subsection id="2.0"><h1>Definition</h1>
+    $$\begin{align*}
+      v(t) &= \frac{dy(t)}{dt} \\
+          &= v_0 + at
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="2.1"><h1>Integrating w.r.t. time</h1>
+    $$\begin{align}
+      \int (v_0 + at) dt &= \frac{dy(t)}{dt} dt \nonumber \\
+      v_0t + \frac{1}{2}at^2 + C &= y(t) \label{eq:integrateVel}
+    \end{align}$$
+  </subsection>
+
+  <subsection id="2.2"><h1>Finding the integration constant</h1>
+    Substituting the initial condition defined by $t=0$ and $y(0) = p_0$, in \ref{eq:integrateVel}:
+
+    $$\begin{align*}
+      v_0 \cdot 0 + \frac{1}{2}a \cdot 0^2 + C &= p_0 \\
+      C &= p_0
+    \end{align*}$$
+
+    \ref{eq:integrateVel} becomes:
+    $$
+      y(t) = v_0t + \frac{1}{2}at^2 + p_0
+    $$
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

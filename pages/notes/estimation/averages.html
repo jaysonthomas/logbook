@@ -61,7 +61,7 @@
 
   $$\begin{align*}
     \hat{x}_t &= f(\hat{x}_{t-1}, z_t) \\
-    \hat{x}_t &= \frac{t-1}{t}\hat{x}_{t-1} + \frac{1}{t}z_t
+              &= \frac{t-1}{t}\hat{x}_{t-1} + \frac{1}{t}z_t
   \end{align*}$$
 </section>
 
@@ -70,7 +70,7 @@
     &\hat{x}_t = (\alpha)\hat{x}_{t-1} + (1-\alpha)z_t \quad\quad 0 \leq \alpha \leq 1
   \end{align*}$$
 
-  With exponential moving average, a trade-off needs to be made. Imagine the drone-hover-then-move example, not just in terms of stationary measurements with small changes. If $\alpha$ is close to 1, i.e. $\alpha \approx 1$, then the method:
+  With exponential moving average, a trade-off needs to be made. If $\alpha$ is close to 1, i.e. $\alpha \approx 1$, then the method:
   <ul>
     <li>Trusts previous estimate over new observations and hence is robust against bad measurements</li>
     This leads to smooth estimates of state, which is good if the state actually is smooth. But when the state is not constant, this breaks down and the estimate is slow to respond to new measurements.

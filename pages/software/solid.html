@@ -49,11 +49,17 @@
 
 <chapter style="counter-reset: chapter 1"><h1>SOLID design principles</h1>
 <section id="0"><h1>Overview</h1>
-  <a href="https://t.ly/ddOKr">Ref</a>, <a href="https://t.ly/qKSwX">Good site</a>.
+  <a href="https://t.ly/ddOKr">Ref</a>, <a href="https://t.ly/XKT9I">Good site</a>.
 </section>
 
 <section id="1"><h1>Single Responsibility</h1>
   A class should have only one reason to change. 
+
+  <p>
+    However, classes shouldn't be too specific leading to 100s of ridiculously interconnected classes, that could easily be one. SRP is about limiting the impact of change - group together things that change for the same reasons and separate those that change for different reasons. There should be a good balance.
+  </p>
+
+  One indication that SRP is not followed is when a constructor has more than 5-6 parameters.
 </section>
 
 <section id="2"><h1>Open/Closed</h1>

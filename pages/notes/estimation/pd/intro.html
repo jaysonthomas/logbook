@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PD: Introduction</title>
+  <meta name="PD: Introduction" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Probability distribution</a>
+<a href="#1">What does a distribution have to do with robotics?</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>PD: Introduction</h1>
+
+<section id="0"><h1>Probability distribution</h1>
+  [<a href="https://t.ly/1iwF">Ref</a>, 
+  <a href="https://t.ly/RY3w">Excellent ref</a>]<p></p>
+
+  A <i>distribution</i> aims to illuminate what the most likely event is.
+
+  <p>
+    A <i>probability distribution</i> is:
+    <ul>
+      <li>A list of events with their associated probabilities or</li>
+      <li>A function that maps from the outcomes to their corresponding probabilities</li>
+    </ul>
+  </p>
+</section>
+
+<section id="1"><h1>What does a distribution have to do with robotics?</h1>
+  Solving estimation problems boils down to using data from sensors which are imperfect.
+
+  <p>
+    For example, a range finder pointed at a wall 1m away will most likely give measurements that are slightly different than 1 meter like 0.992, 1.001... etc. But if this measurement is repeated many times, on average, the sensor will yield the correct distance plus or minus some error. This error is called <i>sensor noise</i> and it's often best modeled as a Gaussian random variable with some mean ideally $0$, and some standard deviation.
+  </p>
+
+  Therefore, in order to use a sensor more effectively, an accurate estimate of what the parameters of its output distribution are, i.e. a <i>sensor model</i> is required. <n>It is not possible to know the exact values of the parameters of a distribution given some data</n>, but an estimate can be computed.
+  
+  <p>
+    A good sensor will have a small variance. A bad sensor will have a large variance. Before a sensor is placed on a robot, it is important to know an estimate of this variance.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

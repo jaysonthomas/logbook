@@ -46,6 +46,9 @@
 <a href="#1">Sample variance</a>
 <a href="#2">Covariance</a>
 <a href="#3">Expected value</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Special case</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation Background: Variance</h1>
@@ -55,8 +58,7 @@
     [<a href="https://t.ly/CUyG">J's question</a> on stackexchange. <a href="https://t.ly/jWCR">Code example</a>.]
   </p>
   
-  When drawing from a distribution over and over again, the <i>variance</i> gives an indication of how spread out the numbers or <i>samples</i> (the values being drawn) will be from the mean (the expected value need not be
-  equal to the mean). The variance is not a measure of how well the mean is known, but how much the samples vary.
+  When drawing from a distribution over and over again, <i>variance</i> gives an indication of how spread out the <i>samples</i> (the values being drawn) will be from the mean. Variance is not a measure of how well the mean is known, but how much the samples vary.
 
   $$
     \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
@@ -105,14 +107,16 @@
   $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
 
   <p>
-    The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. But in the example above, where the underlying events (final position of the bot) are numeric events, the expected value gives an idea of the value of the random variable at any given time. 
+    The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. But, where the underlying events are numeric like the position of a bot, the expected value gives an idea of the value of the random variable at any given time. 
   </p>
 
-  $$
-    E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
-  $$
+  <subsection id="3.0"><h1>Special case</h1>
+    $$
+      E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
+    $$
 
-  $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
+    $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
+  </subsection>
 </section>
 </chapter>
 
