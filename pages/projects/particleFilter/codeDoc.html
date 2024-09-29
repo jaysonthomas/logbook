@@ -64,6 +64,10 @@
       Contains x, y coordinates of the map for use in functions like inpolygon (which checks if points are inside a polygon). The first point of the map is appended again to the end, closing the loop of the polygon by connecting the last vertex to the first.
 
       <p>
+        <code>inPolygonFormatX, inPolygonFormatY</code> contain all the lengths of the X-axis and Y-axis vectors respectively. These are also used in drawing the map with matplotlib's <code>line</code> function which require all the x and y vector lengths to be separate.
+      </p>
+
+      <p>
         <li><code>line</code></li>
         Stores each border line as [x1, y1, x2, y2].
       </p>

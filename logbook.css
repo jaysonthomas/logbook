@@ -257,7 +257,7 @@ body {
 table.table1, table.table1 th, table.table1 td {
   border: 1px solid rgb(68, 66, 66);
   border-collapse: collapse;
-  padding: 5px;
+  padding: 1px 4px; /* 2px top/bottom, 4px left/right */
   text-align: left;
 }
 
@@ -411,6 +411,15 @@ subsubsection > h1 {
   font-style: oblique;  /*italic*/
   font-weight: 100;     /*100: Thin, 400: Normal, 700: Bold*/
 }
+
+summary > h1 {
+  display: inline;
+  color: rgb(208,99,99);
+  font-size: 12px;
+  font-style: oblique;  /*italic*/
+  font-weight: 100;     /*100: Thin, 400: Normal, 700: Bold*/  
+}
+
 definition > h1 {
   display: inline;
   font-size: 16px;

@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Commonality: Measurement equation</title>
+  <meta name="Commonality: Measurement equation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Measurement model</a>
+<a href="#1">Fundamental principle</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Commonality: Measurement equation</h1>
+<section id="0"><h1>Measurement model</h1>
+  A measurement model encapsulated in the Jacobian $H$:
+  <ul>
+    <li>Projects a state into its measurement space or</li>
+    <li>Maps a state to a measurement</li>
+  </ul>
+
+  <p>
+    In the simplest form, if a measurement equation was linear, it would look like:
+    $$
+      y = Hx + v
+    $$
+  </p>
+
+  $z_t$ or $y_t$ represents an observation or a measurement made at timestep $t$. $H$ is the <i>Jacobian matrix</i>; it contains the partial derivatives of the measurements with respect to the parameter/state(s) $x$ of interest.
+</section>
+
+<section id="1"><h1>Fundamental principle</h1>
+  More the measurements, the more accurate the estimate will be.
+
+  <p>
+    If the error $v$ is known (we only know the distribution w.r.t. the unknown $x$), $x$ can be found: $Hx = y - v$. Or if $x$ is known, $v$ can be solved. Since neither is known, this becomes an estimation problem. A <i>maximum likelihood estimation</i> approach is used which, intuitively <n>looks at the measurements and asks what state/parameter value is the most likely to yield the particular set of measurements</n>.
+  </p>  
+
+  An estimation problem boils down to figuring out the measurement model $H$ which is often the tricky bit.
+</section>
+
+
+
+</chapter>
+
+</body>
+</html>

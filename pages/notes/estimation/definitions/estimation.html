@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Definitions: Estimation</title>
+  <meta name="Definitions: Estimation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Definition</a>
+<a href="#1">The need for estimation</a>
+<a href="#2">Applications</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Definitions: Estimation</h1>
+<section id="0"><h1>Definition</h1>
+  The goal of estimation is to come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors. Estimation:
+  <ul>
+    <li>Is a temporal process - things need to be integrated over time.</li>
+    <li>
+      Is a process of managing uncertainty. It is not 100% certain to know where an object is for example.
+    </li>
+  </ul> 
+</section>
+
+<section id="1"><h1>The need for estimation</h1>
+  To quantify uncertainty. The goal is to make a very tight distribution, 
+  so that a robot is more certain of its state. The real world (bot and environment) is uncertain in the following ways:
+  
+  <subsubsection><h1>Stochastic</h1>
+    The effect of actions can have uncertain outcomes due to intrinsic or extrinsic factors.
+
+    <p>
+      A vehicle intending to follow a certain path might get blown to one side by a gust of wind or suddenly stop working. It is not possible to know when an uncertain event could occur that could then cause a state change. 
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Partially observable</h1>
+    The real worl is only partially observable. There is uncertainty about the current state of the world. 
+    
+    <p>
+      Where is the vehicle? What's behind a particular object? It is hard to know everything about the world.
+    </p>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Applications</h1>
+  We only need sensor feedback if we want the drone to be autonomous. 
+  To be autonomous, the robot needs to know the following (RHS of table). 
+  Estimation plays a role in all these problems.
+  <p><table class="table1 center">
+    <tr>
+      <th>Type of problem</th>
+      <th>Knowledge of</th>
+    </tr>
+    <tr>
+      <td>Localisation, navigation</td>
+      <td>
+        Itself
+        <br>
+        Where the vehicle is, its attitude  
+        <br>
+        How fast it's going
+        </td>
+    </tr>
+    <tr>
+      <td>Mapping</td>
+      <td>
+        The environment
+        <br>
+        What is around me?
+      </td>
+    </tr>
+    <tr>
+      <td>Tracking</td>
+      <td>
+        Others
+        <br>
+        Where are the other vehicles?
+        <br>
+        How fast are they going?
+      </td>
+    </tr>
+  </table></p>
+  E.g. estimation is what makes GPS work so well, Apollo spacecraft, 
+  how the phone screen orients itself.
+</section>
+</chapter>
+
+</body>
+</html>

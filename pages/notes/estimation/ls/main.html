@@ -4,9 +4,9 @@
 <head>
   <title>Least Squares: Branches</title>
   <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,13 +39,23 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Linear least squares</a>
+<a href="#1">Non linear least squares</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least Squares: Branches</h1>
+<section id="0"><h1>Linear least squares</h1>
   <ul>
-    <li><a href="lls.html">Linear least squares</a></li>
-    <li><a href="batchLs.html">Batch linear least squares</a></li>
-    <li><a href="wls.html">Weighted batch least squares</a></li>
+    <li>Maximum Likelihood Estimation</li>
+    <ul>
+      <li><a href="mle.html">Overview</a></li>
+      <li><a href="mleDerivation.html">Derivation</a></li>
+      <li><a href="mleExample.html">Example</a></li>
+    </ul>
+
+    <li><a href="batchLs.html">Batch</a></li>
+    <li><a href="wls.html">Weighted</a></li>
+
     <li>Recursive least squares</li>
     <ul>
       <li>Overview</li>
@@ -67,8 +77,14 @@
         <li>An even more <a href="simplifiedEstErrorCovariance.html">simplified form</a> of the estimation error covariance</li>
       </ul>
     </ul>
-    <li><a href="nls.html">Non linear least squares</a></li>
   </ul>
+</section>
+
+<section id="1"><h1>Non linear least squares</h1>
+  <ul>
+    <li><a href="nls.html">Overview</a></li>
+  </ul>
+</section>
 </chapter>
 
 </body>

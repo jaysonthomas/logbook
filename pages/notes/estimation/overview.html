@@ -41,9 +41,6 @@
   
 <a href="#0">Assuming constant state</a>
 <a href="#1">Adapting to changes in a state</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Bayes rule</a></li>
-</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation approaches: Introduction</h1>
@@ -53,31 +50,30 @@
   
   <ul>
     <li>Batch Least squares</li>
-    It requires that measurements come in all at once. The measurement model $H$ is an $n \times m$ matrix, which maps a state vector of length $n$ to a measurement vector of $m$ individual measurements.
+    It requires that measurements come in all at once. The measurement model $H$ maps a state vector of length $m$ to a measurement vector of $k$ individual measurements.
+
+    $$
+      \underbrace{y}_{k \times 1} =  \underbrace{H}_{k \times m} \cdot 
+                                  \underbrace{x}_{m \times 1}
+    $$
 
     <p>
-    <li>Recursive least squares</li>
-    Having a batch of stored measurements is computationally intensive, since the amount of computational resources needed to solve the normal equations grow with the measurement vector size. With a recursive estimator, since measurements come in one at a time, $H$ will just be a vector, not a matrix. $H$ will map a state to a single measurement.
+      <li>Recursive least squares</li>
+      Having a batch of stored measurements is computationally intensive, since the amount of computational resources needed to solve the <m>normal equations</m> grows with the measurement vector size. With a recursive estimator, since measurements come in one at a time, $H$ will just be a vector, not a matrix. $H$ will map a state to a single measurement.
+
+      $$
+        \underbrace{y}_{1 \times 1} =  \underbrace{H}_{1 \times m} \cdot 
+                                    \underbrace{x}_{m \times 1}
+      $$
     </p>
 
     <li>Non-linear leasts squares</li>
-    The measurement model is some arbitrary function of the underlying state.
+    The measurement model is some <m>arbitrary function</m> of the underlying state.
   </ul>
 </section>
 
 <section id="1"><h1>Adapting to changes in a state</h1>
-  To incorporate a vehicle's motion, for example, into the state estimation process, the Kalman filter and its variants called extended and unscented kalman filters can be used. 
-
-  <subsection id="1.0"><h1>Bayes rule</h1>
-    <i>Bayes rule</i> is a method:
-    <ul>
-      <li>To integrate data over time</li>
-      <li>
-        To come up with a distribution that is the best reflection of what the state might be, by considering multiple sources of information
-      </li>
-    </ul>
-    Bayes rule relies on probability at its core to quantify uncertainty. There are other ways, such as confidence scores, fuzzy logic etc.
-  </subsection>
+  To estimate a state that is changing, the Kalman filter and its variants called extended and unscented kalman filters can be used. For example, to estimate the position of a vehicle, a kalman filter helps incorporate the vehicle's motion into the state estimation process.
 </section>
 </chapter>
 

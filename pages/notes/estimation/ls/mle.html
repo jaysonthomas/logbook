@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LLS: Maximum Likelihood Estimation derivation</title>
+  <meta name="LLS: Maximum Likelihood Estimation derivation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Aim</a>
+<a href="#1">Measurement collection</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Parameters of the distribution</a></li>
+  <li><a href="#1.1">Equation of the distribution</a></li>
+</ul>
+<a href="#2">Estimation update</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>LLS: Maximum Likelihood Estimation derivation</h1>
+<section id="0"><h1>Aim</h1>
+  The aim is to find what state is most consistent with the measurements. Mathematically, the goal is to select an estimate $\hat{x}$ to be the value of $x$ that maximizes the probability of the actual measurements $y$ i.e. choose $\hat{x}$ to maximise $p(y| x = \hat{x})$
+
+  <p>
+    There are 2 steps to this process.
+  </p>
+</section>
+
+<section id="1"><h1>Measurement collection</h1>
+  Assuming the measurements are not discrete, they should help form the probability density function $p(y|x)$, which will most likely be a Gaussian. 
+  
+  <subsection id="1.0"><h1>Parameters of the distribution</h1>
+    <ul>
+      <li>Mean</li>
+      $v$ is a zero-mean gaussian $v \sim \mathcal{N}(0,R)$. Hence, the expected value or the mean, is: $\bar{y} = Hx$
+
+      <p>
+        <li>Covariance</li>
+        If the noise in the model is negligible, the covariance $(y-\bar{y})(y-\bar{y})^T$ would be equal to the covariance of just the noise, $R$.
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Equation of the distribution</h1>
+    Given that $p(y|x) = \mathcal{N}(Hx, R)$, the formula for the <a href="../maths/gaussians.html">Gaussian</a>:
+
+    $$
+      p(y|x) = \underbrace{
+          \frac{1}{(2\pi)^{\frac{n}{2}}\lvert{R}\rvert^{\frac{1}{2}}}
+        }_{\text{Normalizer}}
+      e^
+        \underbrace{-\frac{1}{2}(y-Hx)^TR^{-1}(y-Hx)}_{\text{Term to maximise}}
+    $$
+  </subsection>
+</section>
+
+<section id="2"><h1>Estimation update</h1>
+  To find the likelihood of a set of measurements, i.e. $\hat{x}$, the gaussian function (probability density function) corresponding to the measurments needs to be maximised. 
+  
+  <p>
+    The normalizer term does not depend on $x$ at all, i.e. the specific choice of $x$ has no impact on the normalizer and can be ignored. Therefore, the exponent needs to be maximised; which means maximising the function in the exponent.
+  </p>
+
+  The function is maximised by taking its derivative and setting it equal to $0$. $x$ is then solved for to get the equation for the maximum likelihood estimator $\hat{x}$:
+  $$
+    \hat{x} = (H^TR^{-1}H)^{-1}H^TR^{-1}y
+  $$
+
+  This is the the most likely estimate, the solution to the least squares estimation problem given some measurements $y$ that are linearly related to some unknown quantity $x$ by the matrix $H$ that is assumed to be known.
+</section>
+</chapter>
+
+</body>
+</html>

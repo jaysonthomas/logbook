@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Resources</title>
-  <meta name="Resources" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Definitions: Bayes Rule</title>
+  <meta name="Definitions: Bayes Rule" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,18 +39,23 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Resources</h1>
-  <ul>
-    <li>Kalman filter</li>
-    <a href="https://t.ly/WRZn">Great resource</a> on Kalman and bayesian filters. There is also an introduction to statistics course on Udacity.
+<chapter style="counter-reset: chapter 0"><h1>Definitions: Bayes Rule</h1>
 
-    <p>
-      <li>Least squares</li>
-      [<a href="https://t.ly/Hj0U0">Perhaps a good video?</a>, <a href="https://t.ly/mwtO">Good quick tutorial</a>].
-    </p>
+<section id="0"><h1>Overview</h1>
+  <i>Bayes rule</i> is a method:
+  <ul>
+    <li>That relies on probability at its core to quantify uncertainty. It maintains a distribution that is the best reflection of what the state might be</li>
+    <li>To integrate <m>data</m> over time</li>
+    <li>
+      That considers multiple sources of information
+    </li>
   </ul>
+  
+  There are other ways, such as confidence scores, fuzzy logic etc.
+</section>
 </chapter>
 
 </body>

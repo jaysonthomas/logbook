@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Commonality: Covariance</title>
+  <meta name="Commonality: Covariance" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Mathematical model of noise</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Measurement noise covariance</a></li>
+</ul>
+<a href="#1">Estimation covariance</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Purpose</a></li>
+  <li><a href="#1.1">Computation</a></li>
+</ul>
+<a href="#2">When Estimation and Measurement noise covariance becomes equal</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Commonality: Covariance</h1>
+<section id="0"><h1>Mathematical model of noise</h1>
+  <ul>
+    <li>A <i>noise distribution</i> captures the imperfections in a sensor, by modeling the likelihood of making measurement $z$ given the system is in state $x$, $p(z|x)$.</li>
+    It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled.
+
+    <p>
+      <li>Noise distributions are often modeled as a zero-mean gaussian with some covariance $R$.</li>
+
+      To each measurement, a noise $v$ is added, sampled from the gaussian $\mathcal{N}(0, R)$. The most likely measurement is centred on the true value of whatever the sensor measures with some covariance.
+
+      $$
+        v \sim \mathcal{N}(0, R)
+      $$
+    </p>
+  </ul>
+
+  <subsection id="0.0"><h1>Measurement noise covariance</h1>
+    <subsubsection><h1>Purpose</h1>
+      It influences how much trust should be placed on measurements. Higher values in $R$ indicate higher measurement noise, which means less trust in measurements and more reliance on the <n>model prediction</n>.
+    </subsubsection>
+    <subsubsection><h1>Computation</h1>
+      $R$ is usually specified based on known characteristics of measurement sensors or systems. It is often assumed to be constant or known a priori
+    </subsubsection>
+  </subsection>
+</section>
+
+<section id="1"><h1>Estimation covariance</h1>
+  <subsection id="1.0"><h1>Purpose</h1>
+    <ul>
+      <li>The estimation covariance matrix $P$ represents the uncertainty in the estimated state variables.</li>
+      
+      It quantifies how much the estimated state variables are expected to vary from their <m>true values</m> due to <m>uncertainties in the system model</m> and the measurements.
+
+      <p>
+        <li>It helps in determining how much weight should be given to new measurements versus the current state estimate.</li>
+        
+        A larger $P$ means higher uncertainty in the current state estimate, which results in giving more weight to new measurements.
+      </p>  
+    </ul>
+     
+
+  </subsection>
+  <subsection id="1.1"><h1>Computation</h1>
+    In Kalman filter, $P$ is updated recursively based on the process model (model prediction) and the measurement update, to give an overall uncertainty of the state estimate.
+  </subsection>
+</section>
+
+<section id="2"><h1>When Estimation and Measurement noise covariance becomes equal</h1>
+  <subsubsection><h1>Initial conditions</h1>
+    At the initial time step, if the initial state estimate is set to be the same as the measurement, then $P$ might initially be equal to $R$. However, as the estimation process proceeds, $P$ will diverge due to the incorporation of <m>process dynamics</m>.
+  </subsubsection>
+
+  <subsubsection><h1>Simple systems</h1>
+    In some simplified systems where the model is straightforward and the process noise is negligible, $P$ might be driven primarily by the measurement noise. Even in such cases, $P$ would not be exactly equal to $R$ but could be influenced by it significantly.
+  </subsubsection>
+
+  <subsubsection><h1>Steady-state conditions</h1>
+    In some steady-state conditions of a linear system with constant noise characteristics, the asymptotic behavior of $P$ might lead it to a value that reflects the steady-state influence of $R$. Even then, $P$ is not equal to $R$ but is influenced by $R$.
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>
