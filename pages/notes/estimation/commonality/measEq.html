@@ -40,6 +40,9 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Measurement model</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">The Jacobian</a></li>
+</ul>
 <a href="#1">Fundamental principle</a>
 </div>
 
@@ -52,13 +55,21 @@
   </ul>
 
   <p>
-    In the simplest form, if a measurement equation was linear, it would look like:
+    In the simplest form, if a measurement equation is linear, it will look like:
     $$
       y = Hx + v
     $$
   </p>
 
-  $z_t$ or $y_t$ represents an observation or a measurement made at timestep $t$. $H$ is the <i>Jacobian matrix</i>; it contains the partial derivatives of the measurements with respect to the parameter/state(s) $x$ of interest.
+  $z_t$ or $y_t$ represents an observation or a measurement made at timestep $t$. 
+  
+  <subsection id="0.0"><h1>The Jacobian</h1>
+    $H$ is the <i>Jacobian matrix</i>; it contains partial derivatives of the measurements with respect to the unknown parameter/state(s) $x$.
+
+    <p>
+      $H$ is easy to compute in the linear case <n>but requires more mathematical effort in the case of non-linear estimation</n>.
+    </p>
+  </subsection>
 </section>
 
 <section id="1"><h1>Fundamental principle</h1>

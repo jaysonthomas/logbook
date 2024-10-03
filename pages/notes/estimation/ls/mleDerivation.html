@@ -39,54 +39,79 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Maximising the cost function</a>
+<a href="#0">Expanding the cost function</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Details</a></li>
+</ul>
+<a href="#1">Maximising the cost function</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Key components of the cost function</a></li>
+  <li><a href="#1.1">Combining the partial derivatives</a></li>
+  <li><a href="#1.2">Maximising</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Maximum Likelihood Estimation: Derivation</h1>
-<section id="0"><h1>Maximising the cost function</h1>
-  Expanding the cost function to be maximised
+<section id="0"><h1>Expanding the cost function</h1>
+  Expanding the below quadratic expression, i.e. the cost function to be maximised:
   $$\begin{align*}
     & -\frac{1}{2}(y-Hx)^TR^{-1}(y-Hx) \\
-    & -\frac{1}{2} (y^TR^{-1}y - H^Tx^TR^{-1}y - y^TR^{-1}Hx + H^Tx^TR^{-1}Hx)
+    & -\frac{1}{2} (y^TR^{-1}y - x^TH^TR^{-1}y - y^TR^{-1}Hx + x^TH^TR^{-1}Hx) \\
+    & -\frac{1}{2} (y^TR^{-1}y - 2y^TR^{-1}Hx + x^TH^TR^{-1}Hx)
   \end{align*}$$
 
-  <p></p>
-    To maximise the function, take its derivative, set it equal to $0$ and then solve for $x$ to get the equation for the maximum likelihood estimator $\hat{x}$:
-  </p>
-  $$
-    \hat{x} = (H^TR^{-1}H)^{-1}H^TR^{-1}y
-  $$
+  <subsection id="0.0"><h1>Details</h1>
+    The result of the below 2 expressions, that are equal to each other, is a scalar. Each is the transpose of the other.
+    $$
+      {x^T}_{1 \times m} \, {H^T}_{m \times k} \, {R^{-1}}_{k \times k} \, y_{k \times 1} == 
+      {y^T}_{1 \times k} \, {R^{-1}}_{k \times k} \, H_{k \times m} \, x_{m \times 1}
+    $$
+  </subsection>
+</section>
 
-  <button class="accordion">The derivation</button>
-  <div class="panel">
-    $$
-      -\frac{1}{2}(y-Hx)^TR^{-1}H = 0
-    $$
-    
-    Multiplying both sides by $-2$ to simplify the equation:
-    $$
-      (y-Hx)^TR^{-1}H = 0
-    $$
+<section id="1"><h1>Maximising the cost function</h1>
+  To maximise the cost function, take its derivative, set it equal to $0$ and then solve for $x$ to get the equation for the maximum likelihood estimator $\hat{x}$.
 
-    Expanding the transpose and rearranging the equation:
+  <subsection id="1.0"><h1>Key components of the cost function</h1>
+    <ul>
+      <li>$y^TR^{-1}y$  is a constant term with respect to $x$</li>
+      Its derivative w.r.t. $x$ is 0.
+      
+      <p>
+        <li>$- 2y^TR^{-1}Hx$ is linear in $x$</li>
+        $$
+          \frac{\partial}{\partial x} (- 2y^TR^{-1}Hx) = - 2H^TR^{-1}y
+        $$
+      </p>
+      
+      <li>$x^TH^TR^{-1}Hx$ is quadratic in $x$</li>
+      Using the result for differentiating a quadratic form $x^T A x$ w.r.t. $x$, where $A$ is a symmetric matrix, the derivative is:
+
+      $$
+        \frac{\partial}{\partial x} (x^TH^TR^{-1}Hx) = 2H^T R^{-1} Hx
+      $$
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Combining the partial derivatives</h1>
     $$\begin{align*}
-      (y^T-x^TH^T)R^{-1}H &= 0 \\
-      y^TR^{-1}H - x^TH^TR^{-1}H &= 0 \\
-      (y^TR^{-1}H - x^TH^TR^{-1}H)^T &= 0^T \\
-      (y^TR^{-1}H)^T - (x^TH^TR^{-1}H)^T &= 0 \\
-      H^TR^{-T}y - H^T(R^{-1})^THx &= 0 \\
-    \end{align*}$$
+      \frac{\partial f(x)}{\partial x} &= 
+        -\frac{1}{2} (-2H^TR^{-1}y + 2H^T R^{-1} Hx) \\
 
-    Since $R$ is a symmetric matrix ($R=R^T$), $R^{-1}$ is also symmetric: $R^{-1} = (R^{-1})^T$
+        &= H^TR^{-1}y - H^T R^{-1} Hx
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="1.2"><h1>Maximising</h1>
     $$
-      H^TR^{-1}y - H^TR^{-1}Hx = 0 
+      H^TR^{-1}y - H^T R^{-1} Hx = 0
     $$
 
     Rearranging:
     $$
-      x = (H^TR^{-1}H)^{-1}H^TR^{-1}y
+      x = (H^T R^{-1} H)^{-1}H^TR^{-1}y
     $$
-  </div>
+  </subsection>
 </section>
 </chapter>
 

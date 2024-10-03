@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Batch Linear Least Squares</title>
-  <meta name="Batch Linear Least Squares" content="text/html; charset=utf-8;" />
+  <title>Estimation usecase: Non-probabilistic method of estimation</title>
+  <meta name="Estimation usecase: Non-probabilistic method of estimation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -47,14 +47,20 @@
 </ul>
 <a href="#3">Minimising the cost function to find the estimate</a>
 <a href="#4">Limitation</a>
-<a href="#5">Example</a>
+<a href="#5">Numerical example</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Setup</a></li>
+  <li><a href="#5.1">Estimation</a></li>
+</ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Batch Linear Least Squares</h1>
+<chapter style="counter-reset: chapter 0"><h1>Estimation usecase: Non-probabilistic method of estimation</h1>
 
 <section id="0"><h1>Measurement model</h1>
-  $$\text{Measurement model}: y = x+v$$
-  $x$ is the constant parameter value to be estimated for example.
+  $$
+    y = x+v
+  $$
+  $x$ is the constant parameter value to be estimated.
 </section>
 
 <section id="1"><h1>Noise model</h1>
@@ -76,10 +82,10 @@
     e_i = y_i - H_ix
   $$
 
-  The method of least squares states that the best estimate of $x$ ($\hat{x}_{LS}$ or $\mathcal{L}_{LS}(x)$) is one which minimizes the <i>squared error criterion</i>, also called the <i>squared error cost function</i> or <code>loss function</code>; i.e. the sum of squared errors.
+  The method of least squares states that the best estimate of $x$ is one which minimizes the <i>squared error criterion</i>, also called the <i>squared error cost function</i> or <i>loss function</i>; i.e. the sum of squared errors.
 
   $$
-    \hat{x}_{LS} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
+    \hat{x} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
   $$
 
   <subsection id="2.0"><h1>Cost function in matrix notation</h1>
@@ -91,7 +97,7 @@
       \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
     \end{gather*}$$
     
-    $H$, the <i>Jacobian matrix</i>, has the dimensions $m\times n$, where $m$ is the number of measurements and $n$ is the number of unknowns to be estimated. $H$ is easy to compute in the linear case <n>but requires more mathematical effort in the case of non-linear estimation</n>. 
+    $H$, the <i>Jacobian matrix</i>, has the dimensions $k\times m$, where $k$ is the number of measurements and $m$ is the number of unknowns to be estimated.  
     
     <p>
       $x$ can be a vector comprising multiple unknowns.
@@ -104,20 +110,13 @@
       &= (y - Hx)^T(y - Hx) \\
       &= y^Ty - x^TH^Ty - y^THx + x^TH^THx
     \end{align*}$$
+
+    $e^Te$, i.e. <n>matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.</n>
   </subsection>
 </section>
 
 <section id="3"><h1>Minimising the cost function to find the estimate</h1>
-  <button class="accordion">Selah</button>
-  <div class="panel">
-    $e^Te$, i.e. matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.
-
-    <p>
-      Why we set the derivative of $f(x)$ to 0 to solve for an unknown variable $x$: <a href="https://t.ly/WUKV">Ref1</a>.
-    </p>
-    
-    <m>When minimising the sum of squared errors criterion (imagining a plot with $e^2$ on y-axis vs $x$ on the x axis), how do we ensure we don't get stuck in a local maximum instead of the minimum when we set the slope to $0$?</m>
-  </div>
+  <a href="https://t.ly/WUKV">Ref</a> - Why the derivative of $f(x)$ is set to 0 to solve for an unknown $x$. <p></p>
 
   The aim is to minimise the squared error with respect to the unknown $x$. From calculus, an extremum (here, a minimum) can be solved for by setting the partial derivative of the function (here, squared error) w.r.t. 
   the unknown $x$ to $0$. 
@@ -131,52 +130,56 @@
   Re-arranging: 
     
   $$
-    \hat{x}_{LS} = (H^TH)^{-1}H^Ty
+    \hat{x} = (H^TH)^{-1}H^Ty
   $$
 
-  This is called the <i>normal equations</i>. This is solved to find $\hat{x}_{LS}$, the estimate which minimizes the squared error criterion. 
+  This is called the <i>normal equations</i>. This is solved to find the estimate which minimises the squared error criterion. 
 </section>
 
 <section id="4"><h1>Limitation</h1>
-  The batch LS equation has a <i>unique solution</i>, i.e. $\hat{x}$ can only be solved for if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an <i>inverse</i>, i.e. if it is <i>invertible</i>. 
+  The LS equation has a <i>unique solution</i>, i.e. $\hat{x}$ can only be solved for, if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an <i>inverse</i>, i.e. if it is <i>invertible</i>. 
   
-  If we have m measurements and n unknown parameters, then
+  If there are $k$ measurements and $m$ unknown parameters, then
   $$
-    H \in \mathbb{R}^{m\times n} \quad\quad H^TH \in \mathbb{R}^{n\times n}
+    H \in \mathbb{R}^{k\times m} \quad\quad H^TH \in \mathbb{R}^{m\times m}
   $$
   
-  The Jacobian matrix only exists if there are at least as many measurements as there are unknowns, which is usually not a problem. Often, there are too many measurements. 
+  <m>The Jacobian matrix only exists if there are at least as many measurements as there are unknowns</m>, which is usually not a problem. Often, there are too many measurements. 
 </section>
 
-<section id="5"><h1>Example</h1>
-  Consider a parameter estimation example: The aim is to measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle. 4 separate measurements are collected sequentially using a multimeter. Assume the true resistor value is $1k\Omega$. But, this value could be wrong or the multimeter could be inaccurate or there could be some human error in taking the measurements. 
+<section id="5"><h1>Numerical example</h1>
+  <subsection id="5.0"><h1>Setup</h1>
+    The aim is to measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle. 4 separate measurements are collected sequentially using a multimeter. Assume the true resistor value is $1k\Omega$. But, this value could be wrong or the multimeter could be inaccurate or there could be some human error in taking the measurements. 
 
-  <p>
-    Let $x$ be the actual resistance. Assume it is a constant, but unknown.
-    Measurements, $y$, of the resistance are collected:
-  </p>
-  
-  $$
-    y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
-    \quad
-    H = \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
-  $$
-  
-  $$
-    \hat{x}_{LS} = (H^TH)^{-1}H^Ty
-  $$
-  
-  $$
-    \begin{bmatrix}
-    \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
-    \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
-    \end{bmatrix}^{-1}
-    \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
-    \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
-    = \frac{1}{4}(1068 + 988 + 1002 + 996) = 1013.5 \Omega
-  $$
+    <p>
+      Let $x$ be the actual resistance. Assume it is a constant, but unknown.
+      Measurements, $y$, of the resistance are collected:
+    </p>
+    
+    $$
+      y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
+      \quad
+      H = \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
+    $$
+  </subsection>
 
-  Note that the expression simplifies to the arithmetic mean of the 4 measurements. In other words, minimising the simple least squares criterion leads to computing the arithmetic mean in the above example. 
+  <subsection id="5.1"><h1>Estimation</h1>
+    $$
+      \hat{x}_{LS} = (H^TH)^{-1}H^Ty
+    $$
+    
+    $$
+      \begin{bmatrix}
+      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
+      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
+      \end{bmatrix}^{-1}
+      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
+      \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
+      = \frac{1}{4}(1068 + 988 + 1002 + 996) = 1013.5 \Omega
+    $$
+
+    The expression simplifies to the arithmetic mean of the 4 measurements; i.e. minimising the simple least squares criterion leads to computing the arithmetic mean in this case. 
+  </subsection>
 </section>
 </chapter>
 
