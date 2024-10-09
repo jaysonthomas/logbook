@@ -41,7 +41,9 @@
   
 <a href="#0">State/Parameter vector</a>
 <a href="#1">Measurement model</a>
-<a href="#2">Measurement noise vector</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Measurement noise vector</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>RLS: Estimation propagation equation</h1>
@@ -52,28 +54,27 @@
   \end{equation}$$
 
 <section id="0"><h1>State/Parameter vector</h1>
-    $x$ is the unknown state or parameter vector to be estimated.
+  $x$ is the unknown state or parameter vector to be estimated.
 
-    <p>
-      If there are multiple terms in $x = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$, then estimate $\hat{x}_k$ is partitioned as $\hat{x}_k = \begin{bmatrix} \hat{x}_{1,k} \\ \vdots \\ \hat{x}_{n,k} \end{bmatrix}$
-    </p>
-  </section>
+  <p>
+    If there are multiple terms in $x = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$, then estimate $\hat{x}_k$ is partitioned as $\hat{x}_k = \begin{bmatrix} \hat{x}_{1,k} \\ \vdots \\ \hat{x}_{n,k} \end{bmatrix}$
+  </p>
+</section>
 
 <section id="1"><h1>Measurement model</h1>
-    $y_k$, the measurement sampled at discrete-time instant $k$, is related to $x$ by the following measurement equation/model:
-    
-    $$\begin{equation} \label{eq:measurementModel}
-      y_k = H_kx + v_k
-    \end{equation}$$
-  </section>
+  $y_k$, the measurement sampled at discrete-time instant $k$, is related to $x$ by the following measurement equation/model:
+  
+  $$\begin{equation} \label{eq:measurementModel}
+    y_k = H_kx + v_k
+  \end{equation}$$
 
-<section id="2"><h1>Measurement noise vector</h1>
+  <subsection id="1.0"><h1>Measurement noise vector</h1>
     The covariance and mean of the measurement noise vector $v_k$ is assumed to be:
     $$\begin{align*}
       E[v_kv^T_k] &= R_k \\
       E[v_k] &= 0
     \end{align*}$$
-  </section>
+  </subsection>
 </section>
 
 </chapter>

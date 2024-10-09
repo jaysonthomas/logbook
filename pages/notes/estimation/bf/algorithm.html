@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bayes Filters: Algorithm</title>
+  <meta name="Bayes Filters: Algorithm" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Setup</a>
+<a href="#1">Steps</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Bayes Filters: Algorithm</h1>
+<section id="0"><h1>Setup</h1>
+  The algorithm as described here makes the assumption that the system is run in simulation i.e. a control action can be applied and a measurement can be received from the system in the same time step.
+  
+  <p>
+    At every step, the input control is computed using the reference trajectory and the system's state at the end of the previous timestep.
+  </p>
+
+  At the end of every timestep, the belief of the system's state is updated. 
+</section>
+  
+<section id="1"><h1>Steps</h1>
+  <ul>
+    <li>Compute control</li>
+    $$
+      u_t = f(bel(x_{t-1}))
+    $$
+
+    At timestep $t$, previous belief of the system's state is used to get a new control value.
+
+    <p>
+      <li>Predict</li>
+      $$\begin{align*}
+        \bar{bel}(x_t) &= f(bel(x_{t-1}), u_t, \Delta{t}) \\
+                    &= \int{p(x_t|u_t, x_{t-1}) \; bel(x_{t-1}) \; \Delta{t}} 
+      \end{align*}$$
+
+      $u_t$ helps to predict the system's state in the next timestep.
+
+      <p>
+        In general, calculating $\bar{bel}$ is an integral. Depending on how $\bar{bel}$ and $bel$ are represented, the integral might take a closed form. When the belief is Gaussian, the integral takes the form of matrix operations over the mean and covariance matrix. <m>What does the probability term look like IRL?</m>
+      </p>
+    </p>
+
+    <li>Measurement update</li>
+      $$\begin{align*}
+        bel(x_t) &= f(\bar{bel}(x_t), z_t) \\
+                &= \eta \; p(z_t|x_t) \; \bar{bel}(x_t)
+      \end{align*}$$
+
+      Bayes rule is used to (calculate a new distribution) incorporate the new sensor measurement with the predicted state to update the current belief. <m>What does $\eta$ represent?</m>
+  </ul>
+
+  Notice the inputs to the different functions - because of the Markov property, a history of all previous controls and measurements is not required. 
+</section>
+</chapter>
+
+</body>
+</html>

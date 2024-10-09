@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Moment of inertia: Belt with 2 pulleys</title>
+  <meta name="Moment of inertia: Belt with 2 pulleys" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Using gearboxes</a>
+<a href="#1">Overview</a>
+<a href="#2">Belt & applied load</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Mass</a></li>
+</ul>
+<a href="#3">Pulleys & coupling</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Mass</a></li>
+  <li><a href="#3.1">Hollow cylinder approximation</a></li>
+</ul>
+<a href="#4">Total inertia</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Moment of inertia: Belt with 2 pulleys</h1>
+<section id="0"><h1>Using gearboxes</h1>
+  [<a href="https://t.ly/qgt9B">Main ref</a>, <a href="https://t.ly/aXoNn">When to use gears</a>, <a href="https://t.ly/jsobb">Calculate motor drive torque for belt & pulley system</a>, <a href="https://t.ly/USdID">Effect of reflected inertia</a>, <a href="https://t.ly/Zt_P3">Drake: Reflected inertia</a>] <p></p>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  In order for a motor to accelerate or decelerate a load, it must overcome the load's <i>inertia</i>, or resistance to change in motion, as explained in Newton's First Law.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../../figures/physics/10_inertiaBeltPulleySystem.png"/>
+    </figure>
+  </div>
+
+  <p>
+    In belt-driven linear motion systems, the motor has to overcome not only the inertia of the applied load, but also the inertia of the belt, pulleys, and motor coupling. It is common for belt driven systems to use a gearbox to increase torque, reduce speed, and reduce the inertia of the load reflected to the motor.
+  </p>
+
+  The inertia of each component can typically be estimated with sufficient accuracy by using the standard inertia equations for simple shapes. Inertia depends upon the axis around which a component rotates.
+</section>
+
+<section id="2"><h1>Belt & applied load</h1>
+  Considering the applied load and the belt together, since they both rotate around the axis of the driven pulley; they can be modeled as a point mass that rotates around the driven pulley. 
+
+  $$
+    J_l = mr^2
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      J_l &:& \text{Inertia of belt and applied load} & [kgm^2] \\
+      m &:& \text{Mass of belt and applied load} & [kg] \\
+      r &:& \text{Radius of driven pulley} & [m]
+    \end{array}$$
+  </div>
+
+  <subsection id="2.0"><h1>Mass</h1>
+    Belt manufacturers typically provide mass (or weight) information per unit length. The mass of the belt is the mass per unit length multiplied by the total length of the belt. The full, circular belt length needs to be used, not just the length of the stroke.
+  
+    <p>
+      The applied load is typically mounted to the belt via a carriage or table; the mass of the coupling should be included in the mass of the applied load.
+    </p>
+  </subsection>
+</section>
+
+<section id="3"><h1>Pulleys & coupling</h1>
+  The pulleys and their coupling can be treating as solid cylinders that rotate about their own axes.
+
+  $$
+    J_p = \frac{1}{2} mr^2
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      J_p &:& \text{Inertia of solid cylinder (pulley, coupling)} & [kgm^2] \\
+      m &:& \text{Mass of cylinder} & [kg] \\
+      r &:& \text{Radius of cylinder} & [m]
+    \end{array}$$
+  </div>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../../figures/physics/10_inertiaCylinder.png"/>
+    </figure>
+  </div>
+
+  <subsection id="3.0"><h1>Mass</h1>
+    Although the pulleys may have the same radii, if one pulley is toothed (driven) and the other is smooth (idler), as is the case in many belt driven actuators, they will have different masses and, therefore, different inertias.
+  </subsection>
+
+  <subsection id="3.1"><h1>Hollow cylinder approximation</h1>
+    Although the solid cylinder approximation is typically sufficient, more accurate inertia values for the pulleys and coupling can be found by taking into account that these components have a center bore and using the inertia equation for a hollow cylinder.
+
+    $$
+      J_{ph} = \frac{1}{2} m(r_o^2 + r_i^2)
+    $$
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{cclc} 
+        J_p &:& \text{Inertia of hollow cylinder (pulley, coupling)} & [kgm^2] \\
+        m &:& \text{Mass of cylinder} & [kg] \\
+        r_o &:& \text{Outer radius of cylinder} & [m] \\
+        r_i &:& \text{Inner radius of cylinder} & [m]
+      \end{array}$$
+    </div>
+
+    <div class="img-container">
+      <figure>
+        <img style="height:90px; width:auto"
+        src="../../../../figures/physics/10_inertiaHollowCylinder.png"/>
+      </figure>
+    </div>
+
+  </subsection>
+</section>
+
+<section id="4"><h1>Total inertia</h1>
+  The total inertia of the moved mass (applied load, belt, pulleys, and coupling) is divided by the square of the gear reduction, and the inertia of the gearbox is added. This will give the total inertia reflected back to the motor, which can be used for motor sizing and selection.
+
+  $$
+    J = \frac{J_l + J_{p1} + J_{p2} + J_c}{\epsilon^2} + J_g
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      J &:& \text{Total inertia reflected back to the motor} & [kgm^2] \\
+      J_{p1}, J_{p2} &:& \text{Inertia of first & second pulleys} & [kgm^2] \\
+      J_c &:& \text{Inertia of coupling} & [kgm^2] \\
+      J_g &:& \text{Inertia of gearbox} & [kgm^2] \\
+      \epsilon &:& \text{Gear reduction}
+    \end{array}$$
+  </div>
+</section>
+
+</chapter>
+
+</body>
+</html>

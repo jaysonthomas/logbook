@@ -63,16 +63,16 @@
 </section>
 
 <section id="2"><h1>Update the estimate and the covariance</h1>
-  For every measurement $k$:
+  For every measurement $y_k$, the measurement gain $K_k$ is computed and used to update the estimate and the estimator covariance or uncertainty $P_k$. 
+
   $$\begin{align*}
     K_k &= P_{k-1}H^T_k(H_kP_{k-1}H^T_k + R_k)^{-1} \\
     \hat{x}_k &= \hat{x}_{k-1} + K_k(y_k - H_k\hat{x}_{k-1}) \\
     P_k &= (I-K_kH_k)P_{k-1}
   \end{align*}$$
-  
-  Every time a measurement $y_k$ is recorded, the measurement gain $K_k$ is computed and used to update the estimate and the estimator covariance or uncertainty $P_k$. Every time a new measurement is taken, the uncertainty should shrink. 
-</section>
 
+  Every time a new measurement is taken, the uncertainty should shrink.
+</section>
 </chapter>
 
 </body>

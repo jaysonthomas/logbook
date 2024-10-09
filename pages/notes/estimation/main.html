@@ -39,68 +39,80 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Definitions</a>
+<a href="#1">Distributions</a>
+<a href="#2">Usecases</a>
+<a href="#3">Approaches</a>
+<a href="#4">Miscellaneous</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
-
-<section id="0"><h1>Contents</h1>
+<section id="0"><h1>Definitions</h1>
   <ul>
-    <p>
-      <li>Definitions</li>
-      <ul>
-        <li><a href="definitions/estimation.html">Estimation</a></li>
-        <li><a href="definitions/prob.html">Probability</a></li>
-        <li><a href="definitions/variance.html">Variance</a></li>
-        <li><a href="definitions/bayesRule.html">Bayes Rule</a></li>
-        <li><a href="definitions/misc.html">Miscellaneous</a></li>
-      </ul>
-    </p>
-    <li>Background</li>
-    <ul>
-      <li>Probability Distribution</li>
-      <ul>
-        <li><a href="pd/intro.html">Introduction</a></li>
-        <li><a href="pd/types.html">Types</a></li>
-        <li><a href="pd/params.html">Parameters</a></li>
-        <li><a href="pd/commonContinuousPDs.html">Common continuous PDs</a></li>
-      </ul>
-      <li><a href="multivariateDistributions.html">Multivariate distributions</a></li>  
-    </ul>
-    <p>
-      <li>Usecases</li>
-      <ul>
-        <li><a href="usecase/rigidBodyPos.html">Initial kinematics of a rigid body</a></li>
-        <li><a href="usecase/2dDrone.html">2D Drone</a></li>
-        <li><a href="usecase/1DKalmanFilterExample.html">Position of an object using 1D Kalman Filter</a></li>
-        <li><a href="usecase/fittingALine.html">Fitting A Line With Linear LS</a></li>
-        <li><a href="usecase/nonProbabilistic.html">Non-probabilistic method of estimation</a></li>
-      </ul>
-    </p>
+    <li><a href="definitions/estimation.html">Estimation</a></li>
+    <li><a href="definitions/prob.html">Probability</a></li>
+    <li><a href="definitions/variance.html">Variance</a></li>
+    <li><a href="definitions/bayesRule.html">Bayes Rule</a></li>
+    <li><a href="definitions/misc.html">Miscellaneous</a></li>
+  </ul>
+</section>
 
-    <li>Approaches</li>
-    Each approach makes slightly different assumptions about the measurements and the underlying measurement/noise model.
+<section id="1"><h1>Distributions</h1>
+  <ul>
+    <li>Probability Distribution</li>
     <ul>
-      <li><a href="overview.html">Overview</a></li>
-      <li>Commonality</li>
-      <ul>
-        <li><a href="commonality/measEq.html">Measurement Equation</a></li>
-        <li><a href="commonality/covariance.html">Covariance</a></li>
-      </ul>
-      <li><a href="averages.html">Averages</a></li>
-      <li>Least squares</li>
-      <ul>
-        <li><a href="ls/overview.html">Overview</a></li>
-        <li><a href="ls/main.html">Branches</a></li>
-      </ul>
-      <li><a href="mapEstimation.html">Maximum A posteriori Estimation</a></li>
-      <li><a href="bayesFilters.html">Bayes filters</a></li>
+      <li><a href="pd/intro.html">Introduction</a></li>
+      <li><a href="pd/types.html">Types</a></li>
+      <li><a href="pd/params.html">Parameters</a></li>
+      <li><a href="pd/commonContinuousPDs.html">Common continuous PDs</a></li>
+    </ul>
+    <li><a href="multivariateDistributions.html">Multivariate distributions</a></li>  
+  </ul>
+</section>
+
+<section id="2"><h1>Usecases</h1>
+  <ul>
+    <li><a href="usecase/rigidBodyPos.html">Initial kinematics of a rigid body</a></li>
+    <li><a href="usecase/2dDrone.html">2D Drone</a></li>
+    <li><a href="usecase/1DKalmanFilterExample.html">Position of an object using 1D Kalman Filter</a></li>
+    <li><a href="usecase/fittingALine.html">Fitting A Line With Linear LS</a></li>
+    <li>Resistance of a resistor</li>
+    <ul>
+      <li><a href="usecase/nonProbabilistic.html">Non-probabilistic method of estimation</a></li>
+      <li><a href="usecase/wls.html">Weighted LS</a></li>
     </ul>
   </ul>
+</section>
 
-  <p>
+<section id="3"><h1>Approaches</h1>
+  Each approach makes slightly different assumptions about the measurements and the underlying measurement/noise model.
+  <ul>
+    <li><a href="overview.html">Overview</a></li>
+    <li>Commonality</li>
+    <ul>
+      <li><a href="commonality/measEq.html">Measurement Equation</a></li>
+      <li><a href="commonality/covariance.html">Covariance</a></li>
+    </ul>
+    <li><a href="averages.html">Averages</a></li>
+    <li>Least squares</li>
+    <ul>
+      <li><a href="ls/overview.html">Overview</a></li>
+      <li><a href="ls/main.html">Branches</a></li>
+    </ul>
+    <li><a href="mapEstimation.html">Maximum A posteriori Estimation</a></li>
+    <li>Bayes filters</li>
+    <ul>
+      <li><a href="bf/overview.html">Overview</a></li>
+      <li><a href="bf/algorithm.html">Algorithm</a></li>
+      <li><a href="bf/branches.html">Branches</a></li>
+    </ul>
+  </ul>
+</section>
+
+<section id="4"><h1>Miscellaneous</h1>
+  <ul>
     <li><a href="resources.html">Resources</a></li>
-  </p>
+  </ul>
 </section>
 
 </chapter>
