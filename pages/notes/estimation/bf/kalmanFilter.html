@@ -47,65 +47,53 @@
 
 <section id="0"><h1>Individual components</h1>
   Using a 1D drone as an example.
-  <ul>
-    <li>State variables and control input</li>
-    We can only set the drone's acceleration which will influence the vertical velocity and the height, $z$. If we ignore yaw, the state variables and the control input of the system are:
+  <subsection><h1>State variables and control input</h1>
+    A drone's acceleration can be controlled which will then influence its vertical velocity and its height, $z$. If yaw is ignored, the state variables and the control input of the system are:
 
     $$
       x_t = \begin{bmatrix} \dot{z} \\ z \end{bmatrix}
       \qquad
       u_t = [\ddot{z}]
     $$
+  </subsection>
 
-    <p>
-      <li>State <n>transition</n> function</li>
-      The function's job is to advance the state $x_t$ to time $t+1$ based on the system dynamics and the control input.
+  <subsection><h1>State <n>transition</n> function</h1>
+    It advances the state $x_{t-1}$ to time $t$ based on the system dynamics and the control input.
 
-      $$\begin{align*}
-        g(x_t, u_t, \Delta{t}) &=
-        \begin{bmatrix}
-          x_{t,\dot{z}} + u_{t,\ddot{z}} \times \Delta{t} \\
-          x_{t,z} + x_{t,\dot{z}} \times \Delta{t}
-        \end{bmatrix} \\
+    $$\begin{align*}
+      g(x_{t-1}, u_t, \Delta{t}) &=
+      \begin{bmatrix}
+        x_{t-1,\dot{z}} + u_{t,\ddot{z}} \cdot \Delta{t} \\
+        x_{t-1,z} + x_{t-1,\dot{z}} \cdot \Delta{t}
+      \end{bmatrix} \\
 
-        &= \begin{bmatrix}
+      &= \begin{bmatrix} 
             1 & 0 \\
             \Delta{t} & 1
-           \end{bmatrix}
+          \end{bmatrix}
+          \begin{bmatrix} \dot{z} \\ z \end{bmatrix}
+          + \begin{bmatrix} \Delta{t} \\ 0 \end{bmatrix}
+          [\ddot{z}] \\
 
-           \begin{bmatrix}
-            \dot{z} \\
-            z
-           \end{bmatrix}
+      &= A_{t-1}x_{t-1} + B_tu_t
+    \end{align*}$$
 
-           +
-           \begin{bmatrix}
-            \Delta{t} \\
-            0
-           \end{bmatrix}
-           [\ddot{z}] \\
+    $x_{t-1,\dot{z}}$ is the $\dot{z}$ component of the state variable at time $t-1$. The 2nd line is the matrix representation of the transition function.
+  </subsection>
 
-        &= A_tx_t + B_tu_t
-      \end{align*}$$
-
-      $x_{t,\dot{z}}$ is the $\dot{z}$ component of the state variable at time $t$. The 2nd line is the matrix representation of the transition function.
-    </p>
-
-    <li>Jacobian of the State transition function</li>
+  <subsection><h1>Jacobian of the State transition function</h1>
     $$\begin{align*}
-      g(x_t, u_t, \Delta{t}) &= A_tx_t + B_tu_t \\
-      G_t = g'(x_t, u_t, \Delta{t}) &= A_t \\
+      g(x_{t-1}, u_t, \Delta{t}) &= A_{t-1}x_{t-1} + B_tu_t \\
+      G_t = g'(x_{t-1}, u_t, \Delta{t}) &= A_{t-1} \\
     \end{align*}$$
 
     <p>
-      Intuitively, it is the derivative of the state transition function with respect to the state $x_t$, which is just the $A$ matrix in the case of a Kalman filter. So even though $g'$ is written as a function of $u$ and $x$, it turns out that <n>for the linear case, it ignores these inputs and just returns the $A$ matrix</n>. That won't be the case when things become non-linear in EKF. Finding the Jacobian is an overkill for the KF, but it makes the math identical to the EKF.
+      Intuitively, it is the derivative of the state transition function with respect to the state $x$, which is just the $A$ matrix in the case of a Kalman filter. So even though $g'$ is written as a function of $u$ and $x$, <n>for the linear case, it ignores these inputs and just returns the $A$ matrix</n>. That won't be the case when things become non-linear in EKF. Finding the Jacobian is an overkill for the KF, but it makes the math identical to the EKF.
     </p>
+  </subsection>
 
-    <p>
-    <li>
-      Measurement model
-    </li>
-    The <i>measurement model</i> $h$ takes a state as input and <n>returns the measurement we'd expect to see from a perfect sensor for that state</n>. The 1D drone has a range sensor pointing downwards, which measures the height of the drone above the ground. 
+  <subsection><h1>Measurement model</h1>
+    The <i>measurement model</i> $h$ takes a state as input and <n>returns the measurement expected to be seen from a perfect sensor for that state</n>. A 1D drone has a range sensor pointing downwards, which measures the height of the drone above the ground. 
 
     $$\begin{align*}
       h(x_t) &= [x_{t,z}] \\
@@ -114,35 +102,31 @@
              &= C_t \begin{bmatrix} \dot{z} \\ z\end{bmatrix} \\
              &= C_t x_t
     \end{align*}$$
-    </p>
-
-    <p>
-    <li>Jacobian of the measurement model</li>
+  </subsection>
+  
+  <subsection><h1>Jacobian of the measurement model</h1>
     For a linear measurement model, the Jacobian is just the $C$ matrix.
     $$\begin{align*}
       h(x_t) &= C_t x_t \\
       H_t = h'(x_t) &= C_t
     \end{align*}$$
-    </p>
+  </subsection>
 
-    <li>Kalman Gain $K_t$</li>
-    The Kalman gain, computed using the jacobian of the measurement model, helps decide how much the new measurement is trusted compared to the belief after the prediction step.
-  </ul>
-
+  <subsection><h1>Kalman Gain</h1>
+    The Kalman gain $K_t$, computed using the jacobian of the measurement model, helps decide how much the new measurement is trusted compared to the belief after the prediction step.
+  </subsection>
 </section>
 
 <section id="1"><h1>The algorithm</h1>
   Since the <n>beliefs</n> are gaussians, they are <n>represented</n> in the form of a mean $\mu$ and a covariance $\Sigma$.
-  <ul>
-    <p>
-    <li>Compute control</li>
+
+  <subsection><h1>Compute control</h1>
     $$
       u_t = f(\mu_{t-1}, \Sigma_{t-1})
     $$
-    </p>
+  </subsection>
 
-    <p>
-    <li>Kalman Predict</li>
+  <subsection><h1>Kalman Predict</h1>
     $$
       \bar{\mu}_t, \bar{\Sigma}_t = f(\mu_{t-1}, \Sigma_{t-1}, u_t, \Delta{t})
     $$
@@ -152,54 +136,49 @@
     $$
       \bar{\mu}_t = g(\mu_{t-1}, u_t, \Delta{t})
     $$
-    <p>
-      To update the covariance, we first calculate the Jacobian $G_t$ of the state transition function. 
-    </p>
+
+    To update the covariance, the Jacobian $G_t$ of the state transition function is used. 
 
     $$\begin{align*}
       G_t &= g'(\mu_{t-1}, u_t, \Delta{t}) \\
       \bar{\Sigma}_t &= G_t \Sigma_{t-1} G^T_t + Q_t
     \end{align*}$$
 
-    The new covariance always gets bigger after the prediction because some <i>process noise</i> $Q_t$ is added. $Q_t$ is also called the <i>transition covariance</i>.
-    </p>
+    The new covariance always gets bigger after the prediction because some <i>process noise</i> or <i>transition covariance</i>, $Q_t$ is added. 
+  </subsection>
 
-    <p>
-    <li>Compute the Kalman Gain</li>
+  <subsection><h1>Compute Kalman Gain</h1>
     $$\begin{align*}
       H_t &= h'_t(\bar{\mu}_t) \\
       K_t &= \bar{\Sigma}_t \; H^T_t \; (H_t \bar{\Sigma}_t H^T_t + R_t)^{-1}
     \end{align*}$$
 
-    <p>
-      The Kalman gain calculation can be broken down into 3 steps:
-      <ul>
-        <li>
-          Inside the bracket, the estimated covariance is transformed into the measurement space using the jacobian of the measurement model.
-        </li>
+    The Kalman gain calculation can be broken down into 3 steps:
+    <ul>
+      <li>
+        Inside the bracket, the estimated covariance is transformed into the measurement space using the jacobian of the measurement model.
+      </li>
 
-        <p>
+      <p>
         <li>
           Measurement noise $R$ is added to it.
         </li>
-        </p>
+      </p>
 
-        <li>
-          (Outside the bracket) The result is then transformed back into the state space to get the Kalman gain.
-        </li>
-      </ul>
-    </p>
+      <li>
+        (Outside the bracket) <m>The result is then transformed back into the state space to get the Kalman gain</m>.
+      </li>
+    </ul>
+  </subsection>
 
-    <li>Measurement update</li>
+  <subsection><h1>Measurement update</h1>
     $$\begin{align*}
       \mu_t &= \bar{\mu}_t + K_t(z_t - h_t (\bar{\mu}_t)) \\
       \Sigma_t &= (I - K_tH_t)\bar{\Sigma}_t
     \end{align*}$$
 
     The new mean (state estimate) is just the old mean, plus the Kalman gain, multiplied by the difference between the actual measurement, and the measurement we would have expected based on the measurement model. This moves the estimate in the direction of the new measurement by an amount that's dictated by the Kalman gain. The new covariance is computed by some math that takes into account the Kalman gain.
-
-    </p>
-  </ul>
+  </subsection>  
 </section>
 
 </chapter>

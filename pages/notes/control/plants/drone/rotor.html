@@ -54,18 +54,14 @@
   \end{align*}$$
 
   The constant of proportionality, $k_f$ is the <i>thrust coefficient</i>.
-  When the rotation speed of a rotor is doubled, the thrust increases by a factor of 4.
-
-  <p>
-    In addition to the same quantities as the lift constants beleow, the strength/magnitude of the thrust vector also depends on how fast the rotors spin. The direction is always perpendicular to the plane that the rotor spins in.
-  </p>
+  When the rotation speed of a rotor is doubled, thrust increases by a factor of 4.
   
-  <div class="container">
+  <div class="img-container">
     <figure>
       <img style="height:50px; width:auto"
-      src="../../../../figures/drone/30_thrust.png"/>
+      src="../../../../../figures/drone/30_thrust.png"/>
       <figcaption>
-        Direction of thrust
+        Direction of thrust is always perpendicular to the <br>plane that the rotor spins in.
       </figcaption>
     </figure>
   </div>
@@ -79,23 +75,30 @@
     &= k_m \omega^2
   \end{align*}$$
   
-  $k_m$ is the <i>angular torque coefficient</i>. $\omega$ represents the rotation rate of a rotor in $\frac{rad}{s}$. When $\omega = 2\pi$, the rotor does one rotation per second. 
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      k_m &:& \text{Angular torque coefficient} & [Nm\frac{s^2}{rad^2}] \\ 
+      \omega &:& \text{Rotation rate of a rotor} & [\frac{rad}{s}]
+    \end{array}$$
+  </div>
+
+  When $\omega = 2\pi$, the rotor does one rotation per second. 
 </section>
 
 <section id="2"><h1>Lift constants</h1>
-  The actual values of the constants ($k_f, k_m$) depend on the:
+  The constants ($k_f, k_m$) depend on the:
   <ul>
     <li>Size and shape of the plates</li>
     <li>Specific motors used</li>
     <li>Density of the surrounding air they operate in</li>
   </ul> 
   
-  In practice, these values are obtained empirically. The motor and propeller are mounted on a load cell and the force and moment are measured for different motor speeds. The graph below shows a simulation of the data to be expected from such an experiment.
+  In practice, these values are obtained empirically. With the motor and propeller mounted on a load cell, force and moment can be measured for different motor speeds. The graph below shows a simulation of the data to be expected from such an experiment.
 
-  <div class="container">
+  <div class="img-container">
     <figure>
       <img style="height:150px; width:auto"
-      src="../../../../figures/drone/33_liftConstants.png"/>
+      src="../../../../../figures/drone/33_liftConstants.png"/>
       <figcaption>
         Lift constants empirical data
       </figcaption>

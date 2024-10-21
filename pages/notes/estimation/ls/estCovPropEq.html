@@ -94,12 +94,11 @@
   \end{align*}$$
 
   $P_k$ then becomes:
-  $$\begin{align}
-    P_k &= (I - K_kH_k)P_{k-1}(I - K_kH_k)^T + K_kR_kK^T_k 
-            \label{eq:estCovPropEq}\\
-        &= (P_{k-1} - K_kH_kP_{k-1})(I - H_k^TK_k^T) + K_kR_kK^T_k \nonumber \\
-        &= P_{k-1} - K_kH_kP_{k-1} - P_{k-1}H_k^TK_k^T + K_kH_kP_{k-1}H_k^TK_k^T + K_kR_kK^T_k \label{eq:estCovPropEqExpanded} \\
-  \end{align}$$
+  $$\begin{align*}
+    P_k &= (I - K_kH_k)P_{k-1}(I - K_kH_k)^T + K_kR_kK^T_k \\
+        &= (P_{k-1} - K_kH_kP_{k-1})(I - H_k^TK_k^T) + K_kR_kK^T_k \\
+        &= P_{k-1} - K_kH_kP_{k-1} - P_{k-1}H_k^TK_k^T + K_kH_kP_{k-1}H_k^TK_k^T + K_kR_kK^T_k
+  \end{align*}$$
 </section>
 </chapter>
 
