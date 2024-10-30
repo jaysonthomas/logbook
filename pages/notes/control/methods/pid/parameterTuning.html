@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PD: Parameter tuning</title>
+  <meta name="PD: Parameter tuning" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Tunable properties of the system response</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Overshoot</a></li>
+  <li><a href="#1.1">Rise time</a></li>
+  <li><a href="#1.2">Settling time</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>PD: Parameter tuning</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../figures/drone/45_parameterTuning.png"/>
+    </figure>
+  </div>
+
+  Tuning a system depends on the requirements for the system, such as:
+  <ul>
+    <li>Speed, accuracy, stability, etc.</li>
+    <li>Behaviour over time (therefore focusing on T-rise and overshoot)</li>
+    <li>Frequencies (focusing on bandwidth and damping ratio)</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Tunable properties of the system response</h1>
+  Each of the following quantities has an associated design rule. For example, to decrease the rise time, the natural frequency of the system needs to be increased. Most of the time, good performance can be achieved by following a few simple rules of thumb.
+
+  <subsection id="1.0"><h1>Overshoot</h1>
+    That's the amount by which the actual trajectory overshoots the target. Generally, we want that to be small. 
+  </subsection>
+
+  <subsection id="1.1"><h1>Rise time</h1>
+    That's the amount of time it takes to get to the target altitude. Again, we'd like this to be small but often, there are some system limitations such as actuation constraints, that provide a lower bound for the rise time. 
+  </subsection>
+
+  <subsection id="1.2"><h1>Settling time</h1>
+    We say that a system has settled when the oscillations are sufficiently small, within plus minus 2% of the target value. So, the settling time is just the amount of time the system takes to reach that point. Once again, we want this to be small. 
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

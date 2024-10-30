@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PID: Pure PD</title>
+  <meta name="PID: Pure PD" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Effects of different D gains</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>PID: Pure PD</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/drone/43_pd.png"/>
+      <figcaption>
+        The aim is for the drone to stay at the target when it reaches it.
+      </figcaption>
+    </figure>
+  </div>
+
+  The acceleration is now set in proportion to:
+  <ul>
+    <li>The error and</li>
+    <li>The rate of change or derivative of the error.</li>
+  </ul>
+
+  $$\begin{align*}
+    \dot{e}(t) &= \dot{z}_{target}(t) - \dot{z}(t) \\
+    \ddot{z}(t) &= \bar{u}_t(t) = K_p e(t) + K_d \dot{e}(t)
+  \end{align*}$$
+
+  <subsubsection><h1>Intuition</h1>
+    While the p term is responsible for adjusting the thrust so that the vehicle's position matches the target position, the d term is responsible for adjusting the thrust, so that the vehicle's velocity matches the target velocity. 
+
+    <p>
+      So, when the vehicle is rapidly ascending towards the target, the D term will oppose the rapid decrease in the size of the position error, and will cause the vehicle to slow down as it's approaching the target altitude. 
+    </p>
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Effects of different D gains</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../figures/drone/43a_pd.png"/>
+      <figcaption>
+        With low values of $K_d$, it takes longer to "settle" the oscillations. $K_p$ is kept constant. If $K_d$ is too high, then the control gives an excessive response, more abrupt corrections that risk overshooting the reference trajectory (see $K_d=3.0$).
+      </figcaption>
+    </figure>
+  </div>  
+</section>
+</chapter>
+
+</body>
+</html>

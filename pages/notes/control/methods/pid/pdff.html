@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PID: PD with FF</title>
+  <meta name="PID: PD with FF" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">How to tune a PD controller</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>PID: PD with FF</h1>
+<section id="0"><h1>Overview</h1>
+  When the reference trajectory changes very rapidly, a controller's job can be made easier by providing it with the desired acceleration or second derivative of position as well.
+
+  $$
+    \ddot{z}(t) = \bar{u}_t(t) = K_p\left(z_d - z\right)
+    + K_d\left(\dot{z}_d - \dot{z}\right) + \ddot{z}_d
+  $$
+  The acceleration term is usually called the <i>feed-forward</i> term. In the ideal world, $z_d$ would move the vehicle along the desired trajectory and $e, \dot{e}$ would be $0$. No control action would be required. 
+  
+  <p>
+    If the terms were multiplied by the body mass, then all these  would be force terms. If the body was a wheel and the terms were further multiplied by the radius of the wheel, these would all be torque terms.
+  </p>
+</section>
+
+<section id="1"><h1>How to tune a PD controller</h1>
+  The commanded control is centered around the desired acceleration, but pulled either up or down by the errors in position and velocity. 
+
+  <p>
+    $K_p, K_d$ must be positive for the corrections to be effective and for the system to remain stable over all. To decide how big these corrections should be, this equation can be rewritten so that these coefficients have more physical significance.
+  </p>
+
+  $$
+    0 = \underbrace{\left( \ddot{z}_d - \ddot{z}\right)}_{\ddot{e}} +
+        K_d\underbrace{\left(\dot{z}_d - \dot{z}\right)}_{\dot{e}} +
+        K_p\underbrace{\left(z_d - z\right)}_{e}
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

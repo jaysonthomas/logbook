@@ -4,9 +4,9 @@
 <head>
   <title>Underactuation</title>
   <meta name="Underactuation" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -45,10 +45,10 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Underactuation</h1>
 <section id="0"><h1>Definition</h1>
-  A quadrotor moving in the two-dimensional vertical plane has 3 degrees of freedom: $Y, Z, \phi$. But only 2 control variables can be set directly $u_1, u_2$. It is not possible to control all 3 degrees of freedom simultaneously with just the 2 control variables. Such a system is <i>underactuated</i>. 
+  A quadrotor constrained to move in 2D has 3 DOF: $y,z,\phi$. It is possible to define a trajectory to control for 2 DOF at any given time whilst sacrificing control of the 3rd, since at any given time only 2 DOFs can be directly controlled by the 2 available control variables <a href="../plants/drone/2d/forces.html">$u_1$</a>, <a href="../plants/drone/2d/moments.html">$u_2$</a>.
 
   <p>
-    It is possible to define a trajectory and controlling for 2 degrees of freedom at any given time whilst sacrificing control of the 3rd.
+    It is not possible to control all 3 DOFs simultaneously with just the 2 control variables. Such a system is called <i>underactuated</i>.
   </p>
 </section>
 
@@ -56,10 +56,10 @@
   $$\begin{align*}
     \ddot{z} &= g - \frac{u_1 \cdot cos\phi}{m} \\
     \ddot{y} &= \frac{u_1 \cdot sin\phi}{m} \\
-    \ddot{\phi} &= \frac{u_2 \cdot Lcos\theta}{I_x}
+    \ddot{\phi} &= \frac{u_2 \cdot Lcos\theta}{I_{xx}}
   \end{align*}$$
 
-  Looking at the equations, the $y,z$ behaviours are inherently coupled with (tied to) roll. Any thrust will be shared between the 3 DOF. If an attempt was made to simultaneously control $y, z, \phi$:
+  The $y,z$ behaviours are inherently coupled with roll. Any thrust will be shared between the 3 DOFs. If an attempt was made to simultaneously control $y, z, \phi$:
   <ul>
     <li>Assume $\phi$ is controlled first</li>
     It will require spending one control variable, in this case, $u_2$.

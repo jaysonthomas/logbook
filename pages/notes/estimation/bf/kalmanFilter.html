@@ -40,14 +40,28 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Individual components</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">State variables and control input</a></li>
+  <li><a href="#0.1">State <n>transition</n> function</a></li>
+  <li><a href="#0.2">Jacobian of the State transition function</a></li>
+  <li><a href="#0.3">Measurement model</a></li>
+  <li><a href="#0.4">Jacobian of the measurement model</a></li>
+  <li><a href="#0.5">Kalman Gain</a></li>
+</ul>
 <a href="#1">The algorithm</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Compute control</a></li>
+  <li><a href="#1.1">Kalman Predict</a></li>
+  <li><a href="#1.2">Compute Kalman Gain</a></li>
+  <li><a href="#1.3">Measurement update</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Kalman Filter</h1>
 
 <section id="0"><h1>Individual components</h1>
   Using a 1D drone as an example.
-  <subsection><h1>State variables and control input</h1>
+  <subsection id="0.0"><h1>State variables and control input</h1>
     A drone's acceleration can be controlled which will then influence its vertical velocity and its height, $z$. If yaw is ignored, the state variables and the control input of the system are:
 
     $$
@@ -57,7 +71,7 @@
     $$
   </subsection>
 
-  <subsection><h1>State <n>transition</n> function</h1>
+  <subsection id="0.1"><h1>State <n>transition</n> function</h1>
     It advances the state $x_{t-1}$ to time $t$ based on the system dynamics and the control input.
 
     $$\begin{align*}
@@ -81,7 +95,7 @@
     $x_{t-1,\dot{z}}$ is the $\dot{z}$ component of the state variable at time $t-1$. The 2nd line is the matrix representation of the transition function.
   </subsection>
 
-  <subsection><h1>Jacobian of the State transition function</h1>
+  <subsection id="0.2"><h1>Jacobian of the State transition function</h1>
     $$\begin{align*}
       g(x_{t-1}, u_t, \Delta{t}) &= A_{t-1}x_{t-1} + B_tu_t \\
       G_t = g'(x_{t-1}, u_t, \Delta{t}) &= A_{t-1} \\
@@ -92,7 +106,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Measurement model</h1>
+  <subsection id="0.3"><h1>Measurement model</h1>
     The <i>measurement model</i> $h$ takes a state as input and <n>returns the measurement expected to be seen from a perfect sensor for that state</n>. A 1D drone has a range sensor pointing downwards, which measures the height of the drone above the ground. 
 
     $$\begin{align*}
@@ -104,7 +118,7 @@
     \end{align*}$$
   </subsection>
   
-  <subsection><h1>Jacobian of the measurement model</h1>
+  <subsection id="0.4"><h1>Jacobian of the measurement model</h1>
     For a linear measurement model, the Jacobian is just the $C$ matrix.
     $$\begin{align*}
       h(x_t) &= C_t x_t \\
@@ -112,7 +126,7 @@
     \end{align*}$$
   </subsection>
 
-  <subsection><h1>Kalman Gain</h1>
+  <subsection id="0.5"><h1>Kalman Gain</h1>
     The Kalman gain $K_t$, computed using the jacobian of the measurement model, helps decide how much the new measurement is trusted compared to the belief after the prediction step.
   </subsection>
 </section>
@@ -120,13 +134,13 @@
 <section id="1"><h1>The algorithm</h1>
   Since the <n>beliefs</n> are gaussians, they are <n>represented</n> in the form of a mean $\mu$ and a covariance $\Sigma$.
 
-  <subsection><h1>Compute control</h1>
+  <subsection id="1.0"><h1>Compute control</h1>
     $$
       u_t = f(\mu_{t-1}, \Sigma_{t-1})
     $$
   </subsection>
 
-  <subsection><h1>Kalman Predict</h1>
+  <subsection id="1.1"><h1>Kalman Predict</h1>
     $$
       \bar{\mu}_t, \bar{\Sigma}_t = f(\mu_{t-1}, \Sigma_{t-1}, u_t, \Delta{t})
     $$
@@ -147,7 +161,7 @@
     The new covariance always gets bigger after the prediction because some <i>process noise</i> or <i>transition covariance</i>, $Q_t$ is added. 
   </subsection>
 
-  <subsection><h1>Compute Kalman Gain</h1>
+  <subsection id="1.2"><h1>Compute Kalman Gain</h1>
     $$\begin{align*}
       H_t &= h'_t(\bar{\mu}_t) \\
       K_t &= \bar{\Sigma}_t \; H^T_t \; (H_t \bar{\Sigma}_t H^T_t + R_t)^{-1}
@@ -171,7 +185,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Measurement update</h1>
+  <subsection id="1.3"><h1>Measurement update</h1>
     $$\begin{align*}
       \mu_t &= \bar{\mu}_t + K_t(z_t - h_t (\bar{\mu}_t)) \\
       \Sigma_t &= (I - K_tH_t)\bar{\Sigma}_t

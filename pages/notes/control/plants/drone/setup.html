@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Drone project setup</title>
-  <meta name="Drone project setup" content="text/html; charset=utf-8;" />
+  <title>Control: Setup</title>
+  <meta name="Control: Setup" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,103 +39,38 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Qt setup</a>
-<a href="#2">Cmake setup</a>
+<a href="#0">What causes a drone to accelerate?</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">General steps followed</a></li>
-  <li><a href="#2.1">Qt core error</a></li>
-  <li><a href="#2.2">Another message</a></li>
+  <li><a href="#0.0">1D Monorotor</a></li>
 </ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Drone project setup</h1>
+<chapter style="counter-reset: chapter 0"><h1>Control: Setup</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#2">Qt setup</a></li>
-    <li><a href="#3">Cmake setup</a></li>    
-    <li><a href="#10">Questions & todo</a></li>    
-  </ul>
-</section>
+<section id="0"><h1>What causes a drone to accelerate?</h1>
+  Torques generated in the rotors affect their rotation rates which creates forces and moments on the drone which in turn cause translational and rotational accelerations.
 
-<section id="1"><h1>Qt setup</h1>
-  <ul>
-    <li>Open the project file: <code>project/CPPSim.pro</code> </li>
-    <li>Compile and build the project</li>
-    <code>Build -> Build Project CPPSim</code>
-    <li>Run <code>qmake</code> then <code>Run</code> under <code>Build</code></li>
-    <li>Had to run the following:</li>
-<pre><code class="bash">
-sudo apt-get install freeglut3-dev
-</code></pre>
-  </ul>
+  <figure>
+    <img style="height:auto; width:100%"
+    src="../../../../../figures/drone/introToControl1.png"/>
+  </figure>
 
-  I think <code>project/CPPSim.pro.user</code> is where all the configuration for the 
-  project is stored.
-</section>
+  To simplify things, assume direct control over acceleration. $u$ is used to represent a thrust or torque control input to the drone.
 
-<section id="2"><h1>Cmake setup</h1>
-  <subsection id="2.0"><h1>General steps followed</h1>
-<pre><code class="bash">
-mkdir build
-cd build
-cmake ..
-make
-./CPPSim
-</code></pre>    
-  </subsection>
-  
-  <subsection id="2.1"><h1>Qt core error</h1>
-<pre><code class="bash">
-  CMake Error at CMakeLists.txt:29 (find_package):
-  By not providing "FindQt5Core.cmake" in CMAKE_MODULE_PATH this project has
-  asked CMake to find a package configuration file provided by "Qt5Core", but
-  CMake did not find one.
+  <subsection id="0.0"><h1>1D Monorotor</h1>
+    For a 1-D monorotor, the equation of motion is:
+    $$
+      \ddot{z} = g - \frac{u_1}{m}
+    $$ 
 
-  Could not find a package configuration file provided by "Qt5Core" with any
-  of the following names:
+    $u_1$ is the upward thrust that can be controlled. To show it has a direct influence on the body-acceleration, the dynamics equation can be written in a simpler form:
+    $$
+      \ddot{z} = \bar{u_1}
+    $$
 
-    Qt5CoreConfig.cmake
-    qt5core-config.cmake
-
-  Add the installation prefix of "Qt5Core" to CMAKE_PREFIX_PATH or set
-  "Qt5Core_DIR" to a directory containing one of the above files.  If
-  "Qt5Core" provides a separate development package or SDK, be sure it has
-  been installed.
-</code></pre>
-
-I followed <a href="https://t.ly/PncWx">these steps</a>.
-  </subsection>
-
-  <subsection id="2.2"><h1>Another message</h1>
-<pre><code class="bash">
-  -- Checking for module 'glut'
---   No package 'glut' found
--- Found GLUT: /usr/lib/x86_64-linux-gnu/libglut.so  
-CMake Warning (dev) at /usr/share/cmake-3.22/Modules/FindOpenGL.cmake:315 (message):
-  Policy CMP0072 is not set: FindOpenGL prefers GLVND by default when
-  available.  Run "cmake --help-policy CMP0072" for policy details.  Use the
-  cmake_policy command to set the policy and suppress this warning.
-
-  FindOpenGL found both a legacy GL library:
-
-    OPENGL_gl_LIBRARY: /usr/lib/x86_64-linux-gnu/libGL.so
-
-  and GLVND libraries for OpenGL and GLX:
-
-    OPENGL_opengl_LIBRARY: /usr/lib/x86_64-linux-gnu/libOpenGL.so
-    OPENGL_glx_LIBRARY: /usr/lib/x86_64-linux-gnu/libGLX.so
-
-  OpenGL_GL_PREFERENCE has not been set to "GLVND" or "LEGACY", so for
-  compatibility with CMake 3.10 and below the legacy GL library will be used.
-Call Stack (most recent call first):
-  CMakeLists.txt:37 (find_package)
-This warning is for project developers.  Use -Wno-dev to suppress it.
-</code></pre>  
+    This simpler form is a reminder that the quantity being controlled is the body-acceleration. Velocity and position is then the integral of acceleration and velocity respectively.
   </subsection>
 </section>
-
 </chapter>
 
 </body>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Understanding the code</title>
-  <meta name="Understanding the code" content="text/html; charset=utf-8;" />
+  <title>PID control</title>
+  <meta name="PID control" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,33 +39,27 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Visualizer_GLUT</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Initialisation</a></li>
-</ul>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Understanding the code</h1>
-
-<section id="0"><h1>Table of Contents</h1>
+<chapter style="counter-reset: chapter 0"><h1>PID control</h1>
+<section id="0"><h1>Overview</h1>
+  <a href="https://t.ly/UMwqd">6th chapter</a>.
   <ul>
-    <li><a href="#2">Visualizer_GLUT</a></li>
+    <li><a href="proportional.html">Proportional</a></li>
+    <li>Proportional-Derivative</li>
+    <ul>
+      <li><a href="pd.html">Pure PD</a></li>
+      <li><a href="pdff.html">PD with FF</a></li>
+      <li><a href="msd.html">Mass spring damper</a></li>
+      <li><a href="problemWithPD.html">Problem with PD</a></li>
+      <li><a href="parameterTuning.html">Parameter tuning</a></li>
+    </ul>
+
+    <li><a href="integral.html">Integral</a></li>
+    <li><a href="derivative.html">Derivative</a></li>
   </ul>
 </section>
-
-<section id="1"><h1>Visualizer_GLUT</h1>
-  <subsection id="1.0"><h1>Initialisation</h1>
-    A shared pointer is reset with a new memory allocation for the initialisation.
-    We seem to initialise certain values using <code>:</code> in the constructor.
-    It is not inheritance!
-  </subsection>
-  <ul>
-    <li></li>
-    
-  </ul>
-</section>
-
 </chapter>
 
 </body>

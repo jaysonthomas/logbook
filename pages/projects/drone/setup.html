@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drone: Setup</title>
+  <meta name="Drone: Setup" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Qt setup</a>
+<a href="#1">Cmake setup</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">General steps followed</a></li>
+  <li><a href="#1.1">Qt core error</a></li>
+  <li><a href="#1.2">Another message</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Drone: Setup</h1>
+<section id="0"><h1>Qt setup</h1>
+  <ul>
+    <li>Open the project file: <code>project/CPPSim.pro</code> </li>
+    <li>Compile and build the project</li>
+    <code>Build -> Build Project CPPSim</code>
+    <li>Run <code>qmake</code> then <code>Run</code> under <code>Build</code></li>
+    <li>Had to run the following:</li>
+<pre><code class="bash">
+sudo apt-get install freeglut3-dev
+</code></pre>
+  </ul>
+
+  I think <code>project/CPPSim.pro.user</code> is where all the configuration for the 
+  project is stored.
+</section>
+
+<section id="1"><h1>Cmake setup</h1>
+  <subsection id="1.0"><h1>General steps followed</h1>
+<pre><code class="bash">
+mkdir build
+cd build
+cmake ..
+make
+./CPPSim
+</code></pre>    
+  </subsection>
+  
+  <subsection id="1.1"><h1>Qt core error</h1>
+<pre><code class="bash">
+  CMake Error at CMakeLists.txt:29 (find_package):
+  By not providing "FindQt5Core.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "Qt5Core", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "Qt5Core" with any
+  of the following names:
+
+    Qt5CoreConfig.cmake
+    qt5core-config.cmake
+
+  Add the installation prefix of "Qt5Core" to CMAKE_PREFIX_PATH or set
+  "Qt5Core_DIR" to a directory containing one of the above files.  If
+  "Qt5Core" provides a separate development package or SDK, be sure it has
+  been installed.
+</code></pre>
+
+I followed <a href="https://t.ly/PncWx">these steps</a>.
+  </subsection>
+
+  <subsection id="1.2"><h1>Another message</h1>
+<pre><code class="bash">
+  -- Checking for module 'glut'
+--   No package 'glut' found
+-- Found GLUT: /usr/lib/x86_64-linux-gnu/libglut.so  
+CMake Warning (dev) at /usr/share/cmake-3.22/Modules/FindOpenGL.cmake:315 (message):
+  Policy CMP0072 is not set: FindOpenGL prefers GLVND by default when
+  available.  Run "cmake --help-policy CMP0072" for policy details.  Use the
+  cmake_policy command to set the policy and suppress this warning.
+
+  FindOpenGL found both a legacy GL library:
+
+    OPENGL_gl_LIBRARY: /usr/lib/x86_64-linux-gnu/libGL.so
+
+  and GLVND libraries for OpenGL and GLX:
+
+    OPENGL_opengl_LIBRARY: /usr/lib/x86_64-linux-gnu/libOpenGL.so
+    OPENGL_glx_LIBRARY: /usr/lib/x86_64-linux-gnu/libGLX.so
+
+  OpenGL_GL_PREFERENCE has not been set to "GLVND" or "LEGACY", so for
+  compatibility with CMake 3.10 and below the legacy GL library will be used.
+Call Stack (most recent call first):
+  CMakeLists.txt:37 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+</code></pre>  
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>
