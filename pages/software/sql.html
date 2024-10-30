@@ -45,25 +45,23 @@
 
 <chapter style="counter-reset: chapter 0"><h1>SQL</h1>
 
-<section id="0"><h1>Table of Contents</h1>
-  <ul>
-    <li><a href="#1">Misc</a></li>
-  </ul>
+<section id="1"><h1>Join</h1>
+  [<a href="https://t.ly/PSEbR">Ref</a>]<p></p>.
+
+  <i>Join</i> is a strict match, else discard. <i>Left Join</i>, retains the left side no matter what. If there is no RHS, then leave the RHS part of the row blank.
 </section>
 
-<section id="1"><h1>Misc</h1>
-  <ul>
-    <li>Join operations</li>
-    <a href="https://t.ly/PSEbR">Ref</a>.
-    <p>
-      Join is a strict match, else discard. 
-      Left Join, retains the left side no matter what. If there is no RHS, 
-      then leave the RHS part of the row blank.
-    </p>
-  </ul>
+<section><h1>Lead</h1>
+<pre><code class="sql">
+LEAD(timestamp, 1) OVER (PARTITION BY id ORDER BY timestamp ASC) AS nextTs
+</code></pre>
+
+  The above query partitions the huge table by id. Each partition is then sorted by the <code>timestamp</code> column in an ascending order. A new column is then added to the table called <code>nextTs</code> where each entry in it is the next entry of the <code>timestamp</code> column.
+
+  <p>
+    This is mainly used in the <code>SELECT</code> clause of a query.
+  </p>
 </section>
-
-
 </chapter>
 
 </body>
