@@ -39,19 +39,19 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Table of Contents</a>
-<a href="#1">Misc</a>
+<a href="#0">Join</a>
+<a href="#1">Lead</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>SQL</h1>
 
-<section id="1"><h1>Join</h1>
+<section id="0"><h1>Join</h1>
   [<a href="https://t.ly/PSEbR">Ref</a>]<p></p>.
 
   <i>Join</i> is a strict match, else discard. <i>Left Join</i>, retains the left side no matter what. If there is no RHS, then leave the RHS part of the row blank.
 </section>
 
-<section><h1>Lead</h1>
+<section id="1"><h1>Lead</h1>
 <pre><code class="sql">
 LEAD(timestamp, 1) OVER (PARTITION BY id ORDER BY timestamp ASC) AS nextTs
 </code></pre>
