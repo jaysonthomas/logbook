@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D Drone dynamics: Moments</title>
-  <meta name="3D Drone dynamics: Moments" content="text/html; charset=utf-8;" />
+  <title>3D Drone dynamics: Overview</title>
+  <meta name="3D Drone dynamics: Overview" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,8 +39,8 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Moment of inertia</a>
-<a href="#1">Rotational equilibrium</a>
+<a href="#0">Steps</a>
+<a href="#1">Frames</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>3D Drone dynamics: Overview</h1>
@@ -64,14 +64,17 @@
     <li>How do the moments acting on a drone affect its rotational motion?</li>
     $$
       M_x,M_y,M_z 
-      \rightarrow \dot{p}, \dot{q}, \dot{r}
-      \rightarrow p,q,r
-      \rightarrow \phi, \theta, \psi
+      \xrightarrow [\scriptsize\text{equations}]{\scriptsize\text{Euler's}} \dot{p}, \dot{q}, \dot{r} 
+      \xrightarrow{\int} p,q,r
+      \xrightarrow[\scriptsize\text{maths}]{\scriptsize\text{Magic}} \dot\phi, \dot\theta, \dot\psi
+      \xrightarrow{\int} \phi, \theta, \psi
     $$
+
+    All of the $p,q,r$ notations are in the body frame which needs to be converted into the world frame <n>representation</n>.
   </ul>  
 </section>
 
-<section><h1>Frames</h1>
+<section id="1"><h1>Frames</h1>
   A <i>world frame</i> is an <i>inertial frame</i>, i.e. fixed in the world, relative to the surroundings. A <i>body frame</i> is attached to the object under consideration.
 
   <p>

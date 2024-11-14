@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>2D Drone control: Overview</title>
-  <meta name="2D Drone control: Overview" content="text/html; charset=utf-8;" />
+  <title>2D Drone dynamics: Overview</title>
+  <meta name="2D Drone dynamics: Overview" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,51 +39,29 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Steps</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>2D Drone control: Overview</h1>
-  <p>
-    A quadrotor is symmetric. Therefore, the forward-backward motion is very similar to the left-right motion.
-  </p>
-  
-  Underactuation
+<chapter style="counter-reset: chapter 0"><h1>2D Drone dynamics: Overview</h1>
+<section id="0"><h1>Steps</h1>
   <ul>
-    <li>
-      A 2D planar quadrotor is an underactuated system because while it has 3 DOFs, with its $y, z, \phi$ coordinates, only 2 quantities, thrust $u_1$ and rotational moment $u_2$, can be controlled.
-    </li>
+    <li>Define the state</li>
+    The <i>state</i> describes the minimal amount of information needed to predict the motion from one time step to the next. For 2D, the state variables are the vehicle's lateral y-position, vertical z-position, and roll angle, $\phi$. The state also includes velocities associated with each of these variables, which gives a total of six state variables.
 
     <p>
-      <li>
-        At any given time, only 2 of those 3 DOFs can be controlled by sacrificing control of the third.
-      </li>
-    </p>
-  </ul>
-
-  Linearisation
-  <ul>
-    <li>
-      To control $y, z$, if the dynamics of the system is linearised around the hover state, equations that govern $y, z$ become decoupled, allowing them to be controlled independently. $u_1$ can be used to control altitude and $u_2$ can be used to control lateral motion in the y direction. 
-    </li>
-  </ul>
-
-  Cascaded control
-  <ul>
-    <p>
-      <li>
-        In order to control motion in the y direction, $u_2$ would first need to control the intermediate variable of roll $\phi$.
-      </li>
+      <li>Figure out forces and moments acting on the vehicle.</li>
     </p>
 
     <li>
-      This leads to the use of a cascaded control structure where the inner faster control loop which controls the roll angle is first implemented and tuned. Then the slower outer control loop is implemented which uses the y trajectory to set the target roll angle for the inner controller.
+      Convert forces and moments into linear and angular accelerations by applying $F = m*a$, and its rotational equivalent.
     </li>
+
+    <p>
+      <li>Integrate accelerations to get the velocities which is then integrated again to get positions.
   </ul>
-  
- 
 
- 
-
-
+  <a href="https://t.ly/BbFG">advance_state(..)</a> captures these dynamics.
+</section>
 </chapter>
 
 </body>

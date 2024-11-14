@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D drone dynamics: Code perspective</title>
-  <meta name="3D drone dynamics: Code perspective" content="text/html; charset=utf-8;" />
+  <title>3D Drone dynamics: Initialisation</title>
+  <meta name="3D Drone dynamics: Initialisation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,28 +39,31 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Inputs</a>
+<a href="#1">Other variables</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>3D drone dynamics: Code perspective</h1>
-  The aim is to combine the dynamics and 3D control into a single file which will control a simulated 3D quad. 
-
-  <p>
-    The vehicle model takes into account actuation constraints. So, very high PID gains should cause instability.
-  </p>
-
+<chapter style="counter-reset: chapter 0"><h1>3D Drone dynamics: Initialisation</h1>
+<section id="0"><h1>Inputs</h1>
   <ul>
-    <li><a href="init.html">Initialisation</a></li>
-    <li><a href="properties.html">Properties</a></li>
-    <li>Computed values</li>
-    <ul>
-      <li><a href="propAngVels.html">Propeller angular velocities</a></li>
-      <li><a href="rotMatrix.html">Rotation matrix</a></li>
-      <li><a href="linAccel.html">Linear acceleration</a></li>
-      <li><a href="angAccelInBodyFrame.html">Angular accelerations in body frame</a></li>
-      <li><a href="angVelInWorldFrame.html">Angular velocities in world frame</a></li>
-      <li><a href="advanceState.html">Advance State</a></li>
-    </ul>    
+    <li>Coefficients: $k_f, k_m$</li>
+    <li>Mass: $m$</li>
+    <li>Rotor to rotor distance: $L$</li>
+    <li>Moment of inertia: $I_{xx}, I_{yy}, I_{zz}$</li>
   </ul>
+</section>
+
+<section id="1"><h1>Other variables</h1>
+  <ul>
+    <li>Perpendicular distance of drone's arm to axes</li>
+    $$
+      l = \frac{L}{2\sqrt{2}}
+    $$
+    <li>$X$</li>
+    <li>$\omega$</li>
+    <li>$g = 9.8$</li>
+  </ul>
+</section>
 </chapter>
 
 </body>

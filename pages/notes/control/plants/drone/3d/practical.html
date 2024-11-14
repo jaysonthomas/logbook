@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D drone dynamics: Code perspective</title>
-  <meta name="3D drone dynamics: Code perspective" content="text/html; charset=utf-8;" />
+  <title>3D control: Overview</title>
+  <meta name="3D control: Overview" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,28 +39,23 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>3D drone dynamics: Code perspective</h1>
-  The aim is to combine the dynamics and 3D control into a single file which will control a simulated 3D quad. 
+<chapter style="counter-reset: chapter 0"><h1>3D control: Practical considerations</h1>
+<section id="0"><h1>Overview</h1>
+  In an initial version of the simulation, it is assumed that the rotors can generate infinite thrust both upward and downward, and instantaneously change thrust. 
+  
+  <p>
+    This means the controllers will work for a wide range of PID parameters - using aggressive proportional gains will always make the controller perform better. But, this is not practical. If rotors could really satisfy the above assumptions, then any time the quadrotor deviated from the target trajectory, the vehicle could instantly command whatever massive force or torque was required to immediately correct itself.
+  </p>
+ 
+  In reality, motors have a minimum and maximum thrust that they can produce. And the minimum thrust is a small positive number meaning that motors on a drone can only generate thrust in one direction. Additionally, they have a minimum and maximum rate at which they can change the thrust that they produce. 
 
   <p>
-    The vehicle model takes into account actuation constraints. So, very high PID gains should cause instability.
+    Parameter tuning becomes much more important when these actuation constraints are taken into account. In the real world, gains that are too high can actually cause instability.
   </p>
-
-  <ul>
-    <li><a href="init.html">Initialisation</a></li>
-    <li><a href="properties.html">Properties</a></li>
-    <li>Computed values</li>
-    <ul>
-      <li><a href="propAngVels.html">Propeller angular velocities</a></li>
-      <li><a href="rotMatrix.html">Rotation matrix</a></li>
-      <li><a href="linAccel.html">Linear acceleration</a></li>
-      <li><a href="angAccelInBodyFrame.html">Angular accelerations in body frame</a></li>
-      <li><a href="angVelInWorldFrame.html">Angular velocities in world frame</a></li>
-      <li><a href="advanceState.html">Advance State</a></li>
-    </ul>    
-  </ul>
+</section>
 </chapter>
 
 </body>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Matrix/vector operations related to robotic arms</title>
-  <meta name="Matrix/vector operations related to robotic arms" content="text/html; charset=utf-8;" />
+  <title>Cross product</title>
+  <meta name="Cross product" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -39,130 +39,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
-<a href="#1">Special orthogonal group</a>
-<a href="#2">Cross product of $\mathbb{R}^{3 \times 3}$ matrices</a>
-<a href="#3">Cross product of $\mathbb{R}^6$ vectors</a>
-<a href="#4">Cross product of $\mathbb{R}^{4 \times 4}$ matrices</a>
-<a href="#5">se(3) representation</a>
-<a href="#6">Adjoint representation</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Matrix/vector operations related to robotic arms</h1>
-<section id="0"><h1>Topics</h1>
-  Rigid Body Motions
-  <ul>
-    <li><a href="se3.html">Special Euclidean Group</a></li>
-    <ul>
-      <li>Transformation matrices SE(3)</li>
-      <li>$\mathbb{R}^{4 \times 4}$ matrix representation of twist</li>
-    </ul>
-
-    <li>Log</li>
-    $SE(3) \rightarrow se(3)$
-
-    <li>Exponential</li>
-    $se(3) \rightarrow SE(3)$
-
-  </ul>
-
-  Rotations
-  <ul>
-    <li></li>
-  </ul>
-</section>
-
-<section id="1"><h1>Special orthogonal group</h1>
-  <button class="accordion">so(3) makes cross products easier</button>
-  <div class="panel">
-    Cross product of $\mathbb{R}^3$ vectors
-    $$\begin{align*}
-      x \times y &= \begin{bmatrix} x \end{bmatrix} y &\in \mathbb{R}^3 \\
-      x &= \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} &\in \mathbb{R}^3 \\
-      \begin{bmatrix} x \end{bmatrix} &= 
-      \begin{bmatrix} 
-        0 & -x_3 & x_2 \\ 
-        x_3 & 0 & -x_1 \\ 
-        -x_2 & x_1 & 0 
-      \end{bmatrix} \\
-      \begin{bmatrix} x \end{bmatrix} &= -\begin{bmatrix} x \end{bmatrix}^T
-    \end{align*}$$
-
-    The set of all <i>$3 \times 3$ skew-symmetric real matrices</i> is called <i>so(3)</i>.
-  </div>
-  <p></p>
-  <button class="accordion">SO(3) helps describe points in space</button>
-  <div class="panel">
-    It is the set of all $3 \times 3$ real matrices $R$ satisfying:
-    <ul>
-      <li>$R^TR = I$</li>
-      <li>$\lvert{R}\rvert = 1$</li>
-    </ul>
-  </div>
-</section>
-
-<section id="2"><h1>Cross product of $\mathbb{R}^{3 \times 3}$ matrices</h1>
+<chapter style="counter-reset: chapter 3"><h1>Cross product</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://bit.ly/3aj2Zzn">Ref</a>]<p></p>
+  Given 2 vectors $a,b$ with an angle $\theta$ between them, the cross product is $a \times b = c$ where $c$ is a vector that is perpendicular to both $a$ and $b$. Its direction is given by the right hand rule and its magnitude (size) is given by the following equation:
   $$
-    [x \times y] = [x][y] - [y][x] \in so(3)
+    |c| = |a||b|sin\theta
+  $$
+
+  The cross product formula for 2 vectors:
+  $$
+    \begin{pmatrix} a \\ b \\ c \end{pmatrix} \times
+    \begin{pmatrix} d \\ e \\ f \end{pmatrix} = 
+    \begin{pmatrix} bf-ce \\ cd-af \\ ae-bd \end{pmatrix}
   $$
 </section>
-
-<section id="3"><h1>Cross product of $\mathbb{R}^6$ vectors</h1>
-  The <i>Lie bracket</i> of $V_1$ and $V_2$:
-  $$\begin{align*}
-    [ad_{V_1}]V_2 &\in R^6 \\
-
-    [ad_V] &= \begin{bmatrix}
-                [\omega] & 0 \\
-                [v] & [\omega]
-              \end{bmatrix} \in \mathbb{R}^{6 \times 6}
-  \end{align*}$$
-</section>
-
-<section id="4"><h1>Cross product of $\mathbb{R}^{4 \times 4}$ matrices</h1>
-  Matrix form of lie bracket:
-
-  $$
-    [V_1][V_2] - [V_2][V_1] \in se(3)
-  $$
-</section>
-
-<section id="5"><h1>se(3) representation</h1>
-  The set of all $4 \times 4$ real matrices with a $3 \times 3$ so(3) matrix at the top left and four 0s in the bottom row is called <i>se(3)</i>.
-
-  <p>
-    This representation is used to represent a $6 \times 1$ twist matrix as a $4 \times 4$ matrix:
-
-    $$
-      [V_b] = \begin{bmatrix} 
-                [\omega_b] & v_b \\
-                0 & 0
-              \end{bmatrix} \in se(3)
-    $$
-  </p>
-</section>
-
-<section id="6"><h1>Adjoint representation</h1>
-  Since a twist is a 6-element vector and a transformation matrix is a $4 \times 4$, in order to transform a twist from 1 frame of reference to another, a $6 \times 6$ representation of a transformation matrix is required which is the <i>adjoint representation</i>.
-
-  $$\begin{align*}
-    T &= \begin{bmatrix}
-          R & p \\
-          0 & 1
-        \end{bmatrix} \\
-    
-    [Ad_T] &= \begin{bmatrix}
-                R & 0 \\
-                [p]R & R
-              \end{bmatrix} \in \mathbb{R}^{6 \times 6} \\
-
-    V_a &= [Ad_{T_{ab}}] V_b            
-
-  \end{align*}$$
-</section>
-
-
-
 </chapter>
 
 </body>

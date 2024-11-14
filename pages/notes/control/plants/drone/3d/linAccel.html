@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D drone dynamics: Code perspective</title>
-  <meta name="3D drone dynamics: Code perspective" content="text/html; charset=utf-8;" />
+  <title>Linear acceleration</title>
+  <meta name="Linear acceleration" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,28 +39,27 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>3D drone dynamics: Code perspective</h1>
-  The aim is to combine the dynamics and 3D control into a single file which will control a simulated 3D quad. 
+<chapter style="counter-reset: chapter 0"><h1>Linear acceleration</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    \begin{bmatrix}
+      \ddot{x} \\ \ddot{y} \\ \ddot{z}
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+      0 \\ 0 \\ g
+    \end{bmatrix}
+    + \frac{1}{m}R
+    \begin{bmatrix}
+      0 \\ 0 \\ -F_{thrust}
+    \end{bmatrix}
+  $$
 
-  <p>
-    The vehicle model takes into account actuation constraints. So, very high PID gains should cause instability.
-  </p>
-
-  <ul>
-    <li><a href="init.html">Initialisation</a></li>
-    <li><a href="properties.html">Properties</a></li>
-    <li>Computed values</li>
-    <ul>
-      <li><a href="propAngVels.html">Propeller angular velocities</a></li>
-      <li><a href="rotMatrix.html">Rotation matrix</a></li>
-      <li><a href="linAccel.html">Linear acceleration</a></li>
-      <li><a href="angAccelInBodyFrame.html">Angular accelerations in body frame</a></li>
-      <li><a href="angVelInWorldFrame.html">Angular velocities in world frame</a></li>
-      <li><a href="advanceState.html">Advance State</a></li>
-    </ul>    
-  </ul>
+  $F_{thrust}$ is a total force generated collectively by all four propellers and is directed upward in the body frame. It is transformed into the inertial frame (world frame) by the rotation matrix and divided by the mass to get the acceleration vector. $g$ is directed along the z axis.
+</section>
 </chapter>
 
 </body>

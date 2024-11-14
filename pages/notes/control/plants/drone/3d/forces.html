@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D drone dynamics: Code perspective</title>
-  <meta name="3D drone dynamics: Code perspective" content="text/html; charset=utf-8;" />
+  <title>3D Drone dynamics: Forces</title>
+  <meta name="3D Drone dynamics: Forces" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,28 +39,17 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>3D drone dynamics: Code perspective</h1>
-  The aim is to combine the dynamics and 3D control into a single file which will control a simulated 3D quad. 
+<chapter style="counter-reset: chapter 0"><h1>3D Drone dynamics: Forces</h1>
+<section id="0"><h1>Overview</h1>
+  Forces on a drone come from the rotation of the motors. In a body fixed frame, the location of the motors are fixed which makes the math simple - all four motor forces point up in the frame of the body. The net force in the body frame will be the collective thrust from the four rotors and it will be negative in the z direction, since down is positive and up is negative. 
 
   <p>
-    The vehicle model takes into account actuation constraints. So, very high PID gains should cause instability.
+    The net torque becomes simple to calculate in the body frame as well, since the drone's orientation doesn't matter. 
   </p>
-
-  <ul>
-    <li><a href="init.html">Initialisation</a></li>
-    <li><a href="properties.html">Properties</a></li>
-    <li>Computed values</li>
-    <ul>
-      <li><a href="propAngVels.html">Propeller angular velocities</a></li>
-      <li><a href="rotMatrix.html">Rotation matrix</a></li>
-      <li><a href="linAccel.html">Linear acceleration</a></li>
-      <li><a href="angAccelInBodyFrame.html">Angular accelerations in body frame</a></li>
-      <li><a href="angVelInWorldFrame.html">Angular velocities in world frame</a></li>
-      <li><a href="advanceState.html">Advance State</a></li>
-    </ul>    
-  </ul>
+</section>
 </chapter>
 
 </body>

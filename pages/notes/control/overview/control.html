@@ -49,39 +49,69 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Control systems overview</h1>
 
-<section id="0"><h1>Control system</h1>
-  <subsection id="0.0"><h1>Definition and purpose</h1>
-    A control system refers to the method used to control and regulate physical processes through the use of feedback loops with the goal of maintaining a desired performance while compensating for disturbances, changes in system dynamics and environment, or uncertainties in the system/environment. 
+<section id="0.0"><h1>Definition and purpose</h1>
+  A control system refers to the method used:
+  <ul>
+    <li>To control and regulate physical processes through the use of feedback loops</li>
+    <li>With the goal of maintaining a desired performance</li>
+    <li>While compensating for disturbances, changes in system dynamics and environment, or uncertainties in the system/environment</li>
+  </ul>
+
+  <p>
+    In a perfect world, a model of a system's dynamics would be the only thing required. It would help design the system's inputs [motor turn rates for example] that result in a desired behaviour and the controls problem would be solved. 
+  </p>
+
+  [Point 3 above] In the real world, a control problem is all about managing the messiness of the real world, and making sure a system achieves a task in spite of sources that cause errors in achieving a target.
+</section>
+
+<section id="0.2"><h1>Parts of a controller</h1>
+  Block diagrams are used to visualise important information about a controller and the system it controls. Arrows represent signals and boxes represent functions or equations.
+
+  <ul>
+    <li>Plant/System</li>
+    Physically, it represents the system being controlled. Synthetically, it encapsulates the model equations.
 
     <p>
-      In a perfect world, a model of a system's dynamics would be the only thing required. It would help design the system's inputs [motor turn rates for example] that result in a desired behaviour and the controls problem would be solved. In the real world, the control problem is all about managing the messiness of the real world, and making sure a system achieves a task in spite of sources that cause errors in achieving a target.
-    </p>
-  </subsection>
-
-  <subsection id="0.1"><h1>Types</h1>
-    There are two main types of control systems: 
-    <ul>
-      <li>Open-loop systems</li>
-      They rely solely on the input signal to control the output. They are susceptible to disturbances and errors.
-
-      <p>
-        <li>Closed-loop systems</li>
-        They rely on feedback to compare the output with the desired performance and <n>adjust the input</n> accordingly. They can adapt to changes in the environment.
-      </p>
-    </ul>
-  </subsection>
-
-  <subsection id="0.2"><h1>Components</h1>
-    <ul>
-      <li>Plant - the system being controlled</li>
       <li>Actuators - provide input to the plant</li>
       <li>Sensors - measure the state of the plant</li>
-      <li>Feedback path - sends the sensor data back to the controller</li>
-      <li>Controller - processes the sensor data and generates the control signal to the actuators</li>
-    </ul>
+      <li>Controller - processes sensor data and generates control signal to the actuators</li>
+    </p>
+  </ul>
+
+  Signals/Signal path:
+  <ul>
+    <li>Feedback path - sends sensor data back to the controller</li>
+    <li>Input example - commanded thrust</li>
+    <p>
+      <li>Output example - an actual target location</li>
+      Output describes what can be measured about a system. If velocity could be measured, it would also be included in the output.
+    </p>
+    <li>Reference example - a target set location</li>
+  </ul>
+</section>
+
+<section id="0.1"><h1>Types of controllers</h1>
+  <subsection><h1>Open loop</h1>
+    There is no feedback from the system. They are susceptible to disturbances and errors. Errors will be unnoticed and are able to grow unchecked.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:40px; width:auto"
+        src="../../../../figures/control/31a_openLoop.png"/>
+      </figure>
+    </div>
   </subsection>
+  There are two main types of control systems: 
+  <ul>
+    <li>Open-loop systems</li>
+    They rely solely on the input signal to control the output. 
+
+    <p>
+      <li>Closed-loop systems</li>
+      They rely on feedback to compare the output with the desired performance and <n>adjust the input</n> accordingly. They can adapt to changes in the environment.
+    </p>
+  </ul>
 </section>
 </chapter>
-
 </body>
 </html>

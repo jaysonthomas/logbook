@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D drone dynamics: Code perspective</title>
-  <meta name="3D drone dynamics: Code perspective" content="text/html; charset=utf-8;" />
+  <title>2D Drone control: Overview</title>
+  <meta name="2D Drone control: Overview" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,26 +41,49 @@
   
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>3D drone dynamics: Code perspective</h1>
-  The aim is to combine the dynamics and 3D control into a single file which will control a simulated 3D quad. 
-
+<chapter style="counter-reset: chapter 0"><h1>2D Drone control: Overview</h1>
   <p>
-    The vehicle model takes into account actuation constraints. So, very high PID gains should cause instability.
+    A quadrotor is symmetric. Therefore, the forward-backward motion is very similar to the left-right motion.
   </p>
-
+  
+  Underactuation
   <ul>
-    <li><a href="init.html">Initialisation</a></li>
-    <li><a href="properties.html">Properties</a></li>
-    <li>Computed values</li>
-    <ul>
-      <li><a href="propAngVels.html">Propeller angular velocities</a></li>
-      <li><a href="rotMatrix.html">Rotation matrix</a></li>
-      <li><a href="linAccel.html">Linear acceleration</a></li>
-      <li><a href="angAccelInBodyFrame.html">Angular accelerations in body frame</a></li>
-      <li><a href="angVelInWorldFrame.html">Angular velocities in world frame</a></li>
-      <li><a href="advanceState.html">Advance State</a></li>
-    </ul>    
+    <li>
+      A 2D planar quadrotor is an underactuated system because while it has 3 DOFs, with its $y, z, \phi$ coordinates, only 2 quantities, thrust $u_1$ and rotational moment $u_2$, can be controlled.
+    </li>
+
+    <p>
+      <li>
+        At any given time, only 2 of those 3 DOFs can be controlled by sacrificing control of the third.
+      </li>
+    </p>
   </ul>
+
+  Linearisation
+  <ul>
+    <li>
+      To control $y, z$, if the dynamics of the system is linearised around the hover state, equations that govern $y, z$ become decoupled, allowing them to be controlled independently. $u_1$ can be used to control altitude and $u_2$ can be used to control lateral motion in the y direction. 
+    </li>
+  </ul>
+
+  Cascaded control
+  <ul>
+    <p>
+      <li>
+        In order to control motion in the y direction, $u_2$ would first need to control the intermediate variable of roll $\phi$.
+      </li>
+    </p>
+
+    <li>
+      This leads to the use of a cascaded control structure where the inner faster control loop which controls the roll angle is first implemented and tuned. Then the slower outer control loop is implemented which uses the y trajectory to set the target roll angle for the inner controller.
+    </li>
+  </ul>
+  
+ 
+
+ 
+
+
 </chapter>
 
 </body>

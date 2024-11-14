@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Visual servoing</title>
-  <meta name="Visual servoing" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <title>Rotation: Euler's equation</title>
+  <meta name="Rotation: Euler's equation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -15,15 +15,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -39,17 +39,16 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Resources</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Visual servoing</h1>
-<section id="0"><h1>Resources</h1>
-  <!-- Learning videos:
-  Reading: -->
-  Code:
-  <ul>
-    <li><a href="https://t.ly/Q0Siv">A C++ implementation with ROS Noetic to move an arm to match desired orientation of object</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 3"><h1>Rotation: Euler's equation</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://bit.ly/38bvSLg">Ref</a>]<p></p>
+  General form of Euler's equation in a rotating frame:
+  $$
+    M = I\dot\omega + \omega \times (I\omega)
+  $$
 </section>
 </chapter>
 
