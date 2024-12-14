@@ -40,6 +40,11 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Trajectory</a>
+<a href="#2">Altitude controller</a>
+<a href="#3">Lateral position controller</a>
+<a href="#4">Yaw controller</a>
+<a href="#5">Roll-pitch controller</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>3D control: Overview</h1>
@@ -54,7 +59,7 @@
   </div>
 </section>
 
-<section><h1>Trajectory</h1>
+<section id="1"><h1>Trajectory</h1>
   On the left, is the trajectory input. For simplicity, assume the trajectory contains target values for x, y, z, yaw angle, and the associated velocities. It could also contain acceleration targets. This trajectory gets split into three parts: 
   
   <ul>
@@ -64,7 +69,7 @@
   </ul>
 </section>
 
-<section><h1>Altitude controller</h1>
+<section id="2"><h1>Altitude controller</h1>
   The altitude controller is responsible for ensuring the vehicle stays close to the z-trajectory (commanded set position and velocity) by computing a target collective thrust value. Its role here is identical to what it was in the 2D case.
 
   <p>
@@ -77,7 +82,7 @@
   </p> 
 </section>
 
-<section><h1>Lateral position controller</h1>
+<section id="3"><h1>Lateral position controller</h1>
   The x and y trajectory is first handled by the lateral position controller. The only difference from the y position controller in the 2D case is that this controller outputs linear acceleration targets rather than angular ones. This is just a design decision to keep the more complicated angular control logic enclosed within the roll-pitch controller.
 
   <p>
@@ -85,7 +90,7 @@
   </p>
 </section>
 
-<section><h1>Yaw controller</h1>
+<section id="4"><h1>Yaw controller</h1>
   The yaw trajectory is handled by the yaw controller. Yaw is the least interesting of the control loops since it is controlled through the reactive moment command which only affects yaw. So yaw can be treated in isolation. 
 
   <p>
@@ -93,7 +98,7 @@
   </p>
 </section>
 
-<section><h1>Roll-pitch controller</h1>
+<section id="5"><h1>Roll-pitch controller</h1>
   Inputs:
   <ul>
     <li>Target thrust from the altitude controller</li>

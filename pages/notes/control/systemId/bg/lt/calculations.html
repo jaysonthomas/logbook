@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LT: Calculations</title>
+  <meta name="LT: Calculations" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Example</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>LT: Calculations</h1>
+<section id="0"><h1>Overview</h1>
+  Laplace transform integration do not need to be done by hand. It has been solved for most common terms many times before and collected into tables.
+  
+  <div class="img-container">
+    <figure>
+      <img style="height:110px; width:auto"
+      src="../../../../../../figures/control/26_ltTable.png"/>
+      <figcaption>
+        Laplace transform of few common terms that can be found in a table
+      </figcaption>
+    </figure>
+  </div>
+
+  The time domain model can be transformed into the s domain, by replacing each term with the corresponding s domain equivalent. 
+</section>
+
+<section id="1"><h1>Example</h1>
+  Consider a system in the time domain:
+  $$
+    m\ddot{x}(t) + b\dot{x}(t) + kx(t) - \delta(t) = 0
+  $$
+
+  Taking the laplace transform, the s domain equivalent would be:
+  $$
+    (ms^2 + bs + k) \cdot X(s) - 1 = 0
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -46,17 +46,20 @@
 
 <chapter style="counter-reset: chapter 3"><h1>Exponential functions</h1>
 <section id="0"><h1>Imaginary exponents</h1>
-  Exponential functions that have imaginary exponents, such as $e^{j2t}$, produce 2D sinusoids through Euler's formula:
+  [<a href="../../../jlib/docs/maths/exponential.html">Jlib</a>] <p></p>
+  Exponential functions that have imaginary exponents, such as $e^{j2t}$, produce complex sinusoids through Euler's formula:
   $$
     e^{j\omega t} = cos(\omega t)+ jsin(\omega t)
   $$
+
+  The resulting sinusoid is 2D but not in a spatial sense. Its real (plotted on x-axis) and imaginary (y-axis) components oscillate sinusoidally and are related to each other. The resulting trajectory forms a circle when plotted in the complex plane, as the magnitude of $e^{j2t}$ is constant (equal to 1).
 </section>
 
 <section id="1"><h1>Real exponents</h1>
   For exponential functions that have real numbers for exponents:
   <ul>
-    <li>Negative real numbers indicate exponentially decaying signals</li>
-    <li>Positive indicate exponentially growing signals</li>
+    <li>Negative indicates exponentially decaying signals</li>
+    <li>Positive indicates exponentially growing signals</li>
   </ul>
 
   <div class="img-container">
@@ -81,7 +84,7 @@
     </figure>
   </div>
 
-  As with $\omega$, $\sigma$ gives a way to define a location on a real number line that corresponds to a particular exponential function. As a signal moves away from the origin, the absolute value of the real number becomes larger and thus the signal decays or grows at a faster rate.
+  As with $\omega$ giving the location of a signal on a frequency line, $\sigma$ gives the location of an exponential function on a real number line. As an exponential signal moves away from the origin, the absolute value of the real number becomes larger and thus the signal decays or grows at a faster rate.
 </section>
 
 <section id="2"><h1>Imaginary and real exponent</h1>

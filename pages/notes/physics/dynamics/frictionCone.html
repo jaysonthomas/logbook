@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Friction</title>
+  <meta name="Friction" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Practical implication</a>
+<a href="#1">Velocity dependent friction models</a>
+<a href="#2">Mass dependent friction models</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Static friction</a></li>
+  <li><a href="#2.1">Kinetic friction</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Friction cone</h1>
+<section id="0"><h1>Overview</h1>
+  In the context of robotic manipulation, friction cones are a conceptual tool used to model and analyse forces that a robot can apply at a contact point while maintaining a stable grip or manipulation of an object.
+</section>
+
+<section><h1>Key Conceps</h1>
+  <subsection><h1>Contact Force and Friction</h1>
+    When a robot's finger contacts an object, it can exert a force on the object. The nature of this force is governed by Coulomb's law of friction, which states that the tangential (frictional) force at the contact point must be less than or equal to the product of the normal force and the coefficient of friction $\mu$
+
+    $$
+      F_t \leq \mu F_n
+    $$
+   
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        F_t &:& \text{Tangential (frictional) force}\\ 
+        F_n &:& \text{Normal force at the contact point}\\
+        \mu &:& \text{Coefficient of static friction between the finger and the object}
+      \end{array}$$
+    </div>
+  </subsection>
+
+  <subsection><h1>Friction Cone Geometry</h1>
+    The inequality above defines a cone in force space. The apex of the cone is at the contact point, and the cone's axis is aligned with the normal force direction.
+    The cone's half-angle is given by:
+    $$
+      \theta = tan^{-1} \mu
+    $$
+    
+    This angle depends on the coefficient of friction. A higher coefficient of friction results in a wider cone.
+  </subsection>
+  Stable Forces:
+  
+  The force vector at the contact point must lie within the friction cone for the contact to resist slipping. If the force vector lies outside the cone, the contact will slip because the frictional force is insufficient to counteract the applied forces.
+  Friction Cone in Robotic Manipulation:
+  
+  When manipulating an object, a robot uses the friction cone to determine:
+  How much force it can apply without causing the object to slip.
+  The range of permissible forces to maintain stable contact.
+  For multi-fingered grasps, friction cones at all contact points are considered together to analyze the overall stability and the ability to manipulate the object.
+  Practical Applications:
+  Grasp Planning: Robots calculate the friction cones at potential contact points to ensure a stable grip.
+  Force Closure: Ensuring the forces applied at all contact points form a system capable of opposing any external disturbance. This is directly related to the geometry of the friction cones.
+  Dynamic Manipulation: In scenarios where the object is moving, friction cones are used to evaluate whether the robot can apply forces dynamically without losing grip.
+  Visualization:
+  Imagine a cone originating at the contact point:
+  The axis of the cone points along the surface normal.
+  The walls of the cone represent the maximum permissible tangential force in any direction, given the normal force and the coefficient of friction.
+  Any applied force vector at the contact point must remain within this cone to prevent slippage.
+  By leveraging friction cones, roboticists ensure that manipulation tasks are performed effectively while avoiding slip and maintaining control of the object.  
+</section>
+</chapter>
+</body>
+</html>

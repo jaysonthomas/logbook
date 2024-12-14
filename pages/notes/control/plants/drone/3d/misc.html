@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D control: Overview</title>
-  <meta name="3D control: Overview" content="text/html; charset=utf-8;" />
+  <title>3D control: Misc</title>
+  <meta name="3D control: Misc" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,6 +40,11 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Roll-pitch controller</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Equation 1</a></li>
+  <li><a href="#1.1">Equation 2</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>3D control: Misc</h1>
@@ -58,11 +63,11 @@
   </p>
 </section>
 
-<section><h1>Roll-pitch controller</h1>
+<section id="1"><h1>Roll-pitch controller</h1>
   The goal is to output $p_c, q_c$ to control $\ddot{x}, \ddot{y}$.
   The job of the roll-pitch controller is to take commanded x, y accelerations, a thrust, and the vehicle's attitude, and produce a roll rate command $p_c$ and a pitch rate command $q_c$. This is a first order system. 
 
-  <subsection><h1>Equation 1</h1>
+  <subsection id="1.0"><h1>Equation 1</h1>
     Equation 2 from the <a href="https://t.ly/tkUjJ">Paper</a>:
     $$\begin{align*}
       \ddot{x} &= cb^x \\
@@ -83,7 +88,7 @@
     </p>
   </subsection>
 
-  <subsection><h1>Equation 2</h1>
+  <subsection id="1.1"><h1>Equation 2</h1>
     $$
       \begin{bmatrix} p_c \\ q_c \end{bmatrix}
       = \underbrace{\frac{1}{R_{33}}

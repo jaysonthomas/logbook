@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>System ID: Background info</title>
+  <meta name="System ID: Background info" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">LTI System</a>
+<a href="#1">Applying an impulse</a>
+<a href="#2">Convolution Integral</a>
+<a href="#3">Frequency domain</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Background</a></li>
+  <li><a href="#3.1">Transforms</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>System ID: Background info</h1>
+<section id="0"><h1>LTI System</h1>
+  <ul>
+    <li><a href="lti/importance.html">Importance of linear system representation</a></li>
+    <li><a href="lti/operations.html">Allowable operations</a></li>
+    <li><a href="lti/setup.html">Setup</a></li>
+    <li><a href="lti/properties.html">Properties</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Applying an impulse</h1>
+  <ul>
+    <li><a href="impulse/function.html">Impulse function</a></li>
+    <li><a href="impulse/responseFormat.html">Format of an impulse response</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Convolution Integral</h1>
+  <ul>
+    <li><a href="conv/integral.html">Definition & motivation</a></li>
+    <li><a href="conv/integralDerivation.html">Derivation</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Frequency domain</h1>
+  <subsection id="3.0"><h1>Background</h1>
+    <ul>
+      <li><a href="freqDomain.html">Frequency domain representation</a></li>
+      <li><a href="sDomain.html">s Domain</a></li>
+    </ul>  
+  </subsection>
+
+  <subsection id="3.1"><h1>Transforms</h1>
+    A <i>transform</i> is a mapping between two sets of data, or domains.
+    <subsubsection><h1>Fourier Transform</h1>
+      <ul>
+        <li><a href="ft/overview.html">Overview</a></li>
+        <li><a href="ft/shiftTheorem.html">Shift Theorem</a></li>
+        <li><a href="ft/convTheorem.html">Convolution Theorem</a></li>
+        <li><a href="ft/example.html">Example</a></li>
+      </ul>
+    </subsubsection>
+
+    <subsubsection><h1>Laplace Transform</h1>
+      <ul>
+        <li><a href="lt/comparisonToFourier.html">Comparison to Fourier Transform</a></li>
+        <li><a href="lt/example.html">Example</a></li>
+        <li><a href="lt/use.html">Usage</a></li>
+        <li><a href="lt/calculations.html">Calculations</a></li>
+        <li><a href="lt/deconvolution.html">Deconvolution</a></li>
+      </ul>
+    </subsubsection>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

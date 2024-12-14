@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Robotic Manipulation: Force control</title>
+  <meta name="Robotic Manipulation: Force control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Flip-up Project</a>
+<a href="#2">Questions & Todo</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Robotic Manipulation: Force control</h1>
+
+<section id="0"><h1>Overview</h1>
+  Where does force control fit in the manipulation pipeline:
+  <figure>
+    <img style="height:45px; width:auto" 
+    src="../../../flowCharts/5_forceControl/5_forceControl.svg"></img>
+  </figure>
+
+  The first part of the pipeline is predominantly kinematic but there are forces involved 
+  when making a contact. <i>Nonprehensile manipulation</i> means 
+  'manipulation without grasping'. Strategies like
+  sliding and environmental contact is used when grasping. 
+
+  The first step in solving a nonprehensile task is to come up with a simple model.
+  <ul>
+    <li>Restrict DOF for both object and bot</li>
+    <li>Simplify the gripper</li>
+  </ul>
+
+  One needs to come up with 2 dynamic models:
+  <ul>
+    <li>One is used for simulation</li>
+    Includes the bot and the object(s).
+    <li>The other is the robot model used for designing the controllers</li>
+    The bot experiences unmodelled contact forces in this case.
+
+    $$\begin{bmatrix}m &
+    0 \\ 0 & m \end{bmatrix} \dot{v} = m \begin{bmatrix}\ddot{x} \\ \ddot{z}
+    \end{bmatrix} = mg + \begin{bmatrix} u_x \\ u_z \end{bmatrix} + f^c,$$ where
+    $m$ is the mass, $g = [0, -9.81]^T$ is the gravity vector, $u$ is the
+    control input vector, and $f^c$ is the contact force (from the world to the
+    finger).
+  </ul>
+</section>
+
+<section id="1"><h1>Flip-up Project</h1>
+  There are 3 stages to simulating a drake project:
+  <ul>
+    <li>Add systems</li>
+      <figure>
+        <img style="height:auto; width:40%"
+        src="../../../figures/manipulation/1_forceControl.png"/>
+      </figure>
+    <li>Connect</li>
+      <figure>
+        <img style="height:auto; width:70%"
+        src="../../../figures/manipulation/2_forceControl.png"/>
+      </figure>
+    <li>Build and simulate</li>
+      <figure>
+        <img style="height:auto; width:30%"
+        src="../../../figures/manipulation/3_forceControl.png"/>
+      </figure>
+  </ul>
+</section>
+
+<section id="2"><h1>Questions & Todo</h1>
+  <ul>
+    <li>Contact jacobian</li>
+    Which pre-multiplies the contact forces? In the case of a point finger this Jacobian
+    is always the identity matrix.
+    <p>
+      <li>Quaternion floating base coordinates</li>
+    </p>
+
+    <li>
+      In the simple model, does $mg$ have an effect on the object when moving in the
+      $x$ direction? It seems like it does from the equation in section 7.1.
+    </li>
+
+    <p>
+      <li>
+        Why does the 2nd dynamic model talk about unmodelled forces? Are they modelled
+        in the 1st case?
+      </li>
+    </p>
+
+    <li>
+      In the direct force control part, when not in contact, I don't understand how 
+      we get $m\dot{v} = -f^{c_{d}}$
+    </li>
+
+    <p>
+      <li>
+        I don't understand the flip-up equations too well. Perhaps, looking at pushing a book
+        against a wall problems might help - 
+        <a href="https://t.ly/eIqdp">ref1</a>, <a href="https://t.ly/vImT">ref2</a>, 
+        <a href="https://t.ly/lFN-">google search</a>.
+      </li>
+    </p>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

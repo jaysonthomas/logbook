@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Friction</title>
+  <meta name="Friction" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Practical implication</a>
+<a href="#1">Velocity dependent friction models</a>
+<a href="#2">Mass dependent friction models</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Static friction</a></li>
+  <li><a href="#2.1">Kinetic friction</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Friction: Velocity dependent models</h1>
+<section><h1>Preface</h1>
+  [<a href="https://t.ly/7Nv1o">Modern robotics</a>, <a href="https://shorturl.at/gnwAJ">Drake</a>, <a href="https://t.ly/Wg0bV">Mathworks</a>] 
+  
+  <br>
+  Other factors may contribute to the friction at a joint, including loading of a joint's bearings, time a joint has been at rest, temperature, etc. Friction in a gearhead often increases as the gear ratio increases.
+</section>
+
+<section><h1>Viscous</h1>
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../../figures/physics/9_1_viscousFriction.png"/>
+    </figure>
+
+    <p>
+      This is a linear damping force proportional to the velocity which resists motion. Phenomenologically, this is due to a viscous (fluid) drag force produced by lubricants in either an arm-joint or wheels of a mobile robot. 
+
+      $$
+        \tau_{fric} = b_{viscous} \, \dot{\theta}
+      $$
+    </p>
+  </div>
+</section>
+
+<section><h1>Coulomb</h1>
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../../figures/physics/9_2_coulombFriction.png"/>
+    </figure>
+
+    <p>
+      $\tau_{fric}$ can take any value in $[−b_{static} , b_{static}]$ at zero velocity.
+      
+      $$
+        \tau_{fric} = b_{static} \,sgn(\dot{\theta})
+      $$
+    </p>
+
+    <figure>
+    </figure>
+  </div>
+</section>
+
+<section><h1>Static + Viscous</h1>
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../../figures/physics/9_2_staticPlusViscousFriction.png"/>
+    </figure>
+
+    <p>
+      $$
+        \tau_{fric} = b_{static} \, sgn(\dot{\theta}) + b_{viscous}\,\dot{\theta}
+      $$
+    </p>
+
+    <figure>
+    </figure>
+  </div>
+</section>
+
+<section><h1>Static + Kinetic</h1>
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../../figures/physics/9_4_staticPlusKineticFriction.png"/>
+    </figure>
+
+    <p>
+      $\tau_{fric} \geq |b_{static}|$ to initiate motion and then $\tau_{fric} = b_{kinetic} \, sgn(\dot{\theta})$ during motion, where $b_{static} > b_{kinetic}$.
+    </p>
+  </div>
+</section>
+
+<section><h1>Static + Kinetic + Viscous</h1>
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../../figures/physics/9_5_staticPlusKineticPlusViscousFriction.png"/>
+    </figure>
+  </div>
+</section>
+
+<section><h1>Stribeck effect</h1>
+  <div class="container">
+    <figure>
+      <img style="height:85px; width:auto"
+      src="../../../../figures/physics/9_6_stribeck.png"/>
+
+      <figcaption>
+        A friction law exhibiting the Stribeck effect - at low velocities, friction decreases as velocity increases.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

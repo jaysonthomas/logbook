@@ -53,130 +53,18 @@
   In real life, a system will always have some loss of energy - usually from friction which <n>generates heat which then leaves the system through convection, conduction, and radiation</n>.
 </section>
 
-<section id="1"><h1>Velocity dependent friction models</h1>
-  [<a href="https://t.ly/7Nv1o">Modern robotics</a>, <a href="https://shorturl.at/gnwAJ">Drake</a>, <a href="https://t.ly/Wg0bV">Mathworks</a>] 
-  
-  <br>
-  Other factors may contribute to the friction at a joint, including loading of a joint's bearings, time a joint has been at rest, temperature, etc. Friction in a gearhead often increases as the gear ratio increases.
-
-  <subsubsection><h1>Viscous</h1>
-    <div class="container">
-      <figure>
-        <img style="height:85px; width:auto"
-        src="../../../../figures/physics/9_1_viscousFriction.png"/>
-      </figure>
-
-      <p>
-        This is a linear damping force proportional to the velocity which resists motion. Phenomenologically, this is due to a viscous (fluid) drag force produced by lubricants in either an arm-joint or wheels of a mobile robot. 
-
-        $$
-          \tau_{fric} = b_{viscous} \, \dot{\theta}
-        $$
-      </p>
-    </div>
-  </subsubsection>
-
-  <subsubsection><h1>Coulomb</h1>
-    <div class="container">
-      <figure>
-        <img style="height:85px; width:auto"
-        src="../../../../figures/physics/9_2_coulombFriction.png"/>
-      </figure>
-
-      <p>
-        $\tau_{fric}$ can take any value in $[−b_{static} , b_{static}]$ at zero velocity.
-        
-        $$
-          \tau_{fric} = b_{static} \,sgn(\dot{\theta})
-        $$
-      </p>
-
-      <figure>
-      </figure>
-    </div>
-  </subsubsection>
-
-  <subsubsection><h1>Static + Viscous</h1>
-    <div class="container">
-      <figure>
-        <img style="height:85px; width:auto"
-        src="../../../../figures/physics/9_2_staticPlusViscousFriction.png"/>
-      </figure>
-
-      <p>
-        $$
-          \tau_{fric} = b_{static} \, sgn(\dot{\theta}) + b_{viscous}\,\dot{\theta}
-        $$
-      </p>
-
-      <figure>
-      </figure>
-    </div>
-  </subsubsection>
-
-  <subsubsection><h1>Static + Kinetic</h1>
-    <div class="container">
-      <figure>
-        <img style="height:85px; width:auto"
-        src="../../../../figures/physics/9_4_staticPlusKineticFriction.png"/>
-      </figure>
-
-      <p>
-        $\tau_{fric} \geq |b_{static}|$ to initiate motion and then $\tau_{fric} = b_{kinetic} \, sgn(\dot{\theta})$ during motion, where $b_{static} > b_{kinetic}$.
-      </p>
-    </div>
-  </subsubsection>
-
-  <subsubsection><h1>Static + Kinetic + Viscous</h1>
-    <div class="container">
-      <figure>
-        <img style="height:85px; width:auto"
-        src="../../../../figures/physics/9_5_staticPlusKineticPlusViscousFriction.png"/>
-      </figure>
-    </div>
-  </subsubsection>
-
-  <subsubsection><h1>Stribeck effect</h1>
-    <div class="container">
-      <figure>
-        <img style="height:85px; width:auto"
-        src="../../../../figures/physics/9_6_stribeck.png"/>
-
-        <figcaption>
-          A friction law exhibiting the Stribeck effect - at low velocities, friction decreases as velocity increases.
-        </figcaption>
-      </figure>
-    </div>
-  </subsubsection>
-</section>
-
-<section id="2"><h1>Mass dependent friction models</h1>
-  <subsection id="2.0"><h1>Static friction</h1>
-    If an object is at rest, horizontal forces up to a certain threshold force can be applied to the object and it will still remain static. <n>Experiments</n> show this threshold force is a constant (<i>coefficient of static friction</i>) times the normal force.
-
-    $$\begin{align*}
-      F_s \, > \, &\mu_s N \\
-      \frac{1}{3} \, \lt \, &\mu_s \lt 1
-    \end{align*}$$
-
-    <n>This means that the force required to move an object horizontally is always less than the force with which gravity pulls it down</n>. IRL, the threshold to start moving can never be smaller than $\frac{1}{3}$rd of the normal force even on a very slippery surface.
-
+<section><h1>Further reading</h1>
+  <ul>
     <p>
-      $b_{static}$ could be considered to be $\mu_s N$ multiplied by a radius to get $\tau_{fric}$.
+      <li><a href="frictionCone.html">Friction cone</a></li>
     </p>
-  </subsection>
-
-  <subsection id="2.1"><h1>Kinetic friction</h1>
-    A certain force needs to be applied to keep an object moving at a constant velocity. <n>This force is the same as the force of friction</n>. From experiments, it is a constant (<i>coefficient for kinetic friction</i>) times the normal force (here, gravity).
-
-    $$
-      F_k = \mu_k N
-    $$
-
-    $F_k$ is not a threshold force. $b_{kinetic}$ could be considered to be $\mu_k N$ multiplied by a radius to get $\tau_{fric}$.
-  </subsection>  
+    <li>Models</li>
+    <ul>
+      <li><a href="velocityModels.html">Velocity dependent friction models</a></li>
+      <li><a href="massModels.html">Mass dependent friction models</a></li>
+    </ul>
+  </ul>
 </section>
 </chapter>
-
 </body>
 </html>

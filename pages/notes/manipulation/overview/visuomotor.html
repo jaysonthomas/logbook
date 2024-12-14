@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manipulation: Visuomotor control policy</title>
+  <meta name="Manipulation: Visuomotor control policy" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Design approaches</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Model based control</a></li>
+  <li><a href="#1.1">Behaviour cloning</a></li>
+  <li><a href="#1.2">Reinforcement learning</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Manipulation: Visuomotor control policy</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../figures/manipulation/57a_visuomotorPolicy.png"/>
+    </figure>
+  </div>
+
+  <ul>
+    <li>The emphasis is that cameras are involved.</li>
+    A sub domain is visuo-tactile motor control where an additional input to the controller comes from a tactile sensor. But, cameras are still being used.
+
+    <p>
+      <li>
+        Unlike manipulator control, <i>Visuomotor policy</i> aims to control both the state of the robot $q_{robot}$ and that of the environment $q_{env}$ (includes objects like mugs, bowls etc) which is a more general goal.
+      </li>
+    </p>
+  </ul>
+</section>
+
+<section id="1"><h1>Design approaches</h1>
+  There are more similarities than differences between the different approaches. For example, the mapping (internal representation of the model) from observations (sensor interpretations) to action-commands obtained using NN can be achieved by model based control if the later uses a better planning infrastructure.
+  
+  <subsection id="1.0"><h1>Model based control</h1>
+    <div class="img-container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../figures/manipulation/57b_modelBasedControl.png"/>
+      </figure>
+    </div>
+
+    <ul>
+      <li>State estimator</li>
+      It includes a <i>perception</i> module - <i>pose estimation</i>, creation of <i>oct-tree</i> for objects that are not of interest in terms of manipulation but are important in terms of obstacle avoidance. 
+      
+      <p>
+        <n>Strong assumptions are made here that the state of the world can be summarised in a form that can be used by the multi-body planning tools</n>.
+      </p>
+
+      <li>Planner</li>
+      It could include a <i>kinematic trajectory optimisation</i> or <i>sample based</i> planner.
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Behaviour cloning</h1>
+    It is also called <i>Supervised sequence learning</i>. 
+
+    <div class="img-container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../figures/manipulation/57c_behaviourCloning.png"/>
+      </figure>
+      <figcaption>
+        A big neural network maps the inputs to the commands.
+      </figcaption>
+    </div>
+    
+    <ul>
+      <li>It is scalable.</li>
+      
+      <p>
+        <li>It depends on collecting a large number of demonstrations.</li>
+        It takes a <n>history of observations</n> to predict the next action - it does not provide an immediate mapping from the outputs of the sensors to the arm/gripper commands.
+
+        <p>
+          ~50 for single arm dough rolling. ~100 for 2 arms. Haptic-teleop interfaces are used. A <m>foundation model</m> would require much more. Human demonstrations alone may not be scalable to the big goal.
+        </p>
+      </p>
+
+      <li>It gets rid of the strong assuption in model based control that the state of the environment can be summarised.</li>
+      NNs could learn, in a better way, to estimate states of the environment (with the aim of predicting the next action from any observation) by not being constrained by human imagination and hence could be more powerful than the more structured model based pipeline.
+    </ul>
+
+
+  </subsection>
+
+  <subsection id="1.2"><h1>Reinforcement learning</h1>
+    RL is a mix of both - it makes use of models but avoids the sense-plan-act structure. It requires less supervision (demonstrations) but it is also a harder optimisation problem.
+
+    <p>
+      <m>RL often uses BC in the last stage of its pipeline to transition from state feedback to camera feedback</m>.
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>
