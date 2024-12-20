@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Friction</title>
-  <meta name="Friction" content="text/html; charset=utf-8;" />
+  <title>Friction cone</title>
+  <meta name="Friction cone" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,12 +39,11 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Practical implication</a>
-<a href="#1">Velocity dependent friction models</a>
-<a href="#2">Mass dependent friction models</a>
+<a href="#0">Overview</a>
+<a href="#1">Key Conceps</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Static friction</a></li>
-  <li><a href="#2.1">Kinetic friction</a></li>
+  <li><a href="#1.0">Contact Force and Friction</a></li>
+  <li><a href="#1.1">Friction Cone Geometry</a></li>
 </ul>
 </div>
 
@@ -53,8 +52,8 @@
   In the context of robotic manipulation, friction cones are a conceptual tool used to model and analyse forces that a robot can apply at a contact point while maintaining a stable grip or manipulation of an object.
 </section>
 
-<section><h1>Key Conceps</h1>
-  <subsection><h1>Contact Force and Friction</h1>
+<section id="1"><h1>Key Conceps</h1>
+  <subsection id="1.0"><h1>Contact Force and Friction</h1>
     When a robot's finger contacts an object, it can exert a force on the object. The nature of this force is governed by Coulomb's law of friction, which states that the tangential (frictional) force at the contact point must be less than or equal to the product of the normal force and the coefficient of friction $\mu$
 
     $$
@@ -70,7 +69,7 @@
     </div>
   </subsection>
 
-  <subsection><h1>Friction Cone Geometry</h1>
+  <subsection id="1.1"><h1>Friction Cone Geometry</h1>
     The inequality above defines a cone in force space. The apex of the cone is at the contact point, and the cone's axis is aligned with the normal force direction.
     The cone's half-angle is given by:
     $$
@@ -100,5 +99,6 @@
   By leveraging friction cones, roboticists ensure that manipulation tasks are performed effectively while avoiding slip and maintaining control of the object.  
 </section>
 </chapter>
+
 </body>
 </html>

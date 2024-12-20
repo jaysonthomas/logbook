@@ -39,10 +39,12 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Setup: state to be estimated</a>
+<a href="#1">Measurement equation</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation usecase: Fitting A Line With Linear LS</h1>
-
+<section id="0"><h1>Setup: state to be estimated</h1>
   <div class="img-container">
     <figure>
       <img style="height:125px; width:auto"
@@ -53,23 +55,22 @@
     </figure>
   </div>
   
-  Consider data sampled from a straight line (a linear function) $y = at + b$ with some added unknown noise. 
+  Consider data sampled from a straight line (a linear function) $y = at + b$ with some added unknown noise. The aim is to find the properties of the line which form the unknown state vector $x$.
+</section>
+
+<section id="1"><h1>Measurement equation</h1>
+  The equation for the maximum likelihood estimate can be used to find the best estimate for x, $\hat{x}$, given the measurements and $H$ are known.
   
   $$\begin{align*}
-    \underbrace{\begin{bmatrix} y_1 \\ \vdots \\ y_k \end{bmatrix}}_{y}
-    &= \underbrace{\begin{bmatrix} t_1 & 1 \\ \vdots & \vdots \\ t_k & 1 \end{bmatrix}}_{H}
+    \underbrace{\begin{bmatrix} y_1 \\ \vdots \\ y_k \end{bmatrix}}_{y_{k \times 1}}
+    &= \underbrace{\begin{bmatrix} t_1 & 1 \\ \vdots & \vdots \\ t_k & 1 \end{bmatrix}}_{H_{k \times m}}
        \cdot
-       \underbrace{\begin{bmatrix} a \\ b \end{bmatrix}}_{x}
+       \underbrace{\begin{bmatrix} a \\ b \end{bmatrix}}_{x_{m \times 1}}
 
-       + \underbrace{\begin{bmatrix} v_1 \\ \vdots \\ v_k \end{bmatrix}}_{v} \\
+       + \underbrace{\begin{bmatrix} v_1 \\ \vdots \\ v_k \end{bmatrix}}_{v_{k \times 1}} \\
     y_i &= at_i + b + v_i
   \end{align*}$$
-
-  The aim is to find the properties of the line which form the unknown state vector $x$. 
-
-  <p>
-    The equation for the maximum likelihood estimate can be used to find the best estimate for x, $\hat{x}$, given the measurements and $H$ are known.
-  </p>
+</section>
 </chapter>
 
 </body>

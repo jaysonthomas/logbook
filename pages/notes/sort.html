@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sort</title>
+  <meta name="Sort" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
+
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Actuators</a>
+<a href="#1">Common CS algorithms</a>
+<a href="#2">Interview Prep</a>
+<a href="#3">Optimisation</a>
+<a href="#4">Navigation</a>
+<a href="#5">Sensor fusion</a>
+<a href="#6">DSP</a>
+<a href="#7">Machine learning</a>
+<a href="#8">Simulators</a>
+<a href="#9">Electronics</a>
+<a href="#10">Sensors</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Sort</h1>
+<section id="0"><h1>Actuators</h1>
+  <ul>
+    <li><a href="actuators/braking.html">Braking</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Common CS algorithms</h1>
+  <ul>
+    <li><a href="coding/bigO.html">Big O notation</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Interview Prep</h1>
+  <ul>
+    <li><a href="interview/robotics.html">Robotics</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Optimisation</h1>
+  <ul>
+    <li><a href="optimisation/overview.html">Overview</a></li>
+    <li><a href="optimisation/dp/main.html">Dynamic programming</a></li>
+    <li>Lyapunov functions</li>
+    <li>Sums of squares for control</li>
+    <li><a href="optimisation/lqr/main.html">LQR</a></li>
+    <li><a href="optimisation/trajectory.html">Trajectory optimisation</a></li>
+  </ul>
+</section>
+
+<section id="4"><h1>Navigation</h1>
+  <li><a href="navigation/overview.html">Overview</a></li>
+</section>
+
+<section id="5"><h1>Sensor fusion</h1>
+  <ul>
+    <li><a href="sensorFusion/intro.html">Intro</a></li>
+    <li><a href="sensorFusion/lidar.html">LIDAR</a></li>
+    <li><a href="sensorFusion/camera.html">Camera</a></li>
+  </ul>
+</section>
+
+<section id="6"><h1>DSP</h1>
+  <ul>
+    <li><a href="dsp/bootstrap.html">Bootstrap</a></li>
+    <li><a href="dsp/iirvsfir.html">IIR vs FIR</a></li>
+  </ul>
+</section>
+
+<section id="7"><h1>Machine learning</h1>
+  <ul>
+    <li><a href="ml/deeplearning.html">Deep Learning</a></li>
+  </ul>
+</section>
+
+<section id="8"><h1>Simulators</h1>
+  <ul>
+    <li><a href="manipulation/drakeComponents.html">Drake components</a></li>
+  </ul>
+</section>
+
+<section id="9"><h1>Electronics</h1>
+  <ul>
+    <li><a href="electronics/resistors.html">Resistors</a></li>
+    <li><a href="electronics/inductance.html">Inductance</a></li>
+    <li><a href="electronics/peakVRms.html">Peak vs RMS</a></li>
+  </ul>
+</section>
+
+<section id="10"><h1>Sensors</h1>
+  <ul>
+    <li><a href="sensors/gyro.html">Gyroscope</a></li>
+    <li><a href="sensors/accelerometer.html">Accelerometer</a></li>
+    <li><a href="sensors/imu.html">IMU</a></li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

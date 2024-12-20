@@ -44,9 +44,11 @@
 <a href="#2">Background</a>
 <a href="#3">Task setup</a>
 <a href="#4">System view</a>
-<a href="#5">Creating the model</a>
+<a href="#5">Model</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">Equations for the finger</a></li>
+  <li><a href="#5.0">State</a></li>
+  <li><a href="#5.1">Manipulator equation</a></li>
+  <li><a href="#5.2">Equations for the finger</a></li>
 </ul>
 <a href="#6">Testing the interaction of forces using the model</a>
 <ul class="no-bullets">
@@ -73,7 +75,6 @@
   <li><a href="#10.0">Peg-in-hole insertion task</a></li>
   <li><a href="#10.1">Peg-in-hole solution</a></li>
 </ul>
-<a href="#11">Questions & Todo</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Force control</h1>
@@ -173,7 +174,7 @@
 </section>
 
 <section id="5"><h1>Model</h1>
-  <subsection><h1>State</h1>
+  <subsection id="5.0"><h1>State</h1>
     The entire configuration space of the system, the $q$ vector, has elements for both
     <ul>
       <li>The finger</li>
@@ -189,7 +190,7 @@
     $$
   </subsection>
 
-  <subsection><h1>Manipulator equation</h1>
+  <subsection id="5.1"><h1>Manipulator equation</h1>
     $$
       M(q)\ddot{q} + C(q,\dot{q}) = \tau_g(q) + Bu + \Sigma_iJ_i^T(q)f^{c_i}
     $$
@@ -208,7 +209,7 @@
     $$
   </subsection>
 
-  <subsection id="5.0"><h1>Equations for the finger</h1>
+  <subsection id="5.2"><h1>Equations for the finger</h1>
     Equation for the finger in the $x$ coordinate:
     $$\begin{equation}
       m_f \ddot{x}_f = u_x + f^c_x \label{eq:generalX}

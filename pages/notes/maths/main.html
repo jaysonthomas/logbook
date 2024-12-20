@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maths</title>
+  <meta name="Maths" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Calculus</a>
+<a href="#1">Optimisation</a>
+<a href="#2">Rotation</a>
+<a href="#3">Vectors & Matrices</a>
+<a href="#4">Miscellaneous</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Maths</h1>
+<section id="0"><h1>Calculus</h1>
+  <ul>
+    <li><a href="diffEqs.html">Differential equations</a></li>
+    <li><a href="differentiation.html">Differentiation</a></li>
+    <li><a href="integration.html">Integration</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Optimisation</h1>
+  <ul>
+    <li><a href="op/qp.html">Quadratic Programming</a></li>
+    <li><a href="op/brent.html">Brent's method</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Rotation</h1>
+  <ul>
+    <li><a href="dcm.html">Direction Cosine Matrix</a></li>
+    <li><a href="eulerEq.html">Euler's equation</a></li>
+    <li><a href="quaternions.html">Quaternions</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Vectors & Matrices</h1>
+  <ul>
+    <li><a href="crossProduct.html">Cross product</a></li>
+    <li><a href="eigen.html">Eigen</a></li>
+    <li><a href="rank.html">Matrix rank</a></li>
+    <li><a href="robotArmOps.html">Operations related to robotic arms</a></li>
+    <li><a href="vectors.html">Vectors</a></li>
+  </ul>
+</section>
+
+<section id="4"><h1>Miscellaneous</h1>
+  <ul>
+    <li><a href="misc.html">Miscellaneous</a></li>
+    <li><a href="exponentials.html">Exponential functions</a></li>
+    <li><a href="gaussians.html">Gaussians</a></li> 
+
+    <li><a href="jacobian/main.html">Jacobian</a></li>
+    <li><a href="linearAlgebra.html">Linear algebra</a></li>   
+    <li><a href="normalisation.html">Normalisation</a></li>
+    <li><a href="taylorSeries.html">Taylor series approximation</a></li>
+    <li><a href="tolerance.html">Tolerance</a></li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

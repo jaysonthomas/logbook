@@ -50,13 +50,11 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation usecase - Initial kinematics of a rigid body</h1>
 <section id="0"><h1>State to be estimated</h1>
-  Consider an object moving from a starting position $p_0$, with initial velocity $v_0$ and constant acceleration $a$. The goal is to estimate $x$ given a position measurement $y$ at every time step (inverse kinematics?). 
+  Consider an object moving from a starting position $p_0$, with initial velocity $v_0$ and constant acceleration $a$. The goal is to estimate $x$ <n>consisting of 3 unknowns</n> given a position measurement $y$ at every time step (inverse kinematics). 
   $$
     x = \begin{bmatrix}x_1 \\ x_2 \\ x_3\end{bmatrix} 
       = \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
   $$
-
-  <m>There are 3 unknowns - tricky!</m>
 </section>
 
 <section id="1"><h1>Measurement model</h1>
@@ -94,15 +92,15 @@
   </subsection>
   
   <subsection id="1.2"><h1>Matrix/Vector form</h1>
-  The measurement equation is rewritten as:
+  The measurement equation for the $k^{\text{th}}$ term is rewritten as:
   $$
     y_k = y(k\Delta{t}) = 
       \underbrace{
         \begin{bmatrix}1 & k\Delta{t} & \frac{1}{2}(k\Delta{t})^2\end{bmatrix}
-      }_{H_k}
+      }_{H_{1 \times m}}
       \underbrace{
         \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
-      }_{x}
+      }_{x_{m \times 1}}
       + v_k
   $$
 </section>
