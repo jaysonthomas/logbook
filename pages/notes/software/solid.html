@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SOLID design principles</title>
+  <meta name="SOLID design principles" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Single Responsibility</a>
+<a href="#2">Open/Closed</a>
+<a href="#3">Liskov substitution</a>
+<a href="#4">Interface Segregation</a>
+<a href="#5">Dependency of inversion</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>SOLID design principles</h1>
+<section id="0"><h1>Overview</h1>
+  <a href="https://t.ly/ddOKr">Ref</a>, <a href="https://t.ly/XKT9I">Good site</a>.
+</section>
+
+<section id="1"><h1>Single Responsibility</h1>
+  A class should have only one reason to change. 
+
+  <p>
+    However, classes shouldn't be too specific leading to 100s of ridiculously interconnected classes, that could easily be one. SRP is about limiting the impact of change - group together things that change for the same reasons and separate those that change for different reasons. There should be a good balance.
+  </p>
+
+  One indication that SRP is not followed is when a constructor has more than 5-6 parameters.
+</section>
+
+<section id="2"><h1>Open/Closed</h1>
+  The principle dictates the software modules are open for extension but closed for modification. This allows new functionality to be added without changing existing source code.
+
+  <p>
+    Polymorphism is the best way to achieve this - with the use of abstract interfaces, we can extend a class and specialise its behaviour without making changes to the parent. This principle allows for reusable and maintainable software.
+  </p>
+</section>
+
+<section id="3"><h1>Liskov substitution</h1>
+  Subtypes must be substitutable for their base types without altering the correctness of the program. This states that a parent class (say when passed as an argument to a function) should be substitutable by any of its derived classes. This principle ensures that inheritance is used correctly.
+</section>
+
+<section id="4"><h1>Interface Segregation</h1>
+  Clients should not be forced to depend on interfaces that they do not use. This principle advocates for the creation of small and atomic interfaces. Abstractions/interfaces should be designed in such a way that the clients that are using the exposed methods do not have to get the whole pie. Clients should not have to carry the burden of implementing methods that they don't actually need.
+</section>
+
+<section id="5"><h1>Dependency of inversion</h1>
+  <ul>
+    <li>
+      High-level modules should not depend on low-level modules. Both should depend on abstractions.
+    </li>
+    <li>
+      Abstractions should not depend on details. Details should depend on abstractions.
+    </li>
+  </ul>
+  High-level modules orchestrate low-level modules in an application. Whilst low-level modules are more specific to components that are then used by the high-level modules.
+</section>
+</chapter>
+
+</body>
+</html>

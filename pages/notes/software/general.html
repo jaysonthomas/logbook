@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>General software related notes</title>
+  <meta name="General software related notes" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Software downloads</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Snap installs</a></li>
+  <li><a href="#0.1">Apt-get installs</a></li>
+  <li><a href="#0.2">Apt installs</a></li>
+  <li><a href="#0.3">Repositories</a></li>
+  <li><a href="#0.4">Visual studio code extensions</a></li>
+  <li><a href="#0.5">Miscellaneous</a></li>
+</ul>
+<a href="#1">Latex</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Good examples</a></li>
+</ul>
+<a href="#2">Json</a>
+<a href="#3">Drawio</a>
+<a href="#4">Git</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>General software related notes</h1>
+
+<section id="0"><h1>Software downloads</h1>
+  <subsection id="0.0"><h1>Snap installs</h1>
+<pre><code class="bash">
+sudo snap install --classic code
+drawio
+</code></pre>
+  </subsection>
+
+  <subsection id="0.1"><h1>Apt-get installs</h1>
+<pre><code class="bash">
+python3-pip
+python3.8 
+python3.8-venv
+python3.10-venv
+graphviz
+plantuml
+valgrind
+libopencv-*
+libgtk2.0-dev libgtk-3-dev
+gnome-screenshot
+google-chrome-stable
+vlc
+simplescreenrecorder
+xournalpp
+texlive-full
+
+# Upgrading chrome
+sudo apt-get --only-upgrade install google-chrome-stable
+</code></pre>
+  </subsection>
+
+  <subsection id="0.2"><h1>Apt installs</h1>
+<pre><code>
+net-tools
+bazel
+imagemagick
+</code></pre>
+  </subsection>
+
+  <subsection id="0.3"><h1>Repositories</h1>
+    To be able to download different versions of python. I couldn't install python3.8 otherwise. 
+    There is a standard/default python version that is included in every version of 
+    ubuntu - I only have access to that otherwise.
+<pre><code class="bash">
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt-get install python3.8
+</code></pre>
+  </subsection>
+
+  <subsection id="0.4"><h1>Visual studio code extensions</h1>
+<pre><code>
+Latex workshop
+Plantuml
+</code></pre>    
+  </subsection>
+  
+  <subsection id="0.5"><h1>Miscellaneous</h1>
+    <ul>
+      <li>Qt</li>
+      Good <a href="https://t.ly/e5-U">link</a>.
+    </ul>
+  </subsection>
+</section>
+
+<section id="1"><h1>Latex</h1>
+  <a href="https://t.ly/JKUa">Cheat sheet</a>.
+  
+  <subsection id="1.0"><h1>Good examples</h1>
+    Modern robotics library document. I've placed it in my 
+    <a href="t.ly/sbeF">github repo</a> for the coursera assignment I completed.
+  </subsection>
+</section>
+
+<section id="2"><h1>Json</h1>
+  <a href="https://t.ly/i-y4">This</a> shows the general format.
+  I used it as:
+<pre><code class="json">
+  [
+    {"id":"44", "name":"Test"},
+    {"id":"55", "name":"Test1"}
+  ]
+</code></pre>
+
+To convert this into a dataframe:
+<pre><code class="python">
+  with open(inputFile, "r") as reader:
+    df = pd.DataFrame(json.loads(reader))
+</code></pre>
+Use <code>json.load()</code> to read a json file.
+</section>
+
+<section id="3"><h1>Drawio</h1>
+  <ul>
+    <li>
+      To type mathematical equations, enable 
+      <i>Extras - Mathematical typesetting</i>.
+    </li>
+    To type an equation use <code>``</code> or <code>$$ $$</code>
+
+    <li>Shortcuts</li>
+    <ul>
+      <li>Ctrl-Shift-P to make the sidebar disappear</li>
+      <li>Ctri-Shift-u to ungroup</li>  
+      <li>Ctrl-Shift-G to hide the grid</li>
+      <li>Ctrl-Shift-K to hide the left bar</li>
+    </ul>
+
+    <p>
+      <li>Trial settings</li>
+      Zoom - 175%, 10 point grid, 18px font size.
+    </p>
+  </ul>
+
+  The <a href="https://www.drawio.com/">website</a> with different templates and download link. Install the <code>.deb</code> file using - drawio gets upgraded automatically:
+
+<pre><code class="bash">
+sudo dpkg -i package_file.deb  
+</code></pre>
+</section>
+
+<section id="4"><h1>Git</h1>
+  <ul>
+    <li>Submodules</li>
+    <a href="https://t.ly/VMEV">Ref</a>.
+<pre><code class="bash">
+git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
+git submodule update --init --recursive
+</code></pre>
+
+    The 2nd command is used to initialise and update submodules present in git repositories that are cloned from elsewhere. Add the recursive option to do it recursively.
+    <p></p>
+    
+    <li>Unstage added files</li>
+<pre><code class="bash">
+git reset HEAD
+</code></pre>
+
+    <li>Git branch</li>
+<pre><code class="bash">
+# List all branches
+git branch -a
+
+# Create branch Y from another, say X
+# Changes from branch X will show up as changes from the master on the 
+# new branch Y.
+git checkout [X]
+git checkout -b [Y]
+
+# To merge Z into the newly created branch Y
+git merge [Z]
+
+# What branch am I on?
+git branch --show
+</code></pre>
+
+    <p>
+      <li>Git stash</li>
+<pre><code class="bash">
+# List all the stashes related to different branches with stash indices
+git stash list
+
+# Delete a stash
+git stash drop index
+</code></pre>    
+    </p>
+
+    <li>Error when doing a git pull on the new branch created from another (not master)</li>
+    <a href="https://bit.ly/3YSHjRo">Great explanation</a> - fetch included.
+<pre><code class="bash">
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> 7374-adaptive-control
+</code></pre>    
+    <p>
+      <li>Git fetch</li>
+      <a href="https://t.ly/OCdf">Good link</a> on this. I think fetch is used to just
+      pull in meta-data.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

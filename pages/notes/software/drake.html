@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drake</title>
+  <meta name="Drake" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Executing drake cpp examples</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Run examples from outside of the drake folder</a></li>
+  <li><a href="#0.1">Download texture files</a></li>
+</ul>
+<a href="#1">Calling python plot libraries from Drake</a>
+<a href="#2">Learning resources</a>
+<a href="#3">Drake terminology</a>
+<a href="#4">Drake c++ questions</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Templates: Context passed as argument</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Drake</h1>
+
+<section id="0"><h1>Executing drake cpp examples</h1>
+  Using bazel as a build system for drake - 
+  <a href="https://t.ly/jRAN">ref</a>.
+
+<pre><code class="bash">
+cd drake
+bazel build //... --jobs 12
+bazel run //tools:meldis -- --open-window &
+bazel run //examples/acrobot:run_swing_up
+</code></pre>
+
+  The extra step of running <code>MeLDiS</code> is only required if using <code>DrakeVisualizer</code> instead of the Meshcat one in cpp code. 
+
+  <subsection id="0.0"><h1>Run examples from outside of the drake folder</h1>
+    There are <a href="https://t.ly/aAcF">questions</a> on stackoverflow 
+    on how to use Drake as an external library. I found
+    <a href="https://t.ly/Ec1I">this</a> useful.
+
+<pre><code class="bash">
+cd drakeCpp/
+bazel build //helloWorld:simple_continuous_time_system
+bazel run //helloWorld:simple_continuous_time_system
+</code></pre>    
+
+    The hidden file <code>.bazelrc</code> in drakeCpp is important
+    to specify which C++ version to use.
+
+    <p>
+      There is an <a href="https://t.ly/lDoN">example</a> of how to use
+      external libraries as modules (the concept of repositories will
+      still be used but is also being retired.). More on 
+      bazel external dependencies can be found 
+      <a href="https://t.ly/z7XC">here</a>.
+    </p>
+  </subsection>
+
+  <subsection id="0.1"><h1>Download texture files</h1>
+    Download a tar.gz version of drake's stable release corresponding to the particular linux OS from <a href="https://t.ly/-83S">here</a>. Copy over the meshes folder.
+<pre><code class="bash">
+cp -r ~/Downloads/drake-20221116-jammy/drake/share/drake/manipulation/models/ycb/meshes ~/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/share/drake/manipulation/models/ycb/  
+</code></pre>
+  </subsection>
+</section>
+
+<section id="1"><h1>Calling python plot libraries from Drake</h1>
+  <a href="https://t.ly/x3wVP">Ref</a>
+</section>
+
+<section id="2"><h1>Learning resources</h1>
+  <ul>
+    <li>Drake ros <a href="https://t.ly/Q1V1">github repo</a></li>
+    <li><a href="https://t.ly/Xss_">Zucker notes</a></li>
+    <li><a href="https://t.ly/VHqQ">C++ documentation</a></li>
+  </ul> 
+</section>
+
+<section id="3"><h1>Drake terminology</h1>
+  <ul>
+    <li>MeshCat LCM Display Server (MeLDiS)</li>
+    A MeshCat visualization server that listens for and draws Drake's legacy LCM visualization messages. The code is found in <code>bindings/pydrake/visualization/meldis.py</code> which uses <code>_meldis.py</code> in the same folder.
+
+    <p>
+    <li>MeshCat</li>
+    <a href="https://t.ly/65MQ">Github repo</a>.
+    MeshCat is a remotely-controllable 3D viewer, built on top of three.js. 
+    The MeshCat viewer runs in a browser and listens for geometry commands over WebSockets. 
+    This makes it easy to create a tree of objects and transformations by sending the 
+    appropriate commands over the websocket. 
+    
+    <p>
+      The MeshCat viewer is meant to be combined with an interface (python or julia) in the 
+      language of your choice (C++ in this case).
+    </p>
+    </p>
+
+    <li><i>Lightweight Communications and Marshalling(LCM)</i></li>
+    <a href="https://t.ly/CiKN">Discussion</a> on pros and cons of LCM.
+    There's a further <a href="https://t.ly/CMi5">discussion</a> on protocol
+    buffers (<code>protobuf</code>).
+    <a href="https://t.ly/HWcP8">Main project page</a>.
+    
+    <p>
+    <li>Geometry system</li>
+    It is responsible for managing the visual and collision geometry associated with objects in a simulation. This includes things like robot links, obstacles, and the environment. The geometry system allows users to define shapes, associate them with entities in the simulation, and specify their poses and transformations relative to other objects.
+
+    <p>
+      Geometry systems often integrate with a physics engine to provide realistic interactions between objects. They help the physics engine determine collision and contact forces.
+    </p>
+    </p>
+
+    <li>Scene graph</li>
+    It is a hierarchical data structure used to represent the spatial relationships and transformations between objects in a simulation. It helps organize and manage the positions, orientations, and other attributes of objects in a coherent manner.
+
+    <p>
+      The scene graph interacts with other components of the simulation, such as the physics engine for collision detection and the rendering engine for visualisation.
+    </p>
+
+    <li>Context</li>
+      Drake stores all the relevant states and parameters in the context,
+      which can act like a systematic log.
+  </ul>
+</section>
+
+<section id="4"><h1>Drake c++ questions</h1>
+  <subsection id="4.0"><h1>Templates: Context passed as argument</h1>
+    <subsubsection><h1>Called function</h1>
+<pre><code class="c++">   
+CalcTotalEnergy(const systems::Context&ltT>& context)
+</code></pre>
+
+      Which further calls:
+      <div class="container">
+        <figure>
+          <img style="height:100px; width:auto"
+          src="../../figures/software/1_templates.png"/>
+          <figcaption>
+            Templates
+          </figcaption>
+        </figure>
+      </div>    
+    </subsubsection>
+    
+    <subsubsection><h1>Calling function</h1>
+<pre><code class="c++">   
+systems::Context&ltdouble&gt& pendulum_context = diagram->GetMutableSubsystemContext(*pendulum, &simulator.get_mutable_context());
+const double initial_energy = pendulum->CalcTotalEnergy(pendulum_context);
+</code></pre>
+      
+    </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

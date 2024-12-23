@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Unique Pointers</title>
+  <meta name="Unique Pointers" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Introduction</a>
+<a href="#1">Comparison to raw pointers</a>
+<a href="#2">Example 2</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Unique Pointers</h1>
+
+<section id="0"><h1>Introduction</h1>
+  <code>std::unique_ptr</code> is a smart pointer which exclusively owns a dynamically allocated resource on the heap. There must not be a second unique pointer to the same resource. The underlying internal raw pointer pointing to the particular resource is owned by a single RAII class. 
+
+  <p>
+    Unique pointers should be the default choice unless it is known for certain that sharing would be required at a later stage. Internally, a unique pointer uses the rule of five and move semantics along with RAII to encapsulate a resource (the raw pointer) and transfer it between pointer objects when either the move assignment operator or the move constructor are called. Also, a key feature of a unique pointer, which makes it so well-suited as a return type for many functions, is the possibility to convert it to a shared pointer.
+  </p>
+  <div class="container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../figures/software/3_uniquePtr.jpg"/>
+      <figcaption>
+        Moving a unique pointer
+      </figcaption>
+    </figure>
+  </div>
+
+  In the example, a resource in memory is referenced by a unique pointer instance sourcePtr. Then, the resource is reassigned to another unique pointer instance destPtr using std::move. The resource is now owned by destPtr while sourcePtr can still be used but does not manage a resource anymore.
+
+  <p>
+    A unique pointer is constructed using the following syntax:
+<pre><code class="Cpp">
+// p is allocated on the stack and new Type is allocated on the heap.
+std::unique_ptr&ltType&gt p(new Type);
+// or
+auto p = make_unique&ltType&gt ();
+</code></pre>
+  </p>
+</section>    
+
+<section id="1"><h1>Comparison to raw pointers</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/21_unique_pointer.cpp">Example</a>] <br>
+
+  The function <code>RawPointer</code> contains the familiar steps of:
+  <ul>
+    <li>
+      Allocating memory on the heap with new and storing the address in a pointer variable
+    </li>
+
+    <li>
+      Assigning a value to the memory block using the dereferencing operator <code>*</code>
+    </li>
+
+    <li>
+      Deleting the resource on the heap. Forgetting to call delete will result in a memory leak.
+    </li>
+  </ul> 
+
+  The function <code>UniquePointer</code> shows how to achieve the same goal using a smart pointer from the standard library. 
+</section>
+
+<section id="2"><h1>Example 2</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/21b_unique_pointer.cpp">Example</a>] <br>
+
+  <button class="accordion">Notes to be written when needed</button>
+  <div class="panel">
+    <p></p>
+    <p>
+      Note that the custom class MyClass has two constructors, one without arguments and one with a string to be passed, which initializes a member variable _text that lives on the stack. Also, once an object of this class gets destroyed, a message to the console is printed, along with the value of _text. In main, two unique pointers are created with the address of a MyClass object on the heap as arguments. With myClass2, we can see that constructor arguments can be passed just as we would with raw pointers. After both pointers have been created, we can use the -> operator to access members of the class, such as calling the function setText. From looking at the function call alone you would not be able to tell that myClass1 is in fact a smart pointer. Also, we can use the dereference operator * to access the value of myClass1 and myClass2 and assign the one to the other. Finally, the . operator gives us access to proprietary functions of the smart pointer, such as retrieving the internal raw pointer with get().
+    </p>
+      
+    The console output of the program looks like the following:
+<pre><code>
+Objects have stack addresses 0x1004000e0 and 0x100400100
+String 2 destroyed
+String 2 destroyed  
+</code></pre>     
+
+    Obviously, both pointers have different addresses on the stack, even after copying the contents from myClass2 to myClass1. As can be seen from the last two lines of the output, the destructor of both objects gets called automatically at the end of the program and - as expected - the value of the internal string is identical due to the copy operation.
+  </div>
+</section>
+
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A C++ code architecture</title>
+  <meta name="A C++ code architecture" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Encapsulation & abstraction</a>
+<a href="#1">Access specifier or modifier</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Members</a></li>
+  <li><a href="#1.1">Inherited access specifiers</a></li>
+</ul>
+<a href="#2">Invariants - struct vs class</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">When to be private</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>A C++ code architecture</h1>
+<section id="0"><h1>Encapsulation & abstraction</h1>
+  <i>Encapsulation</i> means that:
+  <ul>
+    <li>Related properties are bundled together in a single class</li>
+    <li>These properties are protected from unauthorised or accidental modifications using <i>access modifiers</i></li>
+  </ul>
+
+  <p>
+    <i>Abstraction</i> means that users of a class only need to be familiar with its interface, they don't have to know how member data are stored or how member functions are implemented. 
+  </p>
+
+  Encapsulation and abstraction are related because encapsulation groups relevant data together in a class, while abstraction hides the details of how the data is manipulated. All the user of a class needs to know is that the data is present and there is an interface to interact with it. 
+</section>
+
+<section id="1"><h1>Access specifier or modifier</h1>
+  <subsection id="1.0"><h1>Members</h1>
+    <ul>
+      <li>Public members</li>
+      Public members can be changed <n>directly</n>, by any user of the <i>object</i> (an instance of the class) [<a href="../../jlib/cppExamples/fundamentals/1_public.cpp">Ref</a>].
+
+      <p>
+      <li>Private members</li>
+      [<a href="../../jlib/cppExamples/fundamentals/2_private.cpp">Ref</a>]. They are only accessible directly from within the class itself using member functions. One exception is that they are accessible from <n>friends</n>. 
+      </p>
+
+      <li>Protected members</li>
+      [<a href="../../jlib/cppExamples/fundamentals/3_protectedMembers.cpp">Ref</a>]. They are accessible from member functions of the same class, from friends and also from member functions of derived classes.
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Inherited access specifiers</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/11_inheritedAccessSpecifiers.cpp">Ref</a>] <br>
+    The same access modifiers also define which class members users of derived classes can access.
+
+    <ul>
+      <li>Public inheritance</li>
+      The derived class can access the public and protected members of the base class.
+
+      <p>
+        <li>Protected inheritance</li>
+        The public and protected members of the base class become protected members of the derived class.
+      </p>
+
+      <li>Private inheritance</li>
+      The public and protected members of the base class become private members of the derived class.
+    </ul>
+  </subsection>
+</section>
+
+<section id="2"><h1>Invariants - struct vs class</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/4_invariants.cpp">Ref</a>]
+
+  <p>
+    A struct is preferred if data members:
+    <ul>
+      <li>Need to be publicly accessible</li>
+      <li>Can vary independently of each other</li>
+      <li>Don't have any limitations</li>
+    </ul>
+    
+    <n>When data members need to be made private or limits added on them (<i>invariants</i>), the convention is to convert from a struct into a class</n>. 
+  </p>
+  
+  By default, all members of a struct default to public, whereas all members of a class default to private. 
+
+  <subsection id="2.0"><h1>When to be private</h1>
+    As a general rule, <n>member data subject to an invariant should be specified private in order to enforce the invariant before updating the member's value</n>.
+
+    <p>
+      To access private members, typically public <i>accessor</i> and <i>mutator</i> member functions (also called <i>getter</i> and <i>setter</i> functions) are used. A trivial getter or setter adds no semantic value; the data item could just as well be public [<a href="../../jlib/cppExamples/fundamentals/5_trivialGetterSetter.cpp">Ref</a>].
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

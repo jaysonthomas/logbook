@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polymorphism</title>
+  <meta name="Polymorphism" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Overloading</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Function overloading</a></li>
+  <li><a href="#1.1">Operator overloading</a></li>
+</ul>
+<a href="#2">Overriding</a>
+<a href="#3">Generic programming</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Templates</a></li>
+</ul>
+<a href="#4">Virtual functions</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Polymorphism</h1>
+<section id="0"><h1>Overview</h1>
+  It means "assuming many forms". It describes a paradigm in which a function may behave differently depending on how it is called, i.e. based on its inputs. It allows an interface to work with several different types. We might have a cut function that can work with the plant, the fruit, or the apple class. On the other hand, we might have a brews function that works with fruits and with apples, but not with plants.   
+  
+  <p>
+    Polymorphism can be achieved in different ways, the 2 main ones being overloading and overriding.
+  </p>
+</section>
+
+<section id="1"><h1>Overloading</h1>
+  <subsection id="1.0"><h1>Function overloading</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/14_functionOverloading.cpp">Ref</a>]
+    <br>
+    Same function name, but different function signature, i.e. datatypes of input arguments.
+  </subsection>
+
+  <subsection id="1.1"><h1>Operator overloading</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/15_operatorOverloading.cpp">Brackets</a>, <a href="../../jlib/cppExamples/fundamentals/15_2_operatorOverloading.cpp">Addition</a>, <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Dereferencing</a>]
+    <br>
+    In order to overload an operator, the <code>operator</code> keyword is used in the function signature. Eigen is a matrix library in cpp.
+
+  </subsection>
+</section>
+
+<section id="2"><h1>Overriding</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>]
+  <br>
+  Overriding a function occurs when:
+  <ul>
+    <li>A base class declares a virtual function</li>
+    <li>A derived class can override the virtual function by defining its own implementation with an identical function signature</li>
+  </ul>
+
+  Specifying a function as <code>override</code> in the derived class is good practice, as it empowers the compiler to verify that the function signature in the derived class matches that in the base class.
+</section>
+
+<section id="3"><h1>Generic programming</h1>
+  Generic Programming is an example of polymorphism that generalises the parameters of classes and functions using templates. The aim is to create code (classes and functions) that can be reused with many different types of data. For example using the vector class from the Standard Library, a vector of ints, strings or some user defined class can be created. 
+
+  <subsection id="3.0"><h1>Templates</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/8_templateFunction.cpp">Function template</a>, <a href="../../jlib/cppExamples/fundamentals/9_classTemplate.cpp">Class template</a>]
+    <br>
+    <n><i>Templates</i> use datatypes as parameters</n> so that the same implementation can operate on different data types. At compile time, the compiler expands the code using the types that are passed as parameters.
+
+    <p></p>
+    <button class="accordion">Syntax</button>
+    <div class="panel">
+<pre><code class="cpp">
+// If a class
+template &lttypename dataType1, typename datatype2&gt
+class X {
+  X(datatype1 key, datatype2 value)
+  {
+    // Constructor
+  }
+};
+
+// Calling the class
+X&ltsting, int&gt("age", 3);
+
+// If a function
+template &lttypename datatype&gt
+datatype X(datatype input1, datatype input2)
+{
+
+}
+
+// Calling the function
+X&ltint&gt(5, 6);
+  </code></pre>
+    </div>
+
+    <i>Generic code</i> is the term for code that is independent of types. A <code>template&lt&gt</code> tag is placed before the function/class signature to specify and mark the declaration as generic. The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic (data)type which the <n>parameter</n> that follows it, takes on.
+  </subsection>
+</section>
+  
+<section id="4"><h1>Virtual functions</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/13_virtualFunction.cpp">Ref</a>]<br>
+  Virtual functions are a polymorphic feature. These functions are declared (and possibly defined) in a base class, and can be overridden by derived classes. This approach declares an <n>interface at the base level</n>, but delegates the implementation of the interface to the derived classes.
+
+  <p>
+    Virtual functions can be defined by derived classes, but this is not required. However, if we mark the virtual function with <code>=0</code> in the base class, then the function becomes a <i>pure virtual function</i>. This means that the base class declares but does not define the function. It has the side effect of making its class <i>abstract</i> meaning the class cannot be instantiated. A derived class must define the function, or else the derived class will be abstract.
+  </p>
+
+  We don't know how a generic animal talks. So we declare a function talk as a virtual function. <code>=0</code> means we're never going to create an object of type Animal. We're simply creating an interface such that other classes that inherit from this base class will have to implement the talk function. 
+</section>
+</chapter>
+
+</body>
+</html>
