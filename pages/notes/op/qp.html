@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quadratic Programming</title>
+  <meta name="Quadratic Programming" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Resources</a>
+<a href="#1">Linear 1D (scalar) case</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Without constraints</a></li>
+  <li><a href="#1.1">With constraints</a></li>
+</ul>
+<a href="#2">Linear higher dimension (vector/matrix) case</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Without constraint</a></li>
+  <li><a href="#2.1">With constraints</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Quadratic Programming</h1>
+<section id="0"><h1>Resources</h1>
+  <ul>
+    <li><a href="https://t.ly/IQcZ3">Examples of optimisation problems</a></li>
+  </ul>
+</section>
+<section id="1"><h1>Linear 1D (scalar) case</h1>
+  <subsection id="1.0"><h1>Without constraints</h1>
+    $ax\approx b$ is a standard operation in linear algebra. It represents the aim of finding the best solution for $x$ such that the LHS is approximately equal to the RHS.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/manipulation/50_leastSquares.png"/>
+        <figcaption>
+          $ax \approx{b}$
+        </figcaption>
+      </figure>
+    </div>
+
+    There are only a few things that $a$, $x$ and $b$ can do. $a$ is the slope. $x^*$ is the solution to be found such that $ax^* = b$.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/manipulation/51_leastSquaresParabola.png"/>
+        <figcaption>
+          The quadratic curve of least squares.
+        </figcaption>
+      </figure>
+    </div>
+    $\|ax-b\|^2$ indicates that we're going to score all the different options along the parabola to find the lowest point on the quadratic curve. When the curve touches 0, $ax=b$. The 2 values diverge as the curve moves farther from 0.
+
+    If slope $a$ starts getting small, the solutions start getting worse - we would need a bigger $x$ to achieve the same $b$.
+  </subsection>
+
+  <subsection id="1.1"><h1>With constraints</h1>
+    Even when the method isn't able to achieve the perfect solution, we'd still like to be able to say how good any given solution is. We want to be able to add constraints - the solution isn't allowed to go past a certain $x$ i.e. pick the smallest point on the curve that's within a certain regime. This would be a richer class of optimisations but it's still based on the fundamental idea of first scoring all the points (on the parabola) and then finding the minimum of it. 
+
+    An example of this formulation would be:
+    $$
+      min_x \quad s.t. x\leq 2 \quad \|ax-b\|^2
+    $$
+
+    This equation says minimise over $x$ subject to $x \leq 2$ (the boundary of the search, the regime, the stop condition). 
+
+    <ul>
+      <li>We've made a scoring function for all the possible $x$s</li>
+      <li>We're limiting the search to the constraint $x \leq{2}$</li>
+      <li>We find the lowest point</li>
+    </ul>
+
+    This is a more robust formulation because we're able to put more information into it. 
+  </subsection>
+</section>
+
+<section id="2"><h1>Linear higher dimension (vector/matrix) case</h1>
+  <subsection id="2.0"><h1>Without constraint</h1>
+    $$
+      Ax \approx b
+    $$
+    The matrix case is only a little bit more interesting but super powerful. When things are unconstrained, the minimisation is done by finding the place where the gradient of the cost function (the quadratic $\|Ax-b\|^2$) is minimum. Since we know this is a convex bowl (with the ends) pointing up, it's enough to find any point where the gradient is $0$:
+
+    $$\begin{align*}
+      \frac{\partial}{\partial x} \|Ax-b\|^2 &=
+      \frac{\partial}{\partial x} [x^T A^T Ax - b^T Ax - x^T A^T b + b^2] \\
+      &= 2x^T A^T A - 2b^T A = 0 \\
+      (x^*)^T &= b^T \underbrace{A (A^T A)^{-1}}_{\text{Transpose of the} \atop \text{pseudo-Inverse}} \\
+
+      x^* &= A^{\dagger}b
+    \end{align*}$$
+
+    $A (A^T A)^{-1}$ has no $b$ in it. That's why to take the pinv, we don't need to know $b$ to use it; because the solution is linear in $b$, we can separate out $A$ and $b$. It is kept in the form of the transposes for convenience.
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/manipulation/52_quadraticBowl.png"/>
+        <figcaption>
+          The generalisation of the above parabola is a quadratic bowl.
+        </figcaption>
+      </figure>
+    </div>
+
+    In higher dimensions, the parabola turns into a <n>quadratic bowl</n>. The axes are $x_1$, $x_2$ and the objective $\|Ax-b\|^2$. We score every value $x$ by the cost function $\|Ax-b\|^2$ and find the minimum of it. 
+
+    <p>
+      The quadratic form is given by $[x^T A^T Ax - b^T Ax - x^T A^T b + b^2]$ but the shape is given by $A^T A$ in $x^T A^T Ax$.
+    </p>
+
+    <p>
+      When $A$ starts having small singular values, the bowl starts elongating just as in the case of the parabola with smaller slopes. It can elongate more or less in some directions/dimensions. As it gets long, the minimum $x$ starts leaving it, i.e. gets bigger. 
+    </p>
+  </subsection>
+
+  <subsection id="2.1"><h1>With constraints</h1>
+    We can add boundaries/limits to the problem i.e. find the best solution using the score function $\|Ax-b\|^2$ but don't go past some linear  constraints (some reasonable velocities for example). This is not the only generalisation but this is the one that is used in the lectures.
+
+    $$
+    \|Ax-b\|^2 \quad s.t. \; \underbrace{Cx = d}_{\text{Linear constraint}}
+    $$
+
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/manipulation/53_boundaries.png"/>
+        <figcaption>
+          The generalisation, but with boundaries.
+        </figcaption>
+      </figure>
+    </div>
+
+    A problem like this that has a <i>convex quadratic objective</i> (we know that this bowl is going up) and linear constraints is called a <i>convex quadratic program</i>. It's an important class of optimisation problems. Quadratic programs cannot be solved with pen and paper unless they're very very small. There are efficient algorithms for solving them that can be run in real time at high speeds.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

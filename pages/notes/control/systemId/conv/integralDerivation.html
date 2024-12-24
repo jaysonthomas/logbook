@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Convolution Integral: Derivation</title>
+  <meta name="Convolution Integral: Derivation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Area of a slice</a>
+<a href="#1">Alternate representation for the area of a slice</a>
+<a href="#2">Impulse response to a single sliced input</a>
+<a href="#3">Impulse response to multiple input slices</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Convolution Integral: Derivation</h1>
+
+<section id="0"><h1>Area of a slice</h1>
+  Consider the first infinitesimally thin slice $d\tau$ of a continuous function $f(t)$. The area under the curve for the slice can be approximated as the height of the function times the width of the slice:
+
+  $$
+    f(d\tau) \cdot d\tau
+  $$
+
+  The area is an approximation since $f(d\tau)$ is assumed to be a constant for the entire slice of $d\tau$. If the limit as $d\tau \rightarrow 0$ is taken, then the area under the particular instant of the curve, would no longer be an approximation. Summing all the area slices gives the area under the entire curve.  
+
+  <div class="container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../../../../figures/control/15a_convolutionDerivation.png"/>
+    </figure>
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../../../../figures/control/15b_convolutionDeriv.png"/>
+      <figcaption>
+        Area under a thin slice of the curve from $t=0$ to $t=d\tau$
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Alternate representation for the area of a slice</h1>
+  A slice can be replaced with a single scaled impulse function. Since an impulse function has an area of 1, multiplying it by the area of a slice essentially scales the impulse function to have a similar area.
+
+  $$
+    \underbrace{f(d\tau) \cdot d\tau}_{\scriptsize\text{Area scaling term}} 
+    \cdot 
+    \underbrace{\delta(t-d\tau)}_{\scriptsize\text{Shifted impulse function}}
+  $$
+
+  <div class="img-container">
+    <figure>
+      <img style="height:90px; width:190px"
+      src="../../../../../../figures/control/15c_convolutionDeriv.png"/>
+      <figcaption>
+        A slice of a continuous function can be replaced by a scaled impulse function
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="2"><h1>Impulse response to a single sliced input</h1>
+  If a system can be assumed to be LTI and a continuous function to be an input to it, then the system response is predictable. The response would be the sum of impulse responses:
+  <ul>
+    <li>Time-shifted by the same amount as the input impulse function</li>
+    <li>Scaled by the same amount $f(d\tau) \cdot d\tau$ as the input function</li>
+  </ul>
+
+  The system's impulse response after $d\tau$ time would be:
+  $$
+    \underbrace{f(d\tau) \cdot d\tau}_{\scriptsize\text{Area scaling factor}} 
+    \cdot 
+    \underbrace{g(t-d\tau)}_{\scriptsize\text{Shifted impulse response}}
+  $$
+
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../../figures/control/15d_convolutionDeriv.png"/>
+      <figcaption>
+        If $d\tau$ is extremely small, then the impulse response will be scaled way down and its impact wouldn't be noticeable
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="3"><h1>Impulse response to multiple input slices</h1>
+  If at each time interval $d\tau$, the input is replaced with a scaled impulse function, then the system would produce scaled impulse responses that are shifted in time to correspond to when the impulse functions occurred. 
+
+  <div class="img-container">
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../../../../figures/control/15e_convolutionDeriv.png"/>
+    </figure>
+  </div>
+
+  The system's output consists of:
+  <ul>
+    <li>Shifted individual impulse responses</li>
+    <li>Individual impulse responses scaled down to nothing</li>
+    <li>Layers of infinitesimally small responses that are summed together</li>
+  </ul>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../../../figures/control/15f_convolutionDeriv.png"/>
+      <figcaption>
+        The response to input $f(t)$ becomes <br>the summation of an infinite number of tiny impulse responses
+      </figcaption>
+    </figure>
+  </div>
+
+  The system response would be the superposition of all impulse responses. Digitally, this is done as an operation called <i>Discrete convolution</i>:
+  $$
+    \sum^{\infty}_{i=0}
+    \underbrace{f(i\cdot d\tau) \cdot d\tau}_{\scriptsize\text{Area scaling factor}} 
+    \cdot 
+    \underbrace{g(t - i \cdot d\tau)}_{\scriptsize\text{Shifted impulse response}}
+  $$
+
+  This approximation would be exact if the limit as $d\tau \rightarrow 0$ is taken in an operation called <i>Continuous Convolution</i>:
+  $$
+    \int^{\infty}_0 f(\tau)g(t-\tau)d\tau
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

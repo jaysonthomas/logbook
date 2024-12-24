@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>System ID: Overview</title>
-  <meta name="System ID: Overview" content="text/html; charset=utf-8;" />
+  <title>System ID</title>
+  <meta name="System ID" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,65 +39,90 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Further reading</a>
-<a href="#1">Methods</a>
-<a href="#2">A need for alternate mathematical model representations</a>
+<a href="#0">A need for alternate mathematical model representations</a>
+<a href="#1">LTI System</a>
+<a href="#2">Applying an impulse</a>
+<a href="#3">Convolution Integral</a>
+<a href="#4">Frequency domain</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Problem</a></li>
-  <li><a href="#2.1">Solution</a></li>
+  <li><a href="#4.0">Background</a></li>
+  <li><a href="#4.1">Transforms</a></li>
 </ul>
-<a href="#3">A choice</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>System ID: Overview</h1>
-<section id="0"><h1>Further reading</h1>
+<chapter style="counter-reset: chapter 0"><h1>System ID</h1>
+<section id="0"><h1>A need for alternate mathematical model representations</h1>
   <ul>
-    <li><a href="bg/main.html">Background</a></li>
+    <li><a href="representation/altModels.html">Introduction</a></li>
+    <p>
+      <li>Transfer Functions</li>
+      <ul>
+        <li><a href="representation/tf/definition.html">Definition</a></li>
+        <li>Examples</li>
+        <ul>
+          <li><a href="representation/tf/example.html">MSD</a></li>
+          <li><a href="representation/tf/example2.html">Integrator</a></li>
+        </ul>
+        <li><a href="representation/tf/use.html">Use</a></li>
+      </ul>
+    </p>
+    
+    <li><a href="representation/stateSpace.html">State space representation</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Methods</h1>
-  <i>White box method </i> involves writing out equations of motion in the form of differential equations. <i>Black box method</i> involves conducting system tests in order to find unknown variables.
-</section>
-  
-<section id="2"><h1>A need for alternate mathematical model representations</h1>
-  <subsection id="2.0"><h1>Problem</h1>
-    A differential equation is great for solving for the response of a system but it doesn't lend itself very well to
-    <ul>
-      <li>Analysing how a system naturally behaves</li>
-      <li>Manipulating a system so it behaves a desired way</li>
-    </ul>
-  </subsection>
-
-  <subsection id="2.1"><h1>Solution</h1>
-    The two most popular alternate representations are:
-    <ul>
-      <li><i>Transfer functions</i></li>
-      They are a Laplace domain representation of the system and are associated with the era of control techniques labeled classical control theory.
-      <p>
-        <li><i>State space representation</i></li>
-        It is a time domain representation, packaged in matrix form, associated with the era labeled modern control theory.
-      </p>
-    </ul>
-
-    <div class="img-container">
-      <figure>
-        <img style="height:200px; width:auto"
-        src="../../../../figures/control/2_stateSpaceVsTransferFuncs.png"/>
-        <figcaption>
-          State space vs Transfer function representation
-        </figcaption>
-      </figure>
-    </div>
-  </subsection>
-</section>
-
-<section id="3"><h1>A choice</h1>
-  In modeling a system (i.e. using mathematical operations to map a system's inputs to outputs), the engineer gets to decide:
+<section id="1"><h1>LTI System</h1>
   <ul>
-    <li>What behaviours of the system to represent</li>
-    <li>How complex the representation should be</li>
+    <li><a href="lti/importance.html">Importance of linear system representation</a></li>
+    <li><a href="lti/operations.html">Allowable operations</a></li>
+    <li><a href="lti/setup.html">Setup</a></li>
+    <li><a href="lti/properties.html">Properties</a></li>
   </ul>
+</section>
+
+<section id="2"><h1>Applying an impulse</h1>
+  <ul>
+    <li><a href="impulse/function.html">Impulse function</a></li>
+    <li><a href="impulse/responseFormat.html">Format of an impulse response</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Convolution Integral</h1>
+  <ul>
+    <li><a href="conv/integral.html">Definition & motivation</a></li>
+    <li><a href="conv/integralDerivation.html">Derivation</a></li>
+  </ul>
+</section>
+
+<section id="4"><h1>Frequency domain</h1>
+  <subsection id="4.0"><h1>Background</h1>
+    <ul>
+      <li><a href="freqDomain.html">Frequency domain representation</a></li>
+      <li><a href="sDomain.html">s Domain</a></li>
+    </ul>  
+  </subsection>
+
+  <subsection id="4.1"><h1>Transforms</h1>
+    A <i>transform</i> is a mapping between two sets of data, or domains.
+    <subsubsection><h1>Fourier Transform</h1>
+      <ul>
+        <li><a href="ft/overview.html">Overview</a></li>
+        <li><a href="ft/shiftTheorem.html">Shift Theorem</a></li>
+        <li><a href="ft/convTheorem.html">Convolution Theorem</a></li>
+        <li><a href="ft/example.html">Example</a></li>
+      </ul>
+    </subsubsection>
+
+    <subsubsection><h1>Laplace Transform</h1>
+      <ul>
+        <li><a href="lt/comparisonToFourier.html">Comparison to Fourier Transform</a></li>
+        <li><a href="lt/example.html">Example</a></li>
+        <li><a href="lt/use.html">Usage</a></li>
+        <li><a href="lt/calculations.html">Calculations</a></li>
+        <li><a href="lt/deconvolution.html">Deconvolution</a></li>
+      </ul>
+    </subsubsection>
+  </subsection>
 </section>
 </chapter>
 

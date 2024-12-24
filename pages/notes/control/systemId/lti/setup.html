@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LTI: Setup</title>
+  <meta name="LTI: Setup" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>LTI: Setup</h1>
+<section id="0"><h1>Overview</h1>
+  Consider an LTI system represented by the function $h$. When fed with an input signal $x(t)$, it outputs a signal $y(t)$.
+  
+  <div class="img-container">
+    <figure>
+      <img style="height:60px; width:auto"
+      src="../../../../../figures/control/5_linearSystem.png"/>
+      <figcaption>
+        $y(t) = h(x(t))$
+      </figcaption>
+    </figure>
+  </div>
+  
+  Since $h$ is an LTI system, the only operation it can perform are the ones mentioned <a href="operations.html">here</a>. Hence $h$ can be considered to be a linear operator representing these linear operations.
+  
+  <p>
+    $h$ provides a linear mapping between the vector $x(t)$ and the vector $y(t)$
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>
