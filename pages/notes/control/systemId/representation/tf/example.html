@@ -47,7 +47,7 @@
 
 <chapter style="counter-reset: chapter 0"><h1>TF: Example</h1>
 <section id="0"><h1>Setup</h1>
-  Consider a MSD system on wheels as described <a href="../../plants/msd/singleMassMathModel.html">here</a>. 
+  Consider a <a href="../../../plants/msd/singleMassMathModel.html">MSD system on wheels</a>. 
 
   <p>
     The system model is a perfect candidate to convert into a transfer function, since:
@@ -67,7 +67,7 @@
     \underbrace{\delta(t)}_{\scriptsize\text{Impulse input force}} = 0 \\
   $$
 
-  However, solving linear ODEs in the time domain can be time consuming. The task can be made easier by solving for the impulse response in the s domain, by taking the Laplace transform of the entire differential equation, one term at a time as shown <a href="../lt/calculations.html">here</a>. The transfer function or the laplace transform of the impulse response of the system would be:
+  However, solving linear ODEs in the time domain can be time consuming. The task can be made easier by solving for the impulse response in the s domain, by taking the Laplace transform of the entire differential equation, one term at a time as shown <a href="../../lt/calculations.html">here</a>. The transfer function or the laplace transform of the impulse response of the system would be:
   $$
     X(s) = \frac{1}{ms^2 + bs + k}
   $$
@@ -82,7 +82,7 @@
     <div class="img-container">
       <figure>
         <img style="height:40px; width:auto"
-        src="../../../../../figures/control/28_systemDynamics.png"/>
+        src="../../../../../../figures/control/28_systemDynamics.png"/>
       </figure>
       <figcaption>
         Transfer function representing the cart dynamics
@@ -97,7 +97,7 @@
   <div class="img-container">
     <figure>
       <img style="height:40px; width:auto"
-      src="../../../../../figures/control/29_tfMsdStepResponse.png"/>
+      src="../../../../../../figures/control/29_tfMsdStepResponse.png"/>
     </figure>
   </div>
 
@@ -110,7 +110,7 @@
   <div class="img-container">
     <figure>
       <img style="height:40px; width:auto"
-      src="../../../../../figures/control/29a_tfMsdStepResponse.png"/>
+      src="../../../../../../figures/control/29a_tfMsdStepResponse.png"/>
     </figure>
   </div>
 </section>
