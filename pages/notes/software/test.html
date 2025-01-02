@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hacksaw</title>
-  <meta name="Hacksaw" content="text/html; charset=utf-8;" />
+  <title>Web page</title>
+  <meta name="Web page" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -41,31 +41,34 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Hacksaw</h1>
-<section id="0"><h1>Overview</h1>
-  <a href="https://t.ly/T9Iqv">Purchased item</a><p></p>
-  <ul>
-    <li>Tooth per inch</li>
-    <a href="https://t.ly/A_BP">This link</a> recommends 32-teeth per inch for
-    cutting light metals like aluminium. Blades with more teeth will 
-    provide a smoother, finer cut.
-    
-    <p>
-      <li>Demonstration of use</li>
-      <a href="https://t.ly/t77E">This link</a> recommends not leaving
-      a blade tightened up when storing away. Also, a hacksaw only cuts
-      in the forward motion i.e. the direction in which the blade tooth
-      are pointing.
-    </p>
+<chapter style="counter-reset: chapter 0"><h1>Web page</h1>
 
-    <li>Speed of cut vs TPI</li>
-    <a href="https://t.ly/kml5">Ref</a> - less teeth, 
-    more time to cut, rougher finish.
-  </ul>
-</section>
+<div class="mermaid">
+  stateDiagram-v2
+  [*] --> Off
+  On --> Off
+  Off --> On    
+  On --> Server    
+  note left of Server
+      [LED] Power Ok Blue
+      [LED] Power Fail Red
+  end note    
+  On --> Searching
+  note right of Searching
+      [LED] <a href='https://en.wikipedia.org/wiki/Special:Random' target='_blank'>Wikipedia Link</a>
+      [LED] Power Fail Red
+  end note    
+  Searching --> Transfer : [BLE] On Client Connect to Server     
+  note right of Transfer
+      [LED] Yellow    
+  end note
+  Searching  --> Calibration : [Button] 1,2 Pressed
+  note right of Calibration
+      [LED] Yellow    
+  end note
+</div>
 </chapter>
 
 </body>

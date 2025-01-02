@@ -564,3 +564,8 @@ chapter.appendix figcaption:before {
   content: "Figure " counter(chapter, upper-alpha) "." counter(figure) ": ";
 }
 /* end counters*/
+
+/* Mermaid diagrams, not sure this works! */
+.mermaid {
+  font-family: Arial, sans-serif;
+}
