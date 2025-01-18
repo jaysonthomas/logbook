@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Web page</title>
-  <meta name="Web page" content="text/html; charset=utf-8;" />
+  <title>Reveal js</title>
+  <meta name="Reveal js" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -41,51 +41,18 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Misc</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Web page</h1>
+<chapter style="counter-reset: chapter 0"><h1>Reveal js</h1>
+<section id="0"><h1>Misc</h1>
+  <ul>
+    <li><a href="https://t.ly/3S37J">Speaker view</a></li>
+    Press <code>s</code> on the slide to see the view.
+  </ul>
 
-  <div class="mermaid">
-    %%{
-      init: {
-        'theme': 'base',
-        'themeVariables': {
-          'primaryColor': '#BB2528',
-          'primaryTextColor': '#fff',
-          'primaryBorderColor': '#7C0000',
-          'lineColor': '#F8B229',
-          'noteBkgColor': '#F8B229',
-          'noteTextColor': '#FFFFFF'
-        }
-      }
-    }%%
-    
-    stateDiagram-v2
-    classDef notMoving fill:white
-    classDef movement font-style:italic;
-    classDef badBadEvent fill:#f00,color:white,font-weight:bold,stroke-width:2px,stroke:yellow
-    classDef blueNote fill:#44a6c6,stroke:#000,stroke-width:1px,color:#000
-  
-    [*] --> Off
-    On --> Off
-    Off --> On    
-    On --> Searching
-    note right of Searching 
-    <ul class="grid-list"> <li><a href='https://en.wikipedia.org/wiki/Special:Random' target='_blank'>Wikipedia Link</a>
-      <li><a href='https://en.wikipedia.org/wiki/Special:Random' target='_blank'>Wikipedia Link</a>
-    </ul>
-    end note
-    class Searching blueNote
-    Searching --> Transfer ::: blueNote : [BLE] On Client Connect to Server     
-    note right of Transfer
-        [LED] Yellow    
-    end note
-    Searching  --> Calibration:::badBadEvent : [Button] 1,2 Pressed
-    note right of Calibration
-        [LED] Yellow    
-    end note
-  </div>
-  
+  <a href="https://t.ly/nnH6D">This</a> might be useful to see what can be done with revealjs. But, additionaly, it uses quarto which is not needed.
+</section>
 </chapter>
 
 </body>

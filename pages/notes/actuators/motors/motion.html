@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fundamental physics: motion</title>
+  <meta name="Fundamental physics: motion" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Creation of magnetic fields</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Principle</a></li>
+  <li><a href="#0.1">Induction</a></li>
+</ul>
+<a href="#1">Creation of motion</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Hendrik Lorentz's equation</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Fundamental physics: motion</h1>
+<section id="0"><h1>Creation of magnetic fields</h1>
+  [<a href="https://t.ly/sVzp2">Ref</a>]<p></p>
+
+  <subsection id="0.0"><h1>Principle</h1>
+    <ul>
+      <li>Rotating charges cause the magnetic fields produced in permanent magnets</li>
+      <p>
+        <li>Translating charged particles also produce magnetic fields</li>
+      </p>
+      Example: a wire with charges moving through it will produce a magnetic field which revolves around it in a right-handed manner.
+    </ul>
+  </subsection>
+
+  <subsection id="0.1"><h1>Induction</h1>
+    If a wire is coiled into a loop and a current (charged particles with a translational motion) is passed through it, the magnetic field will add constructively in the area enclosed by the loop.
+   
+    <p>
+      A current moving counterclockwise around a loop of wire will produce a magnetic field inside of it which points out of the screen. This is known as <i>induction</i>. This is how electromagnets work.
+    </p>
+  
+    Moving charged particles create magnetic fields!
+  </subsection>
+</section>
+
+<section id="1"><h1>Creation of motion</h1>
+  When one of these charged particles moves through an existing magnetic field, there will be a force on that particle. 
+  
+  <subsection id="1.0"><h1>Hendrik Lorentz's equation</h1>
+    $$
+      F = \underbrace{qE}_{F_1} + \underbrace{qv \times B}_{F_2}
+    $$
+
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{cclc} 
+        F &:& \text{Forces experienced by a charged particle in an electric field} & [N] \\ 
+        E &:& \text{Electric field strength} & [?] \\
+        q &:& \text{Charge of the particle} & [C]
+      \end{array}$$
+    </div>
+
+    If a charged particle is in an electric field, it will experience 2 forces:
+    <ul>
+      <li>$F_1$</li>
+      <p>
+        A force $F_1$ proportional both to the electric field strength and its charge, applied along the direction of the electric field. 
+      </p>
+
+      <li>$F_2$</li>
+    </ul>
+    
+    the second term which is more important for us today says that if a charged particle moves through a magnetic field it will experience a force which is proportional to the strength of the magnetic field the charge of the particle and the portion of its velocity which is perpendicular to the field this force will be applied perpendicular to both a magnetic field and the velocity of the particle where this force becomes practically useful with motors is when we apply it to a lot of charged particles 
+  </subsection>
+  
+  moving through a wire when charged particles move through a conductive material driven by some electric field we call this a current current is measured in amperes or amps for short and it's essentially the count of the number of charges moving through a cross-section of the material per second if we run a current through a wire the charges in this wire can be thought of as having some velocity in the direction of the current if this wire exists in an external magnetic field which is not parallel to the current each particle will then have a net force applied to it as a result thus we can show that the force on such a wire in a magnetic field is equal to Il cross B where I is the current L is the length of the wire and B is the magnetic field strength using this idea we can now convert electrical current into mechanical motion now let's apply this idea to a closed loop of wire if we have a square loop with current running around it as shown here and we position it in a magnetic field the sides which are now shown is into and out of the page we'll have forces applied to them due to the magnetic field these forces will be in opposite directions and they will create a net torque on this loop of wire this will rotate the wire until the two forces eventually come to rest in line with each other noting that torque is the cross product of distance of application with the force being applied we can now quantify the torque on this loop of wire as the cross product of the diameter with the result of il cross B now we have an equation for the torque on a current carrying loop of wire in a magnetic field before we can move on to Faradays law looking at how motors work in practice we have to talk about one more physics principle Faraday's law what Faraday's law essentially says is that the flux which is another way to say the magnetic field going through the closed loop cannot change too quickly if an external magnetic field going through the loop changes an electromotive force which is a fancy way of saying voltage will be generated across the loop itself such that a current flows in it and induces a magnetic field which resists the changing magnetic flux for example if the external field increased in strength a field would be induced inside the wire which points opposite the direction of the external magnetic field in a motor this voltage is referred to as back electro-motive force or back EMF for short and it's fundamentally important for understanding the dynamic properties of motors another important thing to realize here is that changes in flux can happen due to changes in magnetic field strength but they can also occur due to changes in the orientation of the wire relative to the field imagine for example a loop of wire oriented such that a magnetic field points directly through it then if either the loop or the wire rotates such that this is no longer the configuration the magnetic field passing through the loop Goes Down and thus the flux decreases this change in flux would produce a back EMF in the coil of wire causing a current to flow thus generating a magnetic field rotational cases like this at the primary way we see back EMF generated in motors so that concludes most of the underlying physics ideas we need to get out of the way before we can start talking about how motors work in practice next time we'll start this by exploring how to make motors turn for more than 180 degrees at a time  
+
+</section>
+</chapter>
+
+</body>
+</html>

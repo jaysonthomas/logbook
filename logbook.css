@@ -569,3 +569,19 @@ chapter.appendix figcaption:before {
 .mermaid {
   font-family: Arial, sans-serif;
 }
+
+/* Testing of lists */
+.inline-list {
+  padding: 0 15px;
+  margin: 0;
+}
+
+.grid-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  padding-left: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: none;
+}

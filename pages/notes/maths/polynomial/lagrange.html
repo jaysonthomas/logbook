@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lagrange interpolation polynomial</title>
+  <meta name="Lagrange interpolation polynomial" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Sideways quadratic polynomial</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Role of the lagrange basis polynomials</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Lagrange interpolation polynomial</h1>
+<section id="0"><h1>Description</h1>
+  [<a href="https://t.ly/iHB8J">Oscar Veliz on Lagrange polynomials</a>] <p></p>
+  
+  The Lagrange interpolation formula for $n+1$ points $(x_0, f(x_0)), (x_1, f(x_1)), \cdots, (x_n, f(x_n))$ is given by:
+  $$
+    y = L_n(x) = \sum^n_{i=0} f(x_i)B_i(x)
+  $$
+
+  where $B_i(x)$ are the <i>Lagrange basis polynomials</i>, defined as:
+  $$
+    B_i(x) = \prod_{\substack{j=1 \\ j \neq i}}^{n=3} \frac{x-x_j}{x_i - x_j}
+  $$
+
+  LBPs consist of fractions that are products of linear factors that control how much any given $f(x_i)$ contributes to the resultant polynomial. 
+  
+  <p>
+    The output is a value of $y$ for some value of $x$.
+  </p>
+</section>
+
+<section id="1"><h1>Sideways quadratic polynomial</h1>
+  If $y_1, y_2, y_3$ are 3 distinct values, where $y=f(x)$
+  $$\begin{align*}
+    x &= L_2(y) = \sum^{n=3}_{i=1} f(y_i)B_i(y) \\\\
+    &= 
+      x_1 \frac{y-y_2}{y_1 - y_2} \frac{y-y_3}{y_1 - y_3} + 
+      x_2 \frac{y-y_1}{y_2 - y_1} \frac{y-y_3}{y_2 - y_3} + 
+      x_3 \frac{y-y_1}{y_3 - y_1} \frac{y-y_2}{y_3 - y_2} \\\\
+
+    &= 
+      \sum_{i=1}^{n=3} x_i \prod_{\substack{j=1 \\ j \neq i}}^{n=3}
+      \frac{y-y_j}{y_i - y_j}
+  \end{align*}$$
+
+  The expression is a Lagrange interpolation polynomial $L_2(y)$, specifically for a sideways parabola passing through 3 points $(x_1, y_1), (x_2, y_2), (x_3, y_3)$ that will intersect the x-axis [$L_2(y=0)$] at exactly 1 point [<a href="https://t.ly/G3uTE">Ref</a>]. 
+
+  <subsection id="1.0"><h1>Role of the lagrange basis polynomials</h1>
+    Each term ensures that the parabola passes through the corresponding $(x_i, y_i)$ while contributing to the shape of the curve. 
+
+    <p>
+      They ensure that the corresponding $x_i$ is only dominant near $y_i$. These fractions are $1$ when $y=y_i$ and $0$ otherwise. They essentially weight the contribution of the point $(x_i, y_i)$ making it stronger near $y_i$ and weaker as $y$ moves away from $y_i$. The term vanishes at all other $y_j$, allowing the other terms to control the shape near their respective points. 
+    </p>
+
+    This localised dominance ensures the curve smoothly interpolates through all three points. The fractions distribute (blends in) the influence of each $x_i$ over the entire domain, ensuring the interpolation respects the exact values at the given points while also maintaining a smooth transition between points.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

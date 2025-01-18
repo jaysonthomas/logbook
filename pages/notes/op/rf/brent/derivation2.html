@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>$b = b + \frac{p}{-q}$ derivation</title>
+  <meta name="$b = b + \frac{p}{-q}$ derivation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>$b = b + \frac{p}{-q}$ derivation</h1>
+$$\begin{align*}
+  b &= b + d \\
+  &= b + \frac{p}{-q} \\
+  &= b + \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+  + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+  + \frac{b \cdot f_b(f_a + f_c) - b \cdot f_b^2} {(f_a-f_b) \cdot (f_c-f_b)} \\     
+  &= \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+  + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+  + \frac{b f_b(f_a + f_c) - b \cdot f_b^2 + bf_af_c - bf_af_b - bf_bf_c + bf_b^2} 
+  {(f_a-f_b) \cdot (f_c-f_b)} \\     
+  &= \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+  + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+  + \frac{bf_af_c} {(f_b-f_a) \cdot (f_b-f_c)}
+\end{align*}$$
+</chapter>
+
+</body>
+</html>

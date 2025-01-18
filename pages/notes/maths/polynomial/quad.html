@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quadratic equation</title>
+  <meta name="Quadratic equation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Intuition about the coefficie —nts</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Quadratic equation</h1>
+<section id="0"><h1>Description</h1>
+  The quadratic Lagrange polynomial can always be expanded and rewritten in the standard form:
+  $$
+    L_2(x) = ax^2 + bx + c
+  $$
+
+  where the coefficients depend on the values $f(x_0), f(x_1), f(x_2)$ and the locations of the interpolation points x_0, x_1, x_2.
+
+  <p>
+    The Lagrange form is specific to interpolation and is built to satisfy the condition:
+    $$
+      p(x_i) = f(x_i) \quad\quad i=0,1,2
+    $$
+    
+    This means it guarantees that the polynomial passes through the three specified points.
+  </p>
+
+  The standard quadratic form $ax^2 + bx + c$ on the other hand, does not explicitly emphasize the interpolation property but represents the same class of curves, a parabola.
+</section>
+
+<section id="1"><h1>Intuition about the coefficie —nts</h1>
+  <subsubsection><h1>$a$</h1>
+    <ul>
+      <li>Determines the shape of the parabola</li>
+      If $a>0$, the parabola opens upwards. If $a&lt0$, it opens downwards.
+
+      <p>
+        <li>Non-zero requirement</li>
+        If $a=0$, the equation becomes linear ($bx+c=0$), which is not quadratic.
+      </p>
+
+      <li>Affects the width of the parabola</li>
+      A larger $|a|$ makes the parabola narrower. A smaller $|a|$ (close to but not equal to 0) makes the parabola wider.
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>Others</h1>
+    <ul>
+      <li>$b$ affects the slope of the curve at the vertex</li>
+      <li>$c$ affects the y-intercept</li>
+    </ul>
+  </subsubsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

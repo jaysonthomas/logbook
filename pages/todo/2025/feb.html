@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Check Element</title>
+  <style>
+    /* Add some styles for the default page */
+    check {
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Custom Check Example</h1>
+
+<!-- Usage of the custom element -->
+<check id="2">Decide on next tests. Update documentation.</check>
+<check id="3">Review team feedback.</check>
+<check id="4">Plan the next sprint.</check>
+
+<script>
+  // Define the custom element
+  class CustomCheck extends HTMLElement {
+    constructor() {
+      super();
+
+      // Attach a shadow DOM
+      const shadow = this.attachShadow({ mode: "open" });
+
+      // Create the container for checkbox and label
+      const container = document.createElement("div");
+
+      // Create the checkbox
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+
+      // Create the label
+      const label = document.createElement("label");
+
+      // Set attributes
+      const id = this.getAttribute("id");
+      if (id) {
+        checkbox.id = id; // Set the checkbox ID
+        label.setAttribute("for", id); // Associate the label with the checkbox
+      }
+
+      // Set label text
+      label.textContent = this.textContent;
+
+      // Add a line break
+      const lineBreak = document.createElement("br");
+
+      // Append elements to the container
+      container.appendChild(checkbox);
+      container.appendChild(label);
+      container.appendChild(lineBreak);
+
+      // Append container to the shadow DOM
+      shadow.appendChild(container);
+    }
+  }
+
+  // Register the custom element
+  customElements.define("check", CustomCheck);
+</script>
+
+</body>
+</html>

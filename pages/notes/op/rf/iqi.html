@@ -41,15 +41,57 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Initialisation</a>
+<a href="#1">Iteration</a>
+<a href="#2">Reference</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Root finding: Inverse quadratic interpolation</h1>
-<section id="0"><h1>Overview</h1>
+<section id="0"><h1>Initialisation</h1>
+  Obtain a set of three points $x,y$ where $x$ is the abscissa value and $y$ is the value of the objective function evaluated at $x$, i.e. $y=f(x)$.
+</section>
+
+<section id="1"><h1>Iteration</h1>
+  <ul>
+    <li>Compute a new abscissa value based on IQI</li>
+    $$
+      x_{new} =  
+      a \frac{f_b}{f_a - f_b} \frac{f_c}{f_a - f_c} +  
+        b \frac{f_a}{f_b - f_a} \frac{f_c}{f_b - f_c} + 
+        c \frac{f_a}{f_c - f_a} \frac{f_b}{f_c - f_b}
+    $$
+
+    <p>
+      <li>Evaluate the new abscissa</li>
+      $$
+        y_{new} = f(x_{new})
+      $$
+    </p>
+
+    <li>Update the 3 points by throwing away the oldest</li>
+    $$\begin{align*}
+      (x_a, y_a) &\leftarrow (x_b, y_b) \\
+      (x_b, y_b) &\leftarrow (x_c, y_c) \\
+      (x_c, y_c) &\leftarrow (x_{new}, y_{new}) \\
+    \end{align*}$$
+
+    <p>
+      <li>Evaluate some appropriate stop criteria</li>
+      Keep iterating until the stop criteria is met, in which case the value of $y_{new}$ should be approximately $0$. It is advised that a “best solution” is maintained, as 
+    </p>
+
+    <li>Buffer the best solution</li>
+    Since $x_{new}$ is not guaranteed to be better than previous candidates, a copy of the best solution is maintained.
+  </ul>
+</section>
+
+<section id="2"><h1>Reference</h1>
   [<a href="https://t.ly/c_O4s">Ref</a>,
   <a href="https://t.ly/XSGBV">Matlab</a>, 
-  <a href="https://t.ly/pzcGY">Wiki</a>] <p></p>
-  Derive this!
+  <a href="https://t.ly/pzcGY">Wiki</a>, 
+  <a href="https://t.ly/UsSpW">Oscar Veliz</a>] <p></p>
+
+  Also, refer to <a href="../../maths/polynomial/lagrange.html">Lagrange interpolation polynomials</a>.
 </section>
 </chapter>
 

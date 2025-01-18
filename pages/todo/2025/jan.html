@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="test.js"></script>  
+  <title>Jan 25</title>
+</head>
+<body>
+
+<h1>Week 3</h1>
+<section><h2>Root finding: Brent's method</h2>
+  <input type="checkbox" id="1">
+    Summarise conditions for picking different methods. Just the overview mentioned in the matlab post.
+
+  <br><input type="checkbox" id="1.1">
+    Write up secant method
+</section>
+
+<section><h2>Presentation</h2>
+  <input type="checkbox" id="2">
+    Write the outline of a future presentation on the drone project.
+
+  <br><input type="checkbox" id="2.1">
+    Write notes on what is learnt about reveal js.
+</section>
+
+<section><h2>Weekend</h2>
+  <input type="checkbox" id="3">
+    Summarise last 2 weekends.
+</section>
+
+<script>
+  // Load the state on page load
+  window.onload = loadCheckboxState;
+
+  // Save the state on checkbox change
+  document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.addEventListener('change', saveCheckboxState);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Brent's method: Steps as per matlab blog</title>
+  <meta name="Brent's method: Steps as per matlab blog" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Bisection</a>
+<a href="#1">IQI</a>
+<a href="#2">Final</a>
+<a href="#3">Interpolation acceptability condition</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Brent's method: Steps as per matlab blog</h1>
+<section id="0"><h1>Bisection</h1>
+  $$\begin{align*}
+    m &= \frac{a-b}{2} \\
+    d &= m \\
+    e &= m \\\\
+
+    c &\leftarrow b \quad \quad f_c \leftarrow f_b \\
+  \end{align*}$$
+
+  <ul>
+    <li>If $|d| > \gamma$</li>
+    $$\begin{align*}
+      b &= b + \frac{a-b}{2} \\
+        &= \frac{a + b}{2}     
+    \end{align*}$$
+
+    <p>
+      <li>Else</li>
+      Try to move by $\gamma$ in the direction of $a$.
+      $$
+        b = b - \frac{b-a}{|b-a|} \cdot \gamma
+      $$
+    </p>
+  </ul>
+</section>
+
+<section id="1"><h1>IQI</h1>
+  $$\begin{align*}
+    q &= \frac{f_c}{f_a} \\
+    r &= \frac{f_b}{f_a} \\
+    s &= \frac{f_b}{f_c} \\\\
+
+    p &= s*(2.0*m*q*(q - r) - (b - c)*(r - 1.0)) \\
+      &= \frac{f_b}{f_c} (2 \cdot \frac{a-b}{2} \cdot \frac{f_c}{f_a}
+          \cdot (\frac{f_c}{f_a} - \frac{f_b}{f_a}) - (b - c) \cdot
+          (\frac{f_b}{f_a} - 1)) \\
+      &= \frac{f_b}{f_c} \biggl[(a-b) \cdot \frac{f_c}{f_a}
+          \cdot \frac{f_c - f_b}{f_a} - (b - c) \cdot
+          \frac{f_b - f_a}{f_a} \biggr] \\\\
+
+    q &= (q - 1.0)*(r - 1.0)*(s - 1.0) \\
+      &= (\frac{f_c}{f_a} - 1) \cdot (\frac{f_b}{f_a} - 1) 
+          \cdot (\frac{f_b}{f_c} - 1)
+  \end{align*}$$
+
+  <ul>
+    <li>If $p>0$</li>
+    $$
+      q = -q
+    $$
+
+    <li>Else</li>
+    $$
+      p = -p
+    $$
+  </ul>
+
+  <subsubsection><h1>Is interpolated point acceptable</h1>
+
+    \end{align*}$$
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Final</h1>
+  $$\begin{align*}
+    p &= \frac{f_b}{f_c} \biggl[(a-b) \cdot \frac{f_c}{f_a}
+        \cdot \frac{f_c - f_b}{f_a} - (b - c) \cdot
+        \frac{f_b - f_a}{f_a} \biggr] \\\\
+
+    q &= (\frac{f_c}{f_a} - 1) \cdot (\frac{f_b}{f_a} - 1) 
+          \cdot (\frac{f_b}{f_c} - 1) \\\\
+  \end{align*}$$
+
+  See $\frac{p}{q}$ derivation <a href="derivation1.html">here</a>.
+  $$\begin{align*}
+    \frac{p}{q} &= 
+    -\frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+    - \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+    + \frac{-b \cdot f_b(f_a + f_c) + b \cdot f_b^2} {(f_a-f_b) \cdot (f_c-f_b)} \\     
+  \end{align*}$$
+  
+  If $b = b + d$ and $d = \frac{p}{-q}$, then $b$ is [See derivation <a href="derivation2.html">here</a>]
+  $$\begin{align*}
+    b = \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+    + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+    + \frac{bf_af_c} {(f_b-f_a) \cdot (f_b-f_c)}
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Interpolation acceptability condition</h1>
+  $$\begin{align*}
+    &2.0*p &lt 3.0*m*q - abs(tol*q) \\
+    &2 \cdot \frac{f_b}{f_c} \biggl[(a-b) \cdot \frac{f_c}{f_a}
+    \cdot \frac{f_c - f_b}{f_a} - (b - c) \cdot
+    \frac{f_b - f_a}{f_a} \biggr]
+    &lt
+    3 \cdot \frac{a-b}{2} \cdot 
+    (\frac{f_c}{f_a} - 1) \cdot (\frac{f_b}{f_a} - 1) 
+        \cdot (\frac{f_b}{f_c} - 1) - |\gamma \cdot |
+  \end{align*}$$
+
+  Simplifying RHS:
+  $$\begin{align*}
+    &3.0*m*q - abs(tol*q) \\
+    &q(3*m - |\gamma|) \\
+    &3 \cdot (\frac{f_c-f_a}{f_a})(\frac{f_b-f_a}{f_a})(\frac{f_b-f_c}{f_c})
+    \biggl(\frac{a-b}{2} - |\gamma| \biggr)
+  \end{align*}$$
+
+  Simplifying LHS:
+  $$\begin{align*}
+    &2 \cdot \frac{f_b}{f_c} \biggl[(a-b) \cdot \frac{f_c}{f_a}
+    \cdot \frac{f_c - f_b}{f_a} - (b - c) \cdot
+    \frac{f_b - f_a}{f_a} \biggr] \\
+    &2 \cdot f_b (a-b) \cdot \frac{f_c - f_b}{f_a^2} - 
+    2 \cdot \frac{f_b}{f_c} (b - c) \cdot \frac{f_b - f_a}{f_a} \\
+  \end{align*}$$
+
+  Cancelling terms from both sides:
+  $$\begin{align*}
+    &2 \cdot f_b (a-b) \cdot \frac{f_c - f_b}{f_a} - 
+    2 \cdot \frac{f_b}{f_c} (b - c) \cdot (f_b - f_a) &lt
+    3 \cdot (f_c-f_a)(\frac{f_b-f_a}{f_a})(\frac{f_b-f_c}{f_c})
+    \biggl(\frac{a-b}{2} - |\gamma| \biggr)\\
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>
