@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Motors</title>
-  <meta name="Motors" content="text/html; charset=utf-8;" />
+  <title>Cmake commands: Target include directories</title>
+  <meta name="Cmake commands: Target include directories" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,17 +41,43 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Background</a>
+<a href="#0">Overview</a>
+<a href="#1">Private</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Motors</h1>
-<section id="0"><h1>Background</h1>
-  <ul>
-    <li>Fundamental physics</a></li>
-    <ul>
-      <li><a href="motion.html">Motion</a></li>
-    </ul>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Cmake commands: Target include directories</h1>
+
+<section id="0"><h1>Overview</h1>
+  <code>target_include_directories</code> specifies the include directories to use when compiling a given target. 
+  
+  <p>
+    To include header files present in the source directory of a target library <code>b</code>, where the <code>CMakeLists.txt</code> file is also stored:
+<pre><code class="cmake">
+target_include_directories(
+  b PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+</code></pre>
+
+    This allows any other target that links against <code>b</code> to find its headers.
+  </p>
+
+  To include files from a directory <code>util</code> in the root project directory of a library:
+
+<pre><code class="cmake">
+target_include_directories(
+  b PUBLIC
+  ${CMAKE_SOURCE_DIR}/util/
+)
+</code></pre>
+</section>
+
+<section id="1"><h1>Private</h1>
+  If <code>PRIVATE</code> was used to include a library's headers within itself, these headers wouldn't be visible to a project even if the library was linked to within the project. 
+
+  <p>
+    <code>PUBLIC</code> or <code>INTERFACE</code> would need to be used explicitly. In this case, linking will automatically propagate the library's include directories.
+  </p>
 </section>
 </chapter>
 

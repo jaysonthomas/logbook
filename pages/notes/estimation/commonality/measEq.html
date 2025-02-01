@@ -56,17 +56,15 @@
     <li>Maps a state to a measurement</li>
   </ul>
 
-  <p>
-    In the simplest form, if a measurement equation is linear, it will look like:
-    $$
-      y = Hx + v
-    $$
-  </p>
+  In the simplest form, if a measurement equation is linear, it will look like:
+  $$
+    y = Hx + v
+  $$
 
-  $z_t$ or $y_t$ represents an observation or a measurement made at timestep $t$. 
+  $y$ represents observations or measurements made. 
   
   <subsection id="0.0"><h1>The Jacobian</h1>
-    $H$ is the <i>Jacobian matrix</i>; it contains partial derivatives of the measurements with respect to the unknown parameter/state(s) $x$.
+    $H$, the <i>Jacobian matrix</i>, <n>contains partial derivatives of the measurements with respect to the unknown parameter/state(s) $x$</n>.
 
     <p>
       $H$ is easy to compute in the linear case <n>but requires more mathematical effort in the case of non-linear estimation</n>.
@@ -78,7 +76,7 @@
   More the measurements, the more accurate the estimate will be.
 
   <p>
-    If the error $v$ is known (we only know the distribution w.r.t. the unknown $x$), $x$ can be found: $Hx = y - v$. Or if $x$ is known, $v$ can be solved. Since neither is known, this becomes an estimation problem. A <i>maximum likelihood estimation</i> approach is used which, intuitively <n>looks at the measurements and asks what state/parameter value is the most likely to yield the particular set of measurements</n>.
+    Only the shape of the distribution w.r.t. the unknown $x$ is known. If the error $v$ is known, $x$ can be found: $Hx = y - v$. Or if $x$ is known, $v$ can be solved. Since neither is known, it becomes an estimation problem. A <i>maximum likelihood estimation</i> approach is used which, intuitively <n>looks at the measurements and asks what state/parameter value is the most likely to yield the particular set of measurements</n>.
   </p>  
 
   An estimation problem boils down to figuring out the measurement model $H$ which is often the tricky bit.

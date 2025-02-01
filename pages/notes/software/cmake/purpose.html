@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Motors</title>
-  <meta name="Motors" content="text/html; charset=utf-8;" />
+  <title>Cmake: Purpose</title>
+  <meta name="Cmake: Purpose" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,16 +41,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Background</a>
+<a href="#0">Overview</a>
+<a href="#1">Makefile</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Motors</h1>
-<section id="0"><h1>Background</h1>
+<chapter style="counter-reset: chapter 0"><h1>Cmake: Purpose</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="bash">
+mkdir build; cd build
+
+# Generate the build system files
+cmake ..
+
+# Compile the project
+make
+</code></pre>
+
+  <code>cmake</code> generates the necessary <n>build instructions</n> from <code>CMakeLists.txt</code> that a specific <i>build system</i> like <i>Make</i> or <i>Ninja</i> understands to compile a project. The actual linking and compilation takes place in the <code>make</code> step.
+</section>
+
+<section id="1"><h1>Makefile</h1>
+  In the case of a <i>Make</i> build system, <code>cmake</code> generates a <i>Makefile</i> with instructions on how to:
   <ul>
-    <li>Fundamental physics</a></li>
-    <ul>
-      <li><a href="motion.html">Motion</a></li>
-    </ul>
+    <li>Compile source files into object files.</li>
+    <li>Link those object files into an executable or library.</li>
+    <li>Handle dependencies between files, like ensuring that changes to header files trigger recompilation of dependent source files.</li>
   </ul>
 </section>
 </chapter>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Motors</title>
-  <meta name="Motors" content="text/html; charset=utf-8;" />
+  <title>C: Struct</title>
+  <meta name="C: Struct" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,17 +41,48 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Background</a>
+<a href="#0">Definition</a>
+<a href="#1">Just declaration</a>
+<a href="#2">Alias</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Motors</h1>
-<section id="0"><h1>Background</h1>
-  <ul>
-    <li>Fundamental physics</a></li>
+<chapter style="counter-reset: chapter 0"><h1>C: Struct</h1>
+<section id="0"><h1>Definition</h1>
+<pre><code class="C">
+struct A {
+  int b;
+};  
+</code></pre>
+
+  This allows to create variables of type <code>struct A</code>.
+<pre><code class="C">
+struct A obj;
+obj.b = 10;   
+</code></pre>
+</section>
+
+<section id="1"><h1>Just declaration</h1>
+<pre><code class="C">
+struct A;  
+</code></pre>
+
+  This tells the compiler that <code>A</code> is a struct but does not define its members. Instances of <code>A</code> cannot be created yet as it needs to be defined somewhere else.
+
+  <p>
+    This is used when:
     <ul>
-      <li><a href="motion.html">Motion</a></li>
+      <li>The definition of the struct needs to be kept private and hence defined in a file of a private scope (defined by CMakeLists.txt).</li>
+      <li><code>A</code> is used in pointers <code>struct A *ptr;</code> before it is fully defined.</li>
     </ul>
-  </ul>
+  </p>
+</section>
+
+<section id="2"><h1>Alias</h1>
+<pre><code class="C">
+typedef struct A a;
+</code></pre>
+
+  It creates an alias <code>a</code> for <code>struct A</code>, so the former can be used instead of the latter.
 </section>
 </chapter>
 

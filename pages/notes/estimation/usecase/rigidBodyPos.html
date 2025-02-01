@@ -41,7 +41,7 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">State to be estimated</a>
+<a href="#0">Setup</a>
 <a href="#1">Measurement model</a>
 <ul class="no-bullets">
   <li><a href="#1.0">Measurement equation</a></li>
@@ -51,12 +51,18 @@
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation usecase - Initial kinematics of a rigid body</h1>
-<section id="0"><h1>State to be estimated</h1>
-  Consider an object moving from a starting position $p_0$, with initial velocity $v_0$ and constant acceleration $a$. The goal is to estimate $x$ <n>consisting of 3 unknowns</n> given a position measurement $y$ at every time step (inverse kinematics). 
-  $$
-    x = \begin{bmatrix}x_1 \\ x_2 \\ x_3\end{bmatrix} 
-      = \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
-  $$
+<section id="0"><h1>Setup</h1>
+  <subsubsection><h1>Data</h1>
+    Consider an object moving from a starting position $p_0$, with initial velocity $v_0$ and constant acceleration $a$. The given data consists of position measurement $y$ sampled at every time step.
+  </subsubsection>
+  
+  <subsubsection><h1>State to be estimated</h1>
+    The goal is to estimate $x$ consisting of 3 unknowns. 
+    $$
+      x = \begin{bmatrix}x_1 \\ x_2 \\ x_3\end{bmatrix} 
+        = \begin{bmatrix}p_0 \\ v_0 \\ a\end{bmatrix}
+    $$
+  </subsubsection>  
 </section>
 
 <section id="1"><h1>Measurement model</h1>

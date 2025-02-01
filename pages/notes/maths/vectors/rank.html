@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cmake: Creating an executable</title>
-  <meta name="Cmake: Creating an executable" content="text/html; charset=utf-8;" />
+  <title>Matrix rank</title>
+  <meta name="Matrix rank" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,32 +41,22 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Makefile</a>
+<a href="#0">Full row rank</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Cmake: Creating an executable</h1>
-<section id="0"><h1>Overview</h1>
-<pre><code class="bash">
-mkdir build; cd build
+<chapter style="counter-reset: chapter 3"><h1>Matrix rank</h1>
+<section id="0"><h1>Full row rank</h1>
+  A matrix is full row rank if its rows are linearly independent i.e. the matrix cannot be expressed as a linear combination of other rows. If a matrix is not of full row rank, it means that there exists a linear dependence among its rows.
 
-# Generate the build system files
-cmake ..
+  <p>
+    The <i>rank of a matrix</i> is the maximum number of linearly independent rows or columns in it. If the rank is less than the number of rows ($m$), then the matrix is not of full row rank - there exists at least one row that can be expressed as a linear combination of the other rows.
+  </p>
 
-# Compile the project
-make
-</code></pre>
-
-  <code>cmake</code> generates the necessary build instructions from <code>CMakeLists.txt</code> that a specific build system like <i>Make</i> or <i>Ninja</i> understands to compile a project. The actual linking and compilation takes place in the <code>make</code> step.
-</section>
-
-<section id="1"><h1>Makefile</h1>
-  In the case of a <i>Make</i> build system, <code>cmake</code> generates a <i>Makefile</i> with instructions on how to:
-  <ul>
-    <li>Compile source files into object files.</li>
-    <li>Link those object files into an executable or library.</li>
-    <li>Handle dependencies between files, like ensuring that changes to header files trigger recompilation of dependent source files.</li>
-  </ul>
+  For an inverse dynamics problem:
+  $$
+    \dot{q} = J^{-1} \dot{x}
+  $$
+  $J \in \mathbb{R}^{n \times m}$ where the end-effector has $n$ DOF and there are $m$ joints. If $m &lt n$, then the rank of $J$ can only be $m$ since few ($n-m$) of the $n$ rows will be dependent on the others. In this case, since $J$ is not full row rank, there can be configurations in the operational space for which there is no solution in the joint space, i.e. $J$ becomes non-invertible.
 </section>
 </chapter>
 

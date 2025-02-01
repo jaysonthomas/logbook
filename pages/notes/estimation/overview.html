@@ -41,18 +41,18 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Assuming constant state</a>
-<a href="#1">Adapting to changes in a state</a>
+<a href="#0">Estimating a state that does not change</a>
+<a href="#1">Estimating a varying state on the go</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Estimation approaches: Introduction</h1>
 
-<section id="0"><h1>Assuming constant state</h1>
+<section id="0"><h1>Estimating a state that does not change</h1>
   The following approaches assume a constant state while collecting data for estimation.
   
   <ul>
     <li>Batch Least squares</li>
-    It requires that measurements come in all at once. The measurement model $H$ maps a state vector of length $m$ to a measurement vector of $k$ individual measurements.
+    It requires that measurements come in all at once. The measurement model $H$ <n>maps</n> a state vector of length $m$ to a measurement vector of $k$ individual measurements.
 
     $$
       \underbrace{y}_{k \times 1} =  \underbrace{H}_{k \times m} \cdot 
@@ -74,8 +74,8 @@
   </ul>
 </section>
 
-<section id="1"><h1>Adapting to changes in a state</h1>
-  To estimate a state that is changing, the Kalman filter and its variants called extended and unscented kalman filters can be used. For example, to estimate the position of a vehicle, a kalman filter helps incorporate the vehicle's motion into the state estimation process.
+<section id="1"><h1>Estimating a varying state on the go</h1>
+  <n>To estimate a state that is changing</n>, the Kalman filter and its variants called extended and unscented kalman filters can be used. For example, to estimate the position of a vehicle, a kalman filter helps <n>incorporate the vehicle's motion into the state estimation process</n>.
 </section>
 </chapter>
 
