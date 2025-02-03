@@ -46,7 +46,42 @@
 
 <chapter style="counter-reset: chapter 3"><h1>Timers: Background</h1>
 <section id="0"><h1>Overview</h1>
-  
+  Peripherals like timers are not the same as the oscillator input into the chip. 
+
+  <ul>
+    <li>A <i>PLL</i> helps increase the frequency clock for peripherals.</li>
+    <li>A <i>Divisor</i> helps reduce the frequency clock for peripherals.</li>
+    <li>A <i>Prescaler</i> helps further reduce the clock speed of a timer.</li>
+  </ul>
+
+  The clock frequency of a peripheral is decided by the clock frequency of the 
+</section>
+
+<section><h1>Timer resolution</h1>
+  If a timer has a clock speed of 48MHz, then the timer resolutions are:
+  <ul>
+    <li>Min: 1 tick is $\frac{1}{48MHz}$</li>
+    <li>Max: 1 tick is $\frac{1}{48MHz} \times 2^{32} = ~89s$</li>
+  </ul>
+</section>
+
+<section><h1>Prescaler setup</h1>
+  [<a href="https://t.ly/HZN72">Good Q on stackoverflow</a>]<p></p>
+  Prescaler value = $\frac{f_{\scriptsize\text{APBx_Timer}}}{f_{\scriptsize\text{Desired}}} - 1$. A value of $0$ means the clock frequency is divided by $1$.
+
+  <p>
+    Example: $PSC = \frac{f_{\scriptsize\text{APBx_Timer}}}{f_{10\scriptsize\text{us}}} -1 = \frac{84MHz}{100kHz} = 840-1$. The peripheral clock's frequency is then divided by the prescaler value to get the desired clock frequency.
+  </p>
+
+  The resultant frequency decides the timer-counter's tick frequency. If the counter is set to up-count till $500$. Then, after $500 \times 10$us, the counter will reset and trigger an interrupt.
+</section>
+
+<section><h1>References</h1>
+  Look at a reference manual rather than the datasheet for the various registers associated with timers. For example: <a href="https://t.ly/CjW9W">ref</a>.
+
+  <p>
+    Ask AI about RCC tree of an STM32F407IGH6TR.
+  </p>
 </section>
 </chapter>
 
