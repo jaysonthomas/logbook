@@ -54,28 +54,7 @@
 </ul>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Raw pointers</h1>
-<section id="0"><h1>Typdef for function pointers</h1>
-    
-<pre><code class="C">
-typedef void (*funcPointerTypeName)(int);
-funcPointerTypeName p = &funcName;
-p(5)    // Call the function
-</code></pre>
-  
-  This creates a type, named <code>funcPointerTypeName</code> for a pointer to a function that takes a single int argument and returns nothing. [<a href="https://t.ly/ZOY8">Ref1</a>, <a href="https://t.ly/Cwme">Ref2</a>].
-  
-  <p>
-    The code above works even without the <code>&</code>. This is a special case in C where the compiler automatically takes care of assigning the function's address to the function pointer by just specifying the function's name. The function should have the same format as the declaration of the typedef. In this case:
-   
-<pre><code class="C">
-void foo(int x) {}
-</code></pre>
-  </p>
-
-  Both p and foo have the same type, i.e. <code>void (*)(int)</code>. [<a href="../../jlib/cExamples/funcPointer.c">Example</a>, <a href="../../jlib/cppExamples/fundamentals/18_functionPointer.cpp">Another fun example</a>]. 
-</section>  
-  
+<chapter style="counter-reset: chapter 1"><h1>Raw pointers</h1> 
 <section id="1"><h1>Function argument pointers</h1>
 <pre><code class="C">
 int const * const ptr
