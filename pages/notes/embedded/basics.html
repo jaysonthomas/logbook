@@ -42,6 +42,9 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Timer resolution</a>
+<a href="#2">Prescaler setup</a>
+<a href="#3">References</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Timers: Background</h1>
@@ -57,7 +60,7 @@
   The clock frequency of a peripheral is decided by the clock frequency of the 
 </section>
 
-<section><h1>Timer resolution</h1>
+<section id="1"><h1>Timer resolution</h1>
   If a timer has a clock speed of 48MHz, then the timer resolutions are:
   <ul>
     <li>Min: 1 tick is $\frac{1}{48MHz}$</li>
@@ -65,7 +68,7 @@
   </ul>
 </section>
 
-<section><h1>Prescaler setup</h1>
+<section id="2"><h1>Prescaler setup</h1>
   [<a href="https://t.ly/HZN72">Good Q on stackoverflow</a>]<p></p>
   Prescaler value = $\frac{f_{\scriptsize\text{APBx_Timer}}}{f_{\scriptsize\text{Desired}}} - 1$. A value of $0$ means the clock frequency is divided by $1$.
 
@@ -76,7 +79,7 @@
   The resultant frequency decides the timer-counter's tick frequency. If the counter is set to up-count till $500$. Then, after $500 \times 10$us, the counter will reset and trigger an interrupt.
 </section>
 
-<section><h1>References</h1>
+<section id="3"><h1>References</h1>
   Look at a reference manual rather than the datasheet for the various registers associated with timers. For example: <a href="https://t.ly/CjW9W">ref</a>.
 
   <p>

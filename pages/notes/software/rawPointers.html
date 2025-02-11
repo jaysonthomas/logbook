@@ -41,21 +41,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Typdef for function pointers</a>
-<a href="#1">Function argument pointers</a>
-<a href="#2">Call-by-value vs Call-by-reference</a>
-<a href="#3">Different kinds of pointers</a>
-<a href="#4">Pointer variables</a>
-<a href="#5">Reference variables</a>
-<a href="#6">Mishandling of pointers</a>
+<a href="#0">Function argument pointers</a>
+<a href="#1">Call-by-value vs Call-by-reference</a>
+<a href="#2">Different kinds of pointers</a>
+<a href="#3">Pointer variables</a>
+<a href="#4">Reference variables</a>
+<a href="#5">Mishandling of pointers</a>
 <ul class="no-bullets">
-  <li><a href="#6.0">Dangling pointer</a></li>
-  <li><a href="#6.1">Memory leak</a></li>
+  <li><a href="#5.0">Dangling pointer</a></li>
+  <li><a href="#5.1">Memory leak</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Raw pointers</h1> 
-<section id="1"><h1>Function argument pointers</h1>
+<section id="0"><h1>Function argument pointers</h1>
 <pre><code class="C">
 int const * const ptr
 </code></pre>
@@ -71,7 +70,7 @@ int const * const ptr
   </p>
 </section>
 
-<section id="2"><h1>Call-by-value vs Call-by-reference</h1>
+<section id="1"><h1>Call-by-value vs Call-by-reference</h1>
   <table class="table1 center">
     <tr>
       <th>Expression</th>
@@ -117,11 +116,11 @@ int const * const ptr
   </table>
 </section>
 
-<section id="3"><h1>Different kinds of pointers</h1>
+<section id="2"><h1>Different kinds of pointers</h1>
   This <a href="https://t.ly/4kPR">link</a> seems useful.
 </section>
 
-<section id="4"><h1>Pointer variables</h1>
+<section id="3"><h1>Pointer variables</h1>
 <pre><code class="C++">
 int x = 42;
 int *ptr = &x; // 'ptr' is a pointer that stores the address of 'x'   
@@ -130,7 +129,7 @@ int *ptr = &x; // 'ptr' is a pointer that stores the address of 'x'
   Changing <code>ptr</code> changes <code>x</code>.
 </section>
 
-<section id="5"><h1>Reference variables</h1>
+<section id="4"><h1>Reference variables</h1>
 <pre><code class="C++">
 int y = 10;
 int &ref = y; // 'ref' is a reference to 'y'
@@ -138,14 +137,14 @@ int &ref = y; // 'ref' is a reference to 'y'
   The address of <code>ref</code> is made the same as that of <code>y</code>. Printing <code>ref</code> outputs 10. A reference is a way of creating an alias for an existing variable; the same data can be referred to using a different name.
 </section>
 
-<section id="6"><h1>Mishandling of pointers</h1>
+<section id="5"><h1>Mishandling of pointers</h1>
   <a href="https://t.ly/uBJNS">Ref</a>
 
-  <subsection id="6.0"><h1>Dangling pointer</h1>
+  <subsection id="5.0"><h1>Dangling pointer</h1>
     A dangling pointer situation occurs when a pointer refers to a memory that is no longer allocated.
   </subsection>
 
-  <subsection id="6.1"><h1>Memory leak</h1>
+  <subsection id="5.1"><h1>Memory leak</h1>
     Memory leaks happen when we lose the pointer that is pointing to a memory block, making it impossible to free that block anymore.
   </subsection>
 </section>

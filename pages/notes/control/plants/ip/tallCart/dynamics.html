@@ -41,33 +41,18 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Gravity acting on the pole</a>
-<a href="#1">Setup</a>
-<a href="#2">Balance of forces about the centre of mass</a>
+<a href="#0">Setup</a>
+<a href="#1">Gravity acting on the pole</a>
+<a href="#2">Balance of forces about the centre of masses</a>
 <ul class="no-bullets">
   <li><a href="#2.0">Cart</a></li>
   <li><a href="#2.1">Pole</a></li>
 </ul>
-<a href="#3">Balance of moments about the centre of mass</a>
-<a href="#4">Equations of motion</a>
+<a href="#3">Balance of moments about the centre of masses</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Cartpole with spring-damper attached: Dynamics</h1>
-<section id="0"><h1>Gravity acting on the pole</h1>
-  <div class="img-container">
-    <figure>
-      <img style="height:100px; width:auto"
-      src="../../../../../../figures/dynamics/cartPole/7_poleWeightDotProduct.png"/>
-      <figcaption>
-        <a href="../../../../maths/vectors/products.html">Dot product</a> of the pole's weight and $\hat{d}$, the <br>unit vector in the direction of the pole.
-      </figcaption>
-    </figure>
-  </div>
-
-  The component of the pole's weight in the direction of the pole is $m^{\scriptsize{G}} g\,cos\theta$.
-</section>
-
-<section id="1"><h1>Setup</h1>
+<section id="0"><h1>Setup</h1>
   <div class="container">
     <figure2>
       <img style="height:130px; width:auto"
@@ -92,50 +77,58 @@
   </div>
 </section>
 
-<section id="2"><h1>Balance of forces about the centre of mass</h1>
+<section id="1"><h1>Gravity acting on the pole</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/7_poleWeightDotProduct.png"/>
+      <figcaption>
+        <a href="../../../../maths/vectors/products.html">Dot product</a> of the pole's weight and $\hat{d}$, the <br>unit vector in the direction of the pole.
+      </figcaption>
+    </figure>
+  </div>
+
+  The component of the pole's weight in the direction of the pole is $m^{\scriptsize{G}} g\,cos\theta$.
+</section>
+
+<section id="2"><h1>Balance of forces about the centre of masses</h1>
   <subsection id="2.0"><h1>Cart</h1>
-    $$\begin{align}
+    $$\begin{align*}
       \newcommand{\WaG}{^{\scriptsize{W}\hspace{-0.8em}}a^{\scriptsize{G}}}  
       
-      \sum F_{\hat{i},m^{\scriptsize{C}}} &= m^{\scriptsize{C}} \ddot{x} \,\hat{i} \nonumber \\
-        &= (-kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta) \,\hat{i} \label{eq:iHatCartForces}
-    \end{align}$$
+      \sum F_{\hat{i},m^{\scriptsize{C}}} &= m^{\scriptsize{C}} \ddot{x} \,\hat{i} \\
+        &= (-kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta) \,\hat{i} 
+    \end{align*}$$
   </subsection>
 
   <subsection id="2.1"><h1>Pole</h1>
-    $$\begin{align}
-      \sum F_{\hat{d},m^{\scriptsize{G}}} &= m^{\scriptsize{G}} \cdot \WaG \,\hat{d} \nonumber \\
-        &= -F_1 \,\hat{d} + m^{\scriptsize{G}}g\,cos\theta \,\hat{d} \label{eq:dHatPoleForces} \\
-      \sum F_{\hat{q},m^{\scriptsize{G}}} &= m^{\scriptsize{G}} \cdot \WaG \,\hat{q} \nonumber \\
-        &= -F_2 \,\hat{q} - m^{\scriptsize{G}}g\,sin\theta \,\hat{q} \label{eq:qHatPoleForces}
-    \end{align}$$
+    $$\begin{align*}
+      \sum F_{\hat{d},m^{\scriptsize{G}}} &= m^{\scriptsize{G}} \cdot \WaG \,\hat{d} \\
+        &= -F_1 \,\hat{d} + m^{\scriptsize{G}}g\,cos\theta \,\hat{d} \\
+      \sum F_{\hat{q},m^{\scriptsize{G}}} &= m^{\scriptsize{G}} \cdot \WaG \,\hat{q} \\
+        &= -F_2 \,\hat{q} - m^{\scriptsize{G}}g\,sin\theta \,\hat{q} 
+    \end{align*}$$
 
-    $^{\scriptsize{W}\hspace{-0.4em}}a^{\scriptsize{G}}\,\hat{d}$ is the acceleration of the centre of gravity/mass of the pole w.r.t. the world frame in the $\hat{d}$ direction.
+    $^{\scriptsize{W}\hspace{-0.4em}}a^{\scriptsize{G}}\,\hat{d}$ is the centre of gravity or mass of the pole w.r.t. the world frame in the $\hat{d}$ direction.
   </subsection>
 </section>
 
-<section id="3"><h1>Balance of moments about the centre of mass</h1>
-  The advantage of computing the balance of moments about <code>A</code> is that $F_1$ and $F_2$ don't create any moments about the point. Hoping to never have to evaluate them is futile, since they pop up in the sum of forces about $\hat{d}$ and $\hat{q}$ anyway. The number of terms in the sum of torques equation does reduce though in the former case.
+<section id="3"><h1>Balance of moments about the centre of masses</h1>
+  The advantage of computing the balance of moments about <code>A</code> is that $F_1$ and $F_2$ don't create any moments about the point. Hoping to never have to evaluate them is futile, since they pop up in the sum of forces about $\hat{d}$ and $\hat{q}$ anyway. The number of terms in the sum of torques equation below does reduce though in the former case.
 
-  $$\begin{align}
-    \sum \tau^G_{\hat{k}} &= \frac{d}{dt} H^G \nonumber \nonumber \\
-      &= F_2\,l \,\hat{k} \nonumber \\
-      &= \frac{d}{dt} \biggl(I^G \begin{bmatrix}0 \\ 0 \\ \omega_z\end{bmatrix}\biggr) \nonumber \\
-      &= I^G_{zz} \, \ddot\theta \, \hat{k} \nonumber \\
-      &= \frac{m_G\, l^2}{12}\,\ddot\theta \, \hat{k} \label{eq:kHatPoleMoments}
-  \end{align}$$
+  $$\begin{align*}
+    \sum \tau^G_{\hat{k}} &= \frac{d}{dt} H^G \\
+      &= F_2\,l \,\hat{k} \\
+      &= \frac{d}{dt} \biggl(I^G \begin{bmatrix}0 \\ 0 \\ \omega_z\end{bmatrix}\biggr) \\
+      &= I^G_{zz} \, \ddot\theta \, \hat{k} \\
+      &= \frac{m_G\, l^2}{12}\,\ddot\theta \, \hat{k}
+  \end{align*}$$
 
   $\frac{d}{dt} H^G$ is the time rate of change of angular momentum about <code>G</code>.
 
   <p>
     $\sum \tau^G_{\hat{k}}$ is the sum of external torques about <code>G</code>. The only external torque is caused by $F_2$ about a moment arm of length $l$. Gravity causes no torque since it is acting downwards at <code>G</code>. The torque due to $F_2$ is positive when $F_2$ causes a rotation in the counter-clockwise $\hat{k}$ direction.
   </p>
-
-  $I^G$ is the mass moment of inertia of the pole about <code>G</code>. Since the only term that matters is that in the direction of $\hat{k}$, only $I^G_{zz}$ is considered. It is similar to that of a uniform rod. 
-</section>
-
-<section id="4"><h1>Equations of motion</h1>
-  Isolating $F_1, F_2$ in equations \ref{eq:dHatPoleForces} and \ref{eq:qHatPoleForces}, and substituting them in \ref{eq:kHatPoleMoments} and \ref{eq:iHatCartForces}
 </section>
 
 </chapter>

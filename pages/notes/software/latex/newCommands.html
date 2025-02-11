@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Function pointers</title>
-  <meta name="Function pointers" content="text/html; charset=utf-8;" />
+  <title>Latex: Creating new commands</title>
+  <meta name="Latex: Creating new commands" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -42,52 +42,30 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Typdef for function pointers</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Function pointers</h1>
+<chapter style="counter-reset: chapter 1"><h1>Latex: Creating new commands</h1>
 <section id="0"><h1>Overview</h1>
-<pre><code class="C">
-void func(int x) {}
-void (*funcPointer)(int) = &func;
-funcPointer(5)    // Call the function
+<pre><code class="latex">
+$$
+  \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+  \wrt{W}{0.3}{v}{A} = \dot{x}\, \hat{i}
+
+  \newcommand{\avg}{\wrt{A}{0.1}{v}{G}}
+  \avg = 1
+$$
 </code></pre>
 
-  A function address can also be passed to a function.
-<pre><code class="C">
-void func(int x) {}
-void test(int status, void (*funcPointer)(int x))
-{
-  funcPointer(x)
-}
+  <subsubsection><h1>Output</h1>
+    $$\begin{align*}
+      \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+      \wrt{W}{0.3}{v}{A} &= \dot{x}\, \hat{i} \\
 
-void main()
-{
-  const int status = 1;
-  test(status, &func)    // Call the function
-}
-</code></pre>    
+      \newcommand{\avg}{\wrt{A}{0.1}{v}{G}}
+      \avg &= 1
+    \end{align*}$$
+  </subsubsection>
 </section>
-
-<section id="1"><h1>Typdef for function pointers</h1>
-<pre><code class="C">
-typedef void (*funcPointerTypeName)(int);
-funcPointerTypeName p = &funcName;
-p(5)    // Call the function
-</code></pre>
-  
-  This creates a type named <code>funcPointerTypeName</code> for a pointer to a function that takes a single int argument and returns nothing. [<a href="https://t.ly/ZOY8">Ref1</a>, <a href="https://t.ly/Cwme">Ref2</a>].
-  
-  <p>
-    The code above works even without the <code>&</code>. This is a special case in C where the compiler automatically takes care of assigning the function's address to the function pointer by just specifying the function's name. The function should have the same format as the declaration of the typedef. In this case:
-   
-<pre><code class="C">
-void foo(int x) {}
-</code></pre>
-  </p>
-
-  Both p and foo have the same type, i.e. <code>void (*)(int)</code>. [<a href="../../jlib/cExamples/funcPointer.c">Example</a>, <a href="../../jlib/cppExamples/fundamentals/18_functionPointer.cpp">Another fun example</a>]. 
-</section>  
 </chapter>
 
 </body>

@@ -75,15 +75,36 @@
 <section id="1"><h1>Pole: Linear velocity</h1>
   <subsubsection><h1>Translational motion</h1>
     The centre of mass of the pole moves at the same velocity as that of the cart, $\dot{x}$, in the $\hat{i}$ direction.
+    $$
+      \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+      \wrt{W}{0.3}{v}{A} = \dot{x}\, \hat{i}
+    $$
   </subsubsection>
 
   <subsubsection><h1>Rotational motion</h1>
-    A linear velocity due to rotation is given by $v = r\omega$ and is directed perpendicular to the radius, in this case, the length of the pole.
+    A linear velocity due to rotation is given by $v = r\omega$ and is directed perpendicular to the radius (the length of the pole).
+    $$\begin{align*}
+      \newcommand{\avg}{\wrt{A}{0.1}{v}{G}}
+      \newcommand{\arg}{\wrt{A}{0.5}{r}{G}}
+      \newcommand{\wwg}{\wrt{A}{0.3}{\omega}{G}}
+      \newcommand{\wwgTwo}{\wrt{W}{0.5}{\omega}{G}}
+      
+      \avg &= \,\avg\Bigr|_{\wwg=0} + \bigl(\,\wwgTwo \times \arg\,\bigr) \\
+        &= 0 + \bigl(\omega_z\,\hat{k} \times l\,\hat{d}\,\bigr) \\
+        &= l\dot\theta\,\hat{q}
+    \end{align*}$$
+
+    $\avg\Bigr|_{\wwg=0}$ is the velocity of <code>G</code> as seen from <code>A</code> when <code>G</code> is not rotating. Since <code>G</code> does not have any linear motions, the term is $0$.
+
+    <p>
+      $^{\scriptsize{A}}r^{\scriptsize{G}}$ is the position vector between the 2 points.
+    </p>
   </subsubsection>
 
   <subsubsection><h1>Combining the 2 components</h1>
     $$
-      v_G = \dot{x}\,\hat{i} + l\dot\theta\,\hat{q}
+      \newcommand{\wvg}{\wrt{W}{0.3}{v}{G}}
+      \wvg = \dot{x}\,\hat{i} + l\dot\theta\,\hat{q}
     $$
   </subsubsection>
 </section>
@@ -91,9 +112,19 @@
 <section id="2"><h1>Pole: Linear acceleration</h1>
   Refer <a href="../../../../maths/vectors/ops/unitVectors.html">here</a> for derivatives of unit vectors.
   $$\begin{align*}
-    a_G &= \ddot{x}\,\hat{i} + l\ddot\theta\,\hat{q} + l\dot\theta \frac{d}{dt} \hat{q} \\
+    \wrt{W}{0.5}{a}{G} &= \ddot{x}\,\hat{i} + l\ddot\theta\,\hat{q} + l\dot\theta \frac{d}{dt} \hat{q} \\
         &= \ddot{x}\,\hat{i} + l\ddot\theta\,\hat{q} - l\dot\theta^2\,\hat{d} \\
   \end{align*}$$
+
+  <div class="img-container">
+    <figure>
+      <img style="height:110px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/8_xDdot.png"/>
+      <figcaption>
+        $\ddot{x}\,\hat{i}$ can be split into $\ddot{x}\,cos\theta\,\hat{q}$ and $\ddot{x}\,sin\theta\,\hat{d}$.
+      </figcaption>
+    </figure2>
+  </div>
 
   In terms of $\hat{d}$ and $\hat{q}$ unit vectors:
   $$
