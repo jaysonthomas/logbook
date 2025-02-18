@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>General software related notes</title>
+  <meta name="General software related notes" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Software downloads</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Snap installs</a></li>
+  <li><a href="#0.1">Apt-get installs</a></li>
+  <li><a href="#0.2">Apt installs</a></li>
+  <li><a href="#0.3">Repositories</a></li>
+  <li><a href="#0.4">Visual studio code extensions</a></li>
+  <li><a href="#0.5">Miscellaneous</a></li>
+</ul>
+<a href="#1">Latex</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Good examples</a></li>
+</ul>
+<a href="#2">Json</a>
+<a href="#3">Drawio</a>
+<a href="#4">Git</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Git</h1>
+<section><h1>Submodules</h1>
+  <a href="https://t.ly/VMEV">Ref</a>.
+<pre><code class="bash">
+git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
+git submodule update --init --recursive
+</code></pre>
+
+  <p>
+    The 2nd command is used to initialise and update submodules present in git repositories that are cloned from elsewhere. Add the recursive option to do it recursively.
+  </p>
+</section>
+
+<section><h1>Unstage added files</h1>
+<pre><code class="bash">
+git reset HEAD
+</code></pre>   
+</section>
+
+<section><h1>Stash</h1>
+<pre><code class="bash">
+# List all the stashes related to different branches with stash indices
+git stash list
+
+# Delete a stash
+git stash drop index
+
+# To show the files present in a stash. Add ' -p ' after show to see more details.
+git stash show stash@{0}
+
+# To create a stash entry with a description
+git stash push -m "Description"
+</code></pre>  
+</section>
+
+<section id="4"><h1>Git</h1>
+  <ul>
+    <li>Git branch</li>
+<pre><code class="bash">
+# List all branches
+git branch -a
+
+# Create branch Y from another, say X
+# Changes from branch X will show up as changes from the master on the 
+# new branch Y.
+git checkout [X]
+git checkout -b [Y]
+
+# To merge Z into the newly created branch Y
+git merge [Z]
+
+# What branch am I on?
+git branch --show
+</code></pre>
+
+    <li>Error when doing a git pull on the new branch created from another (not master)</li>
+    <a href="https://bit.ly/3YSHjRo">Great explanation</a> - fetch included.
+<pre><code class="bash">
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> 7374-adaptive-control
+</code></pre>    
+    <p>
+      <li>Git fetch</li>
+      <a href="https://t.ly/OCdf">Good link</a> on this. I think fetch is used to just
+      pull in meta-data.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
