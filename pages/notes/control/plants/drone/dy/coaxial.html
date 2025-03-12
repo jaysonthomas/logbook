@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coaxial Helicopter dynamics</title>
+  <meta name="Coaxial Helicopter dynamics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Example</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Coaxial Helicopter dynamics</h1>
+
+<section id="0"><h1>Example</h1>
+  A co-axial helicopter is just a body with two rotors on top of each other which produce upward thrusts by spinning in opposite directions. Let rotor 1 spin CW with $\omega_1$ and rotor 2 spin CCW with $\omega_2$. Find $\ddot{z}$ and $\ddot\psi$.
+
+  <p>
+    Mass, $m = 1.0kg$ <br>
+    Moment of inertia, $I_z = 2.0kgm^2$<br>
+    Force constant of proportionality, $k_f = 0.1$<br>
+    Moment constant of proportionality, $k_m = 0.2$<br>
+    Rotation rate of propeller 1, $\omega_1 = 10.0rad/s$<br>
+    Rotation rate of propeller 2, $\omega_2 = 8.0rad/s$
+  </p>
+
+  Resulting vertical linear acceleration:
+  $$\begin{align*}
+    \ddot{z} &= \frac{F_{net}}{m} \\
+          &= \frac{1}{m}(mg - F_{thrust}) \\
+          &= \frac{1}{m}(mg - k_f(\omega_1^2 + \omega_2^2)) \\
+          &= g - \frac{k_f}{m}(\omega_1^2 + \omega_2^2) \\
+          &= -6.6 m/s^2
+  \end{align*}$$
+
+  <p>
+    Resulting rotational/angular acceleration:
+    $$\begin{align*}
+    \ddot{\psi} &= \frac{M_{z}}{I_z} \\
+          &= \frac{k_m}{I_z}(\omega_2^2 - \omega_1^2) \\
+          &= -3.6 rad/s^2
+  \end{align*}$$
+  </p>
+
+  If rotor 1 (top) spins faster than rotor 2, then the body of the vehicle experiences angular acceleration in the CCW direction! The body and the propeller would be spinning in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_1^2$ is given a negative sign because we only consider the reaction torque similar to the direction of the thrust - we expel air downwards but consider the motion in the opposite direction. The positive z axis points downwards. When we curl, the thumb points in the positive z direction.
+</section>
+</chapter>
+
+</body>
+</html>

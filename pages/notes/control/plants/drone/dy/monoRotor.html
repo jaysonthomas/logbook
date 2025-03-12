@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monorotor dynamics</title>
+  <meta name="Monorotor dynamics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Forces</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Decomposition</a></li>
+  <li><a href="#0.1">Linear translational acceleration</a></li>
+  <li><a href="#0.2">Translational equilibrium</a></li>
+</ul>
+<a href="#1">Moments</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Decomposition</a></li>
+  <li><a href="#1.1">Rotational acceleration</a></li>
+  <li><a href="#1.2">Rotational equilibrium</a></li>
+</ul>
+<a href="#2">Example</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Monorotor dynamics</h1>
+
+<section id="0"><h1>Forces</h1>
+  <subsection id="0.0"><h1>Decomposition</h1>
+    <subsubsection id="0.0"><h1>Thrust and gravity</h1>
+      A monorotor has only one rotor and therefore only one thrust vector pointing upwards in the positive $z$ direction. This will cause an acceleration in the z direction.
+
+      $$
+        F_z = mg - F_{thrust}
+      $$
+
+      $F_z$ is the net force on the vehicle. To hover ($F_z=0$), the thrust force upwards would need to be equal to the force that gravity exerts downwards.
+    </subsubsection>
+
+    <subsubsection id="0.1"><h1>Drag</h1>
+      A quadrotor as a whole and the individual propellers experience drag.
+  
+      <p>
+        In practice, drag is treated as a disturbance when designing quadrotor controllers. It isn't modeled explicitly since:
+        <ul>
+          <li>
+            Its effects are relatively small at lower vehicle and wind speeds
+          </li>
+          <li>
+            It is difficult to identify the correct drag model
+          </li>
+        </ul>
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection id="0.1"><h1>Linear translational acceleration</h1>
+    $$\begin{align*}
+      \ddot{z} &= g - \frac{F_{thrust}}{m} \\
+               &= g - \frac{u}{m}
+    \end{align*}$$
+  </subsection>
+
+  <subsection id="0.2"><h1>Translational equilibrium</h1>
+    When a monorotor is hovering, it is in translational equilibrium. 
+
+    <div class="container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../../figures/drone/31_ex1_monorotor.png"/>
+        <figcaption>
+          Consider a monorotor that is hovering with $F_{thrust} = 100N$. From the balance of forces, the mass would be: $m = \frac{100}{9.8} = ~10.2kg$ which is a big monorotor.
+        </figcaption>
+      </figure>
+    </div> 
+  </subsection>
+</section>
+
+<section id="1"><h1>Moments</h1>
+  <subsection id="1.0"><h1>Decomposition</h1>
+    [<a href="https://t.ly/i02K">Monorotor spinning sim video</a>] <p></p>
+    A <i>Reaction moment</i> is a rotational moment that is an opposite reaction to some other rotational motion.
+
+    <p>
+      In addition to causing a thrust force, a rotating propeller also introduces a reaction moment. A rotor that's spinning clockwise will produce a moment that causes the body to spin counter-clockwise.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Rotational acceleration</h1>
+    For a monorotor where only the z-axis is considered, the torque equation would be:
+     
+    $$
+      M_z = I_z \ddot\psi
+    $$
+
+    $\psi$ is the yaw angle.
+  </subsection>
+
+  <subsection id="1.2"><h1>Rotational equilibrium</h1>
+    It's impossible for a monorotor to sit truly motionless in the sky because it can never be in rotational equilibrium.
+  </subsection>
+</section>
+
+<section id="2"><h1>Example</h1>
+  What thrust would a 2.2 kg monorotor need in order to accelerate upwards at -4.0m/s2 (z is positive downwards)? 30.4N
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Humanoid</title>
+  <meta name="Humanoid" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Skills</a>
+<a href="#1">Control</a>
+<a href="#2">Modeling & simulation</a>
+<a href="#3">Actuators</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Humanoid</h1>
+<section id="0"><h1>Skills</h1>
+  <ul>
+  </ul>
+</section>
+
+<section id="1"><h1>Control</h1>
+  <ul>
+    <li>Developing and tuning low-level control systems for actuators.</li>
+    <ul>
+      <li>Current/Torque</li>
+      <li>Velocity</li>
+      <li>Position</li>
+      <li>Impedance</li>
+      <li>Admittance</li>
+    </ul>
+    <li>MPC</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Modeling & simulation</h1>
+  <ul>
+    <li>Multi body forward/inverse kinematics and dynamics models.</li>
+    <ul>
+      <li>Use these models to predict actuator behavior ensuring accurate motion planning and control.</li>
+      <li>Address gravity and inertia compensation.</li>
+    </ul>
+
+    <p>
+      <li>Use physics engines (e.g., MuJoCo, Drake) to simulate the entire robotic body using URDF. Simulate multiple actuators and environmental interactions, to test and refine system performance.</li>
+    </p>
+  </ul>
+</section>
+
+<section id="3"><h1>Actuators</h1>
+  <ul>
+    <li>Test and characterisation.</li>
+    
+    <p>
+      <li>Create models for actuators under different conditions (e.g., load, speed).</li>
+      <li>Actuation sizing (torque, speed) based on performance criteria for robotic applications such as manipulation and bipedal locomotion.</li>      
+    </p>
+
+    <li>Validation of actuators in robotic systems.</li>    
+    <li>Analysis (and compensation) of dynamic parameters such as friction, backdrivability, backlash and hysteresis.</li>    
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

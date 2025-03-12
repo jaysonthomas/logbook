@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alternate method for computing pole-kinematics</title>
+  <meta name="Alternate method for computing pole-kinematics" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Linear velocity</a>
+<a href="#1">Linear acceleration</a>
+<a href="#2">Shortcut for computing linear acceleration</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Alternate method for computing pole-kinematics</h1>
+<section id="0"><h1>Linear velocity</h1>
+  <subsubsection><h1>Translational motion</h1>
+    The centre of mass of the pole moves at the same velocity as that of the cart, $\dot{x}$, in the $\hat{i}$ direction.
+    $$
+      \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+      \wrt{W}{0.3}{v}{A} = \dot{x}\, \hat{i}
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Rotational motion</h1>
+    A linear velocity due to rotation is given by $v = r\omega$ and is directed perpendicular to the radius, formed by the length of the pole.
+    $$\begin{align*}
+      \newcommand{\avg}{\wrt{A}{0.1}{v}{G}}
+      \newcommand{\arg}{\wrt{A}{0.5}{r}{G}}
+      \newcommand{\wwg}{\wrt{A}{0.3}{\omega}{G}}
+      \newcommand{\wwgTwo}{\wrt{W}{0.5}{\omega}{G}}
+      
+      \avg &= \,\avg\Bigr|_{\wwg=0} + \bigl(\,\wwgTwo \times \arg\,\bigr) \\
+        &= 0 + \bigl(\omega_z\,\hat{k} \times l\,\hat{d}\,\bigr) \\
+        &= l\dot\theta\,\hat{q}
+    \end{align*}$$
+
+    $\avg\Bigr|_{\wwg=0}$ is the velocity of <code>G</code> as seen from <code>A</code> when <code>G</code> is not rotating. Since <code>G</code> does not have any linear motions, the term is $0$.
+
+    <p>
+      $^{\scriptsize{A}}r^{\scriptsize{G}}$ is the position vector between the 2 points.
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Combining the 2 components</h1>
+    $$
+      \newcommand{\wvg}{\wrt{W}{0.3}{v}{G}}
+      \wvg = \dot{x}\,\hat{i} + l\dot\theta\,\hat{q}
+    $$
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Linear acceleration</h1>
+  Refer <a href="../../../../maths/vectors/ops/unitVectors.html">here</a> for derivatives of unit vectors that rotate [example: $\hat{q}$].
+  $$\begin{align*}
+    \newcommand{\wdt}{ ^{\raise{2.5ex} \scriptsize{W} \hspace{-1.5em}} {\frac{d}{dt}} }
+
+    \wrt{W}{0.5}{a}{G} &= \wdt\,\wvg \\
+        &= \ddot{x}\,\hat{i} + l\ddot\theta\,\hat{q} + l\dot\theta \frac{d}{dt} \hat{q} \\
+        &= \ddot{x}\,\hat{i} + l\ddot\theta\,\hat{q} - l\dot\theta^2\,\hat{d} \\
+  \end{align*}$$
+
+  <div class="img-container">
+    <figure>
+      <img style="height:110px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/8_xDdot.png"/>
+      <figcaption>
+        $\ddot{x}\,\hat{i}$ can be split into $\ddot{x}\,cos\theta\,\hat{q}$ and $\ddot{x}\,sin\theta\,\hat{d}$.
+      </figcaption>
+    </figure2>
+  </div>
+
+  In terms of $\hat{d}$ and $\hat{q}$ unit vectors:
+  $$
+    a_G = (\ddot{x}\,sin\theta - l\dot\theta^2)\,\hat{d} + (\ddot{x}\,cos\theta + l\ddot\theta)\,\hat{q}
+  $$
+
+</section>
+  
+<section id="2"><h1>Shortcut for computing linear acceleration</h1>
+  There are always 5 potential terms when evaluating the acceleration of a point on a rigid body that is both translating and rotating. The reference frame attached to the rigid body is both translating and rotating.
+
+  $$\begin{align*}
+    \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+    \wrt{W}{0.5}{a}{G} &= \wrt{W}{1.0}{a}{A}
+      + \wrt{A}{0.5}{a}{G}\Bigr|_{\wrt{W}{0.1}{\omega}{}=0}
+      + \wrt{W}{0.7}{\dot\omega}{} \times \wrt{A}{0.3}{r}{G}
+      + \wrt{W}{0.7}{\omega}{} \times (\wrt{W}{0.4}{\omega}{} \times \wrt{A}{0.5}{r}{G})
+      + 2\,\wrt{W}{0.3}{\dot\omega}{} \times (\wrt{A}{0.1}{v}{G}\Bigr|_{\wrt{W}{0.1}{\omega}{}=0})
+  \end{align*}$$
+
+  $\wrt{W}{1.0}{a}{A}$ is the translational acceleration. 
+
+  <p>
+    $\wrt{A}{0.5}{a}{G}\Bigr|_{\wrt{W}{0.1}{\omega}{}=0}$ is the acceleration of point <code>G</code> relative to <code>A</code>, if one was evaluating it when standing on the object at <code>G</code>.
+  </p>
+
+  $\wrt{W}{0.7}{\dot\omega}{} \times \wrt{A}{0.3}{r}{G}$ is the eulerian term which is $\ddot\theta$ multiplied by the distance between <code>G</code> and <code>A</code>.
+
+  <p>
+    $\wrt{W}{0.7}{\omega}{} \times (\wrt{W}{0.4}{\omega}{} \times \wrt{A}{0.5}{r}{G})$ is the centripetal term.
+  </p>
+
+  $2\,\wrt{W}{0.3}{\dot\omega}{} \times (\wrt{A}{0.1}{v}{G}\Bigr|_{\wrt{W}{0.1}{\omega}{}=0})$ is the coriolis term which requires motion of the point <code>G</code> relative to <code>A</code>.
+
+  $$
+    \wrt{W}{0.5}{a}{G} = \ddot{x}\,\hat{i} + 0 + l\ddot\theta\,\hat{q} - l\dot\theta^2\,\hat{d} + 0
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

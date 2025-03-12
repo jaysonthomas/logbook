@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Control: Errors</title>
+  <meta name="Control: Errors" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Effect of a small model error</a>
+<a href="#1">Error sources</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Control: Errors</h1>
+
+<section id="0"><h1>Effect of a small model error</h1>
+  Assuming, the aim is for the monorotor to hover: 
+  $$\ddot{z} = 0$$
+
+  Assume the drone's mass has been overestimated by a small amount $\epsilon$, i.e. the drone is lighter than the controller thinks. The target position is a constant altitude (since the aim is to hover). The position over time can be found as follows:
+  <ul>
+    <li>Integrating $\ddot{z}$ to get velocity</li>
+    $$
+      \dot{z}(t) = \int^t_0{\epsilon dT} = \epsilon t + \dot{z}(0)
+    $$
+
+    <li>Integrating $\dot{z}$ to get position</li>
+    $$\begin{align*}
+      z(t)  &= \int^t_0{\epsilon T dT}\\
+      z(t) - z(0) &= \frac{1}{2} \epsilon t^2
+    \end{align*}$$
+  </ul>
+
+  With $z(0) = \dot{z}(0) = 0$, the altitude is supposed to be $z(0)$ forever. But, with the small error in mass, the position grows quadratically with time. 
+
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/drone/IntroToControl4.png"/>
+      <figcaption>
+        Small error in mass causing a quadratic increase in position error  
+      </figcaption>
+    </figure>
+  </div>
+  The smallest deviation of the model (used by the controller to make its thrust decisions) from the real world can lead to quadratic errors in double integrator systems as seen above. A double integrator system is an <i>unstable system</i>. A <i>stable system</i> would have some self-correcting ability and the mismatch would not grow infinitely. 
+</section>
+
+<section id="1"><h1>Error sources</h1>
+  Any dynamic model is always an approximation of the real world. Understanding and addressing errors in control is so important that there are different words for different error types. All errors eventually cause an error in achieving a control target.
+  <ul>
+    <li>Model error</li>
+    An error in the model of the vehicle itself. Eg: neglected aerodynamic effects, model parameter uncertainties like the estimate of the rotational inertia of the vehicle may be slightly off.
+
+    <p>
+      <li>Disturbances</li>
+      They are errors caused by something external or internal to the vehicle that wasn't anticipated. For example, a strong cross-breeze would be a disturbance that could introduce error, or a part coming loose. 
+    </p>
+
+    <li>Measurement error</li>
+    They are unpredictable errors introduced when a measurement of the vehicle or the environment it is in, is taken.
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -397,10 +397,19 @@ section > h1 {
   font-variant: small-caps;
   font-size: large;
 }
+
 chapter section > h1 {
   font-variant: small-caps;
   font-size: large;
 }
+
+chapter section > h1 .MathJax, 
+chapter section > h1 .mjx-container {
+  font-variant: normal;
+  font-size: inherit;
+}
+
+
 subsection > h1 {
   font-variant: normal;
   font-size: medium;
@@ -585,3 +594,4 @@ chapter.appendix figcaption:before {
   margin-bottom: 0px;
   border: none;
 }
+

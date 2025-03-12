@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>2D Control: Non-linear control</title>
+  <meta name="2D Control: Non-linear control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Control loops</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Changes to the linearised cascade controller</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>2D Control: Non-linear control</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../../figures/drone/46b_nonLinearControl2d.png"/>
+    </figure>
+  </div>
+
+  Equations:
+  <div style="text-align:center;">
+    $$\begin{array}{c|c} 
+      \text{Linearised} & \text{Non-linear} \\ 
+      \hline
+      \ddot{y}=g\phi & \ddot{y} = \frac{u_1}{m} sin\phi \\
+      \ddot{z}=g-\frac{u_1}{m} & \ddot{z}=g-\frac{u_1}{m}cos\phi \\
+      \ddot{\phi} = \frac{u_2}{I_{xx}} & \ddot{\phi} = \frac{u_2}{I_{xx}}
+    \end{array}$$
+  </div>
+
+  Solving for $u_1, \phi_c, u_2$:
+  $$\begin{align*}
+    u_1 &= \frac{m(g - \ddot{z})}{cos\phi} \\
+    \phi_c &= sin^{-1} \left( \frac{m\ddot{y}_t}{u_1} \right) \\
+    u_2 &= I_{xx} \ddot{\phi}
+  \end{align*}$$
+
+  In the non-linear case, the thrust needs to be increased when the drone is tilted.
+</section>
+
+<section id="1"><h1>Control loops</h1>
+  To make use of the non-linear dynamics in the controller, the linearised cascade controller does not need to change much. The aim is still to have 3 double integrator equations that can be controlled.  But to get those, this time some non-linear transformations will be required resulting in 2 big changes to the overall data flow. 
+
+  <subsection id="1.0"><h1>Changes to the linearised cascade controller</h1>
+    <ul>
+      <li>The $z$ and $y$ motions are re-coupled by passing the commanded thrust to the $y$ position controller as well as to the drone. </li>
+
+      <p>
+        The effect that thrust will have on the y motion is not considered, even if it will end up impacting both the z and y motions.
+      </p>
+      
+      <li>The commanded thrust is computed based solely on the desired and measured $z$ motion and the current measured angle $\phi$</li>
+    </ul>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

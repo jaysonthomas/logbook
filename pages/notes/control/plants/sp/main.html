@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple pendulum</title>
+  <meta name="Simple pendulum" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">Net (sum of all) moment</a>
+<a href="#2">Balance of moments</a>
+<a href="#3">Simulation</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">State space form</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="setup.html">Setup</a></li>
+    <li><a href="dynamics/main.html">Forces on the pendulum</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Net (sum of all) moment</h1>
+  <div class="container">
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../../../figures/dynamics/2_pendulumNewton.png"/>
+      <figcaption>
+        Forces acting on a simple pendulum
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../../../figures/dynamics/2_gravitySimplePendulum.png"/>
+      <figcaption>
+        Gravity pulls the pendulum in the opposite direction to the applied torque
+      </figcaption>
+    </figure>
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../../../figures/dynamics/2_gravityTrig.png"/>
+    </figure>
+  </div>
+
+  Forces acting on the pendulum:
+  <ul>
+    <li>Component of gravity acting along the string</li>
+    <li>
+      Component of gravity acting tangential and opposite to the direction of the motion of the mass [<a href="https://t.ly/884vC">Ref</a>]
+    </li>        
+    <li>Tension on the string balanced by the gravity component along the string</li>
+    <li>
+      Damping forces such as friction at the pivot point and air resistance
+    </li>
+    <li>
+      Any applied external force
+    </li>
+  </ul>
+
+  The net moment:
+  $$
+    M = \underbrace{-b\dot{\theta}(t) + u(t)}_{Q} 
+      \underbrace{-mgsin(\theta)}_{F_{g_{tangential}}} \cdot l
+  $$
+
+  $Q$ models a damping torque (from friction) and a control torque input. $b$ represents the damping coefficient which characterizes the amount of damping present in the system
+</section>
+
+<section id="2"><h1>Balance of moments</h1>
+  From newton's 2nd law, the moment about the axis of rotation is equal to the net moment $M$ about the same axis causing the pendulum to rotate:
+  
+  $$\begin{align*}
+    M &= J_0 \ddot{\theta} \\
+    Q -mglsin\theta &= ml^2 \ddot{\theta}
+  \end{align*}$$
+
+  Rearranging:
+  $$
+    ml^2 \ddot\theta(t) + b\dot\theta(t) + mgl \sin\theta(t) = u(t)
+  $$
+
+  $ml^2 \ddot\theta$ is a measure of the <n>resistance of the pendulum to changes</n> in its angular motion. $\ddot\theta$ is the angular acceleration.
+</section>
+
+<section id="3"><h1>Simulation</h1>
+  <subsection id="3.0"><h1>State space form</h1>
+    Dynamics of a pendulum in a first-order form: 
+    $$\begin{align*}
+      \dot{x} &= f(x,u) \\
+      \frac{d}{dt}\begin{bmatrix} 
+                    q \\ \dot{q} 
+                  \end{bmatrix} &= 
+      \begin{bmatrix} 
+        \dot{q} \\ \frac{-mgl\sin(q) + \tau}{ml^2}
+      \end{bmatrix}
+    \end{align*}$$
+    
+    where $x=\begin{bmatrix}q \\ \dot{q}\end{bmatrix}$ is the state vector, and $u=\tau$ is the input.
+  
+    <p>
+      In code, the dynamics function takes in $x$, $u$ and some <n>parameters</n> to return back $\dot{x}$. We only get to control $u$. $\dot{x}$ decides the next state which is then used to calculate $\dot{x}$; but the latter's value is also dependent on $u$.
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart-pole dynamics: Alternate equations of acceleration</title>
+  <meta name="Cart-pole dynamics: Alternate equations of acceleration" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Equations due to forces on the pole</a>
+<a href="#1">Equations due to forces on the cart</a>
+<a href="#2">Derived equations from above</a>
+<a href="#3">Usage</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cart-pole dynamics: Alternate equations of acceleration</h1>
+<section id="0"><h1>Equations due to forces on the pole</h1>
+  $$\begin{align*}
+    \ddot{x} &= 
+    \frac{-J \ddot\theta + m^{\scriptsize{p}}g l\,sin\theta + m^{\scriptsize{p}}l^2 \dot\theta^2}
+    {m^{\scriptsize{p}}l\,cos\theta} \tag{1} \label{eq:1} \\\\
+
+    \ddot\theta &= \frac{m^{\scriptsize{p}}l \bigl[l \dot\theta^2 - \ddot{x} \,cos\theta + g sin\theta\bigr]}{J} \tag{2} \label{eq:2}
+  \end{align*}$$
+</section>  
+
+<section id="1"><h1>Equations due to forces on the cart</h1>
+  $$\begin{align*}
+    \ddot{x} &= \frac{f + m^{\scriptsize{p}}l(\ddot\theta \, sin\theta + \dot\theta^2 \, cos\theta)}
+    {m^{\scriptsize{p}} + m^{\scriptsize{c}}} \tag{3} \label{eq:3} \\\\
+
+    \ddot{\theta} &= \frac{(m^{\scriptsize{c}} + m^{\scriptsize{p}}) \ddot{x} - 
+      m^{\scriptsize{p}} l \dot{\theta}^2 \cos\theta - f}
+    {m^{\scriptsize{p}} l \sin\theta} \tag{4} \label{eq:4}
+  \end{align*}$$
+</section>  
+
+<section id="2"><h1>Derived equations from above</h1>
+  $$\begin{align*}
+    \ddot\theta &=
+    \frac{({m^{\scriptsize{p}} + m^{\scriptsize{c}}}) (m^{\scriptsize{p}}g l\,sin\theta + m^{\scriptsize{p}}l^2 \dot\theta^2) -
+    fm^{\scriptsize{p}}l\,cos\theta -
+    (m^{\scriptsize{p}})^2l^2\dot\theta^2cos^2\theta}
+    {(m^{\scriptsize{p}})^2l^2 cos\theta\, sin\theta + 
+      J ({m^{\scriptsize{p}} + m^{\scriptsize{c}}})} \tag{5} \label{eq:5}\\\\
+
+    \ddot{x} &= 
+    \frac{{m^{\scriptsize{p}}}^2l^2 sin\theta \bigl[l \dot\theta^2 + g sin\theta\bigr] +
+    J(m^{\scriptsize{p}} l \dot{\theta}^2 \cos\theta - f)}
+    {J(m^{\scriptsize{c}} + m^{\scriptsize{p}}) +
+    {m^{\scriptsize{p}}}^2l^2 sin\theta \,cos\theta} \tag{6} \label{eq:6}
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Usage</h1>
+  Equations that can be used together:
+  <ul>
+    <li>\ref{eq:5} and \ref{eq:3}</li>
+    <li>\ref{eq:6} and \ref{eq:2}</li>
+    <li>\ref{eq:2} and \ref{eq:3}</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

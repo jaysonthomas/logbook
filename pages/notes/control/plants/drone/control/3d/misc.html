@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>3D control: Misc</title>
+  <meta name="3D control: Misc" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Roll-pitch controller</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Equation 1</a></li>
+  <li><a href="#1.1">Equation 2</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>3D control: Misc</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../../../figures/drone/48b_3dControlOverview.png"/>
+    </figure>
+  </div>
+
+  Considering the roll-pitch, yaw and body rate controllers as one unit, looking at the inputs and outputs to this unit, it can be concluded that it is really controlling a second order system. For example, yaw goes in as input and some moment $u_4$ is produced as output. Since that moment controls the second derivative of yaw, it makes the whole unit a second order system.
+
+  <p>
+    Likewise, the roll-pitch and body rate controllers together make up a second order system. 
+  </p>
+</section>
+
+<section id="1"><h1>Roll-pitch controller</h1>
+  The goal is to output $p_c, q_c$ to control $\ddot{x}, \ddot{y}$.
+  The job of the roll-pitch controller is to take commanded x, y accelerations, a thrust, and the vehicle's attitude, and produce a roll rate command $p_c$ and a pitch rate command $q_c$. This is a first order system. 
+
+  <subsection id="1.0"><h1>Equation 1</h1>
+    Equation 2 from the <a href="https://t.ly/tkUjJ">Paper</a>:
+    $$\begin{align*}
+      \ddot{x} &= cb^x \\
+      \ddot{y} &= cb^y \\
+      \ddot{z} &= cb^z - g
+    \end{align*}$$
+
+    The first 2 equations are the control knobs for x,y. $c$ is the total commanded thrust seen <a href="codePerspective.html">here</a>. 
+
+    <p>
+      $b^x$ is the element in the rotation matrix that maps z in the body frame to x in the world frame. 
+      $$\begin{align*}
+        b^x &= R_{13} \\
+        b^y &= R_{23}
+      \end{align*}$$
+
+      Elements of the rotation matrix, $R_{13}, R_{23}$ can be thought of as the control knobs that control the drone's motion in x,y. The question is how to set targets for these matrix elements? Eventually, the controller needs to output commands for $p,q$.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Equation 2</h1>
+    $$
+      \begin{bmatrix} p_c \\ q_c \end{bmatrix}
+      = \underbrace{\frac{1}{R_{33}}
+      \begin{bmatrix} 
+        R_{21} & -R_{11} \\ 
+        R_{22} & -R_{12}
+      \end{bmatrix}}_{\text{Known rotation} \atop \text{matrix elements}}
+      \begin{bmatrix} \dot{b}^x_c \\ \dot{b}^y_c \end{bmatrix}
+    $$
+
+    The P controller code for the first order system:
+    $$
+      \dot{b}^x_c = \frac{b^x - b^x_c}{\tau_{rp}}
+    $$
+
+    $\tau_{rp}$ is the P control time constant - it is the time constant in the pitch and roll directions. $b^x_c$ is the commanded value for the rotation matrix element $R_{13}$.
+
+    <p>
+      This is how the elements of the rotation matrix can be controlled to output desired x,y accelerations.
+    </p>
+  </subsection>
+
+</section>
+</chapter>
+
+</body>
+</html>

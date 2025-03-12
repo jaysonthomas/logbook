@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>2D Drone dynamics: Linearsiation</title>
+  <meta name="2D Drone dynamics: Linearsiation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Aim</a>
+<a href="#1">Equilibrium point</a>
+<a href="#2">Operating point</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Choosing the operating point</a></li>
+  <li><a href="#2.1">Considerations</a></li>
+</ul>
+<a href="#3">Linearise sines and cosines</a>
+<a href="#4">Linearise products of variables</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>2D Drone dynamics: Linearsiation</h1>
+<section id="0"><h1>Aim</h1>
+  Non-linear equations to be linearised:
+  $$\begin{align*}
+    \ddot{\phi} &= \frac{u_2}{I_{xx}} \\
+    \ddot{y} &= \frac{u_1}{m}sin\phi \\
+    \ddot{z} &= g - \frac{u_1}{m}cos\phi
+  \end{align*}$$
+  
+  Linearisation leads to decoupled equations.
+</section>
+
+<section id="1"><h1>Equilibrium point</h1>
+  At the equilibrium point, the second derivatives are all 0, yielding:
+  $$\begin{align*}
+    \frac{u_2}{I_{xx}} &= 0 \\
+    \frac{u_1}{m}sin\phi &= 0 \\
+    g - \frac{u_1}{m}cos\phi &= 0
+  \end{align*}$$
+
+  From the 1st equation:
+  $$
+    u_2 = 0
+  $$
+
+  Squaring and adding equations 2 and 3:
+  $$\begin{align*}
+    \frac{u_1^2}{m^2} (sin^2\phi + cos^2\phi) &= g^2 \\
+    u_1 &= mg
+  \end{align*}$$
+
+  Thus, substituting in equation 3:
+  $$\begin{align*}
+    \frac{mg}{m}cos\phi &= g \\
+    cos\phi &= 1 \\
+    \phi &= 0
+  \end{align*}$$
+
+</section>
+
+<section id="2"><h1>Operating point</h1>
+  <subsection id="2.0"><h1>Choosing the operating point</h1>
+    A drone is at equilibrium when:
+    <ul>
+      <li>It is hovering</li>
+      <li>The velocities and accelerations (of the drone's body) in the $y, z, \phi$ dimensions are all $0$</li>
+    </ul> 
+
+    Linearisation doesn't just solve the control problem for the one equilibrium configuration, in this case, the hover state; but it finds an approximation for other configurations that are nearby in the state space.
+
+    <p>
+      Conditions that linearisation around hover must satisfy:
+      <ul>
+        <li>When hovering, roll must be zero; if it weren't then $\ddot{y}$ would be non-zero.</li>
+        <li>$y, z$ can be anything - a drone can hover at any $y, z$ coordinates.</li>
+        <li>The downwards thrust $u_1$ must be $mg$ to support the weight.</li>
+        <li>$u_2$ must be zero to ensure zero rotational acceleration.</li>
+      </ul>
+    </p>
+  </subsection>
+  
+  <subsection id="2.1"><h1>Considerations</h1>
+    <div style="text-align:center;">
+      $$\begin{array}{c|c} 
+        \text{At hover} & \text{Around hover} \\ 
+        \hline
+        \phi = 0 & \phi = \Delta\phi \\
+        y = y_0 & y = y_0 + \Delta{y} \\
+        z = z_0 & z = z_0 + \Delta{z} \\
+        u_1 = mg & u_1 = mg + \Delta{u_1} \\
+        u_2 = 0 & u_2 = \Delta{u_2} 
+      \end{array}$$
+    </div>
+
+    Near hover, $u_1$ is equal to $mg$ plus some small deviation which can be positive or negative. Similary, near hover, $\phi$ will be close to its value at hover, i.e. it will be 0 plus some small deviation.
+  </subsection>
+</section>
+
+<section id="3"><h1>Linearise sines and cosines</h1>
+  Applying $sin\phi \approx \phi$ and $cos\phi \approx 1$:
+  $$\begin{align*}
+    \ddot{\phi} &= \frac{u_2}{I_{xx}} \\
+    \ddot{y} &= \frac{u_1}{m}\phi \\
+    \ddot{z} &= g - \frac{u_1}{m}
+  \end{align*}$$
+</section>
+
+<section id="4"><h1>Linearise products of variables</h1>
+  Applying $u_1 = mg + \Delta{u_1}$ and $\phi = \Delta\phi$:
+  $$\begin{align*}
+    \ddot{y} &= \frac{1}{m}(mg + \Delta{u_1})\Delta\phi \\
+            &= \overbrace{g\Delta\phi}^{\scriptsize\text{Small number}} + 
+            \frac{\overbrace{\Delta{u_1}\Delta\phi}^{\scriptsize\text{Tiny number} \;\sim\; 0}}{m} \\
+  \end{align*}$$
+
+  $\Delta{u_1}, \Delta\phi$ are very small numbers; their product yields an even small number and hence can be ignored. This results in:
+  $$
+    \ddot{y} = g\Delta\phi
+  $$
+
+  Since, near hover $\Delta\phi \approx \phi$, the linearised decoupled dynamics equation for $\ddot{y}$ reduces to:
+  $$
+    \ddot{y} = g\phi
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

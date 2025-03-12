@@ -42,22 +42,11 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Setup</a>
-<a href="#1">Description</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Cart pole: FBD</h1>
 <section id="0"><h1>Setup</h1>
-  The entire mass of the pole is collapsed to a point at the end of it to keep the maths simple. A motor applies a horizontal force $f_x$.
-
   <div class="container">
-    <figure>
-      <img style="height:130px; width:auto"
-      src="../../../../../figures/dynamics/cartPole/setup.png"/>
-      <figcaption>
-        Scenario
-      </figcaption>
-    </figure>
-
     <figure>
       <img style="height:170px; width:auto"
       src="../../../../../figures/dynamics/cartPole/2_frames.png"/>
@@ -74,32 +63,6 @@
   <subsubsection><h1>Second DOF</h1>
     The state vector $\begin{bmatrix} \theta \\ \dot{\theta} \end{bmatrix}$  is used to describe the angular rotation of the pole.
   </subsubsection>
-</section>
-
-<section id="1"><h1>Description</h1>
-  Since there are 2 DOFs, 2 free body diagrams are required.
-
-  <div class="img-container">
-    <figure>
-      <img style="height:120px; width:auto"
-      src="../../../../../figures/dynamics/cartPole/fbd.png"/>
-      <figcaption>
-        Drawing of all the forces that keep the cart and the pole connected to the world.
-      </figcaption>
-    </figure>
-  </div>
-
-  <div style="width:0; text-align:left;">
-    $$\begin{array}{cclc} 
-      N &:& \text{Normal force of the track pushing up on the cart} \\ 
-      f_x &:& \text{Horizontal force of the motor} \\
-      W_c &:& \text{Weight of the cart} \\
-      W_p &:& \text{Weight of the pole} \\
-      T_x, T_y &:& \text{2 components of the tension in the rod (constraint force or conduct force)} \\
-    \end{array}$$
-  </div>
-
-  The same tension force is applied in an equal and opposite way to the pole at the point of connection to the cart.
 </section>
 </chapter>
 

@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Propeller angular velocities</title>
+  <meta name="Propeller angular velocities" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">From moments</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Roll</a></li>
+  <li><a href="#0.1">Pitch</a></li>
+  <li><a href="#0.2">Yaw</a></li>
+</ul>
+<a href="#1">From forces</a>
+<a href="#2">Computing the propeller angular velocities</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Propeller angular velocities</h1>
+<section id="0"><h1>From moments</h1>
+  <subsection id="0.0"><h1>Roll</h1>
+    $$\begin{align*}
+      \tau_x  &= I_x \dot{p} \\
+              &= k_f \Big(
+              \underbrace{\omega_1^2 + \omega_4^2 - \omega_2^2 - \omega_3^2}_{\bar{p}} 
+              \Big) l \\
+    \end{align*}$$
+
+    $$
+      \bar{p} = \frac{I_x \dot{p}}{k_fl}
+    $$
+  </subsection>
+
+  <subsection id="0.1"><h1>Pitch</h1>
+    $$\begin{align*}
+      \tau_y  &= I_y \dot{q} \\
+              &= k_f \Big(
+              \underbrace{\omega_1^2 + \omega_2^2 - \omega_3^2 - \omega_4^2}_{\bar{q}} 
+              \Big) l \\
+    \end{align*}$$
+
+    $$
+      \bar{q} = \frac{I_y \dot{q}}{k_fl}
+    $$
+  </subsection>
+
+  <subsection id="0.2"><h1>Yaw</h1>
+    $$\begin{align*}
+      \tau_z  &= I_z \dot{r} \\
+              &= k_m \Big(
+              \underbrace{-\omega_1^2 + \omega_2^2 - \omega_3^2 + \omega_4^2}_{\bar{r}} 
+              \Big) l \\
+    \end{align*}$$
+
+    $$
+      \bar{r} = \frac{I_z \dot{r}}{k_ml}
+    $$
+  </subsection>
+</section>
+
+<section id="1"><h1>From forces</h1>
+  $$\begin{align*}
+    F_{thrust}  &= ma \\
+                &= k_f \Big(
+                \underbrace{\omega_1^2 + \omega_2^2 + \omega_3^2 + \omega_4^2}_{\bar{c}} 
+                \Big) l \\
+  \end{align*}$$
+
+  $$
+    \bar{c} = \frac{ma}{k_f}
+  $$
+
+  <m>For some reason $a$ is written as $-a$ in the solution</m>.
+</section>
+
+<section id="2"><h1>Computing the propeller angular velocities</h1>
+  Rewriting the different sums of propeller angular velocities in matrix form:
+  $$
+    \begin{bmatrix}
+      1 & 1 & 1 & 1 \\
+      1 & -1 & -1 & 1 \\
+      1 & 1 & -1 & -1 \\
+      1 & -1 & 1 & -1
+    \end{bmatrix} \cdot
+    \begin{bmatrix}
+      \omega_1^2 \\
+      \omega_2^2 \\
+      \omega_3^2 \\
+      \omega_4^2
+    \end{bmatrix} = 
+    \begin{bmatrix}
+      \bar{c} \\
+      \bar{p} \\
+      \bar{q} \\
+      \bar{r}
+    \end{bmatrix}
+  $$
+
+  $$\begin{align*}
+    \omega_4 &= \sqrt{\frac{\bar{c} + \bar{p} - \bar{r} - \bar{q}}{4}} \\
+    \omega_3 &= \sqrt{\frac{\bar{r} - \bar{p}}{2} + \omega_4} \\
+    \omega_2 &= \sqrt{\frac{\bar{c} - \bar{p}}{2} - \omega_3} \\
+    \omega_1 &= \sqrt{\bar{c} - \omega_2 - \omega_3 - \omega_4}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>
