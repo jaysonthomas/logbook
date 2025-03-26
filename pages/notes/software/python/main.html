@@ -4,9 +4,9 @@
 <head>
   <title>Python</title>
   <meta name="Python" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,39 +41,59 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Pip</a>
-<a href="#1">Type hinting</a>
+<a href="#0">Matplotlib</a>
+<a href="#1">Scipy</a>
+<a href="#2">Syntax</a>
+<a href="#3">Pip</a>
+<a href="#4">Type hinting</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Stub files</a></li>
+  <li><a href="#4.0">Stub files</a></li>
 </ul>
-<a href="#2">Python configuration</a>
-<a href="#3">Operators</a>
-<a href="#4">Structure</a>
-<a href="#5">List</a>
+<a href="#5">Python configuration</a>
+<a href="#6">Operators</a>
+<a href="#7">Structure</a>
+<a href="#8">List</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">List of numpy arrays</a></li>
+  <li><a href="#8.0">List of numpy arrays</a></li>
 </ul>
-<a href="#6">Python learning from Drake python api</a>
-<a href="#7">Pandas</a>
-<a href="#8">Numpy</a>
-<a href="#9">General</a>
-<a href="#10">Regular expressions</a>
-<a href="#11">Lambda</a>
-<a href="#12">Dictionary</a>
-<a href="#13">Timing python code</a>
-<a href="#14">Relationships</a>
+<a href="#9">Python learning from Drake python api</a>
+<a href="#10">Pandas</a>
+<a href="#11">Numpy</a>
+<a href="#12">General</a>
+<a href="#13">Regular expressions</a>
+<a href="#14">Lambda</a>
+<a href="#15">Dictionary</a>
+<a href="#16">Timing python code</a>
+<a href="#17">Relationships</a>
 <ul class="no-bullets">
-  <li><a href="#14.0">Extension (Inheritance)</a></li>
-  <li><a href="#14.1">Composition</a></li>
-  <li><a href="#14.2">Aggregation</a></li>
+  <li><a href="#17.0">Extension (Inheritance)</a></li>
+  <li><a href="#17.1">Composition</a></li>
+  <li><a href="#17.2">Aggregation</a></li>
 </ul>
-<a href="#15">Set</a>
-<a href="#16">Musings</a>
+<a href="#18">Set</a>
+<a href="#19">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Python</h1>
+<section id="0"><h1>Matplotlib</h1>
+  <ul>
+    <li><a href="matplotlib/animate.html">Animation</a></li>
+  </ul>
+</section>
 
-<section id="0"><h1>Pip</h1>
+<section id="1"><h1>Scipy</h1>
+  <ul>
+    <li><a href="solveIvp.html">Solve IVP</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Syntax</h1>
+  <ul>
+    <li><a href="class.html">Class</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Pip</h1>
 <pre><code class="python">
 pip3 show drake
 pip3 install drake==1.10.0  
@@ -86,7 +106,7 @@ python -m pip install --upgrade black==23.12.1
 </code></pre>
 </section>
 
-<section id="1"><h1>Type hinting</h1>
+<section id="4"><h1>Type hinting</h1>
 <pre><code class="python">
 def greet(name: str) -> str:
   temp : str | None = "Hello"
@@ -95,7 +115,7 @@ def greet(name: str) -> str:
 
   Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
 
-  <subsection id="1.0"><h1>Stub files</h1>
+  <subsection id="4.0"><h1>Stub files</h1>
     In Python, stub files with a .pyi extension are used for type hinting without providing the actual implementation code. These stub files contain type information for functions, classes, and modules, allowing static type checkers and IDEs to analyze code for potential type-related issues without the need for the full implementation.
 
     <p>
@@ -115,7 +135,7 @@ def add(x: int, y: int) -> int: ...
   </subsection>
 </section>
 
-<section id="2"><h1>Python configuration</h1>
+<section id="5"><h1>Python configuration</h1>
   [<a href="https://t.ly/dMtsd">Ref</a>] <br>
   To see the options:
 <pre><code class="bash">
@@ -139,7 +159,7 @@ sudo update-alternatives  --set python /usr/bin/python3.6
 </code></pre>
 </section>
 
-<section id="3"><h1>Operators</h1>
+<section id="6"><h1>Operators</h1>
   <ul>
     <li><code>Set Union</code></li>
 <pre><code class="python">
@@ -153,15 +173,15 @@ print(s)
   </ul>
 </section>
 
-<section id="4"><h1>Structure</h1>
+<section id="7"><h1>Structure</h1>
   <ul>
     <li><code>__init__.py</code></li>
     [<a href="https://bit.ly/3FpJ3cK">Ref</a>] An old way of doing things to mark modules that come under a particular namespace. The namespace here is the name of the folder that the script is placed in. By modules, I mean, anything we want to import - functions, classes or files.
   </ul>
 </section>
 
-<section id="5"><h1>List</h1>
-  <subsection id="5.0"><h1>List of numpy arrays</h1>
+<section id="8"><h1>List</h1>
+  <subsection id="8.0"><h1>List of numpy arrays</h1>
     The following is a list of 2 elements; each being a numpy array.
 <pre><code class="python">
 temp = 
@@ -202,7 +222,7 @@ print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre
   </subsection>
 </section>
 
-<section id="6"><h1>Python learning from Drake python api</h1>
+<section id="9"><h1>Python learning from Drake python api</h1>
   <ul>
     <li>Random number generator</li>
     <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
@@ -228,7 +248,7 @@ outputArray = np.vstack(array1, array2)
   </ul>
 </section>
 
-<section id="7"><h1>Pandas</h1>
+<section id="10"><h1>Pandas</h1>
   <ul>
     <li>Convert group of numpy arrays into a pandas dataframe</li>
 <pre><code class="python">
@@ -273,7 +293,7 @@ temp = pd.DataFrame({'A':l,
   </ul>
 </section>
 
-<section id="8"><h1>Numpy</h1>
+<section id="11"><h1>Numpy</h1>
   <ul>
     <li><code>@</code> is the same as <code>np.dot</code></li>
     <li>Create a 2d array with zeros</li>
@@ -334,7 +354,7 @@ H[1,-3]
   </ul>
 </section>
 
-<section id="9"><h1>General</h1>
+<section id="12"><h1>General</h1>
   <ul>
     <li>For loop to iterate through list with indices</li>
     <a href="https://t.ly/SLyk">Ref</a>.
@@ -366,7 +386,7 @@ H[1,-3]
   </ul>
 </section>
 
-<section id="10"><h1>Regular expressions</h1>
+<section id="13"><h1>Regular expressions</h1>
   <ul>
     <li>Substitute</li>
 <pre><code class="python">
@@ -411,7 +431,7 @@ Output: type
   </ul>  
 </section>
 
-<section id="11"><h1>Lambda</h1>
+<section id="14"><h1>Lambda</h1>
   <ul>
     <li>Sorting</li>
 <pre><code class="python">
@@ -443,7 +463,7 @@ Output: type
   </ul>
 </section>
 
-<section id="12"><h1>Dictionary</h1>
+<section id="15"><h1>Dictionary</h1>
   <ul>
     <li>Creation</li>
     Create a dictionary from empty lists with particular column names.
@@ -495,14 +515,14 @@ Output: type
   </ul>
 </section>
 
-<section id="13"><h1>Timing python code</h1>
+<section id="16"><h1>Timing python code</h1>
 <pre><code class="python">
 python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
 </code></pre>  
 </section>
 
-<section id="14"><h1>Relationships</h1>
-  <subsection id="14.0"><h1>Extension (Inheritance)</h1>
+<section id="17"><h1>Relationships</h1>
+  <subsection id="17.0"><h1>Extension (Inheritance)</h1>
     Inheritance is a mechanism by which a class inherits properties and behaviors (attributes and methods) from another class. It is used to model an "is-a" relationship, where a derived class is a specialized version of the base class.
 
 <pre><code class="python">
@@ -516,7 +536,7 @@ class Dog(Animal):
 </code></pre>    
   </subsection>
 
-  <subsection id="14.1"><h1>Composition</h1>
+  <subsection id="17.1"><h1>Composition</h1>
     Composition is a design principle where a class contains objects of other classes as part of its attributes, to achieve some functionality, and the relationship is referred to as a "has-a" relationship.
 <pre><code class="python">
 class Engine:
@@ -533,7 +553,7 @@ class Car:
       
   </subsection>
 
-  <subsection id="14.2"><h1>Aggregation</h1>
+  <subsection id="17.2"><h1>Aggregation</h1>
     Aggregation is similar to composition but with a key difference - the contained objects have an independent lifecycle, can exist outside the container and can be shared among multiple containers. It represents a "has-a" relationship without strong ownership.
 
 <pre><code class="python">
@@ -552,7 +572,7 @@ class University:
   </subsection>
 </section>
 
-<section id="15"><h1>Set</h1>
+<section id="18"><h1>Set</h1>
   A set is an unordered collection of unique elements defined using <code>{}</code> or the <code>set()</code> constructor. Sets do not allow duplicate elements, and the order of elements is not guaranteed, i.e. they don't support indexing and hence indices cannot be used to access elements in a set. The presence of an element within a set can be checked using the <code>in</code> keyword.
 
 <pre><code class="python">
@@ -563,7 +583,7 @@ if element_to_check in my_set:
 </code></pre>
 </section>
 
-<section id="16"><h1>Musings</h1>
+<section id="19"><h1>Musings</h1>
   <ul>
     <li>What does <code>enumerate</code> in a for loop do?</li>
     <a href="https://t.ly/txYV">Ref</a>.

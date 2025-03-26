@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple pendulum</title>
-  <meta name="Simple pendulum" content="text/html; charset=utf-8;" />
+  <title>Simple pendulum: Simulation</title>
+  <meta name="Simple pendulum: Simulation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,17 +41,28 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
+<a href="#0">State space form</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
-<section id="0"><h1>Topics</h1>
-  <ul>
-    <li><a href="setup.html">Setup</a></li>
-    <li><a href="dynamics/main.html">Forces on the pendulum</a></li>
-    <li><a href="sim.html">Simulation</a></li>
-    <li><a href="refs.html">References</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Simple pendulum: Simulation</h1>
+<section id="0"><h1>State space form</h1>
+  Dynamics of a pendulum in a first-order form: 
+  $$\begin{align*}
+    \dot{x} &= f(x,u) \\
+    \frac{d}{dt}\begin{bmatrix} 
+                  \theta \\ \dot{\theta} 
+                \end{bmatrix} &= 
+    \begin{bmatrix} 
+      \dot{\theta} \\ 
+      \frac{u - b\dot\theta -m_p g \,sin\theta \cdot l}{m_pl^2}
+    \end{bmatrix}
+  \end{align*}$$
+  
+  where $x=\begin{bmatrix}\theta \\ \dot{\theta}\end{bmatrix}$ is the state vector, and $u$ is the input torque which is the only control knob available.
+
+  <p>
+    In code, the dynamics function takes in $x$, $u$ and some <n>parameters</n> to return back $\dot{x}$. $\dot{x}$ decides the next state which is then, along with $u$, used to calculate the next value of $\dot{x}$.
+  </p>
 </section>
 </chapter>
 

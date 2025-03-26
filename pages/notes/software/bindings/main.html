@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bazel</title>
-  <meta name="Bazel" content="text/html; charset=utf-8;" />
+  <title>Bindings</title>
+  <meta name="Bindings" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -42,23 +42,26 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Topics</a>
-<a href="#2">Steps</a>
+<a href="#1">Java to C</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Steps using JNI</a></li>
+  <li><a href="#1.1">Steps using JNA</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Bindings</h1>
-<section><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   A <i>binding</i> is a way to connect code written in one programming language with that of another, i.e. to call functions from one language to another.
 </section>
 
-<section><h1>Java to C</h1>
+<section id="1"><h1>Java to C</h1>
   Java runs on the Java Virtual Machine (JVM) and does not execute native code directly. To interact with C code, Java provides mechanisms like:
   <ul>
     <li>Java Native Interface (JNI) - The official way to call C (or C++) code from Java.</li>
     <li>Java Native Access (JNA) - A higher-level, easier-to-use alternative to JNI.</li>
   </ul>
 
-  <subsection><h1>Steps using JNI</h1>
+  <subsection id="1.0"><h1>Steps using JNI</h1>
     <ul>
       <li>In a java file, load the library with its name. A load function is provided by the binding mechanism</li>
       <li>Compile the Java file</li>
@@ -69,7 +72,7 @@
     </ul>
   </subsection>
 
-  <subsection><h1>Steps using JNA</h1>
+  <subsection id="1.1"><h1>Steps using JNA</h1>
     <ul>
       <li>Create the C file and compile into a shared library</li>
       <li>Write the java code and load the c library using jna binding mechanism</li>

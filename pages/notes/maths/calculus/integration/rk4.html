@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple pendulum</title>
-  <meta name="Simple pendulum" content="text/html; charset=utf-8;" />
+  <title>Integration: RK4</title>
+  <meta name="Integration: RK4" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,17 +41,44 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
+<a href="#0">Refs</a>
+<a href="#1">The method</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple pendulum</h1>
-<section id="0"><h1>Topics</h1>
+<chapter style="counter-reset: chapter 3"><h1>Integration: RK4</h1>
+<section id="0"><h1>Refs</h1>
   <ul>
-    <li><a href="setup.html">Setup</a></li>
-    <li><a href="dynamics/main.html">Forces on the pendulum</a></li>
-    <li><a href="sim.html">Simulation</a></li>
-    <li><a href="refs.html">References</a></li>
+    <li><a href="https://t.ly/LCgHK">Tutorial</a></li>
+    <li>RK implementation seems interesting <a href="https://t.ly/RNPHM">here</a> in python</li>
   </ul>
+</section>
+
+<section id="1"><h1>The method</h1>
+  $$\begin{align*}
+    \newcommand{\oState}[1]{\begin{bmatrix}\dot\theta_{#1} \\ \ddot\theta_{#1} \end{bmatrix}}
+    \newcommand{\iState}{\begin{bmatrix}\theta \\ \dot\theta \end{bmatrix}}
+    \newcommand{\iPrevOutput}[1]{
+      \begin{bmatrix}
+        \theta + \dot\theta_{#1} \cdot \frac{h}{2} \\ 
+        \dot\theta + \ddot\theta_{#1} \cdot \frac{h}{2} \\ 
+      \end{bmatrix}
+    }
+    \newcommand{\iPrevOutputTwo}[1]{
+      \begin{bmatrix}
+        \theta + \dot\theta_{#1} \cdot h \\ 
+        \dot\theta + \ddot\theta_{#1} \cdot h \\ 
+      \end{bmatrix}
+    }
+
+    k_1 = \oState{_1} &= f(t, \iState) \\
+    k_2 = \oState{_2} &= f(t + \frac{h}{2}, \iPrevOutput{1}) \\
+    k_3 = \oState{_3} &= f(t + \frac{h}{2}, \iPrevOutput{2}) \\
+    k_4 = \oState{_4} &= f(t + h, \iPrevOutputTwo{3}) \\\\
+
+    \theta &= \theta + (\dot\theta_1 + 2\dot\theta_2 + 2\dot\theta_3 + \dot\theta_4) \cdot \frac{h}{6} \\
+    \dot\theta &= \dot\theta + (\ddot\theta_1 + 2\ddot\theta_2 + 2\ddot\theta_3 + \ddot\theta_4) \cdot \frac{h}{6} \\
+    t &= t + h
+  \end{align*}$$
 </section>
 </chapter>
 

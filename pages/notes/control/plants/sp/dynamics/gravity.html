@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple pendulum: Inertial Moment</title>
-  <meta name="Simple pendulum: Inertial Moment" content="text/html; charset=utf-8;" />
+  <title>Simple pendulum: Force due to gravity</title>
+  <meta name="Simple pendulum: Force due to gravity" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -42,10 +42,10 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Moment of inertia</a>
+<a href="#1">Comparison to a unit circle</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple pendulum: Moment due to gravity</h1>
+<chapter style="counter-reset: chapter 0"><h1>Simple pendulum: Force due to gravity</h1>
 <section id="0"><h1>Overview</h1>
   Force due to gravity acting on the pendulum is divided into 2:
   <ul>
@@ -59,10 +59,10 @@
     <figure>
       <img style="height:170px; width:auto"
       src="../../../../../../figures/dynamics/simplePendulum/2_gravity.png"/>
+      <figcaption>
+        The figure shows a clockwise rotation which is positive. But, gravity<br> acts against the direction of motion causing an anti-clockwise negative rotation.
+      </figcaption>
     </figure>
-    <figcaption>
-      The figure shows a clockwise rotation which is positive. But, gravity<br> acts against the direction of motion causing an anti-clockwise negative rotation.<p></p>
-    </figcaption>
   </div>
 
   Moment due to gravity about <code>A</code> is:
@@ -70,6 +70,28 @@
     \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
     (M^{\scriptsize{A}}_g)\,\hat{k} = -m_{\scriptsize{p}} g \,sin\theta \cdot l
   $$
+</section>
+
+<section id="1"><h1>Comparison to a unit circle</h1>
+  <div class="container">
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../../figures/dynamics/simplePendulum/3_unitCircle.png"/>
+      <figcaption>
+        A unit circle rotated by $90^0$ anti-clockwise. The radius vector rotates and keeps changing its direction but the body reference frame remains fixed.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../../figures/dynamics/simplePendulum/4_rotatingCoordSys.png"/>
+      <figcaption>
+        The body reference frame rotates but the direction of the radius vector remains fixed. This is the case with gravity.
+      </figcaption>  
+    </figure>
+  </div>
+
+  A sine function is defined in such a way that $sin(60^0) = sin(120^0)$. It's various values are shown at $90^0$ points. This definition matches the physical behaviour of $\hat{d}$ component of the gravity vector and hence it is used.
 </section>
 </chapter>
 

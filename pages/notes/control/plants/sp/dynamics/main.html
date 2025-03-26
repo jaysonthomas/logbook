@@ -42,20 +42,42 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Inertial moment</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Moment of inertia</a></li>
-</ul>
+<a href="#1">Equation of motion</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simple pendulum: Forces</h1>
 <section id="0"><h1>Overview</h1>
-  The forces that act on the pendulum result in torques that must be in equilibrium as per d'Alembert's principle, giving an equation of motion for the pendulum model.
-
+  Various forces act on a pendulum resulting in torques about the pivot point:
   <ul>
-    <li><a href="gravity.html">Moment due to gravity</a> acting on the pendulum's point mass at <code>G</code></li>
+    <li><a href="gravity.html">Force due to gravity</a> acting on the pendulum's point mass at <code>G</code></li>
     <li><a href="inertialMoment.html">Inertial moment</a></i></li>
+    <li>Tension on the string balancing the gravity component along the string</li>
+    <p>
+      <li>Damping forces such as friction at the pivot point and air resistance</li>
+      $$
+        \newcommand{\wrt}[4]{#1^{\hspace{#2em}\scriptsize{#3}}_{\hspace{#2em}#4}}
+        (\wrt{M}{-0.2}{A}{f})\,\hat{k} = -b\,\dot\theta(t)
+      $$
+
+      $b$ represents the damping coefficient which characterizes the amount of damping present in the system.
+    </p>
+    <li>
+      Any applied external torque $u(t)$
+    </li>
   </ul>
+</section>
+
+<section id="1"><h1>Equation of motion</h1>
+  The torques acting on a pendulum must be in equilibrium as per d'Alembert's principle, giving an equation of motion for the pendulum model.
+
+  $$\begin{align*}
+    (\wrt{M}{-0.2}{A}{f} + \wrt{M}{-0.1}{A}{g} + \wrt{M}{-0.1}{A}{i} + u)\,\hat{k} &= 0 \\
+    (-b\,\dot\theta) + (-m_{\scriptsize{p}} g \,sin\theta \cdot l) - (m_pl^2 \ddot\theta) + u &= 0
+  \end{align*}$$
+
+  $$\begin{align}
+    \ddot\theta = \frac{u - b\,\dot\theta -m_{\scriptsize{p}} g \,sin\theta \cdot l}{m_pl^2} \label{eq:1}
+  \end{align}$$
 </section>
 </chapter>
 

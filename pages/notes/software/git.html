@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>General software related notes</title>
-  <meta name="General software related notes" content="text/html; charset=utf-8;" />
+  <title>Git</title>
+  <meta name="Git" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -41,26 +41,14 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Software downloads</a>
-<ul class="no-bullets">
-  <li><a href="#0.0">Snap installs</a></li>
-  <li><a href="#0.1">Apt-get installs</a></li>
-  <li><a href="#0.2">Apt installs</a></li>
-  <li><a href="#0.3">Repositories</a></li>
-  <li><a href="#0.4">Visual studio code extensions</a></li>
-  <li><a href="#0.5">Miscellaneous</a></li>
-</ul>
-<a href="#1">Latex</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Good examples</a></li>
-</ul>
-<a href="#2">Json</a>
-<a href="#3">Drawio</a>
-<a href="#4">Git</a>
+<a href="#0">Submodules</a>
+<a href="#1">Unstage added files</a>
+<a href="#2">Stash</a>
+<a href="#3">Git</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Git</h1>
-<section><h1>Submodules</h1>
+<section id="0"><h1>Submodules</h1>
   <a href="https://t.ly/VMEV">Ref</a>.
 <pre><code class="bash">
 git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
@@ -72,13 +60,13 @@ git submodule update --init --recursive
   </p>
 </section>
 
-<section><h1>Unstage added files</h1>
+<section id="1"><h1>Unstage added files</h1>
 <pre><code class="bash">
 git reset HEAD
 </code></pre>   
 </section>
 
-<section><h1>Stash</h1>
+<section id="2"><h1>Stash</h1>
 <pre><code class="bash">
 # List all the stashes related to different branches with stash indices
 git stash list
@@ -94,7 +82,7 @@ git stash push -m "Description"
 </code></pre>  
 </section>
 
-<section id="4"><h1>Git</h1>
+<section id="3"><h1>Git</h1>
   <ul>
     <li>Git branch</li>
 <pre><code class="bash">
