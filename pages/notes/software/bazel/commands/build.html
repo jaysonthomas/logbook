@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bazel commands: Build</title>
+  <meta name="Bazel commands: Build" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">The basic commands</a></li>
+  <li><a href="#0.1">Unit test</a></li>
+  <li><a href="#0.2">Example commands</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Bazel commands: Build</h1>
+<section id="0"><h1>Overview</h1>
+  Bazel sorts out its package dependencies by itself for itself to run.
+
+  <subsection id="0.0"><h1>The basic commands</h1>
+    The following works for python as well, but here there are specific
+    details that only apply to c++.
+<pre><code class="c++">
+// Build everything in the root directory.
+bazel build //...
+
+// Run the binary executable.
+bazel run //:main
+
+// Clear bazel's cache of all the build artefacts.
+// This is how it knows what changes have been made between builds.
+bazel clean
+
+// To see which subcommands Bazel invokes when doing the build.
+bazel build //:main -s
+</code></pre>
+
+    The different subcommands that Bazel uses for the simple build include
+    (Look for the keyword <code>SUBCOMMAND</code> in the output):
+    <ul>
+      <li>Compiling</li>
+      You'll see the <code>PATH</code>, <code>PWD</code>,
+      then the compilation command which starts with the path to the
+      compiler (example: <code>/usr/bin/gcc</code>) followed by 
+      different compilation commands.
+  
+      <p>
+        An object file is stored in <code>bazel-out</code>
+        (not directly, but in other sub directories).
+      </p>
+      
+      <p>
+        <li>Linking</li>
+        Links with the parameter file (extension <code>.params</code>)
+        found in <code>bazel-bin</code>. This file is readable. 
+        It outputs the binary file and takes in the object file
+        created in the compilation step. We can see the other linker
+        options being used.
+      </p>
+    </ul>
+  
+<pre><code class="c++">
+// Compiling without any optimisation.
+bazel build //:main --copt=-O0 -s
+</code></pre>    
+  </subsection>
+
+  <subsection id="0.1"><h1>Unit test</h1>
+<pre><code class="python">
+# Run all tests within the root of the project.  
+bazel test //...
+
+# To see the errors in the test.
+bazel test //... --test_output=errors
+</code></pre>    
+  </subsection>
+
+  <subsection id="0.2"><h1>Example commands</h1>
+<pre><code class="bash">
+bazel build //estimation/...
+ls bazel-bin/estimation/
+bazel run //estimation:estimateResUsingRLS  
+</code></pre>    
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

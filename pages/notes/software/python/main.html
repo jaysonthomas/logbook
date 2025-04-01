@@ -42,36 +42,31 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Matplotlib</a>
-<a href="#1">Scipy</a>
-<a href="#2">Syntax</a>
-<a href="#3">Pip</a>
-<a href="#4">Type hinting</a>
+<a href="#1">Pandas</a>
+<a href="#2">Scipy</a>
+<a href="#3">Syntax</a>
+<a href="#4">Pip</a>
+<a href="#5">Type hinting</a>
 <ul class="no-bullets">
-  <li><a href="#4.0">Stub files</a></li>
+  <li><a href="#5.0">Stub files</a></li>
 </ul>
-<a href="#5">Python configuration</a>
-<a href="#6">Operators</a>
-<a href="#7">Structure</a>
-<a href="#8">List</a>
+<a href="#6">Python configuration</a>
+<a href="#7">Operators</a>
+<a href="#8">Python learning from Drake python api</a>
+<a href="#9">Numpy</a>
+<a href="#10">General</a>
+<a href="#11">Regular expressions</a>
+<a href="#12">Lambda</a>
+<a href="#13">Dictionary</a>
+<a href="#14">Timing python code</a>
+<a href="#15">Relationships</a>
 <ul class="no-bullets">
-  <li><a href="#8.0">List of numpy arrays</a></li>
+  <li><a href="#15.0">Extension (Inheritance)</a></li>
+  <li><a href="#15.1">Composition</a></li>
+  <li><a href="#15.2">Aggregation</a></li>
 </ul>
-<a href="#9">Python learning from Drake python api</a>
-<a href="#10">Pandas</a>
-<a href="#11">Numpy</a>
-<a href="#12">General</a>
-<a href="#13">Regular expressions</a>
-<a href="#14">Lambda</a>
-<a href="#15">Dictionary</a>
-<a href="#16">Timing python code</a>
-<a href="#17">Relationships</a>
-<ul class="no-bullets">
-  <li><a href="#17.0">Extension (Inheritance)</a></li>
-  <li><a href="#17.1">Composition</a></li>
-  <li><a href="#17.2">Aggregation</a></li>
-</ul>
-<a href="#18">Set</a>
-<a href="#19">Musings</a>
+<a href="#16">Set</a>
+<a href="#17">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Python</h1>
@@ -81,19 +76,28 @@
   </ul>
 </section>
 
-<section id="1"><h1>Scipy</h1>
+<section id="1"><h1>Pandas</h1>
+  <ul>
+    <li><a href="pandas/general.html">General</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Scipy</h1>
   <ul>
     <li><a href="solveIvp.html">Solve IVP</a></li>
   </ul>
 </section>
 
-<section id="2"><h1>Syntax</h1>
+<section id="3"><h1>Syntax</h1>
   <ul>
     <li><a href="class.html">Class</a></li>
+    <li><a href="function.html">Function</a></li>
+    <li><a href="imports.html">Imports</a></li>
+    <li><a href="list.html">List</a></li>
   </ul>
 </section>
 
-<section id="3"><h1>Pip</h1>
+<section id="4"><h1>Pip</h1>
 <pre><code class="python">
 pip3 show drake
 pip3 install drake==1.10.0  
@@ -106,7 +110,7 @@ python -m pip install --upgrade black==23.12.1
 </code></pre>
 </section>
 
-<section id="4"><h1>Type hinting</h1>
+<section id="5"><h1>Type hinting</h1>
 <pre><code class="python">
 def greet(name: str) -> str:
   temp : str | None = "Hello"
@@ -115,7 +119,7 @@ def greet(name: str) -> str:
 
   Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
 
-  <subsection id="4.0"><h1>Stub files</h1>
+  <subsection id="5.0"><h1>Stub files</h1>
     In Python, stub files with a .pyi extension are used for type hinting without providing the actual implementation code. These stub files contain type information for functions, classes, and modules, allowing static type checkers and IDEs to analyze code for potential type-related issues without the need for the full implementation.
 
     <p>
@@ -135,7 +139,7 @@ def add(x: int, y: int) -> int: ...
   </subsection>
 </section>
 
-<section id="5"><h1>Python configuration</h1>
+<section id="6"><h1>Python configuration</h1>
   [<a href="https://t.ly/dMtsd">Ref</a>] <br>
   To see the options:
 <pre><code class="bash">
@@ -159,7 +163,7 @@ sudo update-alternatives  --set python /usr/bin/python3.6
 </code></pre>
 </section>
 
-<section id="6"><h1>Operators</h1>
+<section id="7"><h1>Operators</h1>
   <ul>
     <li><code>Set Union</code></li>
 <pre><code class="python">
@@ -173,56 +177,7 @@ print(s)
   </ul>
 </section>
 
-<section id="7"><h1>Structure</h1>
-  <ul>
-    <li><code>__init__.py</code></li>
-    [<a href="https://bit.ly/3FpJ3cK">Ref</a>] An old way of doing things to mark modules that come under a particular namespace. The namespace here is the name of the folder that the script is placed in. By modules, I mean, anything we want to import - functions, classes or files.
-  </ul>
-</section>
-
-<section id="8"><h1>List</h1>
-  <subsection id="8.0"><h1>List of numpy arrays</h1>
-    The following is a list of 2 elements; each being a numpy array.
-<pre><code class="python">
-temp = 
-[
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]]),
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]])
-]
-</code></pre>
-
-    <p>
-      I can then create an empty list and add this list to it.
-      Every time <code>append</code> is used, a new list is added
-      to the existing list as a new row.
-    </p>
-    <pre class="highlight">
-      <code>trajs = list()
-trajs.append(temp)
-trajs.append(temp)
-print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre>
-
-    <p>
-      {0} - Number of elements within the list 'trajs'. 
-      There are 2 lists.
-      <br>
-      {1} - Number of elements within the first element of 'trajs'. 
-      The first element of 'trajs' is a list containing 2 numpy arrays.
-      <br>
-      {2} - prints out the 1st numpy array.
-    </p>
-  </subsection>
-</section>
-
-<section id="9"><h1>Python learning from Drake python api</h1>
+<section id="8"><h1>Python learning from Drake python api</h1>
   <ul>
     <li>Random number generator</li>
     <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
@@ -248,52 +203,7 @@ outputArray = np.vstack(array1, array2)
   </ul>
 </section>
 
-<section id="10"><h1>Pandas</h1>
-  <ul>
-    <li>Convert group of numpy arrays into a pandas dataframe</li>
-<pre><code class="python">
-test = np.vstack([w,h]).T
-test.shape
-df = pd.DataFrame(test, columns=['w', 'h'])
-
-# If w and h are just 2 arrays with n rows each, when vertically stacked,
-# the array turns into a (2xn) array. We have to then transpose it to get
-# to a column major form.
-</code></pre>    
-    <p></p>
-    
-    <li>Pandas datetime properties</li>
-    <a href="https://t.ly/5Mvv">This</a> seems useful.
-    <p></p>
-
-    <li>Find all rows of a particular column that are nans</li>
-<pre><code class="python">
-df = df['colName']
-df[pd.isna(df)].index
-</code></pre>
-
-    <li>Appending to a dataframe is expensive</li>
-    Use lists instead - <a href="https://bit.ly/3Fg5Ve3">Ref</a>.
-
-    <p>
-      <li>Find the index of the max value of a particular column</li>
-<pre><code class="python">
-df['columnName'].idxmax()
-</code></pre>
-    </p>
-
-    <li>Creating a dataframe from a dictionary but with a twist</li>
-    If there are 2 columns A and B, and I want 3 rows in A with different entries, 
-    but the same corresponding row entry in B:
-<pre><code class="python">
-l = ['a1', 'a2', 'a3']
-temp = pd.DataFrame({'A':l,
-                     'B':'test'})
-</code></pre>
-  </ul>
-</section>
-
-<section id="11"><h1>Numpy</h1>
+<section id="9"><h1>Numpy</h1>
   <ul>
     <li><code>@</code> is the same as <code>np.dot</code></li>
     <li>Create a 2d array with zeros</li>
@@ -354,7 +264,7 @@ H[1,-3]
   </ul>
 </section>
 
-<section id="12"><h1>General</h1>
+<section id="10"><h1>General</h1>
   <ul>
     <li>For loop to iterate through list with indices</li>
     <a href="https://t.ly/SLyk">Ref</a>.
@@ -386,7 +296,7 @@ H[1,-3]
   </ul>
 </section>
 
-<section id="13"><h1>Regular expressions</h1>
+<section id="11"><h1>Regular expressions</h1>
   <ul>
     <li>Substitute</li>
 <pre><code class="python">
@@ -431,7 +341,7 @@ Output: type
   </ul>  
 </section>
 
-<section id="14"><h1>Lambda</h1>
+<section id="12"><h1>Lambda</h1>
   <ul>
     <li>Sorting</li>
 <pre><code class="python">
@@ -463,7 +373,7 @@ Output: type
   </ul>
 </section>
 
-<section id="15"><h1>Dictionary</h1>
+<section id="13"><h1>Dictionary</h1>
   <ul>
     <li>Creation</li>
     Create a dictionary from empty lists with particular column names.
@@ -515,14 +425,14 @@ Output: type
   </ul>
 </section>
 
-<section id="16"><h1>Timing python code</h1>
+<section id="14"><h1>Timing python code</h1>
 <pre><code class="python">
 python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
 </code></pre>  
 </section>
 
-<section id="17"><h1>Relationships</h1>
-  <subsection id="17.0"><h1>Extension (Inheritance)</h1>
+<section id="15"><h1>Relationships</h1>
+  <subsection id="15.0"><h1>Extension (Inheritance)</h1>
     Inheritance is a mechanism by which a class inherits properties and behaviors (attributes and methods) from another class. It is used to model an "is-a" relationship, where a derived class is a specialized version of the base class.
 
 <pre><code class="python">
@@ -536,7 +446,7 @@ class Dog(Animal):
 </code></pre>    
   </subsection>
 
-  <subsection id="17.1"><h1>Composition</h1>
+  <subsection id="15.1"><h1>Composition</h1>
     Composition is a design principle where a class contains objects of other classes as part of its attributes, to achieve some functionality, and the relationship is referred to as a "has-a" relationship.
 <pre><code class="python">
 class Engine:
@@ -553,7 +463,7 @@ class Car:
       
   </subsection>
 
-  <subsection id="17.2"><h1>Aggregation</h1>
+  <subsection id="15.2"><h1>Aggregation</h1>
     Aggregation is similar to composition but with a key difference - the contained objects have an independent lifecycle, can exist outside the container and can be shared among multiple containers. It represents a "has-a" relationship without strong ownership.
 
 <pre><code class="python">
@@ -572,7 +482,7 @@ class University:
   </subsection>
 </section>
 
-<section id="18"><h1>Set</h1>
+<section id="16"><h1>Set</h1>
   A set is an unordered collection of unique elements defined using <code>{}</code> or the <code>set()</code> constructor. Sets do not allow duplicate elements, and the order of elements is not guaranteed, i.e. they don't support indexing and hence indices cannot be used to access elements in a set. The presence of an element within a set can be checked using the <code>in</code> keyword.
 
 <pre><code class="python">
@@ -583,7 +493,7 @@ if element_to_check in my_set:
 </code></pre>
 </section>
 
-<section id="19"><h1>Musings</h1>
+<section id="17"><h1>Musings</h1>
   <ul>
     <li>What does <code>enumerate</code> in a for loop do?</li>
     <a href="https://t.ly/txYV">Ref</a>.

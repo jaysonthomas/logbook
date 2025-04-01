@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Motors</title>
-  <meta name="Motors" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <title>Drake: Texture files</title>
+  <meta name="Drake: Texture files" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,31 +41,15 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Background</a>
-<a href="#1">Types</a>
-<a href="#2">References</a>
+<a href="#0">Download</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Motors</h1>
-<section id="0"><h1>Background</h1>
-  <ul>
-    <li>Fundamental physics</a></li>
-    <ul>
-      <li><a href="motion.html">Motion</a></li>
-    </ul>
-  </ul>
-</section>
-
-<section id="1"><h1>Types</h1>
-  <ul>
-    <li><a href="brushed.html">Brushed DC motor</a></li>
-  </ul>
-</section>
-
-<section id="2"><h1>References</h1>
-  <ul>
-    <li><a href="https://t.ly/_Ozra">Matlab youtube lecture</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Drake: Texture files</h1>
+<section id="0"><h1>Download</h1>
+  Download a tar.gz version of drake's stable release corresponding to the particular linux OS from <a href="https://t.ly/-83S">here</a>. Copy over the meshes folder.
+<pre><code class="bash">
+cp -r ~/Downloads/drake-20221116-jammy/drake/share/drake/manipulation/models/ycb/meshes ~/P/mitManipulation/env/lib/python3.10/site-packages/pydrake/share/drake/manipulation/models/ycb/  
+</code></pre>
 </section>
 </chapter>
 

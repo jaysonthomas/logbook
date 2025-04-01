@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drake: C++ example</title>
+  <meta name="Drake: C++ example" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Executing from within the drake folder</a>
+<a href="#1">Executing from outside of the drake folder</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Drake: C++ example</h1>
+<section id="0"><h1>Executing from within the drake folder</h1>
+  [<a href="https://t.ly/jRAN">Ref</a>]<p></p>
+  
+  Clone drake's git repository. Bazel is used as drake's build system.
+<pre><code class="bash">
+cd drake
+bazel build //examples/acrobot:run_swing_up
+
+# Following are optional
+bazel build //... --jobs 12   # For building everything in Drake.
+bazel run //tools:meldis -- --open-window &
+</code></pre>
+
+  The extra step of running <code>MeLDiS</code> is only required if using <code>DrakeVisualizer</code> instead of the Meshcat one in cpp code. 
+</section>
+
+<section id="1"><h1>Executing from outside of the drake folder</h1>
+  There are <a href="https://t.ly/aAcF">questions</a> on stackoverflow on how to use Drake as an external library. I found <a href="https://t.ly/Ec1I">this</a> useful.
+
+<pre><code class="bash">
+cd drakeCpp/
+bazel build //helloWorld:simple_continuous_time_system
+bazel run //helloWorld:simple_continuous_time_system
+</code></pre>    
+
+  The hidden file <code>.bazelrc</code> in drakeCpp is important to specify which C++ version to use.
+
+  <p>
+    There is an <a href="https://t.ly/lDoN">example</a> of how to use external libraries as modules (the concept of repositories will still be used but is also being retired.). More on bazel external dependencies can be found <a href="https://t.ly/z7XC">here</a>.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

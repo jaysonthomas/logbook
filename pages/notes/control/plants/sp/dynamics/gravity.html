@@ -74,24 +74,26 @@
 
 <section id="1"><h1>Comparison to a unit circle</h1>
   <div class="container">
+    <p>
+      Consider a unit circle. Each ($x,y$) coordinate is given as ($cos\theta, sin\theta$). The radius vector rotates and keeps changing its direction but the body $d,q$ reference frame remains fixed. <br><br>A sine function is defined in such a way that $sin(60^0) = sin(120^0)$.
+    </p>
+
     <figure>
       <img style="height:170px; width:auto"
       src="../../../../../../figures/dynamics/simplePendulum/3_unitCircle.png"/>
-      <figcaption>
-        A unit circle rotated by $90^0$ anti-clockwise. The radius vector rotates and keeps changing its direction but the body reference frame remains fixed.
-      </figcaption>
     </figure>
+  </div>
+
+  <div class="container">
+    <p>
+      In the pendulum case, the body reference frame rotates but the direction of the radius (gravity) vector remains fixed. <br><br>Each ($x,y$) coordinate on the unit circle is given as $(sin\theta, cos\theta)$. The definition of $x=sin\theta$ matches the physical behaviour of the $\hat{d}$ component of the gravity vector at various points. The redefnition of $\theta$ as well aligns with the physical behaviour. 
+    </p>
 
     <figure>
       <img style="height:170px; width:auto"
       src="../../../../../../figures/dynamics/simplePendulum/4_rotatingCoordSys.png"/>
-      <figcaption>
-        The body reference frame rotates but the direction of the radius vector remains fixed. This is the case with gravity.
-      </figcaption>  
     </figure>
   </div>
-
-  A sine function is defined in such a way that $sin(60^0) = sin(120^0)$. It's various values are shown at $90^0$ points. This definition matches the physical behaviour of $\hat{d}$ component of the gravity vector and hence it is used.
 </section>
 </chapter>
 

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bazel: Concepts</title>
-  <meta name="Bazel: Concepts" content="text/html; charset=utf-8;" />
+  <title>Drake</title>
+  <meta name="Drake" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,28 +41,56 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Workspace, Packages</a>
-<a href="#1">Modules</a>
-<a href="#2">Repository rules</a>
+<a href="#0">Misc</a>
+<a href="#1">Setup</a>
+<a href="#2">Sort</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Templates: Context passed as argument</a></li>
+</ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Bazel: Concepts</h1>
-<section id="0"><h1>Workspace, Packages</h1>
-  A <i>workspace</i> is the root folder that contains all the data that is needed to build a project. It is identified by a <code>WORKSPACE</code> or <code>WORKSPACE.bazel</code> file. It is represented by <code>//</code> in a path.
-  
-  <p>
-    The workspace is subdivided into <i>package</i>s. Each folder of the workspace can act as a package (including the directory that contains the WORKSPACE file) and identified by a <code>BUILD</code> or <code>BUILD.bazel</code> file. 
-  </p>
+<chapter style="counter-reset: chapter 0"><h1>Drake</h1>
+<section id="0"><h1>Misc</h1>
+  <ul>
+    <li><a href="plotting.html">Plotting</a></li>
+    <li><a href="refs.html">References</a></li>
+    <li><a href="terminology.html">Terminology</a></li>
+  </ul>
 </section>
 
-<section id="1"><h1>Modules</h1>
-  [<a href="https://t.ly/A8j1m">Ref</a>]<br>
-  Modules are supposed to replace the concept of WORKSPACE.
+<section id="1"><h1>Setup</h1>
+  <ul>
+    <li><a href="setup/cppExample.html">Running C++ examples</a></li>
+    <li><a href="setup/textureFiles.html">Texture files</a></li>
+  </ul>
 </section>
 
-<section id="2"><h1>Repository rules</h1>
-  [<a href="https://t.ly/PhftV">Ref</a>]<br>
-  
+<section id="2"><h1>Sort</h1>
+  <subsection id="2.0"><h1>Templates: Context passed as argument</h1>
+    <subsubsection><h1>Called function</h1>
+<pre><code class="c++">   
+CalcTotalEnergy(const systems::Context&ltT>& context)
+</code></pre>
+
+      Which further calls:
+      <div class="container">
+        <figure>
+          <img style="height:100px; width:auto"
+          src="../../figures/software/1_templates.png"/>
+          <figcaption>
+            Templates
+          </figcaption>
+        </figure>
+      </div>    
+    </subsubsection>
+    
+    <subsubsection><h1>Calling function</h1>
+<pre><code class="c++">   
+systems::Context&ltdouble&gt& pendulum_context = diagram->GetMutableSubsystemContext(*pendulum, &simulator.get_mutable_context());
+const double initial_energy = pendulum->CalcTotalEnergy(pendulum_context);
+</code></pre>
+      
+    </subsubsection>
 </section>
 
 </chapter>
