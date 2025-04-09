@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bazel concept: External repositories</title>
-  <meta name="Bazel concept: External repositories" content="text/html; charset=utf-8;" />
+  <title>Drake: Pendulum_input.h</title>
+  <meta name="Drake: Pendulum_input.h" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,26 +41,36 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Defining an external repository</a>
-<a href="#2">References</a>
+<a href="#0">Namespace</a>
+<a href="#1">Uniform initialisation</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Bazel concept: External repositories</h1>
-<section id="0"><h1>Overview</h1>
-  In Bazel, <code>@something</code> refers to an external repository. <i>External repositories</i> are dependencies that are fetched and made available in a Bazel workspace. They can be git repositories, or archives (zip files) or local file system directories.
+<chapter style="counter-reset: chapter 0"><h1>Drake: Pendulum_input.h</h1>
+<section id="0"><h1>Namespace</h1>
+   The following defines a nested namespace structure. It indicates that the following code is part of the drake simulation framework and specifically an example for a pendulum system.
+<pre><code class="c++">
+namespace drake {
+namespace examples {
+namespace pendulum {    
+</code></pre>
 </section>
 
-<section id="1"><h1>Defining an external repository</h1>
-  Instead of using http_archive or git_repository in WORKSPACE, dependencies are now defined in <code>MODULE.bazel</code> using bazel_dep or use_repo.
-  
-  <p>
-    If <code>@something</code> is not resolved in <code>MODULE.bazel</code>, the module may be missing from the Bazel central registry. 
-  </p>
-</section>
+<section id="1"><h1>Uniform initialisation</h1>
+  Also called <i>list</i> or <i>brace initialisation</i>.
+<pre><code class="c++">
+PendulumInput<double>{}.with_tau(0.0);
+// is equivalent to
 
-<section id="2"><h1>References</h1>
-  There is a <a href="https://t.ly/lDoN">gitlab example</a> of how to use external libraries as modules (the concept of repositories will still be used but is also being retired.). More on bazel external dependencies can be found <a href="https://t.ly/z7XC">here</a>.
+PendulumInput<double> temp;
+temp.with_tau(0.0);        
+</code></pre>
+
+  Steps:
+  <ul>
+    <li>A temporary object of <code>PendulumInput<double></code> is created.</li>
+    <li><code>.with_tau(0.0)</code> is immediately called on this temporary object.</li>
+    <li>The temporary object is discarded if the return value is not used.</li>
+  </ul>
 </section>
 </chapter>
 

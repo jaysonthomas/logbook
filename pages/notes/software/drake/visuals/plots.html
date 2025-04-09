@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Drake: C++ example</title>
-  <meta name="Drake: C++ example" content="text/html; charset=utf-8;" />
+  <title>Drake: Plotting</title>
+  <meta name="Drake: Plotting" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,41 +41,12 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Executing from within the drake folder</a>
-<a href="#1">Executing from outside of the drake folder</a>
+<a href="#0">Calling python plot libraries from Drake</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Drake: C++ example</h1>
-<section id="0"><h1>Executing from within the drake folder</h1>
-  [<a href="https://t.ly/jRAN">Ref</a>]<p></p>
-  
-  Clone drake's git repository. Bazel is used as drake's build system.
-<pre><code class="bash">
-cd drake
-bazel build //examples/acrobot:run_swing_up
-
-# Following are optional
-bazel build //... --jobs 12   # For building everything in Drake.
-bazel run //tools:meldis -- --open-window &
-</code></pre>
-
-  The extra step of running <code>MeLDiS</code> is only required if using <code>DrakeVisualizer</code> instead of the Meshcat one in cpp code. 
-</section>
-
-<section id="1"><h1>Executing from outside of the drake folder</h1>
-  There are <a href="https://t.ly/aAcF">questions</a> on stackoverflow on how to use Drake as an external library. I found <a href="https://t.ly/Ec1I">this</a> useful.
-
-<pre><code class="bash">
-cd drakeCpp/
-bazel build //helloWorld:simple_continuous_time_system
-bazel run //helloWorld:simple_continuous_time_system
-</code></pre>    
-
-  The hidden file <code>.bazelrc</code> in drakeCpp is important to specify which C++ version to use.
-
-  <p>
-    There is an <a href="https://t.ly/lDoN">example</a> of how to use external libraries as modules (the concept of repositories will still be used but is also being retired.). More on bazel external dependencies can be found <a href="https://t.ly/z7XC">here</a>.
-  </p>
+<chapter style="counter-reset: chapter 0"><h1>Drake: Plotting</h1>
+<section id="0"><h1>Calling python plot libraries from Drake</h1>
+  <a href="https://t.ly/x3wVP">Ref</a>
 </section>
 </chapter>
 

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bazel concept: External repositories</title>
-  <meta name="Bazel concept: External repositories" content="text/html; charset=utf-8;" />
+  <title>Drake: Using the meshcat_visualizer</title>
+  <meta name="Drake: Using the meshcat_visualizer" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,26 +41,47 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Defining an external repository</a>
-<a href="#2">References</a>
+<a href="#0">Replace drake_visualizer</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Bazel concept: External repositories</h1>
-<section id="0"><h1>Overview</h1>
-  In Bazel, <code>@something</code> refers to an external repository. <i>External repositories</i> are dependencies that are fetched and made available in a Bazel workspace. They can be git repositories, or archives (zip files) or local file system directories.
-</section>
-
-<section id="1"><h1>Defining an external repository</h1>
-  Instead of using http_archive or git_repository in WORKSPACE, dependencies are now defined in <code>MODULE.bazel</code> using bazel_dep or use_repo.
+<chapter style="counter-reset: chapter 0"><h1>Drake: Using the meshcat_visualizer</h1>
+<section id="0"><h1>Replace drake_visualizer</h1>
+  Make the following changes in the <code>.cc</code> file, say <code>passive_simulation.cc</code>.
   
-  <p>
-    If <code>@something</code> is not resolved in <code>MODULE.bazel</code>, the module may be missing from the Bazel central registry. 
-  </p>
-</section>
+<pre><code class="c++">
+#include "drake/geometry/meshcat_visualizer.h"
 
-<section id="2"><h1>References</h1>
-  There is a <a href="https://t.ly/lDoN">gitlab example</a> of how to use external libraries as modules (the concept of repositories will still be used but is also being retired.). More on bazel external dependencies can be found <a href="https://t.ly/z7XC">here</a>.
+auto meshcat = std::make_shared<geometry::Meshcat>(7050);                                         
+geometry::MeshcatVisualizerd::AddToBuilder(&builder, *scene_graph, meshcat);
+
+auto diagram = builder.Build()
+</code></pre>
+
+  In the <code>BUILD.bazel</code> file in the same folder as the source file, in the <code>drake_cc_binary</code> section for the particular source file (search for the name of the .cc file), include meshcat_visualizer under <code>deps</code>
+
+<pre><code class="bazel">
+drake_cc_binary(
+  name = "passive_simulation",
+  srcs = ["passive_simulation.cc"],
+  add_test_rule = 1,
+  data = [":models"],
+  test_rule_args = ["--target_realtime_rate=0.0"],
+  deps = [
+      ":pendulum_geometry",
+      ":pendulum_plant",
+      "//geometry:meshcat_visualizer",
+      "//systems/analysis:simulator",
+      "//systems/framework:diagram",
+      "//systems/primitives:constant_vector_source",
+      "@gflags",
+  ],
+)
+</code></pre>
+
+  Then run as normal, i.e. no need to open the visualiser separately.
+<pre><code class="bazel">
+bazel run //examples/pendulum:passive_simulation
+</code></pre>
 </section>
 </chapter>
 

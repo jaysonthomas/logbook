@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Drake: Refs</title>
-  <meta name="Drake: Refs" content="text/html; charset=utf-8;" />
+  <title>Clion: Drake setup</title>
+  <meta name="Clion: Drake setup" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,23 +41,29 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Steps</a>
+<a href="#1">Configuration setup</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Drake: Refs</h1>
-<section id="0"><h1>Overview</h1>
+<chapter style="counter-reset: chapter 0"><h1>Clion: Drake setup</h1>
+<section id="0"><h1>Steps</h1>
+  [<a href="https://t.ly/AlZo-">Ref</a>] <p></p>
   <ul>
-    <li>Drake ros <a href="https://t.ly/Q1V1">github repo</a></li>
-    <li><a href="https://t.ly/Xss_">Zucker notes</a></li>
-    <li><a href="https://t.ly/VHqQ">C++ documentation</a></li>
-  </ul> 
-  Pendulum example
-  <ul>
-    <li><a href="https://t.ly/P2YBR">Python plot example</a></li>
-    <li><a href="https://t.ly/wopPZ">Drake's dynamical system notebook</a></li>
-    <li><a href="https://t.ly/4hCth">Drake's PendulumPlant class reference</a></li>
+    <li>Install the Bazel plugin.</li>
+    <li>Import Bazel project.</li>
   </ul>
 </section>
+
+<section id="1"><h1>Configuration setup</h1>
+  <ul>
+    <li>Run -> Edit configurations</li>
+    <li>Target expression: <code>//examples/pendulum:passive_simulation</code></li>
+    <li>Bazel command: <code>run</code></li>
+    <li>Port: 7050</li>
+  </ul>
+  
+</section>
+
 </chapter>
 
 </body>

@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Using python with drake</title>
+  <meta name="Using python with drake" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Issue: python confusion</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Issue</a></li>
+  <li><a href="#0.1">Solution</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Using python with drake</h1>
+<section id="0"><h1>Issue: python confusion</h1>
+  <subsection id="0.0"><h1>Issue</h1>
+    Even though yaml was installed system wide using <code>sudo apt install python3-yaml</code>, bazel was still giving out an error: <code>ModuleNotFoundError: No module named 'yaml'</code>.
+  </subsection>
+
+  <subsection id="0.1"><h1>Solution</h1>
+    Bazel uses its own sandboxed environment, which means any system Python won't be visible to it by default unless explicitly made part of the build.
+
+    <p>
+      The best practice is to declare dependencies with <code>rules_python</code>.
+    </p>
+
+    Under <code>drake_bazel_external</code>, look at <code>setup->install_prereqs</code> to understand what python version is used by drake by default.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -43,16 +43,17 @@
   
 <a href="#0">Misc</a>
 <a href="#1">Setup</a>
-<a href="#2">Sort</a>
+<a href="#2">Visuals</a>
+<a href="#3">C++ code</a>
+<a href="#4">Sort</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Templates: Context passed as argument</a></li>
+  <li><a href="#4.0">Templates: Context passed as argument</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Drake</h1>
 <section id="0"><h1>Misc</h1>
   <ul>
-    <li><a href="plotting.html">Plotting</a></li>
     <li><a href="refs.html">References</a></li>
     <li><a href="terminology.html">Terminology</a></li>
   </ul>
@@ -60,13 +61,32 @@
 
 <section id="1"><h1>Setup</h1>
   <ul>
-    <li><a href="setup/cppExample.html">Running C++ examples</a></li>
+    <li>Running C++ examples</li>
+    <ul>
+      <li><a href="setup/cpp/fromInsideDrake.html">Bazel run from inside drake</a></li>
+      <li><a href="setup/cpp/fromOutsideDrake.html">Bazel run from outside drake</a></li>
+    </ul>
+    <li><a href="setup/python/main.html">Running python examples</a></li>
     <li><a href="setup/textureFiles.html">Texture files</a></li>
   </ul>
 </section>
 
-<section id="2"><h1>Sort</h1>
-  <subsection id="2.0"><h1>Templates: Context passed as argument</h1>
+<section id="2"><h1>Visuals</h1>
+  <ul>
+    <li><a href="visuals/drakeVisualizer.html">Drake visualiser</a></li>
+    <li><a href="visuals/meshcatVisualizer.html">Using the meshcat_visualizer</a></li>
+    <li><a href="visuals/plots.html">Plots</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>C++ code</h1>
+  <ul>
+    <li><a href="code/pendulumInput.html">pendulum_input.h</a></li>
+  </ul>
+</section>
+
+<section id="4"><h1>Sort</h1>
+  <subsection id="4.0"><h1>Templates: Context passed as argument</h1>
     <subsubsection><h1>Called function</h1>
 <pre><code class="c++">   
 CalcTotalEnergy(const systems::Context&ltT>& context)
@@ -76,7 +96,7 @@ CalcTotalEnergy(const systems::Context&ltT>& context)
       <div class="container">
         <figure>
           <img style="height:100px; width:auto"
-          src="../../figures/software/1_templates.png"/>
+          src="../../../../figures/software/1_templates.png"/>
           <figcaption>
             Templates
           </figcaption>
