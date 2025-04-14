@@ -4,9 +4,9 @@
 <head>
   <title>Raw pointers</title>
   <meta name="Raw pointers" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -45,11 +45,10 @@
 <a href="#1">Call-by-value vs Call-by-reference</a>
 <a href="#2">Different kinds of pointers</a>
 <a href="#3">Pointer variables</a>
-<a href="#4">Reference variables</a>
-<a href="#5">Mishandling of pointers</a>
+<a href="#4">Mishandling of pointers</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">Dangling pointer</a></li>
-  <li><a href="#5.1">Memory leak</a></li>
+  <li><a href="#4.0">Dangling pointer</a></li>
+  <li><a href="#4.1">Memory leak</a></li>
 </ul>
 </div>
 
@@ -129,22 +128,14 @@ int *ptr = &x; // 'ptr' is a pointer that stores the address of 'x'
   Changing <code>ptr</code> changes <code>x</code>.
 </section>
 
-<section id="4"><h1>Reference variables</h1>
-<pre><code class="C++">
-int y = 10;
-int &ref = y; // 'ref' is a reference to 'y'
-</code></pre>
-  The address of <code>ref</code> is made the same as that of <code>y</code>. Printing <code>ref</code> outputs 10. A reference is a way of creating an alias for an existing variable; the same data can be referred to using a different name.
-</section>
-
-<section id="5"><h1>Mishandling of pointers</h1>
+<section id="4"><h1>Mishandling of pointers</h1>
   <a href="https://t.ly/uBJNS">Ref</a>
 
-  <subsection id="5.0"><h1>Dangling pointer</h1>
+  <subsection id="4.0"><h1>Dangling pointer</h1>
     A dangling pointer situation occurs when a pointer refers to a memory that is no longer allocated.
   </subsection>
 
-  <subsection id="5.1"><h1>Memory leak</h1>
+  <subsection id="4.1"><h1>Memory leak</h1>
     Memory leaks happen when we lose the pointer that is pointing to a memory block, making it impossible to free that block anymore.
   </subsection>
 </section>

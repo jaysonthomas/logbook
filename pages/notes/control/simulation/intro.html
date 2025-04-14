@@ -55,7 +55,7 @@
   Simulation is all about advancing a system's state forward in time.
 
   <p>
-    When all the forces impacting an object's motion, i.e. the dynamics, are understood, it is possible to implement a function that advances the state forward in time. The dynamics can be abstracted as a <i>plant</i> that will output the current state $x$, given the torque $\tau$ into the system.
+    When a system's dynamics (the impact of forces acting on an object, on its motion) is understood, it is possible to implement a function that advances the state forward in time. The dynamics can be abstracted as a <i>plant</i> that will output the next state $x$, given the torque applied $\tau$ and the current state.
 
     <div class="container">
       <figure>
@@ -68,7 +68,7 @@
     </div>
   </p>
 
-  This abstraction allows more easily a <i>system viewpoint</i>. The output of the system doesn't have to be the state $x$ - it can be a subset of the state, or simply some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input of the system.
+  This abstraction permits a <i>system viewpoint</i>. The output of the system doesn't have to be the state $x$ - it can be a subset of the state obtained via some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input to the system.
 </section>
 
 <section id="1"><h1>Software implementation</h1>

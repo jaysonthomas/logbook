@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Clion: Drake setup</title>
-  <meta name="Clion: Drake setup" content="text/html; charset=utf-8;" />
+  <title>DSP: Moving average filter</title>
+  <meta name="DSP: Moving average filter" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,37 +41,13 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Steps</a>
-<a href="#1">Bazel wrapper setup</a>
-<a href="#2">Configuration of a run or debug</a>
+<a href="#0">Filters</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Clion: Drake setup</h1>
-<section id="0"><h1>Steps</h1>
-  [<a href="https://t.ly/AlZo-">Ref</a>] <p></p>
-  <ul>
-    <li>Install the Bazel plugin.</li>
-    <li>Setup the Bazel wrapper.</li>
-    <li>Import Bazel project.</li>
-    <li>Configure a run or debug.</li>
-  </ul>
+<chapter style="counter-reset: chapter 3"><h1>DSP: Aliasing</h1>
+<section id="0"><h1>Overview</h1>
+  Aliasing happens when high-frequency components fold into the lower frequency band, thus corrupting data.
 </section>
-
-<section id="1"><h1>Bazel wrapper setup</h1>
-  [<a href="https://t.ly/s722f">Ref</a>] <p></p>
-
-  This is a custom Bazel wrapper script written in python to setup any project specific requirements for the interaction of clion and bazel like configuring bazel with extra flags etc. It ensures the environment is set correctly in clion.
-</section>
-
-<section id="2"><h1>Configuration of a run or debug</h1>
-  <ul>
-    <li>Run -> Edit configurations</li>
-    <li>Target expression: <code>//examples/pendulum:passive_simulation</code></li>
-    <li>Bazel command: <code>run</code></li>
-    <li>Port: 7050</li>
-  </ul>
-</section>
-
 </chapter>
 
 </body>
