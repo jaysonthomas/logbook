@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulation overview</title>
+  <meta name="Simulation overview" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Software implementation</a>
+<a href="#2">State variables</a>
+<a href="#3">Forward euler method</a>
+<a href="#4">Backward Euler method</a>
+<a href="#5">Plots</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Simulation: Background</h1>
+<section id="0"><h1>Overview</h1>
+  <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>.
+</section>
+
+<section><h1>System dynamics</h1>
+  To implement a function that advances a system's state forward in time, its dynamics (the impact of forces on an object's motion) needs to be understood/modelled. 
+  
+  <p>
+    A system's dynamics can be abstracted as a <i>plant</i> that will output the next state $x$, given the torque applied $\tau$ and the current state. This abstraction permits a <i>system viewpoint</i>. 
+
+    <div class="container">
+      <figure>
+        <img style="height:30px; width:auto"
+        src="../../../../figures/dynamics/1_simplePendulumSimulation.png"/>
+        <figcaption>
+          An example of abstraction of a system's dynamics: Simple pendulum        
+        </figcaption>
+      </figure>
+    </div>
+  </p>
+</section>
+
+<section><h1>System output</h1>
+  The output of a system doesn't have to be its full state $x$ - it can be a subset of the state obtained via some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input to the system.
+</section>
+</chapter>
+
+</body>
+</html>

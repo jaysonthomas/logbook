@@ -49,26 +49,11 @@
 <a href="#5">Plots</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simulation overview</h1>
-
-<section id="0"><h1>Overview</h1>
-  Simulation is all about advancing a system's state forward in time.
-
-  <p>
-    When a system's dynamics (the impact of forces acting on an object, on its motion) is understood, it is possible to implement a function that advances the state forward in time. The dynamics can be abstracted as a <i>plant</i> that will output the next state $x$, given the torque applied $\tau$ and the current state.
-
-    <div class="container">
-      <figure>
-        <img style="height:30px; width:auto"
-        src="../../../../figures/dynamics/1_simplePendulumSimulation.png"/>
-        <figcaption>
-          An example of abstraction of a system's dynamics: Simple pendulum        
-        </figcaption>
-      </figure>
-    </div>
-  </p>
-
-  This abstraction permits a <i>system viewpoint</i>. The output of the system doesn't have to be the state $x$ - it can be a subset of the state obtained via some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input to the system.
+<chapter style="counter-reset: chapter 0"><h1>Simulation</h1>
+<section><h1>Topics</h1>
+  <ul>
+    <li><a href="background.html">Background</a></li>
+  </ul>
 </section>
 
 <section id="1"><h1>Software implementation</h1>
