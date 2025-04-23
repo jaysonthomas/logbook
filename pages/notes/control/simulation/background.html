@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simulation overview</title>
-  <meta name="Simulation overview" content="text/html; charset=utf-8;" />
+  <title>Simulation: Background</title>
+  <meta name="Simulation: Background" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -42,11 +42,8 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Software implementation</a>
-<a href="#2">State variables</a>
-<a href="#3">Forward euler method</a>
-<a href="#4">Backward Euler method</a>
-<a href="#5">Plots</a>
+<a href="#1">System dynamics</a>
+<a href="#2">System output</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simulation: Background</h1>
@@ -54,7 +51,7 @@
   <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>.
 </section>
 
-<section><h1>System dynamics</h1>
+<section id="1"><h1>System dynamics</h1>
   To implement a function that advances a system's state forward in time, its dynamics (the impact of forces on an object's motion) needs to be understood/modelled. 
   
   <p>
@@ -72,7 +69,7 @@
   </p>
 </section>
 
-<section><h1>System output</h1>
+<section id="2"><h1>System output</h1>
   The output of a system doesn't have to be its full state $x$ - it can be a subset of the state obtained via some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input to the system.
 </section>
 </chapter>
