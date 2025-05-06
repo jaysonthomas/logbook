@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Python: Class</title>
-  <meta name="Python: Class" content="text/html; charset=utf-8;" />
+  <title>Python: DTFT</title>
+  <meta name="Python: DTFT" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,61 +41,27 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Aim</a>
+<a href="#1">Mathematical representation</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Python: Class</h1>
-<section id="0"><h1>Overview</h1>
-<pre><code class="python">
-class MyClass:
-def __init__(self, name, age):
-  """Constructor: Initializes the object with name and age"""
-  self.name = name  # Instance variable
-  self.age = age
+<chapter style="counter-reset: chapter 3"><h1>Python: DTFT</h1>
+<section id="0"><h1>Aim</h1>
+  The aim is to extract frequency information from a discrete time signal.
+</section>
 
-def greet(self):
-  """A regular method"""
-  return f"Hello, my name is {self.name} and I am {self.age} years old."
-
-@staticmethod
-def static_method(a, b):
-  """
-  A static method does not use self and does not have access
-  to the attributes of a class or any of its instances.
-  Example usage: Math util classes with useful functions.
-  """
-  return f"This is a static method. {a + b}"
-
-@classmethod
-def class_method(cls, shortenedName="Not sure"):
-  """
-  A class method (works with the class itself).
-  Acts as an alternate constructor for the class.
-  """
-  print(f"This method belongs to the {cls.__name__} class.")
-
-  age = 25
-  name = shortenedName
-  if name == "A":
-    name = "Alice"
-  return MyClass(name, age)
-  
-# Creating an object (instance of the class)
-person = MyClass("Alice", 25)
-person2 = MyClass.class_method("A")
-# Calling methods
-print(person.greet())
-print(person2.greet())
-print(MyClass.static_method(20, 10))
-</code></pre>
-  <subsubsection><h1>Output</h1>  
-<pre><code class="bash">
-This method belongs to the MyClass class.
-Hello, my name is Alice and I am 25 years old.
-Hello, my name is Alice and I am 25 years old.
-This is a static method. 30
-</code></pre>
-  </subsubsection>
+<section id="1"><h1>Mathematical representation</h1>
+  $$
+    X_k = \sum^{N-1}_{n=0} x_n e^{-i2\pi k\frac{n}{N}}
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \displaystyle\sum^{N-1}_{n=0} &:& \text{Integral replaced by sum over $N$ samples of the input signal} \\ 
+      e^{-i2\pi k\frac{n}{N}} &:& \text{Contains amplitude and phase info for frequency $k$.} \\
+      && \text{Divides each sample with the corresponding complex number of that frequency}\\
+      && \text{as in the case of the fourier transform}\\
+    \end{array}$$
+  </div>
 </section>
 </chapter>
 

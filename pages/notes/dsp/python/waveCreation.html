@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Python: List</title>
-  <meta name="Python: List" content="text/html; charset=utf-8;" />
+  <title>Python: Wave creation</title>
+  <meta name="Python: Wave creation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,66 +41,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Unpacking</a>
-<a href="#1">Sort</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">List of numpy arrays</a></li>
-</ul>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Python: List</h1>
-<section id="0"><h1>Unpacking</h1>
-  When a list is passed to a function with an asterisk before the list name, it unpacks the list elements into separate arguments.
-
+<chapter style="counter-reset: chapter 3"><h1>Python: Wave creation</h1>
+<section id="0"><h1>Overview</h1>
 <pre><code class="python">
-def my_function(a, b, c):
-  print(a, b, c)
-
-my_list = [1, 2, 3]
-my_function(*my_list)  # Unpacks my_list into individual arguments
-</code></pre>
-</section>
-
-<section id="1"><h1>Sort</h1>
-  <subsection id="1.0"><h1>List of numpy arrays</h1>
-    The following is a list of 2 elements; each being a numpy array.
-<pre><code class="python">
-temp = 
-[
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]]),
-  np.array([
-            [1, 0, 0, 1]
-            [0, 1, 0, 0]
-            [0, 0, 1, 1]
-            [0, 0, 0, 1]])
-]
+x = amplitude * np.sin(2 * np.pi * frequency * t)
 </code></pre>
 
-    <p>
-      I can then create an empty list and add this list to it.
-      Every time <code>append</code> is used, a new list is added
-      to the existing list as a new row.
-    </p>
-    <pre class="highlight">
-      <code>trajs = list()
-trajs.append(temp)
-trajs.append(temp)
-print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre>
+  Consider 2 cases:
+  <ul>
+    <li>A: $f=10$Hz, $t=0.5$s</li>
+    <li>B: $f=5$Hz, $t=1$s</li>
+  </ul>
 
-    <p>
-      {0} - Number of elements within the list 'trajs'. 
-      There are 2 lists.
-      <br>
-      {1} - Number of elements within the first element of 'trajs'. 
-      The first element of 'trajs' is a list containing 2 numpy arrays.
-      <br>
-      {2} - prints out the 1st numpy array.
-    </p>
-  </subsection>
+  At the 2 time instants, the value in the 2 cases are the same. But, since A's frequency is higher, it has attained the same value in a shorter period of time.
+
+  <p>
+    The general formula is:
+    $$
+      a\cdot sin(2\pi ft + \phi)
+    $$
+
+    $\phi$ is the phase shift in radians. $\phi > 0$ shifts the wave left (it starts earlier).
+  </p>
 </section>
 </chapter>
 

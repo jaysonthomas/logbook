@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python: List</title>
+  <meta name="Python: List" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Unpacking</a>
+<a href="#1">Sort</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">List of numpy arrays</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Python: List</h1>
+<section id="0"><h1>Unpacking</h1>
+  When a list is passed to a function with an asterisk before the list name, it unpacks the list elements into separate arguments.
+
+<pre><code class="python">
+def my_function(a, b, c):
+  print(a, b, c)
+
+my_list = [1, 2, 3]
+my_function(*my_list)  # Unpacks my_list into individual arguments
+</code></pre>
+</section>
+
+<section id="1"><h1>Sort</h1>
+  <subsection id="1.0"><h1>List of numpy arrays</h1>
+    The following is a list of 2 elements; each being a numpy array.
+<pre><code class="python">
+temp = 
+[
+  np.array([
+            [1, 0, 0, 1]
+            [0, 1, 0, 0]
+            [0, 0, 1, 1]
+            [0, 0, 0, 1]]),
+  np.array([
+            [1, 0, 0, 1]
+            [0, 1, 0, 0]
+            [0, 0, 1, 1]
+            [0, 0, 0, 1]])
+]
+</code></pre>
+
+    <p>
+      I can then create an empty list and add this list to it.
+      Every time <code>append</code> is used, a new list is added
+      to the existing list as a new row.
+    </p>
+    <pre class="highlight">
+      <code>trajs = list()
+trajs.append(temp)
+trajs.append(temp)
+print('{0}, {1}, {2}'.format(len(trajs), len(trajs[0]), trajs[0][0])</code></pre>
+
+    <p>
+      {0} - Number of elements within the list 'trajs'. 
+      There are 2 lists.
+      <br>
+      {1} - Number of elements within the first element of 'trajs'. 
+      The first element of 'trajs' is a list containing 2 numpy arrays.
+      <br>
+      {2} - prints out the 1st numpy array.
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart-pole dynamics: Forces acting on the pole</title>
+  <meta name="Cart-pole dynamics: Forces acting on the pole" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Moment due to gravity</a>
+<a href="#2">Inertial force on the pole due to the cart's motion</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Force</a></li>
+  <li><a href="#2.1">Moment due to the force</a></li>
+</ul>
+<a href="#3">Moment of inertia</a>
+<a href="#4">Equation of motion</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">$\ddot{x}$</a></li>
+  <li><a href="#4.1">$\ddot{\theta}$</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cart-pole dynamics: Forces acting on the pole</h1>
+<section id="0"><h1>Overview</h1>
+  A pendulum on a cart experiences the following 3 torques; all of which must be in equilibrium as per d'Alembert's principle. These torques contribute to 1 equation of motion for the cart and pole model:
+  
+  <ul>
+    <li><a href="gravity.html">Moment due to gravity</a></li>
+    <li><a href="cartMotion.html">Inertial moment due to the cart's motion</a></li>
+    <li>A rotational inertial force known as the <i>moment of inertia</i></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Moment of inertia</h1>
+  The moment of inertia is initially written as some multiple $J$ of $\ddot\theta$, to be substituted later.
+  $$
+    (M^{\scriptsize{A}}_i) \,\hat{k} = J \ddot\theta
+  $$
+</section>
+
+<section id="4"><h1>Equation of motion</h1>
+  Summing the three moments and equating to zero as per d'Alembert's principle, gives:
+
+  $$\begin{align*}
+    (M_g + M^{\scriptsize{G}}_i + M^{\scriptsize{A}}_i)\,\hat{k} &= 0 \\ 
+    -m_{\scriptsize{p}}g l\,sin\theta + 
+    m_{\scriptsize{p}} l (\ddot{x} \,cos\theta - l \dot\theta^2) + 
+    J \ddot\theta &= 0
+  \end{align*}$$
+
+  <subsection id="4.0"><h1>$\ddot{x}$</h1>
+    $$
+      \ddot{x} = 
+      \frac{-J \ddot\theta + m_{\scriptsize{p}}g l\,sin\theta + m_{\scriptsize{p}}l^2 \dot\theta^2}
+      {m_{\scriptsize{p}}l\,cos\theta} \tag{1} \label{eq:1}
+    $$
+
+    This equation is avoided to obtain $\ddot{x}$ as it would return an undefined result when $cos\theta$ in the denominator is $0$ for $\theta=90^0$.    
+  </subsection>
+
+  <subsection id="4.1"><h1>$\ddot{\theta}$</h1>
+    $$\begin{align*}
+      &\ddot\theta = \frac{m_{\scriptsize{p}}l \bigl[l \dot\theta^2 - \ddot{x} \,cos\theta + g sin\theta\bigr]}{J} \tag{2} \label{eq:2}
+    \end{align*}$$
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Python: Iteration</title>
+  <meta name="Python: Iteration" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Output</a></li>
+</ul>
+<a href="#1">Handling of type annotaiton at runtime</a>
+<a href="#2">Iteration delegation</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Steps</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Python: Iteration</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="python">
+from __future__ import annotations
+
+class Pole:
+  def __init__(self, child: Pole | None, name: str = "Unnamed"):
+    self.child = child
+    self.name = name
+
+  def __iter__(self):
+    print(f"Starting iteration from Pole: {self.name}")
+    poles = [self]
+    pole = self.child
+    while pole:
+      print(f"Found child pole: {pole.name}")
+      poles.append(pole)
+      pole = pole.child
+    return iter(poles)
+
+class Cart:
+  def __init__(self, pole: Pole):
+    self.pole = pole
+
+  def __iter__(self):
+    print("Iterating through Cart...")
+    return iter(self.pole)
+
+# Set up the pole chain: Pole A → Pole B
+pole_b = Pole(None, name="Pole B")
+pole_a = Pole(pole_b, name="Pole A")
+cart = Cart(pole_a)
+
+# Iterate and print which pole is being iterated
+for pole in cart:
+  print(f"Currently at Pole: {pole.name}")  
+</code></pre>
+
+  <subsection id="0.0"><h1>Output</h1>
+<pre><code class="python">
+Iterating through Cart...
+Starting iteration from Pole: Pole A
+Found child pole: Pole B
+Currently at Pole: Pole A
+Currently at Pole: Pole B  
+</code></pre>
+  </subsection>
+</section>
+
+<section id="1"><h1>Handling of type annotaiton at runtime</h1>
+  The following <code>import</code> tells Python to treat all type annotations as strings (i.e., defer their evaluation), which avoids the premature lookup of <code>Pole</code>. This feature was added to improve forward references in type hints.
+<pre><code class="python">
+from __future__ import annotations 
+</code></pre>
+
+  Without the above line, python tries to evaluate the type annotation <code>Pole | None</code> before the class <code>Pole</code> has been fully defined. This results in an error because at that point, <code>Pole</code> doesn't yet exist in the namespace.
+</section>
+
+<section id="2"><h1>Iteration delegation</h1>
+<pre><code class="python">
+def __iter__(self):
+  return iter(self.pole)
+
+# The above in Cart boils down to calling __iter__() of the Pole instance:
+return self.pole.__iter__()
+</code></pre>
+
+  <subsection id="2.0"><h1>Steps</h1>
+<pre><code class="python">
+for pole in cart:
+
+# calls
+iter(cart)
+# which is the same as
+Cart.__iter__()
+
+# which triggers
+iter(self.pole)
+# which is the same as
+Pole.__iter__()
+
+# Pole.__iter__() collects the current pole and its children 
+# (via self.child), and returns an iterator over the list.
+</code></pre>
+
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

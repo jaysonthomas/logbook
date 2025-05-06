@@ -57,7 +57,7 @@
   <div class="container">
     <figure2>
       <img style="height:130px; width:auto"
-      src="../../../../../../figures/dynamics/cartPole/5_setup_sd.png"/>
+      src="../../../../../figures/dynamics/cartPole/5_setup_sd.png"/>
       <figcaption>
         Scenario
       </figcaption>
@@ -65,7 +65,7 @@
 
     <figure2>
       <img style="height:130px; width:auto"
-      src="../../../../../../figures/dynamics/cartPole/4_fbd_sd.png"/>
+      src="../../../../../figures/dynamics/cartPole/4_fbd_sd.png"/>
       <figcaption>
         FBD
       </figcaption>
@@ -73,7 +73,7 @@
 
     <figure2>
       <img style="height:100px; width:auto"
-      src="../../../../../../figures/dynamics/cartPole/6_forceComponents.png"/>
+      src="../../../../../figures/dynamics/cartPole/6_forceComponents.png"/>
     </figure2>
   </div>
 </section>
@@ -82,57 +82,57 @@
   <subsection id="1.0"><h1>Position</h1>
     <div class="container">
       <figure>
-        <img style="height:130px; width:auto"
-        src="../../../../../../figures/dynamics/cartPole/9_polePos.png"/>
+        <img style="height:170px; width:auto"
+        src="../../../../../figures/dynamics/cartPole/9_polePos.png"/>
       </figure>
 
       <p>
         The position of <code>G</code> relative to <code>A</code> in the ${W}$ coordinate frame, for a given pendulum angle $\theta$ is given by:
-        $$\begin{align}
+        $$\begin{align*}
           \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
-          \wrt{A}{0.1}{x}{G} &= l\,cos\theta \, \hat{i} \label{eq:1}\\
-          \wrt{A}{0.1}{y}{G} &= -l\,sin\theta \, \hat{j} \label{eq:2}\\
-        \end{align}$$
+          \wrt{A}{0.1}{x}{G} &= l\,cos\theta \, \hat{i} \tag{1} \label{eq:1}\\
+          \wrt{A}{0.1}{y}{G} &= -l\,sin\theta \, \hat{j} \tag{2} \label{eq:2}\\
+        \end{align*}$$
       </p>
       <p></p>
     </div>
   </subsection>
 
   <subsection id="1.1"><h1>Linear velocity</h1>
-    Taking the derivative of \ref{eq:1} and \ref{eq:2} w.r.t. time gives the velocity of <code>G</code> relative to <code>A</code> in the X,Y axes, for a given pendulum angle $\theta$ and angular velocity $\dot\theta$. Since, 
-    $$\begin{align}
-      \frac{d}{dt}\,\wrt{A}{0.1}{x}{G} &= -l \, \dot\theta \, sin\theta \, \hat{i} \label{eq:3} \\
-      \frac{d}{dt}\,\wrt{A}{0.1}{y}{G} &= -l \, \dot\theta \, cos\theta \, \hat{j} \label{eq:4} \\
-    \end{align}$$
+    Taking the derivative of \ref{eq:1} and \ref{eq:2} w.r.t. time gives the velocity of <code>G</code> relative to <code>A</code> in the X,Y axes, for a given pendulum angle $\theta$ and angular velocity $\dot\theta$.
+    $$\begin{align*}
+      \frac{d}{dt}\,\wrt{A}{0.1}{x}{G} &= -l \, \dot\theta \, sin\theta \, \hat{i} \tag{3} \label{eq:3} \\
+      \frac{d}{dt}\,\wrt{A}{0.1}{y}{G} &= -l \, \dot\theta \, cos\theta \, \hat{j} \tag{4} \label{eq:4} \\
+    \end{align*}$$
   </subsection>
   
   <subsection id="1.2"><h1>Linear acceleration</h1>
     Taking the derivative of \ref{eq:3} and \ref{eq:4} w.r.t. time gives the XY acceleration of <code>G</code> relative to <code>A</code> in the X,Y axes, for a given pendulum angle $\theta$, angular velocity $\dot\theta$ and angular acceleration $\ddot\theta$.
   
-    $$\begin{align}
-      \frac{d}{dt}\,\wrt{A}{0.1}{\dot{x}}{G} &= (-l \, \dot\theta^2 \, cos\theta -l \, \ddot\theta \, sin\theta) \, \hat{i} \nonumber \\
-      &= -l(\ddot\theta \, sin\theta + \dot\theta^2 \, cos\theta) \, \hat{i} \label{eq:5} \\
+    $$\begin{align*}
+      \frac{d}{dt}\,\wrt{A}{0.1}{\dot{x}}{G} &= (-l \, \dot\theta^2 \, cos\theta -l \, \ddot\theta \, sin\theta) \, \hat{i} \\
+      &= -l(\ddot\theta \, sin\theta + \dot\theta^2 \, cos\theta) \, \hat{i} \tag{5} \label{eq:5} \\
       
-      \frac{d}{dt}\,\wrt{A}{0.1}{\dot{y}}{G} &= (l \, \dot\theta^2 \, sin\theta -l \, \ddot\theta \, cos\theta) \, \hat{j} \nonumber \\
-      &= -l(\ddot\theta \, cos\theta - \dot\theta^2 \, sin\theta) \, \hat{j} \label{eq:6} \\    
-    \end{align}$$
+      \frac{d}{dt}\,\wrt{A}{0.1}{\dot{y}}{G} &= (l \, \dot\theta^2 \, sin\theta -l \, \ddot\theta \, cos\theta) \, \hat{j} \\
+      &= -l(\ddot\theta \, cos\theta - \dot\theta^2 \, sin\theta) \, \hat{j} \tag{6} \label{eq:6} \\    
+    \end{align*}$$
   </subsection>
 </section>
 
 <section id="2"><h1>Relative to W</h1>
   The <i>absolute acceleration</i> of <code>G</code> (i.e. acceleration relative to <code>W</code>) is obtained by adding the x-axis acceleration of <code>A</code> to \ref{eq:5}. The cart does not move vertically, therefore the absolute y-axis acceleration is remains the same as $\wrt{A}{0.1}{\ddot{y}}{G}$
 
-  $$\begin{align}
-    \wrt{W}{0.1}{\ddot{x}}{G} &= \wrt{A}{0.4}{\ddot{x}}{G} + \ddot{x} \, \hat{i} \nonumber \\
-    &= \biggl(-l(\ddot\theta \, sin\theta + \dot\theta^2 \, cos\theta) + \ddot{x} \biggr) \, \hat{i} \label{eq:7} \\
+  $$\begin{align*}
+    \wrt{W}{0.1}{\ddot{x}}{G} &= \wrt{A}{0.4}{\ddot{x}}{G} + \ddot{x} \, \hat{i} \\
+    &= \biggl(-l(\ddot\theta \, sin\theta + \dot\theta^2 \, cos\theta) + \ddot{x} \biggr) \, \hat{i} \tag{7} \label{eq:7} \\
     
-    \wrt{W}{0.2}{\ddot{y}}{G} &= \wrt{A}{0.5}{\ddot{y}}{G} + \ddot{y} \, \hat{j} \nonumber \\
-    &= \biggl(-l(\ddot\theta \, cos\theta - \dot\theta^2 \, sin\theta) + 0 \biggr) \, \hat{j} \label{eq:8} \\  
-  \end{align}$$
+    \wrt{W}{0.2}{\ddot{y}}{G} &= \wrt{A}{0.5}{\ddot{y}}{G} + \ddot{y} \, \hat{j} \\
+    &= \biggl(-l(\ddot\theta \, cos\theta - \dot\theta^2 \, sin\theta) + 0 \biggr) \, \hat{j} \tag{8} \label{eq:8} \\  
+  \end{align*}$$
 </section>
 
 <section id="3"><h1>Misc</h1>
-  Alternate method for computing pole-kinematics - <a href="altMethod.html">Sort</a>.
+  Alternate method for computing pole-kinematics - <a href="sort/altMethod.html">Sort</a>.
 </section>
 </chapter>
 

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cartpole kinematics: Degrees of freedom</title>
-  <meta name="Cartpole kinematics: Degrees of freedom" content="text/html; charset=utf-8;" />
+  <title>Python: Class</title>
+  <meta name="Python: Class" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -44,42 +44,57 @@
 <a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Cartpole kinematics: Degrees of freedom</h1>
+<chapter style="counter-reset: chapter 1"><h1>Python: Class</h1>
 <section id="0"><h1>Overview</h1>
-  <div class="container">
-    <figure>
-      <img style="height:130px; width:auto"
-      src="../../../../../figures/dynamics/cartPole/5_setup_sd.png"/>
-      <figcaption>
-        Scenario
-      </figcaption>
-    </figure>
+<pre><code class="python">
+class MyClass:
+def __init__(self, name, age):
+  """Constructor: Initializes the object with name and age"""
+  self.name = name  # Instance variable
+  self.age = age
 
-    <figure>
-      <img style="height:130px; width:auto"
-      src="../../../../../figures/dynamics/cartPole/4_fbd_sd.png"/>
-      <figcaption>
-        FBD
-      </figcaption>
-    </figure>
-  </div>
+def greet(self):
+  """A regular method"""
+  return f"Hello, my name is {self.name} and I am {self.age} years old."
 
-  <subsubsection><h1>Possibilities</h1>
-    Since the translation and rotation of the system is constrained in the xy plane and about the $\hat{k}$ axis respectively, 6 DoFs are possible. Each object (cart and pole) can have 2 translatory motions in the $\hat{i}, \hat{j}$ directions and 1 rotation.
-  </subsubsection>
+@staticmethod
+def static_method(a, b):
+  """
+  A static method does not use self and does not have access
+  to the attributes of a class or any of its instances.
+  Example usage: Math util classes with useful functions.
+  """
+  return f"This is a static method. {a + b}"
 
-  <subsubsection><h1>Considering constraints</h1>
-    The cart can only move in the $\hat{i}$ direction, determined by the state variable $x$.
+@classmethod
+def class_method(cls, shortenedName="Not sure"):
+  """
+  A class method (works with the class itself).
+  Acts as an alternate constructor for the class.
+  """
+  print(f"This method belongs to the {cls.__name__} class.")
 
-    <p>
-      Since the pole is fixed at <code>A</code>:
-      <ul>
-        <li>All points points on it have the same translation motion as that of the cart</li>
-        <li>It is constrained to only rotate about $\hat{k}$</li>
-      </ul>
-    </p>
-
-    Thus there are 2 DOFs, requiring 2 coordinates [$x, \theta$] to be defined (hence, 2 FBD) and yielding 2 equations of motion.
+  age = 25
+  name = shortenedName
+  if name == "A":
+    name = "Alice"
+  return MyClass(name, age)
+  
+# Creating an object (instance of the class)
+person = MyClass("Alice", 25)
+person2 = MyClass.class_method("A")
+# Calling methods
+print(person.greet())
+print(person2.greet())
+print(MyClass.static_method(20, 10))
+</code></pre>
+  <subsubsection><h1>Output</h1>  
+<pre><code class="bash">
+This method belongs to the MyClass class.
+Hello, my name is Alice and I am 25 years old.
+Hello, my name is Alice and I am 25 years old.
+This is a static method. 30
+</code></pre>
   </subsubsection>
 </section>
 </chapter>

@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Python: Function</title>
-  <meta name="Python: Function" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <title>Python: Imports</title>
+  <meta name="Python: Imports" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,16 +41,20 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Parameters</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Python: Function</h1>
-<section id="0"><h1>Parameters</h1>
-  Meaning of the number of asterisks before a parameter in a function definition:
+<chapter style="counter-reset: chapter 1"><h1>Python: Imports</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://bit.ly/3FpJ3cK">Ref</a>]<p></p>
+  
+  If folder <code>a</code> contains:
   <ul>
-    <li><code>*args</code> (single asterisk) is used to pass a variable number of positional arguments.</li>
-    <li><code>**kwargs</code> (double asterisk) is used to pass a variable number of keyword arguments (key-value pairs).</li>
+    <li><code>a.py</code></li>
+    <li>folder <code>b</code> which contains <code>b.py</code></li>
   </ul>
+  
+  To access code in <code>a.py</code> from <code>b.py</code>, one method is for <code>a</code> to be defined as a package by placing <code>__init__.py</code> within it. Then, a relative import can be used such as <code>from .. import a</code>.
 </section>
 </chapter>
 
