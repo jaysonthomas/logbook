@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shower</title>
+  <meta name="Shower" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Fuses and switches</a>
+<a href="#2">Electric cable diameter</a>
+<a href="#3">Entry points for water/electricity</a>
+<a href="#4">Shower pressure</a>
+<a href="#5">Musings</a>
+<a href="#6">Triton shower</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Shower</h1>
+
+<section id="0"><h1>Overview</h1>
+  silicone grease
+  
+  <a href="https://t.ly/FJNj">This</a> is the manual for the existing Triton
+  Jade (IPX4?) shower unit. It has a power rating of 8.7-9.5kW.
+  <a href="https://t.ly/_ghz">Good ref</a>.
+
+  <p>
+    I like the Triton T80z fast fit range with its swivel fits meaning
+    the electric cable and water entry points can come in from multiple directions.
+    <a href="https://t.ly/-Fy09">Fitting instructions</a>.
+    It is a <code>thermostatic shower</code>, meaning it keeps a steady temperature.
+  </p>
+</section>
+
+<section id="1"><h1>Fuses and switches</h1>
+  The fuse at the consumer unit is rated at 40A. The shower fuse has the
+  markings: <code>B40, 5940s</code>.
+  <a href="https://t.ly/fJzO">This</a> is a good example of such a switch.
+  It has a <code>Breaking Capacity</code> rating of 6kA and a 
+  <code>Rated Operational Current (ROC)</code> of 40A.
+
+  <p>
+    The boldly written power rating for triton showers is for 240V.
+    An equivalent 8.5kW for 240V is 7.5kW for 230V.
+    So, $I = \frac{7500}{230} = 32.6A$.
+    I need at least $I = \frac{8500}{230} = 36.9A$.
+    With a higher power rating, a high flow rate can be maintained whilst
+    not compromising on the temperature. Also, look for thermostatic options.
+    An equivalent 9.5kW for 240V is 8.7kW for 230V - 
+    <a href="https://t.ly/FlfB">page 7</a>.
+    <a href="https://t.ly/Lk_u">This</a> is the shower we need.
+  </p>
+</section>
+
+<section id="2"><h1>Electric cable diameter</h1>
+  6mm cable can carry up to 9kW.
+  On <a href="https://t.ly/FlfB">page 10</a>, it says how to measure the diameter.
+</section>
+
+<section id="3"><h1>Entry points for water/electricity</h1>
+  Triton allows multiple entry points.
+</section>
+
+<section id="4"><h1>Shower pressure</h1>
+  One cannot have a water pump attached to the mains water supply. I'm guessing a lot of
+  appliances/taps etc depend on the water pressure being standard like 1 bar and not any 
+  higher. In areas where the water pressure is low, a pump would be required but I'm guessing
+  this would have to be disconnected from the mains. For example, water stored in a tank
+  is pumped to the required pressure which is then fed into the shower.
+</section>
+
+<section id="5"><h1>Musings</h1>
+  <ul>
+    <li>How to change fuse board to support more power?</li>
+    <li>How does a low pressure shower head work?</li>
+    <a href="https://t.ly/dPAo">Example</a>.
+    <br><br>
+    
+    <li>Mira</li>
+    <a href="https://t.ly/DaV-">Decent installation video</a>.
+  </ul>
+</section>
+
+<section id="6"><h1>Triton shower</h1>
+  <a href="https://t.ly/R9Iv">Manual</a>. <a href="https://t.ly/osQX">Solenoid valve assembly</a>.
+</section>
+</chapter>
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cart-pole dynamics: Forces acting on the pole</title>
-  <meta name="Cart-pole dynamics: Forces acting on the pole" content="text/html; charset=utf-8;" />
+  <title>Pole dynamics: Moment due to gravity</title>
+  <meta name="Pole dynamics: Moment due to gravity" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../../logbook.js"></script>
 
   <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -42,22 +42,10 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Moment due to gravity</a>
-<a href="#2">Inertial force on the pole due to the cart's motion</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Force</a></li>
-  <li><a href="#2.1">Moment due to the force</a></li>
-</ul>
-<a href="#3">Moment of inertia</a>
-<a href="#4">Equation of motion</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">$\ddot{x}$</a></li>
-  <li><a href="#4.1">$\ddot{\theta}$</a></li>
-</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Pole dynamics: Moment due to gravity</h1>
-<section id="1"><h1>Overview</h1>
+<section id="0"><h1>Overview</h1>
   <div class="container">
     <figure>
       <img style="height:150px; width:auto"
@@ -67,12 +55,18 @@
     <p>
       The torque at <code>A</code> resulting from the downward pull of gravity on the pendulum's mass at <code>G</code> is given by:
       $$
-        (M^{\scriptsize{A}}_g)\,\hat{k} = -m_{\scriptsize{p}} g \,sin\theta \cdot l
+        \bigl|M^{\scriptsize{A}}_g\bigr| = -m^{\scriptsize{G}} g \,sin\theta \cdot l
       $$
 
-      It is zero when the pendulum is fully vertical, and negative when the pendulum is at $+90^0$, i.e. accelerating the pendulum with a negative torque rotates it in the clockwise direction.
+      The moment is in the $\hat{k}$ direction.      
     </p>
   </div>
+
+  The moment is zero when the pendulum is fully vertical, and negative when the pendulum is at $+90^0$, i.e. gravity accelerates the pendulum with a negative torque thereby rotating it in the clockwise direction.
+
+  <p>
+    Any force along $\hat{d}$ does not convert to a torque about $\hat{k}$. The <a href="../../../../maths/vectors/product/dot.html">dot product</a> of the pole's weight and $\hat{d}$, the unit vector in the direction of the pole, gives the component of the pole's weight in the direction of the pole, $m^{\scriptsize{G}} g\,cos\theta$.
+  </p>
 </section>
 </chapter>
 

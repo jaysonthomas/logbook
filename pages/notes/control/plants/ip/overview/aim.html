@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart-Pole: Aim</title>
+  <meta name="Cart-Pole: Aim" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Features</a>
+<a href="#2">Real-world example</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cart-Pole: Aim</h1>
+<section id="0"><h1>Overview</h1>
+  The goal is to:
+  <ul>
+    <li>Understand how the angle of an inverted pendulum (<i>pole</i>) changes when a force is applied to the cart it is mounted to.</li>
+    <p>
+      <li>Derive the equations of motion that relates the acceleration/velocity/position of the cart to the angle/angular velocity of the pole.</li>
+
+      <p>
+        This involves finding $\ddot{x}, \ddot{\theta}$, which can then be integrated to find the other parameters given some initial condition. This is how simulations work.
+      </p>
+    </p>
+
+    <li>Derive a mathematical description of the dynamics of the system, i.e. of how the system moves.</li>
+  </ul>  
+</section>
+
+<section id="1"><h1>Features</h1>
+  <ul>
+    <li>It is an unstable mechanical system.</li>
+    The pole will fall over if an external control force is not applied to move the cart to keep the pole balanced upright; as opposed to a downward hanging pole in which the force of gravity alone results in stable oscillation about the downward vertical.
+
+    <p>
+      <li>The dynamics of the system are nonlinear.</li>
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>Real-world example</h1>
+  Attitude control of a rocket at takeoff when the airspeed is too small for aerodynamic stability.
+</section>
+</chapter>
+
+</body>
+</html>

@@ -41,19 +41,38 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Join</a>
-<a href="#1">Lead</a>
+<a href="#0">Aggregate</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Rule</a></li>
+</ul>
+<a href="#1">Join</a>
+<a href="#2">Lead</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>SQL</h1>
-
-<section id="0"><h1>Join</h1>
-  [<a href="https://t.ly/PSEbR">Ref</a>]<p></p>.
-
-  <i>Join</i> is a strict match, else discard. <i>Left Join</i>, retains the left side no matter what. If there is no RHS, then leave the RHS part of the row blank.
+<section id="0"><h1>Aggregate</h1>
+  Aggregate functions like <code>COUNT(), SUM(), AVG(), MAX()</code> etc. instructs SQL to reduce multiple rows into a single summary value (or one per group). But SQL needs clear instructions - if rows are being summarised based on 1 column, what should it do with the other columns? 
+  
+  <subsection id="0.0"><h1>Rule</h1>
+    Every column in the <code>SELECT</code> clause must either be:
+    <ul>
+      <li>An aggregate function or</li>
+      <li>Listed in the <code>GROUP BY</code> clause</li>
+    </ul>
+  </subsection>
 </section>
 
-<section id="1"><h1>Lead</h1>
+<section id="1"><h1>Join</h1>
+  [<a href="https://t.ly/PSEbR">Ref</a>]<p></p>
+
+  <i>(INNER) JOIN</i> enforces a strict match between the rows of the tables mentioned in the <code>FROM</code> clause. Else, the rows are discarded. 
+  
+  <p>
+    <i>LEFT JOIN</i>, retains the left side no matter what. If there is no RHS, then the RHS part of the row is left blank.
+  </p>
+</section>
+
+<section id="2"><h1>Lead</h1>
 <pre><code class="sql">
 LEAD(timestamp, 1) OVER (PARTITION BY id ORDER BY timestamp ASC) AS nextTs
 </code></pre>

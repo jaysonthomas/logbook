@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cartpole: Derivation of equations of motion</title>
+  <meta name="Cartpole: Derivation of equations of motion" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Balance of moments about the centre of mass</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cartpole: Derivation of equations of motion</h1>
+<section id="0"><h1>Balance of moments about the centre of mass</h1>
+  The advantage of computing the balance of moments about <code>A</code> is that $F_1$ and $F_2$ don't create any moments about the point. Hoping to never have to evaluate them is futile, since they pop up in the sum of forces acting on the pole anyway. The number of terms in the sum of torques equation does reduce though.
+
+  $$\begin{align*}
+    \newcommand{eqRef}[1]{\tag{#1} \label{eq:#1}}
+    \sum \tau^G_{\hat{k}} &= \frac{d}{dt} H^G \\
+      &= F_2\,l \,\hat{k} \\
+      &= \frac{d}{dt} \biggl(I^G \begin{bmatrix}0 \\ 0 \\ \omega_z\end{bmatrix}\biggr) \\
+      &= I^G_{zz} \, \ddot\theta \, \hat{k} \\
+    F_2 &= \frac{J \, \ddot\theta}{l} \\
+    \ddot\theta &= \frac{lF_2}{J} \eqRef{3}
+  \end{align*}$$
+
+  $\frac{d}{dt} H^G$ is the time rate of change of angular momentum about <code>G</code>.
+
+  <p>
+    $\sum \tau^G_{\hat{k}}$ is the sum of external torques about <code>G</code>. The only external torque is caused by $F_2$ about a moment arm of length $l$. Gravity causes no torque since it is acting downwards at <code>G</code>. The torque due to $F_2$ is positive when $F_2$ causes a rotation in the counter-clockwise $\hat{k}$ direction.
+  </p>
+
+  $I^G$ is the mass moment of inertia of the pole about <code>G</code>. Since the only term that matters is that in the direction of $\hat{k}$, only $I^G_{zz}$ is considered. It is similar to that of a uniform rod. 
+</section>
+</chapter>
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cart-pole dynamics: Forces acting on the pole</title>
-  <meta name="Cart-pole dynamics: Forces acting on the pole" content="text/html; charset=utf-8;" />
+  <title>Dynamics: Pole</title>
+  <meta name="Dynamics: Pole" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../../logbook.js"></script>
 
   <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,63 +41,61 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Moment due to gravity</a>
-<a href="#2">Inertial force on the pole due to the cart's motion</a>
+<a href="#0">Topics</a>
+<a href="#1">Equation of motion</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Force</a></li>
-  <li><a href="#2.1">Moment due to the force</a></li>
-</ul>
-<a href="#3">Moment of inertia</a>
-<a href="#4">Equation of motion</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">$\ddot{x}$</a></li>
-  <li><a href="#4.1">$\ddot{\theta}$</a></li>
+  <li><a href="#1.0">$\ddot{x}$</a></li>
+  <li><a href="#1.1">$\ddot{\theta}$</a></li>
 </ul>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Cart-pole dynamics: Forces acting on the pole</h1>
-<section id="0"><h1>Overview</h1>
+<chapter style="counter-reset: chapter 0"><h1>Dynamics: Pole</h1>
+<section id="0"><h1>Topics</h1>
   A pendulum on a cart experiences the following 3 torques; all of which must be in equilibrium as per d'Alembert's principle. These torques contribute to 1 equation of motion for the cart and pole model:
   
   <ul>
     <li><a href="gravity.html">Moment due to gravity</a></li>
-    <li><a href="cartMotion.html">Inertial moment due to the cart's motion</a></li>
-    <li>A rotational inertial force known as the <i>moment of inertia</i></li>
+    <li><a href="forceBalance.html">Balance of forces</a></li>
+    <li><a href="momentBalance.html">Balance of moments</a></li>
+       
+    <li>Inertial moments due to resistance to the pole's:</li>
+    <ul>
+      <li><a href="resistanceToLinearAccel.html">Linear acceleration</a></li>
+      <li><a href="resistanceToRotationalAccel.html">Rotational acceleration</a></li>
+    </ul>
   </ul>
 </section>
 
-<section id="3"><h1>Moment of inertia</h1>
-  The moment of inertia is initially written as some multiple $J$ of $\ddot\theta$, to be substituted later.
-  $$
-    (M^{\scriptsize{A}}_i) \,\hat{k} = J \ddot\theta
-  $$
-</section>
-
-<section id="4"><h1>Equation of motion</h1>
+<section id="1"><h1>Equation of motion</h1>
   Summing the three moments and equating to zero as per d'Alembert's principle, gives:
 
   $$\begin{align*}
     (M_g + M^{\scriptsize{G}}_i + M^{\scriptsize{A}}_i)\,\hat{k} &= 0 \\ 
-    -m_{\scriptsize{p}}g l\,sin\theta + 
-    m_{\scriptsize{p}} l (\ddot{x} \,cos\theta - l \dot\theta^2) + 
+    -m_{\scriptsize{p}}g l\,sin\theta - 
+    m_{\scriptsize{p}} l^2 \ddot\theta - 
+    m_{\scriptsize{p}} l \ddot{x} \,cos\theta - 
     J \ddot\theta &= 0
   \end{align*}$$
 
-  <subsection id="4.0"><h1>$\ddot{x}$</h1>
+  <subsection id="1.0"><h1>$\ddot{x}$</h1>
     $$
       \ddot{x} = 
-      \frac{-J \ddot\theta + m_{\scriptsize{p}}g l\,sin\theta + m_{\scriptsize{p}}l^2 \dot\theta^2}
-      {m_{\scriptsize{p}}l\,cos\theta} \tag{1} \label{eq:1}
+      \frac{-J \ddot\theta - 
+            m_{\scriptsize{p}}g l\,sin\theta - 
+            m_{\scriptsize{p}} l^2 \ddot\theta}
+          {m_{\scriptsize{p}}l\,cos\theta} \tag{1} \label{eq:1}
     $$
 
     This equation is avoided to obtain $\ddot{x}$ as it would return an undefined result when $cos\theta$ in the denominator is $0$ for $\theta=90^0$.    
   </subsection>
 
-  <subsection id="4.1"><h1>$\ddot{\theta}$</h1>
-    $$\begin{align*}
-      &\ddot\theta = \frac{m_{\scriptsize{p}}l \bigl[l \dot\theta^2 - \ddot{x} \,cos\theta + g sin\theta\bigr]}{J} \tag{2} \label{eq:2}
-    \end{align*}$$
+  <subsection id="1.1"><h1>$\ddot{\theta}$</h1>
+    $$
+      \ddot\theta = 
+      \frac{-m_{\scriptsize{p}} l \ddot{x} \,cos\theta -
+            m_{\scriptsize{p}}g l\,sin\theta }
+          {J + m_{\scriptsize{p}} l^2} \tag{2} \label{eq:2}
+    $$
   </subsection>
 </section>
 

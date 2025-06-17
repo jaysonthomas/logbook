@@ -59,7 +59,10 @@
     <p>
       <li>Equations</li>
       <ul>
-        <li><a href="alignment.html">Alignment</a></li>
+        <li><a href="equation/sideBySide.html">Side-by-side</a></li>
+        <li><a href="equation/description.html">Description of variables</a></li>
+        <li><a href="equation/referencing.html">Referencing</a></li>
+        <li><a href="equation/numbering.html">Numbering</a></li>
       </ul>
     </p>
   </ul>
@@ -96,19 +99,6 @@
       <code>\displaylines</code> takes into account <code>\\</code> to mean
       'leave a new line'.
     </p>
-    <li>
-      Place <code>\label{eq:xxx}</code> just after the equation, on the same line, before the newline character <code>\\</code>. Use <code>\ref{eq:xxx}</code> to reference the equation.
-    </li>
-      $$\begin{align}
-        \sigma &= \alpha \mu \nonumber \\
-        1-\frac{v}{r_e \omega} &= \alpha \frac{F}{F_N}  \label{eq:linearVelocityFromSlip}
-      \end{align}$$
-    From $\ref{eq:linearVelocityFromSlip}$
-
-    <p>
-      <li>Numbering equations</li>
-      \begin{equation}\bh(\bq) = 0.\end{equation}
-    </p>
 
     <li>Underbrace</li>
     $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
@@ -131,17 +121,6 @@
       <li>Including normal text with math</li>
       <code>\text{}</code>
     </p>
-
-    <li>Aligning descriptions of equations to the left</li>
-    <div style="width:0; text-align:left;">
-      $$\begin{array}{cclc} 
-        \omega_{c} &:& \text{Cutoff frequency of filter} & [Hz] \\ 
-        t_c = \frac{1}{\omega_c} &:& \text{Decay time} & [s] \\
-        T_{s} &:& \text{Sampling period} & [s]
-      \end{array}$$
-    </div>
-    
-    <code>{cclc}</code> defines a table with four columns, where the 1st, 2nd, and 4th columns are center-aligned, and the 3rd column is left-aligned. The 2nd column is in between the 2 <code>&</code>s.
   </ul>
 </section>
 

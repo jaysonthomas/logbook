@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notation</title>
+  <meta name="Notation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Miscellaneous</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Notation</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="container">
+    <figure2>
+      <img style="height:130px; width:auto"
+      src="../../../../../figures/dynamics/cartPole/5_setup_sd.png"/>
+      <figcaption>
+        Scenario
+      </figcaption>
+    </figure2>
+
+    <figure2>
+      <img style="height:130px; width:auto"
+      src="../../../../../figures/dynamics/cartPole/4_fbd_sd.png"/>
+      <figcaption>
+        FBD: Drawing of all the forces that<br>keep the cart and the pole connected to the world.
+      </figcaption>
+    </figure2>
+
+    <figure2>
+      <img style="height:100px; width:auto"
+      src="../../../../../figures/dynamics/cartPole/6_forceComponents.png"/>
+    </figure2>
+  </div>
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      N &:& \text{Normal force of the track pushing up on the cart} \\ 
+      f_x &:& \text{Horizontal force of the motor} \\
+      W_c &:& \text{Weight of the cart} \\
+      W_p &:& \text{Weight of the pole} \\
+      F_1, F_2 &:& \text{2 components of the tension (also called constraint force or conduct force)} \\
+              &&\text{experienced by the rod} \\
+      N_1 &:& \text{Normal force experienced by the wheels} \\
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Miscellaneous</h1>
+  <div style="width:0; text-align:left;">
+    $$
+      \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{#2em}}{#3}^{\scriptsize{#4}}}
+      \newcommand{\Fdir}[3]{{#1}^{\scriptsize{#2}}_{\scriptsize{\hat{#3}}}}
+
+      \begin{array}{ccl} 
+        \wrt{G}{-0.1}{x}{A} &:& \text{Position of A w.r.t. G in the world frame} \\ 
+        \Fdir{F}{G}{i} &:& \text{Force at G in the } \hat{i} \text{ direction of the world frame}\\
+        F_1 &:& \text{Force 1} \\
+        M^{\scriptsize{A}}_g &:& \text{Moment about A due to gravity} \\
+        m_{\scriptsize{G}} &:& \text{Mass of the centre of mass at G}
+      \end{array}
+    $$
+  </div>
+</section>
+
+</chapter>
+
+</body>
+</html>

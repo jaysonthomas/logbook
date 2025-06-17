@@ -45,6 +45,8 @@
 <ul class="no-bullets">
   <li><a href="#0.0">Direction</a></li>
 </ul>
+<a href="#1">Formula in 3D of 2 vectors</a>
+<a href="#2">Unit vector identities</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Cross Product</h1>
@@ -72,6 +74,34 @@
   <subsection id="0.0"><h1>Direction</h1>
     To find the resulting axis of a cross product, the "right-hand rule" is used: point the index finger in the direction of the first vector, the middle finger in the direction of the second vector, and the thumb will point directly along the axis of the resulting cross product vector, which is perpendicular to the plane containing the original two vectors.
   </subsection>
+</section>
+
+<section id="1"><h1>Formula in 3D of 2 vectors</h1>
+  Given 2 vectors:
+  $$\begin{align*}
+    a &= a_x \hat{i} + a_y \hat{j} + a_z \hat{k} \\
+    b &= b_x \hat{i} + b_y \hat{j} + b_z \hat{k}
+  \end{align*}$$
+  
+  The cross product $a \times b$ is given by the determinant:
+  $$\begin{align*}
+    a \times b &= 
+      \begin{vmatrix}
+        \hat{i} & \hat{j} & \hat{k} \\
+        a_x & a_y & a_z \\
+        b_x & b_y & b_z
+      \end{vmatrix} \\
+    &= (a_y b_z - a_z b_y) \hat{i} - (a_x b_z - a_z b_x) \hat{j} + (a_x b_y - a_y b_x) \hat{k}
+  \end{align*}$$
+
+  An example of a cross product where only the $\hat{k}$ component is non-zero can be found in the <a href="../../../control/plants/ip/method1/dynamics/pole/cartMotion.html">inverted pendulum dynamics computation</a>.
+</section>
+
+<section id="2"><h1>Unit vector identities</h1>
+  $$\begin{align*}
+    \hat{k} \times \hat{i} &= \hat{j} \\
+    \hat{k} \times \hat{j} &= -\hat{i}
+  \end{align*}$$
 </section>
 </chapter>
 

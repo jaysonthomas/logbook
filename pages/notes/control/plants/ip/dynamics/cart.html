@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamics: Cart</title>
+  <meta name="Dynamics: Cart" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">FBD</a>
+<a href="#1">Forces on the cart - overview</a>
+<a href="#2">Forces transmitted by the pole</a>
+<a href="#3">Equation of motion</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Dynamics: Cart</h1>
+<section id="0"><h1>FBD</h1>
+  <div class="container">
+    <figure2>
+      <img style="height:130px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/5_setup_sd.png"/>
+      <figcaption>
+        Scenario
+      </figcaption>
+    </figure2>
+
+    <figure2>
+      <img style="height:130px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/4_fbd_sd.png"/>
+      <figcaption>
+        FBD
+      </figcaption>
+    </figure2>
+
+    <figure2>
+      <img style="height:100px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/6_forceComponents.png"/>
+    </figure2>
+  </div>
+</section>
+
+<section id="1"><h1>Forces on the cart - overview</h1>
+  <ul>
+    <li>External horizontal force $f_x$</li>
+    A motor applies a horizontal force $f_x$.
+
+    <p>
+      <li><a href="#2">Forces transmitted by the pole</a> at point <code>A</code></li>
+      Because of Newton's 3rd law, there are 2 forces acting on the cart at <code>A</code> that are equal and opposite to those acting on the pole at that point.
+    </p>
+
+    <li>The cart's own inertial resistance, i.e. the cart's resistance to acceleration.</li>  
+
+    <p>
+      <li>For any positive motion, the spring force resists and pulls back. For any positive velocity, the damper pulls back.</li>
+    </p>
+
+    <li>Friction and reaction forces at the wheels are ignored.</li>
+  </ul>
+
+  Summation of these forces will equate to zero as per d'Alembert's principle.
+</section>
+
+<section id="2"><h1>Forces transmitted by the pole</h1>
+  This could result from:  
+  <ul>
+    <li>Inertial resistance of the pole mass at point <code>G</code> to the cart's motion</li>
+    <li>External forces applied to the pole</li>
+    <li>Gravity acting on the pole</li>
+  </ul>
+
+  At the point of rotation (attachment to the cart) <code>A</code>, these are drawn as $F_1, F_2$ in the same direction as the forces experienced by the cart. They are not drawn arbitrarily; their directions have been chosen. But, their directions are not known. 
+</section>
+
+<section id="3"><h1>Equation of motion</h1>
+  <code>A</code> is the point at which the mass of the cart is concentrated.
+
+  $$\begin{align*}
+    \newcommand{eqRef}[1]{\tag{#1} \label{eq:#1}}
+    \sum F_\hat{i}^{\scriptsize{A}} &= m_{\scriptsize{A}} \ddot{x} \\
+      &= -kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta + f_x \\\\
+    \ddot{x} &= \frac{-kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta + f_x}{m_{\scriptsize{A}}} \eqRef{4}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cart-pole dynamics: Alternate equations of acceleration</title>
-  <meta name="Cart-pole dynamics: Alternate equations of acceleration" content="text/html; charset=utf-8;" />
+  <title>Final equations</title>
+  <meta name="Final equations" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,58 +41,30 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Equations due to forces on the pole</a>
-<a href="#1">Equations due to forces on the cart</a>
-<a href="#2">Derived equations from above</a>
-<a href="#3">Usage</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Cart-pole dynamics: Alternate equations of acceleration</h1>
-<section id="0"><h1>Equations due to forces on the pole</h1>
+<chapter style="counter-reset: chapter 0"><h1>Final equations</h1>
+<section id="0"><h1>Overview</h1>
+  Substituting <a href="dynamics/pole/forceBalance.html#mjx-eqn:eq:1">$F_1$</a> and <a href="dynamics/pole/forceBalance.html#mjx-eqn:eq:2">$F_2$</a> in the <a href="dynamics/cart.html#mjx-eqn:eq:4">equation for balance of forces on the cart</a>:
+
   $$\begin{align*}
-    \ddot{x} &= 
-    \frac{-J \ddot\theta + m^{\scriptsize{p}}g l\,sin\theta + m^{\scriptsize{p}}l^2 \dot\theta^2}
-    {m^{\scriptsize{p}}l\,cos\theta} \tag{1} \label{eq:1} \\\\
-
-    \ddot\theta &= \frac{m^{\scriptsize{p}}l \bigl[l \dot\theta^2 - \ddot{x} \,cos\theta + g sin\theta\bigr]}{J} \tag{2} \label{eq:2}
+    m_{\scriptsize{A}} \ddot{x} &= -kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta + f_x \\
+      &= -kx -b\dot{x} + \bigl(-m_{\scriptsize{G}}g\,sin\theta - m_{\scriptsize{G}} (\ddot{x}\,cos\theta + l\ddot\theta)\bigr) \, cos\theta + \bigl(m_{\scriptsize{G}}g\,cos\theta - m_{\scriptsize{G}} (\ddot{x}\,sin\theta - l\dot\theta^2)\bigr)\, sin\theta + f_x \\
+      &= -kx -b\dot{x} - m_{\scriptsize{G}} \ddot{x} - m_{\scriptsize{G}} l\ddot\theta \, cos\theta + m_{\scriptsize{G}} l\dot\theta^2 \, sin\theta + f_x \\
+    \ddot{x} &= \frac{-kx -b\dot{x} - m_{\scriptsize{G}} l\ddot\theta \, cos\theta + m_{\scriptsize{G}} l\dot\theta^2 \, sin\theta + f_x}
+    {m_{\scriptsize{A}} + m_{\scriptsize{G}}}
   \end{align*}$$
-</section>  
 
-<section id="1"><h1>Equations due to forces on the cart</h1>
+  Substituting <a href="dynamics/pole/forceBalance.html#mjx-eqn:eq:2">$F_2$</a> in the <a href="dynamics/pole/momentBalance.html#mjx-eqn:eq:3">equation for balance of moments on the pole</a>:
+
   $$\begin{align*}
-    \ddot{x} &= \frac{f + m^{\scriptsize{p}}l(\ddot\theta \, sin\theta + \dot\theta^2 \, cos\theta)}
-    {m^{\scriptsize{p}} + m^{\scriptsize{c}}} \tag{3} \label{eq:3} \\\\
-
-    \ddot{\theta} &= \frac{(m^{\scriptsize{c}} + m^{\scriptsize{p}}) \ddot{x} - 
-      m^{\scriptsize{p}} l \dot{\theta}^2 \cos\theta - f}
-    {m^{\scriptsize{p}} l \sin\theta} \tag{4} \label{eq:4}
+    \ddot\theta &= \frac{lF_2}{J} \\
+      &= \frac{\bigl(-m_{\scriptsize{G}}g\,sin\theta - m_{\scriptsize{G}} (\ddot{x}\,cos\theta + l\ddot\theta) \bigr)l}{J} \\
+    J \ddot\theta &= -lm_{\scriptsize{G}}g\,sin\theta - lm_{\scriptsize{G}} \ddot{x}\,cos\theta - l^2m_{\scriptsize{G}}\ddot\theta \\ 
+    \ddot\theta &= \frac{-lm_{\scriptsize{G}}g\,sin\theta - lm_{\scriptsize{G}} \ddot{x}\,cos\theta}
+                    {J + l^2m_{\scriptsize{G}}}
   \end{align*}$$
-</section>  
-
-<section id="2"><h1>Derived equations from above</h1>
-  $$\begin{align*}
-    \ddot\theta &=
-    \frac{({m^{\scriptsize{p}} + m^{\scriptsize{c}}}) (m^{\scriptsize{p}}g l\,sin\theta + m^{\scriptsize{p}}l^2 \dot\theta^2) -
-    fm^{\scriptsize{p}}l\,cos\theta -
-    (m^{\scriptsize{p}})^2l^2\dot\theta^2cos^2\theta}
-    {(m^{\scriptsize{p}})^2l^2 cos\theta\, sin\theta + 
-      J ({m^{\scriptsize{p}} + m^{\scriptsize{c}}})} \tag{5} \label{eq:5}\\\\
-
-    \ddot{x} &= 
-    \frac{{m^{\scriptsize{p}}}^2l^2 sin\theta \bigl[l \dot\theta^2 + g sin\theta\bigr] +
-    J(m^{\scriptsize{p}} l \dot{\theta}^2 \cos\theta - f)}
-    {J(m^{\scriptsize{c}} + m^{\scriptsize{p}}) +
-    {m^{\scriptsize{p}}}^2l^2 sin\theta \,cos\theta} \tag{6} \label{eq:6}
-  \end{align*}$$
-</section>
-
-<section id="3"><h1>Usage</h1>
-  Equations that can be used together:
-  <ul>
-    <li>\ref{eq:5} and \ref{eq:3}</li>
-    <li>\ref{eq:6} and \ref{eq:2}</li>
-    <li>\ref{eq:2} and \ref{eq:3}</li>
-  </ul>
 </section>
 </chapter>
 
