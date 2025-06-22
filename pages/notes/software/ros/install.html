@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS</title>
-  <meta name="ROS" content="text/html; charset=utf-8;" />
+  <title>ROS: Installation</title>
+  <meta name="ROS: Installation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,12 +41,18 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Resources</a>
-<a href="#1">Installation</a>
+<a href="#0">Verify other ROS distributions are not sourced</a>
+<a href="#1">Configure ubuntu repositories</a>
+<a href="#2">Set locale</a>
+<a href="#3">Setup ROS repository sources</a>
+<a href="#4">Install ROS2 packages</a>
+<a href="#5">Test the installation</a>
+<a href="#6">To find info about a topic</a>
+<a href="#7">Visualising the graph</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>ROS: Installation</h1>
-<section><h1>Verify other ROS distributions are not sourced</h1>
+<section id="0"><h1>Verify other ROS distributions are not sourced</h1>
   [<a href="https://t.ly/xx-4A">Ref</a>] <p></p>
   Make sure no other version of ROS2 or ROS1 are automatically sourced when a terminal is started. <i>Sourced</i> means that a setup file of a ROS2 distribution is automatically called when you open a terminal.
 <pre><code class="bash">
@@ -66,7 +72,7 @@ source /opt/ros/iron/setup.bash
 </code></pre>
 </section>
 
-<section><h1>Configure ubuntu repositories</h1>
+<section id="1"><h1>Configure ubuntu repositories</h1>
   To allow restricted, universe and multiverse.
 <pre><code class="bash">
 sudo add-apt-repository universe
@@ -82,7 +88,7 @@ grep ^deb /etc/apt/sources.list
 
 </section>
 
-<section><h1>Set locale</h1>
+<section id="2"><h1>Set locale</h1>
   That supports UTF-8.
 <pre><code class="bash">
 locale  
@@ -95,7 +101,7 @@ locale
 </code></pre>
 </section>
 
-<section><h1>Setup ROS repository sources</h1>
+<section id="3"><h1>Setup ROS repository sources</h1>
   Add the ROS 2 GPG key with apt.
 <pre><code class="bash">
 sudo apt update && sudo apt install curl -y
@@ -110,7 +116,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-a
 
 </section>
 
-<section><h1>Install ROS2 packages</h1>
+<section id="4"><h1>Install ROS2 packages</h1>
   Update the caches and the system
 <pre><code class="bash">
 sudo apt update
@@ -124,7 +130,7 @@ sudo apt install ros-dev-tools
 </code></pre>
 </section>
 
-<section><h1>Test the installation</h1>
+<section id="5"><h1>Test the installation</h1>
   Run the talker-listener example which is a “Hello World” example of ROS2 programming. 
 
   <p>
@@ -142,7 +148,7 @@ ros2 run demo_nodes_cpp listener
 </code></pre>
 </section>
 
-<section><h1>To find info about a topic</h1>
+<section id="6"><h1>To find info about a topic</h1>
   Open another terminal whilst the communication is going on.
 <pre><code class="bash">
 ros2 topic info /chatter
@@ -153,7 +159,7 @@ ros2 topic info /rosout
   Messages are of the type <code>std_msgs/msg/String</code> which is a ROS2 data type that is equivalent to the string data type in Python and C++.
 </section>
 
-<section><h1>Visualising the graph</h1>
+<section id="7"><h1>Visualising the graph</h1>
 <pre><code class="bash">
 rqt_graph
 </code></pre>

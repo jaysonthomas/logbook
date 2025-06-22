@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS</title>
-  <meta name="ROS" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <title>Docker Engine</title>
+  <meta name="Docker Engine" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,12 +41,14 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Resources</a>
-<a href="#1">Installation</a>
+<a href="#0">Avoid conflicts</a>
+<a href="#1">Setup repository</a>
+<a href="#2">Install Docker packages</a>
+<a href="#3">Enable running Docker without using sudo</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Docker Engine</h1>
-<section><h1>Avoid conflicts</h1>
+<section id="0"><h1>Avoid conflicts</h1>
   [<a href="https://t.ly/w71KP">Ref</a>] <p></p>
   Uninstall packages that can potentially create conflicts with Docker Engine.
 <pre><code class="bash">
@@ -54,7 +56,7 @@ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker c
 </code></pre>
 </section>
 
-<section><h1>Setup repository</h1>
+<section id="1"><h1>Setup repository</h1>
   Setup Docker's apt repository.
 <pre><code class="bash">
 sudo apt-get update
@@ -76,7 +78,7 @@ sudo apt-get update && sudo apt-get upgrade
 </code></pre>
 </section>
 
-<section><h1>Install Docker packages</h1>
+<section id="2"><h1>Install Docker packages</h1>
 <pre><code class="bash">
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 </code></pre>
@@ -87,7 +89,7 @@ sudo docker run hello-world
 </code></pre>  
 </section>
 
-<section><h1>Enable running Docker without using sudo</h1>
+<section id="3"><h1>Enable running Docker without using sudo</h1>
   Create a docker group.
 <pre><code class="bash">
 sudo groupadd docker
