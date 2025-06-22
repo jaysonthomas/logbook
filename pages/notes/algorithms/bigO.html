@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lambda functions</title>
-  <meta name="Lambda functions" content="text/html; charset=utf-8;" />
+  <title>Big O Notation</title>
+  <meta name="Big O Notation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -44,32 +44,13 @@
 <a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Lambda functions</h1>
+<chapter style="counter-reset: chapter 3"><h1>Big O Notation</h1>
 <section id="0"><h1>Overview</h1>
-<pre><code class="cpp">
-void main() {
-  int someVariable = 10;
+  Document <a href="https://t.ly/aUFuZ">this</a> cheat sheet. Execution time plots can be found <a href="https://t.ly/bQmP-">here</a>. I like the following 2 videos: <a href="https://t.ly/uNtI1">Ref 1</a>, <a href="https://t.ly/qFIyx">Ref 2</a>.
+</section>
 
-  const auto getGain = [&](const int test) {
-      return test * someVariable;
-  };
-
-  int result = getGain(5);
-}
-</code></pre>
-
-<ul>
-  <li><code>= [&]</code></li>
-  The <i>capture clause</i> of the lambda function specifies how variables from the surrounding scope are captured and made available within the lambda function. In this case, <code>[&]</code> captures all variables from the <n>surrounding scope</n> by reference, allowing the lambda to access and modify them.
-
-  <p>
-    <li><code>getGain</code></li>
-    The name of the lambda function can be used to call it.
-  </p>
-
-  <li><code>auto</code></li>
-  It is used to automatically deduce the data type of the variable based on the initializer.
-</ul>
+<section id="1"><h1>Overview</h1>
+  Based on <a href="https://www.bigocheatsheet.com/">this cheat sheet</a>, merge sort has a worst time complexity of <n>$O(n log(n))$</n>. I don't mind <a href="https://t.ly/r4vVt">this cheat sheet</a> as well.
 </section>
 
 </chapter>

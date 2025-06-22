@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sort</title>
-  <meta name="Sort" content="text/html; charset=utf-8;" />
+  <title>TODO: Current</title>
+  <meta name="TODO: Current" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../logbook.js"></script>
 
   <script src="../../logbook-mathjax-config.js" defer></script> 
@@ -41,36 +41,45 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Navigation</a>
-<a href="#1">Sensor fusion</a>
-<a href="#2">Machine learning</a>
-<a href="#3">Simulators</a>
+<a href="#0">Control</a>
+<a href="#1">DSP</a>
+<a href="#2">Estimation</a>
+<a href="#3">Motor</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Sort</h1>
-<section id="0"><h1>Navigation</h1>
-  <li><a href="navigation/overview.html">Overview</a></li>
-</section>
-
-<section id="1"><h1>Sensor fusion</h1>
+<chapter style="counter-reset: chapter 1"><h1>TODO: Current</h1>
+<section id="0"><h1>Control</h1>
+  Finish cartpole investigation. Then:
   <ul>
-    <li><a href="sensorFusion/intro.html">Intro</a></li>
-    <li><a href="sensorFusion/lidar.html">LIDAR</a></li>
-    <li><a href="sensorFusion/camera.html">Camera</a></li>
+    <li>Moment of inertia completion</li>
+    <li>V5W model completion</li>
+    <li>MPC applied to cartpole</li>
   </ul>
 </section>
 
-<section id="2"><h1>Machine learning</h1>
+<section id="1"><h1>DSP</h1>
+  Finish cut off frequency for a simple moving average filter. Then:
   <ul>
-    <li><a href="ml/deeplearning.html">Deep Learning</a></li>
+    <li>Cut off frequency for EMA</li>
+    <li>Low pass filter applied to the derivative term</li>
   </ul>
 </section>
 
-<section id="3"><h1>Simulators</h1>
+<section id="2"><h1>Estimation</h1>
   <ul>
-    <li><a href="manipulation/drakeComponents.html">Drake components</a></li>
+    <li>Z mass</li>
+    <li>Z move section analyser</li>
+    <li>V5W LSE</li>
   </ul>
 </section>
+
+<section id="3"><h1>Motor</h1>
+  <ul>
+    <li>Overview</li>
+    <li>4 quadrants</li>
+  </ul>
+</section>
+
 </chapter>
 
 </body>

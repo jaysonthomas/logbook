@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sort</title>
-  <meta name="Sort" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../logbook.js"></script>
+  <title>Minimum swaps</title>
+  <meta name="Minimum swaps" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,35 +41,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Navigation</a>
-<a href="#1">Sensor fusion</a>
-<a href="#2">Machine learning</a>
-<a href="#3">Simulators</a>
+<a href="#0">First attempt</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Sort</h1>
-<section id="0"><h1>Navigation</h1>
-  <li><a href="navigation/overview.html">Overview</a></li>
-</section>
+<chapter style="counter-reset: chapter 3"><h1>Minimum swaps</h1>
+<section id="0"><h1>First attempt</h1>
+  [<a href="https://t.ly/AKeE6">Ref</a>] <p></p>
+<pre><code class="C++">
+#include <unordered_set>
+#include <string>
+using namespace std;
 
-<section id="1"><h1>Sensor fusion</h1>
-  <ul>
-    <li><a href="sensorFusion/intro.html">Intro</a></li>
-    <li><a href="sensorFusion/lidar.html">LIDAR</a></li>
-    <li><a href="sensorFusion/camera.html">Camera</a></li>
-  </ul>
-</section>
+string twoStrings(string s1, string s2)
+{
+    unordered_set<char> chars_in_s1(s1.begin(), s1.end());
 
-<section id="2"><h1>Machine learning</h1>
-  <ul>
-    <li><a href="ml/deeplearning.html">Deep Learning</a></li>
-  </ul>
-</section>
+    for (char c : s2)
+    {
+        if (chars_in_s1.count(c))
+            return "YES";
+    }
 
-<section id="3"><h1>Simulators</h1>
-  <ul>
-    <li><a href="manipulation/drakeComponents.html">Drake components</a></li>
-  </ul>
+    return "NO";
+}
+</code></pre>
+  All characters of <code>s1</code> is placed in a hash set. Then, for each character in s2, it checks if that character is in the set.
 </section>
 </chapter>
 

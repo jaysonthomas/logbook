@@ -98,6 +98,7 @@ dmypy.json
 # Directories
 w/
 timeWithGod/
+strategy/
 
 # Drawio
 *.bkp
