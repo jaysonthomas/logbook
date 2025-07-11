@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>C++ coding questions</title>
-  <meta name="C++ coding questions" content="text/html; charset=utf-8;" />
+  <title>Making anagrams</title>
+  <meta name="Making anagrams" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,45 +41,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Array manipulation</a>
-<a href="#1">Dictionaries & hashmaps</a>
-<a href="#2">String manipulation</a>
-<a href="#3">Sorting</a>
-<a href="#4">Searching</a>
+<a href="#0">First attempt</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>C++ coding questions</h1>
-<section id="0"><h1>Array manipulation</h1>
-  <ul>
-    <li><a href="leftShift.html">Left shift</a></li>
-    <li><a href="minSwaps.html">Minimum swaps</a></li>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 3"><h1>Making anagrams</h1>
+<section id="0"><h1>First attempt</h1>
+  [<a href="https://bit.ly/3eNO0PC">Ref</a>] <p></p>
+<pre><code class="C++">
+#include <unordered_set>
+#include <string>
+using namespace std;
 
-<section id="1"><h1>Dictionaries & hashmaps</h1>
-  <ul>
-    <li><a href="twoStrings.html">Two strings</a></li>
-    <li><a href="checkMag.html">Check magazine</a></li>
-  </ul>
-</section>
+string twoStrings(string s1, string s2)
+{
+    unordered_set<char> chars_in_s1(s1.begin(), s1.end());
 
-<section id="2"><h1>String manipulation</h1>
-  <ul>
-    <li><a href="makingAnagram.html">Making anagrams</a></li>
-  </ul>
-</section>
+    for (char c : s2)
+    {
+        if (chars_in_s1.count(c))
+            return "YES";
+    }
 
-<section id="3"><h1>Sorting</h1>
-  <ul>
-    <li><a href="toys.html">Mark and toys</a></li>
-    <li><a href="sortComp.html">Sorting comparator</a></li>
-  </ul>
-</section>
-
-<section id="4"><h1>Searching</h1>
-  <ul>
-    <li><a href="iceCream.html">Hash tables: Ice cream parlor</a></li>
-  </ul>
+    return "NO";
+}
+</code></pre>
+  All characters of <code>s1</code> is placed in a hash set. Then, for each character in s2, it checks if that character is in the set.
 </section>
 </chapter>
 

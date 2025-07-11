@@ -55,18 +55,17 @@
 <a href="#8">Python learning from Drake python api</a>
 <a href="#9">Numpy</a>
 <a href="#10">General</a>
-<a href="#11">Regular expressions</a>
-<a href="#12">Lambda</a>
-<a href="#13">Dictionary</a>
-<a href="#14">Timing python code</a>
-<a href="#15">Relationships</a>
+<a href="#11">Lambda</a>
+<a href="#12">Dictionary</a>
+<a href="#13">Timing python code</a>
+<a href="#14">Relationships</a>
 <ul class="no-bullets">
-  <li><a href="#15.0">Extension (Inheritance)</a></li>
-  <li><a href="#15.1">Composition</a></li>
-  <li><a href="#15.2">Aggregation</a></li>
+  <li><a href="#14.0">Extension (Inheritance)</a></li>
+  <li><a href="#14.1">Composition</a></li>
+  <li><a href="#14.2">Aggregation</a></li>
 </ul>
-<a href="#16">Set</a>
-<a href="#17">Musings</a>
+<a href="#15">Set</a>
+<a href="#16">Musings</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Python</h1>
@@ -95,6 +94,8 @@
     <li><a href="syntax/imports.html">Imports</a></li>
     <li><a href="syntax/iteration.html">Iteration</a></li>
     <li><a href="syntax/list/main.html">List</a></li>
+    <li><a href="syntax/regex.html">Regex</a></li>
+    <li><a href="syntax/string.html">String</a></li>
   </ul>
 </section>
 
@@ -297,52 +298,7 @@ H[1,-3]
   </ul>
 </section>
 
-<section id="11"><h1>Regular expressions</h1>
-  <ul>
-    <li>Substitute</li>
-<pre><code class="python">
-line = ',{"test":"2022-11-07T14:55:14","source":"water","test2":{ "type": "success"}'
-temp = re.sub(pattern=r'^.*{ "type"', repl='{"type"', string=line)
-
-Output: {"type": "success"}
-</code></pre>
-    <code>^</code> - from the start of the string.
-    <br>
-    <code>.*</code> - match all characters except newline as many times as possible.
-    <br><br>
-
-    <li>Search</li>
-<pre><code class="python">
-line = ',{"test":"2022-11-07T14:55:14","source":"water","test2":{ "type": "success"}'
-ts = re.search(r'{(.*),"source"', line).group(1)
-
-Output: "test":"2022-11-07T14:55:14"
-</code></pre>
-    The starting '{' is just to indicate where we want to begin the search from.
-    <br>
-    <code>group(0)</code> - contains the string considered for the search.
-    <br>
-    <code>group(1)</code> is the portion represented in between the brackets using wildcards.
-    
-    <p>
-      <li>Pick the last word after a given pattern is found</li>
-<pre><code class="python">
-line = 'Blah AS type'
-temp = re.search(r'^.*AS (\w*)', line, flags=re.IGNORECASE)
-if temp != None:
-  temp = temp.group(1)
-
-Output: type
-</code></pre>
-      <code>\w</code> - returns a character. The asterisk picks the repetition of characters. No specific characters
-      mentioned here.
-      <br>
-      With <code>IGNORECASE</code>, 'AS' can be lower or uppercase.
-    </p>
-  </ul>  
-</section>
-
-<section id="12"><h1>Lambda</h1>
+<section id="11"><h1>Lambda</h1>
   <ul>
     <li>Sorting</li>
 <pre><code class="python">
@@ -374,7 +330,7 @@ Output: type
   </ul>
 </section>
 
-<section id="13"><h1>Dictionary</h1>
+<section id="12"><h1>Dictionary</h1>
   <ul>
     <li>Creation</li>
     Create a dictionary from empty lists with particular column names.
@@ -426,14 +382,14 @@ Output: type
   </ul>
 </section>
 
-<section id="14"><h1>Timing python code</h1>
+<section id="13"><h1>Timing python code</h1>
 <pre><code class="python">
 python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
 </code></pre>  
 </section>
 
-<section id="15"><h1>Relationships</h1>
-  <subsection id="15.0"><h1>Extension (Inheritance)</h1>
+<section id="14"><h1>Relationships</h1>
+  <subsection id="14.0"><h1>Extension (Inheritance)</h1>
     Inheritance is a mechanism by which a class inherits properties and behaviors (attributes and methods) from another class. It is used to model an "is-a" relationship, where a derived class is a specialized version of the base class.
 
 <pre><code class="python">
@@ -447,7 +403,7 @@ class Dog(Animal):
 </code></pre>    
   </subsection>
 
-  <subsection id="15.1"><h1>Composition</h1>
+  <subsection id="14.1"><h1>Composition</h1>
     Composition is a design principle where a class contains objects of other classes as part of its attributes, to achieve some functionality, and the relationship is referred to as a "has-a" relationship.
 <pre><code class="python">
 class Engine:
@@ -464,7 +420,7 @@ class Car:
       
   </subsection>
 
-  <subsection id="15.2"><h1>Aggregation</h1>
+  <subsection id="14.2"><h1>Aggregation</h1>
     Aggregation is similar to composition but with a key difference - the contained objects have an independent lifecycle, can exist outside the container and can be shared among multiple containers. It represents a "has-a" relationship without strong ownership.
 
 <pre><code class="python">
@@ -483,7 +439,7 @@ class University:
   </subsection>
 </section>
 
-<section id="16"><h1>Set</h1>
+<section id="15"><h1>Set</h1>
   A set is an unordered collection of unique elements defined using <code>{}</code> or the <code>set()</code> constructor. Sets do not allow duplicate elements, and the order of elements is not guaranteed, i.e. they don't support indexing and hence indices cannot be used to access elements in a set. The presence of an element within a set can be checked using the <code>in</code> keyword.
 
 <pre><code class="python">
@@ -494,7 +450,7 @@ if element_to_check in my_set:
 </code></pre>
 </section>
 
-<section id="17"><h1>Musings</h1>
+<section id="16"><h1>Musings</h1>
   <ul>
     <li>What does <code>enumerate</code> in a for loop do?</li>
     <a href="https://t.ly/txYV">Ref</a>.
