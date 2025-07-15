@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sensors</title>
-  <meta name="Sensors" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Averaging: Noise source</title>
+  <meta name="Averaging: Noise source" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,16 +41,18 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Sensors</h1>
+<chapter style="counter-reset: chapter 3"><h1>Averaging: Noise source</h1>
+<section id="0"><h1>Overview</h1>
+  NumPy uses a pseudorandom number generator which is deterministic but appears random. It follows a specific algorithm that:
 
-<section id="0"><h1>Contents</h1>
   <ul>
-    <li><a href="gyro.html">Gyroscope</a></li>
-    <li><a href="accelerometer.html">Accelerometer</a></li>
-    <li><a href="imu.html">IMU</a></li>
+    <li>Starts with a seed — a starting value for reproducibility.</li>
+    <li>Generates uniform random numbers between 0 and 1.</li>
+    <li>Transforms those numbers into samples from a normal distribution (i.e. into normally-distributed values) using a mathematical method like Box-Muller or Ziggurat.</li>
+    <li>Scales and shifts the value using the mean and standard deviation provided.</li>
   </ul>
 </section>
 </chapter>

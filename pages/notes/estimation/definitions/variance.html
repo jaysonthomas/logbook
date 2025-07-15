@@ -46,10 +46,11 @@
   <li><a href="#0.0">Equation deepdive</a></li>
 </ul>
 <a href="#1">Sample variance</a>
-<a href="#2">Covariance</a>
-<a href="#3">Expected value</a>
+<a href="#2">Standard deviation</a>
+<a href="#3">Covariance</a>
+<a href="#4">Expected value</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Special case</a></li>
+  <li><a href="#4.0">Special case</a></li>
 </ul>
 </div>
 
@@ -60,7 +61,7 @@
     [<a href="https://t.ly/CUyG">J's question</a> on stackexchange. <a href="https://t.ly/jWCR">Code example</a>.]
   </p>
   
-  When drawing from a distribution over and over again, <i>variance</i> gives an indication of how spread out the <i>samples</i> (the values being drawn) will be from the mean. Variance is not a measure of how well the mean is known, but how much the samples vary.
+  When drawing from a distribution over and over again, <i>variance</i> gives an indication of how spread out the <i>samples</i> (the values being drawn) are from the mean. Variance is not a measure of how well the mean is known, but how much the samples vary.
 
   $$
     \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
@@ -95,11 +96,25 @@
   </p>
 </section>
 
-<section id="2"><h1>Covariance</h1>
+<section id="2"><h1>Standard deviation</h1>
+  It controls the spread or width of the values of a distribution around its mean. Smaller $\sigma$ means less variability and a narrower peak.
+
+  <p>
+    In a normal distribution:
+
+    <ul>
+      <li>~68% of values fall within $\pm 1$ standard deviation of the mean.</li>
+      <li>~95% fall within $\pm 2 \sigma$.</li>
+      <li>~99.7% fall within $\pm 3 \sigma$.</li>
+    </ul>
+  </p>
+</section>
+
+<section id="3"><h1>Covariance</h1>
   A <i>covariance matrix</i> is a square matrix that summarises the pairwise correlations between variables in a dataset. It is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
 </section>
 
-<section id="3"><h1>Expected value</h1>
+<section id="4"><h1>Expected value</h1>
   It is not the most likely, but the average value a random variable converges to if a value was continuously drawn from a distribution. It gives the <n>long-run average</n> value of a <n>repeated</n> probabilistic experiment.
   $$
     E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
@@ -112,7 +127,7 @@
     The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. But, where the underlying events are numeric like the position of a bot, the expected value gives an idea of the value of the random variable at any given time. 
   </p>
 
-  <subsection id="3.0"><h1>Special case</h1>
+  <subsection id="4.0"><h1>Special case</h1>
     $$
       E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
     $$

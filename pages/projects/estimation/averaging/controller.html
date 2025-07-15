@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sensors</title>
-  <meta name="Sensors" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Averaging: Controller</title>
+  <meta name="Averaging: Controller" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,18 +41,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Sensors</h1>
+<chapter style="counter-reset: chapter 3"><h1>Averaging: Controller</h1>
+<section id="0"><h1>Overview</h1>
+  Error terms:
+  $$\begin{align*}
+    e &= z_d - z \\
+    \dot{e} &= \dot{z}_d - \dot{z} \\
+    e_i &= e_i + (e \cdot \Delta{t})
+  \end{align*}$$
 
-<section id="0"><h1>Contents</h1>
-  <ul>
-    <li><a href="gyro.html">Gyroscope</a></li>
-    <li><a href="accelerometer.html">Accelerometer</a></li>
-    <li><a href="imu.html">IMU</a></li>
-  </ul>
+  PID terms:
+  $$\begin{align*}
+    P &= k_p \cdot e \\
+    D &= k_d \cdot \dot{e} \\
+    I &= k_i \cdot e_i
+  \end{align*}$$
+
+  New torque demand:
+  $$
+    \bar{u} = P + I + D + \ddot{z}
+  $$
 </section>
+
 </chapter>
 
 </body>

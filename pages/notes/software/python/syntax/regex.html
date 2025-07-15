@@ -41,7 +41,13 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Regular expressions</a>
+<a href="#0">Substitution</a>
+<a href="#1">Search</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Extract content in the middle of a pattern on either side</a></li>
+  <li><a href="#1.1">Extract content after a given pattern</a></li>
+  <li><a href="#1.2">Extract single word to then search for within a list of words</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Python: Regex</h1>
@@ -58,8 +64,8 @@ Output: {"type": "success"}
     <br><br>
 </section>
 
-<section><h1>Search</h1></section>
-  <subsection><h1>Extract content in the middle of a pattern on either side</h1>
+<section id="1"><h1>Search</h1>
+  <subsection id="1.0"><h1>Extract content in the middle of a pattern on either side</h1>
 <pre><code class="python">
 line = ',{"test":"2022-11-07T14:55:14","source":"water","test2":{ "type": "success"}'
 ts = re.search(r'{(.*),"source"', line).group(1)
@@ -73,7 +79,7 @@ Output: "test":"2022-11-07T14:55:14"
     <code>group(1)</code> is the portion represented in between the brackets using wildcards.
   </subsection>
 
-  <subsection><h1>Extract content after a given pattern</h1>
+  <subsection id="1.1"><h1>Extract content after a given pattern</h1>
 <pre><code class="python">
 line = 'Blah AS type'
 temp = re.search(r'^.*AS (\w*)', line, flags=re.IGNORECASE)
@@ -89,7 +95,7 @@ Output: type
 
   </subsection>
 
-  <subsection><h1>Extract single word to then search for within a list of words</h1>
+  <subsection id="1.2"><h1>Extract single word to then search for within a list of words</h1>
 <pre><code class="python">
 if(
   re.search(r',' + key + r'\b', sel) or

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Big Query</title>
-  <meta name="Big Query" content="text/html; charset=utf-8;" />
+  <title>Averaging: Setup</title>
+  <meta name="Averaging: Setup" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -42,43 +42,28 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Last value</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Big Query</h1>
+<chapter style="counter-reset: chapter 3"><h1>Averaging: Setup</h1>
 <section id="0"><h1>Overview</h1>
-  <code>Project.Dataset.Table</code>
+  The aim is to control a coaxial drone using measurements obtained by an altitude sensor. 
 
-  <p>
-    <code>Table</code> is the event table for example.
-  </p>
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      x_t &:& \text{True state of the drone at time t}  \\ 
+      z_t &:& \text{Measurement (of altitude) made at time t} \\
+      \hat{x}_t &:& \text{Estimate of the true state at time t}
+    \end{array}$$
+  </div>
+
+  The sensor used by the quadrotor estimates the altitude with a weighted average defined as:
+  $$
+    \hat{x}_t = \alpha \hat{x}_{t-1} + (1-\alpha)z_t
+  $$
+
+  At $t=0$, the drone's position and velocity are $z = \dot{z} = 0$. At this exact time, the drone's been asked to change its position by 1 meter in the negative direction. It's desired altitude will be $z=-1$. 
 </section>
 
-<section id="1"><h1>Last value</h1>
-  Consider 2 events A,B. A has a field named <code>dist</code>. For every B, the aim is to find the last <code>dist</code> reported by A. The result would be a column <code>distance</code> added to the table.
-<pre><code class="sql">
-SELECT
-  event,
-  timestamp,
-  LAST_VALUE(IF (event="A", dist, NULL) IGNORE NULLS)
-  OVER(ORDER BY timestamp ASC ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS distance
-FROM
-  unionTable
-WHERE
-  event="A"
-  OR event="B"
-ORDER BY
-  timestamp
-</code></pre>  
-
-  <code>LAST_VALUE</code> considers all rows specified within a window, including the current one (so, 6 rows in total in the above example), over <n>the current table being created</n>. 
-  
-  <p>
-    Within the window, starting from the current row, if a row has event=A, then distance=dist. Else, distance=NULL. But, <code>LAST_VALUE</code> is asked to ignore nulls. So, it continues the same if loop until all rows within the window is processed or until the first row where the condition is satisfied. distance=NULL if all rows within the window fails the condition. 
-  </p>
-
-  <code>LAST_VALUE</code> requires that the event being used in its if loop (here, A), to be present in the table being created. If it doesn't find the event, the if loop will always fail.
-</section>
 </chapter>
 
 </body>
