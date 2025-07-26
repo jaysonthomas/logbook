@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Drone estimation & control</title>
-  <meta name="Drone estimation & control" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Kalman Filter</title>
+  <meta name="Kalman Filter" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -44,14 +44,24 @@
 <a href="#0">Topics</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Drone estimation & control</h1>
+<chapter style="counter-reset: chapter 0"><h1>Kalman Filter</h1>
 <section id="0"><h1>Topics</h1>
   <ul>
-    <li><a href="coaxial/main.html">Coaxial drone</a></li>
-    <li><a href="opengl/main.html">Opengl Sim (Not complete, sort!)</a></li>
+    <li>Setup</li>
+    <ul>
+      <li><a href="setup/prediction.html">Prediction</a></li>
+      <li><a href="setup/measurement.html">Measurement</a></li>
+    </ul>
+
+    <li>Steps</li>
+    <ul>
+      <li><a href="steps/prediction.html">Kalman predict</a></li>
+      <li><a href="steps/gain.html">Kalman gain</a></li>
+      <li><a href="steps/measurement.html">Measurement update</a></li>
+      <li><a href="steps/control.html">Compute control</a></li>
+    </ul>
   </ul>
 </section>
-
 </chapter>
 
 </body>

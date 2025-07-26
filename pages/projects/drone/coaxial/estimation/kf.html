@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Drone: Resources</title>
-  <meta name="Drone: Resources" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <title>Kalman filter</title>
+  <meta name="Kalman filter" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,12 +41,22 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Drone: Resources</h1>
+<chapter style="counter-reset: chapter 3"><h1>Kalman filter</h1>
+<section id="0"><h1>Overview</h1>
+  There is uncertainty associated with:
   <ul>
-    <li><a href="https://t.ly/lWTiY">Drone estimation code</a></li>
+    <li>Sensor measurements</li>
+    Due to sensor inaccuracy, captured by covariance matrix $Q$.
+
+    <p>
+      <li>State predictions</li>
+      Due to a system's inability to precisely execute a given command, captured by covariance matrix $R$.
+    </p>
   </ul>
+</section>
 </chapter>
 
 </body>

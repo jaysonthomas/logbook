@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Averaging: Setup</title>
-  <meta name="Averaging: Setup" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <title>EMA</title>
+  <meta name="EMA" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -44,26 +44,26 @@
 <a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Averaging: Setup</h1>
+<chapter style="counter-reset: chapter 3"><h1>EMA</h1>
 <section id="0"><h1>Overview</h1>
-  The aim is to control a coaxial drone using measurements obtained by an altitude sensor. 
+  The sensor used by the quadrotor estimates the altitude with a weighted average defined as:
+  $$
+    \hat{x}_t = \alpha \hat{x}_{t-1} + (1-\alpha)y_t
+  $$
 
   <div style="width:0; text-align:left;">
     $$\begin{array}{cclc} 
       x_t &:& \text{True state of the drone at time t}  \\ 
-      z_t &:& \text{Measurement (of altitude) made at time t} \\
+      y_t &:& \text{Measurement (of altitude) made at time t} \\
       \hat{x}_t &:& \text{Estimate of the true state at time t}
     \end{array}$$
   </div>
 
-  The sensor used by the quadrotor estimates the altitude with a weighted average defined as:
+  Since the trajectory points are generated at 100Hz, the sensor samples measurements at 100Hz. This doesn't meet the minimum Nyquist frequency criteria. With $\alpha=0.95$, the cut off frequency becomes ~15Hz using the following approximation:
   $$
-    \hat{x}_t = \alpha \hat{x}_{t-1} + (1-\alpha)z_t
+    \alpha \approx \frac{2\pi f_c}{f_s}
   $$
-
-  At $t=0$, the drone's position and velocity are $z = \dot{z} = 0$. At this exact time, the drone's been asked to change its position by 1 meter in the negative direction. It's desired altitude will be $z=-1$. 
 </section>
-
 </chapter>
 
 </body>

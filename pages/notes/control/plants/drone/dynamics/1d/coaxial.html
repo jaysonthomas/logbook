@@ -41,42 +41,52 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Example</a>
+<a href="#0">Overview</a>
+<a href="#1">Linear acceleration</a>
+<a href="#2">Angular acceleration</a>
+<a href="#3">Computing angular velocity</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Coaxial Helicopter dynamics</h1>
 
-<section id="0"><h1>Example</h1>
-  A co-axial helicopter is just a body with two rotors on top of each other which produce upward thrusts by spinning in opposite directions. Let rotor 1 spin CW with $\omega_1$ and rotor 2 spin CCW with $\omega_2$. Find $\ddot{z}$ and $\ddot\psi$.
+<section id="0"><h1>Overview</h1>
+  A co-axial helicopter is a body with two rotors on top of each other which produce upward thrusts by spinning in opposite directions. Let rotor 1 spin CW with $\omega_1$ and rotor 2 spin CCW with $\omega_2$.
 
-  <p>
-    Mass, $m = 1.0kg$ <br>
-    Moment of inertia, $I_z = 2.0kgm^2$<br>
-    Force constant of proportionality, $k_f = 0.1$<br>
-    Moment constant of proportionality, $k_m = 0.2$<br>
-    Rotation rate of propeller 1, $\omega_1 = 10.0rad/s$<br>
-    Rotation rate of propeller 2, $\omega_2 = 8.0rad/s$
-  </p>
+  <div class="img-container">
+    <figure>
+      <img style="height:130px; width:auto"
+      src="../../../../../../../figures/dynamics/drone/coaxial.png"/>
+    </figure>
+  </div>
+</section>
+</section>
 
-  Resulting vertical linear acceleration:
+<section id="1"><h1>Linear acceleration</h1>
   $$\begin{align*}
     \ddot{z} &= \frac{F_{net}}{m} \\
           &= \frac{1}{m}(mg - F_{thrust}) \\
           &= \frac{1}{m}(mg - k_f(\omega_1^2 + \omega_2^2)) \\
-          &= g - \frac{k_f}{m}(\omega_1^2 + \omega_2^2) \\
-          &= -6.6 m/s^2
+          &= g - \frac{k_f}{m}(\omega_1^2 + \omega_2^2)
   \end{align*}$$
+</section>
 
-  <p>
-    Resulting rotational/angular acceleration:
-    $$\begin{align*}
+<section id="2"><h1>Angular acceleration</h1>
+  $$\begin{align*}
     \ddot{\psi} &= \frac{M_{z}}{I_z} \\
-          &= \frac{k_m}{I_z}(\omega_2^2 - \omega_1^2) \\
-          &= -3.6 rad/s^2
+      &= \frac{k_m}{I_z}(\omega_1^2 - \omega_2^2)
   \end{align*}$$
-  </p>
 
-  If rotor 1 (top) spins faster than rotor 2, then the body of the vehicle experiences angular acceleration in the CCW direction! The body and the propeller would be spinning in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_1^2$ is given a negative sign because we only consider the reaction torque similar to the direction of the thrust - we expel air downwards but consider the motion in the opposite direction. The positive z axis points downwards. When we curl, the thumb points in the positive z direction.
+  The body of the vehicle experiences angular acceleration in the CCW direction if rotor 2 spins faster than rotor 1. The body and the propeller spin in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_2^2$ is given a negative sign because only the reaction torque is considered since that's the torque that produces motion.
+</section>
+
+<section id="3"><h1>Computing angular velocity</h1>
+  $$\begin{align*}
+    \omega_1^2 + \omega_2^2 &= \frac{m}{k_f} \cdot (g - \ddot{z}) \\\\
+    \omega_1^2 - \omega_2^2 &= \frac{I_z}{k_m} \cdot \ddot{\psi} \\   
+    |\omega_1| &= \sqrt{\frac{\frac{I_z}{k_m} \cdot \ddot{\psi} + \frac{m}{k_f} \cdot (g - \ddot{z})}{2}}
+  \end{align*}$$
+
+  Since the second rotor rotates CCW, $\omega_2 = -|\omega_2|$. 
 </section>
 </chapter>
 

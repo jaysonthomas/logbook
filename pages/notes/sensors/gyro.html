@@ -42,87 +42,70 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Basics</a>
-<a href="#1">Coriolis force</a>
-<a href="#2">Physical working</a>
-<a href="#3">Measurement model</a>
+<a href="#1">Physical working</a>
+<a href="#2">Measurement model</a>
 <ul class="no-bullets">
-  <li><a href="#3.0">Overview</a></li>
-  <li><a href="#3.1">Details</a></li>
+  <li><a href="#2.0">Overview</a></li>
+  <li><a href="#2.1">Details</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Gyroscope</h1>
 
 <section id="0"><h1>Basics</h1>
-  A gyroscope measures the angular rotation about an axis by measuring the Coriolis Force. <n>The coriolis force only shows up when the measurement device is in a rotating reference frame</n>.
+  A <i>gyroscope</i> measures angular rotation about an axis by measuring the <a href="../physics/dynamics/coriolis.html">Coriolis Force</a>, which <n>only shows up when a measurement device is in a rotating reference frame</n>.
 
   <p>
     The most common gyros are small <i>Microelectromechanical Systems (MEMS)</i>  sensors called <i>Vibrating Structure Gyroscopes</i>. A different gyro in the form of a large ball or wheel that mechanically spins could also be attached to a vehicle. Changes to its motions can be measured as the vehicle rotates. But, these large mechanical systems are impractical for smaller vehicles.
   </p>  
 </section>
 
-<section id="1"><h1>Coriolis force</h1>
-  Imagine looking from above at a big spinning disk (like a merry-go-round) that's rotating with some angular velocity $\omega$. Imagine someone standing in the middle of the disc tried to throw a ball at the triangular target shown below:
+<section id="1"><h1>Physical working</h1>
+  <subsubsection><h1>Stationary</h1>
+    <div class="container">
+      <figure>
+        <img style="height:70px; width:auto"
+        src="../../../figures/physics/5_memsGyroVibratingMassesHorizontal.png"/>
+        <figcaption>
+          Vibrating proof masses of a gyro that's not rotating
+        </figcaption>
+      </figure>
 
-  <div class="container">
-    <figure>
-      <img style="height:120px; width:auto"
-      src="../../../figures/physics/3_coriolisForceExplanation_target.png"/>
-      <figcaption>
-        The target
-      </figcaption>
-    </figure>
-  </div>
+      <p>
+        Gyros work by having two tiny masses, called <i>Proof Masses</i>, vibrate in opposite directions. When there is no rotation, these masses just move along a horizontal line i.e. they will have some horizontal velocity.
+      </p>
+    </div>
+  </subsubsection>
 
-  The ball doesn't care that the disk is rotating - it would move in a straight line and by the time it got to the edge of the disk, the target would have rotated far away from where it originally was. Here, the motion is observed from the world frame, which is an inertial frame. In this frame, there is no Coriolis Force.
+  <subsubsection><h1>Rotating</h1>
+    <div class="img-container">
+      <figure>
+        <img style="height:90px; width:auto"
+        src="../../../figures/physics/6_rotatingMemsGyro.png"/>
+        <figcaption>
+          Vibrating proof masses of a gyro that's rotating
+        </figcaption>
+      </figure>
+    </div>
 
-  <div class="container">
-    <figure>
-      <img style="height:120px; width:auto"
-      src="../../../figures/physics/4_inertialVsRotatingFrame.png"/>
-      <figcaption>
-        Inertial vs Rotating frame of reference
-      </figcaption>
-    </figure>
-  </div>
-
-  Imagine standing on the triangular target and observing the motion of the ball. From this point of view (a rotating frame of reference), the ball would take a curved path. It would seem like the ball is being pushed sideways by some force, the <i>Coriolis Force</i> $F_c$.
+    Imagine the sensor is rotating about an axis through its centre, into and perpendicular to the screen, with velocity $\omega$. 
+    
+    <p>
+      If the rotation of the sensor is paused for an instant and its state captured, the rotation vector and the horizontal velocity vectors being orthogonal to each other leads to Coriolis Force vectors (that are orthogonal to the other 2 vectors):
+      <ul>
+        <li>One pointing upwards on the right mass</li>
+        <li>The other pointing downwards on the left mass</li>
+      </ul>
+      
+      At any given time, the 2 masses move opposite to each other and hence experience forces in opposite directions.
+    </p>
+    
+    The resulting motion of the proof masses will have a horizontal and a vertical component. By measuring this deflection in the vertical direction for both proof masses, the rotational rate of the sensor can be inferred.
+  </subsubsection>
 </section>
 
-<section id="2"><h1>Physical working</h1>
-  Gyros work by having two tiny masses called <i>Proof Masses</i> that vibrate in opposite directions. When there is no rotation, these masses just move along a horizontal line i.e. they will have some horizontal velocity.
-
-  <div class="container">
-    <figure>
-      <img style="height:70px; width:auto"
-      src="../../../figures/physics/5_memsGyroVibratingMassesHorizontal.png"/>
-      <figcaption>
-        Vibrating proof masses of a gyro that's not rotating
-      </figcaption>
-    </figure>
-  </div>
-
-  Imagine the sensor is rotating about an axis (through the centre of the sensor, into and perpendicular to the screen) with velocity $\omega$. If we paused the rotation of the sensor for an instant and captured its state (see below), the rotation vector and the horizontal velocity vectors being orthogonal to each other leads to a Coriolis Force pointing upwards on the right mass and one pointing downwards on the left mass. At any given time, the 2 masses move opposite to each other and hence experience forces in opposite directions.
-  
-  <p>
-    This force is orthogonal to both the velocity and the rotation axis. The resulting motion of the proof masses will have a horizontal and a vertical component. 
-  </p>
-  
-  <div class="container">
-    <figure>
-      <img style="height:90px; width:auto"
-      src="../../../figures/physics/6_rotatingMemsGyro.png"/>
-      <figcaption>
-        Vibrating proof masses of a gyro that's rotating
-      </figcaption>
-    </figure>
-  </div>
-
-  By measuring this deflection in the vertical direction for both proof masses, the rotational rate of the sensor can be inferred.
-</section>
-
-<section id="3"><h1>Measurement model</h1>
-  <subsection id="3.0"><h1>Overview</h1>
+<section id="2"><h1>Measurement model</h1>
+  <subsection id="2.0"><h1>Overview</h1>
     The effect of the coriolis force can be measured. This measured size can then be used to infer the rotational speed of the rotating reference frame since $F_c$ is a function of $\omega$:
 
     $$
@@ -132,7 +115,7 @@
     The value (eg: rotation rate) that a sensor (eg: gyroscope) reports is unlikely to be the correct one. The role of a <i>measurement model</i> of a sensor is to help make sense of the imperfect measurements. It should include a measure of how accurate a sensor's measurements are; in this case, that of the inferred quantity $\omega$.
   </subsection>
 
-  <subsection id="3.1"><h1>Details</h1>
+  <subsection id="2.1"><h1>Details</h1>
     Gyro measurements can be used to estimate the body rate of a vehicle, which can then be integrated to get the actual attitude. A simple measurement model for a gyroscope: 
 
     $$

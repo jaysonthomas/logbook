@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dynamics</title>
-  <meta name="Dynamics" content="text/html; charset=utf-8;" />
+  <title>Pitch & roll</title>
+  <meta name="Pitch & roll" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,29 +41,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Definition</a>
-<a href="#1">Decisions</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Dynamics</h1>
+<chapter style="counter-reset: chapter 3"><h1>Pitch & roll</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/uuvIt">AN3461.pdf</a>] <p></p>
 
-<section id="0"><h1>Definition</h1>
-  Dynamics is the branch of classical mechanics that is concerned with the study of forces and their effects on motion. 
-
-  <subsubsection><h1>The dynamics problem</h1>
-    In dynamics aims to understand the forces/moments acting on a vehicle, which can then help to predict the future state of a vehicle. 
-  </subsubsection>
-
-  <subsubsection><h1>The control problem</h1>
-    Control starts with a desired motion and then the forces and moments needed to command to the vehicle, based on the current knowledge of its state. 
-  </subsubsection>
-</section>
-
-<section id="1"><h1>Decisions</h1>
   <ul>
-    <li>Reaction forces are used.</li>
-    For a drone in 1D (just up/down), the resultant thrust is paid attention to.
+    <li>Choosing the sequence roll, then pitch, then yaw Eqs 6 to 8</li>
+    <li>Normalising each accelerometer reading so that the resultant direction of the unit vector within a unit sphere can be found more easily.</li>
   </ul>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:140px; width:auto"
+      src="../../../../figures/sensor/1_imuBodyFrame.png"/>
+    </figure>
+  </div>
+
+  Equations:
+  $$\begin{align*}
+    tan \,\phi_{xyz} &= \frac{a_y}{a_z} \\
+    tan \,\theta_{xyz} &= \frac{-a_x}{a_y \, sin\,\phi + a_z \, cos\,\phi} \\
+                     &= \frac{-a_x}{\sqrt{a_y^2 + a_z^2}} \\
+  \end{align*}$$
 </section>
 </chapter>
 

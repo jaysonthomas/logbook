@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulation</title>
+  <meta name="Simulation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">State</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Simulation</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:160px; width:auto"
+      src="../../.././../figures/control/32_controlStructure.png"/>
+    </figure>
+  </div>
+
+  <subsubsection><h1>Controller</h1>
+    It implements a PID control. Its output is approximated as the $z$ acceleration of the drone.
+  </subsubsection>
+
+  <subsubsection><h1>Actuator</h1>
+    The controller output ($u = \ddot{z}$) causes a change in the rotor angular velocities which then changes the force experienced by the system.
+  </subsubsection>
+
+  <subsubsection><h1>System</h1>
+    A change in the force on the system leads to a new $\ddot{z}$. For the coaxial case, since the output of the controller is treated as $\ddot{z}$, the new $\ddot{z}$ is the same as the controller's output. The following intermediate steps are redundant [<a href="../../../notes/control/plants/drone/dynamics/1d/coaxial.html">coaxial drone dynamics</a>]:
+    <ul>
+      <li>Conversion from controller output ($\ddot{z}$) to rotor angular velocities.</li>
+      <li>Conversion from $\omega_1, \omega_2$ to $f_1, f_2$.</li>
+      <li>Conversion from thrusts to the drone's vertical acceleration.</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>Trajectory generator</h1>
+    When a 'constant' trajectory is desired, an altitude of -1m is set as reference with zero target velocity and acceleration. A target point is generated every 10ms for 10s leading to 1000 reference points.
+  </subsubsection>
+
+  <subsubsection><h1>Sensors</h1>
+    At time $t=n$, the output of the controller is used to update the system's velocity $\dot{x}_{n+1}$ which is then used to update the drone's altitude $x_{n+1}$. 
+
+    <p>
+      At time $t=n+1$, random gaussian noise is added to $x_{n+1}$ to get the measurement $y_{n+1}$.
+    </p>
+
+    The sensor is "sampled" at 100Hz (10ms intervals).
+  </subsubsection>
+</section>
+
+<section id="1"><h1>State</h1>
+  $$
+    x = \begin{bmatrix}z \\ \psi \\ \dot{z} \\ \dot\psi \end{bmatrix}
+  $$
+</section>
+
+</chapter>
+
+</body>
+</html>

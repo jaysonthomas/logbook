@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kalman gain</title>
+  <meta name="Kalman gain" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Aim</a>
+<a href="#1">Inputs</a>
+<a href="#2">Steps</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Kalman gain</h1>
+<section id="0"><h1>Aim</h1>
+  Kalman gain $K$ helps decide how much a new measurement is trusted compared to the belief after the prediction step.
+</section>
+
+<section id="1"><h1>Inputs</h1>
+  $K$ is computed:
+  <ul>
+    <li>Using the Jacobian of the measurement model and</li>
+    <li>indirectly, the Jacobian of the state transition function which helps compute the estimate of the state covariance matrix.</li>
+  </ul>
+
+  $$\begin{align*}
+    H_t &= h'_t(\bar{\mu}_t) \\
+    K_t &= \bar{\Sigma}_t \; H^T_t \; (H_t \bar{\Sigma}_t H^T_t + R_t)^{-1}
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Steps</h1>
+  The Kalman gain calculation involves the following 3 steps:
+  <ul>
+    <li>
+      Inside the bracket, the estimated covariance is transformed into the measurement space using $H$.
+    </li>
+
+    <p>
+      <li><i>Measurement noise</i> $R$ is added to it.</li>
+      There is uncertainty associated with sensor measurements due to sensor inaccuracy, which is captured by the covariance matrix $R$.
+    </p>
+
+    <li>
+      (Outside the bracket) <m>The result is then transformed back into the state space to get the Kalman gain</m>.
+    </li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

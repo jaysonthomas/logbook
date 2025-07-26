@@ -42,18 +42,18 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Matplotlib</a>
-<a href="#1">Pandas</a>
-<a href="#2">Scipy</a>
-<a href="#3">Syntax</a>
-<a href="#4">Pip</a>
-<a href="#5">Type hinting</a>
+<a href="#1">Numpy</a>
+<a href="#2">Pandas</a>
+<a href="#3">Scipy</a>
+<a href="#4">Syntax</a>
+<a href="#5">Pip</a>
+<a href="#6">Type hinting</a>
 <ul class="no-bullets">
-  <li><a href="#5.0">Stub files</a></li>
+  <li><a href="#6.0">Stub files</a></li>
 </ul>
-<a href="#6">Python configuration</a>
-<a href="#7">Operators</a>
-<a href="#8">Python learning from Drake python api</a>
-<a href="#9">Numpy</a>
+<a href="#7">Python configuration</a>
+<a href="#8">Operators</a>
+<a href="#9">Python learning from Drake python api</a>
 <a href="#10">General</a>
 <a href="#11">Lambda</a>
 <a href="#12">Dictionary</a>
@@ -75,19 +75,26 @@
   </ul>
 </section>
 
-<section id="1"><h1>Pandas</h1>
+<section id="1"><h1>Numpy</h1>
+  <ul>
+    <li><a href="numpy/randomGaussNoise.html">Generating random gaussian noise</a></li>
+    <li><a href="numpy/sort.html">Sort</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Pandas</h1>
   <ul>
     <li><a href="pandas/general.html">General</a></li>
   </ul>
 </section>
 
-<section id="2"><h1>Scipy</h1>
+<section id="3"><h1>Scipy</h1>
   <ul>
     <li><a href="solveIvp.html">Solve IVP</a></li>
   </ul>
 </section>
 
-<section id="3"><h1>Syntax</h1>
+<section id="4"><h1>Syntax</h1>
   <ul>
     <li><a href="syntax/class.html">Class</a></li>
     <li><a href="syntax/function.html">Function</a></li>
@@ -99,7 +106,7 @@
   </ul>
 </section>
 
-<section id="4"><h1>Pip</h1>
+<section id="5"><h1>Pip</h1>
 <pre><code class="python">
 pip3 show drake
 pip3 install drake==1.10.0  
@@ -112,7 +119,7 @@ python -m pip install --upgrade black==23.12.1
 </code></pre>
 </section>
 
-<section id="5"><h1>Type hinting</h1>
+<section id="6"><h1>Type hinting</h1>
 <pre><code class="python">
 def greet(name: str) -> str:
   temp : str | None = "Hello"
@@ -121,7 +128,7 @@ def greet(name: str) -> str:
 
   Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
 
-  <subsection id="5.0"><h1>Stub files</h1>
+  <subsection id="6.0"><h1>Stub files</h1>
     In Python, stub files with a .pyi extension are used for type hinting without providing the actual implementation code. These stub files contain type information for functions, classes, and modules, allowing static type checkers and IDEs to analyze code for potential type-related issues without the need for the full implementation.
 
     <p>
@@ -141,7 +148,7 @@ def add(x: int, y: int) -> int: ...
   </subsection>
 </section>
 
-<section id="6"><h1>Python configuration</h1>
+<section id="7"><h1>Python configuration</h1>
   [<a href="https://t.ly/dMtsd">Ref</a>] <br>
   To see the options:
 <pre><code class="bash">
@@ -165,7 +172,7 @@ sudo update-alternatives  --set python /usr/bin/python3.6
 </code></pre>
 </section>
 
-<section id="7"><h1>Operators</h1>
+<section id="8"><h1>Operators</h1>
   <ul>
     <li><code>Set Union</code></li>
 <pre><code class="python">
@@ -179,7 +186,7 @@ print(s)
   </ul>
 </section>
 
-<section id="8"><h1>Python learning from Drake python api</h1>
+<section id="9"><h1>Python learning from Drake python api</h1>
   <ul>
     <li>Random number generator</li>
     <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
@@ -202,67 +209,6 @@ np.arange(start, end, interval_between_each_element)
 <pre><code class="python">
 outputArray = np.vstack(array1, array2)
 </code></pre>
-  </ul>
-</section>
-
-<section id="9"><h1>Numpy</h1>
-  <ul>
-    <li><code>@</code> is the same as <code>np.dot</code></li>
-    <li>Create a 2d array with zeros</li>
-<pre><code class="python">
-test = np.zeros((nrows, ncols))  
-</code></pre>
-
-    <p>
-      <li>Create an empty array</li>
-<pre><code class="python">
-test = np.empty(N)
-</code></pre>    
-    </p>
-    <p>
-      <li>Create a 2d array</li>
-<pre><code class="python">
-# Outer square brackets are needed.
-# 2nd pair of square brackets indicate an individual row.
-# Rows are separated by a comma.
-# Output of x.shape: (1,5)
-x = np.array([[1, 2, 3, 4, 5]])
-
-# Output of x.shape: (5,)
-# Not a 2d array; no 2nd pair of []s.
-x = np.array([1, 2, 3, 4, 5])
-
-# Output of x.shape: (5,1)
-x = np.array([[1, 2, 3, 4, 5]]).T
-
-# Alternative. x is no longer of type array but numpy.matrix.
-x = np.mat([1, 2, 3, 4, 5]).T
-
-# To convert from matrix to array type
-np.asarray(x)
-</code></pre>
-    </p>
-
-    <li>Operations with numpy arrays</li>
-    We can use operations like <code>.shape</code>, <code>.T</code>,
-    but <code>type()</code> is not an attribute of the numpy array class,
-    hence we can't do <code>.type</code>. Similarly, converting numpy matrix
-    back to an array - <code>asarray</code> is not an attribute of the matrix class.
-
-    <p>
-      <li>Accessing elements of an array</li>
-      If H is a 2d array with 3 rows and 3 columns.
-<pre><code class="python">
-H = np.array([[1,2,3],
-              [4,5,6],
-              [7,8,9]])
-# To access all rows of the 3rd column.
-H[:, -1]  
-
-# To access 2nd row of the 1st column.
-H[1,-3]
-</code></pre>      
-    </p>
   </ul>
 </section>
 

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Averaging: Noise source</title>
-  <meta name="Averaging: Noise source" content="text/html; charset=utf-8;" />
+  <title>Coriolis force</title>
+  <meta name="Coriolis force" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -44,16 +44,40 @@
 <a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Averaging: Noise source</h1>
+<chapter style="counter-reset: chapter 0"><h1>Coriolis force</h1>
 <section id="0"><h1>Overview</h1>
-  NumPy uses a pseudorandom number generator which is deterministic but appears random. It follows a specific algorithm that:
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/physics/3_coriolisForceExplanation_target.png"/>
+    </figure>
 
-  <ul>
-    <li>Starts with a seed — a starting value for reproducibility.</li>
-    <li>Generates uniform random numbers between 0 and 1.</li>
-    <li>Transforms those numbers into samples from a normal distribution (i.e. into normally-distributed values) using a mathematical method like Box-Muller or Ziggurat.</li>
-    <li>Scales and shifts the value using the mean and standard deviation provided.</li>
-  </ul>
+    <p>
+      Consider a big spinning disk (like a merry-go-round) rotating with some angular velocity $\omega$. Imagine someone, standing in the middle of the disc, tried to throw a ball at the triangular target shown in the image.
+    </p>
+  </div>
+
+  <subsubsection><h1>Inertial frame of reference</h1>
+    Imagine looking from above.
+    
+    <p>
+      The ball doesn't care that the disk is rotating and it moves in a straight line. By the time it gets to the edge of the disk, the target will have rotated far away from where it originally was. Here, the motion is observed from the world frame, which is an inertial frame. In this frame, <n>there is no Coriolis Force</n>.
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Rotating frame of reference</h1>
+    <div class="img-container">
+      <figure>
+        <img style="height:120px; width:auto"
+        src="../../../../figures/physics/4_inertialVsRotatingFrame.png"/>
+        <figcaption>
+          Inertial vs Rotating frame of reference
+        </figcaption>
+      </figure>
+    </div>
+
+    Imagine standing on the triangular target and observing the motion of the ball. From this point of view (a rotating frame of reference), the ball would take a curved path. It would seem like the ball is being pushed sideways by some force, the <i>Coriolis Force</i> $F_c$.
+  </subsubsection>
 </section>
 </chapter>
 

@@ -1,5 +1,4 @@
 @startuml
-' GM - Drawing/GraphManager.cpp
 DrawUpdate --> glutPostRedisplay
 
 state main {
