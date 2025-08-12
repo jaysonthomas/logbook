@@ -25,7 +25,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -50,6 +50,7 @@
 <chapter style="counter-reset: chapter 0"><h1>DSP bootstrap</h1>
 
 <section id="0"><h1>Definitions</h1>
+  [Sine wave <a href="https://t.ly/S9K4">code</a>] <p></p>
   <ul>
     <li>
       <code>Frequency</code> is the number of times a wave repeats a second.
@@ -97,26 +98,6 @@
   will be half the sampling frequency. The indices in the fft output array above the
   Nyquist frequency represent the complext conjugate.
   <code>Inverse Fourier Transform</code> converts the signal from frequency back to time domain.
-</section>
-
-<section id="2"><h1>Musings</h1>
-  <ul>
-    <li>
-      Why is it that when I set the sampling rate to 2.5kHz and the frequency of the signal is 1kHz,
-      I still am not able to replicate the shape of the original signal? I would have expected to
-      at least see more of a triangle shape instead of the sinusoidal one. Repeat this with a signal
-      created using the scipy library.
-    </li>
-    <br>
-    
-    <li>Complex conjugate of FFT. What use does it have?</li>
-    <br>
-
-    <li>
-      In the sine wave <a href="https://t.ly/S9K4">code</a>, even though I set the amplitude to 1,
-      the 1000Hz wave doesn't attain it.
-    </li>
-  </ul>
 </section>
 
 <section id="3"><h1>Scipy code</h1>

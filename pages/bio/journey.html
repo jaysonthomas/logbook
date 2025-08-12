@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Career journey</title>
+  <meta name="Career journey" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../logbook.js"></script>
+
+  <script src="../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Past</a>
+<a href="#1">Current</a>
+<a href="#2">Interests</a>
+<a href="#3">Where am I in my career</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Career journey</h1>
+<section id="0"><h1>Past</h1>
+  I started off developing proof of concepts in the embedded sensors domain. From a technical standpoint, this involved:
+  <ul>
+    <li>Understanding the measurable characteristics of a physical environment and thereby deciding on the type of sensor.</li>
+    <li>Evaluating off-the-shelf sensors.</li>
+    <li>Designing the electronics around the sensor.</li>
+    Both analog and digital. In some cases this involved mechanical design as well
+
+    <li>Writing firmware code to capture and process sensor measurements.</li>
+    <li>Post data analysis.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Current</h1>
+  Currently, I am a Seniour Software Engineer at Ocado in the motion control (mobile robotics) team. My work has spanned over the following areas:
+  <ul>
+    <li></li>
+  </ul>
+
+</section>
+
+
+</section>
+
+<section id="2"><h1>Interests</h1>
+  I find the following domains interesting because they make use of maths and physics to describe and solve problems.
+  <ul>
+    <li>Optimisation based methods like LQR, MPC to solve control problems</li>
+    <li>Probabilistic methods for state estimation like the different Bayes filters</li>
+    <li>Classical computer vision methods for object segmentation and detection</li>
+    Especially in the fields of manipulation and environment mapping.
+    <li>Motion (trajectory) planning</li>
+  </ul>
+
+  These interests would need to be backed up with:
+  <ul>
+    <li>Simulation</li>
+    <li>Embedded programming on hardware</li>
+    <li>Data analysis</li>
+  </ul>
+
+  I don't mention deep learning as an interest for now as it takes away the physics component for me.
+</section>
+
+<section id="3"><h1>Where am I in my career</h1>
+  Overtime, my desire to get back into core robotics has grown. My interest, these days, center around:
+  <ul>
+    <li>Design of control systems for underactuated systems (includes 3D kinematics and dynamics)</li>
+    <li>Simultaneous localisation (based on bayes filters) and mapping in unstructured environments</li>
+
+    <li>Path planning in unstructured environments</li>
+    <li>Computer vision</li>
+    I haven't yet delved into deep NNs, but I am very impressed by transfer learning i.e. getting a network trained in a particular domain to work in an unrelated domain and it's something I would be keen to explore in the future.
+  </ul>
+
+  <p>
+    In my current role, I do a lot of work in the design and deployment of motion planning, control and localisation methods for fleets of bots in structured environments and I am very keen for the challenge that unstructured environments pose.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

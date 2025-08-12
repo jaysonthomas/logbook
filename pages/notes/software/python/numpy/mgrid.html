@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mesh grid</title>
+  <meta name="Mesh grid" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Usage</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Mesh grid</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="python">
+x, y = np.mgrid[xAxisLimit[0]:xAxisLimit[1]:delta,    # Say, m elements
+                yAxisLimit[0]:yAxisLimit[1]:delta]    # Say, n elements
+</code></pre>  
+
+  <ul>
+    <li><code>x</code> is an $m \times n$ grid where each column has $m$ values in an ascending order between the x limits with the specified step size. All columns are the same. x contains the x-coordinates, which change along the columns.</li>
+
+    <p>
+      <li><code>y</code> is an $m \times n$ grid where each row has $n$ values in an ascending order between the y limits with the specified step size. All rows are the same. y contains the y-coordinates, which change along the rows.</li>
+    </p>
+  </ul>
+  
+  <m>Picking a corresponding element from each matrix, say x[1, 2] and y[1, 2], yields the coordinate pair (x[1, 2],y[1, 2]), which would be a point to do something with on the resultant grid</m>. 
+</section>
+
+<section id="1"><h1>Usage</h1>
+  It is used to calculate the pdf for each coordinate pair taken from the grid, the result of which can then be placed in another $m \times n$ matrix.
+<pre><code class="python">
+stateSpace = multivariate_normal(mu, sigma)
+stateSpace.pdf(configurationSpace)
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -25,7 +25,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -78,6 +78,13 @@
 
     &= A_{t-1}x_{t-1} + B_{t-1}u_{t-1}
   \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      A &:& \text{System matrix}  \\ 
+      B &:& \text{Input matrix}
+    \end{array}$$
+  </div>
 
   At time $t$, torque applied to the drone in the previous time step $\ddot{z}_{t-1}$ advances the drone's velocity from $\dot{z}_{t-1}$ to $\dot{z}_t$. 
   

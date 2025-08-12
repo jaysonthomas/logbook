@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scipy: Multivariate normal</title>
+  <meta name="Scipy: Multivariate normal" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Define the properties of the distribution</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Scipy: Multivariate normal</h1>
+<section id="0"><h1>Overview</h1>
+  A 2D multivariate normal distribution is not calculated by finding two separate PDF values and combining them. It's a single joint probability distribution that describes the system as a whole - one value is calculated directly from the multivariate normal PDF formula, which inherently accounts for the relationship between the two variables.
+
+  <ul>
+    <li>Positive Covariance: When variable X is higher than its mean, variable Y also tends to be higher than its mean. The elliptical contour plot will be tilted diagonally upward.</li>
+
+    <p>
+      <li>Negative Covariance: When variable X is higher than its mean, variable Y tends to be lower than its mean. The ellipse will be tilted downward.</li>
+    </p>
+
+    <li>Zero Covariance: The variables are uncorrelated. There is no linear relationship between them. The ellipse will be aligned with the x and y axes.</li>
+  </ul>
+
+  The single formula incorporates:
+  <ul>
+    <li>The mean of both variables.</li>
+    <li>The variance (or standard deviation) of each variable.</li>
+    <li>The covariance between the variables.</li>
+  </ul>
+
+  The result is a single number representing the probability density on a 2D, bell-shaped surface which is often shaped like an ellipse when viewed from above.
+
+  <p>
+    If the variables are uncorrelated, the 2D PDF is simply the product of the two individual 1D PDFs:
+
+    $$
+      P(x, y) = P(x) * P(y) \quad \text{(only when covariance is zero)}
+    $$
+  </p>
+</section>
+
+<section id="1"><h1>Define the properties of the distribution</h1>
+  <code>multivariate_normal(...)</code> creates a distribution object with its properties:
+  
+  <ul>
+    <li>The mean vector defines the center of the distribution where the peak lies.</li>
+    <li>The covariance matrix defines the shape, size, and orientation of the hill.</li>
+    <ul>
+      <li><i>Variance</i> (diagonal elements) describes how spread out or wide the hill is along each axis.</li>
+      <li><i>Covariance</i> (off-diagonal elements) describes the relationship between the variables. If they are non-zero, the hill is tilted, resulting in an elliptical shape rather than a perfect circle.</li>
+    </ul>
+  </ul>  
+
+<pre><code class="python">
+stateSpace = multivariate_normal(mu, sigma)
+stateSpace.pdf(mu)
+</code></pre>
+  <code>.pdf</code> computes the pdf value for a point specified as the argument. It already knows the mean and covariance when the object was created.
+</section>
+</chapter>
+
+</body>
+</html>

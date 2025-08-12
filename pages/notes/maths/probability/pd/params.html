@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PD: Parameters</title>
+  <meta name="PD: Parameters" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Description</a>
+<a href="#1">Estimating parameters from data</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>PD: Parameters</h1>
+<section id="0"><h1>Description</h1>
+  $\theta$ refers to parameters that describe a distribution. For example, a continuous distribution like a Gaussian, can be fully described by two parameters $\mu$ and $\sigma^2$.
+
+  <p>
+    $p$ of $x$ given $\theta$ is not the same as the function that describes the probability density of $x$, parameterized by $\theta$.
+
+    $$p(x|\theta) \neq p(x;\theta)$$
+    $p(x|\theta)$ implies $\theta$ is a random variable itself.
+  </p>
+</section>
+
+<section id="1"><h1>Estimating parameters from data</h1>
+  Consider samples $x$ are being generated from some Gaussian $\mathcal{N}(\mu, \sigma^2)$ with probability density $p(x)$ and whose parameters $\mu$ and $\sigma$ are unknown. The estimates of these parameters are written as $\hat{x}$ and $\hat\sigma^2$ respectively.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/drone/14_estimatingParametersExample.png"/>
+      <figcaption>
+        Samples in turquoise, repeatedly drawn from a gaussian distribution
+      </figcaption>
+    </figure>
+  </div>
+  
+  If samples of data $\{x_1, x_2,.., x_n\}$ are repeatedly drawn from the distribution, more data will appear near the mean, and fewer samples out on the tails of the gaussian. Using a technique called the <i>method of moments</i>, it can be shown that:
+
+  $$\hat{x} = \frac{1}{n} \sum^n_{i=1}x_i$$
+  $$\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (x_i-\hat{x})^2$$
+</section>
+</chapter>
+
+</body>
+</html>

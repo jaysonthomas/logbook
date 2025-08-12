@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DSP: Moving average filter</title>
-  <meta name="DSP: Moving average filter" content="text/html; charset=utf-8;" />
+  <title>Simple moving average filter</title>
+  <meta name="Simple moving average filter" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -25,7 +25,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,16 +41,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Content</a>
+<a href="#0">Difference equation</a>
 <a href="#1">Setup</a>
 <a href="#2">Window size calculation</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>DSP: Moving average filter</h1>
-<section id="0"><h1>Content</h1>
-  <ul>
-    <li><a href="diffEq.html">Difference equation</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 3"><h1>Simple moving average filter</h1>
+<section id="0"><h1>Difference equation</h1>
+  $$
+    y[n] = \frac{1}{N}\sum^{N-1}_{i=0} x[n-i]
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      y[n] &:& \text{Current output} \\ 
+      x[n] &:& \text{Current input} \\ 
+      x[n-1] &:& \text{Previous input and so on} \\ 
+      N &:& \text{Window size or length of the average} \\
+    \end{array}$$
+  </div>
 </section>
 
 <section id="1"><h1>Setup</h1>

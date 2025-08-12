@@ -25,7 +25,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -72,14 +72,14 @@
   </subsubsection>
 
   <subsubsection><h1>Trajectory generator</h1>
-    When a 'constant' trajectory is desired, an altitude of -1m is set as reference with zero target velocity and acceleration. A target point is generated every 10ms for 10s leading to 1000 reference points.
+    A 'constant' trajectory of altitude -1m is set as reference with zero target velocity and acceleration. A target point is generated every 10ms for 10s leading to 1000 reference points.
   </subsubsection>
 
   <subsubsection><h1>Sensors</h1>
-    At time $t=n$, the output of the controller is used to update the system's velocity $\dot{x}_{n+1}$ which is then used to update the drone's altitude $x_{n+1}$. 
+    At time $t=n$, the output of the controller is used to update the system's velocity $\dot{x}_n$ and the previous velocity is used to update the drone's altitude $x_n$. 
 
     <p>
-      At time $t=n+1$, random gaussian noise is added to $x_{n+1}$ to get the measurement $y_{n+1}$.
+      Random gaussian noise is added to $x_n$ to get the measurement $y_n$.
     </p>
 
     The sensor is "sampled" at 100Hz (10ms intervals).

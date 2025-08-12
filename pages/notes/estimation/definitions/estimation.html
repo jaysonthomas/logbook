@@ -25,7 +25,7 @@
   <div data-type="titlepage" pdf="no">
     <header>
       <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../pages/bio/jjwt.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -42,27 +42,28 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Definition</a>
-<a href="#1">The need for estimation</a>
+<a href="#1">Sources of uncertainty</a>
 <a href="#2">Applications</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Definitions: Estimation</h1>
 <section id="0"><h1>Definition</h1>
-  The goal of estimation is to come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors. Estimation:
+  Estimation is:
   <ul>
-    <li>Is a temporal process - things need to be integrated over time.</li>
+    <li>A temporal process - <n>things need to be integrated over time</n>.</li>
     <li>
-      Is a process of managing uncertainty. It is not 100% certain to know where an object is for example.
+      A process of <n>managing uncertainty</n>. For example, it is not 100% certain to know where an object is.
     </li>
   </ul> 
+
+  Estimation aims to come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors. In other words, it aims to quantify uncertainty and to <n>make a very tight distribution</n>, so that a robot is more certain of its state.
 </section>
 
-<section id="1"><h1>The need for estimation</h1>
-  To quantify uncertainty. The goal is to make a very tight distribution, 
-  so that a robot is more certain of its state. The real world (bot and environment) is uncertain in the following ways:
+<section id="1"><h1>Sources of uncertainty</h1>
+  The real world (bot and environment) is uncertain in the following ways:
   
   <subsubsection><h1>Stochastic</h1>
-    The effect of actions can have uncertain outcomes due to intrinsic or extrinsic factors.
+    The <n>effect of actions</n> can have uncertain outcomes due to intrinsic or extrinsic factors.
 
     <p>
       A vehicle intending to follow a certain path might get blown to one side by a gust of wind or suddenly stop working. It is not possible to know when an uncertain event could occur that could then cause a state change. 
@@ -79,8 +80,6 @@
 </section>
 
 <section id="2"><h1>Applications</h1>
-  We only need sensor feedback if we want the drone to be autonomous. 
-  To be autonomous, the robot needs to know the following (RHS of table). 
   Estimation plays a role in all these problems.
   <p><table class="table1 center">
     <tr>
@@ -116,8 +115,6 @@
       </td>
     </tr>
   </table></p>
-  E.g. estimation is what makes GPS work so well, Apollo spacecraft, 
-  how the phone screen orients itself.
 </section>
 </chapter>
 
