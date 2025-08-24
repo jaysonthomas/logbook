@@ -54,7 +54,7 @@
   </blockquote>
 
   <p>
-    The least squares method aims to fit a mathematical model to a set of observed data points. Each data point has an associated uncertainty or error (<i>weight</i>), which represents how much that specific observation can deviate from the true value. 
+    The least squares method aims to <n>fit a mathematical model to a set of observed data points</n>. Each data point has an associated uncertainty or error (<i>weight</i>), which represents how much that specific observation can deviate from the true value. 
   </p>
   
   Gauss was suggesting that to find the most probable value of an unknown parameter, one should consider
@@ -69,27 +69,27 @@
     A weight can be thought of as the inverse of the variance (or standard deviation) associated with each data point. Data points with smaller variances (higher precision) contribute more to the parameter estimation in the least squares method. 
   </p>
 
-  Getting the model right is hard! <m>Do we take the square root of the mean of the sum of squared errors?</m>
+  Getting the model right is hard!
 </section>
 
-<section id="1"><h1>Assumptions in LS</h1>
-  Things to keep in mind when making a measurement:
+<section id="1"><h1>Assumptions in the basic LS approach</h1>
+  The most basic least squares approach would make unrealistic assumptions in the following areas:
   <ul>
     <li>Sampling time</li>
+    Measurements come in all at once.
+
+    <p>
+      <li>State of the system at the time of measurement</li>
+      The state or parameter being estimated is constant during and between measurements. Eg: a vehicle is stationary.
+    </p>
+
     <li>Measurement model</li>
-    <li>State of the system at the time of the measurement</li>
-    <li>Accuracy of the measurements</li>
-  </ul>
+    The underlying measurement model $H$ is noisy but linear. Measurements of things like orientation are rarely linear.
 
-  The most basic least squares approach would make the following unrealistic assumptions:
-
-  <ul>
-    <li>The measurements come in all at once</li>
-    <li>The underlying measurement model $H$ is noisy but linear</li>
-    Measurements of things like orientation are rarely linear.
-    <li>The vehicle is stationary</li>
-    <li>Each measurement has an equal weight in the error equation</li>
-    We care about each of the measurements equally.
+    <p>
+      <li>Accuracy of measurements</li>
+      Each measurement has an equal weight in the error equation.
+    </p>
   </ul>
 </section>
 </chapter>

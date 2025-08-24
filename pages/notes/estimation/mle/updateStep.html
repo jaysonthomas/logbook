@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least Squares: Branches</title>
-  <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
+  <title>LLS: Maximum Likelihood Estimation derivation</title>
+  <meta name="LLS: Maximum Likelihood Estimation derivation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,29 +41,26 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Linear least squares</a>
-<a href="#1">Non linear least squares</a>
+<a href="#0">Aim</a>
+<a href="#1">Measurement collection</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Parameters of the distribution</a></li>
+  <li><a href="#1.1">Equation of the distribution</a></li>
+</ul>
+<a href="#2">Estimation update</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Least Squares Estimation</h1>
-<section><h1>General</h1>
-  <ul>
-    <li><a href="overview.html">Overview</a></li>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 0"><h1>Update step for a gaussian distribution</h1>
+  Maximising the cost function (by setting its derivative to $0$) and solving for $x$ yields the equation for the maximum likelihood estimator $\hat{x}$ [<a href="derivation.html">Derivation</a>]:
+  $$
+    \hat{x} = (H^TR^{-1}H)^{-1}H^TR^{-1}y
+  $$
 
-<section><h1>Linear LS</h1>
-  <ul>
-    <li><a href="rls/main.html">Recursive</a></li>
-  </ul>
-</section>
-
-<section><h1>Non-linear LS</h1>
-  <ul>
-    <li><a href="nls.html">Overview</a></li>
-  </ul>
-</section>
+  This is the most likely estimate for a gaussian distribution. The cost function would be different for any other distribution (since the PDF would be different) yielding a different estimator equation. 
+  
+  <p>
+    This solution happens to be the same as the (batch) least squares estimation update equation where <n>measurements $y$ are linearly related to some unknown quantity $x$</n> by the matrix $H$ that is assumed to be known.
+  </p>
 </chapter>
-
 </body>
 </html>

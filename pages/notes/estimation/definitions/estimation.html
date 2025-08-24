@@ -46,7 +46,7 @@
 <a href="#2">Applications</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Definitions: Estimation</h1>
+<chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
 <section id="0"><h1>Definition</h1>
   Estimation is:
   <ul>
@@ -57,6 +57,22 @@
   </ul> 
 
   Estimation aims to come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors. In other words, it aims to quantify uncertainty and to <n>make a very tight distribution</n>, so that a robot is more certain of its state.
+
+  <p>
+    Consider the measurement equation:
+    $$
+      Hx = y - v
+    $$
+    
+    Only the shape of the distribution w.r.t. the unknown $x$ is known. If the error $v$ is known, $x$ can be found. Or if $x$ is known, $v$ can be solved. Since neither is known, it becomes an estimation problem.
+  </p>
+
+  <subsubsection><h1>Notes</h1>
+    <ul>
+      <li>In general, more the measurements, the more accurate the estimate will be.</li>
+      <li>An estimation problem boils down to figuring out the measurement model $H$ which is often the tricky bit.</li>
+    </ul>
+  </subsubsection>
 </section>
 
 <section id="1"><h1>Sources of uncertainty</h1>

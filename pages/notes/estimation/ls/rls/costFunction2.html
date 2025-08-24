@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least Squares: Branches</title>
-  <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
+  <title>LLS: Maximum Likelihood Estimation derivation</title>
+  <meta name="LLS: Maximum Likelihood Estimation derivation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,27 +41,40 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Linear least squares</a>
-<a href="#1">Non linear least squares</a>
+<a href="#0">Aim</a>
+<a href="#1">Measurement collection</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Parameters of the distribution</a></li>
+  <li><a href="#1.1">Equation of the distribution</a></li>
+</ul>
+<a href="#2">Estimation update</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Least Squares Estimation</h1>
-<section><h1>General</h1>
-  <ul>
-    <li><a href="overview.html">Overview</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Cost function</h1>
+<section id="1"><h1>Standard form</h1>
+  Instead of minimising the error directly, LS uses a <n>probabilistic formulation to minimise the expected value</n> of the squared measurement residual i.e. the variance of the unknowns, at every time step. The lower the variance, the more certain the estimate becomes.
+
+  <p>
+    For RLS (since it's not batched), the cost function at time $k$:
+    <ul>
+      <li>For a single scalar parameter, is the variance</li>
+      $$\begin{align*}
+        \mathcal L_{RLS} &= \mathbb{E}[(x - \hat{x}_k)^2] \\
+        &= \sigma^2_k
+      \end{align*}$$
+
+      <li>For <n>multiple $n$ unknown parameters</n>, is the trace of the covariance matrix</li>
+      $$\begin{align*}
+        \mathcal L_{RLS} &= \mathbb{E}[(x_1 - \hat{x}_{1k})^2
+        + \cdots + (x_n - \hat{x}_{nk})^2] \\
+        &= Trace(\underbrace{P_k}_{\text Estimator \atop \text covariance})
+      \end{align*}$$
+    </ul>
+  </p>
 </section>
 
-<section><h1>Linear LS</h1>
-  <ul>
-    <li><a href="rls/main.html">Recursive</a></li>
-  </ul>
-</section>
-
-<section><h1>Non-linear LS</h1>
-  <ul>
-    <li><a href="nls.html">Overview</a></li>
-  </ul>
+<section><h1>Alternate form</h1>
+  To find the <a href="../../definitions/misc.html">likelihood</a> $\hat{x}$ of a set of measurements, the PDF corresponding to the measurments needs to be maximised. 
 </section>
 </chapter>
 

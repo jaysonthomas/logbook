@@ -4,9 +4,9 @@
 <head>
   <title>Least Squares: Branches</title>
   <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +17,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -45,22 +45,29 @@
 <a href="#1">Non linear least squares</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Least Squares Estimation</h1>
-<section><h1>General</h1>
+<chapter style="counter-reset: chapter 0"><h1>Recursive Least Squares</h1>
+<section id="0"><h1>Contents</h1>
   <ul>
-    <li><a href="overview.html">Overview</a></li>
-  </ul>
-</section>
-
-<section><h1>Linear LS</h1>
-  <ul>
-    <li><a href="rls/main.html">Recursive</a></li>
-  </ul>
-</section>
-
-<section><h1>Non-linear LS</h1>
-  <ul>
-    <li><a href="nls.html">Overview</a></li>
+    <li>Overview</li>
+    <ul>
+      <li><a href="overview.html">Overview</a></li>
+      <li><a href="updateStep.html">Update step</a></li>
+      <li><a href="kalmanGain.html">Kalman Gain</a></li>
+      <li><a href="algorithm.html">Algorithm</a></li>
+    </ul>
+    
+    <li>Derivation</li>
+    <ul>
+      <li><a href="estimationPropEq.html">Estimation propagation equation</a></li>
+      <li>Estimation error covariance matrix</li>
+      <ul>
+        <li><a href="estimationErrorCovariance.html">Basic form</a></li>
+        <li><a href="estCovPropEq.html">Estimation covariance propagation equation</a></li>
+      </ul>
+  
+      <li><a href="costFunction.html">Gain matrix</a></li>
+      <li>An even more <a href="simplifiedEstErrorCovariance.html">simplified form</a> of the estimation error covariance</li>
+    </ul>
   </ul>
 </section>
 </chapter>

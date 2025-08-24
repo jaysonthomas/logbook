@@ -46,59 +46,32 @@
 <a href="#2">Forms the update step of the linear Kalman filter</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>RLS: Key points</h1>
-
-<section id="0"><h1>Makes recursive incremental updates</h1>
-  RLS is a recursive linear estimator where in an estimate is updated incrementally as new measurements stream in. 
-
-  <p>
-    RLS extends the batch LS solution to work on the fly by:
-    <ul>
-      <li><n>Keeping a running optimal estimate</n> (the LS solution) of some unknown parameter/state for all measurements collected up to the previous time step.</li>
-      <li>
-        <n>Updating the optimal estimate</n> given the measurement at the current time step.
-      </li>
-    </ul>
-  </p>
-
-  <subsubsection><h1>Mathematical expression</h1>
-    A linear recursive estimate $\hat{x}$, at time $k$, is a linear combination of:
-    <ul>
-      <li>The previous estimate (best guess so far) and</li>
-      <li>The <i>current measurement residual</i> (error difference between expected and the actual measurement) <n>weighted</n> by a gain matrix $K_k$</li>
-    </ul>
-  
-    $$\begin{equation} \label{eq:linearRecursiveFormulation}
-      \hat{x}_k = \hat{x}_{k-1} + 
-      \underbrace{K_k}_{\text{Estimator} \atop \text{gain matrix}}
-      \underbrace{(y_k - H_k\hat{x}_{k-1})}_{\text Innovation}
-    \end{equation}$$
-
-    The residual quantifies how well the current measurement matches the previous best estimate. <n>If it is $0$, the old estimate does not need to be updated</n>.
-  </subsubsection>
-</section>
-  
-<section id="1"><h1>Minimises the variance of the unknowns at every time step</h1>
-  Instead of minimising the error directly, RLS uses a probabilistic formulation to minimise the <n>expected value</n> of the squared measurement residual i.e. the variance, at every time step. The lower the variance, the more certain the estimate becomes.
-
-  <p>
-    For a single scalar parameter, the cost function is the variance. At time $k$, it is:
-  </p>
-  $$\begin{align*}
-    \mathcal L_{RLS} &= \mathbb{E}[(x - \hat{x}_k)^2] \\
-    &= \sigma^2_k
-  \end{align*}$$
-
-  For <n>multiple $n$ unknown parameters</n>, the cost function is the trace of the covariance matrix. At time step $k$, it is: 
-  
-  $$\begin{align*}
-    \mathcal L_{RLS} &= \mathbb{E}[(x_1 - \hat{x}_{1k})^2
-    + \cdots + (x_n - \hat{x}_{nk})^2] \\
-    &= Trace(\underbrace{P_k}_{\text Estimator \atop \text covariance})
-  \end{align*}$$
+<chapter style="counter-reset: chapter 0"><h1>Update step</h1>
+<section><h1>Overview</h1>
+  The state estimation process updates two key things at every time step:
+  <ul>
+    <li>The state estimate (the filter's best guess of the current state).</li>
+    <li>The covariance of the estimate (which represents the uncertainty in the state estimate).</li>
+  </ul>
 </section>
 
-<section id="2"><h1>Forms the update step of the linear Kalman filter</h1>
+<section><h1>Estimate update</h1>
+  A linear recursive estimate $\hat{x}$, at time $k$, is a linear combination of:
+  <ul>
+    <li>The previous estimate (best guess so far) and</li>
+    <li>The <i>current measurement residual</i> (error difference between expected and the actual measurement) <n>weighted</n> by a gain matrix $K_k$</li>
+  </ul>
+
+  $$\begin{equation} \label{eq:linearRecursiveFormulation}
+    \hat{x}_k = \hat{x}_{k-1} + 
+    \underbrace{K_k}_{\text{Estimator} \atop \text{gain matrix}}
+    \underbrace{(y_k - H_k\hat{x}_{k-1})}_{\text Innovation}
+  \end{equation}$$
+
+  The residual quantifies how well the current measurement matches the previous best estimate. <n>If it is $0$, the old estimate does not need to be updated</n>.
+</section>
+
+<section><h1>Estimation covariance update</h1>
   Using the linear recursive formulation (\ref{eq:linearRecursiveFormulation}), the covariance matrix $P_k$ can be expressed as a function of $K_k$:
 
   $$

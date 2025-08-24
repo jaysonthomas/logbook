@@ -50,18 +50,14 @@
 <a href="#2">Estimation update</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>LLS: Maximum Likelihood Estimation derivation</h1>
-<section id="0"><h1>Aim</h1>
-  <n>The aim is to find the state that is most consistent with the measurements</n>. Mathematically, the goal is to select an estimate $\hat{x}$ to be the value of $x$ that maximises the probability of the actual measurements $y$ i.e. choose $\hat{x}$ to maximise $p(y| x = \hat{x})$
+<chapter style="counter-reset: chapter 0"><h1>Cost function for a gaussian distribution</h1>
+<section><h1>Gaussian distribution characteristics</h1>
+  Here, the following assumptions are made about the PDF corresponding to the measurments:
+  <ul>
+    <li>Measurements are not discrete</li>
+    <li>Probability density function $p(y|x)$ of the measurements is gaussian</li>
+  </ul>
 
-  <p>
-    There are 2 steps in this process.
-  </p>
-</section>
-
-<section id="1"><h1>Measurement collection</h1>
-  The probability density function $p(y|x)$ of measurements is often a gaussian, assuming they are not discrete.
-  
   <subsection id="1.0"><h1>Parameters of the distribution</h1>
     <ul>
       <li>Mean</li>
@@ -69,7 +65,7 @@
 
       <p>
         <li>Covariance</li>
-        If the noise in the model is negligible, the covariance $(y-\bar{y})(y-\bar{y})^T$ would be equal to the covariance of just the noise $R$.
+        If the noise in the model is negligible, the covariance (<m>of the PDF?</m>) $(y-\bar{y})(y-\bar{y})^T$ would be equal to the covariance of just the noise $R$.
       </p>
     </ul>
   </subsection>
@@ -87,19 +83,12 @@
   </subsection>
 </section>
 
-<section id="2"><h1>Estimation update</h1>
-  To find the <a href="../definitions/misc.html">likelihood</a> $\hat{x}$ of a set of measurements, the PDF corresponding to the measurments needs to be maximised. 
-  
+<section><h1>Cost function</h1>
+  To find the <a href="../../definitions/misc.html">likelihood</a> $\hat{x}$ of a set of measurements, the PDF corresponding to the measurments needs to be maximised.
+
   <p>
     The normaliser term does not depend on $x$, i.e. the specific choice of $x$ has no impact on the normaliser and can be ignored. Therefore, the exponent needs to be maximised; which means maximising the function in the exponent.
   </p>
-
-  The function is maximised by setting its derivative to $0$ and solving for $x$ to get the equation for the maximum likelihood estimator $\hat{x}$:
-  $$
-    \hat{x} = (H^TR^{-1}H)^{-1}H^TR^{-1}y
-  $$
-
-  This is the the most likely estimate, the solution to the least squares estimation problem <n>given some measurements $y$ that are linearly related to some unknown quantity $x$</n> by the matrix $H$ that is assumed to be known.
 </section>
 </chapter>
 

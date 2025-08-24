@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least Squares: Branches</title>
-  <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
+  <title>Estimation approaches: Introduction</title>
+  <meta name="Estimation approaches: Introduction" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -24,8 +24,8 @@
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,26 +41,37 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Linear least squares</a>
-<a href="#1">Non linear least squares</a>
+<a href="#0">Estimating a state that does not change</a>
+<a href="#1">Estimating a varying state on the go</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Least Squares Estimation</h1>
-<section><h1>General</h1>
-  <ul>
-    <li><a href="overview.html">Overview</a></li>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 0"><h1>Estimation approaches: Introduction</h1>
+<section><h1>Overview</h1>
+  Each estimation approach makes slightly different assumptions about various components of the measurement equation.
+  
+  In its simplest form, if a <i>measurement equation</i> is linear, it will look like:
+  $$
+    y = Hx + v
+  $$
 
-<section><h1>Linear LS</h1>
   <ul>
-    <li><a href="rls/main.html">Recursive</a></li>
-  </ul>
-</section>
+    <li>Observations or measurements $y$</li>
+    
+    <p>
+      <li><a href="jacobian.html">Jacobian or measurement model</a> $H$</li>
+      The measurement could be a linear or non-linear function of the true state.
+    </p>
 
-<section><h1>Non-linear LS</h1>
-  <ul>
-    <li><a href="nls.html">Overview</a></li>
+    <li>Noise model $v$</li>
+    Could be a gaussian distribution or not.
+
+    <p>
+      <li>State vector $x$</li>
+      <ul>
+        <li><a href="constantState.html">Constant</a></li>
+        <li><a href="changingState.html">Non-constant</a></li>
+      </ul>
+    </p>
   </ul>
 </section>
 </chapter>

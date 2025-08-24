@@ -4,9 +4,9 @@
 <head>
   <title>Estimation approaches: Introduction</title>
   <meta name="Estimation approaches: Introduction" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,7 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
@@ -45,36 +45,8 @@
 <a href="#1">Estimating a varying state on the go</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Estimation approaches: Introduction</h1>
-
-<section id="0"><h1>Estimating a state that does not change</h1>
-  The following approaches assume a constant state while collecting data for estimation.
-  
-  <ul>
-    <li>Batch Least squares</li>
-    It requires that measurements come in all at once. The measurement model $H$ <n>maps</n> a state vector of length $m$ to a measurement vector of $k$ individual measurements.
-
-    $$
-      \underbrace{y}_{k \times 1} =  \underbrace{H}_{k \times m} \cdot 
-                                  \underbrace{x}_{m \times 1}
-    $$
-
-    <p>
-      <li>Recursive least squares</li>
-      Having a batch of stored measurements is computationally intensive, since the amount of computational resources needed to solve the <m>normal equations</m> grows with the measurement vector size. With a recursive estimator, since measurements come in one at a time, $H$ will just be a vector, not a matrix. $H$ will map a state to a single measurement.
-
-      $$
-        \underbrace{y}_{1 \times 1} =  \underbrace{H}_{1 \times m} \cdot 
-                                    \underbrace{x}_{m \times 1}
-      $$
-    </p>
-
-    <li>Non-linear leasts squares</li>
-    The measurement model is some <m>arbitrary function</m> of the underlying state.
-  </ul>
-</section>
-
-<section id="1"><h1>Estimating a varying state on the go</h1>
+<chapter style="counter-reset: chapter 0"><h1>Estimating a varying state</h1>
+<section id="0"><h1>Overview</h1>
   <n>To estimate a state that is changing</n>, the Kalman filter and its variants called extended and unscented kalman filters can be used. For example, to estimate the position of a vehicle, a kalman filter helps <n>incorporate the vehicle's motion into the state estimation process</n>.
 </section>
 </chapter>

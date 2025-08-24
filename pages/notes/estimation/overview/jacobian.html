@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least Squares: Branches</title>
-  <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
+  <title>Estimation approaches: Introduction</title>
+  <meta name="Estimation approaches: Introduction" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -24,8 +24,8 @@
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,27 +41,23 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Linear least squares</a>
-<a href="#1">Non linear least squares</a>
+<a href="#0">Estimating a state that does not change</a>
+<a href="#1">Estimating a varying state on the go</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Least Squares Estimation</h1>
-<section><h1>General</h1>
+<chapter style="counter-reset: chapter 0"><h1>Jacobian</h1>
+<section><h1>Overview</h1>
+  A measurement model encapsulated in the Jacobian matrix $H$:
   <ul>
-    <li><a href="overview.html">Overview</a></li>
+    <li>Projects a state into its measurement space or</li>
+    <li>Maps a state to a measurement</li>
   </ul>
-</section>
 
-<section><h1>Linear LS</h1>
-  <ul>
-    <li><a href="rls/main.html">Recursive</a></li>
-  </ul>
-</section>
+  $H$ <n>contains partial derivatives of the measurements with respect to the unknown parameter/state(s) $x$</n>.
 
-<section><h1>Non-linear LS</h1>
-  <ul>
-    <li><a href="nls.html">Overview</a></li>
-  </ul>
+  <p>
+    $H$ is easy to compute in the linear case <n>but requires more mathematical effort in the case of non-linear estimation</n>.
+  </p>
 </section>
 </chapter>
 

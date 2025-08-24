@@ -52,12 +52,6 @@
 
 <chapter style="counter-reset: chapter 0"><h1>RLS: Kalman Gain</h1>
 <section id="0"><h1>Relationship with estimate error covariance</h1>
-  Kalman filter's state estimation process updates two key things at every time step:
-  <ul>
-    <li>The state estimate (the filter's best guess of the current state).</li>
-    <li>The covariance of the estimate (which represents the uncertainty in the state estimate).</li>
-  </ul>
-
   When $K$ is large, the filter places more weight on the measurements (i.e., it's more confident in the measurements compared to the prediction). After the state is updated, the estimate covariance matrix is updated as follows:
 
   $$
