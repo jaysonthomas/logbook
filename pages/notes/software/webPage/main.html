@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html>
 <head>
   <title>Web page</title>
   <meta name="Web page" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -17,15 +16,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -41,22 +40,28 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Symbols</a>
-<a href="#1">Linking equations</a>
-<a href="#2">Figures</a>
-<a href="#3">Block diagrams</a>
-<a href="#4">Linking code</a>
-<a href="#5">Adding a collapsable section</a>
-<a href="#6">Referencing</a>
+<a href="#0">Topics</a>
+<a href="#1">Symbols</a>
+<a href="#2">Linking equations</a>
+<a href="#3">Figures</a>
+<a href="#4">Block diagrams</a>
+<a href="#5">Linking code</a>
+<a href="#6">Adding a collapsable section</a>
+<a href="#7">Referencing</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Web page</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="fig.html">Figures</a></li>
+  </ul>
+</section>
 
-<section id="0"><h1>Symbols</h1>
+<section id="1"><h1>Symbols</h1>
   To display angle brackets, use <code>&lt</code>.
 </section>
 
-<section id="1"><h1>Linking equations</h1>
+<section id="2"><h1>Linking equations</h1>
 <pre><code class="html">
 &lta href="site.html#mjx-eqn:eq:equationReferenceName"&gtDisplay Name&lt/a&gt
 </code></pre>
@@ -67,30 +72,7 @@
 </code></pre>
 </section>
 
-<section id="2"><h1>Figures</h1>
-  <ul>
-    <li>Placing figures side-by-side</li>
-    <div class="container">
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../../figures/drone/12_wideGaussian.png"/>
-        <figcaption>
-          Wide gaussian
-        </figcaption>
-      </figure>
-
-      <figure>
-        <img style="height:80px; width:auto"
-        src="../../../figures/drone/13_thinGaussian.png"/>
-        <figcaption>
-          Thin gaussian
-        </figcaption>
-      </figure>
-    </div>
-  </ul>
-</section>
-
-<section id="3"><h1>Block diagrams</h1>
+<section id="4"><h1>Block diagrams</h1>
   <figure>
     <div style="padding: 10px;">
       <script type="text/javascript">
@@ -122,14 +104,14 @@
   </figure>
 </section>
 
-<section id="4"><h1>Linking code</h1>
+<section id="5"><h1>Linking code</h1>
   <ul>
     <li>From github</li>
     If the local code is in <code>logbook/jlib/code/estimation/x.py</code>, then the github code is in <code>https://github.com/jaysonthomas/jlib/blob/main/code/estimation/leastSquares.py</code>
   </ul>
 </section>
 
-<section id="5"><h1>Adding a collapsable section</h1>
+<section id="6"><h1>Adding a collapsable section</h1>
   <ul>
     <li>Button</li>
     <button class="accordion">Test</button>
@@ -149,7 +131,7 @@
   </ul>
 </section>
 
-<section id="6"><h1>Referencing</h1>
+<section id="7"><h1>Referencing</h1>
   <ul>
     <li>Linking to a specific sentence or equation in a page</li>
 <pre><code class="xml">
