@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Compact form of the prediction equation at the current time step</title>
+  <meta name="Compact form of the prediction equation at the current time step" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Compact form of the prediction equation at the current time step</h1>
+  Combining all the prediction equations at $k$ into a single equation:
+  $$
+    \begin{bmatrix}
+      z_{k+1|k} \\ z_{k+2|k} \\ z_{k+3|k} \\ \vdots \\ z_{k+v|k} \\ z_{k+v+1|k}
+      \\ \vdots \\ z_{k+p|k}
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+      CA \\ CA^2 \\ CA^3 \\ \vdots \\ CA^c \\ CA^{c+1} \\ \vdots \\ CA^p
+    \end{bmatrix}
+    x_k +
+    \begin{bmatrix}
+      CB & 0 & 0 & 0 & \cdots & 0 \\
+      CAB & CB & 0 & 0 & \cdots & 0 \\
+      CA^2B & CAB & CB & 0 & \cdots & 0 \\
+      \vdots & \vdots & \vdots & \cdots & \cdots & \vdots \\
+      CA^{c-1}B & CA^{c-2}B & CA^{c-3}B & \cdots & CAB & CB \\
+      CA^cB & CA^{c-1}B & CA^{c-2}B & \cdots & CA^2B & C\bar{A}_{c+1|c}B \\
+      \vdots & \vdots & \vdots & \cdots & \cdots & \vdots \\
+      CA^pB & CA^{p-1}B & CA^{p-2}B & \cdots & CA^{p-c+1}B & C\bar{A}_{p|c}B 
+    \end{bmatrix}
+    \begin{bmatrix} 
+      u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \\ \vdots \\ u_{k+c-2|k} \\ u_{k+c-1|k}
+    \end{bmatrix}
+  $$
+
+  This is written compactly as:
+  $$
+    z = Ox_k + Mu
+  $$
+</chapter>
+
+</body>
+</html>

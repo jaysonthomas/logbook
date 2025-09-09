@@ -44,15 +44,15 @@
 <a href="#0">Topics</a>
 <a href="#1">Software implementation</a>
 <a href="#2">State variables</a>
-<a href="#3">Forward euler method</a>
-<a href="#4">Backward Euler method</a>
-<a href="#5">Plots</a>
+<a href="#3">Plots</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Simulation</h1>
 <section id="0"><h1>Topics</h1>
   <ul>
     <li><a href="background.html">Background</a></li>
+    <li><a href="backwardEuler.html">Backward Euler Method</a></li>
+    <li><a href="forwardEuler.html">Forward Euler Method</a></li>
   </ul>
 </section>
 
@@ -77,56 +77,7 @@
   </p>
 </section>
 
-<section id="3"><h1>Forward euler method</h1>
-  Consider a linear system with its system output $y$ as below:
-  $$\begin{align*}
-    \dot{x} &= Ax + Bu \\
-    y &= Cx
-  \end{align*}$$
-
-  A state sequence is discretised using the Forward Euler method as follows:
-  $$
-    \dot{x} \approx \frac{x_{k+1} - x_k}{h}
-  $$
-  $h$ is a discretisation time constant (a small real number) <br>
-  $k$ denotes a discrete time instant after $kh$ time steps. $k = 0,1,2,..$ <br>
-  $x_k$ is an approximation of the state vector at the time instant $kh$, that is an approximation of $x(kh)$ <br>
-  $x(0)$ is assumed to be known.
-
-  <p>
-    The state-space model becomes:
-
-    $$\begin{align}
-      \label{eq:fEuler}
-      x_{k+1} &= \underbrace{(I + hA)}_{A_f}x_k + \underbrace{hB}_{B_f}u_k \\
-      y_k &= Cx_k \nonumber
-    \end{align}$$
-
-    $y_k, u_k$ are defined in the same manner as the discretised state variable $x_k$.
-  </p>
-
-  The discretised state sequence $x_1, x_2...$ is obtained by propagating \ref{eq:fEuler} from the initial condition $x_0$ using the control input sequence $u_0, u_1, u_2,\ldots$.
-
-  <p>
-    This approach might produce numerical instabilities within the discretised state vector $x_k$ where the state vector might diverge to infinity.
-  </p>
-</section>
-
-<section id="4"><h1>Backward Euler method</h1>
-  To overcome the numerical instability problem within the Forward Euler approach, it is preferable to discretise a state sequence using the Backward Euler method as follows:
-
-  $$
-    \dot{x} \approx \frac{x_{k} - x_{k-1}}{h}
-  $$
-
-  The state model that helps propagate the state forward from the initial condition $x_0$ using some control sequence becomes:
-  $$
-    x_k = \underbrace{(I - hA)^{-1}}_{A_b}x_{k-1} +
-    \underbrace{h(I - hA)^{-1}B}_{B_b}u_k
-  $$
-</section>
-
-<section id="5"><h1>Plots</h1>
+<section id="3"><h1>Plots</h1>
   Plot position/velocity vs time curve!
 </section>
 </section>

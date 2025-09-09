@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple linear system</title>
+  <meta name="Simple linear system" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">State transition function</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Simple linear system</h1>
+<section id="0"><h1>State transition function</h1>
+  [<a href="https://t.ly/xC-7V">Ref</a>] <p></p>
+  $$\begin{align*}
+    z_k &= Cx_k \\
+    x_{k+1} &= Ax_k + Bu_k
+  \end{align*}$$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      A &:& \text{System matrix - it maps how the previous state relates to the next} \\ 
+      B &:& \text{Input matrix - it maps how the control input relates to the next state} \\
+      C &:& \text{Output matrix - it maps a state to the measurement space}
+    \end{array}$$
+  </div>
+
+  Considering a non-simulation environment, at time instant $k$, a prediction $z_k$ can be made of the actual measurement $y_k$ that would be collected of the state at the time instant. In a simulation environment, this would serve as the measurement. 
+  
+  <p>
+    Once, the control input to be applied $u_k$ is decided based on the current state measurement, a prediction can be made of what the state would look like in the next time instant, $x_{k+1}$.
+  </p>
+
+  $y_k$, $z_k$ point to the state variables that the controller aims to control to follow a desired trajectory. It is not necessarily the observed output, that is, it is not necessarily directly measurable.
+</section>
+</chapter>
+
+</body>
+</html>

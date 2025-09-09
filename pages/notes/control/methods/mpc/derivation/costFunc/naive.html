@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cost function: Naive approach</title>
+  <meta name="Cost function: Naive approach" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Mathematical expression</a>
+<a href="#1">Limiations</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cost function: Naive approach</h1>
+<section id="0"><h1>Mathematical expression</h1>
+  The goal of MPC is to track a reference output trajectory. 
+  
+  <p>
+    A natural way of formulating the MPC problem is to determine the vector of <a href="compactPredEq.html">control inputs $u$</a>, such that the following cost function is minimised:
+
+    $$
+      \min_u \|z^d - z\|^2 = \min_u (z^d - z)^T(z^d - z)
+    $$
+
+    $z$ : <a href="compactPredEq.html">Predicted output</a>
+  </p>  
+  $z^d = \begin{bmatrix}
+            z^d_{k+1} \\ z^d_{k+2} \\ z^d_{k+3} \\ \vdots \\ z^d_{k+p}
+          \end{bmatrix}$
+      : Desired output
+</section>
+
+<section id="1"><h1>Limiations</h1>
+  This approach assumes there are no limitations on the magnitude of control inputs. Control inputs can:
+  <ul>
+    <li>Be extremely large, and thus impossible to be applied in practice</li>
+    <li>Lead to actuator saturation which can have devastating effects in a feedback control loop</li>
+  </ul>
+
+  Consequently, a penalty needs to be introduced on the control inputs in the cost function. Furthermore, weights need to be introduced in the cost function to have better control of the convergence of the algorithm.
+</section>
+
+</chapter>
+
+</body>
+</html>

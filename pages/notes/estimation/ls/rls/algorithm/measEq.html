@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Measurement equation description</title>
+  <meta name="Measurement equation description" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Measurement equation description</h1>
+<section id="0"><h1>Overview</h1>
+  As part of the measurement equation, models of the <a href="measModel.html">measurement</a> and <a href="noiseModel.html">noise</a> need to be defined. In linear least squares, the measurement equation is assumed to be linear.
+  $$
+    y_k = H_kx + v_k
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      y &:& \text{Observations or measurements} & n \times 1 \\ 
+      H &:& \text{Jacobian or measurement model} & n \times m \\
+      x &:& \text{State vector} & m \times 1 \\
+      v &:& \text{Noise model} & n \times 1 \\
+      k &:& \text{Time step}
+    \end{array}$$
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

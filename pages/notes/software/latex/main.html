@@ -63,6 +63,7 @@
         <li><a href="equation/description.html">Description of variables</a></li>
         <li><a href="equation/referencing.html">Referencing</a></li>
         <li><a href="equation/numbering.html">Numbering</a></li>
+        <li><a href="equation/conditions.html">Conditions</a></li>
       </ul>
     </p>
   </ul>
@@ -85,28 +86,14 @@
     to specify the points in lines that we want aligned with each other.
 
     <p>
-      <li>Aligning parts of the equation and adding newlines</li>
-      \begin{equation}\displaylines{  
-        \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
-        s.t. \quad & |v|\leq v_{max}     
-      }\end{equation}
-  
-      <code>\quad</code> adds 4 spaces.
+      <li>Underbrace</li>
+      $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
+      <code>\underbrace{</code>The part of the equation to be labelled
+        <code>}_{\text{</code>The label<code>}}</code>
       <br>
-      <code>&</code> aligns the centres of the left sides (to the ampersand symbol)
-      between themselves. Does the same to the right sides as well.
-      <br>
-      <code>\displaylines</code> takes into account <code>\\</code> to mean
-      'leave a new line'.
+      [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
     </p>
-
-    <li>Underbrace</li>
-    $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
-    <code>\underbrace{</code>The part of the equation to be labelled
-      <code>}_{\text{</code>The label<code>}}</code>
-    <br>
-    [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
-
+    
     <p>
       <li>Multiple lines (only 2) in underbrace</li>
       <a href="https://t.ly/YkN6">Ref</a>.

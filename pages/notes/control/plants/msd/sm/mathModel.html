@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Single mass: Mathematical model</title>
+  <meta name="Single mass: Mathematical model" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Forces</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Spring force</a></li>
+  <li><a href="#0.1">Damping force</a></li>
+</ul>
+<a href="#1">Translational dynamics</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Overview</a></li>
+  <li><a href="#1.1">General form</a></li>
+</ul>
+<a href="#2">Aim</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Single mass: Mathematical model</h1>
+<section id="0"><h1>Forces</h1>
+  [<a href="https://t.ly/wj9h">18.03 website (delete?)</a>,
+  <a href="https://t.ly/EDPt_">Some pointers in google doc</a>]
+  
+  <subsection id="0.0"><h1>Spring force</h1>
+    A spring force $F_s$ acts in the oppposite direction to the <n>direction of displacement</n> from the equilibrium point and is proportional to it. For a positive displacment, the spring expands and the spring force tends to bring the object to its equilibrium position.
+
+    $$
+      F_s = -k_sd_{em}
+    $$
+  </subsection>
+
+  <subsection id="0.1"><h1>Damping force</h1>
+    The damper dampens any mechanical oscillations. It is proportional to the velocity and acts opposite to the direction of movement.
+
+    $$
+      F_d = -k_d\dot{d}_{em}
+    $$
+  </subsection>
+</section>
+
+<section id="1"><h1>Translational dynamics</h1>
+  <subsection id="1.0"><h1>Overview</h1>
+    The dynamics is governed by Newton's second law:
+
+    $$\begin{align}
+      &ma = \sum_{i=1}^{n}F_i \nonumber \\
+      &m\ddot{d}_{em} = F - k_d\dot{d}_{em} - k_sd_{em} \nonumber \\
+      \label{eq:msd} &m\ddot{d}_{em} + k_d\dot{d}_{em} + k_sd_{em} = F
+    \end{align}$$
+
+    The equation of motion is a second-order, linear ODE:
+    <ul>
+      <li>
+        <n>Linear</n> because $d_{em}, \dot{d}_{em}, \ddot{d}_{em}$ appear as linear functions
+      </li>
+
+      <li>
+        <n>Second order</n> because it is the order of the highest derivative
+      </li>
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>General form</h1>
+    In general, the differential equation of motion can be written as:
+    
+    $$\begin{align*}
+      m\ddot{x}(t) &= F_{input}(t) - F_{damper}(t) - F_{spring}(t) \\
+      m\ddot{x}(t) &+ b\dot{x}(t) + kx(t) - f(t) = 0 \\
+    \end{align*}$$
+  
+    Given an external input or an excitation into the model, i.e. a force applied to the system, and the initial  condition, the ODE can be solved to get the position of the mass over time $x(t)$. Unknown terms (mass, spring constant and damping coefficient) are written as variables. [<a href="https://t.ly/Mbgag">Using RLS to find the unknown coefficients</a>]
+  
+    <div class="img-container">
+      <figure>
+        <img style="height:60px; width:auto"
+        src="../../../../../figures/dynamics/5b_cartSystemModel.png"/>
+        <figcaption>
+          Mathematical model of the cart system
+        </figcaption>
+      </figure>
+    </div>
+  </subsection>  
+</section>
+
+<section id="2"><h1>Aim</h1>
+  The analytical solution to equation \ref{eq:msd} is given by:
+  $$
+    d_{em} = d_{em}(t, d_{em}(0), \dot{d}_{em}(0), F(t))
+  $$
+
+  $d_{em}(0), \dot{d}_{em}(0)$ are the initial position and velocity. The goal is to numerically solve \ref{eq:msd} instead of using the analytical form.
+</section>
+</chapter>
+
+</body>
+</html>

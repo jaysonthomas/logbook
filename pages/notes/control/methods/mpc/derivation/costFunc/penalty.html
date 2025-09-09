@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cost function: Penalty</title>
+  <meta name="Cost function: Penalty" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Mathematical expression</a>
+<a href="#1">Compact vector form</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cost function: Penalty</h1>
+<section id="0"><h1>Mathematical expression</h1>
+  The part of the cost function that will penalise the inputs has the following form:
+
+  $$\begin{align*}
+    J_u = & u_{k|k}^T \, Q_0 \, u_{k|k} + \\
+          & (u_{k+1|k} - u_{k|k})^T \, Q_1 \, (u_{k+1|k} - u_{k|k}) + \\
+          & (u_{k+2|k} - u_{k+1|k})^T \, Q_2 \, (u_{k+2|k} - u_{k+1|k}) + \\
+          & \cdots + \\
+          & (u_{k+c-1|k} - u_{k+c-2|k})^T \, Q_c \, (u_{k+c-1|k} - u_{k+c-2|k})
+  \end{align*}$$
+  
+  $Q_i, i= 0,1, \cdots, c-1$ are symmetric weighting matrices selected by a user.  
+  
+  <p>
+    The aim is to use the weighting matrices $Q_i$ to penalise the magnitude of the first applied control input $u_{k|k}$ and the difference between the subsequent control inputs.
+  </p>
+</section>
+
+<section id="1"><h1>Compact vector form</h1>
+  <subsubsection><h1>Vector form of the difference between subsequent control inputs</h1>
+    $$\begin{align*}
+      \begin{bmatrix} 
+        u_{k|k} \\ u_{k+1|k} - u_{k|k} \\ u_{k+2|k} - u_{k+1|k} \\ 
+        \vdots \\ 
+        u_{k+c-1|k} - u_{k+c-2|k}
+      \end{bmatrix} &= 
+      \underbrace{
+      \begin{bmatrix}
+        I & 0 & 0 & 0 & \cdots & 0 \\
+        -I & I & 0 & 0 & \cdots & 0 \\
+        0 & -I & I & 0 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \cdots & \vdots \\
+        0 & 0 & \cdots & 0 & -I & I
+      \end{bmatrix}}_{W_I}
+
+      \begin{bmatrix} 
+        u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \\ \vdots \\ u_{k+c-2|k} \\ u_{k+c-1|k}
+      \end{bmatrix} \\
+
+      &= W_I \, u
+    \end{align*}$$
+  </subsubsection>
+
+  <subsubsection><h1>Vector form of the penalty part of the cost function</h1>
+    $$\begin{align*}
+      J_u &= (W_I u)^T W_Q (W_I u) \\
+          &= (u^T W_I^T) W_Q (W_I u) \\
+          &= u^T \underbrace{W_I^T \, W_Q \, W_I}_{W} u \\
+          &= u^T W u
+    \end{align*}$$
+
+    <p>
+      $W_Q$ is a diagonal matrix with the block matrices $Q_i$ on the diagonal.
+    </p>
+
+    $W_Q = \begin{bmatrix}
+      Q_0 & 0 & 0 & \cdots & 0 \\
+      0 & Q_1 & 0 & \cdots & 0 \\
+      \vdots & \vdots & \vdots & \cdots & \vdots \\
+      0 & 0 & 0 & \cdots & Q_{c-1}
+    \end{bmatrix}$
+
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

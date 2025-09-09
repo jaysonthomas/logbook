@@ -42,7 +42,8 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overall idea of LS</a>
-<a href="#1">Assumptions in LS</a>
+<a href="#1">Relation with Bayes filters</a>
+<a href="#2">Assumptions in the basic LS approach</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Least Squares Overview</h1>
@@ -72,7 +73,15 @@
   Getting the model right is hard!
 </section>
 
-<section id="1"><h1>Assumptions in the basic LS approach</h1>
+<section id="1"><h1>Relation with Bayes filters</h1>
+  <n>To estimate a state that is changing</n>, the Kalman filter and its variants called extended and unscented kalman filters can be used. For example, to estimate the position of a vehicle, a kalman filter helps <n>incorporate the vehicle's motion into the state estimation process</n>.
+
+  <p>
+    Else, the least squares approach would suffice.
+  </p>
+</section>
+
+<section id="2"><h1>Assumptions in the basic LS approach</h1>
   The most basic least squares approach would make unrealistic assumptions in the following areas:
   <ul>
     <li>Sampling time</li>

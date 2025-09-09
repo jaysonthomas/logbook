@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Batch LS: Higher order jacobian</title>
+  <meta name="Batch LS: Higher order jacobian" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Measurement equation</a>
+<a href="#1">Setup</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">State</a></li>
+  <li><a href="#1.1">Measurements</a></li>
+  <li><a href="#1.2">Jacobian</a></li>
+</ul>
+<a href="#2">State estimation</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Batch LS: Higher order jacobian</h1>
+[<a href="https://github.com/jaysonthomas/jlib/blob/main/code/estimation/1_highOrderJ.py">Code</a>]
+
+<section id="0"><h1>Measurement equation</h1>
+  $$\begin{align*}
+    y_{k \times 1} &= H_{k \times m} \; x_{m \times 1} + v_{k \times 1} \\
+    \begin{bmatrix} 
+      y_1 \\ \vdots \\ y_k
+    \end{bmatrix}
+    &= \begin{bmatrix}
+        t_1^3 & t_1^2 & t_1 & 1 \\
+        \vdots & \vdots & \vdots & \vdots \\
+        t_k^3 & t_k^2 & t_k & 1 \\
+      \end{bmatrix}
+      \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix} \\
+    y &= x_1t^3 + x_2t^2 + x_3t + x_4 + v
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      m &:& \text{Number of input variables (here, $m=4$)} \\ 
+      k &:& \text{Number of measurements taken}
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Setup</h1>
+  <subsection id="1.0"><h1>State</h1>
+    Here, state $x$ contains the coefficients of the polynomial. 
+    <ul>
+      <li>$x$ is randomly generated or can be initialised with any arbitrary values.</li>
+      <li>$x$ is assumed to be constant when a measurement is made.</li>
+      <li>For all measurments, $x$ remains the same.</li>
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Measurements</h1>
+    To generate $k$ noisy measurements, $x$ is mixed with gaussian noise $\mathcal{N}(0,1)$ to produce $y$, i.e. $v$ is sampled from a gaussian distribution.
+  
+    $$
+      y = Hx + v
+    $$
+  
+<pre><code class="python">
+y = H @ x + np.random.normal(0, 1, size=(k))
+</code></pre>  
+  </subsection>
+
+  <subsection id="1.2"><h1>Jacobian</h1>
+    Each row represents a polynomial of order $m-1$ created using a 
+    randomly picked (sampled) $t$ value from a uniform distribution: 
+    $$
+      H_i = \begin{bmatrix}t_i^3 & t_i^2 & t_i^1 & t_i^0 \end{bmatrix}
+    $$
+  
+<pre><code class="python">
+# Generate a vector of k random values picked between -5 and 5 
+# with equal probability.
+t = np.random.uniform(-5, 5, k)  
+</code></pre>
+
+    <n>By generating observations from evaluating the polynomial at several different points (different values of $t$), a good approximation of the original state can be obtained</n>.
+  </subsection>
+</section>
+
+<section id="2"><h1>State estimation</h1>
+  Given enough samples, $\hat{x}$ should converge to $x$. The exact number of measurements required depends on:
+  <ul>
+    <li>The complexity of mapping the state space to the measurement space using $H$</li>
+    <p>
+      <n>Recovering a good approximation of the state requires more samples as the order of the polynomial increases</n>.
+    </p>
+    <li>How noisy the measurements are, determined by $v$</li>
+  </ul>
+
+<pre><code class="python">
+xHat = LA.pinv(H.T @ H) @ H.T @ y
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

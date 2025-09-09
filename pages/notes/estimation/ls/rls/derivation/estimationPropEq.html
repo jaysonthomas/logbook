@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Estimate propagation equation</title>
+  <meta name="Estimate propagation equation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">State/Parameter vector</a>
+<a href="#1">Measurement model</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Measurement noise vector</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Estimate propagation equation</h1>
+  The aim of RLS is to compute the recursive estimate in the following form (<i>time propagation of the estimate</i> or the <i>estimate propagation equation</i>):
+  
+  $$\begin{equation} \label{eq:estimatePropagation}
+    \hat{x}_k = \hat{x}_{k-1} + K_k(y_k - H_k \hat{x}_{k-1})
+  \end{equation}$$
+
+<section id="0"><h1>State/Parameter vector</h1>
+  $x$ is the unknown state or parameter vector to be estimated.
+
+  <p>
+    If there are multiple terms in $x = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}$, then estimate $\hat{x}_k$ is partitioned as $\hat{x}_k = \begin{bmatrix} \hat{x}_{1,k} \\ \vdots \\ \hat{x}_{n,k} \end{bmatrix}$
+  </p>
+</section>
+
+<section id="1"><h1>Measurement model</h1>
+  $y_k$, the measurement sampled at discrete-time instant $k$, is related to $x$ by the following measurement equation/model:
+  
+  $$\begin{equation} \label{eq:measurementModel}
+    y_k = H_kx + v_k
+  \end{equation}$$
+
+  <subsection id="1.0"><h1>Measurement noise vector</h1>
+    The covariance and mean of the measurement noise vector $v_k$ is assumed to be:
+    $$\begin{align*}
+      E[v_kv^T_k] &= R_k \\
+      E[v_k] &= 0
+    \end{align*}$$
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

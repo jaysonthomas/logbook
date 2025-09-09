@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Single mass: Frequency domain solution</title>
+  <meta name="Single mass: Frequency domain solution" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Setup</a>
+<a href="#1">Using the sinusoidal waveform equation</a>
+<a href="#2">Using acceleration</a>
+<a href="#3">Using known initial conditions</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Initial position</a></li>
+  <li><a href="#3.1">Application of an impulse force</a></li>
+</ul>
+<a href="#4">Final solution</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Single mass: Frequency domain solution</h1>
+<section id="0"><h1>Setup</h1>
+  Imagine a MSD system with no damping. When displaced, the mass would oscillate forever.
+
+  <p>
+    The equation of motion would be:
+    $$\begin{equation}
+      m\ddot{x}(t) + kx(t) = f(t) \label{eq:msd}
+    \end{equation}$$
+  </p>
+</section>
+
+<section id="1"><h1>Using the sinusoidal waveform equation</h1>
+  The differential equation of motion can be solved by assuming the solution is in the form of a sinusoidal waveform and then solving for the 3 unknown coefficients, $A$, $\omega$ and $\phi$:
+
+  $$
+    x(t) = Acos(\omega t + \phi)  
+  $$
+
+  Since there are three unknowns, three equations will be required to solve for them.
+</section>
+
+<section id="2"><h1>Using acceleration</h1>
+  $$\begin{align*}
+    x(t) &= Acos(\omega t + \phi) \\
+    \dot{x}(t) &= -A\omega sin(\omega t + \phi) \\
+    \ddot{x}(t) &= -A\omega^2cos(\omega t + \phi)
+  \end{align*}$$
+
+  Substituting in \ref{eq:msd}:
+  $$
+    m \left[-A\omega^2cos(\omega t + \phi)\right] + k \left[Acos(\omega t + \phi)\right] = f(t)
+  $$
+</section>
+
+<section id="3"><h1>Using known initial conditions</h1>
+  <subsection id="3.0"><h1>Initial position</h1>
+    Initially, there is no force applied to the system:
+    $$\begin{align*}
+      m \left[-A\omega^2cos(\omega t + \phi)\right] + k \left[Acos(\omega t + \phi)\right] &= 0 \\
+      m \omega^2 \left[\cancel{Acos(\omega t + \phi)}\right] &= k \left[\cancel{Acos(\omega t + \phi)}\right] \\
+      \omega &= \sqrt{\frac{k}{m}}
+    \end{align*}$$
+
+    Hence, the initial position of the mass is at rest, resulting in:
+    
+    $$\begin{align*}
+      x(0) &= 0 \\
+      Acos(\omega t + \phi) &= 0 \\
+      \phi &= \frac{\pi}{2}
+    \end{align*}$$
+
+  </subsection>
+
+  <subsection id="3.1"><h1>Application of an impulse force</h1>
+    To find the change in velocity as a result of applying an impulse force, the integral of the acceleration is taken (integral of an impulse force is $1$ [<a href="../../systemId/impulse.html">ref</a>]):
+    $$\begin{align*}
+      v(t) &= \int^\infty_{-\infty}  \frac{\delta(t)}{m}dt \\
+          &= \frac{1}{m} \scriptsize\text{ m\s}
+    \end{align*}$$
+
+    A force applied in the negative direction to the mass would result in an instantaneous initial velocity:
+    $$\begin{align*}
+      \dot{x}(0) &= -\frac{1}{m} \\
+      -A\omega sin(\omega t + \phi) &= -\frac{1}{m} \\
+      A &= \frac{1}{\omega \cdot m \cdot sin(\phi)} \\
+        &= \frac{1}{\sqrt{k \cdot m}}
+    \end{align*}$$
+  </subsection>
+</section>
+
+<section id="4"><h1>Final solution</h1>
+  The motion of the block is described in time domain by a simple cosine wave:
+  $$
+    x(t) = \frac{1}{\sqrt{km}}cos(\sqrt{\frac{k}{m}}t + \frac{\pi}{2})
+  $$
+
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/dynamics/5c_frequencyPlots.png"/>
+    </figure>
+  </div>
+</section>
+
+</chapter>
+
+</body>
+</html>

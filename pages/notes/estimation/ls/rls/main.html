@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Least Squares: Branches</title>
-  <meta name="Least Squares: Branches" content="text/html; charset=utf-8;" />
+  <title>Recursive Least Squares</title>
+  <meta name="Recursive Least Squares" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,32 +41,35 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Linear least squares</a>
-<a href="#1">Non linear least squares</a>
+<a href="#0">Contents</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Recursive Least Squares</h1>
 <section id="0"><h1>Contents</h1>
   <ul>
-    <li>Overview</li>
-    <ul>
-      <li><a href="overview.html">Overview</a></li>
-      <li><a href="updateStep.html">Update step</a></li>
-      <li><a href="kalmanGain.html">Kalman Gain</a></li>
-      <li><a href="algorithm.html">Algorithm</a></li>
-    </ul>
+    <li><a href="overview.html">Overview</a></li>
+
+    <p>
+      <li>Algorithm</li>      
+      <ul>
+        <li><a href="algorithm/initialisation.html">Initialisation</a></li>
+        <li><a href="algorithm/measEq.html">Measurement equation description</a></li>
+        <li><a href="algorithm/updateStep.html">Update step</a></li>
+      </ul>
+    </p>
     
     <li>Derivation</li>
     <ul>
-      <li><a href="estimationPropEq.html">Estimation propagation equation</a></li>
+      <li><a href="derivation/overview.html">Overview</a></li>
+      <li><a href="derivation/estimationPropEq.html">Estimate propagation equation</a></li>
       <li>Estimation error covariance matrix</li>
       <ul>
-        <li><a href="estimationErrorCovariance.html">Basic form</a></li>
-        <li><a href="estCovPropEq.html">Estimation covariance propagation equation</a></li>
+        <li><a href="derivation/estimationErrorCovariance.html">Basic form</a></li>
+        <li><a href="derivation/estCovPropEq.html">Estimation covariance propagation equation</a></li>
       </ul>
   
-      <li><a href="costFunction.html">Gain matrix</a></li>
-      <li>An even more <a href="simplifiedEstErrorCovariance.html">simplified form</a> of the estimation error covariance</li>
+      <li><a href="derivation/costFunction.html">Gain matrix</a></li>
+      <li>An even more <a href="derivation/simplifiedEstErrorCovariance.html">simplified form</a> of the estimation error covariance</li>
     </ul>
   </ul>
 </section>

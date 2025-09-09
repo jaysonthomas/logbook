@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Estimate the resistance of a resistor</title>
+  <meta name="Estimate the resistance of a resistor" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Batch least squares</a>
+<a href="#2">estimateResUsingRLS</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Initialise prior estimates for $\hat x$ and $\hat b$</a></li>
+  <li><a href="#2.1">$y$ and $H$</a></li>
+</ul>
+<a href="#3">uniformDist</a>
+<a href="#4">covarianceTest</a>
+<a href="#5">2dGaussian</a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Connecting the dots</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Estimate the resistance of a resistor</h1>
+<section id="0"><h1>Overview</h1>
+  Given the voltage drop across a resistor at various current values, find the best estimate for the resistance $R$. 
+
+  $$
+    V=IR
+  $$
+
+  LS attempts to fit a line through the origin (i.e., determine the <n>slope 
+    parameter $R$ </n> for $y = HR$) using the method of least squares.
+</section>
+
+<section id="1"><h1>Batch least squares</h1>
+  $$
+    \hat{R} = (H^TH)^{-1}H^Ty
+  $$
+
+  <figure>
+    <img style="height:200px; width:auto"
+    src="../../../../figures/jlib/pyexamples/estimateResistanceUsingLS_1.png"/>
+    <figcaption>
+      The line represents the estimation. We figure out $R$ and plot $V$ for a range of dummy $I$ values.
+    </figcaption>
+  </figure>
+
+  <p>
+    The estimated value will not match the true resistance value exactly, 
+    since we only have a <n>limited number of noisy measurements</n>.
+  </p>
+</section>
+
+<section id="2"><h1>estimateResUsingRLS</h1>
+  <m><code>V</code> has 1 column. Why would <code>H</code> have 2 columns?</m>
+  Using RLS, we fit a linear model that includes an offset term:
+  $$
+    y = Hx + b
+  $$
+
+  <subsection id="2.0"><h1>Initialise prior estimates for $\hat x$ and $\hat b$</h1>
+    <p>
+      To use RLS, we need to have a prior estimate and the uncertainty
+      associated with these prior estimates; otherwise, we won't know 
+      how to weigh the information we receive from a new measurement.
+      In this example, we assume that the initial estimates for $\hat{R}$ 
+      and $\hat{b}$ are uncorelated (i.e., the off-diagonal elements of 
+      the $2 \times 2$ covariance matrix are $0$). 
+    </p>
+
+    We set the prior estimate of:
+    <ul>
+      <li>
+        $R$ knowing there is a high chance it's not very good
+      </li>
+      <li>
+        $b$ knowing Ohm's law is true and there is a high chance it
+        is extremely close to $0$
+      </li>
+    </ul>
+
+    We set the recursive estimator as follows:
+    $$
+      \hat{R} \sim \mathcal{N}(4, 9.0),~~\hat{b} \sim \mathcal{N}(0, 0.2)
+    $$
+
+    Our initial guess is that both variables follow a Gaussian or normal 
+    distribution (we don't know the exact values, so they are considered as 
+    random variables). For example, $\hat{R}$ has a mean of $4\Omega$ and 
+    a standard deviation of $3\Omega$ (i.e., a variance of $9\Omega^{2}$).
+  </subsection>
+
+  <subsection id="2.1"><h1>$y$ and $H$</h1>
+      We assume that current values are known exactly, and that the voltage measurements are corrupted by additive, IID, zero-mean Gaussian noise with a variance of $0.0225V^2$.
+  </subsection>
+</section>
+
+<section id="3"><h1>uniformDist</h1>
+  A uniform distribution can be parameterized by two numbers, $a$ and $b$. 
+  Properties of this distribution:
+  <ul>
+    <li>It has probability density $0$ when $x \lt a$ or $x>b$</li>
+    <li>Each event between $b$ and $a$ has the same probability density of $\frac{1}{(b-a)}$</li>
+  </ul>
+  
+  To get the cumulative probability upto any given event, say $x=u$ such that $a \leq u \leq b$, we multiply the interval length between the events, $x=u$ and $x=a$ with the probability density, i.e. 
+  
+  $$
+    F_x(u) = (x-a) * \frac{1}{b-a}
+  $$
+
+  In a continuous space, we don't think about the probability of any given event, but the probability density of an interval. The probability that $x$ lies between $b$,$a$ is $1$ according to the above equation. Also, the cumulative probability beyond $x=b$ is $1$.
+
+  <p>
+    The way we find the probability of an event lying in an interval say between $x_1$ and $x_2$ in continuous space is by subtracting the cumulative probabilities for $x_1$ and $x_2$.
+  </p>
+
+  The slope of CDF ($\frac{Probability\,of\,interval}{Interval\,length}$), gives the value of PDF, i.e. probability density.
+
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../figures/jlib/pyexamples/2_cdfVsPdf.png"/>
+      <figcaption>
+        The y-axis for CDF is the probability and for PDF is the probability density
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="4"><h1>covarianceTest</h1>
+  In the output:
+  <ul>
+    <li>The covariance between $x$ and $y$ is $-2.5$ - they are negatively correlated</li>
+    <li>The <i>sample variances</i> of $x$ and $y$ are both $2.5$</li>
+  </ul>
+</section>
+
+<section id="5"><h1>2dGaussian</h1>
+  In statistics, the eigenvectors and eigenvalues of the covariance matrix provide information about the underlying relationships between variables. The angle of the first eigenvector with respect to the x-axis gives us the orientation of the data. The eigenvalues represent the scaling factors for the eigenvectors, and the eigenvectors represent the principal directions or axes of the data. The larger the eigenvalue, the more important the corresponding eigenvector is in describing the variance in the data.
+
+  <p>
+    <code>LA.eig</code> returns 2 arrays: <code>w</code> contains the eigenvalues of the matrix in ascending order, and <code>v</code> contains the corresponding eigenvectors as columns.
+  </p>
+
+  <subsection id="5.0"><h1>Connecting the dots</h1>
+    <ul>
+      <li>The area under a probability density plot gives the probability over the particular width of the event space</li>
+      <li>Along with the general shape of the PDF, 2 parameters that are helpful in further describing it are: $\mu$ and $\sigma^2$</li>
+      <p>
+        <li>For 2 variables that are dependent, we find the covariance matrix.</li>
+        In the 1D case, the variance gives a direct measure of the spread.
+        But, in the 2D case, the covariance matrix is a linear transformation of the vector space. To get an understanding of the spread, we find the eigen vector (direction of the spread) and the eigen value (amount of spread, scaling).
+
+        <p>
+          If the non-diagonal elements of the covariance matrix are 0, i.e. the variables are independent, then the eigen vector will have no tilt. The eigen vectors will fall on either or both of the axes.
+        </p>
+      </p>
+
+      <div class="container">
+        <figure>
+          <img style="height:130px; width:auto"
+          src="../../../../figures/drone/22_noTiltEigenVector.png"/>
+          <figcaption>
+            The first eigen vector with no tilt. The non-diagonal elements of the covariance matrix were made 0 on purpose.
+          </figcaption>
+        </figure>
+        <figure>
+          <img style="height:130px; width:auto"
+          src="../../../../figures/drone/23_tiltedEigenVector.png"/>
+          <figcaption>
+            The first eigen vector with tilt, representing the data.
+          </figcaption>
+        </figure>
+      </div>
+
+      It could be that when 2 variables are independent, the eigen vectors won't even cross each other. In the above images, imagine the gaussian curve, centered on the red dot, the mean, and sticking out of the screen. The eigen value defines the spread of this gaussian curve.
+    </ul>
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

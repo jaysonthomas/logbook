@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MPC solution: Minimising the cost function derivative</title>
+  <meta name="MPC solution: Minimising the cost function derivative" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Solution to the MPC problem</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>MPC solution: Minimising the cost function derivative</h1>
+<section id="0"><h1>Solution to the MPC problem</h1>
+  To minimise the cost function w.r.t. $u$, its derivative is set to $0$:
+
+  $$\begin{align*}
+    \frac{\partial{J}}{\partial{u}} &= -2M^T \, W_P \, s + 2M^T \, W_P \, Mu + 2Wu \\
+        &= 0 \\
+        (M^T \, W_P \, M + W)u &= M^T \, W_P \, s
+  \end{align*}$$
+
+  $$
+    \hat{u} = (M^T \, W_P \, M + W)^{-1} \, M^T \, W_P \, s
+  $$
+
+  $\hat{u} = 
+    \begin{bmatrix} 
+      \hat{u}_{k|k} \\ \hat{u}_{k+1|k} \\ \vdots \\ \hat{u}_{k+c-2|k} \\ \hat{u}_{k+c-1|k}
+    \end{bmatrix}
+  $  is the solution to the MPC problem.
+
+  <p>
+    Only the first control input is required. When $\hat{u}_{k|k}$ is applied to the system, after time instant $k+1$, state $x_{k+1}$ is observed, another cost function is formed and solution computed. $\hat{u}_{k+1|k}$ is then applied to the system and the whole procedure is repeated for the time instant $k+2$.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cost function: Derivative</title>
+  <meta name="Cost function: Derivative" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Vector equations</a>
+<a href="#1">Derivative</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Cost function: Derivative</h1>
+<section id="0"><h1>Vector equations</h1>
+  From equations 69 and 81, from the <a href="https://t.ly/CHGf5">Matrix cookbook</a>:
+
+  $$\begin{align*}
+    \frac{\partial w^T a}{\partial w} &= \frac{\partial a^T w}{\partial w} = a \\
+    \frac{\partial w^T H w}{\partial w} &= 2Hw
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      w &:& \text{A vector} \\ 
+      a &:& \text{A constant vector} \\
+      H &:& \text{A constant symmetric matrix}
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Derivative</h1>
+  Applying the above equations:
+
+  $$\begin{align*}
+    \frac{\partial{s^T \, W_P \,s}}{\partial{u}} &= 0 \\ 
+    \frac{\partial{s^T \, W_P \, Mu}}{\partial{u}} &= M^T \, W_P \, s \\ 
+    \frac{\partial{u^T \, M^T \, W_P \, s}}{\partial{u}} &= M^T \, W_P \, s \\ 
+    \frac{\partial{u^T \, M^T \, W_P \, Mu}}{\partial{u}} &= 2M^T \, W_P \, Mu \\ 
+    \frac{\partial{u^T W u}}{\partial{u}} &= 2Wu 
+  \end{align*}$$
+
+  The derivative of the cost function becomes:
+  $$
+    \frac{\partial{J}}{\partial{u}} = -2M^T \, W_P \, s + 2M^T \, W_P \, Mu + 2Wu
+  $$
+</section>
+
+
+</chapter>
+
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LLS: Maximum Likelihood Estimation derivation</title>
-  <meta name="LLS: Maximum Likelihood Estimation derivation" content="text/html; charset=utf-8;" />
+  <title>Cost function for a gaussian distribution</title>
+  <meta name="Cost function for a gaussian distribution" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,24 +41,23 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Aim</a>
-<a href="#1">Measurement collection</a>
+<a href="#0">Gaussian distribution characteristics</a>
 <ul class="no-bullets">
-  <li><a href="#1.0">Parameters of the distribution</a></li>
-  <li><a href="#1.1">Equation of the distribution</a></li>
+  <li><a href="#0.0">Parameters of the distribution</a></li>
+  <li><a href="#0.1">Equation of the distribution</a></li>
 </ul>
-<a href="#2">Estimation update</a>
+<a href="#1">Cost function</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Cost function for a gaussian distribution</h1>
-<section><h1>Gaussian distribution characteristics</h1>
+<section id="0"><h1>Gaussian distribution characteristics</h1>
   Here, the following assumptions are made about the PDF corresponding to the measurments:
   <ul>
     <li>Measurements are not discrete</li>
     <li>Probability density function $p(y|x)$ of the measurements is gaussian</li>
   </ul>
 
-  <subsection id="1.0"><h1>Parameters of the distribution</h1>
+  <subsection id="0.0"><h1>Parameters of the distribution</h1>
     <ul>
       <li>Mean</li>
       $v$ is a zero-mean gaussian $v \sim \mathcal{N}(0,R)$. Hence, the expected value or the mean of the PDF is $\bar{y} = Hx$
@@ -70,7 +69,7 @@
     </ul>
   </subsection>
 
-  <subsection id="1.1"><h1>Equation of the distribution</h1>
+  <subsection id="0.1"><h1>Equation of the distribution</h1>
     Given that $p(y|x) = \mathcal{N}(Hx, R)$, the formula for the <a href="../../maths/gaussians.html">Gaussian</a>:
 
     $$
@@ -83,7 +82,7 @@
   </subsection>
 </section>
 
-<section><h1>Cost function</h1>
+<section id="1"><h1>Cost function</h1>
   To find the <a href="../../definitions/misc.html">likelihood</a> $\hat{x}$ of a set of measurements, the PDF corresponding to the measurments needs to be maximised.
 
   <p>

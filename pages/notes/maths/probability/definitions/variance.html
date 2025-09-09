@@ -47,11 +47,6 @@
 </ul>
 <a href="#1">Sample variance</a>
 <a href="#2">Standard deviation</a>
-<a href="#3">Covariance</a>
-<a href="#4">Expected value</a>
-<ul class="no-bullets">
-  <li><a href="#4.0">Special case</a></li>
-</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Definitions: Variance</h1>
@@ -59,7 +54,7 @@
 <section id="0"><h1>Variance</h1>
   [<a href="https://t.ly/CUyG">Stackexchange question</a>. <a href="https://t.ly/jWCR">Code example</a>.] <p></p>
   
-  When drawing from a distribution over and over again, <i>variance</i> gives an indication of how spread out the <i>samples</i> (the values being drawn) are from the mean. Variance is not a measure of how well the mean is known, but how much the samples vary.
+  When drawing from a distribution <n>repeatedly</n>, <i>variance</i> gives an indication of how spread out the <i>samples</i> (the values being drawn) are from the mean. Variance is not a measure of how well the mean is known, but how much the samples vary.
 
   $$
     \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
@@ -77,7 +72,7 @@
   </p>
   
   <subsection id="0.0"><h1>Equation deepdive</h1>
-    Subtracting the mean makes the mean the zero point. It is a shift operation. All sample values can now be represented w.r.t the mean as simple <n>deviations</n> as shown <a href="https://t.ly/dipKw">here</a>. Squaring the deviations as opposed to taking the raw or absolute value, helps to amplify the deviations of samples from the mean which is helpful when comparing 2 different distributions.
+    Subtracting the mean makes the mean the zero point. It is a shift operation. All sample values can now be represented w.r.t the mean as simple <n>deviations</n> as shown <a href="https://t.ly/dipKw">here</a>. Squaring the deviations as opposed to taking the raw or absolute value, helps to amplify the deviations which is helpful when comparing 2 different distributions.
   </subsection>  
 </section>
 
@@ -107,33 +102,6 @@
     </ul>
   </p>
 </section>
-
-<section id="3"><h1>Covariance</h1>
-  A <i>covariance matrix</i> is a square matrix that summarises the pairwise correlations between variables in a dataset. It is <i>symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.
-</section>
-
-<section id="4"><h1>Expected value</h1>
-  It is not the most likely, but the average value a random variable converges to if a value was continuously drawn from a distribution. It gives the <n>long-run average</n> value of a <n>repeated</n> probabilistic experiment.
-  $$
-    E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
-  $$
-  It's the value of the random variable, times the likelihood of each of 
-  those outcomes all summed together. When the probability of each event is
-  $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
-
-  <p>
-    The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. But, where the underlying events are numeric like the position of a bot, the expected value gives an idea of the value of the random variable at any given time. 
-  </p>
-
-  <subsection id="4.0"><h1>Special case</h1>
-    $$
-      E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
-    $$
-
-    $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
-  </subsection>
-</section>
-
 </chapter>
 
 </body>

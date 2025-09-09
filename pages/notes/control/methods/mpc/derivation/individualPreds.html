@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Individual predictions at the current time step</title>
+  <meta name="Individual predictions at the current time step" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Individual predictions at the current time step</h1>
+  At time instant $k$, the controller predicts the state and output vectors up to $k+p$. It is assumed the state at $k$ is perfectly known. From the <a href="../../../plants/linear/main.html">state/measurement update models</a>, the following state and output predictions are made.
+  
+  <subsubsection><h1>Prediction at $k+1$</h1>
+    $$\begin{align*}
+      x_{k+1|k} &= Ax_k + Bu_{k|k} \\
+      z_{k+1|k} &= Cx_{k+1|k} \\
+                &= CAx_k + CBu_{k|k}
+    \end{align*}$$
+  </subsubsection>
+  
+  <subsubsection><h1>Prediction at $k+2$</h1>
+    $$\begin{align*}
+      x_{k+2|k} &= Ax_{k+1} + Bu_{k+1|k} \\
+                &= A^2x_k + ABu_{k|k} + Bu_{k+1|k} \\
+      z_{k+2|k} &= Cx_{k+2|k} \\
+                &= CA^2x_k + CABu_{k|k} + CBu_{k+1|k}
+    \end{align*}$$
+  </subsubsection>
+
+  <subsubsection><h1>Prediction at $k+3$</h1>
+    $$\begin{align*}
+      x_{k+3|k} &= Ax_{k+2} + Bu_{k+2|k} \\
+                &= A^3x_k + A^2Bu_{k|k} + ABu_{k+1|k} + Bu_{k+2|k} \\
+      z_{k+3|k} &= Cx_{k+3|k} \\
+                &= CA^3x_k + CA^2Bu_{k|k} + CABu_{k+1|k} + CBu_{k+2|k} \\
+                &= CA^3x_k + 
+                \begin{bmatrix} CA^2B & CAB & CB \end{bmatrix}
+                \begin{bmatrix} u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \end{bmatrix}
+    \end{align*}$$
+  </subsubsection>
+
+  <subsubsection><h1>Prediction at the end of the control horizon c</h1>
+    $$
+      z_{k+c|k} = CA^cx_k + 
+                \begin{bmatrix} CA^{c-1}B & CA^{c-2}B & \cdots & CAB & CB \end{bmatrix}
+                \begin{bmatrix} 
+                  u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \\ \vdots \\ u_{k+c-2|k} \\ u_{k+c-1|k}
+                \end{bmatrix}
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Prediction at $k+c+1$</h1>
+    After index $c$, the torque remains constant. This is a constraint imposed on the controller.
+    $$
+      u_{k+c|k} = u_{k+c+1|k} = \cdots = u_{k+c+p|k}
+    $$
+  
+    Therefore, at $k+c+1$:
+    $$
+      z_{k+c+1|k} = CA^{c+1}x_k + 
+                \begin{bmatrix} CA^cB & CA^{c-1}B & \cdots & CA^2B & C(A +I)B \end{bmatrix}
+                \begin{bmatrix} 
+                  u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \\ \vdots \\ u_{k+c-2|k} \\ u_{k+c-1|k}
+                \end{bmatrix}
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Prediction at the final time step $k+p$</h1>
+    $$\begin{align*}
+      z_{k+p|k} &= CA^{p}x_k + 
+        \begin{bmatrix} 
+          CA^{p-1}B & CA^{p-2}B & \cdots & CA^{p-c+1}B &
+          C(A^{p-c} + A^{p-c-1} + \cdots + A + I)B 
+        \end{bmatrix}
+        \begin{bmatrix} 
+          u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \\ \vdots \\ u_{k+c-2|k} \\ u_{k+c-1|k}
+        \end{bmatrix} \\
+
+        &= CA^{p}x_k + 
+        \begin{bmatrix} 
+          CA^{p-1}B & CA^{p-2}B & \cdots & CA^{p-c+1}B & C\bar{A}_{p,c}B                
+        \end{bmatrix}
+        \begin{bmatrix} 
+          u_{k|k} \\ u_{k+1|k} \\ u_{k+2|k} \\ \vdots \\ u_{k+c-2|k} \\ u_{k+c-1|k}
+        \end{bmatrix} \\
+    \end{align*}$$
+    where $\bar{A}_{p,c} = A^{p-c} + A^{p-c-1} + \cdots + A + I$
+
+    For any general $i &gt v$:
+    $$
+      \bar{A}_{i,c} = A^{i-c} + A^{i-c-1} + \cdots + A + I
+    $$
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

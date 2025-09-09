@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MPC derivation</title>
+  <meta name="MPC derivation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>MPC derivation</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li>Prediction equation at the current time step</li>
+    <ul>
+      <li><a href="individualPreds.html">Individual predictions</a></li>
+      <li><a href="compactPredEq.html">Compact form of the prediction equation</a></li>
+    </ul>
+
+    <p>
+      <li>Cost function</li>
+      <ul>
+        <li><a href="costFunc/naive.html">Naive approach</a></li>
+
+        <p>
+          <li>Refined approach</li>
+          <ul>
+            <li><a href="costFunc/penalty.html">Penalty</a></li>
+            <li><a href="costFunc/trackingError.html">Tracking error</a></li>
+            <li><a href="costFunc/refined.html">Mathematical expression</a></li>
+            <li><a href="costFunc/derivative.html">Derivative</a></li>            
+          </ul>
+        </p>
+      </ul>
+    </p>
+
+    <li>Solution to the MPC problem</li>
+    <ul>
+      <li><a href="sol/minimisingCostFunc.html">Minimising the cost function derivative</a></li>
+      <li><a href="sol/efficacy.html">Efficacy</a></li>
+    </ul>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

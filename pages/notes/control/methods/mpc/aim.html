@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aim</title>
+  <meta name="Aim" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Notation</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Prediction horizon</a></li>
+  <li><a href="#0.1">Control horizon</a></li>
+</ul>
+<a href="#1">Statement</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Aim</h1>
+<section id="0"><h1>Notation</h1>
+  <div class="img-container">
+  <figure>
+    <img style="height:200px; width:auto"
+    src="../../../../../figures/control/methods/mpc/overview.png"/>
+  </figure>
+  </div>
+
+  <subsection id="0.0"><h1>Prediction horizon</h1>
+    It is the future horizon over which the state trajectory is predicted.
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        p &:& \text{Length of horizon} \\ 
+        x_{k+i|k} &:& \text{Prediction of the state vector for the time instant }k+i \text{ made at }k \text{. } \\
+        z_{k+i|k} &:& \text{Prediction of the output vector for the time instant }k+i \text{ made at }k \text{. } \\
+        i=0,1,2,\cdots,p &&
+      \end{array}$$
+    </div>
+  </subsection>
+
+  <subsection id="0.1"><h1>Control horizon</h1>
+    It is the future horizon over which the control inputs are allowed to change.
+
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        c &:& \text{Length of horizon} \\ 
+        u_{k+i|k} &:& \text{Control input at }k+i \text{ computed at }k \text{. } \\
+        i=0,1,2,\cdots,c &&
+      \end{array}$$
+    </div>
+
+    $$
+      \text{Limitation: } c \leq p 
+    $$
+
+    The control input is determined as the solution to the MPC problem. It only varies until $k+c$, after which it is constant and equal to the last value in the control horizon $u_{k+c|k}$.
+  </subsection>
+</section>
+
+<section id="1"><h1>Statement</h1>
+  The goal of MPC is to determine a set of control inputs $u_{k+i|k}$ at time instant $k$, that will make the output of the system $z_{k+i|k}$ follow a desired control trajectory over the prediction horizon. 
+  
+  <p>
+    This is done by:
+    <ul>
+      <li>Using the knowledge of the current state $x_k$, and the system model matrices $A,B,C$ to predict the output trajectory $z_{k+i|k}$</li>
+      <li>Minimising the difference between the desired and predicted trajectories</li>
+    </ul>
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

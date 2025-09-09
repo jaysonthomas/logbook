@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Specs to beat</title>
+  <meta name="Specs to beat" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Dell Precision 5550</a>
+<a href="#1">Desktop Gigabyte model: H97M-HD3</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Specs to beat</h1>
+<section id="0"><h1>Dell Precision 5550</h1>
+<pre><code class="bash">
+inxi -Faz
+</code></pre>
+
+  <subsubsection><h1>CPU</h1>
+    <ul>
+      <li>i7-10850 CPU @2.7GHz</li>      
+      <li>6 cores</li>
+      <li>Threads per core 2</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>GPU</h1>
+    <ul>
+      <li>Intel CometLake-H GT2 (UHD Graphics)</li>
+      <li>NVIDIA TU117GLM [Quadro T1000 Mobile]</li>
+    </ul>
+  </subsubsection>  
+
+  <subsubsection><h1>RAM</h1>
+    32GB
+  </subsubsection>    
+</section>
+
+<section id="1"><h1>Desktop Gigabyte model: H97M-HD3</h1>
+  <subsubsection><h1>CPU</h1>
+    <ul>
+      <li>i5-4590 CPU @3.3GHz</li>      
+      <li>4th gen Haswell</li>
+      <li>4 cores</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>GPU</h1>
+    Intel Xeon E3-1200 v3/4th Gen Core Processor Integrated Graphics
+  </subsubsection>  
+
+  <subsubsection><h1>Memory</h1>
+    16GB RAM with 3 SSD memories.
+  </subsubsection>    
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expected value</title>
+  <meta name="Expected value" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Intuition</a>
+<a href="#1">Mathematical expression</a>
+<a href="#2">Special case: Variance</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Expected value</h1>
+<section id="0"><h1>Intuition</h1>
+  It is not the most likely, but the average value a random variable converges to if a value was continuously drawn from a distribution. It gives the <n>long-run average</n> value of a <n>repeated</n> probabilistic experiment.
+</section>
+
+<section id="1"><h1>Mathematical expression</h1>
+  $$
+    E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
+  $$
+  It's the value of the random variable, times the likelihood of each of those outcomes all summed together. 
+  
+  <subsubsection><h1>Proabability</h1>
+    When the probability of each event is $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
+  </subsubsection>
+
+  <subsubsection><h1>Random variable</h1>
+    The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. 
+    
+    <p>
+      But, where the underlying events are numeric like the position of a bot, the expected value gives an idea of the value of the random variable at any given time. 
+    </p>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Special case: Variance</h1>
+  $$
+    E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
+  $$
+
+  $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
+</section>
+
+</chapter>
+
+</body>
+</html>
