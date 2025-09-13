@@ -52,7 +52,7 @@
 
 <section id="1"><h1>Mathematical expression</h1>
   $$
-    E(X) = \sum_{i=1}^{N}x_iP(X=x_i)
+    E(X) = \sum_{i=1}^{N}v_iP(X=v_i)
   $$
   It's the value of the random variable, times the likelihood of each of those outcomes all summed together. 
   
@@ -70,11 +70,16 @@
 </section>
 
 <section id="2"><h1>Special case: Variance</h1>
-  $$
-    E[X = (x_i - \mu)^2] = \sigma^2 = \sum_{i=1}^{N}(x_i-\mu)^2P(X=x_i)
-  $$
+  $$\begin{align*}
+    \sigma^2 &= E[X = (v_i - \mu)^2] \\
+             &= \sum_{i=1}^{N}(v_i-\mu)^2P(X=v_i)
+  \end{align*}$$
 
-  $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
+  $P(X=v_i)$ is the same as $P(X = (v_i - \mu)^2)$.
+
+  <p>
+    $\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean.
+  </p>
 </section>
 
 </chapter>
