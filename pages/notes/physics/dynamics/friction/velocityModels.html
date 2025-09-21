@@ -3,9 +3,9 @@
 <head>
   <title>Friction: Velocity dependent models</title>
   <meta name="Friction: Velocity dependent models" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
 
-  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,15 +16,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -53,23 +53,28 @@
 <section id="0"><h1>Preface</h1>
   [<a href="https://t.ly/7Nv1o">Modern robotics</a>, <a href="https://shorturl.at/gnwAJ">Drake</a>, <a href="https://t.ly/Wg0bV">Mathworks</a>] 
   
-  <br>
-  Other factors may contribute to the friction at a joint, including loading of a joint's bearings, time a joint has been at rest, temperature, etc. Friction in a gearhead often increases as the gear ratio increases.
+  <p>
+    Other factors may contribute to the friction at a joint, including loading of a joint's bearings, time a joint has been at rest, temperature, etc. Friction in a gearhead often increases as the gear ratio increases.
+  </p>
+
+  $\tau_f$ or $\tau_f$ in the following sections refers to the torque that needs to be applied to overcome friction.
 </section>
 
 <section id="1"><h1>Viscous</h1>
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"
-      src="../../../../figures/physics/9_1_viscousFriction.png"/>
+      src="../../../../../figures/physics/9_1_viscousFriction.png"/>
     </figure>
 
     <p>
-      This is a linear damping force proportional to the velocity which resists motion. Phenomenologically, this is due to a viscous (fluid) drag force produced by lubricants in either an arm-joint or wheels of a mobile robot. 
+      This is a <n>linear damping force</n> proportional to the velocity which resists motion. Phenomenologically, this is due to a <n>viscous (fluid) drag force produced by lubricants</n> in either an arm-joint or wheels of a mobile robot. 
 
       $$
-        \tau_{fric} = b_{viscous} \, \dot{\theta}
+        \tau_f = b_v \, \dot{\theta}
       $$
+
+      $b_v$ is the coefficient of viscous friction.
     </p>
   </div>
 </section>
@@ -78,15 +83,17 @@
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"
-      src="../../../../figures/physics/9_2_coulombFriction.png"/>
+      src="../../../../../figures/physics/9_2_coulombFriction.png"/>
     </figure>
 
     <p>
-      $\tau_{fric}$ can take any value in $[−b_{static} , b_{static}]$ at zero velocity.
+      $\tau_f$ can take any value in $[−b_s , b_s]$ at zero velocity.
       
       $$
-        \tau_{fric} = b_{static} \,sgn(\dot{\theta})
+        \tau_f = b_s \,\frac{\dot\theta}{|\dot\theta|}
       $$
+
+      $b_s$ is the coefficient of static friction.
     </p>
 
     <figure>
@@ -98,11 +105,11 @@
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"
-      src="../../../../figures/physics/9_2_staticPlusViscousFriction.png"/>
+      src="../../../../../figures/physics/9_2_staticPlusViscousFriction.png"/>
     </figure>
 
     $$
-      \tau_{fric} = b_{static} \, sgn(\dot{\theta}) + b_{viscous}\,\dot{\theta}
+      \tau_f = b_s \, \frac{\dot\theta}{|\dot\theta|} + b_v\,\dot{\theta}
     $$
 
     <p></p>
@@ -113,12 +120,17 @@
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"
-      src="../../../../figures/physics/9_4_staticPlusKineticFriction.png"/>
+      src="../../../../../figures/physics/9_4_staticPlusKineticFriction.png"/>
     </figure>
-
+    
     <p>
-      $\tau_{fric} \geq |b_{static}|$ to initiate motion and then $\tau_{fric} = b_{kinetic} \, sgn(\dot{\theta})$ during motion, where $b_{static} > b_{kinetic}$.
+      To initiate motion: $|\tau_f| \geq |b_s|$ <br>
+      During motion: $\tau_f = b_k \, \frac{\dot\theta}{|\dot\theta|}$ <br><br>
+      $b_k$ is the coefficient of kinetic friction. <br>
+      $b_s > b_k$
     </p>
+
+    <p></p>
   </div>
 </section>
 
@@ -126,7 +138,7 @@
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"
-      src="../../../../figures/physics/9_5_staticPlusKineticPlusViscousFriction.png"/>
+      src="../../../../../figures/physics/9_5_staticPlusKineticPlusViscousFriction.png"/>
     </figure>
   </div>
 </section>
@@ -135,7 +147,7 @@
   <div class="container">
     <figure>
       <img style="height:85px; width:auto"
-      src="../../../../figures/physics/9_6_stribeck.png"/>
+      src="../../../../../figures/physics/9_6_stribeck.png"/>
 
       <figcaption>
         A friction law exhibiting the Stribeck effect - at low velocities, friction decreases as velocity increases.
