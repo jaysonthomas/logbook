@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Conditions</title>
-  <meta name="Conditions" content="text/html; charset=utf-8;" />
+  <title>Drill</title>
+  <meta name="Drill" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,53 +40,35 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Min of</a>
-<a href="#1">One sided curly brackets</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Conditions</h1>
-<section id="0"><h1>Min of</h1>
-<pre><code class="latex">
-$$\begin{align*}
-  \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
-  s.t. \quad & |v|\leq v_{max}     
-\end{align*}$$
-</code></pre>    
+<chapter style="counter-reset: chapter 3"><h1>Battery</h1>
+<section id="0"><h1>Overview of Li-ion battery</h1>
+  Most Li-ion batteries are built from <i>18650 or 21700</i> cells (each ~3.6 V nominal, ~4.2 V fully charged). To reach a higher voltage, manufacturers connect cells in series. A dual-voltage battery like the Erbauer is built with 10 cells in series (10S). What makes it “dual” is the ability to reconfigure how the tool taps into those cells.
 
-  <subsubsection><h1>Output</h1>
-    $$\begin{align*}
-      \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
-      s.t. \quad & |v|\leq v_{max}     
-    \end{align*}$$
-  </subsubsection>
+  <subsection><h1>18V mode</h1>
+    The 10 cells are treated as two parallel strings of 5 cells each. Capacity = doubled (since two strings are in parallel), so 6.0 Ah. Energy: $18 V \times 6.0 Ah ≈ 108 Wh$
+
+    <p>
+      <i>Parallel mode</i>: Lower voltage, higher current capacity.
+    </p>
+  </subsection>
+
+  <subsection><h1>36V mode</h1>
+    The same 10 cells are treated as one series string of 10 cells. Capacity = the same as a single string, so 3.0 Ah. Energy: $36 V \times 3.0 Ah ≈ 108 Wh$
+
+    <p>
+      <i>Series mode</i>: Higher voltage, lower current capacity.
+    </p>
+  </subsection>
 </section>
 
-<section id="1"><h1>One sided curly brackets</h1>
-<pre><code class="latex">
-$$
-  y = 
-  \left\{
-  \begin{array}{cl}
-    \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
-    0                 & \quad \text{otherwise}
-  \end{array}
-  \right.
-$$
-</code></pre>
-
-  <subsubsection><h1>Output</h1>
-    $$
-      y = 
-      \left\{
-      \begin{array}{cl}
-        \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
-        0                 & \quad \text{otherwise}
-      \end{array}
-      \right.
-    $$
-  </subsubsection>
-   
-  $cl$ stands for a centered column and a left-justified column respectively.
+<section><h1>Battery selection</h1>
+  <ul>
+    <li><a href="https://t.ly/jFieS">Erbauer 18/36V 4/8Ah</a></li>
+    <li><a href="https://t.ly/3ejI7">Erbauer 18/36V 3/6Ah</a></li>
+  </ul>
 </section>
 </chapter>
 
