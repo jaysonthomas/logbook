@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drill</title>
+  <meta name="Drill" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Battery</h1>
+<section id="0"><h1>Overview of Li-ion battery</h1>
+  Most Li-ion batteries are built from <i>18650 or 21700</i> cells (each ~3.6 V nominal, ~4.2 V fully charged). To reach a higher voltage, manufacturers connect cells in series. A dual-voltage battery like the Erbauer is built with 10 cells in series (10S). What makes it “dual” is the ability to reconfigure how the tool taps into those cells.
+
+  <subsection><h1>18V mode</h1>
+    The 10 cells are treated as two parallel strings of 5 cells each. Capacity = doubled (since two strings are in parallel), so 6.0 Ah. Energy: $18 V \times 6.0 Ah ≈ 108 Wh$
+
+    <p>
+      <i>Parallel mode</i>: Lower voltage, higher current capacity.
+    </p>
+  </subsection>
+
+  <subsection><h1>36V mode</h1>
+    The same 10 cells are treated as one series string of 10 cells. Capacity = the same as a single string, so 3.0 Ah. Energy: $36 V \times 3.0 Ah ≈ 108 Wh$
+
+    <p>
+      <i>Series mode</i>: Higher voltage, lower current capacity.
+    </p>
+  </subsection>
+</section>
+
+<section><h1>Battery selection</h1>
+  <ul>
+    <li><a href="https://t.ly/jFieS">Erbauer 18/36V 4/8Ah</a></li>
+    <li><a href="https://t.ly/3ejI7">Erbauer 18/36V 3/6Ah</a></li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
