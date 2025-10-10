@@ -3,9 +3,9 @@
 <head>
   <title>Git</title>
   <meta name="Git" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,15 +16,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -40,14 +40,21 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Submodules</a>
-<a href="#1">Unstage added files</a>
-<a href="#2">Stash</a>
-<a href="#3">Git</a>
+<a href="#0">Topics</a>
+<a href="#1">Submodules</a>
+<a href="#2">Unstage added files</a>
+<a href="#3">Stash</a>
+<a href="#4">Git</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Git</h1>
-<section id="0"><h1>Submodules</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="cherryPick.html">Cherry pick</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Submodules</h1>
   <a href="https://t.ly/VMEV">Ref</a>.
 <pre><code class="bash">
 git submodule add https://github.com/RobotLocomotion/drake.git 'destinationFolder'
@@ -59,13 +66,13 @@ git submodule update --init --recursive
   </p>
 </section>
 
-<section id="1"><h1>Unstage added files</h1>
+<section id="2"><h1>Unstage added files</h1>
 <pre><code class="bash">
 git reset HEAD
 </code></pre>   
 </section>
 
-<section id="2"><h1>Stash</h1>
+<section id="3"><h1>Stash</h1>
 <pre><code class="bash">
 # List all the stashes related to different branches with stash indices
 git stash list
@@ -81,7 +88,7 @@ git stash push -m "Description"
 </code></pre>  
 </section>
 
-<section id="3"><h1>Git</h1>
+<section id="4"><h1>Git</h1>
   <ul>
     <li>Git branch</li>
 <pre><code class="bash">

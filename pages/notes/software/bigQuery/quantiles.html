@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Big Query</title>
-  <meta name="Big Query" content="text/html; charset=utf-8;" />
+  <title>Quantiles</title>
+  <meta name="Quantiles" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,49 +40,41 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
-<a href="#1">Overview</a>
-<a href="#2">Last value</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Big Query</h1>
-<section id="0"><h1>Topics</h1>
-  <ul>
-    <li><a href="quantiles.html">Qunatiles</a></li>
-  </ul>
-</section>
-<section id="1"><h1>Overview</h1>
-  <code>Project.Dataset.Table</code>
-
-  <p>
-    <code>Table</code> is the event table for example.
-  </p>
-</section>
-
-<section id="2"><h1>Last value</h1>
-  Consider 2 events A,B. A has a field named <code>dist</code>. For every B, the aim is to find the last <code>dist</code> reported by A. The result would be a column <code>distance</code> added to the table.
+<chapter style="counter-reset: chapter 0"><h1>Quantiles</h1>
+<section id="0"><h1>Overview</h1>
 <pre><code class="sql">
 SELECT
-  event,
-  timestamp,
-  LAST_VALUE(IF (event="A", dist, NULL) IGNORE NULLS)
-  OVER(ORDER BY timestamp ASC ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS distance
+  APPROX_QUANTILES(error, 3) AS errorQuantile,
+  rowIndex
 FROM
-  unionTable
-WHERE
-  event="A"
-  OR event="B"
-ORDER BY
-  timestamp
+  table1
+GROUP BY
+  rowIndex
 </code></pre>  
 
-  <code>LAST_VALUE</code> considers all rows specified within a window, including the current one (so, 6 rows in total in the above example), over <n>the current table being created</n>. 
-  
+  Assume <code>rowIndex</code> is obtained by using <code>ROW_NUMBER()</code>.
+
   <p>
-    Within the window, starting from the current row, if a row has event=A, then distance=dist. Else, distance=NULL. But, <code>LAST_VALUE</code> is asked to ignore nulls. So, it continues the same if loop until all rows within the window is processed or until the first row where the condition is satisfied. distance=NULL if all rows within the window fails the condition. 
+    Building up quantiles is like building up a fence - to create 3 sections of fence, 4 fence posts are required. In data, these fence posts are the quantile values.
   </p>
 
-  <code>LAST_VALUE</code> requires that the event being used in its if loop (here, A), to be present in the table being created. If it doesn't find the event, the if loop will always fail.
+  If there are 6 values say in a table say with rowIndex = 1, with a request for 3 quantiles, the result would actually be 4 quantiles:
+  <ul>
+    <li>0%: is just the minimum value.</li>
+    <p>
+      <li>First quantile (~33%): With 6 data points, the value at the 33rd percentile is found at position 6 * 0.333 = 2</li>
+    </p>
+
+    <li>Second quantile (~67%): With 6 data points, the value at the 67th percentile is found at position 6 * 0.667 = 4</li>
+
+    <p>
+      <li>100%: is just the maximum value.</li>
+    </p>
+  </ul>
+
 </section>
 </chapter>
 
