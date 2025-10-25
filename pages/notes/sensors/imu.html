@@ -40,20 +40,31 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Sources of errors mentioned in a datasheet</a>
+<a href="#0">References</a>
+<a href="#1">Sources of errors mentioned in a datasheet</a>
 <ul class="no-bullets">
-  <li><a href="#0.0">Resolution</a></li>
-  <li><a href="#0.1">Bias</a></li>
-  <li><a href="#0.2">Random noise</a></li>
+  <li><a href="#1.0">Resolution</a></li>
+  <li><a href="#1.1">Bias</a></li>
+  <li><a href="#1.2">Random noise</a></li>
 </ul>
-<a href="#1">Typical sensor model</a>
+<a href="#2">Typical sensor model</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>IMU</h1>
-<section id="0"><h1>Sources of errors mentioned in a datasheet</h1>
+<section id="0"><h1>References</h1>
+  <ul>
+    <li>Is it possible to workout relative yaw angle changes without a magnetometer</li>
+    <ul>
+      <li><a href="https://t.ly/jbsE_">MPU6050 example</a></li>
+      <li><a href="https://t.ly/dNj_G">Attitude estimation</a></li>
+    </ul>
+  </ul>
+</section>
+
+<section id="1"><h1>Sources of errors mentioned in a datasheet</h1>
   Understanding the error sources that corrupt measurements is the best way to correct them.
 
-  <subsection id="0.0"><h1>Resolution</h1>
+  <subsection id="1.0"><h1>Resolution</h1>
     <ul>
       <li>Digital resolution</li>
       Since an IMU is a digital sensor, it has a limited resolution. Eg: 16-bit.
@@ -67,7 +78,7 @@
     </ul>
   </subsection>
 
-  <subsection id="0.1"><h1>Bias</h1>
+  <subsection id="1.1"><h1>Bias</h1>
     <ul>
       <li><i>Zero offset</i></li>
       Example: 
@@ -94,7 +105,7 @@
       </p>
     </ul>
   </subsection>
-  <subsection id="0.2"><h1>Random noise</h1>
+  <subsection id="1.2"><h1>Random noise</h1>
     It is also referred to as <i>Noise density</i> in the datasheet.
     Example: 
     <ul>
@@ -112,7 +123,7 @@
   </subsection>
 </section>
 
-<section id="1"><h1>Typical sensor model</h1>
+<section id="2"><h1>Typical sensor model</h1>
   $$
     \underbrace{\tilde{x}}_{\text{Measured} \atop \text{sensor value}} 
     = \underbrace{b}_{\text{Bias}} +
