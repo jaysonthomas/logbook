@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Materials</title>
-  <meta name="Materials" content="text/html; charset=utf-8;" />
+  <title>Input</title>
+  <meta name="Input" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,45 +40,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Wickes</a>
-<a href="#1">Screwfix</a>
+<a href="#0">Question</a>
+<a href="#1">Steps</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Materials</h1>
-<section id="0"><h1>Wickes</h1>
-  <ol>
-    <li><a href="https://t.ly/5tYqj">Tongue & groove floorboards</a></li>
-    <ul>
-      <li>18 (t) x 144 (w) x 3000 (l) mm</li>
-    </ul>
-
-    <p>
-      <li><a href="https://t.ly/eeQ_m">Studwork</a></li>
-      <ul>
-        <li>38 x 63 x 3000mm</li>
-      </ul>
-    </p>
-
-    <li><a href="https://t.ly/utj5q">Structural plywood sheet</a></li>
-    <ul>
-      <li>18 x 1220 x 2440 (l) mm</li>
-      <li>High strength exterior sheet wood. Engineered to withstand warping and bending, impressive load-bearing properties, making it ideal for various construction projects (roofing, subflooring).</li>
-      <li>No formaldehyde based glues</li>
-    </ul>
-  </ol>
+<chapter style="counter-reset: chapter 0"><h1>Input</h1>
+<section id="0"><h1>Question</h1>
+  What update needs to be made to $U$ in the next iteration such that the error across the entire run is reduced.
 </section>
 
-<section id="1"><h1>Screwfix</h1>
-  <ol>
-    <li><a href="https://t.ly/gVO_S">Tee hinge</a></li>
-    <ul>
-      <li>76 (l) mm</li>
-      <li>Black, powder coated</li>
-      <li>Max load capacity of 20kg</li>
-      <li>Frame fixing is 59 (l) x ? (w) mm</li>      
-    </ul>
-  </ol>
+<section id="1"><h1>Steps</h1>
+  <ul>
+    <li>The error is filtered through a learning function $L$ to produce a $\Delta U$ signal, which is added to $U_k$ to get the new input $U_{k+1}$.</li>
+    <li>Often a low pass filter $Q$ is added here to remove high-frequency noise and to reduce chattering in the controller.</li>
+    <li>The updated $U$ is input into the system to produce $Y_{k + 1}$, which is compared to the same reference as before to get a new error for the iteration.</li>
+    <li>Repeat the cycle.</li>
+  </ul>
 </section>
+
 </chapter>
 
 </body>

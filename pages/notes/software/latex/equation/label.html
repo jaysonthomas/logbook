@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Post description of variables</title>
-  <meta name="Post description of variables" content="text/html; charset=utf-8;" />
+  <title>Labeling</title>
+  <meta name="Labeling" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -43,29 +43,27 @@
 <a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Post description of variables</h1>
+<chapter style="counter-reset: chapter 1"><h1>Labeling</h1>
 <section id="0"><h1>Overview</h1>
-<pre><code class="latex">
-&ltdiv style="width:0; text-align:left;"&gt
-  $$\begin{array}{cclc} 
-    \omega_{c} &:& \text{Cutoff frequency of filter} & [Hz] \\ 
-    t_c = \frac{1}{\omega_c} &:& \text{Decay time} & [s] \\
-    T_{s} &:& \text{Sampling period} & [s]
-  \end{array}$$
-&lt/div&gt
-</code></pre>    
+  <ul>
+    <li>Underbrace</li>
+      $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
+      <code>\underbrace{</code>The part of the equation to be labelled
+        <code>}_{\text{</code>The label<code>}}</code>
+      <br>
+      [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
+    </p>
+    
+    <p>
+      <li>Multiple lines (only 2) in underbrace</li>
+      <a href="https://t.ly/YkN6">Ref</a>.
+      <code>\underbrace{}_{\text{} \atop \text{}}</code> works well.
+    </p>
 
-  <code>{cclc}</code> defines a table with four columns, where the 1st, 2nd, and 4th columns are center-aligned, and the 3rd column is left-aligned. The 2nd column is in between the 2 <code>&</code>s.
-
-  <subsubsection><h1>Output</h1>
-    <div style="width:0; text-align:left;">
-      $$\begin{array}{cclc} 
-        \omega_{c} &:& \text{Cutoff frequency of filter} & [Hz] \\ 
-        t_c = \frac{1}{\omega_c} &:& \text{Decay time} & [s] \\
-        T_{s} &:& \text{Sampling period} & [s]
-      \end{array}$$
-    </div>
-  </subsubsection>
+    <li>Another way of doing multiple lines ($>2$)</li>
+    Add <code>scripsize</code> to make the text font smaller:
+    $$\underbrace{M}_{\scriptsize\substack{\text{t1}\\\text{t2}\\\text{t3}}}$$
+  </ul>
 </section>
 </chapter>
 

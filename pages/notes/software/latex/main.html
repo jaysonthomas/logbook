@@ -53,16 +53,17 @@
   <ul>
     <li><a href="newCommands.html">Creating new commands</a></li>
     <li><a href="symbols.html">Symbols</a></li>
-    <li><a href="textsInEqs.html">Texts in equations</a></li>
-
+    
     <p>
       <li>Equations</li>
       <ul>
-        <li><a href="equation/sideBySide.html">Side-by-side</a></li>
-        <li><a href="equation/description.html">Description of variables</a></li>
-        <li><a href="equation/referencing.html">Referencing</a></li>
-        <li><a href="equation/numbering.html">Numbering</a></li>
         <li><a href="equation/conditions.html">Conditions</a></li>
+        <li><a href="equation/label.html">Labeling</a></li>
+        <li><a href="equation/numbering.html">Numbering</a></li>        
+        <li><a href="equation/description.html">Post description of variables</a></li>        
+        <li><a href="equation/referencing.html">Referencing</a></li>        
+        <li><a href="equation/sideBySide.html">Side-by-side</a></li>        
+        <li><a href="equation/superscripts.html">Superscripts</a></li>
       </ul>
     </p>
   </ul>
@@ -83,30 +84,6 @@
     <li>Left alignment of equations</li>
     <a href="https://bit.ly/3UUkxpd">Ref</a>. Use <code>&</code>
     to specify the points in lines that we want aligned with each other.
-
-    <p>
-      <li>Underbrace</li>
-      $$u = \underbrace{a_b}_{\text{Test1}} - \underbrace{b_a}_{\text{Test2}}$$
-      <code>\underbrace{</code>The part of the equation to be labelled
-        <code>}_{\text{</code>The label<code>}}</code>
-      <br>
-      [<a href="https://t.ly/Qeatn">Ref</a>] To change the fontsize of the text, place <code>\scriptsize</code> for example, before <code>\text</code>. 
-    </p>
-    
-    <p>
-      <li>Multiple lines (only 2) in underbrace</li>
-      <a href="https://t.ly/YkN6">Ref</a>.
-      <code>\underbrace{}_{\text{} \atop \text{}}</code> works well.
-    </p>
-
-    <li>Another way of doing multiple lines ($>2$)</li>
-    Add <code>scripsize</code> to make the text font smaller:
-    $$\underbrace{M}_{\scriptsize\substack{\text{t1}\\\text{t2}\\\text{t3}}}$$
-
-    <p>
-      <li>Including normal text with math</li>
-      <code>\text{}</code>
-    </p>
   </ul>
 </section>
 
@@ -197,13 +174,6 @@
     \enspace - half of a quad
     <br>
     \qquad - double the quad
-    
-    <p>
-      <li>Dots</li>
-      \ddots - diagonal dots (3) useful for a matrix
-      <br>
-      \cdots - horizontal dots (3)
-    </p>
 
     <li>Spaces in equations</li>
     <a href="https://t.ly/M3Q4">Ref</a>.

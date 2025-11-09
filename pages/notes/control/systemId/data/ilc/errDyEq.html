@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Materials</title>
-  <meta name="Materials" content="text/html; charset=utf-8;" />
+  <title>Error dynamics equation</title>
+  <meta name="Error dynamics equation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,44 +40,33 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Wickes</a>
-<a href="#1">Screwfix</a>
+<a href="#0">Question</a>
+<a href="#1">Comparing errors at successive iterations</a>
+<a href="#2">Sort</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Materials</h1>
-<section id="0"><h1>Wickes</h1>
-  <ol>
-    <li><a href="https://t.ly/5tYqj">Tongue & groove floorboards</a></li>
-    <ul>
-      <li>18 (t) x 144 (w) x 3000 (l) mm</li>
-    </ul>
-
-    <p>
-      <li><a href="https://t.ly/eeQ_m">Studwork</a></li>
-      <ul>
-        <li>38 x 63 x 3000mm</li>
-      </ul>
-    </p>
-
-    <li><a href="https://t.ly/utj5q">Structural plywood sheet</a></li>
-    <ul>
-      <li>18 x 1220 x 2440 (l) mm</li>
-      <li>High strength exterior sheet wood. Engineered to withstand warping and bending, impressive load-bearing properties, making it ideal for various construction projects (roofing, subflooring).</li>
-      <li>No formaldehyde based glues</li>
-    </ul>
-  </ol>
+<chapter style="counter-reset: chapter 0"><h1>Error dynamics equation</h1>
+<section id="0"><h1>Question</h1>
+  What guarantee is there that the error at $k+1$ is always less than the error at $k$? If so, then $U$ is being adjusted in a way that makes the system better at following the reference, since the error is being reduced.
 </section>
 
-<section id="1"><h1>Screwfix</h1>
-  <ol>
-    <li><a href="https://t.ly/gVO_S">Tee hinge</a></li>
-    <ul>
-      <li>76 (l) mm</li>
-      <li>Black, powder coated</li>
-      <li>Max load capacity of 20kg</li>
-      <li>Frame fixing is 59 (l) x ? (w) mm</li>      
-    </ul>
-  </ol>
+<section id="1"><h1>Comparing errors at successive iterations</h1>
+  $$\begin{align*}
+    E_{k+1} &= R - Y_{k+1} \\
+            &= R - G \, U_{k+1} \\
+            &= R - G \, (U_k + L\,E_k) \\
+            &= \underbrace{R - \overbrace{G \, U_k}^{Y_k}}_{E_k} - G \, L\,E_k \\
+            &= (I - GL) E_k
+  \end{align*}$$
+
+  This is the <i>Error dynamics equation</i> which dictates how the error changes in an iteration.
+
+  <p>
+    For the error to be reduced, the following condition needs to be satisfied:
+    $$
+      |I - GL| &lt 1
+    $$
+  </p>
 </section>
 </chapter>
 

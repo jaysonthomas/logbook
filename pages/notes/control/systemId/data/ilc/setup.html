@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Setup</title>
+  <meta name="Setup" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">System dynamics</a>
+<a href="#1">Iterations</a>
+<a href="#2">Question</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Setup</h1>
+<section id="0"><h1>System dynamics</h1>
+  Consider a system (not the controller) to be controlled has the following dynamics in states based form:
+  $$\begin{align*}
+    x_{t+1} &= A x_t + Bu_t \\
+    y_{t+1} &= Cx_t
+  \end{align*}$$
+
+  The initial state:
+  $$
+    x_0 = 0
+  $$
+  
+  Steps:
+  <ul>
+    <li>Input $u$ comes into the system at time $t$.</li>
+    <li>This generates an output $y$ at time $t$.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Iterations</h1>
+  Input and output across entire iterations can be packaged into 2 matrices:
+
+  $$
+    \newcommand{step}[1]{\scriptsize{t{#1}}}
+    Y_k = \begin{bmatrix}
+      y_{\step{+1}} \\
+      y_{\step{+2}} \\
+      \vdots \\
+      y_{\step{+N}}
+    \end{bmatrix} \quad
+
+    U_k = \begin{bmatrix}
+      u_{\step{}} \\
+      u_{\step{+1}} \\
+      \vdots \\
+      u_{\step{+N-1}}
+    \end{bmatrix}
+  $$
+
+  These capture whole sequence of inputs and outputs for one iteration denoted by $k$ where each iteration can have 1 to $N$ steps.
+
+  An input-output relationship can be derived as follows:
+  $$\begin{align*}
+    Y_k &= GU_k \\\\
+    G &= \begin{bmatrix}
+      CB & 0 & \cdots & 0 \\
+      CAB & CB & \cdots & 0 \\
+      \vdots & \vdots & \ddots & 0 \\
+      CA^{N-1}B & CA^{N-2}B & \cdots & CB
+    \end{bmatrix}
+  \end{align*}$$
+
+  For a SISO system with $N$ control actions per iteration G becomes an $N \times N$ matrix.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:40px; width:auto"
+      src="../../../../../../figures/control/methods/ilc/1_generalisedInputOutput.png"/>
+      <figcaption>
+        Block diagram form
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="2"><h1>Question</h1>
+ How does a sequence of hard-coded open loop inputs do at making the system follow some reference?
+
+  <div class="img-container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../../../figures/control/methods/ilc/2_compareToRef.png"/>
+    </figure>
+  </div>
+
+  The output is compared to a reference signal. The difference between them is the error across the entire iteration $E_k$. 
+</section>
+ 
+</chapter>
+
+</body>
+</html>
