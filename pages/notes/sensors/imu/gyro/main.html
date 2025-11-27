@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gyroscope</title>
+  <meta name="Gyroscope" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Basics</a>
+<a href="#1">Physical working</a>
+<a href="#2">Measurement model</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Overview</a></li>
+  <li><a href="#2.1">Details</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Gyroscope</h1>
+
+<section id="0"><h1>Basics</h1>
+  A <i>gyroscope</i> measures angular rotation about an axis by measuring the <a href="../physics/dynamics/coriolis.html">Coriolis Force</a>, which <n>only shows up when a measurement device is in a rotating reference frame</n>.
+
+  <p>
+    The most common gyros are small <i>Microelectromechanical Systems (MEMS)</i>  sensors called <i>Vibrating Structure Gyroscopes</i>. A different gyro in the form of a large ball or wheel that mechanically spins could also be attached to a vehicle. Changes to its motions can be measured as the vehicle rotates. But, these large mechanical systems are impractical for smaller vehicles.
+  </p>  
+</section>
+
+<section id="1"><h1>Physical working</h1>
+  <subsubsection><h1>Stationary</h1>
+    <div class="container">
+      <figure>
+        <img style="height:70px; width:auto"
+        src="../../../figures/physics/5_memsGyroVibratingMassesHorizontal.png"/>
+        <figcaption>
+          Vibrating proof masses of a gyro that's not rotating
+        </figcaption>
+      </figure>
+
+      <p>
+        Gyros work by having two tiny masses, called <i>Proof Masses</i>, vibrate in opposite directions. When there is no rotation, these masses just move along a horizontal line i.e. they will have some horizontal velocity.
+      </p>
+    </div>
+  </subsubsection>
+
+  <subsubsection><h1>Rotating</h1>
+    <div class="img-container">
+      <figure>
+        <img style="height:90px; width:auto"
+        src="../../../figures/physics/6_rotatingMemsGyro.png"/>
+        <figcaption>
+          Vibrating proof masses of a gyro that's rotating
+        </figcaption>
+      </figure>
+    </div>
+
+    Imagine the sensor is rotating about an axis through its centre, into and perpendicular to the screen, with velocity $\omega$. 
+    
+    <p>
+      If the rotation of the sensor is paused for an instant and its state captured, the rotation vector and the horizontal velocity vectors being orthogonal to each other leads to Coriolis Force vectors (that are orthogonal to the other 2 vectors):
+      <ul>
+        <li>One pointing upwards on the right mass</li>
+        <li>The other pointing downwards on the left mass</li>
+      </ul>
+      
+      At any given time, the 2 masses move opposite to each other and hence experience forces in opposite directions.
+    </p>
+    
+    The resulting motion of the proof masses will have a horizontal and a vertical component. By measuring this deflection in the vertical direction for both proof masses, the rotational rate of the sensor can be inferred.
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Measurement model</h1>
+  <subsection id="2.0"><h1>Overview</h1>
+    The effect of the coriolis force can be measured. This measured size can then be used to infer the rotational speed of the rotating reference frame since $F_c$ is a function of $\omega$:
+
+    $$
+      |F_c| = f(\omega)
+    $$
+
+    The value (eg: rotation rate) that a sensor (eg: gyroscope) reports is unlikely to be the correct one. The role of a <i>measurement model</i> of a sensor is to help make sense of the imperfect measurements. It should include a measure of how accurate a sensor's measurements are; in this case, that of the inferred quantity $\omega$.
+  </subsection>
+
+  <subsection id="2.1"><h1>Details</h1>
+    Gyro measurements can be used to estimate the body rate of a vehicle, which can then be integrated to get the actual attitude. A simple measurement model for a gyroscope: 
+
+    $$
+      \tilde{\omega} = \underbrace{\omega}_{\text{True angular} \atop \text{velocity}} + \underbrace{b}_{\text{Bias}} + \underbrace{\eta}_{\text{Additive noise}} \qquad
+
+      \eta \sim N(0, \sigma^2_{gyro})
+    $$
+    
+    The measured rotation rate $\tilde{\omega}$ is equal to the true angular velocity which gets corrupted by some kind of bias (that needs to be identified ahead of time) and some additive zero mean Gaussian noise. The noise changes for every measurement. The bias might be temperature dependent and might change slowly, but it's something that stays constant at least for some amount of time.
+
+    <p>
+      This measurement is used to track the rotation angle and the uncertainty from time step to time step.
+
+      $$
+        \theta_t = \theta_{t-1} + \tilde{\omega}\Delta{t} + \underbrace{\epsilon}_{\text{Approximation} \atop \text{error}}
+      $$
+    </p>
+    Because this is a discrete approximation for computing the integral, in reality, there would also be an approximation error which can be ignored for now. It can also be assumed that any potential bias is calibrated and removed from the Gyro measurements. The equations become:
+
+    $$\begin{align*}
+      \tilde{\omega} &= \omega + \eta \\
+      \theta_t &= \theta_{t-1} + \tilde{\omega}\Delta{t}
+    \end{align*}$$
+    
+    The initial angle $\theta_0$ would need to be known. This type of navigation-by-integration is called <i>dead reckoning</i>. <i>Inertial navigation </i> that is navigation based on inertial sensors only is purely based on dead reckoning. They are highly susceptible to drift.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

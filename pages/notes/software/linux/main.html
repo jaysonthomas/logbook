@@ -40,23 +40,32 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Apt</a>
-<a href="#1">Find</a>
-<a href="#2">Software installation, update, removal</a>
-<a href="#3">Useful tools</a>
-<a href="#4">Images</a>
-<a href="#5">Creating symbolic links</a>
-<a href="#6">Chrome</a>
+<a href="#0">Topics</a>
+<a href="#1">Apt</a>
+<a href="#2">Find</a>
+<a href="#3">Software installation, update, removal</a>
+<a href="#4">Useful tools</a>
+<a href="#5">Images</a>
+<a href="#6">Creating symbolic links</a>
+<a href="#7">Chrome</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Linux</h1>
-<section id="0"><h1>Apt</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="installs.html">Installs</a></li>
+    <li><a href="deb.html">Install a debian package</a></li>
+    <li><a href="snap.html">Snap</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Apt</h1>
   <ul>
     <li><a href="apt/repoSetup.html">Setting up a new repository</a></li>
   </ul>
 </section>
 
-<section id="1"><h1>Find</h1>
+<section id="2"><h1>Find</h1>
   <ul>
     <li>Find files</li>
 <pre><code class="bash">
@@ -78,7 +87,7 @@ grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
   </ul>
 </section>
 
-<section id="2"><h1>Software installation, update, removal</h1>
+<section id="3"><h1>Software installation, update, removal</h1>
   <ul>
     <li>
       When the server from which ubuntu pulls updates didn't work, 
@@ -107,7 +116,7 @@ sudo apt-get autoremove
   </ul>
 </section>
 
-<section id="3"><h1>Useful tools</h1>
+<section id="4"><h1>Useful tools</h1>
   <ul>
 
     <li>Tar</li>
@@ -135,21 +144,21 @@ stat -c '%y' /home/random.file
   </ul>
 </section>
 
-<section id="4"><h1>Images</h1>
+<section id="5"><h1>Images</h1>
 <pre><code class="bash">
 convert {1.jpg,2.jpg} -compress jpeg -quality 50 output.pdf
 convert 1.jpg -quality 100 output.pdf
 </code></pre>
 </section>
 
-<section id="5"><h1>Creating symbolic links</h1>
+<section id="6"><h1>Creating symbolic links</h1>
   Create a symbolic link in <code>/usr/include/</code> for a numpy library for example.
 <pre><code class="bash">
 sudo ln -s /home/jayson/.local/lib/python3.10/site-packages/numpy/core/include/numpy/ /usr/include/numpy
 </code></pre>
 </section>
 
-<section id="6"><h1>Chrome</h1>
+<section id="7"><h1>Chrome</h1>
   <ul>
     <li>Compatible mp4 video format for chrome</li>
 <pre><code class="bash">

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Names</title>
+  <meta name="Names" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Reaction force</a>
+<a href="#1">Longitudinal Friction Force</a>
+<a href="#2">Traction force</a>
+<a href="#3">Summary</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Names</h1>
+<section id="0"><h1>Reaction force</h1>
+  A tyre pushes backward on a road. As per Newton's 3rd law, the road then pushes the tyre forward. The car cannot move itself; it needs an external object (the road) to push back against it. This name is given from a physics perspective.
+</section>
+
+<section id="1"><h1>Longitudinal Friction Force</h1>
+  This name is given from a tyre dynamics (physical mechanism creating the force) perspective. Through the mechanical interlocking (grip) between the rubber and the asphalt, a road is able to push a tyre. The name distinguishes it from lateral friction (cornering) or rolling resistance.
+</section>
+
+<section id="2"><h1>Traction force</h1>
+  This name is given from a functional (focuses on the useful result of the force) perspective. Traction describes the force's ability to do work—specifically, to pull or push a vehicle forward. The name distinguishes useful propulsion from other types of friction (like drag or braking).
+</section>
+
+<section id="3"><h1>Summary</h1>
+  $$\begin{align*}
+    \text{Force from road} &= \text{Reaction force (origin)} \\
+      &= \text{Longitudinal friction force (mechanism)} \\
+      &= \text{Traction (function)}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pandas</title>
+  <meta name="Pandas" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">Index</a>
+<a href="#2">Field</a>
+<a href="#3">Pandas</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Pandas</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="conditionChecks.html">Condition checks</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Index</h1>
+  <ul>
+    <li>Get first index of the dataframe even if it is not zero.</li>
+<pre><code class="python">
+df.index[0]
+</code></pre>
+
+    <li>Find location of a given index</li>
+<pre><code class="python">
+df.index = [10,20,30,40]
+df.index.get_loc(30)    # Output: 2
+</code></pre>
+  </ul>
+</section>
+
+<section id="2"><h1>Field</h1>
+  Get entry from a particular location in a particular column.
+<pre><code class="python">
+entry = df.loc[df.index[3], 'columnName']
+</code></pre>
+</section>
+
+<section id="3"><h1>Pandas</h1>
+  <ul>
+    <li>Convert group of numpy arrays into a pandas dataframe</li>
+<pre><code class="python">
+test = np.vstack([w,h]).T
+test.shape
+df = pd.DataFrame(test, columns=['w', 'h'])
+
+# If w and h are just 2 arrays with n rows each, when vertically stacked,
+# the array turns into a (2xn) array. We have to then transpose it to get
+# to a column major form.
+</code></pre>    
+    <p></p>
+    
+    <li>Pandas datetime properties</li>
+    <a href="https://t.ly/5Mvv">This</a> seems useful.
+    <p></p>
+
+    <li>Find all rows of a particular column that are nans</li>
+<pre><code class="python">
+df = df['colName']
+df[pd.isna(df)].index
+</code></pre>
+
+    <li>Appending to a dataframe is expensive</li>
+    Use lists instead - <a href="https://bit.ly/3Fg5Ve3">Ref</a>.
+
+    <p>
+      <li>Find the index of the max value of a particular column</li>
+<pre><code class="python">
+df['columnName'].idxmax()
+</code></pre>
+    </p>
+
+    <li>Creating a dataframe from a dictionary but with a twist</li>
+    If there are 2 columns A and B, and I want 3 rows in A with different entries, 
+    but the same corresponding row entry in B:
+<pre><code class="python">
+l = ['a1', 'a2', 'a3']
+temp = pd.DataFrame({'A':l,
+                     'B':'test'})
+</code></pre>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

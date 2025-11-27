@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ADC</title>
+  <meta name="ADC" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Working</a>
+<a href="#1">Sample time</a>
+<a href="#2">Clock</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>ADC</h1>
+<section id="0"><h1>Working</h1>
+  An ADC measures an analog voltage (like from a sensor) and converts it into a digital number. To do this, it first <n>samples</n> the voltage by charging a tiny internal capacitor to the same level as the input voltage.
+</section>
+
+<section id="1"><h1>Sample time</h1>
+  <i>Sample time</i> is the amount of time the ADC connects an internal capacitor to an input pin to allow it to charge.
+
+  <p>
+    The sample time can be set to 480 ADC clock cycles for example by setting the required configuration in a register.
+  </p>
+
+  The sample time is chosen based on the impedance (resistance) of the analog source.
+  <ul>
+    <li>For a <i>low impedance</i> (strong signal) source, a short sample time is fine (eg: 3 cycles, this is fast!)</li>
+    <li>A <i>high impedance</i> (weak sensor, a potentiometer) source cannot "push" a lot of current. The ADC's internal capacitor needs more time to charge up to the correct voltage. Using a long sample time like 480 cycles ensures an accurate measurement, even though it makes the conversion slower.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Clock</h1>
+  Considering an STM32F4 microcontroller with a HCLK of 180MHz.
+
+  $$
+    \text{ADCCLK} = \frac{\text{PCLK2}}{\text{ADC_Prescaler}}
+  $$
+  
+  PCLK2 is the clock frequency of APB2 which is usually 90MHz.
+
+  <p>
+    To achieve a 22.5MHz ADC clock frequency, the prescaler would have to be $4$.
+  </p>
+</section>
+
+</chapter>
+
+</body>
+</html>

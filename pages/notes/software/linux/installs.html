@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Installs</title>
+  <meta name="Installs" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Snap installs</a>
+<a href="#1">Apt-get installs</a>
+<a href="#2">Apt installs</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Installs</h1>
+<section id="0"><h1>Snap installs</h1>
+<pre><code class="bash">
+sudo snap install --classic code
+drawio                            # Or the debian package
+</code></pre>
+</section>
+
+<section id="1"><h1>Apt-get installs</h1>
+<pre><code class="bash">
+python3-pip
+python3.8 
+python3.8-venv
+python3.10-venv
+graphviz
+plantuml
+valgrind
+libopencv-*
+libgtk2.0-dev libgtk-3-dev
+gnome-screenshot
+google-chrome-stable
+vlc
+simplescreenrecorder
+xournalpp
+texlive-full
+
+# Upgrading chrome
+sudo apt-get --only-upgrade install google-chrome-stable
+</code></pre>
+</section>
+
+<section id="2"><h1>Apt installs</h1>
+<pre><code>
+net-tools
+bazel
+imagemagick
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

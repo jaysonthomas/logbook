@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Common config parameters</title>
+  <meta name="Common config parameters" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Sensitivity</a>
+<a href="#1">Output data rate</a>
+<a href="#2">Resolution</a>
+<a href="#3">Bandwidth</a>
+<a href="#4">Relationship between resolution and sensitivity</a>
+<a href="#5">Group delay</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Common config parameters</h1>
+<section id="0"><h1>Sensitivity</h1>
+  This refers to the <i>Measurement Range</i> or <i>Full Scale Range</i>. It means the accelerometer is configured to measure forces between -8g and +8g. If the device experiences a force greater than 8g (like a hard impact), the sensor will "clip" (max out) and cannot measure the excess. 
+  
+  <p>
+    Note that in physics, sensitivity usually refers to the smallest change a sensor can detect which differs from this definition.
+  </p>
+</section>
+
+<section id="1"><h1>Output data rate</h1>
+  This is the speed at which the sensor samples acceleration and updates the data registers.
+</section>
+
+<section id="2"><h1>Resolution</h1>
+  This is the scale factor that defines how to convert the raw digital numbers (Least Significant Bits) coming out of the sensor into real-world physical units ('mg').
+
+  <p>
+    4.096 LSB/mg means that for every 1 milli-g of acceleration, the digital output increases by approximately 4 counts. Example: If the sensor reads a raw value of 4096, that equals $1000 mg or 1g.
+  </p>
+
+  For a gyroscope, the unit would be LSB/dps (degrees per second).
+</section>
+
+<section id="3"><h1>Bandwidth</h1>
+  This refers to the internal Low-Pass Filter. Accelerometers are sensitive to high-frequency vibrations (noise). The filter cuts off frequencies that are too fast for the ODR to capture accurately. ODR/4 means the bandwidth is set to 25% of the ODR. 
+  
+  <p>
+    Calculation: $50 \text{ Hz} / 4 = 12.5 \text{ Hz}$. The sensor will filter out vibrations faster than 12.5 Hz.
+  </p>
+</section>
+
+<section id="4"><h1>Relationship between resolution and sensitivity</h1>
+  Because the sensor has a fixed number of digital "steps" (bits) available, changing the Range (Sensitivity) forces the Resolution (Scale Factor) to change. They are inversely proportional.
+  
+  <p>
+    If you increase the range (e.g., to 16g) to measure bigger impacts, you stretch your available bits over a wider area. Your resolution gets worse (fewer LSBs per mg).If you decrease the range (e.g., to 2g) to measure tiny movements, your resolution gets better (more LSBs per mg).
+  </p>
+  
+  The Math behind your specific config:Your sensor (BMI323) uses a 16-bit ADC. This means it has $2^{16}$ (65,536) possible steps.Total Range: $\pm 8g$ is a total span of 16,000 mg.Available Steps: 65,536.Calculation: $65,536 \text{ steps} / 16,000 \text{ mg} \approx \mathbf{4.096 \text{ LSB/mg}}$.
+</section>
+
+<section id="5"><h1>Group delay</h1>
+  In some cases, an accelerometer doesn't just output raw electricity; it processes the data first. It runs the signal through a Digital Low-Pass Filter to smooth out vibrations and noise. The filter needs to collect a few samples of data to "average" them out or perform mathematical smoothing.
+
+  <p>
+    Gathering and processing these samples takes time. That waiting period is the Group Delay.
+  </p>
+
+  When the cut-off frequency of the sensor is lower (say ODR/4, narrow bandwidth), it takes more time to process the signal to make it smooth (23.6 ms vs 11.8ms for ODR/2). 
+</section>
+</chapter>
+
+</body>
+</html>

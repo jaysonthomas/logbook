@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Direction</title>
+  <meta name="Direction" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Acceleration: Friction acts with motion</a>
+<a href="#2">Braking: Friction acts against motion</a>
+<a href="#3">Acceleration</a>
+<a href="#4">Deceleration</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Direction</h1>
+<section id="0"><h1>Overview</h1>
+  Longitudinal friction force does not strictly follow the direction of motion. Instead, it acts in the direction opposite to the slip (or potential slip) of the tyre's contact patch.
+
+Depending on whether you are speeding up or slowing down, this friction can act either with or against the vehicle's motion.
+</section>
+
+<section id="1"><h1>Acceleration: Friction acts with motion</h1>
+  When speeding up, torque is applied to the wheels:
+  <ul>
+    <li>The Mechanism: The wheel tries to spin faster than the car is moving. This means the tire's contact patch pushes backward against the pavement.</li>
+    <li>The Reaction: By Newton's Third Law, the pavement pushes forward on the tire.</li>
+    <li>Result: The longitudinal friction force points in the same direction as the vehicle's velocity, propelling it forward.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Braking: Friction acts against motion</h1>
+  When slowing down, potentially a wheel is clamped:
+  <ul>
+    <li>The Mechanism: The wheel tries to spin slower than the car is moving (or lock up entirely). The contact patch tries to slide forward across the pavement.</li>
+    <li>The Reaction: The pavement pushes backward on the tire to resist this sliding.</li>
+    <li>Result: The longitudinal friction force points in the opposite direction of the vehicle's velocity, slowing it down.</li>
+  </ul>
+</section>
+
+<section id="3"><h1>Acceleration</h1>
+  When a tire pushes against a road surface:
+  <ul>
+    <li>If static friction (due to the grip of the contact patch on the road) is not overcome, the tire does not <i>slip</i> (loss of grip). This allows a reaction force, <i>traction force</i>, to push the tire forward - it is the effective force driving the tire forward.</li> 
+
+    <p>
+      <li>Traction force acts in the direction of motion.</li>
+    </p>
+
+    <li>If a tire begins to slip, the friction involved becomes kinetic friction, which acts opposite to the direction of sliding motion with a lower maximum value than static friction. The car then loses effective traction.</li>
+  </ul>
+</section>
+
+<section id="4"><h1>Deceleration</h1>
+  When braking, the aim is to allow a tire's contact patch with the road to have a longer period gripping onto each other. This allows the tire to slow down and eventually come to a halt. Traction force is still in the direction of motion.
+</section>
+</chapter>
+
+</body>
+</html>
