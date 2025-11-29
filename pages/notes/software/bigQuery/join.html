@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tools</title>
-  <meta name="Tools" content="text/html; charset=utf-8;" />
+  <title>Join</title>
+  <meta name="Join" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,16 +40,38 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
+<a href="#0">Inner join</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Tools</h1>
-<section id="0"><h1>Topics</h1>
-  <ul>
-    <li><a href="inventory/main.html">Inventory</a></li>
-    <li><a href="nonPowered/main.html">Non-powered</a></li>    
-    <li><a href="powered/main.html">Powered</a></li>       
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Join</h1>
+<section id="0"><h1>Inner join</h1>
+  <code>INNER JOIN</code> or <code>JOIN</code>, calculates the Cartesian product of the two from_items and discards all rows that don't meet the join condition. [<a href="https://t.ly/V65-y">Ref</a>].
+
+  <p>
+    Imagine 2 tables with fields:
+    <ul>
+      <li>Table 1: startTime, stopTime, id</li>
+      <li>Table 2: time, error</li>
+    </ul>
+
+    When joining based on the condition that table2.time needs to be between table1.startTime and table1.stopTime, a new virtual table is created where all the rows of the 2nd table that meet this condition are joined with the fields of table 1. Considering just the first row of table 1, this means that the fields of this row are duplicated and attached to every single row of table 2 that satisfies the condition.
+  </p>
+
+<pre><code class="sql">
+SELECT
+  t2.id, t2.time, t2.error,
+  # ROW_NUMBER usage
+FROM
+  table1 AS t1
+JOIN
+  table2 AS t2
+ON
+  t1.id = t2.id
+WHERE
+  t2.time BETWEEN t1.startTime AND t1.stopTime
+</code></pre>  
+
+  Here, the join happens first (based on ON condition), then the filtering. Since, this is an inner join, the SQL Query Optimiser, combines the 2 operation. It would be the same as having all the conditions under <code>ON</code>. This wouldn't be the case with a left join.
 </section>
 </chapter>
 

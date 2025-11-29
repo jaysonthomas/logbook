@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tools</title>
-  <meta name="Tools" content="text/html; charset=utf-8;" />
+  <title>ROW_NUMBER</title>
+  <meta name="ROW_NUMBER" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,16 +40,33 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Topics</a>
+<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Tools</h1>
-<section id="0"><h1>Topics</h1>
-  <ul>
-    <li><a href="inventory/main.html">Inventory</a></li>
-    <li><a href="nonPowered/main.html">Non-powered</a></li>    
-    <li><a href="powered/main.html">Powered</a></li>       
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>ROW_NUMBER</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="sql">
+SELECT
+  t2.id, t2.time, t2.error,
+  ROW_NUMBER() OVER (
+    PARTITION BY t1.xyz
+    ORDER BY t1.startTime ASC
+  ) AS rowIndex
+FROM
+  table1 AS t1
+JOIN
+  table2 AS t2
+ON
+  t1.id = t2.id
+WHERE
+  t2.time BETWEEN t1.startTime AND t1.stopTime
+</code></pre>  
+
+  Since the join and filter operations happen first, every row of table 2 that meets the join + filter conditions have attached to them the corresponding row of table 1. 
+
+  <p>
+    The <code>PARTITION BY</code> clause can then group rows together based on the duplicated fields and assign row numbers. Different groups can thus be created with their rows indexed.
+  </p>
 </section>
 </chapter>
 
