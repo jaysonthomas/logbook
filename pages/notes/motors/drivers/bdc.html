@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quantiles</title>
-  <meta name="Quantiles" content="text/html; charset=utf-8;" />
+  <title>DRV8262DDWR</title>
+  <meta name="DRV8262DDWR" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -41,40 +41,39 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Questions</a>
+<a href="#2">PWM Interface</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Quantiles</h1>
+<chapter style="counter-reset: chapter 3"><h1>DRV8262DDWR</h1>
 <section id="0"><h1>Overview</h1>
-<pre><code class="sql">
-SELECT
-  APPROX_QUANTILES(error, 3) AS errorQuantile,
-  rowIndex
-FROM
-  table1
-GROUP BY
-  rowIndex
-</code></pre>  
+  This section is based on <code>DRV8262DDWR</code> brushed DC motor driver.
+</section>
 
-  Assume <code>rowIndex</code> is obtained by using <code>ROW_NUMBER()</code>.
+<section id="1"><h1>Questions</h1>
+  Integrated current sensing across the high-side MOSFETs allows the driver to regulate the motor current during startup and high load events.
 
   <p>
-    Building up quantiles is like building up a fence; to create 3 sections of fence, 4 fence posts are required. In data, these fence posts are the quantile values.
+    A current limit can be set with an adjustable external voltage reference.
   </p>
 
-  If there are 6 values in a table say with rowIndex = 1, with a request for 3 quantiles over rowIndex = 1, the result would actually be 4 quantiles:
-  <ul>
-    <li>0%: is just the minimum value.</li>
-    <p>
-      <li>First quantile (~33%): With 6 data points, the value at the 33rd percentile is found at position 6 * 0.333 = 2</li>
-    </p>
+  The H-bridge shorts the bottom two switches. This creates a closed loop for the motor's energy, essentially acting as a magnetic brake during the "OFF" microseconds.The device also provides output current proportional to the motor current for each H- bridge. 
+  
+  <p>
+    Integrated sensing removes the need for shunt resistors, reducing board area and system cost.
+  </p>
+</section>
 
-    <li>Second quantile (~67%): With 6 data points, the value at the 67th percentile is found at position 6 * 0.667 = 4</li>
-
-    <p>
-      <li>100%: is just the maximum value.</li>
-    </p>
-  </ul>
-
+<section id="2"><h1>PWM Interface</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../figures/actuator/drivers/1_forward.png"/>
+      <figcaption>
+        Current path in forward motion
+      </figcaption>
+    </figure>
+  </div>
 </section>
 </chapter>
 

@@ -50,10 +50,10 @@
 
 <chapter style="counter-reset: chapter 3"><h1>Common config parameters</h1>
 <section id="0"><h1>Sensitivity</h1>
-  This refers to the <i>Measurement Range</i> or <i>Full Scale Range</i>. It means the accelerometer is configured to measure forces between -8g and +8g. If the device experiences a force greater than 8g (like a hard impact), the sensor will "clip" (max out) and cannot measure the excess. 
+  It configures the <i>Measurement Range</i> or <i>Full Scale Range</i> of the accelerometer, i.e. the range of forces the accelerometer can measure, say between -8g and +8g. If the device experiences a force greater than 8g (like a hard impact), the sensor will clip and not measure the excess. 
   
   <p>
-    Note that in physics, sensitivity usually refers to the smallest change a sensor can detect which differs from this definition.
+    In physics, sensitivity usually refers to the smallest change a sensor can detect which differs from this definition.
   </p>
 </section>
 
@@ -62,20 +62,20 @@
 </section>
 
 <section id="2"><h1>Resolution</h1>
-  This is the scale factor that defines how to convert the raw digital numbers (Least Significant Bits) coming out of the sensor into real-world physical units ('mg').
+  This is the scale factor that defines how to convert the raw digital numbers (LSBs) coming out of the sensor into real-world physical units.
 
   <p>
-    4.096 LSB/mg means that for every 1 milli-g of acceleration, the digital output increases by approximately 4 counts. Example: If the sensor reads a raw value of 4096, that equals $1000 mg or 1g.
+    4.096 LSB/mg means that for every 1 milli-g of acceleration, the digital output increases by approximately 4 counts. Example: If a sensor reads a raw value of 4096, that equals 1000 mg or 1g.
   </p>
 
   For a gyroscope, the unit would be LSB/dps (degrees per second).
 </section>
 
 <section id="3"><h1>Bandwidth</h1>
-  This refers to the internal Low-Pass Filter. Accelerometers are sensitive to high-frequency vibrations (noise). The filter cuts off frequencies that are too fast for the ODR to capture accurately. ODR/4 means the bandwidth is set to 25% of the ODR. 
+  Accelerometers are sensitive to high frequency vibrations. An internal low pass filter cuts off frequencies that are too fast for the ODR to capture accurately. ODR/4 means the bandwidth is set to 25% of the ODR. 
   
   <p>
-    Calculation: $50 \text{ Hz} / 4 = 12.5 \text{ Hz}$. The sensor will filter out vibrations faster than 12.5 Hz.
+    Calculation: 50 Hz / 4 = 12.5 Hz. The sensor will filter out vibrations faster than 12.5 Hz.
   </p>
 </section>
 

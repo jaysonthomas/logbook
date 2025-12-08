@@ -3,9 +3,9 @@
 <head>
   <title>Actuators: Braking</title>
   <meta name="Actuators: Braking" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../logbook.js"></script>
+  <script type="text/javascript" src="../../../../logbook.js"></script>
 
-  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
   <script type="text/javascript" id="MathJax-script" defer
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
@@ -16,15 +16,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
   <script> mermaid.initialize({startOnLoad: true}); </script>  
 
-  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
 
 <body onload="loadChapter('');">  
 
   <div data-type="titlepage" pdf="no">
     <header>
-      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
       <p style="font-size: 14px; text-align: right;"> 
         Last modified <span id="last_modified"></span>.</br>
         <script>
@@ -46,6 +46,7 @@
   <li><a href="#0.1">Generating</a></li>
   <li><a href="#0.2">Examples</a></li>
 </ul>
+<a href="#1">How it is done</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Actuators: Braking</h1>
@@ -84,6 +85,18 @@
 
     The same effect can be seen in a brushed DC motor i.e. if a positive voltage is applied to achieve a positive speed (i.e. "motoring") and then if the supply voltage is instantaneously inverted to become negative, the motor will not instantaneously reverse direction - the negative voltage causes it to slow down first ("generating") and then, once it crosses zero speed, starts rotating in the negative direction ("motoring" again).
   </subsection>
+</section>
+
+<section id="1"><h1>How it is done</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../figures/actuator/drivers/2_brake.png"/>
+      <figcaption>
+        Braking
+      </figcaption>
+    </figure>
+  </div>
 </section>
 </chapter>
 

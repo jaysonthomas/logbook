@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quantiles</title>
-  <meta name="Quantiles" content="text/html; charset=utf-8;" />
+  <title>Accessories</title>
+  <meta name="Accessories" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,41 +40,14 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Topics</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Quantiles</h1>
-<section id="0"><h1>Overview</h1>
-<pre><code class="sql">
-SELECT
-  APPROX_QUANTILES(error, 3) AS errorQuantile,
-  rowIndex
-FROM
-  table1
-GROUP BY
-  rowIndex
-</code></pre>  
-
-  Assume <code>rowIndex</code> is obtained by using <code>ROW_NUMBER()</code>.
-
-  <p>
-    Building up quantiles is like building up a fence; to create 3 sections of fence, 4 fence posts are required. In data, these fence posts are the quantile values.
-  </p>
-
-  If there are 6 values in a table say with rowIndex = 1, with a request for 3 quantiles over rowIndex = 1, the result would actually be 4 quantiles:
+<chapter style="counter-reset: chapter 3"><h1>Accessories</h1>
+<section id="0"><h1>Topics</h1>
   <ul>
-    <li>0%: is just the minimum value.</li>
-    <p>
-      <li>First quantile (~33%): With 6 data points, the value at the 33rd percentile is found at position 6 * 0.333 = 2</li>
-    </p>
-
-    <li>Second quantile (~67%): With 6 data points, the value at the 67th percentile is found at position 6 * 0.667 = 4</li>
-
-    <p>
-      <li>100%: is just the maximum value.</li>
-    </p>
+    <li><a href="brake.html">Physical brake</a></li>
   </ul>
-
 </section>
 </chapter>
 

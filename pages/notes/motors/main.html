@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ADC</title>
-  <meta name="ADC" content="text/html; charset=utf-8;" />
+  <title>Motors</title>
+  <meta name="Motors" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -40,44 +40,19 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Working</a>
-<a href="#1">Sample time</a>
-<a href="#2">Clock</a>
+<a href="#0">Contents</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>ADC</h1>
-<section id="0"><h1>Working</h1>
-  An ADC measures an analog voltage (like from a sensor) and converts it into a digital number. To do this, it first <n>samples</n> the voltage by charging a tiny internal capacitor to the same level as the input voltage.
-</section>
-
-<section id="1"><h1>Sample time</h1>
-  <i>Sample time</i> is the amount of time the ADC connects an internal capacitor to an input pin to allow it to charge.
-
-  <p>
-    The sample time can be set to 480 ADC clock cycles for example by setting the required configuration in a register.
-  </p>
-
-  The sample time is chosen based on the impedance (resistance) of the analog source.
+<chapter style="counter-reset: chapter 3"><h1>Motors</h1>
+<section id="0"><h1>Contents</h1>
   <ul>
-    <li>For a <i>low impedance</i> (strong signal) source, a short sample time is fine (eg: 3 cycles, this is fast!)</li>
-    <li>A <i>high impedance</i> (weak sensor, a potentiometer) source cannot "push" a lot of current. The ADC's internal capacitor needs more time to charge up to the correct voltage. Using a long sample time like 480 cycles ensures an accurate measurement, even though it makes the conversion slower.</li>
+    <li><a href="accessories/main.html">Accessories</a></li>
+    <li><a href="drivers/main.html">Drivers</a></li>
+    <li><a href="fundamentals/main.html">Fundamentals</a></li>    
+    <li><a href="ref.html">References</a></li>    
+    <li><a href="types/main.html">Types</a></li>
   </ul>
 </section>
-
-<section id="2"><h1>Clock</h1>
-  Considering an STM32F4 microcontroller with a HCLK of 180MHz.
-
-  $$
-    \text{ADCCLK} = \frac{\text{PCLK2}}{\text{ADC_Prescaler}}
-  $$
-  
-  PCLK2 is the clock frequency of APB2 which is usually 90MHz.
-
-  <p>
-    To achieve a 22.5MHz ADC clock frequency, the prescaler would have to be $4$.
-  </p>
-</section>
-
 </chapter>
 
 </body>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quantiles</title>
-  <meta name="Quantiles" content="text/html; charset=utf-8;" />
+  <title>Setting up the ADC clock</title>
+  <meta name="Setting up the ADC clock" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -43,39 +43,21 @@
 <a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Quantiles</h1>
+<chapter style="counter-reset: chapter 3"><h1>Setting up the ADC clock</h1>
 <section id="0"><h1>Overview</h1>
-<pre><code class="sql">
-SELECT
-  APPROX_QUANTILES(error, 3) AS errorQuantile,
-  rowIndex
-FROM
-  table1
-GROUP BY
-  rowIndex
-</code></pre>  
+  Considering an STM32F4 microcontroller with a HCLK of 180MHz.
 
-  Assume <code>rowIndex</code> is obtained by using <code>ROW_NUMBER()</code>.
+  $$
+    \text{ADCCLK} = \frac{\text{PCLK2}}{\text{ADC_Prescaler}}
+  $$
+  
+  PCLK2 is the clock frequency of APB2 which is usually 90MHz.
 
   <p>
-    Building up quantiles is like building up a fence; to create 3 sections of fence, 4 fence posts are required. In data, these fence posts are the quantile values.
+    To achieve a 22.5MHz ADC clock frequency, the prescaler would have to be $4$.
   </p>
-
-  If there are 6 values in a table say with rowIndex = 1, with a request for 3 quantiles over rowIndex = 1, the result would actually be 4 quantiles:
-  <ul>
-    <li>0%: is just the minimum value.</li>
-    <p>
-      <li>First quantile (~33%): With 6 data points, the value at the 33rd percentile is found at position 6 * 0.333 = 2</li>
-    </p>
-
-    <li>Second quantile (~67%): With 6 data points, the value at the 67th percentile is found at position 6 * 0.667 = 4</li>
-
-    <p>
-      <li>100%: is just the maximum value.</li>
-    </p>
-  </ul>
-
 </section>
+
 </chapter>
 
 </body>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Current-voltage relationship</title>
+  <meta name="Current-voltage relationship" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../bio.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Back EMF (Electromotive Force)</a>
+<a href="#2">Stall current</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Current-voltage relationship</h1>
+<section id="0"><h1>Overview</h1>
+  <ul>
+    <li>Voltage (PWM) determines Speed</li>
+    When a PWM duty cycle is increased to 100%, the maximum average voltage is applied across the motor. The motor responds by trying to spin as fast as that voltage allows.
+
+    <p>
+      <li>Load (Resistance) determines Current</li>
+      Current is directly proportional to the work (torque) the motor has to do. If the motor is spinning freely in the air, it is doing almost no work. Therefore, it draws almost no current.
+    </p>
+  </ul>
+</section>
+
+<section id="1"><h1>Back EMF (Electromotive Force)</h1>
+  If 12V (max power) is applied across a motor, why isn't 12V worth of current flowing through it?
+
+  <ul>
+    <li>As a motor spins, it acts like a generator. It creates a voltage that pushes back against the voltage being applied.</li>
+
+    <p>
+      <li>At max speed (No Load): The motor spins so fast that the "push back" voltage becomes almost equal to the supply voltage.</li>
+      
+      Example: With an input of 12V, the motor spins up and generates 11.8V of back EMF.The effective voltage driving the current is only the difference: $12V - 11.8V = 0.2V$. Only a tiny amount of current flows—just enough to overcome the friction of the bearings.</li>
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>Stall current</h1>
+  Even at 100% PWM, max current draw will only be seen in 2 scenarios:
+  <ul>
+    <li>The Instant of Startup</li>
+    
+    For a fraction of a second when the motor is turned on, it is not moving yet. There is zero Back EMF to fight the voltage. The current spikes to the maximum until the motor picks up speed.
+
+    <p>
+      <li>Stall condition</li>
+      If a motor shaft is physically grabbed with pliers stopped from spinning while the power is still on, the speed drops to zero, back EMF drops to zero, and the motor draws the maximum possible current (which usually burns it out quickly).
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
