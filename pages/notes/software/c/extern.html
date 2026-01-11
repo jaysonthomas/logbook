@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Symbols</title>
-  <meta name="Symbols" content="text/html; charset=utf-8;" />
+  <title>Extern</title>
+  <meta name="Extern" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,44 +40,44 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Brackets</a>
-<a href="#1">Matrix</a>
-<a href="#2">Sum of</a>
+<a href="#0">Declaration</a>
+<a href="#1">Definition</a>
+<a href="#2">Linker errors</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>Symbols</h1>
-<section id="0"><h1>Brackets</h1>
-<pre><code class="latex">
-\bigl(\bigr)
-%or
-\biggl(\biggr)
+<chapter style="counter-reset: chapter 0"><h1>Extern</h1>
+<section id="0"><h1>Declaration</h1>
+<pre><code class="C">
+extern int a;
 </code></pre>
 
-<subsubsection><h1>Output</h1>
-$$
-  \bigl(\bigr) \;
-  \biggl(\biggr)
-$$  
-</subsubsection>
+  When declared in a header file, this tells the compiler, "There is an integer named <code>a</code> defined somewhere else (in another file). Don't allocate memory for it now; just trust that the linker will find it later."
+
+  <p>
+    This allows a global variable to be shared among multiple source (.c) files.
+  </p>
+
+  Delcaring in a header file allows for a centralised announcement. Any .c file that includes that header gets the announcement and can use the particular variable.
 </section>
 
-<section id="1"><h1>Matrix</h1>
+<section id="1"><h1>Definition</h1>
+<pre><code class="C">
+int a;
+</code></pre>
+
+  This tells the compiler to allocate memory for an integer named <code>a</code>. This should happen in exactly one .c file.
+</section>
+
+<section id="2"><h1>Linker errors</h1>
   <ul>
-    <li><code>\ddots</code> - diagonal dots (3)</li>
-    <li><code>\cdots</code> - horizontal dots (3)</li>
+    <li>Multiple Definitions</li>
+    If you write int a; (without extern) in the header file, and include that header in two different .c files, the linker will fail. It will complain that a is defined twice (multiple definition of a).
+
+    <p>
+      <li>Undefined Reference</li>
+      If you declare extern int a; in the header but forget to define int a; in exactly one .c file, the linker will fail because it can't find the memory address for a.
+    </p>
   </ul>
-</section>
-
-<section id="2"><h1>Sum of</h1>
-<pre><code class="latex">
-\sum^p_{i=1}
-</code></pre>
-
-<subsubsection><h1>Output</h1>
-$$
-  \sum^p_{i=1}
-$$  
-</subsubsection>  
 </section>
 </chapter>
 

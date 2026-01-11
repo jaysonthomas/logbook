@@ -42,6 +42,7 @@
   
 <a href="#0">Static friction</a>
 <a href="#1">Kinetic friction</a>
+<a href="#2">Design considerations</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Friction: Mass dependent models</h1>
@@ -67,8 +68,18 @@
     F_k = \mu_k N
   $$
 
-  $F_k$ is not a threshold force. $b_{kinetic}$ could be considered to be $\mu_k N$ multiplied by a radius to get $\tau_{fric}$.
+  $F_k$ is not a threshold force. $b_{kinetic}$ could be considered to be $\mu_k N$ multiplied by a radius to get $\tau_{fric}$
 </section>  
+
+<section id="2"><h1>Design considerations</h1>
+  To make braking easier, it is more efficient to design a system where $\mu_s$ is larger than $\mu_k$, i.e. more force is required to get an object to start moving from rest compared to keeping it moving at a <n>constant velocity</n>. <n>In other words, less force is required to stop an object when it is in the static regime</n> (<m>wheels stick more or have more instantaneous moments of stickiness?</m>) or more force is required to stop an object when it is moving with some constant velocity.
+    
+  <p>
+    Normally, $\mu_k \lt \lt \frac{1}{4}\mu_s$. To brake quicker, the maximum amount of friction (which is found in the static regime) needs to be exploited. 
+  </p>
+
+  However, the <i>locking of wheels</i> needs to be prevented. When a wheel stays locked, it slides on the ground (it moves with the momentum already built up), thereby staying in the regime of kinetic friction.
+</section>
 </chapter>
 
 </body>

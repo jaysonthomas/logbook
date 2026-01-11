@@ -43,6 +43,7 @@
 <a href="#0">Definition</a>
 <a href="#1">Just declaration</a>
 <a href="#2">Alias</a>
+<a href="#3">Self referencing</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>C: Struct</h1>
@@ -82,6 +83,28 @@ typedef struct A a;
 </code></pre>
 
   It creates an alias <code>a</code> for <code>struct A</code>, so the former can be used instead of the latter.
+</section>
+
+<section id="3"><h1>Self referencing</h1>
+<pre><code class="C">
+typedef struct A
+{
+  int b;
+  struct A *next;
+}a;
+
+// Another way
+typedef struct
+{
+  int b;
+}a;
+</code></pre>
+
+  The first example gives the structure a tag name <code>struct A</code>, allowing it to refer to itself inside its own definition (essential for linked lists), since the compiler is aware of the tag. Alias <code>a</code> is created right after.
+  
+  <p>
+    The second example creates an anonymous (no tag) structure, which cannot refer to itself until the definition is complete with an alias. This is useful for simple data containers that do not need to point to other instances of themselves.
+  </p>
 </section>
 </chapter>
 
