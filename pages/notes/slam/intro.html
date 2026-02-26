@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Big O Notation</title>
-  <meta name="Big O Notation" content="text/html; charset=utf-8;" />
+  <title>Intro</title>
+  <meta name="Intro" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../logbook.js"></script>
 
   <script src="../../../logbook-mathjax-config.js" defer></script> 
@@ -41,53 +41,38 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">O(1)</a>
-<a href="#2">O(N)</a>
-<a href="#3">References</a>
+<a href="#1">Categories of SLAM</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Big O Notation</h1>
+<chapter style="counter-reset: chapter 3"><h1>Intro</h1>
 <section id="0"><h1>Overview</h1>
-  Big O time complexity is a way of analysing the amount of time it takes for an algorithm to execute as the input size grows. The worst case is always considered.
-
-  <p>
-    Any constants are ignored apart from $1$.
-  </p>
-</section>
-
-<section id="1"><h1>O(1)</h1>
-  An algorithm that always executes in the same time regardless of the size of the data set. Efficient with any data set.
-
-  <p>
-    Example use: 
-
-    <ul>
-      <li>Extracting data from any element from an array.</li>
-      <li>Hashing algorithm.</li>
-    </ul>
-  </p>
-</section>
-
-<section id="2"><h1>O(N)</h1>
-  In this case, as the input size grows, the execution time grows proportionately. 
-
-  <p>
-    Example use: 
-
-    <ul>
-      <li>A loop iterating through a single dimension array (e.g., sum of array values).</li>
-      <li>Linear search.</li>
-    </ul>
-  </p>
-</section>
-
-<section id="3"><h1>References</h1>
+  In SLAM, a robot must
   <ul>
-    <li>Document <a href="https://t.ly/aUFuZ">this</a> cheat sheet. Execution time plots can be found <a href="https://t.ly/bQmP-">here</a>. I like the following 2 videos: <a href="https://t.ly/uNtI1">Ref 1</a>, <a href="https://t.ly/qFIyx">Ref 2</a>.</li>
+    <li>Construct a map of the environment</li>
+    <li>While simultaneously localising itself (figuring out its pose) relative to the map</li>
+  </ul>
+  
+  With noise in the robot's motions and measurements, the map and robot's pose will be uncertain, and the errors in the robot's pose estimates, and map will be correlated. The accuracy of the map depends on the accuracy of the localisation and vice versa. SLAM is often called the chicken or the egg problem because the map is needed for localisation, and the robot's pose is needed for mapping. 
+  
+  <p>
+    For robots to be useful to society, they must be able to move in environments that they've never seen before. For instance, it wouldn't be feasible to provide a robot vacuum cleaner with a map of all the furniture every time. 
+  </p>
+</section>
 
+<section id="1"><h1>Categories of SLAM</h1>
+  SLAM algorithms generally fall into five categories. 
+  <ul>
+    <li>EKF</li>
+    <li>Sparse extended information filter or SEIF</li>
+    <li>Extended information form or EIF</li>
+    
     <p>
-      <li>Based on <a href="https://www.bigocheatsheet.com/">this cheat sheet</a>, merge sort has a worst time complexity of <n>$O(n log(n))$</n>. I don't mind <a href="https://t.ly/r4vVt">this cheat sheet</a> as well.</li>
+      <li>FastSLAM</li>
+      It uses the particle filter approach along with the low dimensional extended kalman filter to solve the SLAM problem. This algorithm is then adapted to grid maps, which results in a grid based fastSLAM algorithm.
     </p>
+
+    <li>GraphSLAM</li>
+    It uses constraints to represent relationships between robot poses and the environment, and then tries to resolve all of these constraints to create the most likely map given the data. An implementation of graphSLAM is called real time appearance based mapping, or RTABmap.
   </ul>
 </section>
 </chapter>

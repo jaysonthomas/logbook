@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Addition</title>
-  <meta name="Addition" content="text/html; charset=utf-8;" />
+  <title>Orientation</title>
+  <meta name="Orientation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,40 +40,34 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Using screws</a>
-<a href="#1">Using bolts</a>
-<a href="#2">Walls</a>
-<a href="#3">Seals</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Addition</h1>
-<section id="0"><h1>Using screws</h1>
+<chapter style="counter-reset: chapter 3"><h1>Orientation</h1>
+  There are different ways to numerically represent a relative orientation. There are functions that assist in going back and forth between them.  There's no one representation to rule them all. Different parts of a stack use different representations: 
   <ul>
-    <li><a href="screws/woodPerp.html">Joining 2 wood pieces perpendicular to the grain</a></li>
-    <li><a href="screws/guide.html">General guide</a></li>
-    <li><a href="screws/extendPlywood.html">Extend plywood</a></li>
+    <li>Rotation matrix</li>
+    <li>Euler angles of which there are many but the familiar ones are roll, pitch, yaw</li>
+    <li>Quaternions</li>
   </ul>
-</section>
+  
+  No matter what the numerical representation, in spatial algebra an orientation is symbolically represented as $R$. Orientation of $A$ relative to $B$:  
+  $$^BR^A$$ 
+  
+  For orientations, the multiplication operator is used instead of the addition operator: 
+  $$
+    ^BR^A \cdot {^A}R^C = {^B}R^C
+  $$
 
-<section id="1"><h1>Using bolts</h1>
+  Orientations don't need an expressed-in frame. I can turn my head however I want or change the expressed-in frame, but the rotation of $A$ relative to $B$ will still be the same. There is a multiplicative inverse for rotations/orientations similar to an additive inverse for addition:
+  $$
+    [^BR^A]^{-1} = {^A}R^B
+  $$ 
+
+  If $R$ is a $3 \times 3$ rotation matrix, then:
   <ul>
-    <li><a href="bolts/studToWall.html">Fixing stud to bricks</a></li>
+    <li>The inverse is just the matrix inverse</li>
+    <li>Because rotation matrices are orthonormal, the transpose is the same as the inverse</li>
   </ul>
-</section>
-
-<section id="2"><h1>Walls</h1>
-  <ul>
-    <li><a href="wall/studs.html">Find studs</a></li>
-    <li><a href="wall/plugs.html">Wall plugs</a></li>
-  </ul>
-</section>
-
-<section id="3"><h1>Seals</h1>
-  <ul>
-    <li><a href="seal/silicone.html">Silicone</a></li>
-  </ul>
-</section>
-
 </chapter>
 
 </body>

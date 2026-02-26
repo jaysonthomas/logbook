@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shower Screen</title>
-  <meta name="Shower Screen" content="text/html; charset=utf-8;" />
+  <title>Matrix/vector operations related to robotic arms</title>
+  <meta name="Matrix/vector operations related to robotic arms" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -40,21 +40,37 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Refs</a>
-<a href="#1">Notes</a>
+<a href="#0">Topics</a>
+<a href="#1">Example</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Shower Screen</h1>
-<section id="0"><h1>Refs</h1>
-  <ul>
-    <li><a href="https://t.ly/i2-Md">Screen added on top of tiles - very nice</a></li>
-    <li><a href="https://t.ly/RhSCf">Adding screen to bathtub, still very useful</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 3"><h1>Matrix/vector operations related to robotic arms</h1>
+<section id="0"><h1>Topics</h1>
+  In linear algebra, two vectors in an inner product space are orthonormal if they are orthogonal unit vectors. A unit vector means that the vector has a length of 1, which is also known as <i>normalised</i>. <i>Orthogonal</i> means that the two vectors are perpendicular to each other. A set of vectors form an orthonormal set if all vectors in the set are mutually orthogonal and all of unit length. An orthonormal set which forms a basis is called an <i>orthonormal basis</i>.
 </section>
 
-<section id="1"><h1>Notes</h1>
+<section id="1"><h1>Example</h1>
+  Consider a rotation matrix representing a 90° rotation around the $z$-axis:
+
+  $$
+    A = \begin{bmatrix} 
+      0 & -1 & 0 \\ 
+      1 & 0 & 0 \\ 
+      0 & 0 & 1 
+      \end{bmatrix}
+  $$
+
+  Orthonormality checks:
   <ul>
-    <li>Paneling used: Traditional cladding 8 x 94 mm, 2.4M</li>
+    <li>Dot Product of Columns (Orthogonality)</li>
+    Dot product of any two distinct columns is 0. For example, Column 1 $\cdot$ Column 2:
+    $$(0 \times -1) + (1 \times 0) + (0 \times 0) = 0$$
+
+    <p>
+      <li>Magnitude of Columns (Normalisation)</li>
+      The length (Euclidean norm) of every column is 1. For Column 1:
+      $$\sqrt{0^2 + 1^2 + 0^2} = 1$$
+    </p>
   </ul>
 </section>
 </chapter>
