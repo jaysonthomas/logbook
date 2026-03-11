@@ -53,10 +53,10 @@
   <p>
     Unique pointers should be the default choice unless it is known for certain that sharing would be required at a later stage. Internally, a unique pointer uses the rule of five and move semantics along with RAII to encapsulate a resource (the raw pointer) and transfer it between pointer objects when either the move assignment operator or the move constructor are called. Also, a key feature of a unique pointer, which makes it so well-suited as a return type for many functions, is the possibility to convert it to a shared pointer.
   </p>
-  <div class="container">
+  <div class="img-container">
     <figure>
       <img style="height:150px; width:auto"
-      src="../../figures/software/3_uniquePtr.jpg"/>
+      src="../../../../../../figures/software/3_uniquePtr.jpg"/>
       <figcaption>
         Moving a unique pointer
       </figcaption>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trajectory optimisation</title>
+  <meta name="Trajectory optimisation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Summary of the approaches to calculate the cost to go</a></li>
+  <li><a href="#1.1">Fundamental idea of TO</a></li>
+</ul>
+<a href="#2">Basic TO formulation</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Trajectory optimisation</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="directTranscription.html">Direct transcription</a></li>
+  </ul>
+</section>
+<section id="1"><h1>Overview</h1>
+  <subsection id="1.0"><h1>Summary of the approaches to calculate the cost to go</h1>
+    The cost to go: $J^*(x)$
+    <ul>
+      <li>Dynamic programming</li>
+      <ul>
+        <li>On a mesh</li>
+        We can analyse its convergence but it doesn't scale well i.e. its <m>discretisation grows quickly</m> in high dimensions.
+
+        <p>
+          <li>Neural value iteration</li>
+          It has less guarantees in terms of convergence (when it will converge or fail) but scales better and can handle <m>different shapes of $J$</m>.
+        </p>
+      </ul>
+
+      <li>LQR</li>
+      It can scale to arbitrarily large dimensions but it is restricted to linear systems.
+
+      <p>
+        <li>Sums of squares approximate dynamic programming and lyapunov type methods</li>
+        SOS works on convex optimisation. 
+
+        <p>
+          <m>
+            These methods can be made to have guarantees because we can check the up and off conditions. Just having the SOS pushing up from below for the approximate cost to go, doesn't give performance guarantees. We have to bring a different version down from above in order to have performance guarantees. This set of tools are designed to be in a regime where we can be giving guarantees. They scale fairly well to definitely more than what can be done with meshes but struggle when the DOFs goes beyond 10.
+          </m>
+        </p>
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Fundamental idea of TO</h1>
+    Apart from lqr which is for linear systems, these methods are very clean but they're restricted to relatively low dimensional systems.
+
+    <p>
+      The context for TO is that we want to fundamentally break the curse of dimensionality. The reason these methods are difficult in high dimensions is because they try to solve a very high dimensional problem; a function for all $x$ which is hard to do as the dimension of $x$ increases.
+    </p>
+    
+    In TO, instead of thinking about for all $x$, it thinks about a single initial condition and rolls out just one solution from a particular initial condition. This is now almost immune to the dimension of the state. The complexity now increases with time. So we're going to analyse single trajectories. 
+    
+    <p>
+      It has other problems. If we never look at all of the states then it's hard to say something about global optimality. We can say something about local changes to the trajectory (if it gets worse), but asking for something to be global requires looking at all of the states.
+    </p>
+
+    A humanoid has many DOFs. It would take a long time (years) to visit all of the possible states in its state space if we were to examine all of the possible configurations that the humanoid is capable of. It is too much to ask that we have to solve for all possible $x$. The TO view of the world takes it to an extreme where we're considering one (initial) state. Probably the right answer is something in between the two.
+  </subsection>
+</section>
+
+<section id="2"><h1>Basic TO formulation</h1>
+  It looks similar to the optimal dynamic programming control formulation. We have a dynamical system: $\dot{x} = f(x, u)$.
+
+  <p>
+    We need to write optimization problems that optimises some long-term objective ($0 \rightarrow t_f$) subject to some dynamic constraints.
+  </p>
+
+  $$
+  \begin{align*}
+    min \quad & \int^{t_f}_0 
+        \underbrace{l(x(t),u(t))}_{\text{Objective}}dt \\
+    s.t. \quad & \dot{x} = f(x, u)
+    \left.\right\} &\text{dynamic constraints} \\
+    \quad &
+    \left.
+      \begin{array}{ c l }
+        &\text{Collision avoidance} \\
+        &\text{Joint input limits} \\
+      \end{array}
+    \right\} &\text{additional constraints}
+  \end{align*}
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

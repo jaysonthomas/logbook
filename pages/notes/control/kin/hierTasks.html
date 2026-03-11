@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hierarchy of tasks</title>
+  <meta name="Hierarchy of tasks" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">Overview</a>
+<a href="#2">References</a>
+<a href="#3">Notation swap</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Hierarchy of tasks</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li>Solving a hierarchy of tasks</li>
+    Solutions to QP can be thought of as solution sets.
+    <ul>
+      <li><a href="equality.html">Equality tasks</a></li>
+      <li><a href="inequality.html">Inequality tasks</a></li>
+    </ul>
+  </ul>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  Such a problem is encountered with a robot that has many DOFs that needs to achieve several tasks that are often in conflict under constraints.
+</section>
+
+<section id="2"><h1>References</h1>
+  <a href="https://t.ly/aZSn9">The main paper</a>: Generalising the task priority framework to inequality tasks. <p></p>
+  
+  This work is often referred to as a hierarchy of quadratic programs.
+</section>
+
+<section id="3"><h1>Notation swap</h1>
+  The <a href="jointLimits.html#2">solution</a> to a single task can be written more abstractly as:
+  $$\begin{align*}
+    \min_x \quad & x^T A x + b^T x \\
+    s.t. \quad & Cx \leq x_{lim}  
+  \end{align*}$$
+
+  The $C$ matrix in the inequality allows the inequality constraints to be mapped to the cartesian space. E.g., $C$ could be a task Jacobian which allows incorporating constraints such as keeping the camera focused on a particular region of a workspace. It can then be mapped to the joint space and incorporated into different solvers.
+</section>
+</chapter>
+
+</body>
+</html>

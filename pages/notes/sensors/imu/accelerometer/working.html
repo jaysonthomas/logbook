@@ -41,6 +41,12 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Hardware setup</a>
+<a href="#2">Example measurements</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Resting on an object</a></li>
+  <li><a href="#2.1">Free fall</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Working principle</h1>
@@ -50,35 +56,44 @@
     a = \frac{1}{m}F
   $$
 
-  The acceleration on a given vehicle depends on computing the sum of all forces $F$ acting on the vehicle. Accelerometers don't measure total acceleration, but <i>specific acceleration</i> which is the acceleration caused by all the forces acting on a vehicle except for gravity.
+  The total acceleration on a vehicle is the sum of all forces $F$ acting on the vehicle. Accelerometers don't measure total acceleration, but <i>specific acceleration</i> which is the acceleration caused by all the forces acting on a vehicle except for gravity. 
+  
+  <p>
+    The output of an accelerometer is actually:
+
+    $$
+      a_{accel} = \frac{1}{m}(F - F_g)
+    $$
+  </p>
+  
+  A full 3-axis accelerometer would need three of these in orthogonal directions.
+</section>
+
+<section id="1"><h1>Hardware setup</h1>
+  A simple accelerometer consists of a proof mass attached inside of some housing that is constrained to only move vertically. The proof mass is attached between the top and bottom of the housing with 2 springs. It is calibrated to be at the centre when the net external vertical force acting on the housing is $0$. The springs stretch/contract to keep the proof mass in the centre.
 
   <div class="container">
     <figure>
       <img style="height:140px; width:auto"
-      src="../../../../figures/physics/7_accelerometer.png"/>
-      <figcaption>
-        Accelerometer housing - the proof mass is calibrated to be at the centre when the net external vertical force acting on the housing is $0$
-      </figcaption>
+      src="../../../../../figures/physics/7_accelerometer.png"/>
     </figure>
   </div>
-  A simple accelerometer consists of a proof mass attached inside of some housing and constrained to only move vertically. The proof mass is attached between the top and bottom of the housing with 2 springs. An accelerometer measures the difference between the upwards force provided by the upper spring and the downwards force provided by the lower spring.
+  
+  An accelerometer measures the difference between the upwards force provided by the upper spring and the downwards force provided by the lower spring.
 
   $$
     F_{springs,net} = F_{s,up} - F_{s,down}
   $$
+</section>
 
-  When an accelerometer is sitting on a table, the proof mass should have $0$ acceleration, because the housing has $0$ acceleration. To achieve this, the net force from the springs on the accelerometer is upwards and equal to $mg$ - the accelerometer would measure a net acceleration upwards that's equal to $g$.
+<section id="2"><h1>Example measurements</h1>
+  <subsection id="2.0"><h1>Resting on an object</h1>
+    When an accelerometer is sitting on a table, the housing and the proof mass have $0$ acceleration. To keep the proof mass in the centre, the net force from the springs on the accelerometer is upwards and equal to $mg$ - the accelerometer would measure a net acceleration upwards that's equal to $g$.
+  </subsection>
 
-  <p>
-    If the sensor were in free fall, the housing and the proof mass would accelerate downwards at $9.8 m/s^2$. To keep the proof mass centered in the housing, the two springs would be pulling equally so the NET force from the springs would be $0$ and the accelerometer would measure $0$ acceleration.
-  </p>
-
-  The output of an accelerometer is actually:
-  $$
-    a_{accel} = \frac{1}{m}(F - F_g)
-  $$
-  
-  A full 3-axis accelerometer would need three of these in orthogonal directions.
+  <subsection id="2.1"><h1>Free fall</h1>
+    If the sensor were in free fall, the housing and the proof mass would accelerate downwards at $9.8 m/s^2$. To keep the proof mass centered in the housing, the two springs would be pulling equally so the net force from the springs would be $0$ and the accelerometer would measure $0$ acceleration.
+  </subsection>
 </section>
 </chapter>
 

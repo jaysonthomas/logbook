@@ -41,9 +41,16 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">O(1)</a>
-<a href="#2">O(N)</a>
-<a href="#3">References</a>
+<a href="#1">O($1$)</a>
+<a href="#2">O($log \, N$)</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Binary search</a></li>
+</ul>
+<a href="#3">O($N$)</a>
+<a href="#4">O(N $log \, N$)</a>
+<a href="#5">O($N \cdot M$)</a>
+<a href="#6">O($N^2$)</a>
+<a href="#7">References</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Big O Notation</h1>
@@ -55,7 +62,7 @@
   </p>
 </section>
 
-<section id="1"><h1>O(1)</h1>
+<section id="1"><h1>O($1$)</h1>
   An algorithm that always executes in the same time regardless of the size of the data set. Efficient with any data set.
 
   <p>
@@ -68,7 +75,31 @@
   </p>
 </section>
 
-<section id="2"><h1>O(N)</h1>
+<section id="2"><h1>O($log \, N$)</h1>
+  Logarithmic. An algorithm that halves the data set in each pass. Opposite to exponential. Efficient with large data sets.
+
+  <p>
+    Example use: 
+
+    <ul>
+      <li>Binary search.</li>
+      <li>Push/pop on a heap.</li>
+    </ul>
+  </p>
+
+  <subsection id="2.0"><h1>Binary search</h1>
+    Consider an array of size $N$. How many times can the array be divided by 2 to get just 1 element. In other words, how many times can 1 be multiplied by 2 to get $N$. In other words, 2 to the power of what gives $N$, which is the definition of log.
+
+    $$\begin{align*}
+      2^x &= N \\
+      x &= log_2 N
+    \end{align*}$$
+
+    An array of size N can be divided $log_2 N$ times. The base here is 2.
+  </subsection>
+</section>
+
+<section id="3"><h1>O($N$)</h1>
   In this case, as the input size grows, the execution time grows proportionately. 
 
   <p>
@@ -81,7 +112,43 @@
   </p>
 </section>
 
-<section id="3"><h1>References</h1>
+<section id="4"><h1>O(N $log \, N$)</h1>
+  Algorithms that divide a data set but can be solved using concurrency on independent divided lists.
+
+  <p>
+    Example use: 
+
+    <ul>
+      <li>Quick/Merge sort.</li>
+    </ul>
+  </p>
+</section>
+
+<section id="5"><h1>O($N \cdot M$)</h1>
+  Very similar performance to O($N^2$)
+
+  <p>
+    Example use: 
+    <ul>
+      <li>2D rectangular matrix.</li>
+    </ul>
+  </p>
+</section>
+
+<section id="6"><h1>O($N^2$)</h1>
+  In this case, as the input size grows, the performance is proportional to the square of the size of the data set.
+
+  <p>
+    Example use: 
+
+    <ul>
+      <li>A nested loop iterating through a two dimension array.</li>
+      <li>Bubble sort.</li>
+    </ul>
+  </p>
+</section>
+
+<section id="7"><h1>References</h1>
   <ul>
     <li>Document <a href="https://t.ly/aUFuZ">this</a> cheat sheet. Execution time plots can be found <a href="https://t.ly/bQmP-">here</a>. I like the following 2 videos: <a href="https://t.ly/uNtI1">Ref 1</a>, <a href="https://t.ly/qFIyx">Ref 2</a>.</li>
 

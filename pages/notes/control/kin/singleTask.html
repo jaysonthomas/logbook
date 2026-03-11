@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Diff IK - single task</title>
+  <meta name="Diff IK - single task" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">Anaotmy of a robot task - forward model</a>
+<a href="#2">Aim</a>
+<a href="#3">Particular solution</a>
+<a href="#4">Homogeneous solution</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Example</a></li>
+</ul>
+<a href="#5"></a>
+<ul class="no-bullets">
+  <li><a href="#5.0">Limited DOFs</a></li>
+</ul>
+<a href="#6">Getting stuck in local minima</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Diff IK - single task</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="overview.html">Overview</a></li>
+    <li>Problems when computing diff IK</li>
+    <ul>
+      <li><a href="singularity.html">Singularities</a></li>
+      <li><a href="jointLimits.html">Joint limits</a></li>
+    </ul>
+  </ul>
+</section>
+
+<section id="1"><h1>Anaotmy of a robot task - forward model</h1>
+  $$
+    v = J(q) \dot{q}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      v \in R^m &:& \text{Cartesian velocities (twists)} \\ 
+      J(q) &:& \text{Robot Jacobian} \\
+      q \in R^n &:& \text{Joint velocities} \\
+      n \geq m &:& \text{Dimension of the joint velocities is greater than that of the task} \\
+    \end{array}$$
+  </div>
+
+  A task is represented by cartesian velocities (here, a twist with 6 DOF). Each twist is related to a joint velocity through the robot Jacobian. Ideally, the dimension of a task $m$ is much greater than $n$, so that there is some redundancy and therefore lots of interesting ways to achieve it.
+</section>
+
+<section id="2"><h1>Aim</h1>
+  Given the task $v$ in cartesian space, find the vector of joint velocities $\dot{q}$.
+
+  <p>
+    This can be formalised as a least squares problem - the aim is to minimise the difference between the task vector $v$ and the model that maps to the cartesian space:
+    $$\begin{equation}
+      \min_{\dot{q}} \quad \|v - J\dot{q}\|^2\\ \label{eq:formalAim}
+    \end{equation}$$
+
+    $\min_{\dot{q}}$ means minimise $\dot{q}$.
+  </p>
+</section>
+
+<section id="3"><h1>Particular solution</h1>
+  The particular solution of diff IK inovles doing the algebraic inversion of a linear mapping.
+
+  $$\begin{align}
+    \dot{q}^* &= J^T \, (JJ^T)^{-1} v \label{eq:jacobInverse} \\
+              &= J^\dagger \, v \label{eq:pseudoInverse}
+  \end{align}$$
+
+  This is the right pseudo-inverse of the robot Jacobian solution. It can be inspected that substituting $\ref{eq:jacobInverse}$ into the problem's objective function $\ref{eq:formalAim}$ will minimise the difference. This is how the inversion $\ref{eq:pseudoInverse}$ is arrived at.
+
+  <div class="container">
+    <figure>
+      <img style="height:95px; width:auto"
+      src="../../../../figures/control/kinematics/1_singlePoint.png"/>
+    </figure>
+
+    <p>
+      This method is equivalent to finding 1 particular point within what could be, in general, a large subset of potential solutions.
+    </p>
+  </div>
+</section>
+
+<section id="4"><h1>Homogeneous solution</h1>
+  Adding a second component to the particular solution leads to the homogeneous solution to the problem. It is essentially a vector of joint velocities $q_0$ mapped into the null space of the Jacobian using $I - JJ^\dagger$
+
+  $$\begin{equation}
+    \dot{q}^* = \underbrace{J^\dagger \, v}_{\text{Particular} \atop \text{component}} + 
+    \underbrace{(I - JJ^\dagger) \, q_0}_{\text{Homogeneous} \atop \text{component}} \label{eq:homSol}
+  \end{equation}$$
+
+  Whatever is being mapped (here, $q_0$) needs to be projected into a space where it doesn't affect the main task $v$. The homogeneous component does not affect the task, but allows projecting secondary tasks into the null space.
+
+  <div class="container">
+    <figure>
+      <img style="height:95px; width:auto"
+      src="../../../../figures/control/kinematics/1_singlePoint.png"/>
+    </figure>
+
+    <p>
+      With the homogeneous formulation, any point can be constructed within the green valid solution set for the diff IK problem.
+    </p>
+  </div>
+
+  <subsection id="4.0"><h1>Example</h1>
+    <a href="https://t.ly/dazUM">This video</a> is from a paper that's unrelated to diff IK, but nicely shows what a null space solution means.
+
+    <p>
+      The task is to move the tip of an end effector along a hexagon. This can be solved in many ways if the robot has more DOFs than the DOFs needed to specify the task. Here, the task has 3 DOFs and the robot has 7, so the null space $I - JJ^\dagger$ is 4 dimensional. The robot joints seem to bounce/dance in the null space.
+    </p> 
+
+    These kind of motions can be chosen arbitrarily as long as they don't conflict with the primary task which is achieved with the null space projection.
+  </subsection>
+</section>
+
+<section id="5"><h1></h1>
+  <subsection id="5.0"><h1>Limited DOFs</h1>
+    Minimising the solution space $I - JJ^\dagger$ is equiavalent to minimising the difference to 0. Is there a case where it cannot be minimised to 0?
+
+    <p>
+      If the joint space does not have as many DOFs as needed to accomplish a task. E.g., consider a robot with only 4 joints trying to accomplish a 6 DOF cartesian task/twist.
+    </p>
+
+    In this case, it wouldn't be possible to minimise the cost function. The end solution would be the best that could be found in a least squares sense to the problem. It will accomplish as much as it can without actually solving the problem of executing the task perfectly.
+
+    <p>
+      In the case of the humanoid, it might not be possible to achieve all of the tasks when there are multiple conflicting objectives. A hint at that is also the null space element. The null space will be done as well as possible as long as it doesn't conflict with anything that lives in the particular solution side of the equation.
+    </p>
+  </subsection>
+</section>
+
+<section id="6"><h1>Getting stuck in local minima</h1>
+  Some basic IK solvers like closed loop IK, will iterate on equations of type \ref{eq:homSol} until they converge to a joint solution. They can get stuck.
+
+  <p>
+    More advanced IK solvers like track IK, will do many of these in parallel threads and then even a QP solution on top. Here, lots of local searches and random restarts are done to avoid the problem of local minimums.
+  </p>
+
+  All the diff IK discussed here is  local.
+</section>
+</chapter>
+
+</body>
+</html>

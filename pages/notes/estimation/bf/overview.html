@@ -40,16 +40,16 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Aim</a>
+<a href="#0">Novelty</a>
 <a href="#1">Key steps</a>
 <a href="#2">Uncertainty in the estimate after each step</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Bayes Filters: Overview</h1>
-<section id="0"><h1>Aim</h1>
+<section id="0"><h1>Novelty</h1>
   <ul>
     <li>
-      Bayes Filter is a general framework for thinking about state estimation. It updates and maintains an accurate and responsive belief of a state that is continuously changing.
+      Bayes Filter is a general <n>framework</n> for thinking about state estimation. It updates and maintains a belief of a state that is continuously changing.
     </li>
     
     <p>
@@ -72,7 +72,7 @@
 
     <p>
       <li>Measurement update step</li>
-      Observations can be used to correct the prediction.
+      <n>Observations can be used to correct the prediction</n>.
     </p>
   </ul>
 </section>
@@ -96,14 +96,14 @@
     </figure>
   </div>
 
-  The uncertainty in the state estimate is a distrbution and not a point estimate. 
+  The uncertainty in a state estimate is not a point estimate but a distrbution. 
   
   <ul>
     <li>After the prediction step</li>
     The current state is projected forward based on the control input. This prediction will be noisy because of <n>imperfections in the system model</n>, causing an increase in the uncertainty and hence the belief to spread out.
 
     <p>
-      If a perfect transition model with no noise was used, one could predict forever without the need to make any measurements. However, because there is noise, if the prediction step was carried out forever, the transition noise would keep increasing after each step.
+      If a <i>transition model</i> is perfect with no noise, it would be possible to predict forever without the need to make any measurements. However, because there is noise, if the prediction step is carried out forever, the <i>transition noise</i> would keep increasing after each step.
     </p>
 
     <li>After the measurement step</li>

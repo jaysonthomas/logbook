@@ -43,16 +43,15 @@
 <a href="#0">Verify other ROS distributions are not sourced</a>
 <a href="#1">Configure ubuntu repositories</a>
 <a href="#2">Set locale</a>
-<a href="#3">Setup ROS repository sources</a>
+<a href="#3">Set up ROS repository sources</a>
 <a href="#4">Install ROS2 packages</a>
-<a href="#5">Test the installation</a>
-<a href="#6">To find info about a topic</a>
-<a href="#7">Visualising the graph</a>
+<a href="#5">Environment variables setup</a>
+<a href="#6">Confirm ROS2 version</a>
+<a href="#7">ROS package dependencies</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>ROS: Installation</h1>
 <section id="0"><h1>Verify other ROS distributions are not sourced</h1>
-  [<a href="https://t.ly/xx-4A">Ref</a>] <p></p>
   Make sure no other version of ROS2 or ROS1 are automatically sourced when a terminal is started. <i>Sourced</i> means that a setup file of a ROS2 distribution is automatically called when you open a terminal.
 <pre><code class="bash">
 printenv ROS_DISTRO
@@ -72,11 +71,9 @@ source /opt/ros/iron/setup.bash
 </section>
 
 <section id="1"><h1>Configure ubuntu repositories</h1>
-  To allow restricted, universe and multiverse.
+  Install ubuntu universe repository.
 <pre><code class="bash">
 sudo add-apt-repository universe
-sudo add-apt-repository multiverse
-sudo add-apt-repository restricted
 sudo apt install software-properties-common
 </code></pre>
 
@@ -90,7 +87,6 @@ grep ^deb /etc/apt/sources.list
 <section id="2"><h1>Set locale</h1>
   That supports UTF-8.
 <pre><code class="bash">
-locale  
 sudo apt update && sudo apt install locales
 sudo locale-gen en_GB en_GB.UTF-8
 sudo update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8
@@ -100,8 +96,8 @@ locale
 </code></pre>
 </section>
 
-<section id="3"><h1>Setup ROS repository sources</h1>
-  Add the ROS 2 GPG key with apt.
+<section id="3"><h1>Set up ROS repository sources</h1>
+  Add the ROS 2 GPG key.
 <pre><code class="bash">
 sudo apt update && sudo apt install curl -y
 
@@ -113,6 +109,20 @@ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 </code></pre>
 
+  <ul>
+    <li>deb: Tells the system this is a binary software repository.</li>
+    <li>arch=$(dpkg --print-architecture): Automatically detects if your system is amd64 (typical PC) or arm64 (like a Raspberry Pi).</li>
+    <li>signed-by=...: This is a security feature. It tells Ubuntu to only trust packages from this source if they are signed with the specific ROS digital key.</li>
+
+    <p>
+      <li>http://packages.ros.org/...: The actual web address where the ROS 2 files live.</li>
+      <li><code>$(. /etc/os-release && echo $UBUNTU_CODENAME)</code> is a shortcut that checks the version of Ubuntu (like "Jammy" or "Noble") and inserts that name to get the software built specifically for the OS version.</li>
+    </p>
+
+    <li>The pipe (|) takes that long string and hands it to the next command:</li>
+    <li>tee takes the input and writes it into a new file named ros2.list.</li>
+    <li>> /dev/null: This just keeps things tidy. It prevents the command from printing the entire string back out to your terminal window.</li>
+  </ul>
 </section>
 
 <section id="4"><h1>Install ROS2 packages</h1>
@@ -124,45 +134,39 @@ sudo apt upgrade
 
   Install ROS2
 <pre><code class="bash">
-sudo apt install ros-jazzy-desktop
+sudo apt install ros-kilted-desktop
 sudo apt install ros-dev-tools
 </code></pre>
 </section>
 
-<section id="5"><h1>Test the installation</h1>
-  Run the talker-listener example which is a “Hello World” example of ROS2 programming. 
+<section id="5"><h1>Environment variables setup</h1>
+  Inform what ROS2 environment variables/paths to use in a bash session (terminal):
 
-  <p>
-    First source the ROS2 environment and then run the talker node
 <pre><code class="bash">
-source /opt/ros/jazzy/setup.bash
-ros2 run demo_nodes_cpp talker
-</code></pre>
-  </p>
+echo "source /opt/ros/kilted/setup.bash" >> ~/.bashrc
 
-  Open another terminal and run the listener node.
-<pre><code class="bash">
-source /opt/ros/jazzy/setup.bash
-ros2 run demo_nodes_cpp listener
+# For the changes to take effect
+source ~/.bashrc    
+
+# Check the line is added
+gedit ~/.bashrc
 </code></pre>
+
 </section>
 
-<section id="6"><h1>To find info about a topic</h1>
-  Open another terminal whilst the communication is going on.
+<section id="6"><h1>Confirm ROS2 version</h1>
 <pre><code class="bash">
-ros2 topic info /chatter
-ros2 topic info /parameter_events
-ros2 topic info /rosout
+env | grep ROS
 </code></pre>
 
-  Messages are of the type <code>std_msgs/msg/String</code> which is a ROS2 data type that is equivalent to the string data type in Python and C++.
 </section>
 
-<section id="7"><h1>Visualising the graph</h1>
+<section id="7"><h1>ROS package dependencies</h1>
 <pre><code class="bash">
-rqt_graph
+sudo rosdep init
+rosdep update
 </code></pre>
-  This command will bring up a graph describing the topic-node structure of the ROS2 system. 
+
 </section>
 </chapter>
 

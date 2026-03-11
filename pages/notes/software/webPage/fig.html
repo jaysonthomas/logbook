@@ -40,10 +40,13 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Figures side-by-side</a>
+<a href="#1">Text beside figure</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Figures</h1>
-<subsubsection><h1>Code</h1>
+<section id="0"><h1>Figures side-by-side</h1>
+  <subsubsection><h1>Code</h1>
 <pre><code class="html">
 &ltdiv class="container"&gt
   &ltfigure&gt
@@ -63,7 +66,7 @@
   &lt/figure&gt
 &lt/div&gt
 </code></pre>
-</subsubsection>
+  </subsubsection>
 
   <subsubsection><h1>Output</h1>
     <div class="container">
@@ -84,6 +87,51 @@
       </figure>
     </div>
   </subsubsection>
+</section>
+
+<section id="1"><h1>Text beside figure</h1>
+  <subsubsection><h1>Code</h1>
+<pre><code class="html">
+&ltdiv class="container" style="display: flex; align-items: flex-start; gap: 20px;"&gt
+  &ltfigure&gt
+    &ltimg style="height:150px; width:auto"
+    src="../../figures/bio/me.png"/&gt
+  &lt/figure&gt
+  
+  &ltdiv&gt
+    &ltp style="margin-top: 0;"&gt
+      I'm Jayson. I'm an engineer with a keen interest in control systems applied to robotics. I'm also a keen DIY-er.
+    &lt/p&gt
+    
+    &ltul&gt
+      &ltli&gt&lta href="journey.html"&gtCareer journey&lt/a&gt&lt/li&gt
+      &ltli&gt&lta href="industry.html"&gtIndustry experience&lt/a&gt&lt/li&gt
+    &lt/ul&gt
+  &lt/div&gt
+&lt/div&gt
+</code></pre>
+  </subsubsection>
+
+  <subsubsection><h1>Output</h1>
+    <div class="container" style="display: flex; align-items: flex-start; gap: 20px;">
+      <figure>
+        <img style="height:120px; width:auto"
+        src="../../../../figures/drone/13_thinGaussian.png"/>
+      </figure>
+      
+      <div>
+        <p style="margin-top: 0;">
+          I'm Jayson. I'm an engineer with a keen interest in control systems applied to robotics. I'm also a keen DIY-er.
+        </p>
+        
+        <ul>
+          <li><a href="journey.html">Career journey</a></li>
+          <li><a href="industry.html">Industry experience</a></li>
+        </ul>
+      </div>
+    </div>
+  </subsubsection>
+</section>
 </chapter>
 
 </body>

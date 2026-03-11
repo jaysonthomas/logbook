@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Measurement model</title>
+  <meta name="Measurement model" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Details</a>
+<a href="#2">Attitude estimation</a>
+<a href="#3">Drift</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Measurement model</h1>
+<section id="0"><h1>Overview</h1>
+  The effect of a coriolis force can be measured. It can then be used to infer the rotational speed of a rotating reference frame since $F_c$ is a function of $\omega$:
+
+  $$
+    |F_c| = f(\omega)
+  $$
+
+  The value (e.g., rotation rate) that a sensor (e.g., gyroscope) reports is unlikely to be the correct one. The role of a <i>measurement model</i> of a sensor is to help make sense of the imperfect measurements. It includes a measure of how accurate a sensor's measurements are; in this case, that of the inferred quantity $\omega$.
+</section>
+
+<section id="1"><h1>Details</h1>
+  A simple measurement model for a gyroscope: 
+
+  $$\begin{align*}
+    \tilde{\omega} &= \underbrace{\omega}_{\text{True angular} \atop \text{velocity}} + \underbrace{b}_{\text{Bias}} + \underbrace{\eta}_{\text{Additive noise}} \\\\
+    
+    \eta &\sim N(0, \sigma^2_{gyro})
+  \end{align*}$$
+  
+  The measured rotation rate $\tilde{\omega}$ is equal to the true angular velocity, corrupted by some:
+  <ul>
+    <li>Bias</li>
+    It needs to be identified ahead of time. It might be temperature dependent and might change slowly, but it's something that stays constant at least for some amount of time.
+
+    <p>
+      <li>Zero mean gaussian noise</li>
+      It changes for every measurement.
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>Attitude estimation</h1>
+  Gyro measurements can be used to estimate the body rate of a vehicle, which can then be integrated to get the actual attitude.
+
+  $$
+    \theta_t = \theta_{t-1} + \tilde{\omega}\Delta{t} + \underbrace{\epsilon}_{\text{Approximation} \atop \text{error}}
+  $$
+
+  Since, computing an integral is a discrete approximation, in reality, there would also be an approximation error which can be ignored for now. It can also be assumed that any potential bias is calibrated and removed from the Gyro measurements. The equations become:
+
+  $$\begin{align*}
+    \tilde{\omega} &= \omega + \eta \\
+    \theta_t &= \theta_{t-1} + \tilde{\omega}\Delta{t}
+  \end{align*}$$
+  
+  The initial angle $\theta_0$ would need to be known. This type of navigation-by-integration is called <i>dead reckoning</i>. <i>Inertial navigation</i>, that is navigation based on inertial sensors only, is purely based on dead reckoning. They are highly susceptible to drift.
+</section>
+
+<section id="3"><h1>Drift</h1>
+  A gyroscope measures angular velocity. The orientation is computed by integrating tiny slices of velocity over time. Because of the noise and bias in each measurement, the tiny error gets added over and over again leading to drift.
+
+  <p>
+    Gyroscopes, however, don't suffer from jitter and can provide immediate, smoother angle measurements. An accelerometer is used to slowly nudge the gyro back to reality whenever it starts to drift away from the gravity vector.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

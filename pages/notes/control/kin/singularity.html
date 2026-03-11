@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Singularities</title>
+  <meta name="Singularities" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Cause</a>
+<a href="#1">Solution: Damped least squares</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Singularities</h1>
+<section id="0"><h1>Cause</h1>
+  This happens when the determinant of the jacobian is 0, i.e. the left pseudo inverse cannot be computed. The whole equation breaks down.
+  $$
+    det(J) = 0
+  $$
+</section>
+
+<section id="1"><h1>Solution: Damped least squares</h1>
+  The damped LS solution reformulates the optimisation problem to include some relaxation.
+  $$
+    \min_{\dot{q}} \quad \|v - J\dot{q}\|^2 
+  $$
+
+  Expanding the equation:
+  $$
+    \min_{\dot{q}} \quad \dot{q}^T \underbrace{J^T J}_{\text{Hessian} \atop \text{matrix}} \dot{q} - 
+    2 \dot{q}^T J^T v
+  $$
+  
+  Adding a damping term to the above quadratic form by adding a small $\epsilon$ and the identity matrix to the Hessian matrix, the Hessian matrix ends up always having an inverse. The solution, hence computed, will always work even at a singularity at the cost of more inaccuracies in the output that the diff IK algorithm gives.
+
+  $$
+    \min_{\dot{q}} \quad \dot{q}^T (J^T J + \epsilon I) \dot{q} - 
+    2 \dot{q}^T J^T v
+  $$
+  
+  There is a lot of work on how to choose the $\epsilon$ or even how to dynamically change it depending on the distance from a singularity.
+</section>
+</chapter>
+
+</body>
+</html>

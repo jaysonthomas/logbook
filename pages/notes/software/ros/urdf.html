@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URDF</title>
+  <meta name="URDF" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<ul class="no-bullets">
+  <li><a href="#0.0">Joints</a></li>
+</ul>
+<a href="#1">Creation</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>URDF</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/_lcKm">Ref</a>] <p></p>
+  <i>Unified Robot Description Format</i> is an XML file that contains a complete physical description of a robot:
+  <ul>
+    <li>Geometry</li>
+    <li>Kinematics</li>
+    <li>Dynamics</li>
+    <li>Visual aspects</li>
+  </ul>
+
+  <p>
+    The body of a robot consists of two components
+    <ul>
+      <li>Links: The rigid pieces of a robot</li>
+      <li>Joints: The pieces of a robot that move, enabling motion between connected links</li>
+    </ul>
+  </p>
+
+  <div class="container">
+  <figure>
+    <img style="height:80px; width:auto"
+    src="../../../../figures/software/ros/urdf/1_mobileBot.png"/>
+    <figcaption>
+      Links and joints of a mobile bot with lidar
+    </figcaption>
+  </figure>
+
+  <subsection id="0.0"><h1>Joints</h1>
+    A wheel joint is a revolute joint, connecting a wheel link to a base link. Fixed joints have no motion at all. It could be a simple screw that connects a LIDAR to a robot's base. Prismatic joints cause linear motion between links (as opposed to rotational motion with a revolute joint).
+  </subsection>
+</section>
+
+<section id="1"><h1>Creation</h1>
+<pre><code class="bash">
+ros2 pkg create --build-type ament_cmake --license BSD-3-Clause mycobot_description
+</code></pre>  
+</section>
+</chapter>
+
+</body>
+</html>

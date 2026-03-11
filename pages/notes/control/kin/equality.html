@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Equality tasks</title>
+  <meta name="Equality tasks" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Math</a>
+<a href="#1">Scope</a>
+<a href="#2">Rewrite</a>
+<a href="#3">Examples</a>
+<a href="#4">Hierarchy</a>
+<a href="#5">Closed form solution</a>
+<a href="#6">Visualisation</a>
+<a href="#7">Rewrite as a constraint</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Equality tasks</h1>
+<section id="0"><h1>Math</h1>
+  If the task is an equality one like the forward model, the problem can be formulated as: Minimise the norm squared of the task vector within a solution set. 
+    
+  <p>
+    The solution set aims to solve the problem of minimising the task matrix $A$ (equivalent to Jacobian) times the task variables $x$ (equivalent to joint velocities) and the task vector $b$ (cartesian task $v$). The solution would be within the green blob.
+  </p>
+
+  $$
+    \min_{\dot{q}} \quad \|v - J\dot{q}\|^2
+  $$
+
+  The above diff IK equation can be formulated into the notation of solution sets:
+
+  $$\begin{align}
+    \min_{x \in S_i} \quad & \frac{1}{2} ||x||^2 \nonumber \\
+    S_i = \quad & arg \min_x {\frac{1}{2} \, ||A_ix - b_i||^2} \label{eq:solSet}
+  \end{align}$$
+
+  Solving the single task problem will yield a solution, vector $x^*$, within the green solution set. 
+  <div class="img-container">
+    <figure>
+      <img style="height:95px; width:auto"
+      src="../../../../figures/control/kinematics/3_equalitySol.png"/>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Scope</h1>
+  Equality tasks only consider tasks of the form $Ax = b$. It could be the forward model of the differential forward kinematics, $V = J \dot{q}$. It could also be a constraint of the form $Ax = b$. QP solvers allow specification of equality constraints.
+
+  <p>
+    Tasks of the form $Cx \leq D$ is not considered. Consider that the aim/output of the diff IK algorithm is set to avoid joint limits as a task. The issue with this is that the null space is null since an equality task is specified for every joint. If this is specified as the top priority task, then the algorithm won't consider any other tasks. The robot will just avoid joint limits forever.
+  </p>
+
+  If the task is specified as a lower priority one, there is the risk that a higher priority task will force the algorithm into a joint limit. This is the problem usually seen when trying to solve joint limits as the $q_0$ task - the limits can only be avoided if it is not conflicting with the main task $v$.
+
+  $$
+    \dot{q}^* = J^\dagger \, v + (I - JJ^\dagger) \, q_0
+  $$
+
+  Here, the assumption is made that the priority of tasks are known apriori. There are interesting works on dynamically swapping priorities depending on some higher level application.
+</section>
+
+<section id="2"><h1>Rewrite</h1>
+  \ref{eq:solSet} can be rewritten as the left pseudo inverse of $A$ times the task vector, plus the projection $P$ into the null space and some null space vector.
+
+  $$\begin{align*}
+    S_i &= \underbrace{A^{\dagger}_i \, b_i}_{\text{Particular} \atop \text{component}} + 
+      \underbrace{P_i \, z_i}_{\text{Homogeneous} \atop \text{component}} \\
+        &= x^*_i + P_i \, z_i
+  \end{align*}$$
+
+  This is equivalent to the homogeneous solution:
+  $$
+    \dot{q}^* = J^\dagger \, v + (I - JJ^\dagger) \, q_0
+  $$
+
+  This helps describe any point within the solution set - the particular solution is $x^*$ and the projection into null space helps nicely describe any point within the solution set.
+</section>
+
+<section id="3"><h1>Examples</h1>
+  <ul>
+    <li>Reach a ball or</li>
+    <li>Move an arm to a certain pose or </li>
+    <li>Follow a tele-operator's commands</li>
+  </ul>
+
+  In all these cases, the diff IK problem can be mapped into solution sets. 
+</section>
+
+<section id="4"><h1>Hierarchy</h1>
+  Given a task $i$ with a solution set $S_i$, consider a task $i+1$ of lower priority. E.g., An arm needs to reach a ball, but it's elbow needs to stay above a certain plane. Keeping the elbow above the plane is less important than reaching the ball. So, the aim is to achieve the 2 tasks as much as possible within the least squares sense.
+
+  $$\begin{equation}
+    S_{i+1} = \quad arg \min_x \left\{\frac{1}{2} \, ||A_{i+1}x - b_{i+1}||^2\right\} \label{eq:lowerPriority}
+  \end{equation}$$
+
+  The insight to solve a hierarchy of equality tasks is that the solution set $S_{i+1}$ needs to be constrained to live within the null space of the higher priority task $P_i \, z_i$. The solution of the lower priority task should never affect the result of the higher priority task.
+</section>
+
+<section id="5"><h1>Closed form solution</h1>
+  Hierarchy of equality tasks has a closed form solution.
+
+  $$
+    x^*_{i+1} = x^*_i + (A_{i+1} \, P_i)^\dagger + (b_{i+1} - A_{i+1} \, x^*_i)
+  $$
+
+  The solution $x^*_{i+1}$, including the hierarchy up to the level of $i+1$, is built recursively from the previous solution $x^*_i$ plus a projection $(A_{i+1} \, P_i)$ of the task $b_{i+1}$ at level $i+1$, discounting the effect of the higher order tasks $A_{i+1} \, x^*_i$.
+
+  <p>
+    Inserting $x^*_{i+1}$ into the $x$ of \ref{eq:lowerPriority} and expanding will give the equation more clarity.
+  </p>
+
+  The null space projector of the higher priority task $P_i$ within the solution equation of the lower priority task helps guarantee that the solution $x^*_{i+1}$ will fully solve the solution above $x^*_i$ or it will not solve it any more worse than the solution that is already obtained. It will only add components that will solve the next task as well as possible in the least squares sense without having a conflict.
+
+  <p>
+    This solution is analytical, recursive. The equation can just be used. There is no need for a QP solver. The results will be good as long as there are no inequalities.
+  </p>
+</section>
+
+<section id="6"><h1>Visualisation</h1>
+  Consider a solution set of a lower priority task $i+1$ represented by the orange blob, if it were not constrained. The green blob represents the solution set of the higher priority task $i$.
+
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/control/kinematics/4_equalityVisuals.png"/>
+    </figure>
+
+    <p>
+      The equation guarantees a solution within the intersection of the solution sets, if the sets intersect. If the sets did not intersect, the equation would give the closest point in the green set to the orange set, in a least squares sense.
+    </p>
+  </div>
+</section>
+
+<section id="7"><h1>Rewrite as a constraint</h1>
+  If the solution set for a single task can be described as a particular solution along with a homogeneous component (null space projection and the vector of a task in the null space), it can also be specified as a constraint.
+  $$\begin{align*}
+    S_i &= x^*_i + P_i \, z_i \\
+      &= {x \in \mathcal{R}^n : A_i x = A_i x^*_i}
+  \end{align*}$$
+  
+  $z_i$ will now operate under the constraint $A_i x = A_i x^*_i$. So, all the solutions for the task vector $x$, when plugged into the LHS, has to obey the equality to the RHS. This locks the obtained solution set for task $i$ which can be used in the next level and cannot be modified by the next level priority task.
+
+  <p>
+    Instead of the analytical solution, if the desire was to write the equality tasks as a sequence of QPs, the above constraint would have to be specified for every task $i+1$ and fed into a QP solver which would then return the same analytical solution.
+  </p>
+
+  33:53
+</section>
+
+</chapter>
+
+</body>
+</html>

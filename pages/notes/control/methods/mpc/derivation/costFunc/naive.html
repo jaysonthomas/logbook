@@ -49,13 +49,13 @@
   The goal of MPC is to track a reference output trajectory. 
   
   <p>
-    A natural way of formulating the MPC problem is to determine the vector of <a href="compactPredEq.html">control inputs $u$</a>, such that the following cost function is minimised:
+    A natural way of formulating the MPC problem is to determine the vector of <a href="../compactPredEq.html">control inputs $u$</a>, such that the following cost function is minimised:
 
     $$
       \min_u \|z^d - z\|^2 = \min_u (z^d - z)^T(z^d - z)
     $$
 
-    $z$ : <a href="compactPredEq.html">Predicted output</a>
+    $z$ : <a href="../compactPredEq.html">Predicted output</a>
   </p>  
   $z^d = \begin{bmatrix}
             z^d_{k+1} \\ z^d_{k+2} \\ z^d_{k+3} \\ \vdots \\ z^d_{k+p}
@@ -64,13 +64,11 @@
 </section>
 
 <section id="1"><h1>Limiations</h1>
-  This approach assumes there are no limitations on the magnitude of control inputs. Control inputs can:
-  <ul>
-    <li>Be extremely large, and thus impossible to be applied in practice</li>
-    <li>Lead to actuator saturation which can have devastating effects in a feedback control loop</li>
-  </ul>
-
-  Consequently, a penalty needs to be introduced on the control inputs in the cost function. Furthermore, weights need to be introduced in the cost function to have better control of the convergence of the algorithm.
+  This approach assumes there are no limitations on the magnitude of control inputs. Control inputs can be extremely large leading to actuator saturation which can have devastating effects in a feedback control loop. Hence, a penalty needs to be introduced on the control inputs in the cost function. 
+  
+  <p>
+    Furthermore, weights need to be introduced in the cost function to have better control of the convergence of the algorithm.
+  </p>
 </section>
 
 </chapter>

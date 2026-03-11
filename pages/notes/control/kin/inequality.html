@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inequality tasks</title>
+  <meta name="Inequality tasks" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+  <script> mermaid.initialize({startOnLoad: true}); </script>  
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Need</a>
+<a href="#1">Math</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Inequality tasks</h1>
+<section id="0"><h1>Need</h1>
+  $$
+    x^*_{i+1} = x^*_i + (A_{i+1} \, P_i)^\dagger + (b_{i+1} - A_{i+1} \, x^*_i)
+  $$
+
+  This equation does not consider joint limits and operates within a task space area. Addressing these tasks as a high priority equality task creates the risk for an empty null space. An <i>empty null space</i> means no redundancy, i.e., no fancy things can be done to have more tasks than a particular one.
+</section>
+
+<section id="1"><h1>Math</h1>
+  $$
+    Cx \leq d
+  $$
+
+  <div class="img-container">
+    <figure>
+      <img style="height:95px; width:auto"
+      src="../../../../figures/control/kinematics/5_inequalityMath.png"/>
+    </figure>
+  </div>
+
+  Consider a 2D case where the $C$ matrix defines the 2 lines and the desire is for the solution to live within the orange area.
+
+  <p>
+    The aim is to minimise a vector of slack variables $w$ with the task vector belonging to an admissable space $x \in S_{i-1}$ which could for instance be a solution space of some other task, subject to the inequality constraint (i.e. satisfied as much as possible) with the slack variable. The slack variable is important because it may not be possible to fully comply with the inequality.
+  </p>
+
+  $$\begin{align*}
+    S_i = \quad & arg \min_{x \in S_{i-1}} \quad \frac{1}{2} \, ||w||^2 \\
+    s.t. \quad & w \geq C_i \, x - d_i
+  \end{align*}$$
+
+  This can be easily formulated within a QP solver.
+
+  <p>
+    If the inequality constraint cannot be satisfied, the slack vector will have a norm larger than 0. Else, 0.
+  </p>
+
+  36:22
+</section>
+</chapter>
+
+</body>
+</html>

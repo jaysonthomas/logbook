@@ -49,12 +49,14 @@
 <section id="0"><h1>Overview</h1>
   <ul>
     <li>A <i>noise distribution</i> captures the imperfections in a sensor, by modeling the likelihood of making measurement $y$ given the system is in state $x$, $p(y|x)$.</li>
-    It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled.
+    <p>
+      It is not possible to know exactly how much noise gets added to each individual measurement. However, the distribution from which the noise is sampled can be modeled.
+    </p>
+
+    <li>Noise distributions are often modeled as a zero-mean gaussian with some covariance $R$.</li>
 
     <p>
-      <li>Noise distributions are often modeled as a zero-mean gaussian with some covariance $R$.</li>
-
-      To each measurement, a noise $v$ is added, sampled from the gaussian $\mathcal{N}(0, R)$. The most likely measurement is centred on the true value of whatever the sensor measures with some covariance.
+      In simulation, a noise $v$ is added to each measurement, sampled from the gaussian $\mathcal{N}(0, R)$. The most likely measurement is centred on the true value of whatever the sensor measures with some covariance.
 
       $$
         v \sim \mathcal{N}(0, R)

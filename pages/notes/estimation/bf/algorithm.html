@@ -49,7 +49,7 @@
   The algorithm as described here makes the assumption that the system is run in simulation i.e. a control action can be applied and a measurement can be received from the system in the same time step.
   
   <p>
-    At every step, the input control is computed using the reference trajectory and the system's state at the end of the previous timestep.
+    At the start of every step, the input control is computed using the reference trajectory and the system's state at the end of the previous timestep.
   </p>
 
   At the end of every timestep, the belief of the system's state is updated. 
