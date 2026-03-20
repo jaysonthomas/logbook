@@ -47,17 +47,12 @@
 <a href="#4">Useful tools</a>
 <a href="#5">Images</a>
 <a href="#6">Creating symbolic links</a>
+<a href="#7">Chrome</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Linux</h1>
-<section id="0"><h1>Topics</h1>
-  <ul>
-    <li><a href="installs.html">Installs</a></li>
-    <li><a href="deb.html">Install a debian package</a></li>
-    <li><a href="snap.html">Snap</a></li>
-    <li><a href="uninstall.html">Uninstall</a></li>
-    <li><a href="setup">Setup of a workstation</a></li>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Setup of a workstation</h1>
+<section id="0"><h1>Installations</h1>
+  Chrome, terminator, vs code, drawio.
 </section>
 
 <section id="1"><h1>Apt</h1>
