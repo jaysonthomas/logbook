@@ -13,20 +13,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
   <script>
-        // Use 'load' or 'DOMContentLoaded' to be safe
-        window.addEventListener('DOMContentLoaded', () => {
-            // Trim whitespace from all code blocks
-            document.querySelectorAll('pre code').forEach((block) => {
-                block.textContent = block.textContent.trim();
-            });
+      // Use 'load' or 'DOMContentLoaded' to be safe
+      window.addEventListener('DOMContentLoaded', () => {
+          // Trim whitespace from all code blocks
+          document.querySelectorAll('pre code').forEach((block) => {
+              block.textContent = block.textContent.trim();
+          });
 
-            // Now tell highlight.js to color the cleaned text
-            hljs.highlightAll();
-        });
-    </script>
-  <!-- <script>hljs.initHighlightingOnLoad();</script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
-  <script> mermaid.initialize({startOnLoad: true}); </script>  
+          // Now tell highlight.js to color the cleaned text
+          hljs.highlightAll();
+      });
+  </script>
 
   <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
