@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple pendulum: Setup</title>
-  <meta name="Simple pendulum: Setup" content="text/html; charset=utf-8;" />
+  <title>Definitions</title>
+  <meta name="Definitions" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -49,23 +49,39 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple pendulum: Setup</h1>
-<section id="0"><h1>Overview</h1>
-  A simple pendulum consists of a:
-  <ul>
-    <li>
-      <n>Point</n> mass $m$, i.e. the mass is not spread out
-    </li>
-    <li>
-      Massless string (or rod)
-    </li>
-  </ul>
+<chapter style="counter-reset: chapter 0"><h1>Definitions</h1>
+  <subsubsection><h1>Dynamics</h1>
+    It is the branch of mechanics that is concerned with the study of forces and their effects on motion. 
+  </subsubsection>
 
-  The <a href="https://t.ly/J1UQC">simple pendulum</a> is the simplest abstraction of a manipulator. Another <a href="https://t.ly/yo9YU">Ref</a>.
-</section>
+  <subsubsection><h1>The dynamics problem</h1>
+    Given the forces/moments acting on a system, can a future state of a system be predicted. 
+  </subsubsection>
+
+  <subsubsection><h1>The control problem</h1>
+    Given a desired motion and the current state of a system, what forces and moments need to be commanded to achieve the desire motion. 
+  </subsubsection>
+
+  <subsubsection><h1>Smooth vs Non-smooth systems</h1>
+    Robotics has contact mechanics when a foot hit the ground or a gripper grasps an object. Making and breaking contact is non-smooth, resulting in a discontinuous impact that cannot be written as an ODE. $F=ma$ does not apply at the instant when contact is made or broken.
+  </subsubsection>
+
+  <subsubsection><h1>State vector</h1>
+    It is everything that is needed to specify the initial conditions of a system.
+  </subsubsection>
+
+  <subsubsection><h1>Affine</h1>
+    It means linear plus a constant: $ax + b$
+  </subsubsection>
+
+  <subsubsection><h1>Euler-Lagrange equation</h1>
+    Kinetic energy minus potential energy.
+    $$
+      L = \frac{1}{2} v^T M(q) v - U(q)
+    $$
+  </subsubsection>
 </chapter>
 
 </body>

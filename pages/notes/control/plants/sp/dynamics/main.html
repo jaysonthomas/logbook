@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple pendulum dynamics</title>
-  <meta name="Simple pendulum dynamics" content="text/html; charset=utf-8;" />
+  <title>Dynamics</title>
+  <meta name="Dynamics" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -49,12 +49,15 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Forces/moments</a>
 <a href="#1">Equation of motion</a>
+<a href="#2">State space form</a>
+<a href="#3">Control affine form</a>
+<a href="#4">Manipulator form</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple pendulum dynamics</h1>
-<section id="0"><h1>Overview</h1>
+<chapter style="counter-reset: chapter 0"><h1>Dynamics</h1>
+<section id="0"><h1>Forces/moments</h1>
   The following forces acting on a pendulum result in torques about its pivot point:
   <ul>
     <li><a href="gravity.html">Force due to gravity</a> acting on the pendulum's point mass at <code>G</code></li>
@@ -86,6 +89,59 @@
   $$\begin{align}
     \ddot\theta = \frac{u - b\,\dot\theta -m_{\scriptsize{p}} g \,sin\theta \cdot l}{m_pl^2} \label{eq:1}
   \end{align}$$
+</section>
+
+<section id="2"><h1>State space form</h1>
+  Dynamics of a pendulum in a first-order form: 
+  $$\begin{align*}
+    \dot{x} &= f(x,u) \\
+    \frac{d}{dt}\begin{bmatrix} 
+                  \theta \\ \dot{\theta} 
+                \end{bmatrix} &= 
+    \begin{bmatrix} 
+      \dot{\theta} \\ 
+      \frac{u - b\dot\theta -m_p g \,sin\theta \cdot l}{m_pl^2}
+    \end{bmatrix}
+  \end{align*}$$
+  
+  where $x=\begin{bmatrix}\theta \\ \dot{\theta}\end{bmatrix}$ is the state vector, and $u$ is the input torque which is the only control knob available.
+
+  <p>
+    In code, the dynamics function takes in $x$, $u$ and some <n>parameters</n> to return back $\dot{x}$. $\dot{x}$ decides the next state which is then, along with $u$, used to calculate the next value of $\dot{x}$.
+  </p>
+
+  $q$ or $\theta$ is not a vector that lives on the real line, i.e. is not $\mathbb{R}^n$. It is a compact manifold that wraps around (it's a circle) and does not go to infinity.
+
+  $$\begin{align*}
+    q &\in S^1 \quad &\text{(circle)} \\
+    v &\in \mathbb{R} &\\
+    x &\in S^1 \times \mathbb{R} \quad &\text{(cylinder)}
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Control affine form</h1>
+  $$\begin{align*}
+    \dot{x} &= f_0(x) + B(x)\, u \\
+      \begin{bmatrix} 
+        \dot\theta \\ \ddot{\theta} 
+      \end{bmatrix}
+      &= \begin{bmatrix} 
+        \dot\theta \\ \frac{-g sin\theta}{l} 
+      \end{bmatrix}
+      + \begin{bmatrix} 
+        0 \\ \frac{1}{m_p l^2}
+      \end{bmatrix} \, u
+
+  \end{align*}$$
+</section>
+
+<section id="4"><h1>Manipulator form</h1>
+  $$\begin{align*}
+    M(q) &= m_p l^2 \\
+    C(q, v) &= m_p gl sin\theta \\
+    B &= I \\
+    G &= I
+  \end{align*}$$
 </section>
 </chapter>
 

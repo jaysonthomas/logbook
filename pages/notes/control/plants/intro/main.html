@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple linear system</title>
-  <meta name="Simple linear system" content="text/html; charset=utf-8;" />
+  <title>Introduction</title>
+  <meta name="Introduction" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -49,32 +49,25 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">State transition function</a>
+<a href="#0">Topics</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simple linear system</h1>
-<section id="0"><h1>State transition function</h1>
-  [<a href="https://t.ly/xC-7V">Ref</a>] <p></p>
-  $$\begin{align*}
-    z_k &= Cx_k \\
-    x_{k+1} &= Ax_k + Bu_k
-  \end{align*}$$
-  
-  <div style="width:0; text-align:left;">
-    $$\begin{array}{ccl} 
-      A &:& \text{System matrix - maps how a state relates to the next state} \\ 
-      B &:& \text{Input matrix - maps how a control input relates to the next state} \\
-      C &:& \text{Output matrix - maps a state to the measurement space}
-    \end{array}$$
-  </div>
-
-  Considering a non-simulation environment, at time instant $k$, a prediction $z_k$ can be made of the actual measurement $y_k$ that would be collected of the state at the time instant. In a simulation environment, this would serve as the measurement. 
-  
-  <p>
-    Once, the control input to be applied $u_k$ is decided based on the current state measurement, a prediction can be made of what the state would look like in the next time instant, $x_{k+1}$.
-  </p>
-
-  $y_k$, $z_k$ point to the state variables that the controller aims to control to follow a desired trajectory. It is not necessarily the observed output, that is, it is not necessarily directly measurable.
+<chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="definitions.html">Definitions</a></li>
+    <li><a href="convention.html">Convention</a></li>
+    
+    <p>
+      <li>Dynamics</li>
+      <ul>
+        <li><a href="dynamics/continuous.html">Continuous time smooth systems</a></li>
+        <li><a href="dynamics/affine.html">Control affine systems</a></li>
+        <li><a href="dynamics/manipulator.html">Manipulator</a></li>
+        <li><a href="dynamics/linear.html">Linear system</a></li>
+      </ul>
+    </p>
+  </ul>
 </section>
 </chapter>
 
