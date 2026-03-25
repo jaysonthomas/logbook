@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS</title>
-  <meta name="ROS" content="text/html; charset=utf-8;" />
+  <title>Installation test</title>
+  <meta name="Installation test" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
@@ -49,32 +38,27 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Hello world</a>
+<a href="#1">To find info about a topic</a>
+<a href="#2">Visualising the graph</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>ROS2</h1>
-<section id="0"><h1>Contents</h1>
-  <ul>
-    <li>Installation</li>
-    <ul>
-      <li><a href="install.html">Commands</a></li>
-      <li><a href="test.html">Test</a></li>
-    </ul>
+<chapter style="counter-reset: chapter 1"><h1>Package creation</h1>
+<section><h1>Use</h1>
+  [<a href="https://t.ly/m6W2b">Automatic Addison</a>] <p></p>
+</section>
 
-    <p>
-      <li><a href="package.html">Package creation</a></li>
-    </p>
-    <p>
-      <li><a href="usingDocker.html">Create and run ROS2 packages in docker containers</a></li>
-      <li><a href="refs.html">References</a></li>
-    </p>
-
-    <li><a href="urdf.html">URDF</a></li>
-
-    <p>
-      <li><a href="commsCppAndPython.html">Communication between C++ and python nodes</a></li>
-    </p>
-  </ul>
+<section id="0"><h1>Steps</h1>
+  <pre><code class="bash">
+    cd test/ros/
+    mkdir src
+    cd src/
+    ros2 pkg create --build-type ament_cmake --license Apache-2.0 ros2_fundamentals_examples
+    cd ..
+    colcon build
+    source install/setup.bash
+    ros2 pkg list
+  </code></pre>
 </section>
 </chapter>
 

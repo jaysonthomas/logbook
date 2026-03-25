@@ -122,6 +122,36 @@ function forwardOldChapterLink() {
   }
 }
 
+function initialiseSyntaxHighlighting() {
+    document.querySelectorAll('pre code').forEach((block) => {
+        const lines = block.textContent.split('\n');
+        
+        // Remove empty first/last lines
+        if (lines[0]?.trim() === '') lines.shift();
+        if (lines.length > 0 && lines[lines.length - 1]?.trim() === '') lines.pop();
+
+        // Find the minimum indentation
+        const minIndent = lines.reduce((acc, line) => {
+            const match = line.match(/^(\s+)\S/);
+            if (match) return Math.min(acc, match[1].length);
+            return acc;
+        }, Infinity);
+
+        // Remove indentation and update text
+        block.textContent = lines
+            .map(line => line.substring(minIndent === Infinity ? 0 : minIndent))
+            .join('\n');
+    });
+
+    // Ensure highlight.js is loaded before calling this
+    if (typeof hljs !== 'undefined') {
+        hljs.highlightAll();
+    }
+}
+
+// Automatically trigger it when the DOM is ready
+window.addEventListener('DOMContentLoaded', initialiseSyntaxHighlighting);
+
 function loadChapter(project)  {
   var url = window.location.pathname;
   var filename = url.substring(url.lastIndexOf('/')+1);
