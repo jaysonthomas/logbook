@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basis vectors</title>
+  <meta name="Basis vectors" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Criteria</a>
+<a href="#2">Types</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Basis vectors</h1>
+<section id="0"><h1>Overview</h1>
+  The red and green arrows in the following image are the basis vectors of the <i>coordinate system</i> (the grid in the background).
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../figures/maths/5_1_basisVectors.png"/>
+    </figure>
+  </div>
+
+  Basis vectors are fixed to a coordinate system. If the latter is stretched or rotated (<i>transformed</i>), the basis vectors also end up being transformed. From here on, the coordinate system will not be drawn. <n>Any transformation of the basis vectors implies a transformation to its corresponding coordinate system</n>.
+
+  <p>
+    Basis vectors are like a ruler for a coordinate system. As long as the ruler isn't zero and isn't pointing in the same direction as another ruler in the set, it can be used to measure and describe any point in the space. Depending on the ruler's tick marks, it will lead to different coordinates (coefficients) for the same point.
+  </p>
+
+  <ul>
+    <li>A unit vector is like a ruler where the tick marks are exactly 1 unit apart.</li>
+    <li>A non-unit vector is like a ruler where the tick marks are 5 units apart or 0.5 units apart.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Criteria</h1>
+  To be a basis for a space, a set of vectors needs to satisfy two specific conditions:
+  <ul>
+    <li>Linear Independence: No vector in the set can be built by combining the others.</li>
+    <li>Spanning the Space: You can reach any point in the space by scaling and adding these vectors.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Types</h1>
+  <ul>
+    <li>Orthogonal: Unit vectors: No, Perpendicular: Yes</li>
+    <li>Orthonormal: Unit vectors: Yes, Perpendicular: Yes</li>
+  </ul>
+
+  If a basis is not normalised (unit length), the math just gets a bit "messier," but the underlying geometry remains valid. For example, calculations like the dot product or finding projections would involve dividing by the magnitude of the vectors every time if not normalised.
+</section>
+</chapter>
+
+</body>
+</html>

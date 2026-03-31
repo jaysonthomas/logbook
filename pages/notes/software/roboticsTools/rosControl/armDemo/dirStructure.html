@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Directory structure</title>
+  <meta name="Directory structure" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">package.xml</a>
+<a href="#2">xml file</a>
+<a href="#3">Bringup</a>
+<a href="#4">Description</a>
+<a href="#5">reference_generator</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Directory structure</h1>
+<section id="0"><h1>Overview</h1>
+  <pre><code class="nohighlight">
+    └── ws/src/demo/example7/ 
+      └── bringup
+      └── controller
+      └── description
+      └── doc
+      └── hardware
+      └── reference_generator
+      └── test
+      ├── CMakeLists.txt
+      ├── package.xml
+      ├── ros2_control_demo_example_7.xml
+      └── README.md
+  </code></pre>
+</section>
+
+<section id="1"><h1>package.xml</h1>
+  What is available within the package for outside consumption.
+</section>
+
+<section id="2"><h1>xml file</h1>
+  Mentions that the library being built contains classes <code>RobotSystem</code> and <code>RobotController</code>.
+</section>
+
+<section id="3"><h1>Bringup</h1>
+  <pre><code class="nohighlight">
+    └── bringup 
+      └── config
+        ├── r6bot_controller.yaml
+      └── launch
+        ├── r6bot_controller.launch.py
+        └── send_trajectory.launch.py   
+   </code></pre>
+
+   <code>r6bot_controller.yaml</code>: configuration file. <code>send_trajectory.launch.py</code>: Sends the trajectory for the robot to move in a circle.
+</section>
+
+<section id="4"><h1>Description</h1>
+  <pre><code class="nohighlight">
+    └── description 
+      └── launch
+      └── ros2_control
+      └── urdf
+   </code></pre>
+</section>
+
+<section id="5"><h1>reference_generator</h1>
+  Generates joint angles that move a robot's end-effector in a circle. It reads the URDF file and using IK, computes the joint angles.
+</section>
+</chapter>
+
+</body>
+</html>

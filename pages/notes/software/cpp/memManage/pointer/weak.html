@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
@@ -66,7 +55,7 @@
 </section>
 
 <section id="1"><h1>Example 1</h1>
-  <a href="../../jlib/cppExamples/fundamentals/23a_weak_pointer.cpp">Example</a><br>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/23a_weak_pointer.cpp">Example</a><br>
   The code on the right shows a few examples of how to use and how not to use weak pointers. The output looks as follows:
 <pre><code>
 shared pointer count = 1
@@ -77,7 +66,7 @@ shared pointer count = 1
 </section>
 
 <section id="2"><h1>Example 2</h1>
-  <a href="../../jlib/cppExamples/fundamentals/23b_weak_pointer.cpp">Example</a><br>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/23b_weak_pointer.cpp">Example</a><br>
 
   As we have seen with raw pointers, you can never be sure whether the memory resource to which the pointer refers is still valid. With a weak pointer, even though this type does not prevent an object from being deleted, the validity of its resource can be checked. The code on the right illustrates how to use the expired() function to do this.
 

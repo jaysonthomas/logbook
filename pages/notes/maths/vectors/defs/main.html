@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Definitions</title>
+  <meta name="Definitions" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">Dimension of a vector space</a>
+<a href="#2">Determinant</a>
+<a href="#3">Span</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Definitions</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="basis.html">Basis vectors</a></li>
+    <li><a href="definite.html">Definiteness</a></li>
+    <li><a href="linearTransformation.html">Linear Transformation</a></li>
+    <li><a href="span.html">Span</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Dimension of a vector space</h1>
+  [<a href="https://t.ly/E2P_l">Ref</a>]<br>
+  The dimension of a vector space is the number of linearly independent vectors that form a <n>basis</n> for the vector space, i.e. the minimum number of vectors that can be used to express any vector in the space.
+
+  For example, the standard basis for the three-dimensional Euclidean space consists of three linearly independent vectors: (1, 0, 0), (0, 1, 0), and (0, 0, 1). Therefore, the dimension of this vector space is 3. Similarly, the dimension of a two-dimensional vector space such as the xy-plane is 2, because any vector in this space can be expressed as a linear combination of two linearly independent vectors, such as (1, 0) and (0, 1).
+</section>
+
+<section id="2"><h1>Determinant</h1>
+  [<a href="https://t.ly/Ug0a">Ref</a>] The <i>determinant</i> gives an idea of how much an area (in 2D and volume in 3D) is being squished, scaled or flipped.
+</section>
+
+<section id="3"><h1>Span</h1>
+  The span of a vector is a line passing through the origin of a coordinate system and the end or tip of the vector. The pink line in the above image is the span of the yellow vector.
+
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../figures/maths/5_2_spanOfVector.png"/>
+      <figcaption>
+        The yellow vector gets knocked off its original span (pink line) after a linear transformation of the coordinate system.
+      </figcaption>
+    </figure>
+  </div>
+
+  Normally, vectors get knocked off (rotated by some amount from) their original span under the influence of a linear transformation as shown above.
+</section>
+</chapter>
+
+</body>
+</html>

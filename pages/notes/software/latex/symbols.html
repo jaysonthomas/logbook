@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
@@ -51,10 +40,13 @@
   
 <a href="#0">Brackets</a>
 <a href="#1">Element of</a>
-<a href="#2">Fancy letters</a>
-<a href="#3">Matrix</a>
-<a href="#4">Pseudo-inverse</a>
-<a href="#5">Sum of</a>
+<a href="#2">Evaluated at</a>
+<a href="#3">Fancy letters</a>
+<a href="#4">Implies</a>
+<a href="#5">Matrix</a>
+<a href="#6">Pseudo-inverse</a>
+<a href="#7">Sum of</a>
+<a href="#8">Transpose</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Symbols</h1>
@@ -74,9 +66,9 @@
 </section>
 
 <section id="1"><h1>Element of</h1>
-<pre><code class="latex">
-\in \quad \mathbb{R}
-</code></pre>
+  <pre><code class="latex">
+    \in \quad \mathbb{R}
+  </code></pre>
 
   <subsubsection><h1>Output</h1>
     $$
@@ -85,24 +77,44 @@
   </subsubsection>
 </section>
 
-<section id="2"><h1>Fancy letters</h1>
-<pre><code class="latex">
-\mathcal{N}
-</code></pre>
+<section id="2"><h1>Evaluated at</h1>
+  <pre><code class="latex">
+    \frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}}
+  </code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$\frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}}$$
+  </subsubsection>
+</section>
+
+<section id="3"><h1>Fancy letters</h1>
+  <pre><code class="latex">
+    \mathcal{N}
+  </code></pre>
 
   <subsubsection><h1>Output</h1>
     $$\mathcal{N}$$
   </subsubsection>
 </section>
 
-<section id="3"><h1>Matrix</h1>
+<section id="4"><h1>Implies</h1>
+  <pre><code class="latex">
+    \implies
+  </code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$\implies$$
+  </subsubsection>
+</section>
+
+<section id="5"><h1>Matrix</h1>
   <ul>
     <li><code>\ddots</code> - diagonal dots (3)</li>
     <li><code>\cdots</code> - horizontal dots (3)</li>
   </ul>
 </section>
 
-<section id="4"><h1>Pseudo-inverse</h1>
+<section id="6"><h1>Pseudo-inverse</h1>
 <pre><code class="latex">
 \dagger
 </code></pre>
@@ -114,16 +126,26 @@ $$
 </subsubsection>  
 </section>
 
-<section id="5"><h1>Sum of</h1>
-<pre><code class="latex">
-\sum^p_{i=1}
-</code></pre>
+<section id="7"><h1>Sum of</h1>
+  <pre><code class="latex">
+    \sum^p_{i=1}
+  </code></pre>
 
-<subsubsection><h1>Output</h1>
-$$
-  \sum^p_{i=1}
-$$  
-</subsubsection>  
+  <subsubsection><h1>Output</h1>
+    $$
+      \sum^p_{i=1}
+    $$  
+  </subsubsection>  
+</section>
+
+<section id="8"><h1>Transpose</h1>
+  <pre><code class="latex">
+    x^\top
+  </code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$x^\top$$
+  </subsubsection>
 </section>
 </chapter>
 

@@ -124,31 +124,30 @@ function forwardOldChapterLink() {
 
 function initialiseSyntaxHighlighting() {
     document.querySelectorAll('pre code').forEach((block) => {
+        // 1. Get the raw HTML (preserves spans)
+        let html = block.innerHTML;
+
+        // 2. Remove the very first and last empty newlines
+        html = html.replace(/^\s*[\r\n]/, '').replace(/[\r\n]\s*$/, '');
+
+        // 3. Find the common indentation using textContent
         const lines = block.textContent.split('\n');
-        
-        // Remove empty first/last lines
-        if (lines[0]?.trim() === '') lines.shift();
-        if (lines.length > 0 && lines[lines.length - 1]?.trim() === '') lines.pop();
+        const indentMatch = lines.find(l => l.trim().length > 0)?.match(/^\s*/);
+        const indent = indentMatch ? indentMatch[0].length : 0;
 
-        // Find the minimum indentation
-        const minIndent = lines.reduce((acc, line) => {
-            const match = line.match(/^(\s+)\S/);
-            if (match) return Math.min(acc, match[1].length);
-            return acc;
-        }, Infinity);
-
-        // Remove indentation and update text
-        block.textContent = lines
-            .map(line => line.substring(minIndent === Infinity ? 0 : minIndent))
+        // 4. Remove leading indent from each line, but skip HTML tags
+        const cleanHtml = html.split('\n')
+            .map(line => line.substring(indent))
             .join('\n');
+
+        // 5. Update innerHTML instead of textContent
+        block.innerHTML = cleanHtml;
     });
 
-    // Ensure highlight.js is loaded before calling this
     if (typeof hljs !== 'undefined') {
         hljs.highlightAll();
     }
 }
-
 // Automatically trigger it when the DOM is ready
 window.addEventListener('DOMContentLoaded', initialiseSyntaxHighlighting);
 

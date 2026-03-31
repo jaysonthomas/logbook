@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Build system: Colcon</title>
+  <meta name="Build system: Colcon" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Steps</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Source an underlay</a></li>
+  <li><a href="#1.1">Build the workspace</a></li>
+  <li><a href="#1.2">Source the environment</a></li>
+</ul>
+<a href="#2">--symlink-install</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Build system: Colcon</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/O_anz">Ref</a>]<p></p>
+
+  <pre><code class="nohighlight">
+    └── ros_ws 
+      └── src
+      └── <span class="highlight-word">build</span>
+      └── <span class="highlight-word">install</span>
+      └── <span class="highlight-word">log</span>
+  </code></pre>
+
+  The highlighted directories are created by colcon.
+</section>
+
+<section id="1"><h1>Steps</h1>
+  <subsection id="1.0"><h1>Source an underlay</h1>
+    <code>underlay</code> refers to an existing ROS2 installation that will provide a workspace with the necessary build dependencies for its packages.
+
+    <p>
+      A workspace will be an overlay on top of the existing ROS 2 installation.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Build the workspace</h1>
+    <pre><code class="bash">
+      colcon build --symlink-install
+    </code></pre>
+  </subsection>
+
+  <subsection id="1.2"><h1>Source the environment</h1>
+    When colcon has completed building successfully, the output will be in the install directory. colcon will have generated bash/bat files in the install directory to help set up the environment. These files will:
+    
+    <ul>
+      <li>Add all of the installed executables or libraries to the path and library paths.</li>
+      <li>Provide any bash or shell commands exported by the built packages.</li>
+    </ul>
+
+    <pre><code class="bash">
+      source install/setup.bash
+    </code></pre>
+  </subsection>
+</section>
+
+<section id="2"><h1>--symlink-install</h1>
+  colcon normally copies files into the install folder. If a source file changes, nothing in install changes until a rebuild. With <code>--symlink-install</code>, instead of copying files, colcon creates symbolic links (shortcuts) that point back to the original source files.
+
+  <p>
+    It only helps with non-compiled files (Python scripts, YAML configs, launch files, etc.). C++ still needs a full rebuild because the compiler has to actually process the source.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

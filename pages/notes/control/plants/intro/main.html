@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
@@ -57,9 +46,9 @@
   <ul>
     <li><a href="definitions.html">Definitions</a></li>
     <li><a href="convention.html">Convention</a></li>
-    
+  
     <p>
-      <li>Dynamics</li>
+      <li>General types of dynamical systems</li>
       <ul>
         <li><a href="dynamics/continuous.html">Continuous time smooth systems</a></li>
         <li><a href="dynamics/affine.html">Control affine systems</a></li>
@@ -70,8 +59,15 @@
 
     <li>Analysis of dynamical systems</li>
     <ul>
+      <li><a href="analysis/overview.html">Overview</a></li>
       <li><a href="analysis/equilibria.html">Equilibria</a></li>
-      <li><a href="analysis/stability.html">Stability</a></li>
+      <p>
+        <li>Stability of equilibrium points</li>
+        <ul>
+          <li><a href="analysis/stability/asymptotic/main.html">Asymptotic stability</a></li>
+          <li><a href="analysis/stability/lyapunov.html">Lyapunov stability</a></li>
+        </ul>
+      </p>      
     </ul>
   </ul>
 </section>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Stability</title>
-  <meta name="Stability" content="text/html; charset=utf-8;" />
+  <title>Commands</title>
+  <meta name="Commands" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../../logbook.js"></script>
 
   <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
@@ -49,12 +38,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Package creation</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Stability</h1>
-<section id="0"><h1>Overview</h1>
-  Stability of the equilibria.
+<chapter style="counter-reset: chapter 1"><h1>Commands</h1>
+<section id="0"><h1>Package creation</h1>
+  [<a href="https://t.ly/_lcKm">Ref</a>] <p></p>
+  <pre><code class="bash">
+    mkdir cobot
+    cd cobot
+    ros2 pkg create --build-type ament_cmake --license BSD-3-Clause cobot_description
+    ros2 pkg create --build-type ament_cmake --license BSD-3-Clause cobot
+    cd cobot
+    gedit package.xml   # Add the dependency to cobot_description
+    cd ~/test/ros
+    colcon build --packages-select cobot_description cobot
+    source install/setup.bash
+    ros2 pkg list
+  </code></pre>  
 </section>
 </chapter>
 

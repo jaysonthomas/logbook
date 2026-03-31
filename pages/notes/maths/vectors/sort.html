@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
@@ -75,15 +64,15 @@
   <div class="container">
     <figure>
       <img style="height:150px; width:auto"
-      src="../../../figures/maths/5_3_LinearTransformation.png"/>
+      src="../../../../figures/maths/5_3_LinearTransformation.png"/>
     </figure>
     <figure>
       <img style="height:50px; width:auto"
-      src="../../../figures/maths/4_linearTransformation.png"/>
+      src="../../../../figures/maths/4_linearTransformation.png"/>
     </figure>
     <figure>
       <img style="height:120px; width:auto"
-      src="../../../figures/maths/1_linearTransformation.png"/>
+      src="../../../../figures/maths/1_linearTransformation.png"/>
       <figcaption>
         Example of $A$ applied on basis vectors
       </figcaption>
@@ -96,7 +85,7 @@
   <div class="container">
     <figure>
       <img style="height:100px; width:auto"
-      src="../../../figures/maths/5_1_basisVectors.png"/>
+      src="../../../../figures/maths/5_1_basisVectors.png"/>
     </figure>
   </div>
 
@@ -109,7 +98,7 @@
   <div class="container">
     <figure>
       <img style="height:100px; width:auto"
-      src="../../../figures/maths/5_2_spanOfVector.png"/>
+      src="../../../../figures/maths/5_2_spanOfVector.png"/>
       <figcaption>
         The yellow vector gets knocked off its original span (pink line) after a linear transformation of the coordinate system.
       </figcaption>

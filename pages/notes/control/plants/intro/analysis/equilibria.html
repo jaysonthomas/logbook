@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
@@ -50,11 +39,15 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Moving an equilibrium point</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Controllability</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Equilibria</h1>
 <section id="0"><h1>Overview</h1>
-  <i>Equilibrium point</i> of a dynamical system is a point at which the system is at rest, i.e. there is no movement.
+  <i>Equilibrium point</i> of a dynamical system is a point at which a system is at rest, i.e. there is no movement; if it is placed there, it will remain there.
 
   $$
     \dot{x} = f(x, u) = 0
@@ -67,7 +60,7 @@
   </ul>
 </section>
 
-<section><h1>Moving an equilibrium point</h1>
+<section id="1"><h1>Moving an equilibrium point</h1>
   To move an equilibrium point to a desired state $x^*$ using control, it would be necessary to find a value of $u$ for which $\dot{x} = 0$. It boils down to a root-finding problem in (solving for) $u$ :
   $$
     f(x^*, u) = 0
@@ -75,7 +68,7 @@
 
   <a href="../../sp/analysis/equilibria.html">Simple pendulum example</a>.
 
-  <subsection><h1>Controllability</h1>
+  <subsection id="1.0"><h1>Controllability</h1>
     It is not possible to do this in the case where there are more joints or DOFs than actuators, i.e. in an underactuated system. In such a case, it would be necessary to reason about the dynamics in a sophisticated way since it is not possible to cancel out torques arbitrarily.
   </subsection>
 </section>

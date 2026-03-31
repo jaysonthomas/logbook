@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
@@ -57,18 +46,18 @@
     \dot{x} = f_0(x) + B(x)\, u
   $$
 
-  $f_0$ and $B$ (which is a matrix) are non-linear functions of $x$. If $x$ is fixed, then thinking of the equation as a function in $u$, $f_0$ and $B$ are constants, the equation becomes affine in the control input.
-
-  <p>
-    $f_0$ and $B$ are generally non-zero. If $B$ is <i>full rank</i> (i.e. a system is fully actuated), the equation can be inverted and can be solved for $u$ for any arbitrary $\dot{x}$. Feedback linearisation is commonly used in this case to control classical manipulator arms.
-  </p>
-
   <div style="width:0; text-align:left;">
     $$\begin{array}{ccl} 
       f_0(x) &:& \text{Drift} \\ 
-      B(x) &:& \text{Input jacobian} 
+      B(x) &:& \text{Input jacobian matrix} 
     \end{array}$$
   </div>
+
+  $f_0$ and $B$ are non-linear functions of $x$. If $x$ is fixed, then thinking of the equation as a function in $u$, $f_0$ and $B$ become constants and the equation becomes affine in the control input.
+
+  <p>
+    $f_0$ and $B$ are generally non-zero. If $B$ is <i>full rank</i> (i.e. a system is fully actuated), the equation can be inverted and can be solved for $u$ for any arbitrary $\dot{x}$. <m>Feedback linearisation is commonly used in this case to control classical manipulator arms</m>.
+  </p>
 
   <a href="../../sp/dynamics/main.html">Simple pendulum example</a>.
 </chapter>

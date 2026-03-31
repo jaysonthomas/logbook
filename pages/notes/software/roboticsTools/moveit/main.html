@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Moveit</title>
+  <meta name="Moveit" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Install moveit</a>
+<a href="#1">RViz interaction with moveit</a>
+<a href="#2">C++ interaction with moveit</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Hello world with robot arm</a></li>
+  <li><a href="#2.1">Visualise with Rviz</a></li>
+  <li><a href="#2.2">Object interaction</a></li>
+</ul>
+<a href="#3">Using the task constructor</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Moveit</h1>
+<section id="0"><h1>Install moveit</h1>
+  <ul>
+    <li>Source ROS2 installation</li>
+    <li>Install rosdep which is written in python for automatic dependency installation</li>
+    <li>Initialise and update rosdep</li>
+    <li><m>System update</m></li>
+
+    <p>
+      <li>Install colcon extension, mixin - help with specifying multiple command line args.</li>
+      <li>Install python vcstool - help with cloning supporting repos for a given repo.</li>
+    </p>
+
+    <li>Create workspace with source folder.</li>
+    <li>Clone repo containing moveit tutorials into src.</li>
+
+    <p>
+      <li>Check that there isn't a version of moveit already installed.</li>
+      <li>Using rosdep, install all dependenices required by any ros package under src.</li>
+    </p>
+
+    <li>Go up a folder and build using the debug or release keyword. Can take an hour to compile.</li>
+    <li>Source the workspace (setup.bash). Add to bashrc if required.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>RViz interaction with moveit</h1>
+  <ul>
+    <li>ros2 launch moveit tutorials demo launch.py</li>
+    <li>Can save it with an rviz extension.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>C++ interaction with moveit</h1>
+  <subsection id="2.0"><h1>Hello world with robot arm</h1>
+    <ul>
+      <li>Build ROS package.</li>
+      <li>Boiler plate c++ code to interact with moveit</li>
+      <ul>
+        <li>Initialise ROS <code>rclcpp</code></li>
+        <li>Create node with <code>declare_parameters..</code> that is essential with moveit</li>
+        <li>Create logger</li>
+
+        <p>
+          <li>Create the movegroup interface.</li>
+          <li>Create target pose</li>
+          <li>Create plan to target</li>
+          <li>Execute plan</li>
+        </p>
+        <li>Shutdown ros</li>
+      </ul>
+    </ul>
+
+    Finally, source the workspace and use <code>ros2 run</code>
+  </subsection>
+
+  <subsection id="2.1"><h1>Visualise with Rviz</h1>
+    <ul>
+      <li>Add dependency and header file to moveit_visual_tools.</li>
+      <li>Build</li>
+      
+      <p>
+        <li>Include thread header and create an executor thread that run the main node.</li>
+        Add this after the logger and before the main code section.
+      </p>
+
+      <li>Add <code>spinner.join</code> after shutting down ros.</li>
+
+      <p>
+        <li>Create and initialise moveit_visual_tools with the current node, its base link and the robot model.</li>
+        Delete all previous markers and load remote control.
+      </p>
+
+      <li>Create closures to draw text, prompt a user and draw trajectory.</li>
+    </ul>
+
+    Use <code>trigger()</code> to refresh the screen after any drawing or prompting.
+  </subsection>
+
+  <subsection id="2.2"><h1>Object interaction</h1>
+    Inform moveit of an object, so it plans around the box.
+
+    <ul>
+      <li>Include planning_scene_interface.</li>
+      <li>Create collision object w.r.t. the robot's base.</li>
+      <li>Give the box an id, set its dimensions and pose.</li>
+      <li>Push_back the primitive and its pose into a list forming the collision object.</li>
+      <li>Add the whole collision object to the scene.</li>
+    </ul>
+  </subsection>
+
+<section id="3"><h1>Using the task constructor</h1>
+    
+  </section>
+</section>
+
+</chapter>
+
+</body>
+</html>

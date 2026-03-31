@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
@@ -50,17 +39,23 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Introduction</a>
-<a href="#1">Example 1</a>
-<a href="#2">Example 2</a>
-<a href="#3">Example 3</a>
+<a href="#1">Under the hood</a>
+<a href="#2">Usecase</a>
+<a href="#3">Example 1</a>
+<a href="#4">Example 2</a>
+<a href="#5">Example 3</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Shared Pointers</h1>
 <section id="0"><h1>Introduction</h1>
   <code>std::shared_ptr</code> points to a heap resource but does not explicitly own it. There may even be several shared pointers to the same resource, each of which will increase an internal reference count. As soon as this count reaches zero, the resource will automatically be deallocated.
+</section>
+
+<section id="1"><h1>Under the hood</h1>
+  Just as a unique pointer, a shared pointer owns the resource it points to. The main difference between the two smart pointers is that shared pointers keep a reference counter on how many of them point to the same memory resource. 
   
   <p>
-    Just as the unique pointer, a shared pointer owns the resource it points to. The main difference between the two smart pointers is that shared pointers keep a reference counter on how many of them point to the same memory resource. Each time a shared pointer goes out of scope, the counter is decreased. When it reaches zero (i.e. when the last shared pointer to the resource is about to vanish). the memory is properly deallocated. This smart pointer type is useful for cases where you require access to a memory location on the heap in multiple parts of your program and you want to make sure that whoever owns a shared pointer to the memory can rely on the fact that it will be accessible throughout the lifetime of that pointer.
+    Each time a shared pointer goes out of scope, the counter is decreased. When it reaches zero (i.e. when the last shared pointer to the resource is about to vanish). the memory is properly deallocated. 
   </p>
 
   <div class="container">
@@ -74,8 +69,12 @@
   </div>
 </section>
 
-<section id="1"><h1>Example 1</h1>
-  <a href="../../jlib/cppExamples/fundamentals/22a_shared_pointer.cpp">Example</a><br>
+<section id="2"><h1>Usecase</h1>
+  This smart pointer type is useful for cases where access to a memory location is required on the heap in multiple parts of a program and a guarantee can be provided that whoever owns a shared pointer to the memory can rely on the fact that it will be accessible throughout the lifetime of that pointer.
+</section>
+
+<section id="3"><h1>Example 1</h1>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/22a_shared_pointer.cpp">Example</a><br>
 
   We can see that shared pointers are constructed just as unique pointers are. Also, we can access the internal reference count by using the method use_count(). In the inner block, a second shared pointer shared2 is created and shared1 is assigned to it. In the copy constructor, the internal resource pointer is copied to shared2 and the resource counter is incremented in both shared1 and shared2. Let us take a look at the output of the code:
 
@@ -90,8 +89,8 @@ shared pointer count = 1
   You may have noticed that the lifetime of shared2 is limited to the scope denoted by the enclosing curly brackets. Thus, once this scope is left and shared2 is destroyed, the reference counter in shared1 is decremented by one - which is reflected in the three console outputs given above.
 </section>
 
-<section id="2"><h1>Example 2</h1>
-  <a href="../../jlib/cppExamples/fundamentals/22b_shared_pointer.cpp">Example</a><br>
+<section id="4"><h1>Example 2</h1>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/22b_shared_pointer.cpp">Example</a><br>
 
   A shared pointer can also be redirected by using the reset() function. If the resource which a shared pointer manages is no longer needed in the current scope, the pointer can be reset to manage a difference resource as illustrated in the example on the right.
 
@@ -108,8 +107,8 @@ Destructor of MyClass called
   After creation, the program prints 1 as the reference count of shared. Then, the reset function is called with a new instance of MyClass as an argument. This causes the destructor of the first MyClass instance to be called, hence the console output. As can be seen, the reference count of the shared pointer is still at 1. Then, at the end of the program, the destructor of the second MyClass object is called once the path of execution leaves the scope of main.
 </section>
 
-<section id="3"><h1>Example 3</h1>
-  <a href="../../jlib/cppExamples/fundamentals/22c_shared_pointer.cpp">Example</a><br>
+<section id="5"><h1>Example 3</h1>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/22c_shared_pointer.cpp">Example</a><br>
   
   Despite all the advantages of shared pointers, it is still possible to have problems with memory management though. 
 

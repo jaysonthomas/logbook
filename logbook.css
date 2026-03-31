@@ -594,3 +594,16 @@ chapter.appendix figcaption:before {
   margin-bottom: 0px;
   border: none;
 }
+
+code.nohighlight { color: unset; /* reset for file trees / plain blocks */ }
+code.nohighlight .highlight-word {
+  color: #e0bf6c;
+  font-weight: bold;
+}
+pre code.nohighlight {
+  display: block;
+  background-color: #1e1e1e; /* or whatever your code block background is */
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 1em;
+}

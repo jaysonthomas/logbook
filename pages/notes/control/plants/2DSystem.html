@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS</title>
-  <meta name="ROS" content="text/html; charset=utf-8;" />
+  <title>2D System</title>
+  <meta name="2D System" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
@@ -49,33 +38,24 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Stability analysis</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>ROS2</h1>
-<section id="0"><h1>Contents</h1>
-  <ul>
-    <li>Installation</li>
-    <ul>
-      <li><a href="install.html">Commands</a></li>
-      <li><a href="test.html">Test</a></li>
-    </ul>
+<chapter style="counter-reset: chapter 0"><h1>2D System</h1>
+<section id="0"><h1>Stability analysis</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/control/dynamics/simple2d/1_stability.png"/>
+    </figure>
+    <figcaption>
+      Phase portrait of $\dot{x} = x^2$
+    </figcaption>
+  </div>
 
-    <p>
-      <li><a href="package.html">Package creation</a></li>
-    </p>
-    <p>
-      <li><a href="usingDocker.html">Create and run ROS2 packages in docker containers</a></li>
-      <li><a href="refs.html">References</a></li>
-    </p>
-
-    <li><a href="urdf.html">URDF</a></li>
-
-    <p>
-      <li><a href="commsCppAndPython.html">Communication between C++ and python nodes</a></li>
-    </p>
-  </ul>
+  A small perturbation to the right causes the system to be unstable and blow up. A small perturbation to the left causes the system to come back to the equilibrium point.
 </section>
+
 </chapter>
 
 </body>

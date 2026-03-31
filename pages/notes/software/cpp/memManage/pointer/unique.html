@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
 </head>
@@ -50,18 +39,35 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Introduction</a>
-<a href="#1">Comparison to raw pointers</a>
-<a href="#2">Example 2</a>
+<a href="#1">Construction</a>
+<a href="#2">Move</a>
+<a href="#3">Comparison to raw pointers</a>
+<a href="#4">Under the hood</a>
+<a href="#5">Example 2</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Unique Pointers</h1>
 
 <section id="0"><h1>Introduction</h1>
-  <code>std::unique_ptr</code> is a smart pointer which exclusively owns a dynamically allocated resource on the heap. There must not be a second unique pointer to the same resource. The underlying internal raw pointer pointing to the particular resource is owned by a single RAII class. 
+  <code>std::unique_ptr</code> is a smart pointer which <n>exclusively</n> owns a <n>dynamically allocated resource on the heap</n>. There must not be a second unique pointer to the same resource. The underlying internal raw pointer pointing to the particular resource is owned by a single RAII class. 
 
   <p>
-    Unique pointers should be the default choice unless it is known for certain that sharing would be required at a later stage. Internally, a unique pointer uses the rule of five and move semantics along with RAII to encapsulate a resource (the raw pointer) and transfer it between pointer objects when either the move assignment operator or the move constructor are called. Also, a key feature of a unique pointer, which makes it so well-suited as a return type for many functions, is the possibility to convert it to a shared pointer.
+    Unique pointers should be the default choice unless it is known for certain that sharing would be required at a later stage. Also, a key feature of a unique pointer, which makes it so well-suited as a return type for many functions, is the possibility to convert it to a shared pointer.
   </p>
+</section>    
+
+<section id="1"><h1>Construction</h1>
+  A unique pointer is constructed using the following syntax:
+  
+  <pre><code class="Cpp">
+    // p is allocated on the stack and new Type is allocated on the heap.
+    std::unique_ptr&ltType&gt p(new Type);
+    // or
+    auto p = make_unique&ltType&gt ();
+  </code></pre>
+</section>
+
+<section id="2"><h1>Move</h1>
   <div class="img-container">
     <figure>
       <img style="height:150px; width:auto"
@@ -73,20 +79,10 @@
   </div>
 
   In the example, a resource in memory is referenced by a unique pointer instance sourcePtr. Then, the resource is reassigned to another unique pointer instance destPtr using std::move. The resource is now owned by destPtr while sourcePtr can still be used but does not manage a resource anymore.
+</section>
 
-  <p>
-    A unique pointer is constructed using the following syntax:
-<pre><code class="Cpp">
-// p is allocated on the stack and new Type is allocated on the heap.
-std::unique_ptr&ltType&gt p(new Type);
-// or
-auto p = make_unique&ltType&gt ();
-</code></pre>
-  </p>
-</section>    
-
-<section id="1"><h1>Comparison to raw pointers</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/21_unique_pointer.cpp">Example</a>] <br>
+<section id="3"><h1>Comparison to raw pointers</h1>
+  [<a href="../../../../../../jlib/cpp/examples/fundamentals/21_unique_pointer.cpp">Example</a>] <br>
 
   The function <code>RawPointer</code> contains the familiar steps of:
   <ul>
@@ -106,8 +102,12 @@ auto p = make_unique&ltType&gt ();
   The function <code>UniquePointer</code> shows how to achieve the same goal using a smart pointer from the standard library. 
 </section>
 
-<section id="2"><h1>Example 2</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/21b_unique_pointer.cpp">Example</a>] <br>
+<section id="4"><h1>Under the hood</h1>
+  Internally, a unique pointer uses the rule of five and move semantics along with RAII to encapsulate a resource (the raw pointer) and transfer it between pointer objects when either the move assignment operator or the move constructor are called.
+</section>
+
+<section id="5"><h1>Example 2</h1>
+  [<a href="../../../../../../jlib/cpp/examples/fundamentals/21b_unique_pointer.cpp">Example</a>] <br>
 
   <button class="accordion">Notes to be written when needed</button>
   <div class="panel">

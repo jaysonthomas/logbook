@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Details</title>
+  <meta name="Details" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Gripper joint characteristics</a>
+<a href="#1">Mass and inertial properties</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>Details</h1>
+<section id="0"><h1>Gripper joint characteristics</h1>
+  The physical limitations: how much force the joints can exert (effort), how fast they can move (velocity), and their friction/damping characteristics. 
+
+  <pre><code class="xml">
+    &lt;xacro:property name="joint_effort" value="56.0"/&gt;
+    &lt;xacro:property name="joint_velocity" value="2.792527"/&gt;
+    &lt;xacro:property name="joint_damping" value="0.0"/&gt;
+    &lt;xacro:property name="joint_friction" value="0.0"/&gt;
+  </code></pre>  
+</section>
+
+<section id="1"><h1>Mass and inertial properties</h1>
+  These properties describe the mass of the gripper components and how their mass is distributed (inertia). These values are important for accurate physics simulation. 
+  
+  <pre><code class="xml">
+    &lt;xacro:property name="gripper_link_mass" value="0.007"/&gt;
+    &lt;xacro:property name="gripper_link_ixx" value="1e-6"/&gt;
+    &lt;xacro:property name="gripper_link_iyy" value="1e-6"/&gt;
+    &lt;xacro:property name="gripper_link_izz" value="1e-6"/&gt;
+  </code></pre>  
+</section>
+
+ros2 launch urdf_tutorial display.launch.py model:=~/test/ros/src/cobot/cobot_description/urdf/robots/cobot_280.urdf.xacro
+</chapter>
+
+</body>
+</html>

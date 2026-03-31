@@ -12,18 +12,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script>
-      // Use 'load' or 'DOMContentLoaded' to be safe
-      window.addEventListener('DOMContentLoaded', () => {
-          // Trim whitespace from all code blocks
-          document.querySelectorAll('pre code').forEach((block) => {
-              block.textContent = block.textContent.trim();
-          });
-
-          // Now tell highlight.js to color the cleaned text
-          hljs.highlightAll();
-      });
-  </script>
+  <script src="../../../../logbook.js" defer></script>
 
   <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
 </head>
@@ -68,11 +57,11 @@
 </section>
 
 <section id="1"><h1>Purpose</h1>
-  A Jacobian captures how a change in an input space affects the output space. 
+  A Jacobian matrix captures how a change in an input space affects the output space. It has $n$ rows and $m$ columns.
   
   <p>
-    Each column ($m$ in total) of the Jacobian matrix captures how a change in an input space variable ($m$ in total) affects the $n$-dimensional vector in the output space. A Jacobian has $n$ rows and $m$ columns.
-  </p>
+    Each column of the Jacobian matrix captures how a change in any of the $m$ input space variables affects the $n$-dimensional vector in the output space.
+  </p>   
 </section>
 
 <section id="2"><h1>Alternate statements</h1>
