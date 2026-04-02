@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Visual Studio Code</title>
-  <meta name="Visual Studio Code" content="text/html; charset=utf-8;" />
+  <title>Create sim from scratch</title>
+  <meta name="Create sim from scratch" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,45 +38,29 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">C++ include path</a>
-<a href="#1">Editor tweaks</a>
-<a href="#2">Python imports</a>
-<a href="#3">Useful extensions</a>
+<a href="#0">Steps overview</a>
+<a href="#1">Setup</a>
+<a href="#2">References</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Visual Studio Code</h1>
-<section id="0"><h1>C++ include path</h1>
-  <p>
-    VS Code's IntelliSense engine is separate from the actual compiler (like GCC or Clang). Even if the code builds fine using a Makefile or CMake, the editor needs to be "told" where to look so it can provide helpful suggestions.
-  </p>
-  
-  Steps:
+<chapter style="counter-reset: chapter 3"><h1>Create sim from scratch</h1>
+<section id="0"><h1>Steps overview</h1>
   <ul>
-    <li>Ctrl + Shift + P</li>
-    <li>Type C/C++: Edit Configurations (UI)</li>
-    <li>Scroll down to the Include path section</li>
-    <li>Include <code>/usr/include/eigen3/**</code> or <code>/usr/local/include/eigen3/**</code></li>
-    <li>Alternatively, click the "JSON" link or open .vscode/c_cpp_properties.json and update the includePath array</li>
+    <li>Create ros workspace/src, description package.</li>
   </ul>
-  
 </section>
 
-<section id="1"><h1>Editor tweaks</h1>
-  <code>Alt+z</code> is used for fitting lines of code within view.
+<section id="1"><h1>Setup</h1>
+  <pre><code class="bash">
+    sudo apt install ros-kilted-ros2-control ros-kilted-ros2-controllers
+    ros2 pkg create --build-type ament_cmake --license Apache-2.0 description
+  </code></pre>
 </section>
 
-<section id="2"><h1>Python imports</h1>
-  To tell VS code's pylance where the workspace root is, open the folder in which the main python file is using Ctrl+k+o, and then continue working on code.
-</section>
-
-<section id="3"><h1>Useful extensions</h1>
-<pre><code>
-Latex workshop
-Plantuml
-C++ (from microsoft)
-Clang-Format
-Python
-</code></pre>    
+<section id="2"><h1>References</h1>
+  <ul>
+    <li><a href="https://t.ly/gnoV2">Edouard youtube</a></li>
+  </ul>
 </section>
 </chapter>
 

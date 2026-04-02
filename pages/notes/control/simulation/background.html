@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simulation: Background</title>
-  <meta name="Simulation: Background" content="text/html; charset=utf-8;" />
+  <title>Background</title>
+  <meta name="Background" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -43,9 +43,21 @@
 <a href="#2">System output</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Simulation: Background</h1>
+<chapter style="counter-reset: chapter 0"><h1>Background</h1>
 <section id="0"><h1>Overview</h1>
-  <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>.
+  <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>. A discrete-time simulation helps simulate continuous dynamics (represented by ODEs which are always continuous), digitally on a PC.
+
+  <subsubsection><h1>Motivation</h1>
+    <ul>
+      <li>It is only possible to solve $\dot{x}=f(x)$ for $x(t)$, for linear systems and very simple non-linear ones.</li>
+      <li>Digital devices can't represent continuous states $x(t)$. Discrete states $x_k$ are required, instead.</li>
+      <li>Discrete time models can capture some things that continuous ODEs cannot, like impacts that are non-differentiable.</li>
+
+      <p>
+        When a brick is dropped, its velocity goes from some non-zero value to 0 instantaneously, the moment it hits the ground. The acceleration goes to infinity. Therefore, it is not possible to represent such discontinuous jumps with an ODE. In discrete time, it would be represented as a simple instantaneous jump.
+      </p>
+    </ul>
+  </subsubsection>
 </section>
 
 <section id="1"><h1>System dynamics</h1>
@@ -59,7 +71,7 @@
         <img style="height:30px; width:auto"
         src="../../../../figures/dynamics/1_simplePendulumSimulation.png"/>
         <figcaption>
-          An example of abstraction of a system's dynamics: Simple pendulum        
+          An example of abstraction of a system's dynamics        
         </figcaption>
       </figure>
     </div>

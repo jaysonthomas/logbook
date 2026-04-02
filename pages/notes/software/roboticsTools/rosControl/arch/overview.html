@@ -38,30 +38,30 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Contents</a>
+<a href="#1">Details</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Overview</h1>
-  Equilibrium points are those with $\dot{x} = 0$.
+<chapter style="counter-reset: chapter 1"><h1>Overview</h1>
+<section id="0"><h1>Contents</h1>
+  The Controller Manager is the primary ROS node that handles the lifecycle of controllers and coordinates with the hardware.
 
   <p>
-    The way to check for stable/unstable equilibria, is to take the first derivative of the dynamics w.r.t. x, $\frac{\partial{f}}{\partial{x}}$, which corresponds to the $A$ matrix in a linear system. If all of the eigenvalues of $A$ have a strictly negative real part, the system is stable. If any of the eigenvalues are 0, the stability is inconclusive and fancier analysis tools would need to be used.
+    Inside the Controller Manager, there is a C++ class called the ResourceManager that is responsible for loading, initializing, and managing all hardware components defined in a URDF file.
   </p>
 
-  The eigenvalues correspond to eigenvectors. There are particular eigenvector directions along which a system can be stable in some cases or unstable. If a system has a mixed spectrum of stable and unstable eigenvectors, even the slightest noise perturbation along an unstable eigenvector can cause the system to blow up to infinity. It is possible to do a more complex analysis and compute stable/unstable manifolds around equilibria of where a system can evolve.
+  Hardware Components are loaded as plugins (using pluginlib). They are not independent processes or nodes; they are shared libraries linked into the Controller Manager at runtime.
+</section>
 
-  <subsubsection><h1>Note</h1>
-    The eigenvalue concept is based on the fact that, near an equilibrium point:
-    <ul>
-      <li>$\dot{x} = 0$</li>
-      <li>the dynamics can be locally approximated by $Ax$</li>
-    </ul>
+<section id="1"><h1>Details</h1>
+  When ros2_control is launched, a URDF's content is passed to the controller_manager node as a string parameter called robot_description.
 
-    If the system is not at an equilibrium point, then $f(x) \neq 0$.  This doesn't hold up.
-    
-    <p>
-      Doing a taylor expansion, $f(x) + A \Delta{x} \cdots$, at non-equilibrium setting, the first leading affine term is non-zero, so the expansion doesn't hold much information. There are things (not covered here) that can be said about stability along trajectories where the leading term is non-zero.
-    </p>
-  </subsubsection>
+  <p>
+    Inside the controller_manager (specifically in its on_configure or initialization phase), it passes the string within robot_description parameter to a class called ComponentParser (found in the hardware_interface package). The parser hunts for ros2_control XML tags. It then iterates through every hardware block and extracts the plugin name and the component type.
+  </p>
+
+  The parser passes the plugin names to the ResourceManager, which uses pluginlib to find the compiled .so libraries corresponding to the names and get back corresponding class instances.
+</section>
 </chapter>
 
 </body>

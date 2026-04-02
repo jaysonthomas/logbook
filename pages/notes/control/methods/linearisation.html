@@ -58,7 +58,7 @@
       \ddot{y} = c_1u_1 + c_2u_2 + c_3\phi + \cdots
     $$
 
-    $c_1, c_2, \cdots$ are constants. There is no sine, cosine or multiplication of input and state (eg: $u \cdot phi$). A plot of LHS as a function of $u_1$ or $\phi$ or any of the other variables, would be a straight line. 
+    $c_1, c_2, \cdots$ are constants. There is no sine, cosine or multiplication of input and state (eg: $u\, \phi$). A plot of LHS as a function of $u_1$ or $\phi$ or any of the other variables, would be a straight line. 
   </p>
 
   <subsubsection><h1>Benefits of linear equations</h1>
@@ -94,7 +94,7 @@
   </p>
 
   <subsubsection><h1>Use</h1>
-    For a 2D drone, it helps decouple the dynamics in the $y,z,\phi$ directions, which enables thinking about each of the directions separately.
+    Decoupling the dynamics in the $y,z,\phi$ directions for a 2D drone, enables thinking about each of the directions separately.
   </subsubsection>
 </section>
 
@@ -103,8 +103,10 @@
     Choose some state of the non-linear system to linearise around. 
 
     <p>
-      Since approximations due to linearisation are only valid in a small region around the operating point, it's helpful to <n>linearise around an equilibrium state</n>. An <i>equilibrium</i> exists when certain fixed and non-changing control input values can be found resulting in velocities and accelerations, at least in some dimensions, to be constant. Intuitively, this is a state that the vehicle can stay in for an extended period of time. 
+      Since <n>approximations due to linearisation are only valid in a small region around an operating point</n>, it's helpful to <n>linearise around an equilibrium state</n>. 
     </p>
+
+    An <i>equilibrium</i> exists when certain fixed and non-changing control input values can be found resulting in velocities and accelerations, at least in some dimensions, to be constant. Intuitively, this is a state that the vehicle can stay in for an extended period of time.
   </subsection>
 
   <subsection id="2.1"><h1>Linearise sines and cosines</h1>
@@ -126,7 +128,8 @@
         </figcaption>
       </figure>
     </div>
-    Linearisation finds the line that is the tangent to the operating point. The tangent to $sin\phi$ at $\phi=0$ is $y=\phi$ and $cos\phi$ and its tangent line are equal to 1 when $\phi$ is small.
+    
+    Linearisation finds the tangent line at an operating point. The tangent when $\phi$ is small, here 0, for $sin\phi$ is $y=\phi$ and for $cos\phi$ is $y = 1$.
   </subsection>
   
   <subsection id="2.2"><h1>Linearise products of variables</h1>
@@ -145,7 +148,7 @@
     </figure>
   </div>
 
-  To linearise a quadratic function as above around a (<i>operating</i>) point, say $x = 1$, a straight line that best approximates the function at the point needs to be found. This means the line has to pass through the point and also have the same slope as the function at the point. 
+  The result of linearisation of a quadratic function around an <i>operating</i> point, say $x = 1$, is a straight line that best approximates the function at the point. The line has to pass through the point and have the same slope as the function at the point. 
 
   <p>
     The solution is the tangent line at the operating point. The slope of the parabola at the operating point can be found using calculus and will match that of the tangent line. Zooming into the operating point, visually, the tangent and the parabola are very close to each other. This confirms the tangent is a good linear approximation of the parabola in the region. 

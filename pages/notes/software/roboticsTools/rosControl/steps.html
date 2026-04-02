@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ROS2</title>
-  <meta name="ROS2" content="text/html; charset=utf-8;" />
+  <title>Steps</title>
+  <meta name="Steps" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,37 +38,37 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
+<a href="#0">Configuration</a>
+<a href="#1">Launch</a>
 </div>
 
-<chapter style="counter-reset: chapter 1"><h1>ROS2</h1>
-<section id="0"><h1>Contents</h1>
-  <ul>
-    <li><a href="intro/main.html">Introduction</a></li>
+<chapter style="counter-reset: chapter 1"><h1>Steps</h1>
+<section id="0"><h1>Configuration</h1>
+  URDF is required with a <code>ros2_control</code> tag to specify hardware interfaces.
 
-    <li>Installation</li>
-    <ul>
-      <li><a href="install.html">Commands</a></li>
-      <li><a href="test.html">Test</a></li>
-    </ul>
+  <p>
+    A package with a config (bringup/config/.yaml) for the different controllers being used.
+  </p>
+</section>
 
-    <p>
-      <li><a href="buildSys.html">Build system: Colcon</a></li>
-      <li><a href="paramsFlow.html">Parameters flow from YAML to C++</a></li>
-    </p>
-    <p>
-      <li><a href="package.html">Package creation</a></li>
-      <li><a href="urdf/main.html">URDF</a></li>
-    </p>
-    <p>
-      <li><a href="usingDocker.html">Create and run ROS2 packages in docker containers</a></li>
-      <li><a href="refs.html">References</a></li>
-    </p>
+<section id="1"><h1>Launch</h1>
+  Create a <code>robot_state_publisher</code> node with the URDF (robot + controller description) as a parameter.
 
-    <p>
-      <li><a href="commsCppAndPython.html">Communication between C++ and python nodes</a></li>
-    </p>
-  </ul>
+  <p>
+    Create a <code>ros2_control_node</code> found in package <code>controller_manager</code> with the YAML file as parameter. This node subscribes to the <code>/robot_description</code> topic from <code>robot_state_publisher</code> node for the URDF. The node is called <code>controller_manager</code>.
+  </p>
+
+  Use <code>spawner</code> found in package <code>controller_manager</code> to create the various controller nodes. Each controller node will automatically be given the YAML file parameters that was setup in step 2.
+
+  <p>
+    Create an rviz node. Confirm frames.
+  </p>
+
+  Confirm list of nodes and topics.
+
+  <p>
+    Teleop using the keyboard, sending messages to particular topics.
+  </p>
 </section>
 </chapter>
 
