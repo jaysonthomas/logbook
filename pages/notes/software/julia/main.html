@@ -38,12 +38,43 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Installation</a>
+<a href="#0">Topics</a>
+<a href="#1">Installation</a>
+<a href="#2">Julia notebooks on a browser</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Julia</h1>
-<section id="0"><h1>Installation</h1>
-  
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="backslash.html">Backslash operator</a></li>
+  </ul>
+</section>
+<section id="1"><h1>Installation</h1>
+  <pre><code class="bash">
+    curl -fsSL https://install.julialang.org | sh
+    . /home/jayson/.bashrc
+    juliaup add lts
+    juliaup default lts
+    julia --version
+  </code></pre>
+
+  Libraries to install within julia's package manager:
+  <pre><code class="julia">
+    julia
+    ]
+    add IJulia, FiniteDiff, ForwardDiff, Plots, BenchmarkTools, PyPlot
+  </code></pre>
+</section>
+
+<section id="2"><h1>Julia notebooks on a browser</h1>
+  <pre><code class="bash">
+    sudo apt install python3-notebook
+    julia
+
+    # Inside REPL
+    using IJulia    
+    notebook()
+  </code></pre>
 </section>
 </chapter>
 

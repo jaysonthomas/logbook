@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>robot_state_publisher</title>
+  <meta name="robot_state_publisher" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Debug</a>
+<a href="#2">Use</a>
+</div>
+
+<chapter style="counter-reset: chapter 1"><h1>robot_state_publisher</h1>
+<section id="0"><h1>Overview</h1>
+  <pre><code class="python">
+    robot_state_publisher_node = Node(
+      package="robot_state_publisher",
+      executable="robot_state_publisher",
+      parameters=[
+        {"robot_description": get_robot_description(package_name, urdf_rel_path)}
+      ],
+    )
+  </code></pre>
+
+  <code>robot_description</code> holds the instructions to generate the entire XML content of a robot model. The instructions are obtained by running the <code>xacro</code> command on the urdf.xacro file path.
+</section>
+
+<section id="1"><h1>Debug</h1>
+  In a new terminal, query the running ros2 system:
+  <pre><code class="bash">
+    ros2 param get /robot_state_publisher robot_description
+  </code></pre>
+</section>
+
+<section id="2"><h1>Use</h1>
+  The robot_state_publisher calculates and broadcasts the 3D poses of all the links of a robot. It takes two inputs:
+
+  <ul>
+    <li>The URDF: This tells the node the "static" relationship (e.g., "The hand is 0.5 meters from the elbow").</li>
+    <li>Joint States: It listens to a topic (usually /joint_states) that provides the "dynamic" angles (e.g., "The elbow is currently bent at 45 degrees").</li>
+  </ul>
+  
+  By combining these two, it calculates the position of every single part of the robot relative to the base and broadcasts them as TF transforms. It doesn't know about gravity, friction, mass, or torque. It is purely kinematic.
+</section>
+</chapter>
+
+</body>
+</html>

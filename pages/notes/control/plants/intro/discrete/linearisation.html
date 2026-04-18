@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Linearisation Process</title>
+  <meta name="Linearisation Process" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Taylor expansion at an equilibrium point</a>
+<a href="#1">Linearisation</a>
+<a href="#2">Redefinition of the perturbation</a>
+<a href="#3">Origin shift</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Linearisation Process</h1>
+<section id="0"><h1>Taylor expansion at an equilibrium point</h1>
+  Consider the system has an equilibrium point at $x^*$. If the system starts there, it stays there, i.e. the next state around an equilibrium point is the same as the current state.
+  $$
+    x^* = f_d(x^*)
+  $$
+
+  Consider a very small perturbation $\Delta x_k$ is applied to the system near the equilibrium point. Any smooth function $f_d(x_k)$ can then be expanded around a fixed point $x^*$ using the Taylor Series:
+  $$
+    f_d(x_{k+1}) = f_d(x^*) + 
+      \frac{\partial f_d}{\partial x} \bigg|_{x^*} (x_k - x^*) + 
+      \text{Higher Order Terms (H.O.T.)}
+  $$
+</section>
+
+<section id="1"><h1>Linearisation</h1>
+  As part of linearisation, ignoring the H.O.T., the equation simplifies to:
+  $$
+    x_{k+1} \approx x^* + A_d \, (x_k - x^*)
+  $$
+  
+  $A_d = \frac{\partial f_d}{\partial x} \bigg|_{x=x^*}$ is the Jacobian matrix.
+</section>
+
+<section id="2"><h1>Redefinition of the perturbation</h1>
+  Redefining the small shift/deviation/error from the fixed point:
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      \Delta x_k = (x_k - x^*) &:& \text{How far the system is from the target now.} \\ 
+      \Delta x_{k+1} = (x_{k+1} - x^*) &:& \text{How far the system will be in the next step}
+    \end{array}$$
+  </div>
+
+  The above equation simplifies to the following linear mapping:
+  $$
+    \Delta x_{k+1} = A_d \Delta x_k
+  $$
+</section>
+
+<section id="3"><h1>Origin shift</h1>
+  Redefining the coordinate system so that the fixed point $x^*$ is at $0$. If $x^* = 0$, then $\Delta x_k$ is just $x_k$, and the equation simplifies to:
+  $$
+    x_{k+1} = A_d x_k
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

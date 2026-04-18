@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Partial derivative</title>
+  <meta name="Partial derivative" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Symbol</a>
+<a href="#1">Components</a>
+<a href="#2">Visual Intuition</a>
+<a href="#3">Example</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Partial derivative</h1>
+<section id="0"><h1>Symbol</h1>
+  $\frac{\partial{f}}{\partial{x}} \bigg|_{g(y)} $
+</section>
+
+<section id="1"><h1>Components</h1>
+  <ul>
+    <li>$\frac{\partial f}{\partial x}$: For a tiny move in $x$-direction, how much does the value of $f$ change? (assuming $y$ stays constant during that tiny step).</li>
+    
+    <p>
+      <li>$\bigg|$: This means evaluated at or restricted to.</li>
+    </p>
+
+    <li>$g(y)$: This is the constraint. Evaluation of the derivative is restricted to a specific curve or set of values defined by $g(y)$ in the $xy$-plane.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Visual Intuition</h1>
+  $f(x, y)$ is a mountain range.
+  
+  <p>$\frac{\partial f}{\partial x}$ is the steepness of the mountain if say one walks strictly East-West.The constraint $g(y)$ is a hiking trail winding through the mountains.</p>
+
+  Combining the two, what is the East-West steepness at every step, specifically along the trail $g(y)$.
+
+  <p>
+    It is the slope experienced under specific conditions (e.g., "What is the pressure change relative to volume, given that the temperature is held constant?").
+  </p>
+</section>
+
+<section id="3"><h1>Example</h1>
+  If $g(y)$ defines a specific $x$-value (i.e., $x = g(y)$), then this relationship is essentially being substituted into the derivative.
+  
+  <p>
+    If $f(x, y) = x^2 + y^2$ and the constraint is $x = y^3$:
+  </p>
+
+  <ol>
+    <li>First, find the general derivative: $\frac{\partial f}{\partial x} = 2x$.</li>
+    <li>Then, evaluate it at the constraint: $\frac{\partial f}{\partial x} \big|_{x=y^3} = 2(y^3) = 2y^3$.</li>
+  </ol>
+
+  In this case, the "steepness" in the $x$-direction is now expressed entirely in terms of the position along the $y$-axis.
+</section>
+</chapter>
+
+</body>
+</html>

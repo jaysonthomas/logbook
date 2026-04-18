@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Higher dimensional systems</title>
+  <meta name="Higher dimensional systems" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Background</a>
+<a href="#1">Stability criteria</a>
+<a href="#2">Intuition</a>
+<a href="#3">Steps to analyse stability</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Higher dimensional systems</h1>
+
+<section id="0"><h1>Background</h1>
+  $\frac{\partial{f}}{\partial{x}}$ is no longer a scalar, but a Jacobian matrix. 
+
+  <subsubsection><h1>Matrix shape</h1>
+    If $\dot{x} = f(x)$ and $x \in \mathbb{R}^n$, then the Jacobian matrix $J = \frac{\partial{f}}{\partial{x}}$ is a <n>square matrix ($n \times n$)</n>.
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Stability criteria</h1>
+  For a symmetric matrix, the eigen values are all pure real. In most dynamical systems, the Jacobian is a non-symmetric matrix, for which the eigenvalues can be complex.
+
+  <p>
+    For stability, the real parts of the eigenvalues of the Jacobian matrix need to be strictly negative. 
+  </p>
+
+  <subsubsection><h1>Physical meaning</h1>
+    The imaginary parts correspond to oscillatory behaviour. As long as the real parts which correspond to damping are strictly negative, those oscillations will get damped out.
+
+    <p>
+      The more negative the values are, the quicker the system will return to an equilibrium point. The actual quantitative value depends on the choice of coordinate system (mm vs cm, s vs ms for example). But, if the eigenvalue spectrum of the system was available for a given coordinate system, this statement holds true considering the relative values.
+    </p>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Intuition</h1>
+  In a dynamical sense, a set of coordinates can be chosen such that the dynamics decouple into a whole bunch of individual scalar systems. Each scalar system can then be treated as a 1D case.
+
+  <p>
+    If the system is linearised around an equilibrium, the eigenvectors define a coordinate transformation that decouples the dynamics into independent scalar systems, each governed by a single eigenvalue.
+  </p>
+</section>
+
+<section id="3"><h1>Steps to analyse stability</h1>
+  Take an eigen decomposition, i.e. decouple into $n$ 1D systems. 
+
+  $$\begin{align*}
+    \text{Re}\left[\text{eigvals}\left(\frac{\partial{f}}{\partial{x}}\right)\right] &lt 0 &\implies \text{stable} \\
+    \text{otherwise} &\implies \text{unstable}
+  \end{align*}$$
+
+  If there are any non-negative eigenvalues, the system is considered to be unstable.
+</section>
+</chapter>
+
+</body>
+</html>

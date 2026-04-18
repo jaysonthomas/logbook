@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fixed point iteration</title>
+  <meta name="Fixed point iteration" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Setup</a>
+<a href="#1">Description</a>
+<a href="#2">Usecase</a>
+<a href="#3">Performance</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Fixed point iteration</h1>
+<section id="0"><h1>Setup</h1>
+  Consider a dynamical system that is stable (all eigenvalues have negative real parts if continuous time or are within the unit circle in a complex plane if discrete time) at an unknown equilibrium point. 
+</section>
+
+<section id="1"><h1>Description</h1>
+  If the system is iterated forward in discrete time or simulated forward in continuous time, the system will eventually land at the stable fixed point or zero.
+
+  <p>
+    Only works if the equilibrium point to be found $x^*$ is stable and if the initial guess is in the basin of attraction. The method can converge slowly depending on the properties of $f$ (the magnitude of the eigen values). An asymptotic convergence means it will get to the zero eventually, but could take a long time.
+  </p>
+</section>
+
+<section id="2"><h1>Usecase</h1>
+  Gradient descent is fixed point iteration (the optimisation algorithm) applied to minimising the gradient of the objective function.
+
+  <p>
+    Consider a scalar function $f$. Solving for gradient of the function equal to 0 to find the root. The gradient can be seen as the equivalent of the 'dynamics' in this case. 
+  </p>
+
+  All the disadvantages of FPI applies to gradient descent. That is the reason why there are so many tricks being applied to make gradient descent work.
+</section>
+
+<section id="3"><h1>Performance</h1>
+  This is O($n$).
+</section>
+</chapter>
+
+</body>
+</html>

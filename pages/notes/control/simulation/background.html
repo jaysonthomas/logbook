@@ -39,28 +39,37 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">System dynamics</a>
-<a href="#2">System output</a>
+<a href="#1">Motivation</a>
+<a href="#2">System dynamics</a>
+<a href="#3">System output</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Background</h1>
 <section id="0"><h1>Overview</h1>
   <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>. A discrete-time simulation helps simulate continuous dynamics (represented by ODEs which are always continuous), digitally on a PC.
 
-  <subsubsection><h1>Motivation</h1>
-    <ul>
-      <li>It is only possible to solve $\dot{x}=f(x)$ for $x(t)$, for linear systems and very simple non-linear ones.</li>
-      <li>Digital devices can't represent continuous states $x(t)$. Discrete states $x_k$ are required, instead.</li>
-      <li>Discrete time models can capture some things that continuous ODEs cannot, like impacts that are non-differentiable.</li>
-
-      <p>
-        When a brick is dropped, its velocity goes from some non-zero value to 0 instantaneously, the moment it hits the ground. The acceleration goes to infinity. Therefore, it is not possible to represent such discontinuous jumps with an ODE. In discrete time, it would be represented as a simple instantaneous jump.
-      </p>
-    </ul>
+  <p>
+    Euler integration is based on approximating the next discrete state by linearising the continuous dynamics using Taylor series expansion.
+  </p>
+  
+  <subsubsection id="3"><h1>Caution</h1>
+    Sanity check behaviours (energy, momentum behaviour etc) where the outcome is already known. Never trust a simulation at face value.
   </subsubsection>
 </section>
 
-<section id="1"><h1>System dynamics</h1>
+<section id="1"><h1>Motivation</h1>
+  <ul>
+    <li>It is only possible to solve $\dot{x}=f(x)$ for $x(t)$, for linear systems and very simple non-linear ones.</li>
+    <li>Digital devices can't represent continuous states $x(t)$. Discrete states $x_k$ are required, instead.</li>
+    <li>Discrete time models can capture some things that continuous ODEs cannot, like contact-impacts that are non-differentiable.</li>
+
+    <p>
+      When a brick is dropped, its velocity goes from some non-zero value to 0 instantaneously, the moment it hits the ground. The acceleration goes to infinity. Therefore, it is not possible to represent such discontinuous jumps with an ODE. In discrete time, it would be represented as a simple instantaneous jump.
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>System dynamics</h1>
   To implement a function that advances a system's state forward in time, its dynamics (the impact of forces on an object's motion) needs to be understood/modelled. 
   
   <p>
@@ -78,7 +87,7 @@
   </p>
 </section>
 
-<section id="2"><h1>System output</h1>
+<section id="3"><h1>System output</h1>
   The output of a system doesn't have to be its full state $x$ - it can be a subset of the state obtained via some sensor attached to the system! Where there is full access to the state for feedback, i.e. <i>full-state feedback</i>, the system becomes more deterministic and the future value of the system can be predicted given the current time, state, and input to the system.
 </section>
 </chapter>

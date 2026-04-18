@@ -39,6 +39,7 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
+<a href="#1">Without the final column</a>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Post description of variables</h1>
@@ -64,6 +65,18 @@
       \end{array}$$
     </div>
   </subsubsection>
+</section>
+
+<section id="1"><h1>Without the final column</h1>
+<pre><code class="latex">
+&ltdiv style="width:0; text-align:left;"&gt
+  $$\begin{array}{ccl} 
+    \omega_{c} &:& \text{Cutoff frequency of filter} \\ 
+    t_c = \frac{1}{\omega_c} &:& \text{Decay time} \\
+    T_{s} &:& \text{Sampling period}
+  \end{array}$$
+&lt/div&gt
+</code></pre>     
 </section>
 </chapter>
 

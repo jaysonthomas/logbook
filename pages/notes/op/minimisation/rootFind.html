@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Root finding formulation</title>
+  <meta name="Root finding formulation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Newton's method</a>
+<a href="#2">Alternate interpretation</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Root finding formulation</h1>
+<section id="0"><h1>Overview</h1>
+  Minimisation involves root finding on the gradient. The objective function:
+  $$
+    g(x) = \nabla{f(x)}
+  $$
+</section>
+
+<section id="1"><h1>Newton's method</h1>
+  $$
+    \nabla{f(x + \Delta{x})} \approx \nabla{f(x)} + 
+      \underbrace{\frac{\partial}{\partial{x}} \left(\nabla{f(x)}\right)}_{\nabla^2 f}
+      \Delta{x} = 0
+  $$
+
+  Solving for $\Delta{x}$:
+  $$
+    \Delta{x} = - \left(\nabla^2 f(x)\right)^{-1} \nabla{f(x)}
+  $$
+
+  The new $x$ then becomes $x + \Delta{x}$. Repeat until convergence.
+
+  <p>
+    In this formulation, there is no notion of maximisation or minimisation. Newton's method is a local root-finding method that will converge to the closest fixed point (value of $x$ that causes the objective function to output a value as close to 0 as possible) to the initial guess; which could be a local minima, maxima or a saddle point. 
+  </p>
+</section>
+
+<section id="2"><h1>Alternate interpretation</h1>
+  Newton's method on $\nabla{f}$ boils down to solving the first order Taylor expansion of $\nabla{f}$ by zeroing out the first term. Another interpretation: this is equivalent to fitting a local quadratic approximation to the function $f(x)$ and exactly minimising that local quadratic approximation.
+</section>
+
+</chapter>
+
+</body>
+</html>

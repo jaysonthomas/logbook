@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Linear approximation</title>
+  <meta name="Linear approximation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Intuition</a>
+<a href="#2">Derivation</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Linear approximation</h1>
+<section id="0"><h1>Overview</h1>
+  This is also called a <i>first-order Taylor expansion</i>. 
+</section>
+
+<section id="1"><h1>Intuition</h1>
+  Consider the derivative as the slope of a hill. To know how much the elevation changes as one moves forward, the steepness needs to be multiplied by the distance covered.
+  
+  $$
+    f(x + \Delta{x}) \approx f(x) + \frac{\partial{f}}{\partial{x}}\bigg|_x \, \Delta{x}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      f(x) &:& \text{Current location, starting height} \\ 
+      \frac{\partial{f}}{\partial{x}}\bigg|_x &:& \text{Steepness of the slope at the current spot. Rate of change.} \\
+      \Delta{x} &:& \text{Distance moved from the current spot.}
+    \end{array}$$
+  </div>
+  
+  If the slope is 2 (rising 2 meters for every 1 meter forward), for a forward movement of 0.5 meters, the height increases by $2 \times 0.5 = 1$ meter.
+</section>
+
+<section id="2"><h1>Derivation</h1>
+  The derivative is defined as the limit of the average rate of change:
+  $$
+    \frac{df}{dx} = \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}
+  $$
+  
+  The derivative is treated as a fixed value for a very small $\Delta x$. 
+  
+  <p>
+    Rearranging:
+  </p>
+  $$\begin{align*}
+    \frac{df}{dx} \cdot \Delta x &\approx f(x + \Delta x) - f(x) \\
+    f(x + \Delta x) &\approx f(x) + \frac{df}{dx} \Delta x
+  \end{align*}$$
+  
+  The term $\frac{\partial f}{\partial x} \Delta x$ represents the change in the function's value ($\Delta y$) predicted by the tangent line.
+</section>
+</chapter>
+
+</body>
+</html>

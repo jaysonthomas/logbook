@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notation</title>
+  <meta name="Notation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Convenient derivative notations</a>
+<a href="#1">Taylor expansion</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Notation</h1>
+<section id="0"><h1>Convenient derivative notations</h1>
+  [<a href="../../maths/jacobian/notation.html">Jacobian notation</a>] <p></p>
+  $$
+    \nabla{f(x)} = \left(\frac{\partial{f}}{\partial{x}}\right)^\top \in \mathbb{R}^{n \times 1} \quad \text{Column vector}
+  $$
+
+  Hessians have to be symmetric matrices.
+  $$\begin{align*}
+    \nabla^2{f(x)} &= \frac{\partial}{\partial{x}}
+      \left(\nabla{f(x)}\right) \\
+      &= \frac{\partial^2f}{\partial{x}^2} \in \mathbb{R}^{n \times n}
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Taylor expansion</h1>
+  Taking the 2nd order Taylor expansion of $f$ (as long as it's a scalar valued function of a vector) to see where the Hessian matrix comes in:
+  $$
+    f(x + \Delta{x}) \approx f(x) + 
+      \frac{\partial{f}}{\partial{x}} \, \Delta{x} +
+      \frac{1}{2} \Delta{x}^\top \frac{\partial^2f}{\partial{x}^2} \Delta{x}
+  $$
+
+  All this is dimensionally correct.
+</section>
+</chapter>
+
+</body>
+</html>

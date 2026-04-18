@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Integration: RK4</title>
+  <meta name="Integration: RK4" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../logbook.js"></script>
+
+  <script src="../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Refs</a>
+<a href="#1">Use</a>
+<a href="#2">Overview of the method</a>
+<a href="#3">Problems</a>
+<a href="#4">The method</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Integration: RK4</h1>
+<section id="0"><h1>Refs</h1>
+  <ul>
+    <li><a href="https://t.ly/LCgHK">Tutorial</a></li>
+    <li>RK implementation seems interesting <a href="https://t.ly/RNPHM">here</a> in python</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Use</h1>
+  RK4 is useful to simulate a smooth set of ODEs.
+
+  <p>
+    Rather than fitting a line to a solution curve like the Euler methods, RK4 fits a cubic polinomial. It fits cubic splines over the time steps which is way more accurate than a line. 
+  </p>
+
+  The accuracy achieved is of higher value than the computational cost.
+</section>
+
+<section id="2"><h1>Overview of the method</h1>
+  $$\begin{align*}
+    x_{k+1} &= f_d(x_k) \\\\
+    K_1 &= f(x_k) \\
+    K_2 &= f(x_k + \frac{h}{2} K_1) \\
+    K_3 &= f(x_k + \frac{h}{2} K_2) \\
+    K_4 &= f(x_k + \frac{h}{2} K_3) \\ \\
+    x_{k+1} &= x_k + \frac{h}{6} \left(K_1 + 2K_2 + 2K_3 + K_4\right)
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      f &:& \text{The continuous function} \\ 
+    \end{array}$$
+  </div>
+
+  Evaluate $f$ twice at half-way points and then finally take a full step. This set of equations is the result of doing quadrature with a cubic spline. This is approximating an interval with a cubic polynomial.
+
+  <p>
+    The final result is a weighted combination of $K$s with the middle terms weighted more heavily.
+  </p>
+</section>
+
+<section id="3"><h1>Problems</h1>
+  As long as the time steps are small 0.2ms (5 Hz), the integrator behaves well. As the time step gets bigger, it adds artificial damping. Beyond a certain point, it does weird things and blows up.
+</section>
+
+<section id="4"><h1>The method</h1>
+  $$\begin{align*}
+    \newcommand{\oState}[1]{\begin{bmatrix}\dot\theta_{#1} \\ \ddot\theta_{#1} \end{bmatrix}}
+    \newcommand{\iState}{\begin{bmatrix}\theta \\ \dot\theta \end{bmatrix}}
+    \newcommand{\iPrevOutput}[1]{
+      \begin{bmatrix}
+        \theta + \dot\theta_{#1} \cdot \frac{h}{2} \\ 
+        \dot\theta + \ddot\theta_{#1} \cdot \frac{h}{2} \\ 
+      \end{bmatrix}
+    }
+    \newcommand{\iPrevOutputTwo}[1]{
+      \begin{bmatrix}
+        \theta + \dot\theta_{#1} \cdot h \\ 
+        \dot\theta + \ddot\theta_{#1} \cdot h \\ 
+      \end{bmatrix}
+    }
+
+    k_1 = \oState{_1} &= f(t, \iState) \\
+    k_2 = \oState{_2} &= f(t + \frac{h}{2}, \iPrevOutput{1}) \\
+    k_3 = \oState{_3} &= f(t + \frac{h}{2}, \iPrevOutput{2}) \\
+    k_4 = \oState{_4} &= f(t + h, \iPrevOutputTwo{3}) \\\\
+
+    \theta &= \theta + (\dot\theta_1 + 2\dot\theta_2 + 2\dot\theta_3 + \dot\theta_4) \cdot \frac{h}{6} \\
+    \dot\theta &= \dot\theta + (\ddot\theta_1 + 2\ddot\theta_2 + 2\ddot\theta_3 + \ddot\theta_4) \cdot \frac{h}{6} \\
+    t &= t + h
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

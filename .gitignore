@@ -97,8 +97,13 @@ dmypy.json
 
 # Directories
 w/
-timeWithGod/
-strategy/
 
 # Drawio
 *.bkp
+
+# Latex
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.aux

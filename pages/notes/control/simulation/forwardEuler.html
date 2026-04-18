@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Forward Euler method</title>
-  <meta name="Forward Euler method" content="text/html; charset=utf-8;" />
+  <title>Forward Euler integration</title>
+  <meta name="Forward Euler integration" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,9 +38,72 @@
 
   <div id="mySidenav" class="sidebar">
   
+<a href="#0">Math</a>
+<a href="#1">Error</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Concave up</a></li>
+  <li><a href="#1.1">Concave down</a></li>
+</ul>
+<a href="#2">Overshoot</a>
+<a href="#3">Sort</a>
 </div>
 
-<chapter style="counter-reset: chapter 0"><h1>Forward Euler method</h1>
+<chapter style="counter-reset: chapter 0"><h1>Forward Euler integration</h1>
+<section id="0"><h1>Math</h1>
+  $$
+    x_{k+1} = \underbrace{x_k + h \, f(x_k, u_k)}_{f_d(x_k, u_k)}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      h &:& \text{Time step} \\ 
+      f_d &:& \text{Discrete function} \\
+      f &:& \text{Continuous function}
+    \end{array}$$
+  </div>
+
+  A solution curve is approximated by taking a small step along the tangent lines on the curve. The linear approximation always overshoots which leads to an output that is physically nonsensical.
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/control/sim/1_fwdEuler.png"/>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Error</h1>
+  The error in Forward Euler comes from the fact that a straight line cannot follow a curve. Consider what happens <n>locally</n> when the curvature of a function (second derivative and hence the first) changes.
+  
+  <subsection id="1.0"><h1>Concave up</h1>
+    A bowl. Consider the curve from the equilibrium point (base of the bowl or minimum point) onwards. 
+
+    <p>
+      $\ddot{y} > 0$. From a velocity perspective, the curve bends upwards. The tangent line (the "old" slope) keeps going straight (undershoots) while the real solution goes up.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Concave down</h1>
+    Upside-down bowl. Consider the curve from the equilibrium point (upside-down base of the bowl or maximum point) onwards. 
+
+    <p>
+      $\ddot{y} < 0$. From a velocity perspective, the curve bends downwards. The tangent line (the "old" slope) keeps going straight (overshoots) while the real solution drops.
+    </p>
+  </subsection>
+</section>
+
+<section id="2"><h1>Overshoot</h1>
+  Forward euler can both overshoot and undershoot. Overshoot gets more attention because of oscillatory systems like a spring or pendulum. In these systems, the velocity solution is a sine or cosine wave.
+
+  <ul>
+    <li>As a pendulum swings toward the center, it is concave down relative to its velocity.</li>
+    <li>Forward Euler uses the high velocity from the start of the <n>step</n> and applies it for the whole duration.</li>
+    <li>By the time the step ends, the "real" pendulum should have slowed down because of gravity, but the Euler pendulum kept going at the higher speed.</li>
+    <li>This results in an overshoot of the displacement.</li>
+  </ul>
+
+  Forward Euler is blind to the change in slope during the interval $\Delta t$. It assumes the world is a series of perfectly straight lines, but physics is a world of curves.
+</section>
+<section id="3"><h1>Sort</h1>
   Consider a linear system with its system output $y$ as below:
   $$\begin{align*}
     \dot{x} &= Ax + Bu \\
@@ -73,6 +136,7 @@
   <p>
     This approach might produce numerical instabilities within the discretised state vector $x_k$ where the state vector might diverge to infinity.
   </p>
+</section>
 </chapter>
 
 </body>

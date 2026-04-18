@@ -38,34 +38,36 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">As seen in different contexts</a>
-<a href="#1">Purpose</a>
-<a href="#2">Alternate statements</a>
+<a href="#0">Content</a>
+<a href="#1">Alternate statements</a>
 <ul class="no-bullets">
-  <li><a href="#2.0">Statement 1</a></li>
-  <li><a href="#2.1">Statement 2</a></li>
+  <li><a href="#1.0">Statement 1</a></li>
+  <li><a href="#1.1">Statement 2</a></li>
 </ul>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Jacobian</h1>
-<section id="0"><h1>As seen in different contexts</h1>
+<section id="0"><h1>Content</h1>
   <ul>
-    <li><a href="basisVector.html">Transformation of a basis vector</a></li>
-    <li><a href="arm.html">Robotic arm</a></li>
-    <li><a href="../../estimation/usecase/rigidBodyPos.html">Position estimation of a rigid body</a></li>
+    <li><a href="purpose.html">Purpose</a></li>
+    <li><a href="description.html">Description</a></li>
+
+    <p>
+      <li><a href="notation.html">Notation</a></li>
+    </p>
+
+    <li>Usecases</li>
+    <ul>
+      <li><a href="../../control/plants/intro/continuous/analysis/stability/asymptotic/higherD.html">Higher dimensional dynamical system</a></li>
+      <li><a href="basisVector.html">Transformation of a basis vector</a></li>
+      <li><a href="arm.html">Robotic arm</a></li>
+      <li><a href="../../estimation/usecase/rigidBodyPos.html">Position estimation of a rigid body</a></li>
+    </ul>
   </ul>
 </section>
 
-<section id="1"><h1>Purpose</h1>
-  A Jacobian matrix captures how a change in an input space affects the output space. It has $n$ rows and $m$ columns.
-  
-  <p>
-    Each column of the Jacobian matrix captures how a change in any of the $m$ input space variables affects the $n$-dimensional vector in the output space.
-  </p>   
-</section>
-
-<section id="2"><h1>Alternate statements</h1>
-  <subsection id="2.0"><h1>Statement 1</h1>
+<section id="1"><h1>Alternate statements</h1>
+  <subsection id="1.0"><h1>Statement 1</h1>
     The <code>Jacobian matrix</code>, $H$, contains the partial derivatives of the measurement equation with respect to the parameter(s) of interest.
 
     <p>
@@ -73,7 +75,7 @@
     </p>
   </subsection>
 
-  <subsection id="2.1"><h1>Statement 2</h1>
+  <subsection id="1.1"><h1>Statement 2</h1>
     Each element of the Jacobian matrix represents how much the error changes when you make a small change in one of the parameters.
 
     <p>
