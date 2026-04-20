@@ -95,9 +95,15 @@
 <section><h1>Convergence guarantees</h1>
   If the Hessian of an objective function is globally positive definite, everywhere in $\mathbb{R}^n$, the function is said to be strongly convex. It's a big bowl. In which case, Newton's method is guaranteed to converge to the global optimum. In the strictly positive definite case, it's the global Optimum. In the semi-definite case, it's a global Optimum. In the latter, it is possible to have a flat bottom like a valley where all the points are equivalent.
 
+  $$
+    \nabla^2 f &gt 0 \, \rightarrow \, f(x)\text{ is strongly convex} \\
+  $$
+
+  Weakly convex $\nabla^2 f \geq 0$ means that there are flat spots in the bowl.
+
   <p>
-    Weakly convex means that there are flat spots in the bowl (the inequality version)
-  </p>
+    When the objective function is strongly convex, guarantees can be provided of the runtime of Newton's method - predictions can be made of its runtime, how much sample time is possible, all of which is important for real time control.
+   </p>
 </section>
 </chapter>
 

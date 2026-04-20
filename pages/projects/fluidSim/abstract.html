@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Optimal control</title>
+  <meta name="Optimal control" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../logbook.js"></script>
+
+  <script src="../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Topics</a>
+<a href="#1">References</a>
+<a href="#2">Progress</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Abstract</h1>
+<section id="0"><h1>Novelty</h1>
+  A differentiable <i>fluid-structure interaction (FSI)</i> solver for robotics that offers
+  <ul>
+    <li>stable simulation</li>
+    Aquarium achieves stable simulation with accurate flow physics by directly integrating over the incompressible Navier-Stokes equations using a fully implicit Crank-Nicolson scheme with a second-order finite-volume spatial discretisation.
+
+    <p>
+      <li>accurately coupled fluid-robot physics in two dimensions and</li>
+       The fluid and robot physics are coupled using the immersed-boundary method by formulating the no-slip condition as an equality constraint applied directly to the Navier-Stokes system. This choice of coupling allows the fluid-structure interaction to be posed and solved as a nonlinear optimization problem.
+    </p>
+
+    <li>full differentiability with respect to fluid and robot states and parameters</li>
+    This optimization-based formulation is then exploited using the implicit-function theorem to compute derivatives. Derivatives can then be passed to downstream gradient-based optimization or learning algorithms.
+  </ul>  
+</section>
+
+<section><h1>Examples</h1>
+  Aquarium's ability to accurately simulate coupled fluid- robot physics with the following 2D examples:
+  <ul>
+    <li>cylinder in free stream</li>
+    <li>a soft robotic fish tail with hardware validation</li>
+    <li>Aquarium's ability to provide analytical gradients by performing gradient-based shape-and-gait optimization of an oscillating diamond foil to maximize its generated thrust.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
