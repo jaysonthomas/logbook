@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="Introduction" content="text/html; charset=utf-8;" />
+  <title>Regularisation</title>
+  <meta name="Regularisation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,7 +39,8 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Math</a>
+<a href="#1">Steps</a>
+<a href="#2">Performance</a>
 </div>
 
 <chapter style="counter-reset: chapter 3"><h1>Regularisation</h1>
@@ -47,43 +48,43 @@
   Hard linear problems or nonlinear problems are usually not strongly convex. Regularisation is a trick used to minimise a function that is not strongly convex.
 
   <p>
-    If the Hessian is not positive definite, it is padded with 0s until it is and then that's going to guarantee a descent step.
+    The Hessian needs to be positive definite to guarantee a descent step. If it is not, it is padded with 0s until it is.
   </p>
 
-  Also called <i>Damped Newton</i> method. If $\nabla^2 f$ is made bigger, then the inverse becomes smaller. Hence, the step size or learning rate shrinks which leads to damping the steps.
+  Also called <i>Damped Newton</i> method. If $\nabla^2 f$ is made bigger, then the inverse becomes smaller. Hence, the step size or learning rate shrinks which leads to damped/shorter steps.
 </section>
 
 <section id="1"><h1>Steps</h1>
-  Initialise some variable $H$ with the Hessian:
-  $$
-    H \leftarrow \nabla^2 f
-  $$
+  <equation>
+    Initialise some variable $H$ with the Hessian matrix:
+    $$
+      H \leftarrow \nabla^2 f
+    $$
 
-  While $H$ is not positive definite, it is padded:
-  $$\begin{align*}
-    &\text{while } H \ngtr 0 \\
-    &\qquad H \leftarrow H + \beta{I} \\
-    &\text{end}
-  \end{align*}$$
+    While $H$ is not positive definite, it is padded with some multiple of the identity.
+    $$\begin{align*}
+      &\text{while } H \ngtr 0 \\
+      &\qquad H \leftarrow H + \beta{I} \\
+      &\text{end}
+    \end{align*}$$
 
-  <div style="width:0; text-align:left;">
-    $$\begin{array}{ccl} 
-      \beta &:& \text{Provides padding of the Hessian matrix with some multiple of the identity.}\\
-        && \text{Scalar hyperparameter that can be tuned.} \\ 
-        && \beta &gt 0
-    \end{array}$$
-  </div>
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        \beta &:& \text{Scalar hyperparameter that can be tuned. } \beta &gt 0\\ 
+      \end{array}$$
+    </div>
 
-  Once $H$ is positive definite, run the Newton step:
-  $$\begin{align*}
-    \Delta{x} &= - H^{-1} \nabla{f(x)} \\
-    x &\leftarrow x + \Delta{x}
-  \end{align*}$$
+    Once $H$ is positive definite, run the Newton step:
+    $$\begin{align*}
+      \Delta{x} &= - H^{-1} \nabla{f(x)} \\
+      x &\leftarrow x + \Delta{x}
+    \end{align*}$$
+  </equation>
 
   In practice, a custom cholesky factorisation is attempted that introduces padding on the fly as it runs into negative values. Specifically, cholesky computes the square roots of the diagonal and if it comes across a negative eigenvalue somewhere, it will end up with an imaginary number and that's how it knows it failed. It then just pads that spot and keeps going.
 </section>
 
-<section><h1>Shortcomings</h1>
+<section id="2"><h1>Performance</h1>
   Regularisation makes sure each solution heads downhill and never uphill. It still exhibits the overshoot problem though.
 
   <p>

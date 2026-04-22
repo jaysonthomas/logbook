@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="Introduction" content="text/html; charset=utf-8;" />
+  <title>Newton's method</title>
+  <meta name="Newton's method" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,31 +38,29 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
-<a href="#1">Math</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Introduction</h1>
-<section id="0"><h1>Overview</h1>
-  Minimisation gets reformulated into root finding. Constrained minimisation gets reformulated into regular minimization with constraints and then finally into root finding. The objective function changes, but minimisation is basically a root-finding problem.
-</section>
-
-<section id="1"><h1>Math</h1>
+<chapter style="counter-reset: chapter 3"><h1>Newton's method</h1>
   $$
-    \min_x \, f(x) \quad f(x): \mathbb{R}^n \rightarrow \mathbb{R}
+    \nabla{f(x + \Delta{x})} \approx \nabla{f(x)} + 
+      \underbrace{\frac{\partial}{\partial{x}} \left(\nabla{f(x)}\right)}_{\nabla^2 f}
+      \Delta{x} = 0
   $$
 
-  $f$ is a scalar valued function. It takes in a vector and output a scalar. The aim is to find the $x$ that gives the smallest return value/output of the function.
+  Solving for $\Delta{x}$:
+  $$
+    \Delta{x} = - \left(\nabla^2 f(x)\right)^{-1} \nabla{f(x)}
+  $$
+
+  The new $x$ then becomes $x + \Delta{x}$. Repeat until convergence.
 
   <p>
-    If $f$ is smooth, then at a minimum the function has to be flat; at a minimum the bottom is flat. 
+    In this formulation, there is no notion of maximisation or minimisation. Newton's method is a local root-finding method that will converge to the closest fixed point (value of $x$ that causes the objective function to output a value as close to 0 as possible) to the initial guess; which could be a local minima, maxima or a saddle point. 
   </p>
 
-  $$
-    \frac{\partial{f}}{\partial{x}}\bigg|_{x^*} = 0
-  $$
-  At a local minimum $x^*$, the Jacobian must be 0. If the bottom is tilted then it means the function can go further down.
-</section>
+  <subsubsection id="2"><h1>Alternate interpretation</h1>
+    Newton's method on $\nabla{f}$ boils down to solving the first order Taylor expansion of $\nabla{f}$ by zeroing out the first term. Another interpretation: this is equivalent to fitting a local quadratic approximation to the function $f(x)$ and exactly minimising that local quadratic approximation.
+  </subsubsection>
 </chapter>
 
 </body>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Root finding formulation</title>
-  <meta name="Root finding formulation" content="text/html; charset=utf-8;" />
+  <title>Lagrange multiplier</title>
+  <meta name="Lagrange multiplier" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -39,39 +39,26 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Overview</a>
-<a href="#1">Newton's method</a>
-<a href="#2">Alternate interpretation</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Root finding formulation</h1>
+<chapter style="counter-reset: chapter 3"><h1>Lagrange multiplier</h1>
 <section id="0"><h1>Overview</h1>
-  Minimisation involves root finding on the gradient. The objective function:
+  If two vectors are parallel, one is simply a multiple of the other.
   $$
-    g(x) = \nabla{f(x)}
-  $$
-</section>
-
-<section id="1"><h1>Newton's method</h1>
-  $$
-    \nabla{f(x + \Delta{x})} \approx \nabla{f(x)} + 
-      \underbrace{\frac{\partial}{\partial{x}} \left(\nabla{f(x)}\right)}_{\nabla^2 f}
-      \Delta{x} = 0
+    \nabla{f} = k \nabla{c}
   $$
 
-  Solving for $\Delta{x}$:
-  $$
-    \Delta{x} = - \left(\nabla^2 f(x)\right)^{-1} \nabla{f(x)}
-  $$
+  To turn this into an equilibrium equation (the kind mathematicians and physicists love because they represent a balance), everything is moved to one side:
+  $$\begin{align*}
+    \nabla{f} - k \nabla{c} &= 0 \\
+    \nabla{f} + \lambda \nabla{c} &= 0
+  \end{align*}$$
 
-  The new $x$ then becomes $x + \Delta{x}$. Repeat until convergence.
+  This is the classic Lagrange expression. At a specific point, the force pulling the function $f$ to change its value is perfectly balanced by the reaction force of the constraint $c$.
 
   <p>
-    In this formulation, there is no notion of maximisation or minimisation. Newton's method is a local root-finding method that will converge to the closest fixed point (value of $x$ that causes the objective function to output a value as close to 0 as possible) to the initial guess; which could be a local minima, maxima or a saddle point. 
+    $\lambda$ acts as a scaling factor that stretches or shrinks $\nabla c$ to perfectly cancel out $\nabla f$.
   </p>
-</section>
-
-<section id="2"><h1>Alternate interpretation</h1>
-  Newton's method on $\nabla{f}$ boils down to solving the first order Taylor expansion of $\nabla{f}$ by zeroing out the first term. Another interpretation: this is equivalent to fitting a local quadratic approximation to the function $f(x)$ and exactly minimising that local quadratic approximation.
 </section>
 
 </chapter>

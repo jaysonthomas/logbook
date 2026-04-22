@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Applying Newton's method</title>
+  <meta name="Applying Newton's method" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">The Newton step</a>
+<a href="#1">Expanding the partial gradients</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Applying Newton's method</h1>
+<section id="0"><h1>The Newton step</h1>
+  Newton's method finds the root of a function by using a first-order Taylor expansion of the gradient. The aim is to find a step $(\Delta x, \Delta \lambda)$ such that:
+  $$
+    \nabla L(x + \Delta x, \lambda + \Delta \lambda) = 0
+  $$
+  
+  Expanding $\nabla L$ around the current point $(x, \lambda)$ using the multivariable Taylor series:
+  $$
+    \nabla L(x + \Delta x, \lambda + \Delta \lambda) \approx \nabla L(x, \lambda) + \mathbf{H}_L(x, \lambda) \begin{bmatrix} \Delta x \\ \Delta \lambda \end{bmatrix} = 0
+  $$
+  Where $\mathbf{H}_L$ is the Hessian of the Lagrangian.
+</section>
+
+<section id="1"><h1>Expanding the partial gradients</h1>
+  The gradient $\nabla L$ is a vector composed of partial derivatives with respect to $x$ and $\lambda$
+  $$
+    \nabla L = \begin{bmatrix} 
+        \nabla_x L \\ 
+        \nabla_\lambda L 
+      \end{bmatrix}
+  $$
+  
+  <subsubsection><h1>W.r.t. $x$</h1>
+    Expanding the top row, the stationarity condition for $x$ and substituting <a href="lagrangian.html#1">partial derivative</a>:
+    $$\begin{align*}
+      \nabla_x L(x + \Delta x, \lambda + \Delta \lambda) &\approx 
+        \nabla_x L(x, \lambda) + 
+        \frac{\partial}{\partial x}(\nabla_x L) \Delta x + 
+        \frac{\partial}{\partial \lambda}(\nabla_x L) \Delta \lambda \\
+
+        &\approx \nabla_x L(x, \lambda) +
+        \nabla_{xx}^2 L \; \Delta{x} +
+        \nabla_x c \; \Delta \lambda \\
+        &= 0
+    \end{align*}$$
+
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        \nabla_x L(x, \lambda) &:& \text{Current gradient} \\
+        \frac{\partial}{\partial x}(\nabla_x L) &:& \frac{\partial^2 L}{\partial{x}^2} \text{, often written as } \nabla_{xx}^2 L \\
+        \frac{\partial}{\partial \lambda}(\nabla_x L) &:& \frac{\partial^2 L}{\partial{x}\,\partial\lambda} 
+      \end{array}$$
+    </div>
+  </subsubsection>
+
+  <subsubsection><h1>W.r.t. $\lambda$</h1>
+    $$\begin{align*}
+      \nabla_\lambda L(x + \Delta x, \lambda + \Delta \lambda) &\approx 
+        c(x) + \frac{\partial c}{\partial x} \Delta x \\
+        &= 0
+    \end{align*}$$
+  </subsubsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

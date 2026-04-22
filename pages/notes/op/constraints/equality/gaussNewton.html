@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Taylor series</title>
-  <meta name="Taylor series" content="text/html; charset=utf-8;" />
+  <title>Gauss-Newton method</title>
+  <meta name="Gauss-Newton method" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,17 +38,22 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Taylor series</h1>
-<section id="0"><h1>Contents</h1>
-  <ul>
-    <li><a href="linearApprox.html">Linear approximation</a></li>
-    <li><a href="multivariate.html">Multivariate</a></li>
-    <li><a href="sort.html">Sort</a></li>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 0"><h1>Gauss-Newton method</h1>
+  $$
+    \frac{\partial^2 L}{\partial{x}^2} = 
+    \nabla^2 f + \frac{\partial}{\partial x} 
+    \left[\nabla_x c \, \lambda \right]
+  $$
+
+  The 2nd term on the RHS is called the <i>constraint curvature</i> term since it is a 2nd derivative of the constraints. $c$ is a vector. $\nabla_x c$ is a matrix. Derivative of that gives a 3rd rank tensor. Hence why it is expensive to compute. Sophisticated auto-diffing tools can be used. 
+  
+  <p>
+    The term is often dropped to use only the Hessian of the objective (instead of the Hessian of the Lagrangian). When dropped, it is called <i>Gauss Newton</i> method. It is a standard method used in robotics applications.
+  </p>
+
+  The Gauss Newton method is slower to converge than full Newton. It requires more iterations, but iterations are cheaper to compute. It often wins in wall-clock time.
 </chapter>
 
 </body>

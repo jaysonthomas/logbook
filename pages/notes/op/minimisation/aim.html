@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Minimisation</title>
-  <meta name="Minimisation" content="text/html; charset=utf-8;" />
+  <title>Aim</title>
+  <meta name="Aim" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../logbook.js"></script>
 
   <script src="../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,24 +38,23 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Content</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Minimisation</h1>
-<section id="0"><h1>Content</h1>
-  <ul>
-    <li><a href="aim.html">Aim</a></li>
-    <li><a href="newton.html">Newton's method</a></li>
-    
-    <p>
-      <li><a href="globalisation.html">Globalisation strategies</a></li>
-      <ul>
-        <li><a href="regularisation.html">Regularisation</a></li>
-        <li><a href="lineSearch.html">Line search</a></li>
-      </ul>
-    </p>    
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 3"><h1>Aim</h1>
+  Minimisation gets reformulated into root finding. Constrained minimisation gets reformulated into regular minimisation with constraints and then finally into root finding.
+
+  <p>
+    Consider that $g$ is a <i>scalar valued function</i> - it takes in a vector and outputs a scalar. The aim is to find the $x$ that gives the smallest return value/output of the function.
+
+    $$
+      \min_x \, g(x) \quad g(x): \mathbb{R}^n \rightarrow \mathbb{R}
+    $$
+  </p>
+
+  Minimisation involves root finding on the gradient. The objective function:
+  $$
+    g(x) = \nabla{f(x)}
+  $$
 </chapter>
 
 </body>

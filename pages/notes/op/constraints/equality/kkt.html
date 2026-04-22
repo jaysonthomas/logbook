@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Taylor series</title>
-  <meta name="Taylor series" content="text/html; charset=utf-8;" />
+  <title>KKT system formulation</title>
+  <meta name="KKT system formulation" content="text/html; charset=utf-8;" />
   <script type="text/javascript" src="../../../../../logbook.js"></script>
 
   <script src="../../../../../logbook-mathjax-config.js" defer></script> 
@@ -38,17 +38,36 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Contents</a>
 </div>
 
-<chapter style="counter-reset: chapter 3"><h1>Taylor series</h1>
-<section id="0"><h1>Contents</h1>
+<chapter style="counter-reset: chapter 0"><h1>KKT system formulation</h1>
+  $$
+    \begin{bmatrix}
+      \nabla_{xx}^2 L & \nabla_x c \\
+      (\nabla_x c) ^\top & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      \Delta x \\
+      \Delta \lambda
+    \end{bmatrix} =
+    \begin{bmatrix}
+      -\nabla_x L(x, \lambda) \\
+      -c(x)
+    \end{bmatrix}
+  $$
+
+  With regard to the left most matrix, there's a
   <ul>
-    <li><a href="linearApprox.html">Linear approximation</a></li>
-    <li><a href="multivariate.html">Multivariate</a></li>
-    <li><a href="sort.html">Sort</a></li>
+    <li>Hessian in the top left.</li>
+    <li>Jacobian-transpose and a Jacobian of the constraints in the top and bottom right respectively.</li>
+    <li>0 in the bottom right.</li>
   </ul>
-</section>
+     
+  This structure is ubiquitous in optimisation. In constrained optimisation, problems are going to end up as a linear system as above. This linear system is called a <i>KKT system</i> based on the <a href="lagrangian.html">KKT conditions</a>. 
+  
+  <p>
+    There are specialised solvers for it. There is even more structure lurking underneath that is exploited to solve it quickly.
+  </p>
 </chapter>
 
 </body>
