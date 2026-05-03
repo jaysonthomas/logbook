@@ -31,23 +31,7 @@
       </p>
     </header>
   </div>
-  
-  <div id="main" class="sidebar1">
-    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
-  </div>
-
-  <div id="mySidenav" class="sidebar">
-  
-<a href="#0">Overview</a>
-<a href="#1">Change of coordinates</a>
-<a href="#2">Validity of the dynamics in the operation space</a>
-<ul class="no-bullets">
-  <li><a href="#2.0">Is $M_c(q)$ invertible?</a></li>
-  <li><a href="#2.1">Null space of a controller</a></li>
-</ul>
-</div>
-
-<chapter style="counter-reset: chapter 0"><h1>End-effector stiffness control</h1>
+  <chapter style="counter-reset: chapter 0"><h1>End-effector stiffness control</h1>
 <section id="0"><h1>Overview</h1>
   The aim is for the fingertip to act like a MSD. To achieve this, the controller would have to be implemented in the ee (instead of joint) coordinates; which means the dynamics would have to be considered in the ee coordinates instead of $q$. This is also called <i>cartesian stiffness control</i>.
 

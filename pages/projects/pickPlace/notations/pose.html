@@ -31,16 +31,7 @@
       </p>
     </header>
   </div>
-  
-  <div id="main" class="sidebar1">
-    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
-  </div>
-
-  <div id="mySidenav" class="sidebar">
-  
-</div>
-
-<chapter style="counter-reset: chapter 3"><h1>Pose</h1>
+  <chapter style="counter-reset: chapter 3"><h1>Pose</h1>
   The <i>pose</i> of a frame contains both position and orientation of that frame relative to another. $^BX^A$ represents the position and orientation of frame $A$ relative to that of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, an expressed-in frame for a transform $^BX^A$ is not required. It is however used for the derivative of a pose i.e. <i>spatial velocity</i> $V_{6 \times 1}$.
 
   $$\begin{align*}

@@ -31,32 +31,7 @@
       </p>
     </header>
   </div>
-  
-  <div id="main" class="sidebar1">
-    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
-  </div>
-
-  <div id="mySidenav" class="sidebar">
-  
-<a href="#0">Diagram Builder</a>
-<a href="#1">Scenegraph</a>
-<ul class="no-bullets">
-  <li><a href="#1.0">Implementation details</a></li>
-</ul>
-<a href="#2">Relationship between Plant and Scenegraph</a>
-<a href="#3">Plant</a>
-<a href="#4">Parser</a>
-<a href="#5">Package map</a>
-<a href="#6">Leaf system</a>
-<a href="#7">DeclareForcedPublishEvent</a>
-<a href="#8">Simulation description format (SDF)</a>
-<ul class="no-bullets">
-  <li><a href="#8.0">Moment of inertia</a></li>
-</ul>
-<a href="#9">Drake resources</a>
-</div>
-
-<chapter style="counter-reset: chapter 3"><h1>Drake components</h1>
+  <chapter style="counter-reset: chapter 3"><h1>Drake components</h1>
 
 <section id="0"><h1>Diagram Builder</h1>
   The real modeling power of Drake comes from combining many smaller systems together into more complex systems. We use the <code>DiagramBuilder</code> class to <code>AddSystem()</code>s and to <code>Connect()</code> input ports to output ports or to expose them as inputs/output of the diagram.  Then we call <code>Build()</code> to generate the new <i>Diagram</i> instance, which is just another System in the framework, and can be simulated or analyzed using the entire suite of tools.
