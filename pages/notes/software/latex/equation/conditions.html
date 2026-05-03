@@ -39,7 +39,11 @@
   <div id="mySidenav" class="sidebar">
   
 <a href="#0">Min of</a>
-<a href="#1">One sided curly brackets</a>
+<a href="#1">Layered Min</a>
+<a href="#2">One sided curly brackets</a>
+<ul class="no-bullets">
+  <li><a href="#2.0">Another method</a></li>
+</ul>
 </div>
 
 <chapter style="counter-reset: chapter 1"><h1>Conditions</h1>
@@ -59,18 +63,32 @@ $$\begin{align*}
   </subsubsection>
 </section>
 
-<section id="1"><h1>One sided curly brackets</h1>
-<pre><code class="latex">
-$$
-  y = 
-  \left\{
-  \begin{array}{cl}
-    \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
-    0                 & \quad \text{otherwise}
-  \end{array}
-  \right.
-$$
-</code></pre>
+<section id="1"><h1>Layered Min</h1>
+  <pre><code class="latex">
+    $$
+      \min_{\substack{x(t) \\ u(t)}}     
+    $$
+  </code></pre>    
+
+  <subsubsection><h1>Output</h1>
+    $$
+      \min_{\substack{x(t) \\ u(t)}}     
+    $$
+  </subsubsection>
+</section>
+
+<section id="2"><h1>One sided curly brackets</h1>
+  <pre><code class="latex">
+    $$
+      y = 
+      \left\{
+      \begin{array}{cl}
+        \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+        0                 & \quad \text{otherwise}
+      \end{array}
+      \right.
+    $$
+  </code></pre>
 
   <subsubsection><h1>Output</h1>
     $$
@@ -82,9 +100,26 @@ $$
       \end{array}
       \right.
     $$
+    $cl$ stands for a centered column and a left-justified column respectively.
   </subsubsection>
-   
-  $cl$ stands for a centered column and a left-justified column respectively.
+
+  <subsection id="2.0"><h1>Another method</h1>
+    <pre><code class="latex">
+      $$y = 
+      \begin{cases}
+        \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+        0 & \quad \text{otherwise}
+      \end{cases}$$
+    </code></pre>
+
+    <subsubsection><h1>Output</h1>
+      $$y = 
+        \begin{cases}
+          \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+          0 & \quad \text{otherwise}
+      \end{cases}$$
+    </subsubsection>
+  </subsection>
 </section>
 </chapter>
 

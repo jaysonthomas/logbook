@@ -38,32 +38,32 @@
 
   <div id="mySidenav" class="sidebar">
   
-<a href="#0">Overview</a>
+<a href="#0">Setup</a>
 <a href="#1">State space form</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Double Integrator</h1>
 
-<section id="0"><h1>Overview</h1>
+<section id="0"><h1>Setup</h1>
   [<a href="https://t.ly/9E1jc">Russ lecture 2009</a>,
   <a href="https://t.ly/RQ_yV">Control article</a>] <br>
   <div class="container">
     <figure>
       <img style="height:80px; width:auto"
-      src="../../../figures/dynamics/6_doubleIntegrator.png"/>
+      src="../../../../figures/dynamics/6_doubleIntegrator.png"/>
       <figcaption>
-        FBD
+        FBD. Example of a mechanical system would be a brick sliding over frictionless ice.
       </figcaption>
     </figure>
   </div>
 
-  $q$ is used to denote the kinematics and $x$ is used as the state vector.
+  $q$ is used to denote the kinematics and $x$ is used as the state vector. This is a linear system.
 </section>
 
 <section id="1"><h1>State space form</h1>
   $$\begin{align*}
-    \text{State, }x &= \begin{bmatrix}q \\\dot{q}\end{bmatrix} \\
-    \dot{x} &= Ax + Bu \\
+    \text{State:}\; x &= \begin{bmatrix}q \\\dot{q}\end{bmatrix} \\
+    \text{Dynamics:}\; \dot{x} &= Ax + Bu \\
             &= \begin{bmatrix}0 & 1 \\
                               0 & 0
                \end{bmatrix}x + \begin{bmatrix} 0 \\ 1\end{bmatrix}u \\
@@ -80,7 +80,7 @@
     \ddot{q} &= u
   \end{align*}$$
 
-  $F=\ddot{q}$, since $m=1$.
+  $F=\ddot{q}$, since $m=1$. $u$ is a scalar force.
 </section>
 </chapter>
 

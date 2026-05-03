@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Landscape plot</title>
+  <meta name="Landscape plot" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Objective function</a>
+<a href="#1">Constraint</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Landscape plot</h1>
+<section id="0"><h1>Objective function</h1>
+  $x$ is a 2 \times 1 vector in 2 dimensions with a horizontal-axis (x) and a vertical-axis (y) value. Feed the function $f$ with different (x, y) values to get a scalar which acts as the altitude in the contour plot.
+</section>
+
+<section id="1"><h1>Constraint</h1>
+  Only the boundary where the constraint is satisfied at $c(x) = 0$, is plotted.
+
+  <p>
+    $c(x)$ defines a relationship between $x_1$ and $x_2$. Setting the function to 0 to find the boundary:
+    $$
+      x_1^2 + 2x_1 - x_2 = 0
+    $$
+  </p>
+  
+  To plot this in a standard 2D coordinate system (where $x_1$ is the horizontal axis and $x_2$ is the vertical axis), solve for $x_2$:
+  $$
+    x_2 = x_1^2 + 2x_1
+  $$
+  This is the standard equation for a parabola, which is a 1D line living in a 2D space.
+</section>
+</chapter>
+
+</body>
+</html>

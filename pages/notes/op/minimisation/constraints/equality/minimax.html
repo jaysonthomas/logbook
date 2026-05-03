@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Minimax method</title>
+  <meta name="Minimax method" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Reason for existence</a>
+<a href="#1">Setup</a>
+<a href="#2">Best case solution</a>
+<a href="#3">Minimax method</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Role of the maximiser</a></li>
+  <li><a href="#3.1">Role of the minimiser</a></li>
+</ul>
+<a href="#4">Performance</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Minimax method</h1>
+<section id="0"><h1>Reason for existence</h1>
+  Consider an objective function that is strongly convex, a bowl. Even if a solution starts of in an interior region in a constrained problem and converges to the minimum close to the constraint, it is possible for the eigen values of the Hessian to not be positive definite. 
+
+  <p>
+    Since the objective function is convex, it is not the cause. The constraints cause it.
+  </p>
+</section>
+
+<section id="1"><h1>Setup</h1>
+  $$\begin{align*}
+    \min_x \quad & f(x) \\
+    s.t. \quad & c(x) = 0
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Best case solution</h1>
+  $$\begin{align*}
+    & \min_x \quad f(x) + \rho_\infty(c(x)) \\\\
+    & \rho_\infty (x)= 
+    \left\{
+    \begin{array}{cl}
+      0 & \quad c(x) = 0 \\
+      +\infty & \quad c(x) \neq 0
+    \end{array}
+    \right.
+  \end{align*}$$
+
+  The above is not practically implementable. The log barrier method approximates the above in a smooth way, but it still blows up which is not good. 
+
+  <p>
+    In the primal-dual method, a dummy slack variable which turns out to be closely related to the lagrange multiplier is introduced to provide an alternate solution to the log-barrier method since the latter can still blow up.
+  </p>
+</section>
+
+<section id="3"><h1>Minimax method</h1>
+  A new lagrange multiplier term is introduced. This method is exactly equivalent to the impractical theoretical method.
+
+  $$
+    \min_x \quad \max_\lambda \quad f(x) + \lambda^\top c(x) \\
+  $$
+
+  <subsection id="3.0"><h1>Role of the maximiser</h1>
+    If $c(x) \neq 0$, the maximizer drives $\lambda^\top c(x)$ to $+\infty$.
+    
+    <ul>
+      <li>If $c(x) &lt 0$, the maximizer sets $\lambda \to \infty$.</li>
+      <li>If $c(x) &gt 0$, the maximizer sets $\lambda \to -\infty$.</li>
+    </ul>
+    
+    The maximiser acts as a violation detector. Their sole job is to punish the minimizer as severely as possible for any deviation from the constraint $c(x) = 0$. Maximises the penalty by finding any $c(x) \neq 0$ and exploiting it to reach $\infty$.
+  </subsection>
+
+  <subsection id="3.1"><h1>Role of the minimiser</h1>
+    The outer player (the minimiser) knows what the maximizer is up to. Because the minimizer wants to keep the overall value as small as possible, they are forced to choose an $x$ that prevents the maximizer from blowing the function up.
+    
+    <p>
+      The only way for the minimizer to stop the maximizer from reaching $+\infty$ is to pick $x$ such that $c(x) = 0$.
+    </p>
+
+    Minimises the total cost by minimising $f(x)$ while hiding from the maximizer by keeping $c(x) = 0$.
+  </subsection>
+</section>
+
+<section id="4"><h1>Performance</h1>
+  In practice, $\lambda$ is not allowed go to infinity. In algorithms like the Augmented Lagrangian or Interior Point Methods, $\lambda$ is updated iteratively. The "pressure" from $\lambda$ pushes $x$ closer to the feasible region until an equilibrium is reached.
+</section>
+</chapter>
+
+</body>
+</html>

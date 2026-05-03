@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Armijo condition</title>
+  <meta name="Armijo condition" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Examples</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Moving Toward the Origin</a></li>
+  <li><a href="#1.1">Moving "Sideways" (Orthogonal)</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Armijo condition</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    \|r_n\|_2 &gt \|r\|_2 + b \; \alpha \; \frac{r}{\|r\|_2} \; J \; \Delta z
+  $$
+
+  The residual at the current step $r$ is the objective function evaluated at the current step since the reference is 0.
+
+  <p>
+    The Armijo condition compares <n>scalars</n> (the new norm vs. the old norm). $J \Delta z$ is a vector which gives the predicted change in the residual vector. To turn this vector change into a scalar change in length, it needs to be projected onto the current residual vector.
+  </p>
+
+  In the first iteration, $r_n$ is based on the point $z + \Delta z$. In the remaining iterations, $r_n$ is based on $z + \alpha \; \Delta z$.
+</section>
+
+<section id="1"><h1>Examples</h1>
+  <subsection id="1.0"><h1>Moving Toward the Origin</h1>
+    Here, a step is perfectly aligned with reducing the error.
+
+    <p>
+      Consider that the residual, $r = [10, 0]$ 
+    </p>
+
+    $\|r\|_2 = \sqrt{10^2 + 0^2} = 10$ <br>
+    Unit Vector $\frac{r}{\|r\|} = [1, 0]$
+
+    <p>
+      Change: $J\Delta z = [-1, 0]$. A decrease of 1 unit in the first component is predicted.
+    </p>
+
+    $$
+      \frac{r}{\|r\|_2} \; J \; \Delta z = [1, 0] \cdot [-1, 0] = (1 \times -1) + (0 \times 0) = -1
+    $$
+  
+    The Armijo condition sees a change of $-1$, a movement in the descent direction, so it expects a significant decrease in the norm.
+  </subsection>
+
+  <subsection id="1.1"><h1>Moving "Sideways" (Orthogonal)</h1>
+    Here, the step changes the residual vector, but not in a way that immediately makes it shorter.
+    
+    <p>
+      Consider that the residual, $r = [10, 0]$ 
+    </p>
+ 
+    Change: $J\Delta z = [0, -1]$ (Predicting a change in the second component only)
+    
+    $$
+      \frac{r}{\|r\|_2} \; J \; \Delta z = [1, 0] \cdot [0, -1] = (1 \times 0) + (0 \times -1) = 0
+    $$
+    
+    Even though the Jacobian says something is changing ($M\Delta z$ isn't zero), the norm isn't expected to change.
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

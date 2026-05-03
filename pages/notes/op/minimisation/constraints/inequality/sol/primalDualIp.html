@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Primal dual interior point method</title>
+  <meta name="Primal dual interior point method" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Solution</a>
+<ul class="no-bullets">
+  <li><a href="#1.0">Primal and dual feasibility inequality conditions</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Primal dual interior point method</h1>
+<section id="0"><h1>Overview</h1>
+  This is a practical method that has provable polynomial time complexity for convex problems.
+
+  <p>
+    Consider the simplest case where $x$ is positive (not positive definite).
+    $$\begin{align*}
+      \min_x \quad & f(x) \\
+      s.t. \quad & x \geq 0
+    \end{align*}$$
+  </p>
+
+  This is converted into an unconstrained problem.
+  $$
+    \min_x \quad f(x) - \rho \; log(x)
+  $$
+
+  Based on the first-order necessary (FON) conditions (stationarity), the first order derivative is set to 0 and can be solved using Newton's method:
+  $$\begin{equation}
+    \frac{\partial f}{\partial x} - \frac{\rho}{x} = 0 \label{eq:1}
+  \end{equation}$$
+
+  This primal FON condition blows up to infinity as $x \rightarrow 0$.
+</section>
+
+<section id="1"><h1>Solution</h1>
+  Introduce a new variable $\lambda$ that will end up having a similar function as a lagrange multiplier.
+  $$\begin{equation}
+    \lambda = \frac{\rho}{x} \label{eq:2}
+  \end{equation}$$
+
+  Substituting \ref{eq:2} in \ref{eq:1} and rearranging \ref{eq:2}:
+  $$\begin{align}
+    \nabla f - \lambda &= 0 \label{eq:3} \\
+    x \; \lambda &= \rho \label{eq:4}
+  \end{align}$$
+
+  In \ref{eq:3}, $\lambda$ takes the same place as a lagrange multiplier. 
+
+  <p>
+    \ref{eq:4} is a relaxation or smoothing of the complementarity condition from the kkt conditions - it's $\rho$ instead of 0 on the RHS. $x \; \lambda = 0$ represents hard switching that is not differentiable. Another way to think about it is, it's a brick wall penalty that blows up to infinity at precisely $x=0$ as described by the problem above. By using $\rho$ the the brick wall is smoothened in such a way that it is now differentiable. Log barrier can be thought of as a smoothing of the KKT conditions with the above trick.
+  </p>
+
+  To converge to a solution that satisfies the KKT conditions exactly, $\rho$ needs to be driven to 0. As $\rho$ approaches 0, \ref{eq:4} starts to approach hard-switching and becomes non-differentiable. It can be driven arbitrarily close to 0 (based on tolerance), but it cannot be set to exactly 0. 
+
+  <subsection id="1.0"><h1>Primal and dual feasibility inequality conditions</h1>
+    If the solver starts in the interior, it will stay there because of the log barrier properties. So, the other two conditions are not explicitly required in the Newton solver. But, it is still essential to satisfy them, since a Newton step approximates everything by linearising everything; because of which it can step across the barrier (constraints get violated) due to its linearisation kind of approximations. To mitigate this, it is essential to have a line search that backtracks and checks the constraint to make sure the solver is always staying in the interior-feasible region and doesn't step across the barrier.
+
+    <p>
+      Enforce $x \geq 0$ and $\lambda \geq 0$ with line search. But, getting the line search right is tricky, so another approach is used.
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

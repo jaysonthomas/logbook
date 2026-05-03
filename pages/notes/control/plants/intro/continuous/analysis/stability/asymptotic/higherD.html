@@ -42,27 +42,26 @@
 <a href="#1">Stability criteria</a>
 <a href="#2">Intuition</a>
 <a href="#3">Steps to analyse stability</a>
+<a href="#4">Eigenvalues check</a>
+<a href="#5">Core concept</a>
 </div>
 
 <chapter style="counter-reset: chapter 0"><h1>Higher dimensional systems</h1>
 
 <section id="0"><h1>Background</h1>
-  $\frac{\partial{f}}{\partial{x}}$ is no longer a scalar, but a Jacobian matrix. 
-
-  <subsubsection><h1>Matrix shape</h1>
-    If $\dot{x} = f(x)$ and $x \in \mathbb{R}^n$, then the Jacobian matrix $J = \frac{\partial{f}}{\partial{x}}$ is a <n>square matrix ($n \times n$)</n>.
-  </subsubsection>
+  $\frac{\partial{f}}{\partial{x}}$ is no longer a scalar, but a Jacobian matrix. If $\dot{x} = f(x)$ and $x \in \mathbb{R}^n$, then the Jacobian matrix $J = \frac{\partial{f}}{\partial{x}}$ is a square matrix ($n \times n$). See <a href="../../../../../../../maths/jacobian/usecase/higherD.html">matrix shape</a>.
 </section>
 
 <section id="1"><h1>Stability criteria</h1>
-  For a symmetric matrix, the eigen values are all pure real. In most dynamical systems, the Jacobian is a non-symmetric matrix, for which the eigenvalues can be complex.
+  For a symmetric matrix, the eigenvalues are all pure real. In most dynamical systems, the Jacobian is a non-symmetric matrix, for which the eigenvalues can be complex.
 
   <p>
-    For stability, the real parts of the eigenvalues of the Jacobian matrix need to be strictly negative. 
+    <n>For stability, the real parts of the eigenvalues of the Jacobian matrix need to be strictly negative</n>. 
   </p>
 
   <subsubsection><h1>Physical meaning</h1>
-    The imaginary parts correspond to oscillatory behaviour. As long as the real parts which correspond to damping are strictly negative, those oscillations will get damped out.
+    <n>The imaginary parts correspond to oscillatory behaviour. As long as the real parts which correspond to damping are strictly negative, those oscillations will get damped out</n>.
+    
 
     <p>
       The more negative the values are, the quicker the system will return to an equilibrium point. The actual quantitative value depends on the choice of coordinate system (mm vs cm, s vs ms for example). But, if the eigenvalue spectrum of the system was available for a given coordinate system, this statement holds true considering the relative values.
@@ -71,10 +70,10 @@
 </section>
 
 <section id="2"><h1>Intuition</h1>
-  In a dynamical sense, a set of coordinates can be chosen such that the dynamics decouple into a whole bunch of individual scalar systems. Each scalar system can then be treated as a 1D case.
+  In general, a set of coordinates can be chosen for a dynamical system such that the dynamics decouple into a bunch of individual scalar systems. Each scalar system can then be treated as a 1D case.
 
   <p>
-    If the system is linearised around an equilibrium, the eigenvectors define a coordinate transformation that decouples the dynamics into independent scalar systems, each governed by a single eigenvalue.
+    If a system is linearised around an equilibrium, <n>the eigenvectors define a coordinate transformation that decouples the dynamics into independent scalar systems, each governed by a single eigenvalue</n>.
   </p>
 </section>
 
@@ -87,6 +86,30 @@
   \end{align*}$$
 
   If there are any non-negative eigenvalues, the system is considered to be unstable.
+</section>
+
+<section id="4"><h1>Eigenvalues check</h1>
+  Eigenvalues correspond to eigenvectors. There are particular eigenvector directions along which a system can be stable or unstable. 
+  
+  <p>
+    If a system has a mixed spectrum of stable and unstable eigenvectors, even the slightest noise perturbation along an unstable eigenvector can cause the system to blow up to infinity. It is possible to do a more complex analysis and compute stable/unstable manifolds of where a system can evolve around an equilibrium.
+  </p>
+</section>
+
+<section id="5"><h1>Core concept</h1>
+  The eigenvalue concept is based on the fact that, near an equilibrium point:
+  <ul>
+    <li>$\dot{x} = 0$</li>
+    <li>the dynamics can be locally approximated by $Ax$</li>
+  </ul>
+
+  If the system is not at an equilibrium point, then $f(x) \neq 0$.
+  
+  <p>
+    at a non-equilibrium point, a taylor expansion, $f(x) + A \Delta{x} \cdots$ consists of a leading affine term that is non-zero. $f(x)$ dominates the system. The Jacobian $A$ still contains information about the local stretching or shearing of the flow. In fluid dynamics, this is used even when not at equilibrium (look up Lyapunov Exponents). It gives information of whether nearby points are getting sucked closer together or ripped further apart as a system swooshes along at velocity $f(x_0)$. 
+  </p>
+
+  There are things (not covered here) that can be said about stability along trajectories where the leading term is non-zero.
 </section>
 </chapter>
 

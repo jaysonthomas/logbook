@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Minimax method</title>
+  <meta name="Minimax method" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Reason for existence</a>
+<a href="#1">Setup</a>
+<a href="#2">Best case solution</a>
+<a href="#3">Minimax method</a>
+<a href="#4">Regularisation</a>
+<ul class="no-bullets">
+  <li><a href="#4.0">Intuition</a></li>
+</ul>
+<a href="#5">Saddle point</a>
+<a href="#6">Intuition</a>
+<ul class="no-bullets">
+  <li><a href="#6.0">Visualisation</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Minimax method</h1>
+<section id="0"><h1>Reason for existence</h1>
+  Consider an objective function that is strongly convex, a bowl. Even if a solution starts of in an interior region in a constrained problem and converges to the minimum close to the constraint, it is possible for the eigen values of the Hessian to not be positive definite. 
+
+  <p>
+    Since the objective function is convex, it is not the cause. The constraints cause it.
+  </p>
+</section>
+
+<section id="1"><h1>Setup</h1>
+  $$\begin{align*}
+    \min_x \quad & f(x) \\
+    s.t. \quad & c(x) \geq 0
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Best case solution</h1>
+  $$\begin{align*}
+    & \min_x \quad f(x) + \rho^-_\infty(c(x)) \\\\
+    & \rho^-_\infty (x) = 
+      \begin{cases}
+        0 & \quad c(x) \geq 0 \\
+        +\infty & \quad c(x) &lt 0
+      \end{cases}
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Minimax method</h1>
+  A new lagrange multiplier term is introduced. This method is exactly equivalent to the impractical theoretical method. This method is closely related to the primal-dual trick and lagrange multipliers.
+
+  $$
+    \min_x \quad \max_{\lambda \geq 0} \quad f(x) - \lambda^\top c(x) \\
+  $$
+
+  Similar to the KKT conditions, $\lambda$ has to be positive which turns the maximisation into a constrained maximisation problem.
+
+  <p>
+    When $c(x) &lt 0$, the inner problem blows up.
+  </p>
+
+  When solving a primal-dual problem involving optimising over $x$ and $\lambda$, the optimiser is trying to find a saddle point. When minimising w.r.t. x, the function w.r.t. x needs to be convex locally, a right-side-up bowl. When maximising w.r.t. $\lambda$, the function w.r.t. $\lambda$ is an upside-down bowl.
+</section>
+
+<section id="4"><h1>Regularisation</h1>
+  KKT conditions define a saddle point in ($x, \lambda$). KKT system should have dim(x) positive eigenvalues and dim($\lambda$) negative eigenvalues at an optimum. This is called being <i>quasi-definite</i>.
+
+  $$
+    \begin{bmatrix}
+      H + \beta I & c^\top \\
+      c & -\beta I
+    \end{bmatrix}
+    \begin{bmatrix} \Delta x \\ \Delta \lambda \end{bmatrix} =
+    \begin{bmatrix} -\nabla_x L \\ -c(x) \end{bmatrix}
+    \quad \beta &gt 0
+  $$
+  A positive regulariser is used on $x$ and a negative one on $\lambda$ to force the right kind of saddle - it forces gradient descent on the x's and ascent on the $\lambda$s.
+  
+  <p>
+    A matrix is quasi-definite if it can be partitioned into a positive definite block and a negative definite block.
+  </p>
+
+  <subsection id="4.0"><h1>Intuition</h1>
+    When $\beta I$ and $-\beta I$ are added to the Hessian matrix, they essentially bend the geometry of the optimization landscape to ensure the solver behaves predictably.
+    
+    <ul>
+      <li>Positive Regularizer ($H + \beta I$):By adding a positive value to the diagonal of the primal block, we ensure that the eigenvalues associated with $x$ are shifted in the positive direction. This makes the local surface look more like a "valley" (convex). In this geometry, the natural direction for the solver is downward toward the bottom of the valley.</li>
+
+      <p>
+        <li>Negative Regularizer ($-\beta I$):By subtracting a positive value (adding a negative one) from the dual block, we force the eigenvalues associated with $\lambda$ to be negative. This makes the surface look like a "peak" (concave) in the $\lambda$ dimension. In this geometry, the natural direction for the solver is upward toward the top of the peak.</li>
+      </p>
+    </ul>
+
+    $\beta$ terms act as "steering." Without them, if the Hessian $H$ is singular or "flat," the solver might get lost. By forcing the $x$-block to be positive and the $\lambda$-block to be negative, you mathematically guarantee that the algorithm treats $x$ as something to be minimized and $\lambda$ as something to be maximized, effectively "locking in" the saddle point search.
+  </subsection>
+</section>
+
+<section id="5"><h1>Saddle point</h1>
+  Around the saddle point, the terrain is positive definite in the x directions and negative definite in the $\lambda$ directions.
+
+  <subsubsection><h1>The Curvature (Definiteness)</h1>
+    This describes the "bend" of the surface.
+    
+    <ul>
+      <li>$x$ directions: The Hessian with respect to $x$ ($\nabla_{xx}^2 L$) should be Positive Definite. This creates the "right-side-up bowl" that allows for a minimum.</li>
+
+      <p>
+        <li>$\lambda$ directions: The Hessian with respect to $\lambda$ ($\nabla_{\lambda\lambda}^2 L$) is actually zero in a linear constraint problem (since $\lambda$ is usually linear in the Lagrangian), but in a general sense, the "Dual" objective is Concave. Concavity implies Negative Semi-Definite.</li>
+      </p>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>The Domain (Constraints)</h1>
+    This is just the allowed range. Saying $\lambda \geq 0$ is like saying "You can only walk on the right side of the street." It doesn't change the fact that the street might be sloped like an upside-down bowl.
+  </subsubsection>
+
+  Imagine a mountain ridge (the $\lambda$ direction) that is cut off by a wall at $\lambda = 0$.
+  
+  <ul>
+    <li>If the "peak" of the mountain is at $\lambda = 5$, the optimizer stops at 5.</li>
+    <li>If the "peak" of the mountain is actually at $\lambda = -2$, the optimizer wants to go there but hits the wall at $\lambda = 0$.</li>
+  </ul> 
+  In the second case, the "saddle point" happens right against the boundary. This is exactly what happens in the KKT conditions: 
+  <ul>
+    <li>If the constraint is inactive, $\lambda = 0$ (the optimizer is pushed against the wall).</li>
+    <li>If the constraint is active, $\lambda > 0$ (the optimizer found a peak away from the wall).</li>
+  </ul>  
+</section>
+
+<section id="6"><h1>Intuition</h1>
+  If the solution is at a point that is a minimum for $x$ but not a maximum for $\lambda$, the dual player will move $\lambda$ to increase the value. If the solution is at a maximum for $\lambda$ but not a minimum for $x$, the primal player will move $x$ to decrease it. The only point where neither player wants to move is the saddle point.
+
+  <subsection id="6.0"><h1>Visualisation</h1>
+    Imagine a physical horse saddle. 
+    
+    <ul>
+      <li>If one moves front-to-back (along the horse's spine), one would be at the bottom of a curve. This represents the $x$ dimension (minimisation).</li>
+      <li>If one moves side-to-side (where the legs hang), one would be at the peak of a curve. This represents the $\lambda$ dimension (maximization).</li>
+    </ul>
+    
+    At the very center of the saddle, one is at a minimum relative to one direction and a maximum relative to the other.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

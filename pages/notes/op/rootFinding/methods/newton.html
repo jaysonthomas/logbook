@@ -51,6 +51,11 @@
     f(x + \Delta{x}) \approx f(x) + \frac{\partial{f}}{\partial{x}}\bigg|_x \, \Delta{x}
   $$
 
+  At $x_k$, the taylor approximation of the function would be the following, where $\Delta x = x_{k+1} - x_k$.
+  $$
+    f(x_k + \Delta{x}) \approx f(x_k) + \frac{\partial{f}}{\partial{x}}\bigg|_{x_k} \, \Delta{x}
+  $$
+  
   It is hard to solve a nonlinear equation $f() = 0$. But, solving a linear approximation is easy. Hence, set approximation to 0 and solve for $\Delta{x}$
   $$\begin{align*}
     0 &= f(x) + \frac{\partial{f}}{\partial{x}}\bigg|_x \, \Delta{x} \\

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sufficient condition</title>
+  <meta name="Sufficient condition" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Scalar case</a>
+<a href="#2">Higher dimensional vector case</a>
+<a href="#3">Convergence guarantees</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Sufficient condition</h1>
+<section id="0"><h1>Overview</h1>
+  The interest is in the min case alone. At a minimum, second order sufficient conditions (a condition on the Hessian of the objective function) dictate that the curve needs to be both flat and curved up around it.
+</section>
+
+<section id="1"><h1>Scalar case</h1>
+  Considering a Newton step, in the scalar case, the division will only consist of scalars, i.e. the Jacobian and Hessian are scalars.
+
+  $$
+    \Delta{x} = - \left(\nabla^2 f(x)\right)^{-1} \nabla{f(x)}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      - &:& \text{The negative sign implies negative descent along the objective function.} \\ 
+      \nabla{f(x)} &:& \text{The objective function. Gradient.} \\
+      \nabla^2 f(x) &:& \text{The Hessian.} 
+    \end{array}$$
+  </div>
+
+  The Hessian is equivalent to a learning rate or step size. In order to not go uphill, the Hessian needs to be a positive learning rate.
+
+  $$\begin{align*}
+    \nabla^2 f &gt 0 &\quad \text{Leads to descent or minimisation} \\
+    \nabla^2 f &lt 0 &\quad \text{Leads to ascent or maximisation} \\
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Higher dimensional vector case</h1>
+  For minimisation, the Hessian needs to be strictly positive definite, $\nabla^2 f &gt 0$ (All eigenvalues are positive). Another way of writing it:
+  $$
+    \nabla^2 f \in S^n_{++}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      S^n &:& \text{Symmetric matrix in n dimensions.} \\ 
+      ++ &:& \text{Strictly positive definite}
+    \end{array}$$
+  </div>
+
+  If it were a single $+$, it would mean semi-positive definite meaning $\nabla^2 f \geq 0$.
+
+  <p>
+    In $\mathbb{R}^n$, by choosing the right coordinates (<m>related to eigenvectors/values</m>?), the Hessian matrix can be diagonalised, which decouples the objective function into $n$ scalar systems. 
+  </p>
+</section>
+
+<section id="3"><h1>Convergence guarantees</h1>
+  If the Hessian of an objective function is globally positive definite, everywhere in $\mathbb{R}^n$, the function is said to be strongly convex. It's a big bowl. In which case, Newton's method is guaranteed to converge to the global optimum. 
+  $$
+    \nabla^2 f &gt 0 \, \rightarrow \, f(x)\text{ is strongly convex} \\
+  $$
+  
+  In the strictly positive definite case, it's the global Optimum. In the semi-definite case, it's a global Optimum. In the latter, it is possible to have a flat bottom like a valley where all the points are equivalent. Weakly convex $\nabla^2 f \geq 0$ means that there are flat spots in the bowl.
+
+  <p>
+    When the objective function is strongly convex, guarantees can be provided of the runtime of Newton's method - predictions can be made of its runtime, how much sample rate is possible, all of which is important for real time control.
+   </p>
+</section>
+
+</chapter>
+
+</body>
+</html>

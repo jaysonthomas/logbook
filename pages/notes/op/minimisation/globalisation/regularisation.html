@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Regularisation</title>
+  <meta name="Regularisation" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../logbook.js"></script>
+
+  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Overview</a>
+<a href="#1">Steps</a>
+<a href="#2">Intuition</a>
+<a href="#3">Performance</a>
+</div>
+
+<chapter style="counter-reset: chapter 3"><h1>Regularisation</h1>
+<section id="0"><h1>Overview</h1>
+  Hard linear problems or nonlinear problems are usually not strongly convex. Regularisation is a trick used to minimise a function that is not strongly convex.
+
+  <p>
+    The Hessian needs to be positive definite to guarantee a descent step. If it is not, it is padded with 0s until it is.
+  </p>
+
+  Also called <i>Damped Newton</i> method. If $\nabla^2 f$ is made bigger, then the inverse becomes smaller. Hence, the step size or learning rate shrinks which leads to damped/shorter steps.
+</section>
+
+<section id="1"><h1>Steps</h1>
+  <equation>
+    Initialise some variable $H$ with the Hessian matrix:
+    $$
+      H \leftarrow \nabla^2 f
+    $$
+
+    While $H$ is not positive definite, it is padded with some multiple of the identity.
+    $$\begin{align*}
+      &\text{while } H \ngtr 0 \\
+      &\qquad H \leftarrow H + \beta{I} \\
+      &\text{end}
+    \end{align*}$$
+
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        \beta &:& \text{Scalar hyperparameter that can be tuned. } \beta &gt 0\\ 
+      \end{array}$$
+    </div>
+
+    Once $H$ is positive definite, run the Newton step:
+    $$\begin{align*}
+      \Delta{x} &= - H^{-1} \nabla{f(x)} \\
+      x &\leftarrow x + \Delta{x}
+    \end{align*}$$
+  </equation>
+
+  In practice, a custom cholesky factorisation is attempted that introduces padding on the fly as it runs into negative values. Specifically, cholesky computes the square roots of the diagonal and if it comes across a negative eigenvalue somewhere, it will end up with an imaginary number and that's how it knows it failed. It then just pads that spot and keeps going.
+</section>
+
+<section id="2"><h1>Intuition</h1>
+  The Hessian of the objective function ($H$) must be positive definite for the problem to have a unique, stable minimum. If the Hessian is "flat" or has negative curvature (meaning it looks like an upside-down bowl), the solver will get lost. 
+  
+  <p>
+    Adding $\beta I$ pulls the edges of the upside-down bowl upwards, turning it into a right-side-up bowl. Mathematically, this shifts all eigenvalues of the Hessian to the right.
+  </p>
+
+  If an eigenvalue was at $-0.5$ and you add $\beta = 1.0$, the new eigenvalue becomes $+0.5$.
+</section>
+
+<section id="3"><h1>Performance</h1>
+  Regularisation makes sure each solution heads downhill and never uphill. It still exhibits the overshoot problem though.
+
+  <p>
+    If the initial guess is exactly at a maximum, the solution will just stay there.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

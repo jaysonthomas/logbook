@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Performance</title>
+  <meta name="Performance" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Performance</h1>
+  It is not necessary to give the root finding problem a feasible initial guess.
+
+  <p>
+    Equality constraints are usually going to be the dynamics of a robot which are non-linear. Giving a feasible initial guess would be hard.
+  </p>
+
+  To avoid overshooting, line search would need to be implemented. A linearisation of the constraint (which can be a non-linear function) is used at each step. So, each solution would have to lie on that approximated tangent constraint-line - it moves towards the minima at each step, but lies on the approximated tangent constraint-line. It is not guaranteed to stay on the actual constraint curve. But, it will track it well; it will eventually move towards it.
+
+  <p>
+    At each step/spot, $\lambda$ tries to impedance match between $\nabla f$ and $\nabla c$ so they cancel each other out. It will definitely be a non-zero value.
+  </p>
+
+  In the example, the Hessian of the objective is positive definite. But, the Hessian of the Lagrangian which includes the curvature of the constraint can be indefinite based on the starting location. This can cause the solution to get stuck in a local optimum that is not even on the constraint. In the example, the objective function is convex, but the constraint isn't and the constraint curvature term can mess things up. Regularisation is the right solution.
+
+  <p>
+    Regularisation involves messing with the constraint curvature term which mutes its usefulness. It would be useful if the initial guess is closer to the optimum. Regularisation can make things worse if the initial guess is far from the optimum. It might be better to just ignore the term as in the Gauss-Newton method. An indefinite Hessian is bad because it corresponds to something non-convex.
+  </p>
+
+  In control problems, the user gets to design the cost function $f$ which is usually a benign convex or quadratic function. However, the user does not get to pick the constraints which usually involves the physics/dynamics, safety etc. The constraints tend to be the tricky function. Hence why Gauss-Newton is often used since the Hessian of the objective function behaves well towards the Hessian of the Lagrangian.
+</chapter>
+
+</body>
+</html>

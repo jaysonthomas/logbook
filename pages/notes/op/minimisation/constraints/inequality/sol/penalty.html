@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Penalty methods</title>
+  <meta name="Penalty methods" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Old way</a>
+<a href="#1">New way</a>
+<a href="#2">Pros & cons</a>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>Penalty methods</h1>
+<section id="0"><h1>Old way</h1>
+  $$\begin{align*}
+    \min_x \quad & f(x) \\
+    s.t. \quad & c(x) \geq 0
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>New way</h1>
+  Replace constraints with cost terms that penalise constraint violation. A quadratic cost function is introduced and the constraints are gotten rid of.
+
+  <div class="container" style="display: flex; align-items: flex-start; gap: 20px;">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../../../../figures/optimisation/constraints/3_penaltyMethod.png"/>
+    </figure>  
+    <div>
+      $$
+        \min_x \quad f(x) + \frac{\rho}{2} \biggl[\text{min}(0, c(x))\biggr]^2
+      $$
+
+      $\text{min}(0, c(x))$ takes the minimum of the output of the cost function and 0. If the cost function outputs a positive value, it will output 0. If the cost function outputs a negative value, it will get squared and penalised.
+    </div>
+  </div>
+</section>
+
+<section id="2"><h1>Pros & cons</h1>
+  Easy to implement. 
+  
+  <subsubsection><h1>Ill-conditioned</h1>
+    To get as close to the constraint as possible with some reasonable tolerance, it is possible to get into a situation where $\rho$ needs to be increased to an unreasonably high number which can be numerically terrible (floating point round off etc) leading to the minimiser not being able to solve the problem. This is described as being <i>ill-conditioned</i> where $\rho$ has to be increased to an unreasonably high number to satisfy the constraints. Hence, cannot come up with a solution that is highly accurate.
+
+    <p>
+      Fundamentally, a solution space will have very big and very small numbers in the same problem. There will be a huge dynamic range in the derivatives or the Hessian which will show up in Newton step. Because of the finite precision of double precision arithmetic, it will lead to loss of accuracy in the solution or a solution cannot be found.
+    </p>
+
+    Solutions include Augmented Lagrangian method - introduce a lagrange multiplier as well and use the penalty value to estimate the lagrange multiplier, i.e. offload the penalt at each iteration into the lagrange multiplier estimate. This avoids the need to increase $\rho$ and the multiplier also converges. Alternating Direction Method Multipliers (ADMM) is a flavour of this.
+  </subsubsection>
+
+  <subsubsection><h1>Discontinuous Hessian</h1>
+    The function with the penalty cost is smooth. Its first derivative is smooth too - it's flat. The Hessian to the right is 0. To the left, it is $\rho$ times something.
+
+    <p>
+      Gradient descent works since it uses first derivative. Using Newton's method can be a bit sketchy - the convergence rate drops off at certain <m>infintesimal</m> points where the Hessian is discontinuous; it still converges, but doesn't have quadratic convergence any more. But, it works fine in practice. So, it's not as big a deal as the ill-conditioning problem.
+    </p>
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

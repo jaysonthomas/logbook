@@ -46,7 +46,11 @@
 
 <chapter style="counter-reset: chapter 0"><h1>Background</h1>
 <section id="0"><h1>Overview</h1>
-  <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>. A discrete-time simulation helps simulate continuous dynamics (represented by ODEs which are always continuous), digitally on a PC.
+  <i>Simulation</i> <n>is all about advancing a system's state forward in time</n>. 
+  
+  <p>
+    A <i>discrete-time simulation</i> helps simulate continuous dynamics (represented by ODEs which are always continuous), digitally on a PC. Integration methods are used to go from continuous to discrete time. To go from discrete to continuous time (i.e. to get very smooth state transitions), interpolation is used; cubic spline interpolation being the most popular.
+  </p>
 
   <p>
     Euler integration is based on approximating the next discrete state by linearising the continuous dynamics using Taylor series expansion.

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KKT conditions</title>
+  <meta name="KKT conditions" content="text/html; charset=utf-8;" />
+  <script type="text/javascript" src="../../../../../../logbook.js"></script>
+
+  <script src="../../../../../../logbook-mathjax-config.js" defer></script> 
+  <script type="text/javascript" id="MathJax-script" defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="../../../../../../logbook.js" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+</head>
+
+<body onload="loadChapter('');">  
+
+  <div data-type="titlepage" pdf="no">
+    <header>
+      <h1><a href="../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
+      <p style="font-size: 18px;"><a href="../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+      <p style="font-size: 14px; text-align: right;"> 
+        Last modified <span id="last_modified"></span>.</br>
+        <script>
+        var d = new Date(document.lastModified);
+        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
+      </p>
+    </header>
+  </div>
+  
+  <div id="main" class="sidebar1">
+    <span style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  </div>
+
+  <div id="mySidenav" class="sidebar">
+  
+<a href="#0">Stationarity</a>
+<a href="#1">Primal feasibility</a>
+<a href="#2">Dual feasibility</a>
+<a href="#3">Complementarity</a>
+<ul class="no-bullets">
+  <li><a href="#3.0">Inactive constraint</a></li>
+  <li><a href="#3.1">Active constraint</a></li>
+</ul>
+</div>
+
+<chapter style="counter-reset: chapter 0"><h1>KKT conditions</h1>
+<section id="0"><h1>Stationarity</h1>
+  Dictates the gradient condition - the gradient needs to be 0 in the free directions. The lagrange multiplier helps cancel out the gradients. 
+  $$
+    \nabla f - \nabla_x c \lambda = 0
+  $$
+
+  In the equality case, $\lambda$ can be positive or negative as long as the constraint pulls minimisation solutions to the constraint-line. 
+  
+  <p>
+    In the inequality case, it is desirable for the constraint to push solutions in the positive direction and not pull them onto the line. The negative sign is important and $\lambda$ needs to be positive as per the dual feasibility condition to ensure the gradients cancel out.
+  </p>
+
+  <p>
+    Some write the constraint as negative, in which case the sign needs to be positive. As long as the gradients cancel out!
+  </p>
+</section>
+
+<section id="1"><h1>Primal feasibility</h1>
+  Dictates that the constraints need to be satisfied or the <i>primal variable</i> needs to be feasible w.r.t. the constraints, i.e. the $x$s need to obey the constraints. 
+  $$
+    c(x) \geq 0
+  $$
+</section>
+
+<section id="2"><h1>Dual feasibility</h1>
+  The <i>Dual variable</i> refers to the lagrange multiplier. It needs to obey the constraints. For a minimisation problem, that means it needs to be positive.
+  $$
+    \lambda \geq 0
+  $$
+</section>
+
+<section id="3"><h1>Complementarity</h1>
+  $$
+    \lambda \odot c(x) = \lambda^\top c(x) = 0
+  $$
+  Element-wise product of the 2 vectors results in a vector. All elements of the result need to be 0. This condition can also be written as the dot product of the transpose of the lagrange multiplier with the constraints which results in a scalar. The scalar output needs to be 0.
+
+  <p>
+    Also called <i>complimentary slackness</i>. This encodes switching behaviour. The switching of the constraint, on or off to look like either an unconstrained problem or an equality constraint problem respectively, is handled by the complementarity condition.
+  </p>
+  
+  Intuitively, it is enforcing that either $c$ or $\lambda$ has to be 0. The KKT conditions mainly encode the switching behaviour.
+
+  <p>
+    There are 2 options as far as constraints are concerned.
+  </p>
+
+  <subsection id="3.0"><h1>Inactive constraint</h1>
+    If the minimiser were in the internal feasible region then it would just go to the minimum. The lagrange multiplier term shouldn't be there. It would look like an unconstrained problem. The constraints would be strictly greater than or equal to zero. Considering the stationarity condition, the constraint needs to drop out and $\lambda$ needs to be 0.
+  </subsection>
+
+  <subsection id="3.1"><h1>Active constraint</h1>
+    If the constraints are active, it means the minimiser or the solution is on the boundary set of the constraints, then it looks like an equality constraint problem. The lagrange multiplier term is needed in the stationarity condition. 
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>
