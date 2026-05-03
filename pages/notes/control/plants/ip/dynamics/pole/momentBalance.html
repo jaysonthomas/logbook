@@ -1,36 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cartpole: Derivation of equations of motion</title>
-  <meta name="Cartpole: Derivation of equations of motion" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../../../../logbook.js"></script>
-
-  <script src="../../../../../../../logbook-mathjax-config.js" defer></script> 
-  <script type="text/javascript" id="MathJax-script" defer
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  <script src= "../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Cartpole: Derivation of equations of motion", "../../../../../../../");
   </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script src="../../../../../../../logbook.js" defer></script>
-
-  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
 </head>
 
-<body onload="loadChapter('');">  
-
-  <div data-type="titlepage" pdf="no">
-    <header>
-      <h1><a href="../../../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
-      <p style="font-size: 14px; text-align: right;"> 
-        Last modified <span id="last_modified"></span>.</br>
-        <script>
-        var d = new Date(document.lastModified);
-        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-      </p>
-    </header>
-  </div>
+<body onload="loadChapter('');">
   <chapter style="counter-reset: chapter 0"><h1>Cartpole: Derivation of equations of motion</h1>
 <section id="0"><h1>Balance of moments about the centre of mass</h1>
   The advantage of computing the balance of moments about <code>A</code> is that $F_1$ and $F_2$ don't create any moments about the point. Hoping to never have to evaluate them is futile, since they pop up in the sum of forces acting on the pole anyway. The number of terms in the sum of torques equation does reduce though.

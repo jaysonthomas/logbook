@@ -1,36 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Impulse: Application example</title>
-  <meta name="Impulse: Application example" content="text/html; charset=utf-8;" />
-  <script type="text/javascript" src="../../../../../logbook.js"></script>
-
-  <script src="../../../../../logbook-mathjax-config.js" defer></script> 
-  <script type="text/javascript" id="MathJax-script" defer
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Impulse: Application example", "../../../../../");
   </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-  <script src="../../../../../logbook.js" defer></script>
-
-  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
 </head>
 
-<body onload="loadChapter('');">  
-
-  <div data-type="titlepage" pdf="no">
-    <header>
-      <h1><a href="../../../../../index.html" style="text-decoration:none;">Logbook</a></h1>
-      <p style="font-size: 18px;"><a href="../../../../../pages/bio/main.html">Jayson Wynne-Thomas</a></p>
-      <p style="font-size: 14px; text-align: right;"> 
-        Last modified <span id="last_modified"></span>.</br>
-        <script>
-        var d = new Date(document.lastModified);
-        document.getElementById("last_modified").innerHTML = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();</script>
-      </p>
-    </header>
-  </div>
+<body onload="loadChapter('');">
   <chapter style="counter-reset: chapter 0"><h1>Impulse: Application example</h1>
 <section id="0"><h1>Setup</h1>
   Imagine a block sitting on a table is struck with a hammer. This comes close to an impulse force since the hammer would be applying a very large force to the block over a very short period of time. The block would move with an instantaneous initial velocity and start sliding across the table. It would slow down over time due to friction and would eventually stop.
