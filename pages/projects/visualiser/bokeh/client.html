@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Client", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Client</h1>
+<section id="0"><h1>Array</h1>
+  <pre><code class="cpp">
+    auto message = std_msgs::msg::Float64MultiArray();
+  </code></pre>
+  Creates a ROS2 message object.
+
+  <p>
+    An example would be a simulation publishing the following array every time step: [time, position, velocity, control]
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

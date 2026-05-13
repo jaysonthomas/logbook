@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../logbook.css" />
+  <script src= "../../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Cost function: Refined approach", "../../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Cost function: Refined approach</h1>
+  The vector of optimal control inputs $u$ can be determined by minimising the following cost function:
+
+  $$
+    J = \min_u J_z + J_u
+  $$
+
+  From the <a href="penalty.html">penalty</a> and the <a href="trackingError.html">tracking error</a>, the cost function can be rewritten as:
+  $$\begin{align*}
+    J &= (s - Mu)^T \, W_P \, (s - Mu) + u^T W u \\
+      &= s^T \, W_P \,s - s^T \, W_P \, Mu - u^T \, M^T \, W_P \, s +  u^T \, M^T \, W_P \, Mu \, + u^T W u
+  \end{align*}$$
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Measurement update", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Measurement update</h1>
+<section id="0"><h1>State update</h1>
+  $$
+    \hat{x}_{k+1|k+1} = \hat{x}_{k+1|k} + \underbrace{L_{k+1}}_{\text{Kalman Gain}} z_{k+1}
+  $$
+
+  If $L$ is selected based on traditional methods like pole placement, then it is called a <i>Luenberger observer</i>. It would be similar to having a linear feedback that is not optimal, i.e. not LQR. If it's optimised, it's called the <i>Kalman Gain</i>.
+</section>
+
+<section id="1"><h1>Covariance update</h1>
+  $$
+    \Sigma_{k+1|k+1} = E[(x_{k+1} - \hat{x}_{k+1})(\dots)^\top]
+  $$
+
+  Substituting the state update equation and $z_{k+1}$:
+  $$
+    \Sigma_{k+1|k+1} = E[(x_{k+1} - \hat{x}_{k+1|k} - L_{k+1}(Cx_{k+1} + v_{k+1} - C\hat{x}_{k+1|k}))(\dots)^\top]
+  $$
+
+  Assuming the state $x_{k+1}$ and the sensor noise $v_{k+1}$ are uncorrelated:
+  $$
+    \Sigma_{k+1|k+1} = (I - L_{k+1}C) \Sigma_{k+1|k} (I - L_{k+1}C)^\top + L_{k+1} V L_{k+1}^\top
+  $$
+
+  This form of covariance update is called the <i>Joseph form</i>. This is good in terms of numerical precision w.r.t. floating point numbers on a computer because it's symmetric. Other versions give non-symmetric matrices or have minus signs which can lead to indefinite covariances i.e. covariance with negative eigen values. Covariances have to be at least positive semidefinite. This form is guaranteed to give a symmetric positive semidefinite matrix by construction.
+
+  <p>
+    The updated covariance</a> $\Sigma_{k+1|k+1}$ is a function of $L$ and is a convex quadratic equation.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

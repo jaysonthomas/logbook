@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Deterministic optimal control", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Deterministic optimal control</h1>
+<section id="0"><h1>Overview</h1>
+  The aim is to minimise a cost function $J$ w.r.t. state $x(t)$ and control $u(t)$ trajectories. $J$ is a function of functions since the state and control are functions of time. Considering the discrete version where discrete samples replace continuous time.
+
+  <p>
+      This is a <i>finite time problem</i> where once the end is reached at the final time step, there are no more control moves and a final cost is incurred.
+  </p>
+
+  $$
+    \min_{\substack{x_{1:N} \\ u_{1:N-1}}} \quad J(x_{1:N}, u_{1:N-1}) = 
+    \sum^{N-1}_{k=1} l(x_k, u_k) + l_f(x_N) \\
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      l(x_k, u_k) &:& \text{Stage cost. Cost incurred at each time step.} \\ 
+        && \text{This is added along the trajectory.} \\
+      l_f(x_N) &:& \text{Terminal cost, a function of just the final state (the final landing spot)} \\
+        && \text{since there are no more moves to perform.} \\
+      u_{1:N-1} &:& \text{No control action is taken at the terminal state. } \\ 
+        && \text{Hence, one less control action than states.} \\
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Solution</h1>
+  Samples $x_k, u_k$ are often called <i>knot points</i> since often splines are used to interpolate between points. Often the optimisation is solved for course knot points (say 5Hz), but then upscaled (500Hz) <m>by interpolating using cubic splines between the solutions</m> which leads to very smooth outputs. 
+
+  <p>
+    The solutions are open loop trajectories in $(x, u)$. In a stochastic setting, the solutions are feedback policies since everything is noisy and some feedback is needed for stabilisation. RL can only provide feedback policies as solutions.
+  </p>
+
+  Aside from LQR, there are no other problems of this nature that have analytical solutions. In the latter case, numerical methods/optimisations are used.
+</section>
+
+<section id="2"><h1>Constrained optimisation problem</h1>
+  <p>
+    Constraints are enforced at each time step. They are usually evaluated for the knot points and not for the finer interpolated points due to the higher computational expense.
+  </p>
+
+  Following are different types of constraints:
+
+  <subsubsection><h1>Dynamics constraints</h1>
+    They are a set of equality constraints that are enforced at every time step. RK4 could be used to obtain the below for example.
+    $$
+      s.t. \quad x_{k+1} = f(x_k, u_k)
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Actuator constraints</h1>
+    These are bounds on $u$, torque limits, which are inequality constraints.
+    $$
+      u_{min} \leq u_k \leq u_{max} \quad \forall k
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Collision avoidance constraints</h1>
+    These are Obstacle/safety constraints which are state inequality constraints. For e.g. distance from the minimum radius around an object needs to be above some threshold.
+    $$
+      c(x_k) \geq 0 \quad \forall k
+    $$
+  </subsubsection>
+</section>
+
+<section id="3"><h1>Continuous time formulation</h1>
+  $$
+    \min_{\substack{x(t) \\ u(t)}} \quad J(x(t), u(t)) = 
+    \int_{t_0}^{t_f} l(x(t), u(t)) \; dt + l_f(x(t_f)) 
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Use", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Use</h1>
+<section id="0"><h1>Overview</h1>
+  The Ricatti equation helps to solve the QP using a forward backward recursion method.
+
+  <subsubsection><h1>Reduced computational complexity</h1>
+    This method exploits the sparsity in the QP and solves it efficiently without messing around with all the zeros as in the case of solving the QP with the backslash on the giant matrix.
+
+    <p>
+      General dense QP has $O\left(\left[N(n+m)\right]^3\right)$ complexity.
+    </p>
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        N &:& \text{Horizon - number of time steps.} \\ 
+        n &:& \text{Dimension of state - number of state variables.} \\
+        m &:& \text{Dimension of control - number of control variables.}
+      \end{array}$$
+    </div>
+
+    Riccati solution is $O\left(N(n+m)^3\right)$ complexity. This makes it easier to solve long horizon problems since it's not $N^3$ - in the time horizon, the complexity is linear.
+  </subsubsection>
+
+  <subsubsection><h1>Feedback policy</h1>
+    Solving the LQR in the forward pass gives the trajectory in $x$s and $u$s. In the backward pass, it gives $K$s and $P$s.
+
+    <p>
+      From the structure of the equation in <a href="matrixStructure.html#mjx-eqn:eq:1">1</a>, 
+      $$
+        u = -Kx
+      $$
+    </p>
+
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        K &:& \text{Feedback policy}
+      \end{array}$$
+    </div>
+
+    Instead of a single trajectory solution for a specific $x_1$ that would have only been good for a single initial condition, the sparse matrix trick has given a general feedback policy that can now give a solution for any $x_1$. The feedback policy stabilises and tracks along a whole trajectory and is robust to noise disturbance, modeling error etc. 
+  </subsubsection>  
+</section>
+</chapter>
+
+</body>
+</html>

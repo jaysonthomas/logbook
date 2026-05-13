@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Algorithm", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Algorithm</h1>
+<section id="0"><h1>Steps</h1>
+  The first pass involves <n>bootstrapping the recursion</n>.
+  <ul>
+    <li>Start with the gaussian prior</li>
+    $$
+      \hat x_{0|0} \; \Sigma_{0|0} \; W \; V
+    $$
+
+    <p>
+      <li>Prediction step</li>
+      Pass the mean and the covariance through the linear dynamics.
+      $$\begin{align*}
+        \hat{x}_{k+1|k} &= A \hat{x}_{k|k} + B u_k \\
+        \Sigma_{k+1|k} &= A \Sigma_{k|k} A^T + W
+      \end{align*}$$
+    </p>
+
+    <li>Compute Innovation terms</li>
+    $$\begin{align*}
+      z_{k+1} &= y_{k+1} - C\hat{x}_{k+1|k} \\
+      S_{k+1} &= C \Sigma_{k+1|k} C^T + V    
+    \end{align*}$$
+
+    <p>
+      <li>Compute Kalman Gain</li>
+      $$
+        L_{k+1} = \Sigma_{k+1|k} C^\top S_{k+1}^{-1}
+      $$
+    </p>
+
+    <li>Measurement update</li>
+    $$\begin{align*}
+      \hat{x}_{k+1|k+1} &= \hat{x}_{k+1|k} + L_{k+1} z_{k+1} \\
+      \Sigma_{k+1|k+1} &= (I - L_{k+1}C) \Sigma_{k+1|k} (I - L_{k+1}C)^\top + L_{k+1} V L_{k+1}^\top
+    \end{align*}$$
+
+    <p>
+      <li>Go to prediction step.</li>
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

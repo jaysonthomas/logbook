@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("KKT system", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>KKT system</h1>
+<section id="0"><h1>Lagrangian</h1>
+  <a href="../../minimisation/constraints/equality/lagrangian.html">Lagrangian</a> of the QP is:
+  $$
+    L(z, \lambda) = \frac{1}{2} z^\top H z + 
+      \lambda^\top [Cz - d]
+  $$
+  The lagrange multiplier $\lambda$ is for the <a href="qpFormulation.html#3">dynamics constraints</a>.
+</section>
+
+<section id="1"><h1>KKT conditions</h1>
+  Setting the gradients of the Lagrangian to 0.
+  $$\begin{alignat*}{2}
+    \nabla_z L &= Hz + C^\top \lambda &= 0 \\
+    \nabla_\lambda L &= Cz - d &= 0
+  \end{alignat*}$$
+</section>
+
+<section id="2"><h1>KKT linear system formulation</h1>
+  $$
+    \begin{bmatrix} H & C^\top \\ C & 0 \end{bmatrix}
+    \begin{bmatrix} z \\ \lambda \end{bmatrix} = 
+    \begin{bmatrix} 0 \\ d \end{bmatrix}
+  $$
+  
+  Since no linearisation was required, reformulating the problem as a QP and then stacking as a linear system, Newton's method could solve this in a single iteration. 
+</section>
+</chapter>
+
+</body>
+</html>

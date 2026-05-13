@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Riccati equation", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Riccati equation</h1>
+<section id="0"><h1>Steps</h1>
+  There is a recursion for $K$ and $P$. Start the recursion at time step $N$:
+  $$
+    P_N = Q_N
+  $$
+
+  Then back-substitute to solve for $P$ and $K$. This runs from $N$ to the first time step.
+  $$\begin{aligned}
+    K_k &= (R + B^T P_{k+1} B)^{-1} B^T P_{k+1} A \\
+    P_k &= Q + A^T P_{k+1} (A - B K_k)
+  \end{aligned}$$
+
+  This is called the <i>Riccati equation/recursion</i>.
+
+  <p>
+    There are 4 different versions of the Ricatti equation: discrete, continuous time and finite/infinite horizon.
+  </p>
+
+  <subsubsection><h1>Overview</h1>
+    First, solve the QP by doing a backward Riccati pass to get $K$s and $P$s. Then, do a forward pass by rolling out the dynamics to get $x_{1:N}$ and $u_{1:N-1}$.
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

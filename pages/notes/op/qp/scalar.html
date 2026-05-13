@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Linear 1D (scalar) case", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Linear 1D (scalar) case</h1>
+<section id="0"><h1>Without constraints</h1>
+  $ax\approx b$ is a standard operation in linear algebra. It represents the aim of finding the <n>best solution</n> for $x$ such that LHS is approximately equal to RHS.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/optimisation/qp/1_leastSquares.png"/>
+      <figcaption>
+        $ax \approx{b}$
+      </figcaption>
+    </figure>
+  </div>
+
+  There are only a few things that $a$, $x$ and $b$ can do. $a$ is the slope. $x^*$ is the solution to be found such that $ax^* = b$.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/optimisation/qp/2_leastSquaresParabola.png"/>
+      <figcaption>
+        <n>The quadratic curve of least squares</n>.
+      </figcaption>
+    </figure>
+  </div>
+  $\|ax-b\|^2$ scores all the different options along the parabola to find the lowest point on the quadratic curve. When the curve touches 0, $ax=b$. The 2 values diverge as the curve moves farther from 0.
+
+  <p>
+    If slope $a$ starts getting small, the solutions start getting worse - to achieve the same $b$, $x$ would need to be bigger.
+  </p>
+</section>
+
+<section id="1"><h1>With constraints</h1>
+  Adding constraints prevents a solution from going past a certain $x$ i.e. picks the smallest point on the curve that's within a certain regime. <n>It is still based on the fundamental idea of first scoring all the points on the parabola and then finding the minimum of it</n>. 
+
+  <subsubsection><h1>Example</h1>
+    $$\begin{align*}
+      \min_x \quad & \|ax-b\|^2 \\
+      s.t. \quad & x\leq 2
+    \end{align*}$$
+
+    This equation says minimise over $x$ subject to $x \leq 2$ (the boundary of the search, the regime, the stop condition). 
+
+    <ul>
+      <li>A scoring function has been created for all the possible $x$.</li>
+      <li>The search has been limited to the constraint $x \leq{2}$.</li>
+      <li>The aim is to find the lowest point.</li>
+    </ul>
+
+    This is a more robust formulation because it is possible to put more information into it. 
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

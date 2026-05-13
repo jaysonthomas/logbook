@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("LQR as DP", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>LQR as DP</h1>
+<section id="0"><h1>Math</h1>
+  The optimal cost-to-go at the final state at time $N$ is just the terminal cost:
+  $$\begin{equation}
+    V_N(x) = \frac{1}{2}x^T Q_N x = \frac{1}{2}x^T P_N x \label{eq:1}
+  \end{equation}$$
+
+  $$\begin{equation}
+    V_{N-1} = \min_u \frac{1}{2}
+      x_{N-1}^T Q x_{N-1} + 
+      \frac{1}{2}u^T R u + 
+      V_N(Ax_{N-1} + Bu_{N-1}) \label{eq:2}
+  \end{equation}$$
+
+  When minimising just over $u$, the state term is constant and becomes irrelevant. Substituting \ref{eq:1}:
+  $$
+    V_{N-1} = \min_u \frac{1}{2}u^T R u + 
+    \frac{1}{2}(Ax_{N-1} + Bu)^T P_N (Ax_{N-1} + Bu)
+  $$
+
+  Because of the restrictions on $Q, R$, this is a convex quadratic problem. Setting the gradient w.r.t. $u$ to 0:
+  $$
+    \nabla_u V_{N-1} = Ru + B^T P_N (Ax_{N-1} + Bu) = 0
+  $$
+
+  Solving for $u$:
+  $$\begin{equation}
+    u_{N-1} = -\underbrace{(R + B^T P_N B)^{-1} B^T P_N A}_{K_{N-1}} 
+      x_{N-1} \label{eq:3}
+  \end{equation}$$
+
+  Now that the optimal $u$ for the particular time step is found, plugging \ref{eq:3} into \ref{eq:2}:
+  $$\begin{align}
+    V_{N-1}(x) &= \frac{1}{2}x^T \underbrace{\left[ Q + K^T R K + (A - BK)^T P_N (A - BK) \right]}_{P_{N-1}} x \nonumber \\
+    &= \frac{1}{2}x^T P_{N-1} x \label{eq:4}
+  \end{align}$$
+
+  \ref{eq:4} looks similar to \ref{eq:1} which suggests that there is a backward recursion in $K, P$. This is iterated until the first time step. This is Riccati recursion.
+</section>
+</chapter>
+
+</body>
+</html>

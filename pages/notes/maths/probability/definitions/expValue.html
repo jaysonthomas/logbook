@@ -11,9 +11,9 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Expected value</h1>
+<chapter style="counter-reset: chapter 0"><h1>Expected value</h1>
 <section id="0"><h1>Intuition</h1>
-  It is not the most likely, but the average value a random variable converges to if a value was continuously drawn from a distribution. It gives the <n>long-run average</n> value of a <n>repeated</n> probabilistic experiment.
+  It is <n>not the most likely</n>, but the average value a random variable converges to if a value was continuously drawn from a distribution. It gives the <n>long-run average</n> value of a <n>repeated</n> probabilistic experiment.
 </section>
 
 <section id="1"><h1>Mathematical expression</h1>
@@ -21,33 +21,51 @@
     E(X) = \sum_{i=1}^{N}v_iP(X=v_i)
   $$
   It's the value of the random variable, times the likelihood of each of those outcomes all summed together. 
-  
-  <subsubsection><h1>Proabability</h1>
-    When the probability of each event is $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
-  </subsubsection>
 
   <subsubsection><h1>Random variable</h1>
-    The expected value of a random variable, where the underlying events are truly non-numeric quantities such as working or not working, may not be useful because the values assigned to the random variables wouldn't make sense. 
+    Where the underlying events are non-numeric quantities such as working or not working, the expected value of a random variable may not be useful because the numeric values assigned to the random variables wouldn't make sense. 
     
     <p>
-      But, where the underlying events are numeric like the position of a bot, the expected value gives an idea of the value of the random variable at any given time. 
+      Where the underlying events are numeric like the position of a bot, the expected value gives an idea of the value of the random variable at any given time. 
     </p>
   </subsubsection>
 </section>
 
-<section id="2"><h1>Special case: Variance</h1>
-  $$\begin{align*}
-    \sigma^2 &= E[X = (v_i - \mu)^2] \\
-             &= \sum_{i=1}^{N}(v_i-\mu)^2P(X=v_i)
-  \end{align*}$$
+<section id="2"><h1>Special cases</h1>
+  <subsection id="2.0"><h1>Variance</h1>
+    $$\begin{align*}
+      \sigma^2 &= E[X = (v_i - \mu)^2] \\
+              &= \sum_{i=1}^{N}(v_i-\mu)^2P(X=v_i)
+    \end{align*}$$
 
-  $P(X=v_i)$ is the same as $P(X = (v_i - \mu)^2)$.
+    $P(X=v_i)$ is the same as $P(X = (v_i - \mu)^2)$.
 
-  <p>
-    <n>$\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean</n>.
-  </p>
+    <p>
+      <n>$\sigma^2$ is the long-term average ($E$) of the square of the deviation from the mean</n>.
+    </p>
+  </subsection>
+
+  <subsection id="2.1"><h1>Equal probability</h1>
+    When the probability of each event is $\frac{1}{N}$, the expected value is equal to the mean of the distribution.
+  </subsection>
 </section>
 
+<section id="3"><h1>Trace trick</h1>
+  The dot product within the expectation $E\left[(x - \hat x)^\top (x - \hat x)\right]$ results in a scalar. Wrapping the scalar in a trace operator means nothing - trace of a scalar is the same scalar.
+
+  $$\begin{align}
+    E \left[tr((x - \hat x)^\top (x - \hat x))\right] &= 
+      E \left[tr((x - \hat x) (x - \hat x)^\top)\right] \label{eq:1} \\
+      &= tr \left(E \left[(x - \hat x) (x - \hat x)^\top\right]\right) \label{eq:2} \\
+      &= tr(\Sigma) \nonumber
+  \end{align}$$
+
+  Permuting the entries inside a trace makes no difference as in \ref{eq:1}. Instead of a dot product, it is now an outer product. The expectation of the outer product is the covariance.
+
+  <p>
+    Expectation and trace are linear operators. Since both are linear, the order of the operations does not matter. Moving the trace outside as in \ref{eq:2}. 
+  </p>
+</section>
 </chapter>
 
 </body>

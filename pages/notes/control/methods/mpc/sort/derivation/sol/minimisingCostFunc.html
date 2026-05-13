@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../logbook.css" />
+  <script src= "../../../../../../../../setup.js"></script>
+  <script>
+    initializePage("MPC solution: Minimising the cost function derivative", "../../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>MPC solution: Minimising the cost function derivative</h1>
+<section id="0"><h1>Solution to the MPC problem</h1>
+  To minimise the cost function w.r.t. $u$, its derivative is set to $0$:
+
+  $$\begin{align*}
+    \frac{\partial{J}}{\partial{u}} &= -2M^T \, W_P \, s + 2M^T \, W_P \, Mu + 2Wu \\
+        &= 0 \\
+        (M^T \, W_P \, M + W)u &= M^T \, W_P \, s
+  \end{align*}$$
+
+  $$
+    \hat{u} = (M^T \, W_P \, M + W)^{-1} \, M^T \, W_P \, s
+  $$
+
+  $\hat{u} = 
+    \begin{bmatrix} 
+      \hat{u}_{k|k} \\ \hat{u}_{k+1|k} \\ \vdots \\ \hat{u}_{k+c-2|k} \\ \hat{u}_{k+c-1|k}
+    \end{bmatrix}
+  $  is the solution to the MPC problem.
+
+  <p>
+    Only the first control input is required. When $\hat{u}_{k|k}$ is applied to the system, after time instant $k+1$, state $x_{k+1}$ is observed, another cost function is formed and solution computed. $\hat{u}_{k+1|k}$ is then applied to the system and the whole procedure is repeated for the time instant $k+2$.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

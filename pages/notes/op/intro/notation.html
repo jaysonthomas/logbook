@@ -11,8 +11,14 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Notation</h1>
-<section id="0"><h1>Convenient derivative notations</h1>
+<chapter style="counter-reset: chapter 0"><h1>Notation</h1>
+<section id="0"><h1>State</h1>
+  $$
+    x \in \mathbb{R}^{n \times 1}
+  $$
+</section>
+
+<section id="1"><h1>Convenient derivative notations</h1>
   [<a href="../../maths/jacobian/notation.html">Jacobian notation</a>] <p></p>
   $$
     \nabla{f(x)} = \left(\frac{\partial{f}}{\partial{x}}\right)^\top \in \mathbb{R}^{n \times 1} \quad \text{Column vector}
@@ -26,7 +32,7 @@
   \end{align*}$$
 </section>
 
-<section id="1"><h1>Taylor expansion</h1>
+<section id="2"><h1>Taylor expansion</h1>
   Taking the 2nd order Taylor expansion of $f$ (as long as it's a scalar valued function of a vector) to see where the Hessian matrix comes in:
   $$
     f(x + \Delta{x}) \approx f(x) + 

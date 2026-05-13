@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Use", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Use</h1>
+  Most often systems are partially observable and very noisy which means it is not possible to reconstruct a full, clean state from just current measurements.
+
+  <p>
+    Consider only position measurements are available. A state could include both position and velocity. Velocity cannot be computed if only the current position measurement is known.
+  </p>
+  
+  A naive way to compute velocity would be to finite difference the current position and the last position. But finite differencing amplifies noise. By using a kalman filter and leveraging the dynamics model, a much better job can be done.
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Matrix structure", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Matrix structure</h1>
+<section id="0"><h1>Derivation</h1>
+  The KKT system for LQR is very <i>sparse</i> (lots of 0s) and has lots of structure.
+
+  <p>
+    If there is no coupling, <m>the matrix</m> will be diagonal. Here everything (costs etc) is per time step. The only coupling across time steps happens in the dynamics constraints. In particular time steps $k$ and $k+1$ are coupled. But $k$ is not coupled to $k+2$. This means there is a single off diagonal element coupling between $k$ and $k+1$ and then after that nothing (just 0s).  
+  </p>
+
+  $$\begin{bmatrix}
+    R &   &   &   &   &   & | & B^T &     &     \\
+      & Q &   &   &   &   & | & -I  & A^T &     \\
+      &   & R &   &   &   & | &     & B^T &     \\
+      &   &   & Q &   &   & | &     & -I  & A^T \\
+      &   &   &   & R &   & | &     &     & B^T \\
+      &   &   &   &   & Q_4 & | &     &     & -I  \\
+    \hline
+    B & -I &   &   &   &   & | &     &     &     \\
+      & A  & B & -I &   &   & | &     & \mathbf{0} &     \\
+      &   &   & A & B & -I & | &     &     &     
+  \end{bmatrix}
+  \begin{bmatrix}
+    u_1 \\ x_2 \\ u_2 \\ x_3 \\ u_3 \\ x_4 \\
+    \hline \lambda_2 \\ \lambda_3 \\ \lambda_4
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \\ \mathbf{0} \\ \\
+    \hline -Ax_1 \\ 0 \\ 0
+  \end{bmatrix}$$
+
+  Zooming into the bottom row of $H$:
+  $$\begin{aligned}
+    Q_4 x_4 - \lambda_4 &= 0 \\ 
+    \lambda_4 &= Q_4 x_4
+  \end{aligned}$$
+
+  Zooming into one row above and substituting $\lambda_4$:
+  $$\begin{aligned}
+    R u_3 + B^T \lambda_4 &= 0 \\
+    R u_3 + B^T Q_4 x_4 &= 0
+  \end{aligned}$$
+
+  Plugging in the dynamics for $x_4$, the above equation becomes:
+  $$
+    R u_3 + B^T Q_4 (A x_3 + B u_3) = 0
+  $$
+
+  Rearranging
+  $$\begin{equation}
+    u_3 = -\underbrace{(R + B^T Q_4 B)^{-1} B^T Q_4 A}_{K_3} x_3 \label{eq:1}
+  \end{equation}$$
+
+  Zooming into one row above again, substituting $\lambda_4$ and plugging in the dynamics for $x_4$:
+  $$\begin{aligned}
+    Q_3 x_3 - \lambda_3 + A^T \lambda_4 &= 0 \\
+    Q_3 x_3 - \lambda_3 + A^T Q_4 x_4 &= 0 \\
+    Q_3 x_3 - \lambda_3 + A^T Q_4 (A x_3 + B u_3) &= 0 \\
+  \end{aligned}$$
+
+  Rearranging and substituting $K_3$ to get an equation in just $x$:
+  $$
+    \lambda_3 = \underbrace{(Q_3 + A^T Q_4 (A - B K_3))}_{P_3} x_3
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

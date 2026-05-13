@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../logbook.css" />
+  <script src= "../../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Convective Acceleration", "../../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Convective Acceleration</h1>
+<section id="0"><h1>Overview</h1>
+  This captures the change in velocity as the fluid moves to a new location. For example, if a slow-moving river enters a narrow gorge, the water must speed up simply because it is moving into a tighter space, even if the flow rate is steady. 
+  $$
+    (u \cdot \nabla)u
+  $$
+
+  $u \cdot \nabla$ is not being multiplied by $u$. Just as $\frac{d}{dx}$ is an operator applied to/acting on $f(x)$ in $\frac{d}{dx} f(x)$, $u \cdot \nabla$ is an operator applied to $u$.
+  <ul>
+    <li>$u \cdot \nabla$: Differentiate along the flow direction.</li>
+    <li>$u$: The quantity being differentiated.</li>
+  </ul>
+
+  $$
+    \frac{\Delta u}{\Delta \text{position}} \times \frac{\Delta \text{position}}{\Delta t} = \frac{\Delta u}{\Delta t}
+  $$
+  The spatial gradient of $u$ weighted by how fast the fluid is traversing that space results in an acceleration in the direction of motion.
+
+  <p>
+    It's a chain rule in disguise.
+  </p>
+  $$
+    \frac{du}{dt} = \frac{\partial u}{\partial x}\frac{dx}{dt} + \frac{\partial u}{\partial y}\frac{dy}{dt} + \frac{\partial u}{\partial z}\frac{dz}{dt} = (u \cdot \nabla)u
+  $$
+
+</section>
+</chapter>
+
+</body>
+</html>

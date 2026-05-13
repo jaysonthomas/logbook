@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Infinite Horizon LQR", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Infinite Horizon LQR</h1>
+<section id="0"><h1>Overview</h1>
+  For a time invariant problem where $A \; B \; Q \; R$ are not functions of $k$, i.e. remain constant, it turns out that $P \; K$ converge very quickly to steady state values as the algorithm goes backward in time. This is referred to as an <i>infinite horizon LQR</i>.
+  
+  <p>
+    Example application: for stabilisation problems where the aim is to rest at some equilibrium point. 
+  </p>
+
+  Time varying LQR is used for tracking problems where a trajectory is being tracked over time.
+</section>
+
+<section id="1"><h1>Aim</h1>
+  The aim is to solve for the steady state values of $P \; K$ and then use those as constants instead of dealing with time-varying $P \; K$. This is mainly used for stabilisation problems.
+</section>
+
+<section id="2"><h1>Math</h1>
+  Consider the <a href="../riccati/riccati.html">backward recursion equations</a>. In the infinite horizon limit, $P$ will not change.
+  $$
+    P_{k+1} = P_k = P_\infty = P
+  $$
+
+  The gain equation becomes:
+  $$
+    K = (R + B^\top P B)^{-1} B^\top P A
+  $$
+
+  Substituting this into the Riccati equation, it becomes:
+  $$
+    P = Q + A^\top P A - A^\top P B (R + B^\top P B)^{-1} B^\top P A
+  $$
+
+  This can be written in the form $f(P) = 0$ which becomes a root finding problem.
+</section>
+
+<section id="3"><h1>Practical solution</h1>
+  Because $P$ is a matrix, this is a system of nonlinear quadratic equations; it becomes a nonlinear root finding problem. In practice, generic root-finding methods are rarely used because the structure of the Riccati equation allows for more efficient, specialized algorithms.
+
+  <p>
+    The solution used is the Schur Method (Eigen-decomposition). In C++, Eigen combined with a DARE (Discrete-Time Algebraic Riccati Equation) solver library is used.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

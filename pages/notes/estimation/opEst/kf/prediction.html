@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Prediction step", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Prediction step</h1>
+<section id="0"><h1>Overview</h1>
+  The dynamics model is used to propagate the distribution forward by one time step. No measurements are included yet.
+</section>
+
+<section id="1"><h1>State</h1>
+  First, the state estimate or the mean of the distribution is predicted using the <a href="../../../control/plants/intro/continuous/types/linear.html">dynamics</a>.
+  $$\begin{aligned}
+    \hat{x}_{k+1|k} &= E\left[x_{k+1} | y_{1:k}\right] \\
+      &= E\left[ A x_k + B u_k + w_k \mid y_{1:k} \right] \\
+      &= A \hat{x}_{k|k} + B u_k
+  \end{aligned}$$
+   
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \hat{x}_{k+1|k} &:& \text{The subscript means it's the state estimate at $k+1$ given measurements up to time $k$.} \\ 
+      w_k &:& \text{Stochastic dynamics.}
+    \end{array}$$
+  </div>
+
+  $u_k$ is known and is not a random variable. A zero mean Gausian noise is assumed, hence $E[w] = 0$. This results in the final equation where the dynamics is applied to the last best state estimate. 
+</section>
+
+<section id="2"><h1>Covariance</h1>
+  $$\begin{aligned}
+    \Sigma_{k+1|k} &= E\left[ (x_{k+1} - \hat{x}_{k+1|k}) (\cdots)^T \right] \\
+    &= E\left[ (A x_k + \cancel{B u_k} + w_k - A \hat{x}_{k|k} - \cancel{B u_k}) (\cdots)^T \right] \\
+    &= A \underbrace{E\left[ (x_k - \hat{x}_{k|k}) (\cdots)^T \right]}_{\Sigma_{k|k}} A^T + \underbrace{E\left[ w_k w_k^T \right]}_{W} \\
+    &= A \Sigma_{k|k} A^T + W
+  \end{aligned}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      W &:& \text{Process covariance}
+    \end{array}$$
+  </div>
+  $A$ and $E[.]$ are linear, so $A$ can be taken outside. $x_k$ and $w_k$ are uncorrelated; hence the product is 0. 
+
+  <subsubsection><h1>Intuition</h1>
+    The end equation passes the state covariance through the dynamics and adds on the process noise to make the noise bigger.
+
+    <p>
+      $A \Sigma_{k|k} A^T$ is how a coariance matrix is propagated through a linear transformation. A change of coordinates takes place on the matrix. It shows up all the time where a linear change of coordinates is applied to a matrix that is in a different coordinate system.
+    </p>
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

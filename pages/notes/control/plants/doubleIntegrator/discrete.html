@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Discrete time", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Discrete time</h1>
+  $$\begin{align*}
+    x_{k+1} &= Ax_k + Bu_k \\
+      &= \begin{bmatrix}1 & h \\ 0 & 1 \end{bmatrix} 
+        \begin{bmatrix}q \\ \dot{q} \end{bmatrix} +
+        \begin{bmatrix} \frac{1}{2}h^2 \\ h \end{bmatrix} u_k \\
+  \end{align*}$$
+  
+  $h$ - time step
+
+  <p>
+    This is a simple system that has a simple closed form solution.
+  </p>
+
+  This solution can be obtained from RK4. RK4 would give an approximate solution that is accurate up to the fourth order using Taylor expansion approximation. In this system, the highest order in the $A$ and $B$ matrices is second order. Hence, RK4 would give an exact solution since it's accurate up to the fourth order.
+</chapter>
+
+</body>
+</html>

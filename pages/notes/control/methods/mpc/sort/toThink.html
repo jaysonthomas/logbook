@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("To think", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>To think</h1>
+<section id="0"><h1>Basics</h1>
+  <subsubsection><h1>In order to control a dynamical system, what are the steps to formulate it and solve it using MPC?</h1>
+    <ul>
+      <li>Formulate a least-squares cost function and minimise it.</li>
+      <li>The solution is expressed in a closed form as a solution of weighted least-squares problem.</li>
+      <li>The input constraints can be implicitly handled by properly selecting the weight matrices.</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>MPC algorithm usecase</h1>
+    <ul>
+      <li>Implement in python using classes.</li>
+      <li>Implement in C++ using the eigen library.</li>
+      <li>Test on a system consisting of two objects connected by springs and dampers.</li>
+    </ul>
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Characteristics of systems considered</h1>
+  <ul>
+    <li>Unconstrained case of a linear dynamical system, where the state vector is completely known.</li>
+    <li>Case where the state is not known. An observer would need to be integrated with the MPC algorithm.</li>
+    <li>Constrained linear dynamical system</li>
+    <li>Non-linear smooth systems (the most general formulation)</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

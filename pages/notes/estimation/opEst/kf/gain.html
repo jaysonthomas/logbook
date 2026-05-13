@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Kalman Gain", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Kalman Gain</h1>
+  Using the MMSE idea of minimising the state covariance which is the same as minimising the <a href="../../../maths/probability/definitions/expValue.html#3">trace of the updated covariance</a> $\Sigma_{k+1|k+1}$:
+  $$\begin{align*}
+    \argmin \quad &E[(x_{k+1} - \hat{x}_{k+1|k+1})^T(\dots)] \\
+      &\text{tr}(\Sigma_{k+1|k+1})
+  \end{align*}$$
+
+  Using the <a href="measurement.html#3">covariance equation</a>, minimise the trace of it to find the optimal $L$ by setting the derviative of the trace to 0 and solving for $L_{k+1}$.
+  $$\begin{align*}
+    \frac{\partial \text{tr}(\Sigma_{k+1|k+1})}{\partial L_{k+1}} &= 0 \\
+    L_{k+1} &= \Sigma_{k+1|k} C^\top S_{k+1}^{-1}
+  \end{align*}$$
+</chapter>
+
+</body>
+</html>

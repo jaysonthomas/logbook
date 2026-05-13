@@ -13,11 +13,7 @@
 <body onload="loadChapter('');">
   <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
 <section id="0"><h1>Overview</h1>
-  <p>
-    LQR problem is a trajectory optimisation problem AKA deterministic optimal control problem.
-  </p>
-
-  <a href="../../control/plants/intro/continuous/types/linear.html">Linear dynamics</a> is assumed. Cost functions/weights on both the states and the controls are quadratic and can vary with time. There's a terminal cost on the final state.
+  LQR problem is a trajectory optimisation problem AKA a deterministic optimal control problem.
 
   $$\begin{align*}
     \min_{\substack{x_{1:N} \\ u_{1:N-1}}} \quad & J = 
@@ -28,26 +24,57 @@
     & Q \geq 0, \quad R &gt 0
   \end{align*}$$
 
-  The dynamics also vary with time, hence $A,B$ matrices have $k$ subscripts. The problem is time invariant if $A_k=A, B_k=B, Q_k=Q, R_k=R \; \forall k$. 
-
-  <p>
-    For a QP to be convex, the Hessian has to be positive definite. Similarly, the state cost matrix $Q$ needs to be positive semi-definite and the control cost matrix $R$ needs to be strictly positive definite for the problem to have a well posed solution.
-  </p>
-
-  If $Q=0$, it would mean certain states are ignored/not important.
-
-  <p>
-    If $R=0$, there's no cost on having control which can lead to an unbounded control solution, i.e. the controls could blow up to infinity. If there is a cost to getting to a goal and there is no cost on the controls, the solution could simply slam the controls to infinity and get there instantly which would be ill-posed, infinite solution.
-  </p>
-
   The initial state is always given.
+
+  <p>
+    Here cost functions are tuned vs gains.
+  </p>
+</section>
+
+<section id="1"><h1>Cost function</h1>
+  <subsubsection><h1>Properties</h1>
+    Cost functions/weights on both the states and the controls: 
+    <ul>
+      <li>Are quadratic</li>
+      <li>Can vary with time</li>
+      <li>Have constraints</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>Constraints</h1>
+    For a QP to be convex, the Hessian has to be positive definite. Similarly, for an LQR problem to have a well posed solution:
+    <ul>
+      <li>The state cost matrix $Q$ needs to be positive semi-definite</li>
+      <li>The control cost matrix $R$ needs to be strictly positive definite</li>
+    </ul>
+
+    <p>
+      If $Q=0$, it would mean certain states are ignored/not important.
+    </p>
+
+    If there is a cost to getting to a goal and there is no cost on the controls $R=0$, the solution could simply slam the controls to infinity and get there instantly which would be an ill-posed, infinite solution. It would be an unbounded control solution, i.e. the controls blow up to infinity.
+
+    <p>
+      Only the relative values of Q and R matter. If R is high, any control action will be penalised.
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Terminal cost</h1>
+    There's a terminal cost on the final state.
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Constraints</h1>
+  <a href="../../control/plants/intro/continuous/types/linear.html">Linear dynamics</a> is assumed. 
 
   <p>
     The only constraints allowed for an LQR problem are those for the dynamics.
   </p>
+
+  The dynamics varies with time, hence $A,B$ matrices have $k$ subscripts. The problem is time invariant if $A_k=A, B_k=B, Q_k=Q, R_k=R \; \forall k$.
 </section>
 
-<section id="1"><h1>Advantages</h1>
+<section id="3"><h1>Advantages</h1>
   <ul>
     <li>The reason LQR is so useful is because most nonlinear problems can be locally approximated as an LQR one. This is useful in creating local tracking controllers around trajectories and stabilizing controllers around equilibrium points.</li>
 
@@ -58,7 +85,7 @@
     <li>Can be applied to a variety of problems like stochastic, partially observable, infinite horizon problems etc.</li>
 
     <p>
-      <li>LQR is a rare gem where there's a closed form solution. It is possible to get a lot of insight and leverage that closed form solution in different areas. When other constraints are added in, it ends up not having closed form solution. It would then need to be solved numerically.</li>
+      <li>LQR is a rare gem where there's a closed form solution. It is possible to get a lot of insight and leverage that closed form solution in different areas. When constraints other than those of the dynamics are added in, it ends up not having a closed form solution. It would then need to be solved numerically, which is also done very often.</li>
     </p>
   </ul>
 </section>

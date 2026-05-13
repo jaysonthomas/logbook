@@ -12,7 +12,7 @@
 
 <body onload="loadChapter('');">
   <chapter style="counter-reset: chapter 0"><h1>Linear systems</h1>
-<section id="0"><h1>Overview</h1>
+<section id="0"><h1>Continuous time</h1>
   $$
     \dot{x} = A(t) \, x + B(t) \, u
   $$
@@ -23,19 +23,11 @@
   </p>
 </section>
 
-<section id="1"><h1>Linearising a non-linear system</h1>
-  If a system is non-linear, as long as it's smooth, it's derivatives can be taken and linearised locally to then approximate the system as a linear one. This works 90% of the time. The linear system can now be useful for analysis and to design local controllers.
-
-  <p>
-    The system $\dot{x} = f(x, u)$ can be approximated locally using a linear system about some nominal $x, u$ by taking the jacobians, i.e. by assigning $A = \frac{\partial{f}}{\partial{x}}$, $B = \frac{\partial{f}}{\partial{u}}$.
-  </p>
-</section>
-
-<section id="2"><h1>State transition function</h1>
-  [<a href="https://t.ly/xC-7V">Ref</a>] <p></p>
+<section id="1"><h1>Discrete time - state transition function</h1>
+  [<a href="https://t.ly/xC-7V">Ref</a>] 
   $$\begin{align*}
     z_k &= Cx_k \\
-    \dot{x}_{k+1} &= Ax_k + Bu_k
+    x_{k+1} &= Ax_k + Bu_k
   \end{align*}$$
   
   <div style="width:0; text-align:left;">
@@ -46,13 +38,21 @@
     \end{array}$$
   </div>
 
-  Consider a non-simulation environment, at time instant $k$, a prediction $z_k$ is made of the actual measurement $y_k$ that is obtained of the state at $k$. In a simulation environment, this would serve as the measurement. 
+  Consider a non-simulation environment. At time instant $k$, a prediction $z_k$ is made of the actual measurement $y_k$ that is obtained of the state at $k$. In a simulation environment, this would serve as the measurement. 
   
   <p>
-    Once the control input to be applied $u_k$ is decided based on the current state measurement, a prediction can be made of what the state would look like in the next time instant, $x_{k+1}$.
+    Once the control input to be applied $u_k$ is decided based on the current state measurement, a prediction can be made of the state in the next time instant, $x_{k+1}$.
   </p>
 
-  $y_k$, $z_k$ point to the state variables that the controller aims to control to follow a desired trajectory. It is not necessarily the observed output, that is, it is not necessarily directly measurable.
+  The controller aims to control the state $x_k$ to follow a desired trajectory. It is not necessarily observable, i.e. directly measurable.
+</section>
+
+<section id="2"><h1>Linearising a non-linear system</h1>
+  The system $\dot{x} = f(x, u)$ can be approximated locally using a linear system about some nominal $x, u$ by taking the jacobians, i.e. by assigning $A = \frac{\partial{f}}{\partial{x}}$, $B = \frac{\partial{f}}{\partial{u}}$. Here higher order terms are ignored.
+
+  <p>
+    If a system is non-linear, as long as it's smooth, <m>its derivatives can be linearised locally to approximate the system as a linear one</m>. This works 90% of the time. The linearised system can then be useful for analysis and to design local controllers.
+  </p>
 </section>
 </chapter>
 

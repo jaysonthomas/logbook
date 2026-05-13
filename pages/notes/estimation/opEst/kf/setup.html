@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Setup</h1>
+<section id="0"><h1>Assumptions</h1>
+  Consider a recursive linear MMSE estimator. <i>Recursive</i> means a state estimate is maintained/updated at each time step. 
+  
+  <subsubsection><h1>State estimate</h1>
+    The state estimate at time $k$ is assumed to include all measurements up to the current time.
+    $$
+      \hat{x}_{k|k} = E\left[x_k | y_{1:k}\right]
+    $$
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        \hat{x}_{k|k} &:& \text{Estimate at k given or conditioned on k} \\ 
+        E\left[x_k | y_{1:k}\right] &:& \text{Expectation of } x_k \text{ conditioned on measurements from time step 1 up to } k
+      \end{array}$$
+    </div>
+
+    The current estimate is <i>causal</i> as in it only depends on current and previous times, not on future data.
+  </subsubsection>
+
+  <subsubsection><h1>State covariance</h1>
+    The <i>state covariance</i>, error covariance of the state, is assumed to be known. In other words, gaussian beliefs/distribution over the state is assumed.
+    $$
+      \Sigma_{k|k} = E\left[(x_k - \hat{x}_{k|k}) (x_k - \hat{x}_{k|k})^\top\right]
+    $$
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Aim</h1>
+  The aim is to update $\hat x$ and $\Sigma$ to include a new measurement at $t_{k+1}$.
+</section>
+</chapter>
+
+</body>
+</html>

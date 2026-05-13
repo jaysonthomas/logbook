@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("MAP vs MMSE", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>MAP vs MMSE</h1>
+<section id="0"><h1>Setup</h1>
+  Given a probability distribution, what is the optimal state to return from an estimation method.
+  <div class="container" style="display: flex; align-items: flex-start; gap: 20px;">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../../figures/estimation/intro/mapVsMmse.png"/>
+    </figure>
+  </div>
+
+  When the distribution is gaussian (symmetric, unimodal distribution), MAP and MMSE give the same result.
+
+  <p>
+    It is possible to derive a kalman filter by solving either estimator-optimisation problems because they coincide for a gaussian input. The original Kalman paper does it geometrically using projections. Also mentioned in <a href="https://t.ly/41BX3">Kailath's book</a>.
+  </p>
+</section>
+
+<section id="1"><h1>MAP</h1>
+  One option is to pick the maximum of the distribution, the state corresponding to the highest point. This is called the maximum a posterior estimate. 
+
+  $$
+    arg \max \; p(x|y)
+  $$
+
+  $p(x|y)$ is the probability of the state given the measurements. This is called <i>posterior</i> since it is a distribution of the state based on all the collected measurements.
+</section>
+
+<section id="2"><h1>MMSE</h1>
+  The other reasonable choice is to pick the least squares or the minimum mean squared error answer which would return the average/mean state (in the middle) of the distribution. In the figure, MMSE is a bad estimate since it returns a state that is at a low probability point.
+
+  $$
+    arg \min_\hat x \; E\left[(x - \hat x)^\top (x - \hat x)\right]
+  $$
+
+  The <a href="../../maths/probability/definitions/expValue.html">expectation</a> is minimised to output the corresponding state estimate $\hat x$. Also called least squares or minimum variance. <a href="https://gemini.google.com/share/785595abf7ad">gemini</a>.
+</section>
+</chapter>
+
+</body>
+</html>

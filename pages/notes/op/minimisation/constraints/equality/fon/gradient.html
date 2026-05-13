@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+  <script src= "../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Zero gradient", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Zero gradient</h1>
+<section id="0"><h1>Overview</h1>
+  The gradient $\nabla{f} = 0$ in the directions the system is free to move in.
+
+  <p>
+    The system can only move in certain directions/dimensions. The gradient can be non-zero in the non-free directions.
+  </p>
+
+  For the unconstrained version, $\nabla{f} = 0$ is the only FON condition for a minimum [<a href="../../globalisation/necessaryCondition.html">Ref</a>].
+</section>
+
+<section id="1"><h1>Math</h1>
+  Mathematically, the necessary condition on the gradient is described as below. See <a href="intuition.html">intuition</a>.
+
+  <subsection id="1.0"><h1>Scalar case</h1>
+    Any non-zero component of $\nabla f$ must be normal to the constraint at an optimum. <n>Equivalently</n>, $\nabla f$ must be parallel to $\nabla{c}$. There is no need for the gradients to be of the same length.
+
+    $$
+      \nabla{f} + \lambda \, \nabla{c} = 0
+    $$
+
+    $\lambda$ is the <a href="../../../../maths/op/lagrangeMultiplier.html">Lagrange multiplier</a> or dual variable.
+  </subsection>
+
+  <subsection id="1.1"><h1>Higher dimensional space</h1>
+    $$
+      \frac{\partial{f}}{\partial{x}} + \lambda^\top \frac{\partial{c}}{\partial{x}} = 0
+      \qquad \lambda \in \mathbb{R}^m
+    $$
+
+    $c$ holds a bunch of scalar constraints, one for each dimension. There is a $\lambda$ for each one of those constraints.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

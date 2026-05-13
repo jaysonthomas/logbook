@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("QP formulation", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>QP formulation</h1>
+<section id="0"><h1>Aim</h1>
+  The aim is to define/rewrite the LQR problem as a QP problem.
+
+  $$\begin{align*}
+    \min_z \quad & \frac{1}{2} z^\top H z \\
+    s.t. \quad & Cz = d 
+  \end{align*}$$
+
+  This is an equality constrained QP.
+</section>
+
+<section id="1"><h1>Decision variables</h1>
+  <p>
+    Assume initial state $x_1$ is given. Hence, it's not a decision variable since it's not being optimised.
+  </p>
+
+  Define $z$ as a stack of all the decision variables in the LQR problem over the time horizon.
+  $$
+    z = \begin{bmatrix}
+      u_1 \\ x_2 \\ u_2 \\ x_3 \\ u_3 \\ \vdots \\ x_N
+    \end{bmatrix}
+  $$
+</section>
+
+<section id="2"><h1>Cost function</h1>
+  $$
+    H = \begin{bmatrix}
+      R_1 & & & \huge 0 \\
+      & Q_2 & & \\
+      & & R_2 & \\
+      & & & \ddots \\
+      \huge 0 & & & & Q_N
+    \end{bmatrix}
+  $$
+
+  This is a <i>block diagonal matrix</i>, i.e. the off-diagonal blocks are 0 matrices.
+
+  <p>
+    The overall cost function becomes:
+    $$
+      J = \frac{1}{2} z^\top H z
+    $$
+  </p>
+</section>
+
+<section id="3"><h1>Dynamics constraints</h1>
+  They are a set of constraints, one for each time step. They need to be defined in terms of $z$. $x_1$ needs to show up in the constraints, but not in $z$.
+  $$
+    \underbrace{
+    \begin{bmatrix}
+      B_1 & -I  & 0   & \cdots & \cdots & 0 \\
+      0   & A_2 & B_2 & -I     & 0      & \vdots \\
+          &     & \ddots & \ddots & \ddots & 0 \\
+          &     &     & A_{N-1} & B_{N-1} & -I
+    \end{bmatrix}}_{C}
+    \underbrace{\begin{bmatrix} u_1 \\ x_2 \\ u_2 \\ x_3 \\ u_3 \\ \vdots \\ x_N \end{bmatrix}}_{z} = 
+    \underbrace{\begin{bmatrix} -A_1 x_1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}}_{d}
+  $$
+  The first 2 lines expand to:
+  $$\begin{align*}
+    B_1 u_1 - x_2 &= -A_1 x_1 \\
+    A_2 x_2 + B_2 u_2 - x_3 &= 0
+  \end{align*}$$
+
+  In the first line, $x_1$ is not part of the decision variables, hence it is moved to the RHS.
+</section>
+</chapter>
+
+</body>
+</html>

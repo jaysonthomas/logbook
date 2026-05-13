@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Convexity", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Convexity</h1>
+<section id="0"><h1>Convex set</h1>
+  <div class="container" style="display: flex; align-items: flex-start; gap: 20px;">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/maths/convexity/1_convexSet.png"/>
+    </figure>
+    
+    <div>
+      <p style="margin-top: 0;">
+        A <i>convex set</i> is one in which a line connecting any 2 points in the set is fully contained in the set.
+      </p>
+    </div>
+  </div>
+
+  <subsection id="0.0"><h1>Examples</h1>
+    <ul>
+      <li>Linear subspaces ($Ax= b$, hyperplanes)</li>
+      <li>Half space/box/polytope ($Ax \leq b$)</li>
+      <li>Ellipsoids</li>
+      <p>
+        <li>Cones</li>
+        This is a 2nd order cone. It shows up as friction cones in contact scenarios. Some more detail in lec 10.
+      </p>
+    </ul>
+  </subsection>
+</section>
+
+<section id="1"><h1>Convex function</h1>
+  A function whose epigraph is a convex set. <i>Epigraph</i> is the portion above a curve. This function takes in a vector and outputs a scalar similar to an objective function.
+  $$
+    f(x) \; : \; \mathbf{R}^n \rightarrow \mathbf{R}
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Linear higher dimension (vector/matrix) case", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Linear higher dimension (vector/matrix) case</h1>
+<section id="0"><h1>Without constraint</h1>
+  $$
+    Ax \approx b
+  $$
+  In an unconstrained minimisation problem, the aim is to find the $x$ where the gradient of the cost function (the quadratic $\|Ax-b\|^2$) is minimum. Since this is a convex bowl with ends pointing up, it's enough to find any point where the gradient is $0$:
+
+  $$\begin{align*}
+    \frac{\partial}{\partial x} \|Ax-b\|^2 &=
+    \frac{\partial}{\partial x} [x^T A^T Ax - b^T Ax - x^T A^T b + b^2] \\
+    &= 2x^T A^T A - 2b^T A = 0 \\
+    (x^*)^T &= b^T \underbrace{A (A^T A)^{-1}}_{\text{Transpose of the} \atop \text{pseudo-Inverse}} \\
+
+    x^* &= A^{\dagger}b
+  \end{align*}$$
+
+  $A (A^T A)^{-1}$ has no $b$ in it. This is why <code>pinv</code> does not need to know $b$ to be used. It is only possible separate out $A$ and $b$ since the solution is linear in $b$. It is kept in the form of the transposes for convenience.
+
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/optimisation/qp/3_quadraticBowl.png"/>
+      <figcaption>
+        The generalisation of the above parabola is a quadratic bowl.
+      </figcaption>
+    </figure>
+  </div>
+
+  In higher dimensions, the parabola turns into a <n>quadratic bowl</n>. The axes are $x_1$, $x_2$ and the objective $\|Ax-b\|^2$. <n>Every $x$ is scored by the cost function</n> $\|Ax-b\|^2$ and the minimum is found. 
+
+  <p>
+    The quadratic form is given by $[x^T A^T Ax - b^T Ax - x^T A^T b + b^2]$ but the shape is given by $A^T A$ in $x^T A^T Ax$.
+  </p>
+
+  <p>
+    When $A$ starts having small singular values, the bowl starts elongating just as in the case of the parabola with smaller slopes. It can elongate more or less in some directions/dimensions. As it gets long, the minimum $x$ starts leaving it, i.e. gets bigger. 
+  </p>
+</section>
+
+<section id="1"><h1>With constraints</h1>
+  Boundaries/limits can be added to the problem i.e. find the best solution using the scoring function $\|Ax-b\|^2$ but don't go past some linear constraints (some reasonable velocities for example). 
+
+  $$\begin{align*}
+    \min_x \quad & \|Ax-b\|^2 \\
+    s.t. \quad & \underbrace{Cx = d}_{\text{Linear constraint}}
+  \end{align*}$$
+
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/optimisation/qp/4_boundaries.png"/>
+      <figcaption>
+        The generalisation, but with boundaries.
+      </figcaption>
+    </figure>
+  </div>
+
+  A problem like this that has a <i>convex quadratic objective</i> (where the bowl goes up) and linear constraints is called a <i>convex quadratic program</i>. It's an important class of optimisation problems. 
+
+  <p>
+    Quadratic programs cannot be solved with pen and paper unless they're very very small. There are efficient algorithms for solving them that can be run in real time at high speeds.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

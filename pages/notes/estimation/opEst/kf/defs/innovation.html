@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("Innovation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Innovation</h1>
+<section id="0"><h1>Definition</h1>
+  It is the error in the prediction - difference between the actual and the predicted measurement (computed based on the predicted state). <m>This error is linearly fedback in the kalman filter</m>.
+
+  $$\begin{aligned}
+    z_{k+1} &= y_{k+1} - C\hat{x}_{k+1|k} \\
+      &= Cx_{k+1} + v_{k+1} - C\hat{x}_{k+1|k}
+  \end{aligned}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      y &:& \text{Actual measurement} \\ 
+      C &:& \text{Measurement model} \\ 
+      v &:& \text{Measurement noise} \\
+      y_k = Cx_k + v_k &:& \text{Measurement equation}
+    \end{array}$$
+  </div>
+
+  A Gaussian stays Gaussian under linear affine transformations (e.g. linear dynamics or linear measurement model) which is what makes the KF derivation work. 
+
+  <p>
+    $A,B,C$ are assumed to be LTI. But, the same applies for the time-varying case.
+  </p>
+</section>
+
+<section id="1"><h1>Innovation Covariance</h1>
+  $$\begin{aligned}
+    S_{k+1} &= E[z_{k+1} z_{k+1}^\top] \\
+    &= E[(Cx_{k+1} + v_{k+1} - C\hat{x}_{k+1|k})(\cdots)^\top]
+  \end{aligned}$$
+
+  The state $x_{k+1}$ and the sensor noise $v_{k+1}$ are assumed to be uncorrelated. They can be correlated; for e.g. IMU readings vary with extreme temperature and can affect state estimation.
+
+  $$\begin{align*}
+    S_{k+1} &= C \underbrace{E \left[ (x_{k+1} - \hat{x}_{k+1|k})(\dots)^T \right]}_{\Sigma_{k+1|k}} C^T + 
+      \underbrace{E \left[ v_{k+1} v_{k+1}^T \right]}_{V} \\
+    &= C \Sigma_{k+1|k} C^T + V
+  \end{align*}$$
+
+  Innovation is the error signal that is fed back into an estimator.
+</section>
+</chapter>
+
+</body>
+</html>

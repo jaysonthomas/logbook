@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+  <script src= "../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Sim", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Sim</h1>
+<section id="0"><h1>Aim</h1>
+  At each time step, the velocity field $u$ at the current time step $k$ is known. The aim is to find $u_{k+1}$.
+
+  <p>
+    This is achieved by:
+    <ul>
+      <li>Solving the Navier-Stokes momentum equation numerically.</li>
+      <li>Integrating with a Crank-Nicolson scheme (implicit midpoint) which steps forward in time.</li>
+    </ul>
+  </p>
+</section>
+  
+
+  $$\begin{equation}
+    \frac{u_{k+1}-u_{k}}{\Delta t}+\frac{1}{2}\left[N\left(u_{k+1}\right)+N\left(u_{k}\right)\right]=\frac{1}{2 R e}\left[L u_{k+1}+L u_{k}+2 b c_{L}\right]-G p_{k+1}
+  \end{equation}$$
+    Rearranging to put all $k+1$ terms on the left:
+
+  $$\begin{equation}
+    \underbrace{\left(\frac{1}{\Delta t} I-\frac{1}{2 R e} L\right)}_{A} u_{k+1}+\frac{1}{2} N\left(u_{k+1}\right)+G p_{k+1}=\underbrace{\left(\frac{1}{\Delta t} I+\frac{1}{2 R e} L\right) u_{k}-\frac{1}{2} N\left(u_{k}\right)+\frac{1}{R e} b c_{L}}_{r+b c_{1}}
+  \end{equation}$$
+</chapter>
+
+</body>
+</html>

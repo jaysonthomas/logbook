@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Example 1 python code", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Example 1 python code</h1>
+<section id="0"><h1>Steps</h1>
+  <ul>
+    <li>Create a class that inherits from the core <a href="../../../../notes/software/roboticsTools/ros/defs/node.html">node</a> class.</li>
+    <li><a href="../../../../notes/software/roboticsTools/ros/defs/node.html">Spin</a> the object of the class in main.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Visualiser class</h1>
+  <subsection id="1.0"><h1>Constructor</h1>
+    Call the parent <code>Node</code> constructor and set the node name which will be visible to other nodes as <code>/meshcat_visualizer</code>.
+    <pre><code class="python">
+      super().__init__("meshcat_visualizer")
+    </code></pre>
+
+    Create a Meshcat visualisation server/client object. Meshcat usually launches a small web server automatically.
+    <pre><code class="python">
+      self.vis = meshcat.Visualizer()
+      print(f"Meshcat URL: {self.vis.url()}")
+    </code></pre>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

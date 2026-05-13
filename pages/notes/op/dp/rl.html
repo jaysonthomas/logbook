@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("RL notation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>RL notation</h1>
+<section id="0"><h1>Contents</h1>
+  DP equations can be equivalently written in terms of action-value or Q function:
+  $$
+    Q_k(x, u) = l(x, u) + V_{k+1}(f(x, u))
+  $$
+
+  In model free RL, combining the cost-to-go, the one step cost and the dynamics into 1 function means that RL would only have to learn the 1 function (and implicitly learn the dynamics). In model based RL, the functions are separated out.
+</section>
+</chapter>
+
+</body>
+</html>

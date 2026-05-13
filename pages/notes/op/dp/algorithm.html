@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Algorithm", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Algorithm</h1>
+<section id="0"><h1>Steps</h1>
+  Set the cost-to-go $V$ at the final state to the terminal cost:
+  $$
+    V_N(x) = l_N(x)
+  $$
+
+  Set time step $k = N$.
+
+  <equation>
+    <code>while k &gt 1</code>
+
+    <p>
+      Inequality constraints can be applied on the torque $u$ by drawing it from a set $U$ that has the constraints. Applying a min over just 1 step:
+    </p>
+    $$
+      V_{k-1}(x) = \min_{u \in \mathcal{U}} [l(x, u) + V_k(f(x, u))]
+    $$
+
+    Continuing backwards by setting time step $k = k-1$.
+  </equation>
+
+  $V_k(x)$ is now known $\forall k$. The optimal policy is therefore:
+  $$
+    u_k(x) = \arg \min_{u \in \mathcal{U}} \; [l(x, u) + V_{k+1}(f(x, u))]
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      l(x, u) &:& \text{One step cost} \\ 
+      V_{k+1} &:& \text{Cost-to-go}
+    \end{array}$$
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

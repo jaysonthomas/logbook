@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("Node", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Node</h1>
+<section id="0"><h1>Overview</h1>
+  A ROS node (a unix process) is capable of:
+  <ul>
+    <li>Subscribing and publishing to topics</li>
+    <li>Using timers</li>
+    <li>Logging</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Spin</h1>
+  Keeps a node alive and processing callbacks forever. Without this, a program would exit immediately.
+</section>
+</chapter>
+
+</body>
+</html>

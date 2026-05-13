@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("Algorithm", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Algorithm</h1>
+<section id="0"><h1>Steps</h1>
+  <ul>
+    <li>At time instant $k$, on the basis of the known state vector $x_k$ and the system matrices $A,B,C$, form the lifted matrices and compute the solution $\hat{u}$.</li>
+
+    <p>
+      <li>Extract the first entry of the solution $\hat{u}_{k|k}$</li> and apply it to the system.
+    </p>
+
+    <li>Wait for the system to respond and obtain the state measurement $x_{k+1}$. Repeat step 1.</li>
+  </ul>
+</section>  
+</chapter>
+
+</body>
+</html>

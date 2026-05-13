@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../logbook.css" />
+  <script src= "../../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Cost function: Tracking error", "../../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Cost function: Tracking error</h1>
+<section id="0"><h1>Mathematical expression</h1>
+  The part of the cost function that corresponds to the tracking error has the following form:
+
+  $$\begin{align*}
+    J_z = & (z_{k+1|k}^d - z_{k+1|k})^T \, P_1 \, (z_{k+1|k}^d - z_{k+1|k}) + \\
+          & (z_{k+2|k}^d - z_{k+2|k})^T \, P_2 \, (z_{k+2|k}^d - z_{k+2|k}) + \\
+          & \cdots + \\
+          & (z_{k+p|k}^d - z_{k+p|k})^T \, P_p \, (z_{k+p|k}^d - z_{k+p|k})
+  \end{align*}$$
+  
+  $P_i, i= 1,2, \cdots, p$ are symmetric weighting matrices selected by a user.  
+</section>
+
+<section id="1"><h1>Compact vector form</h1>
+  By using the <a href="../compactPredEq.html">compact measurement prediction equation</a>,  the cost function can be written as follows:
+
+  $$\begin{align*}
+    J_z &= (z^d - z)^T \, W_P \, (z^d - z) \\
+        &= (\underbrace{z^d - Ox_k}_{s} - Mu)^T \, W_P \, (z^d - Ox_k - Mu) \\
+        &= (s - Mu)^T \, W_P \, (s - Mu)
+  \end{align*}$$
+
+  <p>
+    $W_P$ is a diagonal matrix with the block matrices $P_i$ on the diagonal.
+  </p>
+
+  $W_P = \begin{bmatrix}
+    P_1 & 0 & 0 & \cdots & 0 \\
+    0 & P_2 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \cdots & \vdots \\
+    0 & 0 & 0 & \cdots & P_p
+  \end{bmatrix}$
+
+  <p>
+    This part of the cost function penalises the difference between the desired trajectory and the controlled trajectory. Since it is assumed that the state vector is known, and the desired trajectory vector is given, the vector $s$ can be computed.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

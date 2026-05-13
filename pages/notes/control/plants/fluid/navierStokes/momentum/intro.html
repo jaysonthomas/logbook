@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../../logbook.css" />
+  <script src= "../../../../../../../setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
+<section id="0"><h1>Overview</h1>
+  It is a 2nd order equation in time. It helps in understanding fluid flow - the change in velocity of a fluid-cube is determined by the sum of forces acting on it:
+  <ul>
+    <li>Pressure: Water moves from high-pressure zones to low-pressure zones (like squeezing a tube of toothpaste).</li>
+    <p>
+      <li> Viscosity (Friction) is the internal friction. It smooths out velocity differences between layers of water.</li>
+    </p>
+    <li>External Forces: Gravity pulling it down or a pump pushing it forward.</li>
+  </ul> 
+</section>
+
+<section id="1"><h1>Math</h1>
+  $$
+    \underbrace{\frac{\partial u}{\partial t} + (u \cdot \nabla)u}_{ma} = 
+    \underbrace{-\nabla p + \frac{1}{Re}\nabla^2 u + a_{ext}}_{F}
+  $$
+  
+  This equation tracks the total acceleration of a specific 'parcel' of fluid and balances it against all the forces acting on it.
+</section>
+</chapter>
+
+</body>
+</html>
