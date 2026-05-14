@@ -12,6 +12,9 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Discrete time</h1>
+<section id="0"><h1>State update</h1>
+  The next state is computed from the current state and control input.
+
   $$\begin{align*}
     x_{k+1} &= Ax_k + Bu_k \\
       &= \begin{bmatrix}1 & h \\ 0 & 1 \end{bmatrix} 
@@ -24,8 +27,38 @@
   <p>
     This is a simple system that has a simple closed form solution.
   </p>
+</section>
 
-  This solution can be obtained from RK4. RK4 would give an approximate solution that is accurate up to the fourth order using Taylor expansion approximation. In this system, the highest order in the $A$ and $B$ matrices is second order. Hence, RK4 would give an exact solution since it's accurate up to the fourth order.
+<section id="1"><h1>State space model</h1>
+  <subsubsection><h1>Dynamics</h1>
+    $$ A = \begin{bmatrix} 1 & h \\ 0 & 1 \end{bmatrix} $$
+
+    This corresponds to:
+    $$\begin{align*}
+      q_{k+1} &= q_k + h\dot q_k \\
+      \dot q_{k+1} &= \dot q_k \\
+    \end{align*}$$
+
+    Without control, velocity stays constant.
+  </subsubsection>
+
+  <subsubsection><h1>Control input</h1>
+    $$
+      B = \begin{bmatrix} \frac{1}{2}h^2 \\ h \end{bmatrix}
+    $$
+
+    This says acceleration $u$ affects:
+    <ul>
+      <li>position through $\frac{1}{2}h^2$</li>
+      <li>velocity through $hu$</li>
+    </ul>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Simulation method</h1>
+  This solution can be obtained from RK4. In this system, the highest order in the $A$ and $B$ matrices is second order. Hence, in this instance, RK4 would give an exact solution since it's accurate up to the fourth order in the Taylor expansion approximation.
+</section>
+
 </chapter>
 
 </body>

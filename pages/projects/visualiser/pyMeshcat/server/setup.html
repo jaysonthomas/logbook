@@ -20,6 +20,20 @@
     pip3 install meshcat
   </code></pre>
 </section>
+
+<section id="1"><h1>Launch server</h1>
+  <pre><code class="shell">
+    clear; python3 ~/repos/ros2/src/double_integrator/di_lqr_inf/scripts/bokeh_plotter.py
+  </code></pre>
+</section>
+
+<section id="2"><h1>Launch client</h1>
+  <pre><code class="shell">
+    colcon build --packages-select di_lqr_inf
+    source install/setup.bash
+    ros2 run di_lqr_inf di_lqr_inf_node
+  </code></pre>
+</section>
 </chapter>
 
 </body>

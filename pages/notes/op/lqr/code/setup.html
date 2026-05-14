@@ -13,30 +13,18 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Setup</h1>
 <section id="0"><h1>Overview</h1>
-  The aim is to simulate a discrete-time LQR controlling a simple 1D motion system (position + velocity), and publish the trajectory over time.
+  The aim is to simulate a discrete-time LQR controlling a simple 1D motion system (position + velocity), and publish the trajectory over time. Refer <a href="../../../control/plants/doubleIntegrator/main.html">double integrator</a>.
    
-  The control input $u$ is acceleration.
+  <p>
+    The control input $u$ is acceleration.
+  </p>
+
+  This is an LQR stabilisation problem.
 </section>
 
 <section id="1"><h1>State</h1>
-  $$ \begin{bmatrix} \text{p} \\ \text{v} \end{bmatrix}$$
-  
-  <div style="width:0; text-align:left;">
-    $$\begin{array}{ccl} 
-      p &:& \text{Position} \\ 
-      v &:& \text{Velocity}
-    \end{array}$$
-  </div>
-
   The system starts displaced from the origin. The controller's job is to drive the state to 0.
   $$x_0 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$$
-
-  <subsubsection><h1>State update</h1>
-    The next state is computed from the current state and control input.
-    $$
-      x_{k+1} = Ax_k + Bu_k
-    $$
-  </subsubsection>
 </section>
 
 <section id="2"><h1>Control input</h1>
@@ -47,36 +35,10 @@
     K &= \begin{bmatrix} k_1 & k_2 \end{bmatrix}
   \end{align*}$$
 
-  The controller uses both position error and velocity to determine acceleration. If position is positive, controller usually applies negative acceleration to bring it back.
+  Since the aim is to drive the state to 0, any value of position or velocity is an error and is used to determine the acceleration. If position is positive, controller applies negative acceleration to bring it back.
 </section>
 
-<section id="3"><h1>State space model</h1>
-  <subsubsection><h1>Dynamics</h1>
-    $$ A = \begin{bmatrix} 1 & h \\ 0 & 1 \end{bmatrix} $$
-
-    This corresponds to:
-    $$\begin{align*}
-      p_{k+1} &= p_k + hv_k \\
-      v_{k+1} &= v_k \\
-    \end{align*}$$
-
-    Without control, velocity stays constant.
-  </subsubsection>
-
-  <subsubsection><h1>Control input</h1>
-    $$
-      B = \begin{bmatrix} \frac{1}{2}h^2 \\ h \end{bmatrix}
-    $$
-
-    This says acceleration $u$ affects:
-    <ul>
-      <li>position through $\frac{1}{2}h^2$</li>
-      <li>velocity through $hu$</li>
-    </ul>
-  </subsubsection>
-</section>
-
-<section id="4"><h1>Cost matrices</h1>
+<section id="3"><h1>Cost matrices</h1>
   LQR minimises the cost:
   $$
     J = \sum_{k=0}^\infty x_k^\top Q_k x_k + u_k^\top R_k u_k 
@@ -93,7 +55,7 @@
   </subsubsection>
 </section>
 
-<section id="5"><h1>Simulation parameters</h1>
+<section id="4"><h1>Simulation parameters</h1>
   <div style="width:0; text-align:left;">
     $$\begin{array}{ccl} 
       h = 0.1 &:& \text{Time step} \\ 

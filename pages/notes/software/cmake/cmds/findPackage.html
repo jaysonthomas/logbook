@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("find_package", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>find_package</h1>
+<section id="0"><h1>Overview</h1>
+  <code>find_package</code> is just a locator. Its only job is to scour a system, find where Eigen is installed, and grab its files, headers, and libraries. CMake deliberately separates finding a package from using a package for two main reasons:
+
+  <ul>
+    <li>Multiple Targets</li>
+    A single CMakeLists.txt file might build five different executables or libraries. If find_package automatically applied Eigen to everything in the file, it would cause massive bloat and unnecessary dependencies for targets that don't need it.
+
+    <p>
+      <li>Scope Control (Public vs. Private)</li>
+      CMake needs to know how you are using Eigen. In your code, you used PUBLIC. This tells CMake: "I need Eigen to build this library, and anyone who links against my library also needs Eigen." If you used PRIVATE, it would mean: "I use Eigen internally, but hide it from anyone using my library." find_package cannot guess your architectural intent.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
