@@ -13,13 +13,13 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
 <section id="0"><h1>Overview</h1>
-  LQR is not able to reason about constraints on a system. It is purely dynamics and cost function, no handling of actuator limits or safety constraints. Convex MPC uses the LQR framework whilst also handling constraints.
+  LQR is not able to reason about constraints on a system such as actuator limits or safety constraints. The Ricatti solution for an LQR is a back substitution solution for a QP. If other constraints are added to the QP, it changes the block structure and breaks the Riccati solution. 
 
   <p>
-    Often, constraints are simple. For e.g. scalar bounds on actuator inputs.
+     However, it is still possible to solve the QP (with linear inequalities for e.g.) even if it's strictly no longer an LQR problem. Convex MPC uses the LQR framework whilst also handling constraints.
   </p>
 
-  The Ricatti solution for an LQR is a back substitution solution for a QP. If other constraints are added to the QP, it changes the block structure and breaks the Riccati solution. However, it is still possible to solve the QP (with linear inequalities for e.g.) even if it's strictly no longer an LQR problem as long as the QP is solved fast enough.
+  Also called <i>Receeding horizon control</i>.
 </section>
 </chapter>
 

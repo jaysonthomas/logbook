@@ -35,11 +35,17 @@
     \Sigma_{k+1|k+1} = (I - L_{k+1}C) \Sigma_{k+1|k} (I - L_{k+1}C)^\top + L_{k+1} V L_{k+1}^\top
   $$
 
-  This form of covariance update is called the <i>Joseph form</i>. This is good in terms of numerical precision w.r.t. floating point numbers on a computer because it's symmetric. Other versions give non-symmetric matrices or have minus signs which can lead to indefinite covariances i.e. covariance with negative eigen values. Covariances have to be at least positive semidefinite. This form is guaranteed to give a symmetric positive semidefinite matrix by construction.
+  This form of covariance update is called the <i>Joseph form</i>. The updated covariance</a> $\Sigma_{k+1|k+1}$ is a function of $L$ and is a convex quadratic equation.
 
-  <p>
-    The updated covariance</a> $\Sigma_{k+1|k+1}$ is a function of $L$ and is a convex quadratic equation.
-  </p>
+  <subsection id="1.0"><h1>Numerical precision</h1>
+    The Joseph form is good in terms of numerical precision w.r.t. floating point numbers on a computer because it's symmetric. This form is guaranteed to give a symmetric positive semidefinite matrix by construction.
+    
+    <p>
+      Covariances have to be at least positive semidefinite. 
+    </p>
+    
+    Other versions give non-symmetric matrices or have minus signs which can lead to indefinite covariances i.e. covariance with negative eigen values. 
+  </subsection>
 </section>
 </chapter>
 

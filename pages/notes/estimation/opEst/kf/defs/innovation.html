@@ -13,7 +13,7 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Innovation</h1>
 <section id="0"><h1>Definition</h1>
-  It is the error in the prediction - difference between the actual and the predicted measurement (computed based on the predicted state). <m>This error is linearly fedback in the kalman filter</m>.
+  It is the error in the prediction - difference between the actual and the predicted measurement (computed based on the predicted state). <m>Innovation is the error signal that is linearly fedback into an estimator</m>.
 
   $$\begin{aligned}
     z_{k+1} &= y_{k+1} - C\hat{x}_{k+1|k} \\
@@ -49,8 +49,6 @@
       \underbrace{E \left[ v_{k+1} v_{k+1}^T \right]}_{V} \\
     &= C \Sigma_{k+1|k} C^T + V
   \end{align*}$$
-
-  Innovation is the error signal that is fed back into an estimator.
 </section>
 </chapter>
 

@@ -17,7 +17,7 @@
 </section>
 
 <section id="1"><h1>State</h1>
-  First, the state estimate or the mean of the distribution is predicted using the <a href="../../../control/plants/intro/continuous/types/linear.html">dynamics</a>.
+  First, the state estimate or the mean of the distribution is predicted using the <a href="../../../control/plants/intro/types/linear.html">dynamics</a>.
   $$\begin{aligned}
     \hat{x}_{k+1|k} &= E\left[x_{k+1} | y_{1:k}\right] \\
       &= E\left[ A x_k + B u_k + w_k \mid y_{1:k} \right] \\
@@ -47,13 +47,13 @@
       W &:& \text{Process covariance}
     \end{array}$$
   </div>
-  $A$ and $E[.]$ are linear, so $A$ can be taken outside. $x_k$ and $w_k$ are uncorrelated; hence the product is 0. 
+  $A$ and $E[.]$ are linear, so $A$ can be taken outside. <m>$x_k$ and $w_k$ are uncorrelated; hence the product is 0</m>. 
 
   <subsubsection><h1>Intuition</h1>
     The end equation passes the state covariance through the dynamics and adds on the process noise to make the noise bigger.
 
     <p>
-      $A \Sigma_{k|k} A^T$ is how a coariance matrix is propagated through a linear transformation. A change of coordinates takes place on the matrix. It shows up all the time where a linear change of coordinates is applied to a matrix that is in a different coordinate system.
+      $A \Sigma_{k|k} A^T$ is how a coariance matrix is propagated through a linear transformation [<a href="../../../maths/probability/definitions/covariance.html#2">ref</a>]. A change of coordinates takes place on the matrix. It shows up all the time where a linear change of coordinates is applied to a matrix <m>that is in a different coordinate system</m>.
     </p>
   </subsubsection>
 </section>

@@ -24,14 +24,26 @@
   </ul>
 </section>
 
-<section id="2"><h1>Mathematical expression</h1>
+<section id="2"><h1>Linear transformation</h1>
+  The covariance matrix of a random vector $x$ is defined as the expected value of the outer product of its deviations from the mean:
+  $$
+    \Sigma_x = E[(x - \mu)(x - \mu)^\top]
+  $$
   
+  If a linear transformation is applied to $x$ such that $y = Cx$, the covariance of the new variable $y$ becomes:
+  $$
+    \Sigma_y = E[(Cx - C\mu)(Cx - C\mu)^\top]
+  $$
+  
+  By using the property of transposes $(AB)^\top = B^\top A^\top$, $C$ matrices can be factored out:
+  $$\begin{align*}
+    \Sigma_y &= E[C(x - \mu)(x - \mu)^\top C^\top] \\
+      &= C E[(x - \mu)(x - \mu)^\top] C^\top \\ 
+      &= C \Sigma_x C^\top
+  \end{align*}$$
+
+  The sandwich structure ($C \dots C^T$) ensures that the covariance is always $\geq 0$, symmetric and positive semi-definite, which physically means the output cannot have negative uncertainty.
 </section>
-
-<section id="3"><h1>Zero covariance</h1>
-
-</section>
-
 </chapter>
 
 </body>

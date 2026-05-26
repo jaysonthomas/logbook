@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Generation of measurements", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Generation of measurements</h1>
+<section id="0"><h1>Topics</h1>
+  Consider at time step $k$, the following position measurement $y$ is generated from the actual position $x_q$.
+  $$
+    y_k = C \; x_k + \sqrt V \; \eta
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      y &:& \text{Measurement} \\
+      \eta &:& \text{Random variable drawn from a standard normal distribution } N(0, 1) \\ 
+      \sqrt V &:& \text{Standard deviation scaling of the noise term.}
+    \end{array}$$
+  </div>
+
+  Variance is a single, deterministic number that describes the average spread of the distribution — it does not contain the random variable $\eta$ itself. Consider individual simulated samples, the squared deviation of a specific measurement's noise from the mean would be $(\sqrt{V}\eta)^2 = V\eta^2$. But the average of the deviations across the entire distribution, the expected value of $\eta^2$ is $1$. Thus the variance is just $V$.
+
+  <p>
+    Without $\eta$, $\sqrt{V}$ is just a constant offset. Every single time you simulate or compute this measurement, it would shift the exact same amount. It wouldn't be "noise" anymore—it would just be a known bias.
+  </p>
+
+  By multiplying $\sqrt{V}$ by $\eta$, you are telling the simulation:
+  <ul>
+    <li>Pick a random direction and intensity: That's $\eta$. It samples from a standard normal distribution, giving you a random number (sometimes positive, sometimes negative, usually between $-2$ and $2$).</li>
+
+    <p>
+      <li>Scale it to the right size: Multiplying that random sample by $\sqrt{V}$ stretches or shrinks that standard normal bell curve so that it matches the actual variance $V$ of your physical sensor.</li>
+    </p>
+  </ul>  
+</section>
+</chapter>
+
+</body>
+</html>

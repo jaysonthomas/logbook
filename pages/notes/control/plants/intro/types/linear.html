@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("Linear systems", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Linear systems</h1>
+<section id="0"><h1>Continuous time</h1>
+  $$
+    \dot{x} = A(t) \, x + B(t) \, u
+  $$
+  The system is called <i>linear time invariant</i> if $A(t) = A$ and $B(t) = B$, i.e. constants. It is called <i>linear time varying</i> otherwise. Compared to control affine, this is linear in both $u$ and $x$.
+
+  <p>
+    If a system's dynamics are linear, the control problem can be written as a convex optimisation problem.
+  </p>
+</section>
+
+<section id="1"><h1>Discrete time - state transition function</h1>
+  [<a href="https://t.ly/xC-7V">Ref</a>] 
+  $$\begin{align*}
+    z_k &= Cx_k \\
+    x_{k+1} &= Ax_k + Bu_k
+  \end{align*}$$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      A &:& \text{System matrix or dynamics maps how a state relates to the next state} \\ 
+      B &:& \text{Input matrix or control maps how a control input relates to the next state} \\
+      C &:& \text{Output matrix or measurement model maps a state to the measurement space}
+    \end{array}$$
+  </div>
+
+  Consider a non-simulation environment. At time instant $k$, a prediction $z_k$ is made of the actual measurement $y_k$ that is obtained of the state at $k$. In a simulation environment, this would serve as the measurement. 
+  
+  <p>
+    Once the control input to be applied $u_k$ is decided based on the current state measurement, a prediction can be made of the state in the next time instant, $x_{k+1}$.
+  </p>
+
+  The controller aims to control the state $x_k$ to follow a desired trajectory. It is not necessarily observable, i.e. directly measurable.
+</section>
+
+<section id="2"><h1>Linearising a non-linear system</h1>
+  The system $\dot{x} = f(x, u)$ can be approximated locally using a linear system about some nominal $x, u$ by taking the jacobians, i.e. by assigning $A = \frac{\partial{f}}{\partial{x}}$, $B = \frac{\partial{f}}{\partial{u}}$. Here higher order terms are ignored.
+
+  <p>
+    If a system is non-linear, as long as it's smooth, <m>its derivatives can be linearised locally to approximate the system as a linear one</m>. This works 90% of the time. The linearised system can then be useful for analysis and to design local controllers.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

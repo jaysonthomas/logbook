@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("Infinite horizon LQR", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Infinite horizon LQR</h1>
+<section id="0"><h1>Overview</h1>
+  This is an LQR stabilisation problem.
+</section>
+
+<section id="1"><h1>Control input</h1>
+  The optimal feedback gain $K$ is computed using LQR. The optimal <n>control law</n> is:
+  $$\begin{align*}
+    u_k &= -K \; x_k \\
+      &= - \left(k_1 \; q_k + k_2 \; \dot q_k \right) \\\\
+    K &= \begin{bmatrix} k_1 & k_2 \end{bmatrix}
+  \end{align*}$$
+
+  Since the aim is to drive the state to 0, any value of position or velocity is an error and is used to determine the acceleration. If position is positive, controller applies negative acceleration to bring it back.
+</section>
+
+<section id="2"><h1>Cost matrices</h1>
+  LQR minimises the cost:
+  $$
+    J = \sum_{k=0}^\infty x_k^\top Q_k x_k + u_k^\top R_k u_k 
+  $$
+
+  $$ Q = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} $$
+  $$ R = 0.1 $$
+
+  <subsubsection><h1>Interpretation</h1>
+    <ul>
+      <li>Large state values are penalised.</li>
+      <li>Since control effort is not penalised as much, the controller can act aggressively.</li>
+    </ul>
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>
