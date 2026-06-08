@@ -11,7 +11,7 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Visual Studio Code</h1>
+<chapter style="counter-reset: chapter 3"><h1>Visual Studio Code</h1>
 <section id="0"><h1>C++ include path</h1>
   <p>
     VS Code's IntelliSense engine is separate from the actual compiler (like GCC or Clang). Even if the code builds fine using a Makefile or CMake, the editor needs to be "told" where to look so it can provide helpful suggestions.
@@ -22,7 +22,16 @@
     <li>Ctrl + Shift + P</li>
     <li>Type C/C++: Edit Configurations (UI)</li>
     <li>Scroll down to the Include path section</li>
-    <li>Include <code>/usr/include/eigen3/**</code> or <code>/usr/local/include/eigen3/**</code></li>
+
+    <p>
+      <li>Common includes</li>
+      <pre><code>
+        /usr/include/eigen3/**
+        /usr/local/include/eigen3/**
+        /opt/ros/kilted/include/**
+      </code></pre>
+    </p>
+    
     <li>Alternatively, click the "JSON" link or open .vscode/c_cpp_properties.json and update the includePath array</li>
   </ul>
   

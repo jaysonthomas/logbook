@@ -3,31 +3,23 @@
 <head>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
-  <script src= "../../../../../setup.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
   <script>
-    initializePage("Polymorphism", "../../../../../");
+    initializePage("Static", "../../../../../../");
   </script>
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 1"><h1>Polymorphism</h1>
-<section id="0"><h1>Overview</h1>
-  It means "assuming many forms". It describes a paradigm in which a function may behave differently depending on how it is called, i.e. based on its inputs. It allows an interface to work with several different types. We might have a cut function that can work with the plant, the fruit, or the apple class. On the other hand, we might have a brews function that works with fruits and with apples, but not with plants.   
-  
-  <p>
-    Polymorphism can be achieved in different ways, the 2 main ones being overloading and overriding.
-  </p>
-</section>
-
-<section id="1"><h1>Overloading</h1>
-  <subsection id="1.0"><h1>Function overloading</h1>
+<chapter style="counter-reset: chapter 1"><h1>Static</h1>
+<section id="0"><h1>Overloading</h1>
+  <subsection id="0.0"><h1>Function overloading</h1>
     [<a href="../../jlib/cppExamples/fundamentals/14_functionOverloading.cpp">Ref</a>]
     <br>
     Same function name, but different function signature, i.e. datatypes of input arguments.
   </subsection>
 
-  <subsection id="1.1"><h1>Operator overloading</h1>
+  <subsection id="0.1"><h1>Operator overloading</h1>
     [<a href="../../jlib/cppExamples/fundamentals/15_operatorOverloading.cpp">Brackets</a>, <a href="../../jlib/cppExamples/fundamentals/15_2_operatorOverloading.cpp">Addition</a>, <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Dereferencing</a>]
     <br>
     In order to overload an operator, the <code>operator</code> keyword is used in the function signature. Eigen is a matrix library in cpp.
@@ -35,7 +27,7 @@
   </subsection>
 </section>
 
-<section id="2"><h1>Overriding</h1>
+<section id="1"><h1>Overriding</h1>
   [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>]
   <br>
   Overriding a function occurs when:
@@ -47,10 +39,10 @@
   Specifying a function as <code>override</code> in the derived class is good practice, as it empowers the compiler to verify that the function signature in the derived class matches that in the base class.
 </section>
 
-<section id="3"><h1>Generic programming</h1>
+<section id="2"><h1>Generic programming</h1>
   Generic Programming is an example of polymorphism that generalises the parameters of classes and functions using templates. The aim is to create code (classes and functions) that can be reused with many different types of data. For example using the vector class from the Standard Library, a vector of ints, strings or some user defined class can be created. 
 
-  <subsection id="3.0"><h1>Templates</h1>
+  <subsection id="2.0"><h1>Templates</h1>
     [<a href="../../jlib/cppExamples/fundamentals/8_templateFunction.cpp">Function template</a>, <a href="../../jlib/cppExamples/fundamentals/9_classTemplate.cpp">Class template</a>]
     <br>
     <n><i>Templates</i> use datatypes as parameters</n> so that the same implementation can operate on different data types. At compile time, the compiler expands the code using the types that are passed as parameters.
@@ -85,17 +77,6 @@ X&ltint&gt(5, 6);
 
     <i>Generic code</i> is the term for code that is independent of types. A <code>template&lt&gt</code> tag is placed before the function/class signature to specify and mark the declaration as generic. The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic (data)type which the <n>parameter</n> that follows it, takes on.
   </subsection>
-</section>
-  
-<section id="4"><h1>Virtual functions</h1>
-  [<a href="../../jlib/cppExamples/fundamentals/13_virtualFunction.cpp">Ref</a>]<br>
-  Virtual functions are a polymorphic feature. These functions are declared (and possibly defined) in a base class, and can be overridden by derived classes. This approach declares an <n>interface at the base level</n>, but delegates the implementation of the interface to the derived classes.
-
-  <p>
-    Virtual functions can be defined by derived classes, but this is not required. However, if we mark the virtual function with <code>=0</code> in the base class, then the function becomes a <i>pure virtual function</i>. This means that the base class declares but does not define the function. It has the side effect of making its class <i>abstract</i> meaning the class cannot be instantiated. A derived class must define the function, or else the derived class will be abstract.
-  </p>
-
-  We don't know how a generic animal talks. So we declare a function talk as a virtual function. <code>=0</code> means we're never going to create an object of type Animal. We're simply creating an interface such that other classes that inherit from this base class will have to implement the talk function. 
 </section>
 </chapter>
 
