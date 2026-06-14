@@ -25,11 +25,11 @@ function initializePage(chapterTitle, rootPath = "../../../../") {
 
     // --- Execute Injections ---
     injectCSS("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css");
-    injectCSS(`${rootPath}logbook.css`);
+    injectCSS(`${rootPath}utils/logbook.css`);
 
-    injectScript(`${rootPath}logbook-mathjax-config.js`);
+    injectScript(`${rootPath}utils/logbook-mathjax-config.js`);
     injectScript("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js");
-    injectScript(`${rootPath}logbook.js`);
+    injectScript(`${rootPath}utils/logbook.js`);
 
     // FIX FOR HIGHLIGHT.JS:
     // We pass a callback to run highlightAll() only AFTER the file has loaded
