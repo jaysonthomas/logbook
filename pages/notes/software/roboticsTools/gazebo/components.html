@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Components", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Components</h1>
+<section id="0"><h1>Overview</h1>
+  There are six components involved in running an instance of a Gazebo simulation.
+</section>
+
+<section id="1"><h1>Infrastructure</h1>
+  It is a common practice to run gzserver first, followed by gzclient, allowing some time to initialize the simulation scene, objects within, and associated parameters before rendering it. To make our lives easier, there is a single intuitive command that necessarily launches both the components sequentially.
+
+  <subsection id="1.0"><h1>Server</h1>
+    gzserver is responsible for parsing the description files related to the scene we are trying to simulate, as well as the objects within. It then simulates the complete scene using a physics and sensor engine.
+
+    <p>
+      The server can be launched independently in a terminal. It does not have any GUI component. Running gzserver in a so-called headless mode can come in handy in certain situations.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Client</h1>
+    gzclient provides the Graphical Client that connects to the gzserver and renders the simulation scene along with useful interactive tools. While you can technically run gzclient by itself, it does nothing at all (except consume your compute resources), since it does not have a gzserver to connect to and receive instructions from.
+  </subsection>
+</section>
+
+<section id="2"><h1>Dependencies</h1>
+  <subsection id="2.0"><h1>World file</h1>
+    A world file in Gazebo contains all the elements in the simulated environment. These elements are your robot model, its environment, lighting, sensors, and other objects. You have the ability to save your simulation to a world file that usually has a .world extension.
+
+    <p>
+      Gazebo can also read the content of a world file from your disk to generate the simulation. To launch the simulation from a world file, type:
+      <pre><code class="bash">
+        gazebo &ltyourworld&gt.world
+      </code></pre>
+    </p>
+
+    The world file follows the <a href="../formats/sdf.html">SDF</a> format.
+  </subsection>
+
+  <subsection id="2.1"><h1>Model file</h1>
+    For simplification, you must create a separate SDF file of your robot with exactly the same format as your world file. This model file should only represent a single model (ex: a robot) and can be imported by your world file. The reason why you need to keep your model in a separate file is to use it in other projects. To include a model file of a robot or any other model inside your world file, you can add the following code to the world’s SDF file:
+
+    <pre><code class="xml">
+      &ltinclude&gt
+        &lturi&gtmodel://model_file_name&lt/uri&gt
+      &lt/include&gt
+    </code></pre>
+  </subsection>
+
+  <subsection id="2.2"><h1>Environment variables</h1>
+    There are many environment variables that Gazebo uses, primarily to locate files (world, model, …) and set up communications between gzserver and gzclient. While working on a robotic project, you’ll leave these variables as default. Here’s an example of a variable that Gazebo uses:
+
+GAZEBO_MODEL_PATH: List of directories where Gazebo looks to populate a model file.
+  </subsection>
+</section>
+<section id="3"><h1>Interaction</h1>
+  <subsection id="3.0"><h1>Plugins</h1>
+    To interact with a world, model, or sensor in Gazebo, you can write plugins. These plugins can be either loaded from the command line or added to your SDF world file. 
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

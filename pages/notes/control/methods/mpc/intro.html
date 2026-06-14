@@ -13,7 +13,7 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
 <section id="0"><h1>Overview</h1>
-  LQR is not able to reason about constraints on a system such as actuator limits or safety constraints. The Ricatti solution for an LQR is a back substitution solution for a QP. If other constraints are added to the QP, it changes the block structure and breaks the Riccati solution. 
+  LQR is not able to reason about constraints on a system such as actuator limits or safety constraints [<a href="../../../op/lqr/riccati/drawbacks.html">Ref</a>]. 
 
   <p>
      However, it is still possible to solve the QP (with linear inequalities for e.g.) even if it's strictly no longer an LQR problem. Convex MPC uses the LQR framework whilst also handling constraints.

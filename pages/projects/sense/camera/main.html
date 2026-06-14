@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../logbook.css" />
+  <script src= "../../../../setup.js"></script>
+  <script>
+    initializePage("Camera", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Camera</h1>
+<section id="0"><h1>Steps</h1>
+  [<a href="https://t.ly/RCHLd">Ref</a>]<p></p>
+  
+  <subsubsection><h1>2D feature-tracking pipeline</h1>
+    Keypoint Detection: Implementing various detector types (e.g., SHITOMASI, HARRIS, FAST, BRISK, ORB, AKAZE, SIFT) to locate points of interest in the images.
+
+    <p>
+      Descriptor Extraction: Implementing multiple descriptor types to uniquely describe the detected keypoints based on their surrounding pixels.
+    </p>
+
+    Descriptor Matching: Matching the descriptors between successive frames using methods like Brute-Force (MAT_BF) or FLANN (MAT_FLANN), utilizing selector types like Nearest Neighbor (SEL_NN) and K-Nearest Neighbor (SEL_KNN) with a distance ratio test.
+  </subsubsection>
+
+  <subsubsection><h1>3D Object tracking</h1>
+    Convert pixel-level feature tracking to object-level tracking by associating bounding boxes across sequential frames.
+
+    <p>
+      ROI filtering: Given an image, using YOLO, bounding boxes are placed around specific objects of interest. Descriptor matching is only applied to these bounding boxes (ROI).
+    </p>
+
+    Association Logic: For every bounding box in the previous frame, the code identifies and extracts exactly one best-matching bounding box in the current frame based on the highest number of shared keypoint matches.
+
+    <p>
+      Output: The final result is delivered as a hashmap containing the optimized pairs of matching bounding box IDs across the two frames.
+    </p>
+  </subsubsection>
+    
+  <subsubsection><h1>Lidar time-to-collision (TTC) Estimation</h1>
+    Compute the time remaining before a potential collision with a preceeding vehicle, based on the relative distance and velocity derived from Lidar points across sequential frames.
+
+    <p>
+      Avoided sensor noise by averaging the closest 20% of points instead of using a single, potentially rogue minimum distance point. 
+    </p>
+
+    Calculated TTC using the filtered distance change between 2 consecutive frames over the time step.
+  </subsubsection>
+
+  <subsubsection><h1>Visualisation</h1>
+    Calculate the maximum and minimum spatial boundaries of each obstacle cluster to wrap them in 3D bounding boxes, creating clear "no-go zones" that a car must avoid to prevent collisions.
+  </subsubsection>
+
+  <subsubsection><h1>Setup 2</h1>
+    Upgrade the pipeline with the pcl::PointXYZI data type, allowing the system to handle both 3D spatial coordinates and laser reflectivity (intensity) data.
+  </subsubsection>
+  
+  <subsubsection><h1>Data reduction and Region of Interest (ROI) selection</h1>
+    Use Voxel Grid downsampling to drastically thin out the data density to a 0.2m resolution. Apply a 3D CropBox to strip away irrelevant distant surroundings and reflections from the car roof.
+  </subsubsection>
+
+  <subsubsection><h1>Deployment</h1>
+    Use the segmentation, clustering, and bounding box tools. Tuning their operational boundaries so they can reliably detect and isolate noisy real-world urban obstacles.
+  </subsubsection>
+  
+  <subsubsection><h1>Stream PCD</h1>
+    Re-architect the visualizer loop so it can continuously accept PCD frames. This turns it into a real-time, animated playback of an autonomous vehicle detecting obstacles on the move.
+  </subsubsection>
+
+  <subsubsection><h1>Benchmarking</h1>
+    Substitute PCL's built-in segmentation and clustering methods with the self-built 3D RANSAC and KD-Tree implementations, wrap them in a macro toggle to easily switch between the custom pipeline and the PCL standard.
+  </subsubsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

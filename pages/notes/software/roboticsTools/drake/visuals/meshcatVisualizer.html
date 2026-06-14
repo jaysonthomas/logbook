@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../../logbook.css" />
+  <script src= "../../../../../../setup.js"></script>
+  <script>
+    initializePage("Drake: Using the meshcat_visualizer", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Drake: Using the meshcat_visualizer</h1>
+<section id="0"><h1>Replace drake_visualizer</h1>
+  Make the following changes in the <code>.cc</code> file, say <code>passive_simulation.cc</code>.
+  
+<pre><code class="c++">
+#include "drake/geometry/meshcat_visualizer.h"
+
+auto meshcat = std::make_shared<geometry::Meshcat>(7050);                                         
+geometry::MeshcatVisualizerd::AddToBuilder(&builder, *scene_graph, meshcat);
+
+auto diagram = builder.Build()
+</code></pre>
+
+  In the <code>BUILD.bazel</code> file in the same folder as the source file, in the <code>drake_cc_binary</code> section for the particular source file (search for the name of the .cc file), include meshcat_visualizer under <code>deps</code>
+
+<pre><code class="bazel">
+drake_cc_binary(
+  name = "passive_simulation",
+  srcs = ["passive_simulation.cc"],
+  add_test_rule = 1,
+  data = [":models"],
+  test_rule_args = ["--target_realtime_rate=0.0"],
+  deps = [
+      ":pendulum_geometry",
+      ":pendulum_plant",
+      "//geometry:meshcat_visualizer",
+      "//systems/analysis:simulator",
+      "//systems/framework:diagram",
+      "//systems/primitives:constant_vector_source",
+      "@gflags",
+  ],
+)
+</code></pre>
+
+  Then run as normal, i.e. no need to open the visualiser separately.
+<pre><code class="bazel">
+bazel run //examples/pendulum:passive_simulation
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Constrained discrete optimisation problem", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Constrained discrete optimisation problem</h1>
+  <p>
+    Constraints are enforced at each time step. They are usually evaluated for the knot points and not for the finer interpolated points due to the higher computational expense.
+  </p>
+
+  Following are different types of constraints:
+
+  <subsubsection><h1>Dynamics constraints</h1>
+    They are a set of equality constraints enforced at every time step. RK4 could be used to obtain the below for example.
+    $$
+      s.t. \quad x_{k+1} = f(x_k, u_k)
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Actuator constraints</h1>
+    These are scalar bounds on $u$, torque limits, which are inequality constraints.
+    $$
+      u_{min} \leq u_k \leq u_{max} \quad \forall k
+    $$
+  </subsubsection>
+
+  <subsubsection><h1>Collision avoidance constraints</h1>
+    These are obstacle avoidance or safety constraints. <n>They are inequality constraints on the state</n>. For e.g. distance from the minimum radius around an object needs to be above some threshold.
+    $$
+      c(x_k) \geq 0 \quad \forall k
+    $$
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

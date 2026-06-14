@@ -11,15 +11,15 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
+<chapter style="counter-reset: chapter 0"><h1>Estimation</h1>
 <section id="0"><h1>Definition</h1>
   Estimation is a temporal process - <n>things need to be integrated over time</n>. 
   
   <p>
     It aims to: 
     <ul>
-      <li>Come up with an estimate $\hat{x}$ for some unknown state $x$, both of which are vectors.</li>
-      <li>Quantify uncertainty by <n>making a very tight distribution</n>, so that a robot is more certain of its state. For example, it is not 100% certain to know where an object is.</li>
+      <li>Come up with an estimate $\hat{x}$ for some unknown state vector $x$.</li>
+      <li><n>Quantify uncertainty</n> by making a very tight distribution, so that a robot is more certain of its state.</li>
     </ul>   
   </p>
 
@@ -29,7 +29,7 @@
       Hx = y - v
     $$
     
-    Only the shape of the distribution w.r.t. the unknown $x$ is known. If the error $v$ is known, $x$ can be found. Or if $x$ is known, $v$ can be solved. Since neither is known, it becomes an estimation problem.
+    <n>Only the shape of the distribution w.r.t. the unknown $x$ is known</n>. If the error $v$ is known, $x$ can be found. Or if $x$ is known, $v$ can be solved. Since neither is known, it becomes an estimation problem.
   </subsection>
 
   <subsubsection><h1>Notes</h1>
@@ -47,12 +47,12 @@
     The <n>effect of actions</n> can have uncertain outcomes due to intrinsic or extrinsic factors.
 
     <p>
-      A vehicle intending to follow a certain path might get blown to one side by a gust of wind or suddenly stop working. It is not possible to know when an uncertain event could occur that could then cause a state change. 
+      A vehicle intending to follow a certain path might get blown to one side by a gust of wind or suddenly stop working. It is not possible to know when an uncertain event, that could cause a state change, could occur. 
     </p>
   </subsubsection>
 
   <subsubsection><h1>Partially observable</h1>
-    The real worl is only partially observable. There is uncertainty about the current state of the world. 
+    The real world is only partially observable. There is uncertainty about the current state of the world. 
     
     <p>
       Where is the vehicle? What's behind a particular object? It is hard to know everything about the world.

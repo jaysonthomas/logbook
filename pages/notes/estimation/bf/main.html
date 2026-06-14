@@ -11,7 +11,7 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Bayes filters</h1>
+<chapter style="counter-reset: chapter 0"><h1>Bayes filters</h1>
 <section id="0"><h1>Topics</h1>
   <ul>
     <li><a href="overview.html">Overview</a></li>
@@ -32,7 +32,7 @@
 
   <ul>
     <li><a href="kf/main.html">Kalman Filter</a></li>
-      Kalman filter is a specific implementation of the bayes filter where everything is represented as Gaussians.
+      Kalman filter is a specific implementation of the bayes filter where everything is represented as Gaussians. It can be applied to linear systems where the output is proportional to the input.
 
     <p>
     <li><a href="ekf.html">Extended Kalman Filter (EKF)</a></li>
@@ -44,7 +44,7 @@
     </p>
 
     <li><a href="ukf.html">Unscented Kalman Filter (UKF)</a></li>
-    Here, a non-linear state is estimated using special particles which can be <m>passed through a non-linear system</m> instead of linearising the system as in the case of EKF. It is simpler to implement.
+    Here, a non-linear state is estimated using special particles which can be <m>passed through a non-linear system</m> instead of linearising the system as in the case of EKF. It is simpler to implement. They are applicable in highly non-linear systems where EKF may fail to converge.
 
     <p>
       <li>

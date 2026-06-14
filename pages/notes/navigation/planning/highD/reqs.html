@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" type="text/css" href="../../../../../logbook.css" />
+  <script src= "../../../../../setup.js"></script>
+  <script>
+    initializePage("Weakened requirements", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Weakened requirements</h1>
+  Combinatorial path planning algorithms are too inefficient to apply in high-dimensional environments, which means that some practical compromise is required to solve the problem! 
+
+  <p>
+    Instead of aspiring to use an algorithm that is complete, the requirement can be weakened to use an algorithm that is <i>probabilistically complete</i> - the probability of finding a path, if one exists, increases to 1 as time goes to infinity.
+  </p>
+
+  Similarly, the requirement of an optimal path can be weakened to that of a <i>feasible path</i>, where all environmental and robot constraints such as obstacles and motion constraints are obeyed. For high-dimensional problems with long computational times, it may take unacceptably long to find the optimal path, whereas a feasible path can be found with relative ease. Finding a feasible path proves that a path from start to goal exists, and if needed, <m>the path can be optimized locally</m> to improve performance.
+
+  <p>
+    Sample-based planning is probabilistically complete and looks for a feasible path instead of the optimal path.
+  </p>
+</chapter>
+
+</body>
+</html>
