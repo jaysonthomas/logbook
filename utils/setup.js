@@ -44,7 +44,7 @@ function initializePage(chapterTitle, rootPath = "../../../../") {
         <div data-type="titlepage" pdf="no">
             <header>
                 <h1><a href="${rootPath}index.html" style="text-decoration:none;">Logbook</a></h1>
-                <p style="font-size: 18px;"><a href="${rootPath}pages/bio/main.html">Jayson Wynne-Thomas</a></p>
+                <p style="font-size: 18px;"><a href="${rootPath}bio/main.html">Jayson Wynne-Thomas</a></p>
                 <p style="font-size: 14px; text-align: right;">Last modified <span>${dateStr}</span></p>
             </header>
         </div>`;

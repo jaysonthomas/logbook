@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Linear velocity of a point w.r.t. its axis of rotation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Linear velocity of a point w.r.t. its axis of rotation</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/9_polePos.png"/>
+    </figure>
+  </div>
+
+  $$
+    \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{#2em}}{#3}^{\scriptsize{#4}}}
+    \newcommand{\avg}{\wrt{A}{-0.1}{v}{G}}
+    \newcommand{\arg}{\wrt{A}{-0.5}{r}{G}}
+    \newcommand{\wwg}{\wrt{A}{0}{\omega}{G}}
+    \newcommand{\wwgTwo}{\wrt{W}{-0.5}{\omega}{G}}
+    
+    \avg = \,\avg\Bigr|_{\wwg=0} + \bigl(\,\wwgTwo \times \arg\,\bigr)
+  $$
+
+  $\avg\Bigr|_{\wwg=0}$ is the velocity of <code>G</code> as seen from <code>A</code> when <code>G</code> is not rotating. If <code>G</code> does not have any linear motions, the term is $0$.
+ 
+  <p>
+    $^{\scriptsize{A}}r^{\scriptsize{G}}$ is the position vector between the 2 points.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

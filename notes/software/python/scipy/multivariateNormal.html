@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Scipy: Multivariate normal", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Scipy: Multivariate normal</h1>
+<section id="0"><h1>Overview</h1>
+  A 2D multivariate normal distribution is not calculated by finding two separate PDF values and combining them. It's a single joint probability distribution that describes the system as a whole - one value is calculated directly from the multivariate normal PDF formula, which inherently accounts for the relationship between the two variables.
+
+  <ul>
+    <li>Positive Covariance: When variable X is higher than its mean, variable Y also tends to be higher than its mean. The elliptical contour plot will be tilted diagonally upward.</li>
+
+    <p>
+      <li>Negative Covariance: When variable X is higher than its mean, variable Y tends to be lower than its mean. The ellipse will be tilted downward.</li>
+    </p>
+
+    <li>Zero Covariance: The variables are uncorrelated. There is no linear relationship between them. The ellipse will be aligned with the x and y axes.</li>
+  </ul>
+
+  The single formula incorporates:
+  <ul>
+    <li>The mean of both variables.</li>
+    <li>The variance (or standard deviation) of each variable.</li>
+    <li>The covariance between the variables.</li>
+  </ul>
+
+  The result is a single number representing the probability density on a 2D, bell-shaped surface which is often shaped like an ellipse when viewed from above.
+
+  <p>
+    If the variables are uncorrelated, the 2D PDF is simply the product of the two individual 1D PDFs:
+
+    $$
+      P(x, y) = P(x) * P(y) \quad \text{(only when covariance is zero)}
+    $$
+  </p>
+</section>
+
+<section id="1"><h1>Define the properties of the distribution</h1>
+  <code>multivariate_normal(...)</code> creates a distribution object with its properties:
+  
+  <ul>
+    <li>The mean vector defines the center of the distribution where the peak lies.</li>
+    <li>The covariance matrix defines the shape, size, and orientation of the hill.</li>
+    <ul>
+      <li><i>Variance</i> (diagonal elements) describes how spread out or wide the hill is along each axis.</li>
+      <li><i>Covariance</i> (off-diagonal elements) describes the relationship between the variables. If they are non-zero, the hill is tilted, resulting in an elliptical shape rather than a perfect circle.</li>
+    </ul>
+  </ul>  
+
+<pre><code class="python">
+stateSpace = multivariate_normal(mu, sigma)
+stateSpace.pdf(mu)
+</code></pre>
+  <code>.pdf</code> computes the pdf value for a point specified as the argument. It already knows the mean and covariance when the object was created.
+</section>
+</chapter>
+
+</body>
+</html>

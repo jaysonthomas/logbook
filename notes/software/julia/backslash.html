@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Backslash operator", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Backslash operator</h1>
+<section id="0"><h1>Description</h1>
+  When presented with <code>x = A \ b</code>, Julia tries to solve the linear equation:
+  $$
+    A x = b
+  $$
+  
+  Instead of manually calculating an inverse ($A^{-1}b$), which is computationally expensive and numerically unstable, <code>\</code> analyses the structure of the matrix $A$ (e.g., is it diagonal? symmetric? upper triangular?) and chooses the fastest, most accurate solver—usually based on LU or QR or LDLT decomposition.
+</section>
+</chapter>
+
+</body>
+</html>

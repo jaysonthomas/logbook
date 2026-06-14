@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Newton's method", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Newton's method</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    \Delta{x} = -\left(\frac{\partial{f}}{\partial{x}}\bigg|_x\right)^{-1} \, f(x)
+  $$
+
+  Here, $f()$ is the residual. $\frac{\partial{f}}{\partial{x}}$ is the Jacobian of the residual.
+
+  <p>
+    A first order taylor expansion of the residual is taken and set to 0, i.e. the equation is solved for the a next residual of ~0. It is then evaluated for different $x_{k+1}$ candidate values.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

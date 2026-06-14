@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("$b = b + \frac{p}{-q}$ derivation", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>$b = b + \frac{p}{-q}$ derivation</h1>
+$$\begin{align*}
+  b &= b + d \\
+  &= b + \frac{p}{-q} \\
+  &= b + \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+  + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+  + \frac{b \cdot f_b(f_a + f_c) - b \cdot f_b^2} {(f_a-f_b) \cdot (f_c-f_b)} \\     
+  &= \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+  + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+  + \frac{b f_b(f_a + f_c) - b \cdot f_b^2 + bf_af_c - bf_af_b - bf_bf_c + bf_b^2} 
+  {(f_a-f_b) \cdot (f_c-f_b)} \\     
+  &= \frac{a \cdot f_b \cdot f_c} {(f_a-f_c) \cdot (f_a-f_b)}
+  + \frac{c \cdot f_a \cdot f_b} {(f_c-f_a) \cdot (f_c-f_b)} 
+  + \frac{bf_af_c} {(f_b-f_a) \cdot (f_b-f_c)}
+\end{align*}$$
+</chapter>
+
+</body>
+</html>

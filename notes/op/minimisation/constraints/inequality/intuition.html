@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Intuition", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Intuition</h1>
+  <div class="container" style="display: flex; align-items: flex-start; gap: 20px;">
+    <figure>
+      <img style="height:200px; width:auto"
+      src="../../../../../figures/optimisation/constraints/2_inequality_necessary_conditions.png"/>
+    </figure>  
+    <div>
+      <p style="margin-top: 0;">
+        The blue shaded area $c(x) \geq 0$ is the feasible region. This is a linear inequality, since a line marks the constraint-boundary.
+      </p>
+
+      The objective function is in 2d, a quadratic bowl. The unconstrained minimum would be at the origin of the bowl. But with the constraints, the new minimum needs to live on the upper left of the plot, in the feasible region.
+
+      <p>
+        The gradient of $c$ points in the direction of increasing $c$. The gradient of $f$ points radially outward.
+      </p>
+    </div>
+  </div>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Process noise", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Process noise</h1>
+<section id="0"><h1>Overview</h1>
+  Kalman filter usually converts all uncertainty into an additive process noise term because that keeps the estimation problem tractable.
+  $$
+    x_{k+1} = Ax_k + Bu_k + w_k
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      A &:& \text{Propagates the state dynamics} \\ 
+      B &:& \text{Maps inputs/disturbances into the state}
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Dynamics uncertainty</h1>
+  If the true system is:
+  $$
+    x_{k+1} = (A + \Delta A)x_k + Bu_k
+  $$
+
+  The effective process noise is:
+  $$
+    w_k = \Delta Ax_k
+  $$
+
+  The effective covariance becomes state dependent:
+  $$
+    Cov(w_k) = Cov(\Delta Ax_k)
+  $$
+  
+  This is harder to handle since it is multiplicative noise, not simple additive white noise - the uncertainty grows with state magnitude which breaks the assumptions of the ordinary KF.
+</section>
+
+<section id="2"><h1>Input uncertainty</h1>
+  If uncertainty is modeled as noise on the input/control channel
+  $$\begin{align*}
+    x_{k+1} &= A x_k + B(u_k + \eta_k) \\
+    \eta_k &\sim \mathcal{N}(0, \Sigma_\eta) \\
+    w_k &= B\eta_k
+  \end{align*}$$
+
+  The process covariance becomes:
+  $$\begin{align*}
+    W &= \mathbb{E}[w_k w_k^\top] \\
+      &= \mathbb{E}[(B\eta_k)(B\eta_k)^\top] \\
+      &= B\Sigma_\eta B^\top
+  \end{align*}$$
+
+  $B$ in the covariance suggests that the process uncertainty enters the system through the same channels as the control/disturbance input channel.
+
+  <subsection id="2.0"><h1>Examples</h1>
+    <ul>
+      <li>Imperfect actuators or motor torque uncertainty</li>
+      <li>Unknown external force entering through the same physics as the actuator</li>
+      <li>Discretization uncertainty in the input</li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="3"><h1>Forgetting factor</h1>
+  High process noise is similar to a forgetting factor. It down-weights predictions (lower trust in the propagation) and up-weights newer measurements.
+</section>
+
+<section id="4"><h1>Example</h1>
+  $$
+    W = B \; 0.1 \; B^\top + 10^{-5} I
+  $$
+
+  The small diagonal term adds a tiny isotropic background uncertainty everywhere. It is usually added to ensure:
+  <ul>
+    <li>positive definiteness</li>
+    <li>numerical stability</li>
+    <li>full rank covariance</li>
+  </ul>
+
+  Without it, $B\Sigma_\eta B^\top$ can be singular if B has low rank.
+</section>
+
+<section id="5"><h1>Practicalities</h1>
+  Choose the process variance to be large enough to absorb unmodeled dynamics, linearization error, parameter drift, disturbances etc.
+
+  <p>
+    A standard Kalman filter assumes:
+    $$
+      w_k \sim \mathbb N(0, W) 
+    $$
+    with covariance independent of the state. 
+  </p>
+
+  Uncertainty is injected into the state evolution in a controlled way to compensate for any model imperfections.
+</section>
+</chapter>
+
+</body>
+</html>

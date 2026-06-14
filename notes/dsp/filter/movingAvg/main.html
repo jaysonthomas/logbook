@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Simple moving average filter", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Simple moving average filter</h1>
+<section id="0"><h1>Difference equation</h1>
+  $$
+    y[n] = \frac{1}{N}\sum^{N-1}_{i=0} x[n-i]
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      y[n] &:& \text{Current output} \\ 
+      x[n] &:& \text{Current input} \\ 
+      x[n-1] &:& \text{Previous input and so on} \\ 
+      N &:& \text{Window size or length of the average} \\
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Setup</h1>
+  A signal is being sampled at 16kHz. It is then sub-sampled at 200Hz. In order to minimise noise in the low-frequency signal, a moving average filter is to be implemented at high frequency.
+</section>
+
+<section id="2"><h1>Window size calculation</h1>
+  [<a href="https://t.ly/7DpML">Ref</a> - see comments for details] <p></p>
+  
+  The cutoff frequency of a moving average filter:
+  $$
+    f_c \approx \frac{0.443 \cdot f_s}{N}
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      f_s &:& \text{16kHz} \\ 
+      N &:& \text{Window size} \\
+    \end{array}$$
+  </div>
+
+  The sub-sampled nyquist frequency is 100Hz. The filter should attenuate frequency components above $f_c=100$ to avoid aliasing. The ideal window size in this case would be $N=~70.88$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("PID: Proportional", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>PID: Proportional</h1>
+<section id="0"><h1>Overview</h1>
+  The control strength is proportional to error:
+  $$\begin{align*}
+    e(t) &= z_{target}(t) - z(t) \\
+    \ddot{z}(t) &= \bar{u}_t(t) = K_p e(t)
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Problems with P controller</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:90px; width:auto"
+      src="../../../../figures/drone/42_pController.png"/>
+    </figure>
+  </div>
+
+  The output of the P controller is better than the quadratic error of the open loop control strategy. 
+
+  However, there are 2 problems:
+  <ul>
+    <li>Oscillating behaviour</li>
+    The actual $z$ bounces up and down when it's supposed to be steady.
+    
+    <p>
+      <li>Offset</li>
+      The oscillations aren't centered on the target $z$.
+    </p>
+  </ul>
+
+  Different values of $K_p$ won't help get rid of the oscillations; they only change the frequency of the oscillations. 
+  <div class="img-container">
+    <figure>
+      <img style="height:180px; width:auto"
+      src="../../../../figures/drone/42a_pControllerComparison.png"/>
+      <figcaption>
+        Comparing the results with two $K_p$ values ($K_p=1$ and $K_p=10$):
+      </figcaption>
+    </figure>
+  </div>
+  
+  When $z_{target}$ is different from the current $z$, the controller accelerates in proportion with the error. But this, unfortunately, does not lead to zero velocity when the vehicle gets to the target location. Instead, the vehicle gets to the target altitude with some vertical speed and this causes it to overshoot and hence begins a cycle of oscillations.
+</section>
+</chapter>
+
+</body>
+</html>

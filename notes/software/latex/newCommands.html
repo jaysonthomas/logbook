@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Latex: Creating new commands", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Latex: Creating new commands</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="latex">
+$$
+  \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+  \wrt{W}{0.3}{v}{A} = \dot{x}\, \hat{i}
+
+  \newcommand{\avg}{\wrt{A}{0.1}{v}{G}}
+  \avg = 1
+$$
+</code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$\begin{align*}
+      \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+      \wrt{W}{0.3}{v}{A} &= \dot{x}\, \hat{i} \\
+
+      \newcommand{\avg}{\wrt{A}{0.1}{v}{G}}
+      \avg &= 1
+    \end{align*}$$
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

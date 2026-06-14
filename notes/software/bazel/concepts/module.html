@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Bazel concepts: Module", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Bazel concepts: Module</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/A8j1m">Ref</a>]<p></p>
+  A <i>module</i> is the root folder or package that contains all the data that is needed to build a project. It is identified by a <code>MODULE.bazel</code> file. It is represented by <code>//</code> in a path. It used to be referred to as <i>workspace</i> instead.
+  
+  <p>
+    Each folder of a module can act as a package (including the root directory) and identified by a <code>BUILD</code> or <code>BUILD.bazel</code> file. 
+  </p>
+</section>
+
+<section id="1"><h1>Contents of MODULE.bazel</h1>
+  <ul>
+    <li>Declaration of the name of the module.</li>
+    <li>Minimum bazel version required.</li>
+  </ul>  
+</section>
+
+</chapter>
+
+</body>
+</html>

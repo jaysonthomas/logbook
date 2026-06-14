@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Active set", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Active set</h1>
+<section id="0"><h1>Overview</h1>
+  It aims to have some strategy/heuristics to guess which constraints are going to be active and which ones are going to be inactive. If they're inactive, throw them out. If active, solve an equality-constrained problem.
+
+  <p>
+    In the worst case, the complexity is high - every possible combination of active and inactive constraints will need to be checked; which blows up in the number of constraints in a terrible way.
+  </p>
+
+  If the heuristic is good and the system is warm starting, then this works well. There are many control applications where this is the case. In MPC problems where the system is warm started all the time and it is only ever doing small updates on the solution, this can be extremely effective. But, this is not a general solution. It requires a custom QP solver with custom heuristics.
+
+  <subsubsection><h1>How to check if the guess (active or inactive constraints) is wrong</h1>
+    Check the constraints after the solution is obtained. If there was a constraint that should have been in the active set that wasn't, the constraint will be violated, $c$ will be negative in the solution.
+
+    <p>
+      If a constraint that shouldn't have been in the active set, is put in there, the solutions may end up on the line, but they should have been in the feasible region instead. $\lambda$ will have the wrong sign in the solution - if a solution that shouldn't be in the active region, is in there, it would naturally be in the feasible region, i.e. $\lambda$ would be 0. But, now the minimiser is pulling solutions towards the constraint rather than pushing off it. Hence, $\lambda$ would be negative since it is being pulled but that isn't the natural behaviour.
+    </p>
+
+    This method tries different combinations till it gets it right.
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

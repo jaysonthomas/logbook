@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("SDF - Simulation Description Format", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>SDF - Simulation Description Format</h1>
+  [<a href="https://t.ly/awuvI">Ref</a>] <p></p>
+  <pre><code class="xml">
+    &lt?xml version="1.0" ?&gt
+    &ltsdf version="1.5"&gt
+      &ltworld name="default"&gt
+        &ltphysics type="ode"&gt
+          ...
+        &lt/physics&gt
+
+        &ltscene&gt
+          ...
+        &lt/scene&gt
+
+        &ltmodel name="box"&gt
+          ...
+        &lt/model&gt
+
+        &ltmodel name="sphere"&gt
+          ...
+        &lt/model&gt
+
+        &ltlight name="spotlight"&gt
+          ...
+        &lt/light&gt
+
+      &lt/world&gt
+    &lt/sdf&gt
+  </code></pre>
+</chapter>
+
+</body>
+</html>

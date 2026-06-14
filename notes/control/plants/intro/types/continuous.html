@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Continuous time smooth system", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Continuous time smooth system</h1>
+  The most general form for a smooth system is a first order ODE:
+  $$ 
+    \dot{x} = f(x, u)
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      x &:& \text{State} \in \, \mathbb{R}^n \text{(vector of size } n \text{)}\\ 
+      f &:& \text{Dynamics (here, a function)} \\
+      u &:& \text{Control input} \in \, \mathbb{R}^m \\
+      \dot{x} &:& \text{Time derivative of the state vector} 
+    \end{array}$$
+  </div>
+
+  Any mechanical system can be written as a first order ODE by making the state vector twice as big:
+  $$
+    x = \begin{bmatrix} q \\ v \end{bmatrix}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      q &:& \text{Configuration/joint angles, in physics. In robotics, it is referred to as pose. It is not always a vector.} \\ 
+      v &:& \text{Velocity. It is always a vector.} 
+    \end{array}$$
+  </div>
+
+  $q$ does not always live in the vector space $\mathbb{R}^n$ since orientations don't add like vectors. Roll, then pitch is not the same as pitch then roll. 
+
+  <p>
+    An <a href="../../sp/dynamics/main.html">example</a> of a smooth continuous time system is a simple pendulum.
+  </p>
+</chapter>
+
+</body>
+</html>

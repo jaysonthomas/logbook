@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Particle Filter: Code documentation", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Particle Filter: Code documentation</h1>
+<section id="0"><h1>Classes</h1>
+  <subsection id="0.0"><h1>Bot</h1>
+    <ul>
+      <li><code>dir</code></li>
+      Angle of the bot stored as a 2D vector.
+    </ul>
+  </subsection>
+
+  <subsection id="0.1"><h1>Map</h1>
+    <ul>
+      <li><code>inPolygonFormat</code></li>
+      Contains x, y coordinates of the map for use in functions like inpolygon (which checks if points are inside a polygon). The first point of the map is appended again to the end, closing the loop of the polygon by connecting the last vertex to the first.
+
+      <p>
+        <code>inPolygonFormatX, inPolygonFormatY</code> contain all the lengths of the X-axis and Y-axis vectors respectively. These are also used in drawing the map with matplotlib's <code>line</code> function which require all the x and y vector lengths to be separate.
+      </p>
+
+      <p>
+        <li><code>line</code></li>
+        Stores each border line as [x1, y1, x2, y2].
+      </p>
+
+      <li><code>point</code></li>
+      Stores the closed map with the first point repeated at the end.
+    </ul>
+  </subsection>
+
+  <subsection id="0.2"><h1>Matrix</h1>
+    <ul>
+      <li><code>createTranslation</code></li>
+      Converts a 2D vector into a translation matrix with homogenous coordinates.
+
+      <p>
+        <li><code>createZRotation</code></li>
+        Converts an angle into a rotation matrix with homogenous coordinates.
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="0.3"><h1>Scanner</h1>
+    <ul>
+      <li><code>locationOffset</code></li>
+      This is the physical location of the ultrasound sensor. The sensor is mounted on a motor. The centre of rotation would ideally be located at the centre of the bot from a top-down view. If there is an offset from the centre of the bot, then this is captured in this variable.
+
+      <p>
+        <li><code>config</code></li>
+        Stores how the bot performs a <n>single scan</n>:
+        <ul>
+          <li>The number of points/samples collected</li>
+          <li>The angle between samples</li>
+        </ul>
+      </p>
+    </ul>
+  </subsection>
+</section>
+
+<section id="1"><h1>Particular variables</h1>
+  <ul>
+    <li><code>map</code></li>
+    It is of type <code>Point</code>. The first column, <code>map[i][0]</code>, contains the x coordinates, and the second column contains the y coordinates.
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

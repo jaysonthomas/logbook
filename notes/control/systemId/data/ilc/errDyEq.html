@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Error dynamics equation", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Error dynamics equation</h1>
+<section id="0"><h1>Question</h1>
+  What guarantee is there that the error at $k+1$ is always less than the error at $k$? If so, then $U$ is being adjusted in a way that makes the system better at following the reference, since the error is being reduced.
+</section>
+
+<section id="1"><h1>Comparing errors at successive iterations</h1>
+  $$\begin{align*}
+    E_{k+1} &= R - Y_{k+1} \\
+            &= R - G \, U_{k+1} \\
+            &= R - G \, (U_k + L\,E_k) \\
+            &= \underbrace{R - \overbrace{G \, U_k}^{Y_k}}_{E_k} - G \, L\,E_k \\
+            &= (I - GL) E_k
+  \end{align*}$$
+
+  This is the <i>Error dynamics equation</i> which dictates how the error changes in an iteration.
+
+  <p>
+    For the error to be reduced, the following condition needs to be satisfied:
+    $$
+      |I - GL| &lt 1
+    $$
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

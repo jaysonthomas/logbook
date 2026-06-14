@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Static", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Static</h1>
+<section id="0"><h1>Overloading</h1>
+  <subsection id="0.0"><h1>Function overloading</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/14_functionOverloading.cpp">Ref</a>]
+    <br>
+    Same function name, but different function signature, i.e. datatypes of input arguments.
+  </subsection>
+
+  <subsection id="0.1"><h1>Operator overloading</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/15_operatorOverloading.cpp">Brackets</a>, <a href="../../jlib/cppExamples/fundamentals/15_2_operatorOverloading.cpp">Addition</a>, <a href="../../jlib/cppExamples/fundamentals/20_raii.cpp">Dereferencing</a>]
+    <br>
+    In order to overload an operator, the <code>operator</code> keyword is used in the function signature. Eigen is a matrix library in cpp.
+
+  </subsection>
+</section>
+
+<section id="1"><h1>Overriding</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/16_overriding.cpp">Ref</a>]
+  <br>
+  Overriding a function occurs when:
+  <ul>
+    <li>A base class declares a virtual function</li>
+    <li>A derived class can override the virtual function by defining its own implementation with an identical function signature</li>
+  </ul>
+
+  Specifying a function as <code>override</code> in the derived class is good practice, as it empowers the compiler to verify that the function signature in the derived class matches that in the base class.
+</section>
+
+<section id="2"><h1>Generic programming</h1>
+  Generic Programming is an example of polymorphism that generalises the parameters of classes and functions using templates. The aim is to create code (classes and functions) that can be reused with many different types of data. For example using the vector class from the Standard Library, a vector of ints, strings or some user defined class can be created. 
+
+  <subsection id="2.0"><h1>Templates</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/8_templateFunction.cpp">Function template</a>, <a href="../../jlib/cppExamples/fundamentals/9_classTemplate.cpp">Class template</a>]
+    <br>
+    <n><i>Templates</i> use datatypes as parameters</n> so that the same implementation can operate on different data types. At compile time, the compiler expands the code using the types that are passed as parameters.
+
+    <p></p>
+    <button class="accordion">Syntax</button>
+    <div class="panel">
+<pre><code class="cpp">
+// If a class
+template &lttypename dataType1, typename datatype2&gt
+class X {
+  X(datatype1 key, datatype2 value)
+  {
+    // Constructor
+  }
+};
+
+// Calling the class
+X&ltsting, int&gt("age", 3);
+
+// If a function
+template &lttypename datatype&gt
+datatype X(datatype input1, datatype input2)
+{
+
+}
+
+// Calling the function
+X&ltint&gt(5, 6);
+  </code></pre>
+    </div>
+
+    <i>Generic code</i> is the term for code that is independent of types. A <code>template&lt&gt</code> tag is placed before the function/class signature to specify and mark the declaration as generic. The keyword <code>typename</code> (or alternatively, <code>class</code>) specifies the generic (data)type which the <n>parameter</n> that follows it, takes on.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

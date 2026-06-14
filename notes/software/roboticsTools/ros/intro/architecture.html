@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Architecture", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Architecture</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../../../figures/software/ros/2_architecture.png"/>
+    </figure>
+  </div>
+  <ul>
+    <li>OS Layer: ROS 2 runs on different operating systems (Linux, Windows, Mac).
+
+ROS Middleware Layer (RMW): ROS 2 is based on the Data Distribution Service (DDS), an open standard for communications implemented over the User Datagram Protocol (UDP). Since different DDS vendors can be used, a DDS API is provided, the ROS Middleware interface (rmw). The adoption of DDS allows the exchange of information between processes with real-time characteristics, security capabilities, and custom quality of service of each connection.
+
+ROS client library (RCL): The basic functionality of all ROS 2 elements are implemented in a single C library called rcl; then the libraries rclcpp and rclpy adapt this functionality to the particularities of each language, C++ and Python, respectively. APIs for other languages can be implemented. This allows new functionalities to be available sooner in any language.
+
+User Code: ROS 2 provides a convention on how to write nodes by forcing implemented nodes to inherit from a Node class that already has all the functionalities required. This saves a lot of time, facilitates a good modular structure and eases the cooperation between projects</li>
+  </ul>
+</chapter>
+
+</body>
+</html>

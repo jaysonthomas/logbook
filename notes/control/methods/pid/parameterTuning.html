@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("PD: Parameter tuning", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>PD: Parameter tuning</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../figures/drone/45_parameterTuning.png"/>
+    </figure>
+  </div>
+
+  Tuning a system depends on the requirements for the system, such as:
+  <ul>
+    <li>Speed, accuracy, stability, etc.</li>
+    <li>Behaviour over time (therefore focusing on T-rise and overshoot)</li>
+    <li>Frequencies (focusing on bandwidth and damping ratio)</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Tunable properties of the system response</h1>
+  Each of the following quantities has an associated design rule. For example, to decrease the rise time, the natural frequency of the system needs to be increased. Most of the time, good performance can be achieved by following a few simple rules of thumb.
+
+  <subsection id="1.0"><h1>Overshoot</h1>
+    That's the amount by which the actual trajectory overshoots the target. Generally, we want that to be small. 
+  </subsection>
+
+  <subsection id="1.1"><h1>Rise time</h1>
+    That's the amount of time it takes to get to the target altitude. Again, we'd like this to be small but often, there are some system limitations such as actuation constraints, that provide a lower bound for the rise time. 
+  </subsection>
+
+  <subsection id="1.2"><h1>Settling time</h1>
+    We say that a system has settled when the oscillations are sufficiently small, within plus minus 2% of the target value. So, the settling time is just the amount of time the system takes to reach that point. Once again, we want this to be small. 
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

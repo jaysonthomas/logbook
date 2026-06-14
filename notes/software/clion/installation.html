@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Clion: Installation", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Clion: Installation</h1>
+<section id="0"><h1>Steps</h1>
+  Follow steps in <code>CLion-2024.3.5/clion-2024.3.5/Install-Linux-tar.txt</code> after the download.
+  <ul>
+    <li>Download</li>
+    <li>Move downloaded folder</li>
+    <li><code>./clion.sh</code> from <code>bin/</code></li>
+
+    <li>Add to system path</li>
+
+
+
+    <li>Change heap size</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Addition to system path</h1>
+  Add the following to line to the end of <code>~/.bashrc</code>. sudo is not required.
+<pre><code class="bash">
+export PATH="/home/jayson/software/clion-2024.3.5/bin:$PATH"
+</code></pre>
+
+  Apply the changes
+<pre><code class="bash">
+source ~/.bashrc
+</code></pre>
+  Type <code>clion</code> in any directory.
+</section>
+
+<section id="2"><h1>Heap size change</h1>
+  Create <code>clion64.vmoptions</code> in the configuration directory <code>~/.config/JetBrains/CLion2024.3</code>. Set the <code>-Xms</code> and <code>-Xmx</code> parameters.
+
+  <ul>
+    <li><code>-Xms</code>: Sets the initial heap size (the minimum amount of memory allocated to the JVM at startup).</li>
+    <li><code>-Xmx</code>: Sets the maximum heap size (the maximum amount of memory the JVM can use).</li>
+  </ul>
+
+  <subsection id="2.0"><h1>Check max heap size</h1>
+    It cannot exceed the system's total available free RAM.
+
+    <subsubsection><h1>Check Available System RAM</h1>
+<pre><code class="bash">
+free -h
+</code></pre>
+      The "Total" value under the "Mem" row gives system's total RAM.
+    </subsubsection>
+
+    <subsubsection><h1>Check Current JVM Limits</h1>
+<pre><code class="bash">
+java -XX:+PrintFlagsFinal | grep -i HeapSize
+</code></pre>
+      This will show various heap size limits set by default. For example, if MaxHeapSize is 8589934592, it means the JVM can use up to $\frac{8589934592}{1024^3} = 8$GB. By default, the JVM usually sets the maximum heap size to ¼ of the total system memory.
+    </subsubsection>
+
+
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

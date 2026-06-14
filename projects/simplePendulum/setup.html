@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup for simple pendulum", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Setup for simple pendulum</h1>
+<section id="0"><h1>Drake</h1>
+  
+  <div class="container">
+    <figure>
+      <img style="height:300px; width:auto"
+      src="../../figures/projects/1_drakeConnections.png"/>
+      <figcaption>
+        Drake connections
+      </figcaption>
+    </figure> 
+    
+    <figure>
+      <img style="height:190px; width:auto"
+      src="../../figures/projects/2_drakeBlocks.png"/>
+      <figcaption>
+        Drake blocks
+      </figcaption>
+    </figure>
+  </div>
+
+  <ul>
+    <li>User sets the initial state (position, velocity) in the context which is used by the plant</li>
+    <li>The sliders have a default torque</li>
+    <li>The plant calculates the next state based on the torque input and the context</li>
+    <li>The state is fed into geometry (which is registered with the scene graph) which calculates the output visual pose</li>
+    <li>The pose is fed back into MeshcatVisualizer for display</li>
+  </ul>
+
+  The building blocks in drake can be seen as:
+  <ul>
+    <li>Source of the torque</li>
+    <li>The plant and its context which needs to be initialised</li>
+    One can get the context either from the simulator (<code>pend.ipynb</code>) or from the builder (<code>passive_simulation.cc</code>). The state can be extracted from this context to be initialised.
+
+    <p>
+      <li>The scene graph to which the geometry of the plant needs to be registered</li>
+      <li>The visualiser</li>
+      <li>The builder (or the <i>diagram</i>) to which all these components are added. We then <code>build</code> the builder</li>
+      <li>The simulator which is created from the diagram</li>
+      3 actions that need to be carried out on the simulator:
+      <ul>
+        <li><code>set_target_realtime_rate</code></li>
+        <li><code>Initialize</code></li>
+        <li><code>AdvanceTo</code></li>
+      </ul>
+    </p>
+  </ul>
+</section>
+
+<section id="1"><h1>How to run the simulation</h1>
+  <ul>
+    <li>Run meshcat</li>
+<pre><code class="bash">
+cd ~/P/external/drake  
+bazel run //tools:meldis -- --open-window &  
+</code></pre>  
+
+    <p>
+      <li>Run the simulation</li>
+<pre><code class="bash">
+cd software/clion-2021.2.3/bin/
+./clion.sh &
+</code></pre>
+
+      In clion, <code>Run->Edit Configurations</code>, create a Bazel command (both run and debug): <code>//examples/pendulum:passive_simulation</code>
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

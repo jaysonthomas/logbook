@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Imagemagick", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Imagemagick</h1>
+<section id="0"><h1>Commonly used commands</h1>
+  <ul>
+    <li>Find current size of image</li>
+<pre><code class="bash">
+identify &ltimage_path&gt
+</code></pre>
+    It gives the width x height.
+
+    <p>
+      <li>Changing the aspect ratio of images</li>
+<pre><code class="bash">
+convert input.jpg -resize 1500x500! output.jpg
+</code></pre>
+    </p>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

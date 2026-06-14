@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Parameters flow from YAML to C++", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Parameters flow from YAML to C++</h1>
+<section id="0"><h1>Contents</h1>
+  <ul>
+    <li><a href="spawner.html">Spawner node</a></li>
+  </ul>
+  <ul>
+    <li>The YAML file is passed to a spawner at launch time via a <code>launch.py</code> file.</li>
+    <li>The spawner node sends client requests to the <code>controller_manager</code> server</li>
+    <p>
+      <li>The <code>controller_manager</code> reads the YAML and uses the type field to look up and load the correct plugin via pluginlib.</li>
+    </p>
+    <li>The plugin instance (RobotController class) is spawned under a namespace matching the YAML key (r6bot_controller), which makes all ros__parameters accessible via the ROS parameter server under that node/namespace.</li>
+  </ul>
+  
+</section>
+
+<section id="1"><h1>YAML file</h1>
+  <pre><code class="YAML">
+    r6bot_controller:
+      ros__parameters:
+        type: ros2_control_demo_example_7/RobotController
+  </code></pre>
+
+  <pre><code class="YAML">
+    type: &ltpackage name or namespace&gt/&ltPlugin class name&gt
+  </code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

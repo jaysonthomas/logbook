@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Single mass: Setup", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Single mass: Setup</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/dynamics/3a_msd.png"/>
+      <figcaption>
+        Mass spring damper
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/dynamics/5a_CartSystem.png"/>
+      <figcaption>
+        Wheeled cart attached to a wall with a spring and damper, rolling without friction on a floor.
+      </figcaption>
+    </figure>
+  </div>
+
+  At equilibrium, there is no horizontal force acting on the spring - the system is at rest. 
+  <div class="img-container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../figures/dynamics/3b_msdFreeBody.png"/>
+      <figcaption>
+        Free body diagram
+      </figcaption>
+    </figure>
+  </div>
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      d_{em} &:& \text{Distance of the CoM from the equilibrium point} \\ 
+      d &:& \text{Distance of the CoM from the origin} \\
+      d_e &:& \text{Distance of the equilibrium point from the origin}
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Aim</h1>
+  An analytical solution to the equation of motion can be found, given the initial condition and the external force. But, the goal is to find a numerical solution using the state-space form.
+</section>
+</chapter>
+
+</body>
+</html>

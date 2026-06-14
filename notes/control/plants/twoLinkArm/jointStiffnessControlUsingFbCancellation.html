@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Joint stiffness control implemented using feedback cancellation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Joint stiffness control implemented using feedback cancellation</h1>
+
+<section id="0"><h1>The new behaviour</h1>
+  Starting at the joint level, a PD position controller with gravity compensation for a DP would look like:
+  $$\begin{equation}
+    u = -\tau_g(q) + K_p(q^d-q) + K_d(\dot{q}^d-\dot{q})
+  \end{equation}$$
+
+  <p>
+    The behaviour/interaction of say joint 2 within a DP can be configured to seem like it has rotary springs of a certain stiffnes $k$, and damping $b$ when perturbed (the unit of each term is in torque):      
+    $$\begin{equation}
+      \underbrace{M(q)\ddot{q} + C(q,\dot{q})}_{m\ddot{x}} + 
+      \underbrace{K_d(\dot{q}-\dot{q}^d)}_{b\dot{x}} +
+      \underbrace{K_p(q-q^d)}_{kx} = \tau_{ext}
+    \end{equation}$$
+  </p>
+
+  Using feedback cancellation, the controller can be achieved by:
+  <ul>
+    <li>Cancelling out the dynamics that are not desired</li>
+    Cancel the gravity compensation term $\tau_g$ but retain $M, C$ terms.
+    
+    <li>Inserting new desired dynamics</li>
+    i.e. PD control.
+  </ul>   
+</section>
+
+<section id="1"><h1>Benefit of having gravity compensation</h1>
+  To hold a DP in a horizontal position where gravity is pulling down, without GC, the $K_p$ term would need to do the work of cancelling out gravity and hence would have a large value.
+
+  <p>
+    To hold the pendulum at an offset from the horizontal position (between downward and horizontal), $K_p$ would still need to be very large. To hold the DP in the downward position, $K_p$ would not need to be so large to get a reasonable performance compared to the horizontal position, but still ends up having an excessive value for the sake of the rest of the workspace.
+  </p>
+</section>
+
+</chapter>
+
+</body>
+</html>

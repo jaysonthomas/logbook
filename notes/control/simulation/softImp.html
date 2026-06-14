@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Practical software implementation steps", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Practical software implementation steps</h1>
+
+<section id="0"><h1>High-level overview of steps</h1>
+  Typically, the software function is written in 2 stages:
+
+  <ul>
+    <li>Uncontrolled motion</li>
+    The actuators aren't energised and the vehicle is purely under the influence of external forces. For example: a drone whose rotors are not spinning, is purely under the influence of gravity.
+
+    <p>
+      <li>Controlled motion</li>
+    </p>
+  </ul>
+
+  When using existing simulations, sanity check behaviours (energy, momentum behaviour etc) where the outcome is already known. Never trust a simulation at face value - wrong integration methods can be used which can cause the simulation to blow up.
+</section>
+
+<section id="1"><h1>State variables</h1>
+  Forces directly affect the acceleration of the system. Any kind of acceleration advances the state forward in time by $dt$ seconds. It first changes the velocity which changes the position. To montior changes in the state over time, these 2 variables need to be tracked and thus become part of the state.
+
+  <p>
+    If the rotors are spinning, there would be rotational velocity and angle included in the state variables.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

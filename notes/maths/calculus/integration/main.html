@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Integration", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Integration</h1>
+<section id="0"><h1>Double integral</h1>
+  Taking the fourier transform of the convolution integral:
+  $$
+    \mathcal{F}((f*g)(t)) = \int^\infty_{-\infty}
+      \left[
+            \int^\infty_{-\infty}f(\tau)g(t-\tau)d\tau
+      \right] e^{-j\omega t} dt
+  $$
+
+  <subsubsection><h1>Rearranging the limits</h1>
+    Here, the summation of the inner integral is done w.r.t. $\tau$ and that of the outer integral is done w.r.t. $t$. A double integral can be integrated in either order as long as the integration limits are transformed appropriately. 
+    
+    <p>
+      Here, the limits are both from $-\infty$ to $\infty$, so rearranging the integrals is just a matter of pulling $e^{-j\omega t}dt$ in and $d\tau$ out.
+    </p>
+
+    $$
+      \mathcal{F}((f*g)(t)) = \int^\infty_{-\infty}
+        \left[
+              \int^\infty_{-\infty}f(\tau)g(t-\tau) e^{-j\omega t} dt
+        \right] d\tau
+    $$
+
+    $f(\tau)$ of the inner integral can be moved out since it is a function of $\tau$ and hence a constant when integrated w.r.t. $t$.
+    $$
+      \mathcal{F}((f*g)(t)) = \int^\infty_{-\infty}
+        \left[
+          f(\tau)\int^\infty_{-\infty}g(t-\tau) e^{-j\omega t} dt
+        \right] d\tau
+    $$
+
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

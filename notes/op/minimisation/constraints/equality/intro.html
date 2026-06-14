@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Equality constraints", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Equality constraints</h1>
+<section id="0"><h1>Setup</h1>
+  $$\begin{alignat*}{3}
+    \min_x \quad & f(x)  \qquad && f(x) &&: \mathbb{R}^n \rightarrow \mathbb{R} \\
+    s.t. \quad & c(x) = 0  \qquad && c(x) &&: \mathbb{R}^n \rightarrow \mathbb{R}^m
+  \end{alignat*}$$
+
+  The output of $c$ can be thought of as $m$ scalar constraints.
+</section>
+
+<section id="1"><h1>Usecase</h1>
+  Equalities are usually dynamics constraints. They can also be a goal constraint, for e.g. the aim could be to get to a particular state at the end of a trajectory or horizon etc.
+</section>
+</chapter>
+
+</body>
+</html>

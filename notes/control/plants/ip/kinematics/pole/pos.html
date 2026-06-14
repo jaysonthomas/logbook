@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Position of a point w.r.t. its axis of rotation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Position of a point w.r.t. its axis of rotation</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="container">
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../../figures/dynamics/cartPole/9_polePos.png"/>
+    </figure>
+
+    <p>
+      The position of <code>G</code> relative to <code>A</code> in the ${W}$ coordinate frame, for a given pendulum angle $\theta$ is given by:
+      $$\begin{align*}
+        \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+        \wrt{A}{0.1}{x}{G} &= l\,sin\theta \, \hat{i} \\
+        \wrt{A}{0.1}{y}{G} &= -l\,cos\theta \, \hat{j}
+      \end{align*}$$
+    </p>
+  </div>
+
+  The position vector between the 2 points is given as:
+  $$\begin{align*}
+    ^{\scriptsize{A}}r^{\scriptsize{G}} &= l\,\hat{d} \\
+      &= l\,sin\theta \, \hat{i} -l\,cos\theta \, \hat{j}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

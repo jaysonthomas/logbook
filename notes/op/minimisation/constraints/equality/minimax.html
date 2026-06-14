@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Minimax method", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Minimax method</h1>
+<section id="0"><h1>Reason for existence</h1>
+  Consider an objective function that is strongly convex, a bowl. Even if a solution starts of in an interior region in a constrained problem and converges to the minimum close to the constraint, it is possible for the eigen values of the Hessian to not be positive definite. 
+
+  <p>
+    Since the objective function is convex, it is not the cause. The constraints cause it.
+  </p>
+</section>
+
+<section id="1"><h1>Setup</h1>
+  $$\begin{align*}
+    \min_x \quad & f(x) \\
+    s.t. \quad & c(x) = 0
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Best case solution</h1>
+  $$\begin{align*}
+    & \min_x \quad f(x) + \rho_\infty(c(x)) \\\\
+    & \rho_\infty (x)= 
+    \left\{
+    \begin{array}{cl}
+      0 & \quad c(x) = 0 \\
+      +\infty & \quad c(x) \neq 0
+    \end{array}
+    \right.
+  \end{align*}$$
+
+  The above is not practically implementable. The log barrier method approximates the above in a smooth way, but it still blows up which is not good. 
+
+  <p>
+    In the primal-dual method, a dummy slack variable which turns out to be closely related to the lagrange multiplier is introduced to provide an alternate solution to the log-barrier method since the latter can still blow up.
+  </p>
+</section>
+
+<section id="3"><h1>Minimax method</h1>
+  A new lagrange multiplier term is introduced. This method is exactly equivalent to the impractical theoretical method.
+
+  $$
+    \min_x \quad \max_\lambda \quad f(x) + \lambda^\top c(x) \\
+  $$
+
+  <subsection id="3.0"><h1>Role of the maximiser</h1>
+    If $c(x) \neq 0$, the maximizer drives $\lambda^\top c(x)$ to $+\infty$.
+    
+    <ul>
+      <li>If $c(x) &lt 0$, the maximizer sets $\lambda \to \infty$.</li>
+      <li>If $c(x) &gt 0$, the maximizer sets $\lambda \to -\infty$.</li>
+    </ul>
+    
+    The maximiser acts as a violation detector. Their sole job is to punish the minimizer as severely as possible for any deviation from the constraint $c(x) = 0$. Maximises the penalty by finding any $c(x) \neq 0$ and exploiting it to reach $\infty$.
+  </subsection>
+
+  <subsection id="3.1"><h1>Role of the minimiser</h1>
+    The outer player (the minimiser) knows what the maximizer is up to. Because the minimizer wants to keep the overall value as small as possible, they are forced to choose an $x$ that prevents the maximizer from blowing the function up.
+    
+    <p>
+      The only way for the minimizer to stop the maximizer from reaching $+\infty$ is to pick $x$ such that $c(x) = 0$.
+    </p>
+
+    Minimises the total cost by minimising $f(x)$ while hiding from the maximizer by keeping $c(x) = 0$.
+  </subsection>
+</section>
+
+<section id="4"><h1>Performance</h1>
+  In practice, $\lambda$ is not allowed go to infinity. In algorithms like the Augmented Lagrangian or Interior Point Methods, $\lambda$ is updated iteratively. The "pressure" from $\lambda$ pushes $x$ closer to the feasible region until an equilibrium is reached.
+</section>
+</chapter>
+
+</body>
+</html>

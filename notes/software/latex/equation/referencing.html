@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Referencing", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Referencing</h1>
+<section id="0"><h1>Overview</h1>
+  Place <code>\label{eq:xxx}</code> just after the equation, on the same line, before the newline character <code>\\</code>. Use <code>\ref{eq:xxx}</code> to reference the equation.
+    
+<pre><code class="latex">
+$$\begin{align}
+  \sigma &= \alpha \mu \nonumber \\
+  1-\frac{v}{r_e \omega} &= \alpha \frac{F}{F_N}  \label{eq:linearVelocityFromSlip}
+\end{align}$$
+</code></pre>    
+
+<pre><code class="latex">
+From $\ref{eq:linearVelocityFromSlip}$
+</code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$\begin{align}
+      \sigma &= \alpha \mu \nonumber \\
+      1-\frac{v}{r_e \omega} &= \alpha \frac{F}{F_N}  \label{eq:linearVelocityFromSlip}
+    \end{align}$$
+
+    From $\ref{eq:linearVelocityFromSlip}$
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Frequency domain representation", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Frequency domain representation</h1>
+<section id="0"><h1>Benefits over time domain</h1>
+  <ul>
+    <li>Converts the cumbersome integration step of convolution into a multiplication.</li>
+    <p>
+      <li>Easier to observe meaningful behaviour in frequency domain in the case of systems that have (good or bad) oscillations.</li>
+    </p>
+  </ul>
+
+  No information is lost when representing a signal in the frequency domain - the exact same information is just represented in a different format.
+</section>
+
+<section id="1"><h1>Represenation</h1>
+  In the frequency domain, an oscillatory motion-response to a force can be fully characterised by just 3 parameters:
+  <ul>
+    <li>Frequency</li>
+    <li>Amplitude</li>
+    <li>Phase shift corresponding to the starting position</li>
+  </ul>
+
+  <n>A signal is thought of in terms of the characteristics (Amplitude and phase) of the frequencies that make it up</n> rather than how it changes over time, i.e. to recreate a sine/cosine wave, only the above information is required.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:60px; width:auto"
+      src="../../../figures/control/20_polarCoords.png"/>
+    </figure>
+  </div>
+
+  The two graphs above are a function of $\omega$, i.e. the value of $\omega$ gives an indication of where (the location) on the frequency line the signal is. 
+
+  <div>
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../figures/control/20b_freqAsALocation.png"/>
+    </figure>
+  </div>
+</section>
+
+<section id="2"><h1>Example</h1>
+  A signal in the time domain that looks random and chaotic, can be represented clearly in the frequency domain. 
+
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/dynamics/7_freqDomainExample.png"/>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Solution", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Solution</h1>
+  Samples $x_k, u_k$ are often called <i>knot points</i> since often splines are used to interpolate between points. Often the optimisation is solved for course knot points (say 5Hz), but then upscaled (500Hz) <m>by interpolating using cubic splines between the solutions</m> which leads to very smooth outputs. 
+
+  <p>
+    The solutions are open loop trajectories in $(x, u)$. In a stochastic setting, the solutions are feedback policies since everything is noisy and some feedback is needed for stabilisation. RL can only provide feedback policies as solutions.
+  </p>
+
+  Numerical methods/optimisations are used for non-LQR problems, since they do not have analytical solutions.
+</chapter>
+
+</body>
+</html>

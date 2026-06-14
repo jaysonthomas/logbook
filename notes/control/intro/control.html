@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Control systems overview", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Control systems overview</h1>
+
+<section id="0"><h1>Definition and purpose</h1>
+  A control system refers to the method used:
+  <ul>
+    <li>To control and regulate physical processes through the use of feedback loops</li>
+    <li>With the goal of maintaining a desired performance</li>
+    <li>While compensating for errors:
+      <ul>
+        <li>Disturbances</li>
+        <li>Changes or uncertainties in system dynamics and environment</li>
+      </ul>
+  </ul>
+
+  In a perfect world, a model of a system's dynamics would help design a system's inputs [motor turn rates for example] that result in a desired behaviour and the controls problem would be solved. 
+</section>
+
+<section id="1"><h1>Parts of a controller</h1>
+  Block diagrams are used to visualise important information about a controller and the system it controls. Arrows represent signals and boxes represent functions or equations.
+
+  <subsection id="1.0"><h1>Functions/Equations</h1>
+    <ul>
+      <li>Plant/System</li>
+      Physically, it represents the system being controlled. Synthetically, it encapsulates the model equations.
+
+      <p>
+        <li>Actuators - provide input to the plant</li>
+        <li>Sensors - measure the state of the plant</li>
+        <li>Controller - processes sensor data and generates control signal to the actuators</li>
+      </p>
+    </ul>
+  </subsection>
+
+  <subsection id="1.1"><h1>Examples of Signals</h1>
+    <ul>
+      <li>Input - commanded thrust</li>
+      <p>
+        <li>Output - an actual target location</li>
+        Output describes what can be measured about a system. If velocity could be measured, it would also be included in the output.
+      </p>
+      <li>Reference - a target set location</li>
+    </ul>
+
+    <subsubsection><h1>Signal path</h1>
+      Feedback path - sends sensor data back to the controller
+    </subsubsection>
+  </subsection>
+</section>
+
+<section id="2"><h1>Types of controllers</h1>
+  <subsection id="2.0"><h1>Open loop</h1>
+    There is no feedback from the system. They are susceptible to disturbances and errors. Errors will be unnoticed and are able to grow unchecked.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:40px; width:auto"
+        src="../../../figures/control/31a_openLoop.png"/>
+      </figure>
+    </div>
+  </subsection>
+
+  <subsection id="2.1"><h1>Closed loop</h1>
+    They rely on feedback to compare the output with the desired performance and <n>adjust the input</n> accordingly. They can adapt to errors.
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Dynamics: Pole", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Dynamics: Pole</h1>
+<section id="0"><h1>Topics</h1>
+  A pendulum on a cart experiences the following 3 torques; all of which must be in equilibrium as per d'Alembert's principle. These torques contribute to 1 equation of motion for the cart and pole model:
+  
+  <ul>
+    <li><a href="gravity.html">Moment due to gravity</a></li>
+    <li><a href="forceBalance.html">Balance of forces</a></li>
+    <li><a href="momentBalance.html">Balance of moments</a></li>
+       
+    <li>Inertial moments due to resistance to the pole's:</li>
+    <ul>
+      <li><a href="resistanceToLinearAccel.html">Linear acceleration</a></li>
+      <li><a href="resistanceToRotationalAccel.html">Rotational acceleration</a></li>
+    </ul>
+  </ul>
+</section>
+
+<section id="1"><h1>Equation of motion</h1>
+  Summing the three moments and equating to zero as per d'Alembert's principle, gives:
+
+  $$\begin{align*}
+    (M_g + M^{\scriptsize{G}}_i + M^{\scriptsize{A}}_i)\,\hat{k} &= 0 \\ 
+    -m_{\scriptsize{p}}g l\,sin\theta - 
+    m_{\scriptsize{p}} l^2 \ddot\theta - 
+    m_{\scriptsize{p}} l \ddot{x} \,cos\theta - 
+    J \ddot\theta &= 0
+  \end{align*}$$
+
+  <subsection id="1.0"><h1>$\ddot{x}$</h1>
+    $$
+      \ddot{x} = 
+      \frac{-J \ddot\theta - 
+            m_{\scriptsize{p}}g l\,sin\theta - 
+            m_{\scriptsize{p}} l^2 \ddot\theta}
+          {m_{\scriptsize{p}}l\,cos\theta} \tag{1} \label{eq:1}
+    $$
+
+    This equation is avoided to obtain $\ddot{x}$ as it would return an undefined result when $cos\theta$ in the denominator is $0$ for $\theta=90^0$.    
+  </subsection>
+
+  <subsection id="1.1"><h1>$\ddot{\theta}$</h1>
+    $$
+      \ddot\theta = 
+      \frac{-m_{\scriptsize{p}} l \ddot{x} \,cos\theta -
+            m_{\scriptsize{p}}g l\,sin\theta }
+          {J + m_{\scriptsize{p}} l^2} \tag{2} \label{eq:2}
+    $$
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

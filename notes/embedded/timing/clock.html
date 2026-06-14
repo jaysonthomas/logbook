@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Clocks", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Clocks</h1>
+<section id="0"><h1>Overview</h1>
+  A central clock, referred to as <i>HCLK (High-speed Clock)</i>, drives the Arm Cortex-M4 core in an STM32F427IIT6 microcontroller. It has a maximum clock frequency (CPU speed) of 180 MHz. 
+</section>
+
+<section id="1"><h1>Clocks for buses</h1>
+  A microcontroller also typically features several <i>buses</i> (shared communication pathway that transfers data and signals between components) for peripherals, which are derived from this main clock and have their own maximum speed limits:
+
+  <ul>
+    <li><i>AHB Buses (Advanced High-performance Bus)</i>: These buses connect high-speed peripherals. Their clock speed is typically derived directly from the HCLK, often running at the full 180 MHz.</li>
+
+    <p>
+      <li><i>APB Buses (Advanced Peripheral Bus)</i>: These buses connect to lower-speed peripherals.</li>
+      <ul>
+        <li><i>APB2</i> (High-speed): Runs at a higher frequency (e.g., up to $\frac{180}{2} = 90$ MHz).</li>
+        <li><i>APB1</i> (Low-speed): Runs at a lower frequency (e.g., up to $\frac{180}{4} = 45$ MHz).</li>
+      </ul>
+    </p>
+  </ul>
+  The exact speeds of the APB buses are configured using prescalers.
+</section>
+
+<section id="2"><h1>SYSCLK</h1>
+  Should have the same value as HCLK.
+</section>
+
+</chapter>
+
+</body>
+</html>

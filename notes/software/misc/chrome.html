@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Chrome", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Chrome</h1>
+<section id="0"><h1>Install</h1>
+<pre><code class="bash">
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+sudo apt autoremove
+</code></pre>
+
+Upgrade
+<pre><code class="bash">
+sudo apt-get --only-upgrade install google-chrome-stable
+</code></pre>
+</section>
+
+<section id="1"><h1>Miscellaneous</h1>
+	<ul>
+		<li>Compatible mp4 video format for chrome</li>
+<pre><code class="bash">
+ffmpeg -i input.mp4 -c:v libx264 -c:a aac -strict experimental -b:a 128k output.mp4
+</code></pre>
+
+		<p>
+			<li>Dark mode</li>
+			Open <code>chrome://flags/</code> in a new tab. Searching for "dark" should lead to <code>Auto Dark Mode for Web Contents</code>. Change to "Enabled". This even works on protected local pages [<a href="https://t.ly/1hHcN">Ref</a>]. 
+		</p>
+
+		<li>Dark mode extension for google docs</li>
+		[<a href="https://t.ly/PRICQ">Ref</a>]
+	</ul>
+</section>
+</chapter>
+
+</body>
+</html>

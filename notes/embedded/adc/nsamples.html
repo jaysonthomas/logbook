@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setting the number of samples", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Setting the number of samples</h1>
+<section id="0"><h1>Overview</h1>
+  To set the number of samples captured per ADC channel, DMA is used by setting <code>DMA_CNDTRx</code> depending on chip type.
+  
+  <p>
+    The ADC is dumb; if it is set to continuous mode, then it will sample forever. To limit the number of samples, setup the DMA controller to only transfer the specific number of samples to a predefined buffer. When the DMA counter <code>CNDTR</code> reaches 0, the DMA stops transferring and triggers a "Transfer Complete" interrupt. The ADC can then be stopped in that interrupt.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

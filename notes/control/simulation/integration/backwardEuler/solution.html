@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Solution", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Solution</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    x_{k+1} = x_k + hf(x_{k+1}) 
+  $$
+
+  A root finding method is used to find the next state. It aims to find a value for $x_{k+1}$ (X-axis) such that the residual (Y-axis) is approximately 0. In other words, when a value for $x_{k+1}$ is plugged into the above equation on the RHS, the same value needs to be returned.
+
+  <p>
+    A fixed point of a function $G(x)$ is any value $x^*$ such that $G(x^*) = x^*$. Mathematically, $x_{k+1}$ is a <i>fixed point</i>.
+  </p>
+</section>
+
+<section id="1"><h1>Intuition</h1>
+  A root-finder (like Fixed Point Iteration) is essentially playing a game of "hot or cold".
+  
+  <p>
+    It guesses: "I think the next state is $x_0$".<br>
+    The math says: "If the next state were $x_0$, then according to the physics, it should actually be $G(x_0)$".<br>
+    This result is plugged into the equation to get: $x_1 = G(x_0)$.<br>
+    This is repeated until the input matches the output ($x \approx G(x)$).
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

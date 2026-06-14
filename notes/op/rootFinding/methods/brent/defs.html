@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Brent's method: definitions", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Brent's method: definitions</h1>
+<section id="0"><h1>Points</h1>
+  <div class="container">
+    <figure>
+      <img style="height:110px; width:auto"
+      src="../../../../../figures/rf/1_abscissaOrdinate.png"/>
+    </figure>
+  </div>
+
+  <i>$a,b$</i> are abscissa points that satisfy the following conditions:
+  <ul>
+    <li>$a$ and $b$ <i>bracket</i> the sign change of $f(x)$ and hence provides the <n>midpoint</n></li>
+    <p>
+      <li>$|f(b)| \leq |f(a)|$</li>
+      <i>$b$</i> always corresponds to the best solution, i.e. the lowest zero, $|f(b)|$, the smallest value of $|f(x)|$ so far. 
+    </p>
+  </ul>
+
+  <i>$c$</i> is the previous $b$. Hence, $c$ and $b$ provide the secant.
+  $$
+    c = b_{i-1}
+  $$
+
+  <i>$d$</i> gives an indication of how much the candidate abscissa changes through every iteration.
+  $$\begin{align*}
+    d &= b - c \\
+      &= \Delta{b}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

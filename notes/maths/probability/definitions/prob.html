@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Definitions: Probability", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Definitions: Probability</h1>
+
+<section id="0"><h1>Probability</h1>
+  $$
+    P(\text{of a particular event}) = \frac{\text{Frequency of the particular event occurring}}{\text{Total occurrences of all events}}
+  $$
+
+  <subsection id="0.0"><h1>Continuous samples space</h1>
+    The real value position of a robot, represented by a random variable, is an example of a continuous sample space.
+  
+    <div class="img-container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../figures/estimation/1_continuousStateExample.png"/>
+        <figcaption>
+          [<a href="https://t.ly/_1lN">Ref</a>] Position of a robot
+        </figcaption>
+      </figure>
+    </div>
+
+    <n>For a continuous sample space, the probability of any particular value will always be 0</n>. For example, probability that a vehicle is in some region is given more importance than any specific location.
+  </subsection>
+
+  <subsection id="0.1"><h1>Example</h1>
+    <div class="container">
+      <figure>
+        <img style="height:100px; width:auto"
+        src="../../../../figures/estimation/2_probabilityExample.png"/>
+      </figure>
+
+      <p>
+        Consider running a test to see if a bot comes to a stop at exactly the right point, a 1000 times. At the end of each test, the bot's position is measured w.r.t. the target.
+      </p>
+    </div>
+  
+    $$
+      P(Bot\, stops\, 1mm\, from\, target) = 
+      \frac{Frequency\, of\, particular\, event}
+      {Total\, number\, of\, events} = \frac{900}{1000} = 0.9
+    $$
+  
+    Random variable, $X$, represents the event, i.e. the error in the final position.
+    <br>
+    Example, $x_2 = 2000$, $P(X=x_2) = 0.05$.
+  </subsection>
+</section>
+
+<section id="1"><h1>Definitions related to probability</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Term</th>
+      <th>Definition</th>
+    </tr>
+    <tr>
+      <td>Event or outcome</td>
+      <td>Something that could happen</td>
+    </tr>
+    <tr>
+      <td>Sample space</td>
+      <td>List of events</td>
+    </tr>
+    <tr>
+      <td>Discrete sample space</td>
+      <td>Discrete set of events or possible outcomes</td>
+    </tr>
+    <tr>
+      <td>Probability</td>
+      <td><n>Relative</n> likelihood or relative frequency of an event occurring</td>
+    </tr>
+    <tr>
+      <td>Normalised PD</td>
+      <td>A PD in which all the probabilities sum to 1</td>
+    </tr>
+    <tr>
+      <td>Probability of 0</td>
+      <td>The event is guaranteed to not happen</td>
+    </tr>
+    <tr>
+      <td>Probability of 1</td>
+      <td>The event is certain to happen</td>
+    </tr>
+    <tr>
+      <td>Conditional probability</td>
+      <td>
+        The probability of some event given that some other event already 
+        occurred. PMF is used to find this.
+      </td>
+    </tr>
+
+    <tr>
+      <td>$p(x)$</td>
+      <td>
+        The probability of a vehicle being in position $x$.
+      </td>
+    </tr>
+
+    <tr>
+      <td>$p(x,y)$</td>
+      <td>
+        The probability of a vehicle being in position x <n>and</n> making measurements y.
+      </td>
+    </tr>
+
+    <tr>
+      <td>$p(y|x)$</td>
+      <td>
+        The probability of <n>making measurements y given</n> that a vehicle is in position x.
+      </td>
+    </tr>
+  </table>
+</section>
+
+</chapter>
+
+</body>
+</html>

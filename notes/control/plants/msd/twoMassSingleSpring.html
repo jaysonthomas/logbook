@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Two masses with a single spring", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Two masses with a single spring</h1>
+<section id="0"><h1>Setup</h1>
+  [<a href="https://t.ly/69bO4">Ref</a>] <br>
+
+  Given a spring with spring elasticity constant $k$ whose extension is in the direction $x$, the magnitude of the force that <n>the spring exerts</n> is given by
+
+  $$
+    |\vec{F}| = F = k|L-l|
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      L &:& \text{Current length of the spring} \\ 
+      l &:& \text{Equilibrium length of the spring}
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Frictionless</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:160px; width:auto"
+      src="../../../../figures/dynamics/twoMassOneSpring/1_fbd.png"/>
+      <figcaption>
+        FBD
+      </figcaption>
+    </figure>
+  </div>
+  Imagine the two masses are at positions $x_1$ and $x_2$ with $x_2>x_1$, then the length of the spring is given by $L = x_2 - x_1$ so that the magnitude of the force exerted by the spring is given by
+  $$
+    |\vec{F}| = F = k|(x_2-x_1) - l|
+  $$
+
+  If $x_2 - x_1>l$, then the spring is stretched in which case the mass on the right feels a force of this magnitude to the left, and the mass on the left feels a force of the same mangitude to the right
+  \begin{align*}
+    F_1 = m\ddot x_1 &= k(x_2-x_1 - l) \\
+                      &= -k(x_1-x_2 + l) \\
+    F_2 = m\ddot x_2 &= -k(x_2 - x_1 - l)
+  \end{align*}
+
+  Essentially, the difference in the sign of $l$ can be attributed to Newton's third law; the forces on each mass must be equal in magnitude, but opposite in direction.
+</section>
+<section id="2"><h1>With friction</h1>
+  If friction were included on the surface, then each mass experiences a force due to kinetic friction. The equations of motion become:
+  
+  \begin{align*}
+    m\ddot x_1 = -k(x_1-x_2 + l) - \mu_k m_1g\frac{\dot x_1}{|\dot x_1|} \\
+    m \ddot x_2 = -k(x_2 - x_1 - l) - \mu_k m_2g\frac{\dot x_2}{|\dot x_2|}
+  \end{align*}
+  
+  These differential equations are considerably harder to solve in general. The sign of the friction force term would be opposite to the direction of motion.  One way to do this is to multiply the force's magntiude by $\frac{-\dot x}{|\dot x|}$  which is $-1$ when the object is moving to the right, and $+1$ when the object is moving to the left. 
+</section>
+</chapter>
+
+</body>
+</html>

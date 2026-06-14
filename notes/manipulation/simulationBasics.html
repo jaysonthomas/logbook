@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Simulation basics", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Simulation basics</h1>
+
+<section id="0"><h1>Overview</h1>
+  The main focus is on the physics engine piece of the simulation. The following makes simulating contact for manipulation challenging: 
+  <ul>
+    <li>Stiff differential equations</li>
+    Stiffness is under our control. We need to understand where it comes from, how it manifests itself in simulations and how to deal with it when things go wrong.
+  </ul>
+
+</section>
+
+<section id="1"><h1>Mass spring damper system</h1>
+  <subsection id="1.0"><h1>The system</h1>
+    <div class="container">
+      <figure>
+        <img style="height:85px; width:auto"
+        src="../../figures/manipulation/54_massSpringDamper.png"/>
+        <figcaption>
+          Mass spring damper
+        </figcaption>
+      </figure>
+    </div>
+
+    Equation of damped oscillator:
+    $$
+    \underbrace{m}_{\text{Mass} \atop \text{matrix}}\ddot{q} + 
+    \underbrace{b}_{\scriptsize \text{Damping}}\dot{q} + 
+    \underbrace{k}_{\text{Spring} \atop \text{stiffness}}q = 0
+    $$
+
+    $q$ is the position.
+
+    <p>
+      The physical intuition for the damper is that it pulls energy out of the system. Example, friction. Here, the mass wants to oscillate because of the spring but it's going to slow down because of
+      the damper.
+    </p>
+
+    How do we simulate a simple system like this, accurately.
+  </subsection>
+
+  <subsection id="1.1"><h1>Differential equations</h1>
+    A differential equation way to think about the system is to write the equations of motion in the state-space form:
+
+    $$\begin{align*}
+      x &= \begin{bmatrix}
+            q \\ \dot{q}
+          \end{bmatrix} \\
+      \dot{x} &= \begin{bmatrix}
+                    \dot{q} \\
+                    \frac{1}{m}(-b\dot{q} - k{q})
+                \end{bmatrix} \\
+              &= Ax \\
+
+      A &= \begin{bmatrix}
+            0 & 1 \\
+            -\frac{k}{m} & -\frac{b}{m}
+          \end{bmatrix}
+    \end{align*}$$
+  </subsection>
+  
+  <subsection id="1.2"><h1>Stability analysis</h1>
+    For the MSD continuous time system, what are the stability properties given a change in the parameters $m, b, k$? If we start at some initial position and velocity as shown in the figure, and let go, does the mass go back and forth about position 0 and come to rest or is it going to do something different. Is the limit of the position as time goes to $\infty$ equal to 0?
+
+    $$
+      \lim_{t \to \infty} q(t) = 0 \text{?}
+    $$
+
+    <p>
+       The system is stable as long as the parameters are all greater than 0. The damping needs to be strictly greater than 0, so that the system is actually decaying and not oscillating forever. Mass cannot be not greater than 0.
+    </p>
+
+    The way we can confidently tell whether our parameters will be greater than 0 and hence whether the system is a stable one or not, is by taking the eigen values of the $A$ matrix.
+  </subsection>
+
+  <subsection id="1.3"><h1>Numerical integration</h1>
+    To integrate a continuous time equation forward i.e. advance this simulator, we make a discrete time approximation.
+
+    $$
+      x[n+1] = x[n] + 
+      \underbrace{h}_{\text{Time step} > 0}
+      \underbrace{Ax[n]}_{\dot{x}}
+    $$
+
+    This is a particular kind of integration called <i>Forward euler integration</i>. If one cares about the linear analysis, the above equation can be written as:
+
+    $$
+      x[n+1] = (I + hA)x[n]
+    $$
+
+    This is a different linear dynamical system and we can ask the following fundamental questions related to numerical analysis:
+    <ul>
+      <li>Is the system stable or not</li>
+      As $n$ goes to $\infty$, does $x$ go to $0$?
+
+      <li>
+        For different values of $h$, how accurately can we simulate the true solution from above differential equation
+      </li>
+    </ul>
+
+    The answer is subtle. The eigen values are messier than we would like. So we opt to do it numerically. One of the great things about linear dynamical systems is that we can integrate them perfectly in closed form. So we can compare the analytical solution (will have no numerical
+    integration accuracies) with the solution obtained through numerical approximation (using Euler integration) and ask how similar they are.
+
+    <p>
+      The integration method takes the derivative at each time and then forecasts that out as if it was constant; so it's going to make an approximation of the analytical solution. As we increase $h$, i.e. take bigger time steps, the accuracy of the approximation is going to decrease until it gets very bad. 
+    </p>
+
+    So it is possible to artificially enforce a system whose continuous time dynamics are stable, to have a discrete time approximation that is unstable by having a very large time step in simulation.    
+
+    <p>
+      In particular what matters is the time step $h$ relative to the acceleration $\ddot{q} \sim \frac{k}{m}$. If the stiffness increases, the derivatives are going to get larger. Taking a long time step with fast changing derivatives can quickly lead to big errors. If the accelerations are big, we need to take small time steps to simulate the system accurately. 
+    </p>
+
+    To simulate a heavy humanoid that is generating relatively big forces on the ground is easier since big forces on big robot generates relatively low accelerations. If the humanoid were to pick up a toothpick, this is a bad case since it's generating big forces on a little mass. This could lead to the toothpicks flying off in simulation.
+
+    <p>
+      One of the challenges in simulating manipulation is that we have to deal with a range of inertias. We tend to have very stiff equations and also the accuracy of the contact simulation is such that we need to choose $k$ larger than we would for walking. 
+    </p>
+
+    Having a stiff differential equation means that we have large accelerations resulting in having to use small time steps to simulate accurately.
+  </subsection>
+
+  <subsection id="1.4"><h1>Phase portrait</h1>
+    <div class="container">
+      <figure>
+        <img style="height:85px; width:auto"
+        src="../../figures/manipulation/55_StableSystemPlot.png"/>
+        <figcaption>
+          Damped system
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img style="height:130px; width:auto"
+        src="../../figures/manipulation/56_phasePortrait.png"/>
+        <figcaption>
+          Expected phase portrait in a damped scenario
+        </figcaption>
+      </figure>
+    </div>
+    
+    To understand the integration of this MSD system, we could plot $q$ as a function of time. We would expect to see an oscillation that decays if it's stable or blow up if it's unstable. But, to see the long term behaviour of the system, it would be clearer to do a phase plot i.e. $q$ versus $\dot{q}$.    
+
+    <p>
+      As the stiffness $k$ gets bigger, the phase portrait becomes more elongated i.e. we get larger velocities.
+    </p>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

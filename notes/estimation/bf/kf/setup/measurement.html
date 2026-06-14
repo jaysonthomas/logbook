@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Measurement setup", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Measurement setup</h1>
+<section id="0"><h1>Measurement model</h1>
+  <i>Measurement model</i> $h$ takes a state as input and <n>returns the measurement expected to be seen from a perfect sensor for that state</n>. 
+
+  <p>
+    Consider a 1D drone having a range sensor pointing downwards, which measures its distance to the ground. 
+  </p>
+
+  $$\begin{align*}
+    h_t = h(x_t) &= [x_{t,z}] \\
+        &= \begin{bmatrix} 0 & 1\end{bmatrix}
+          \begin{bmatrix} \dot{z} \\ z\end{bmatrix} \\
+        &= C_t \begin{bmatrix} \dot{z} \\ z\end{bmatrix} \\
+        &= C_t \; x_t
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Jacobian of the measurement model</h1>
+  For a linear measurement model, the Jacobian is just the $C$ matrix.
+  $$
+    H_t = h'(x_t) = C_t
+  $$
+</section>
+
+
+</chapter>
+
+</body>
+</html>

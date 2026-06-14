@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Python: DTFT", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Python: DTFT</h1>
+<section id="0"><h1>Aim</h1>
+  The aim is to extract frequency information from a discrete time signal.
+</section>
+
+<section id="1"><h1>Mathematical representation</h1>
+  $$
+    X_k = \sum^{N-1}_{n=0} x_n e^{-i2\pi k\frac{n}{N}}
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \displaystyle\sum^{N-1}_{n=0} &:& \text{Integral replaced by sum over $N$ samples of the input signal} \\ 
+      e^{-i2\pi k\frac{n}{N}} &:& \text{Contains amplitude and phase info for frequency $k$.} \\
+      && \text{Divides each sample with the corresponding complex number of that frequency}\\
+      && \text{as in the case of the fourier transform}\\
+    \end{array}$$
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

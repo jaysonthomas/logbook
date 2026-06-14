@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Dot product", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Dot product</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/SWOu3">Ref</a>] <p></p>
+  <div class="container">
+    <figure>
+      <img style="height:110px; width:auto"
+      src="../../../../figures/maths/vectors/3_dotProduct.png"/>
+      <figcaption>
+        Scenario
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:110px; width:auto"
+      src="../../../../figures/maths/vectors/2_dotProductIntuition.png"/>
+      <figcaption>
+        Intuition: Like shining a light<br> to see where the shadow lies
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Cross product</h1>
+  [<a href="https://t.ly/yR3Ll">Ref</a>]<p></p>
+  <p>
+    The cross product of two vectors can be intuitively understood as a way to capture both the <i>>spread</i> between the vectors and the direction perpendicular to the plane they form. The magnitude of the cross product equals the area of the parallelogram defined by the two vectors. If the vectors are almost parallel, the “spread” (and hence the area) is small, and if they are perpendicular, the area is maximized.
+  </p>
+
+  Given 2 vectors $a,b$ with an angle $\theta$ between them, the cross product is $a \times b = c$ where $c$ is a vector that is perpendicular to both $a$ and $b$. Its direction is given by the right hand rule and its magnitude (size) is given by the following equation:
+  $$
+    |c| = |a||b|sin\theta
+  $$
+
+  The cross product formula for 2 vectors:
+  $$
+    \begin{pmatrix} a \\ b \\ c \end{pmatrix} \times
+    \begin{pmatrix} d \\ e \\ f \end{pmatrix} = 
+    \begin{pmatrix} bf-ce \\ cd-af \\ ae-bd \end{pmatrix}
+  $$
+
+  <subsection id="1.0"><h1>Direction</h1>
+    To find the resulting axis of a cross product, the "right-hand rule" is used: point the index finger in the direction of the first vector, the middle finger in the direction of the second vector, and the thumb will point directly along the axis of the resulting cross product vector, which is perpendicular to the plane containing the original two vectors.
+  </subsection>
+</section>
+
+<section id="2"><h1>Unit vector identities</h1>
+  $$\begin{align*}
+    \hat{j} \cdot \hat{j} &= 1 \\
+    \hat{i} \cdot \hat{i} &= 1 \\
+    \hat{i} \cdot \hat{j} &= 0
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Contour", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Contour</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="python">
+plt.contour(gridX, gridY, pdf, contourLevels, colors=colour)
+</code></pre>  
+
+  Given the multivariate probability density function values <code>pdf</code> for every point on an x,y grid, <code>contour</code> plots only those contour lines for specific pdf values specified by <code>contourLevels</code>.
+
+  <p>
+    The points of the X,Y grid is formed by combining the values corresponding to specific rows and columns from both the 2D matrices <code>gridX, gridY</code>.
+  </p>
+
+  Contour is a 2D representation of a 3D surface. It is like a topographic map:
+  <ul>
+    <li>The X and Y axes are the grid coordinates (like longitude and latitude).</li>
+    <li>The contour lines represent points of equal "height" or Z value (like altitude).</li>
+
+    Here, z is the probability density calculated at each (x, y) point.
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

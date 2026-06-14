@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Numbering", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Numbering</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="latex">
+$$\begin{align*}
+\newcommand{eqNo}[1]{\hspace{6em}(#1)}
+  \sum F_\hat{i}^{\scriptsize{A}} &= m^{\scriptsize{A}} \ddot{x} \\
+    &= -kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta + f_x \eqNo{1} \label{eq:1}
+\end{align*}$$
+</code></pre>    
+
+  <subsubsection><h1>Output</h1>
+    $$\begin{align*}
+      \newcommand{eqNo}[1]{\qquad\qquad\qquad(#1)}
+      \sum F_\hat{i}^{\scriptsize{A}} &= m^{\scriptsize{A}} \ddot{x} \\
+        &= -kx -b\dot{x} + F_2\, cos\theta + F_1\, sin\theta + f_x \eqNo{1} \label{eq:1}
+    \end{align*}$$
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Another way</h1>
+<pre><code class="latex">
+\begin{equation}\bh(\bq) = 0.\end{equation}
+</code></pre>    
+
+  <subsubsection><h1>Output</h1>
+    \begin{equation}\bh(\bq) = 0.\end{equation}
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Setup</h1>
+<section id="0"><h1>URDF</h1>
+  Add control tags in the URDF and define the hardware interface which is a mock initially.
+
+  <p>
+    Specify the command and state interfaces which should match that of a controller specified in the YAML file.
+  </p>
+</section>
+
+<section id="1"><h1>YAML</h1>
+  Create yaml file under bringup/config to configure the <code>controller manager</code> which will start the different controllers and bind them with hardware interfaces. The latter are described in a urdf file.
+
+  <p>
+    <code>controller manager</code> parameters include update rate, joint state broadcaster and controllers to be used. Nodes specified as parameters will be started by the <code>controller manager</code>.
+  </p>
+
+  Each controller is loaded in as a plugin. To find out what type to specify in the YAML file, check the class name specified in the plugin.xml file of the corresponding controller to be used. Parameters that can be used with the controller can be found in a YAML file in the src folder of the controller.
+
+  <p>
+    Specify interface type which should match that of the hardware interface specified in the URDF.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

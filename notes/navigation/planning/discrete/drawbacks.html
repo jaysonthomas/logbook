@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Drawbacks", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Drawbacks</h1>
+  Performing a complete discretisation of a large space such as those found in higher dimensional problems and applying a graph search algorithm to the space may be too costly. The complexity of the path planning problem increases exponentially with the number of dimensions in the C-space.
+
+  <subsubsection><h1>Increased Dimensionality</h1>
+    For a 2-dimensional 8-connected space, every node has 8 successors (it is possible to move from every cell laterally or diagonally). A 3-dimensional 8-connected space has 26 successors from every node. As the dimension of the C-space grows, the number of successors that every cell has increases substantially. For an n-dimensional space, it is equal to $3^n - 1$.
+
+    <p>
+      If multiple 6-DOF arms work in a common space, the computation required to perform path planning to avoid collisions increases substantially. Planning for humanoid robots may take intolerably long to solve using the combinatorial approach.
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Constrained Dynamics</h1> 
+    For instance, a car is limited in its motion - it can move forward and backward, and it can turn with a limited turning radius. However, the car is not able to move laterally
+
+    <p>
+      In the case of the car, more complex motion dynamics must be considered when path planning - including the derivatives of the state variables such as velocity. For example, a car's safe turning radius is dependent on it's velocity.
+    </p>
+
+    Robotic systems can be classified into two different categories:
+    <ul>
+      <li><i>Holonomic systems</i></li>
+      They can be defined as systems where every constraint depends exclusively on the current pose and time, and not on any derivatives with respect to time.
+
+      <p>
+        <li><i>Nonholonomic systems</i></li>
+        They are dependent on derivatives. Path planning for nonholonomic systems is more difficult due to the added constraints.
+      </p>
+    </ul>
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

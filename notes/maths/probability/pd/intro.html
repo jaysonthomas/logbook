@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/1iwF">Ref</a>, 
+  <a href="https://t.ly/RY3w">Excellent ref</a>]<p></p>
+
+  A <i>distribution</i> aims to illuminate what the most likely event is.
+
+  <p>
+    A <i>probability distribution</i> is:
+    <ul>
+      <li>A list of events with their associated probabilities or</li>
+      <li>A function that maps from the outcomes to their corresponding probabilities</li>
+    </ul>
+  </p>
+</section>
+
+<section id="1"><h1>What does a distribution have to do with robotics?</h1>
+  Solving estimation problems boils down to using data from sensors which are imperfect.
+
+  <p>
+    For example, a range finder pointed at a wall 1m away will most likely give measurements that are slightly different than 1 meter like 0.992, 1.001... etc. But if this measurement is repeated many times, on average, the sensor will yield the correct distance plus or minus a small amount of error. 
+  </p>
+
+  This error is called <i>sensor noise</i> and is <n>modeled</n> as a Gaussian random variable with some mean, ideally $0$, and some standard deviation. <n>It is only possible to know an estimate of the parameters of a noise distribution</n>.
+  
+  <p>
+    A good sensor will have a small variance. A bad sensor will have a large variance. Before a sensor is placed on a robot, it is important to know an estimate of this variance.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

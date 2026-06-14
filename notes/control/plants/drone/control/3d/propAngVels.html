@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Propeller angular velocities", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Propeller angular velocities</h1>
+<section id="0"><h1>From moments</h1>
+  <subsection id="0.0"><h1>Roll</h1>
+    $$\begin{align*}
+      \tau_x  &= I_x \dot{p} \\
+              &= k_f \Big(
+              \underbrace{\omega_1^2 + \omega_4^2 - \omega_2^2 - \omega_3^2}_{\bar{p}} 
+              \Big) l \\
+    \end{align*}$$
+
+    $$
+      \bar{p} = \frac{I_x \dot{p}}{k_fl}
+    $$
+  </subsection>
+
+  <subsection id="0.1"><h1>Pitch</h1>
+    $$\begin{align*}
+      \tau_y  &= I_y \dot{q} \\
+              &= k_f \Big(
+              \underbrace{\omega_1^2 + \omega_2^2 - \omega_3^2 - \omega_4^2}_{\bar{q}} 
+              \Big) l \\
+    \end{align*}$$
+
+    $$
+      \bar{q} = \frac{I_y \dot{q}}{k_fl}
+    $$
+  </subsection>
+
+  <subsection id="0.2"><h1>Yaw</h1>
+    $$\begin{align*}
+      \tau_z  &= I_z \dot{r} \\
+              &= k_m \Big(
+              \underbrace{-\omega_1^2 + \omega_2^2 - \omega_3^2 + \omega_4^2}_{\bar{r}} 
+              \Big) l \\
+    \end{align*}$$
+
+    $$
+      \bar{r} = \frac{I_z \dot{r}}{k_ml}
+    $$
+  </subsection>
+</section>
+
+<section id="1"><h1>From forces</h1>
+  $$\begin{align*}
+    F_{thrust}  &= ma \\
+                &= k_f \Big(
+                \underbrace{\omega_1^2 + \omega_2^2 + \omega_3^2 + \omega_4^2}_{\bar{c}} 
+                \Big) l \\
+  \end{align*}$$
+
+  $$
+    \bar{c} = \frac{ma}{k_f}
+  $$
+
+  <m>For some reason $a$ is written as $-a$ in the solution</m>.
+</section>
+
+<section id="2"><h1>Computing the propeller angular velocities</h1>
+  Rewriting the different sums of propeller angular velocities in matrix form:
+  $$
+    \begin{bmatrix}
+      1 & 1 & 1 & 1 \\
+      1 & -1 & -1 & 1 \\
+      1 & 1 & -1 & -1 \\
+      1 & -1 & 1 & -1
+    \end{bmatrix} \cdot
+    \begin{bmatrix}
+      \omega_1^2 \\
+      \omega_2^2 \\
+      \omega_3^2 \\
+      \omega_4^2
+    \end{bmatrix} = 
+    \begin{bmatrix}
+      \bar{c} \\
+      \bar{p} \\
+      \bar{q} \\
+      \bar{r}
+    \end{bmatrix}
+  $$
+
+  $$\begin{align*}
+    \omega_4 &= \sqrt{\frac{\bar{c} + \bar{p} - \bar{r} - \bar{q}}{4}} \\
+    \omega_3 &= \sqrt{\frac{\bar{r} - \bar{p}}{2} + \omega_4} \\
+    \omega_2 &= \sqrt{\frac{\bar{c} - \bar{p}}{2} - \omega_3} \\
+    \omega_1 &= \sqrt{\bar{c} - \omega_2 - \omega_3 - \omega_4}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

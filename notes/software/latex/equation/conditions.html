@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Conditions", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Conditions</h1>
+<section id="0"><h1>Min of</h1>
+<pre><code class="latex">
+$$\begin{align*}
+  \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+  s.t. \quad & |v|\leq v_{max}     
+\end{align*}$$
+</code></pre>    
+
+  <subsubsection><h1>Output</h1>
+    $$\begin{align*}
+      \min_v \quad & \|\bJ(q)v - V_d\|^2_2\\
+      s.t. \quad & |v|\leq v_{max}     
+    \end{align*}$$
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Layered Min</h1>
+  <pre><code class="latex">
+    $$
+      \min_{\substack{x(t) \\ u(t)}}     
+    $$
+  </code></pre>    
+
+  <subsubsection><h1>Output</h1>
+    $$
+      \min_{\substack{x(t) \\ u(t)}}     
+    $$
+  </subsubsection>
+</section>
+
+<section id="2"><h1>One sided curly brackets</h1>
+  <pre><code class="latex">
+    $$
+      y = 
+      \left\{
+      \begin{array}{cl}
+        \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+        0                 & \quad \text{otherwise}
+      \end{array}
+      \right.
+    $$
+  </code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$
+      y = 
+      \left\{
+      \begin{array}{cl}
+        \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+        0                 & \quad \text{otherwise}
+      \end{array}
+      \right.
+    $$
+    $cl$ stands for a centered column and a left-justified column respectively.
+  </subsubsection>
+
+  <subsection id="2.0"><h1>Another method</h1>
+    <pre><code class="latex">
+      $$y = 
+      \begin{cases}
+        \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+        0 & \quad \text{otherwise}
+      \end{cases}$$
+    </code></pre>
+
+    <subsubsection><h1>Output</h1>
+      $$y = 
+        \begin{cases}
+          \frac{x^2 - x}{2} & \quad \text{if } x \geq 1 \\
+          0 & \quad \text{otherwise}
+      \end{cases}$$
+    </subsubsection>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

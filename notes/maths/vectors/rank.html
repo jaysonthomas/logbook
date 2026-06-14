@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Matrix rank", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Matrix rank</h1>
+<section id="0"><h1>Full row rank</h1>
+  A matrix is full row rank if its rows are linearly independent i.e. the matrix cannot be expressed as a linear combination of other rows. If a matrix is not of full row rank, it means that there exists a linear dependence among its rows.
+
+  <p>
+    The <i>rank of a matrix</i> is the maximum number of linearly independent rows or columns in it. If the rank is less than the number of rows ($m$), then the matrix is not of full row rank - there exists at least one row that can be expressed as a linear combination of the other rows.
+  </p>
+
+  For an inverse dynamics problem:
+  $$
+    \dot{q} = J^{-1} \dot{x}
+  $$
+  $J \in \mathbb{R}^{n \times m}$ where the end-effector has $n$ DOF and there are $m$ joints. If $m &lt n$, then the rank of $J$ can only be $m$ since few ($n-m$) of the $n$ rows will be dependent on the others. In this case, since $J$ is not full row rank, there can be configurations in the operational space for which there is no solution in the joint space, i.e. $J$ becomes non-invertible.
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Visual Studio Code", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Visual Studio Code</h1>
+<section id="0"><h1>C++ include path</h1>
+  <p>
+    VS Code's IntelliSense engine is separate from the actual compiler (like GCC or Clang). Even if the code builds fine using a Makefile or CMake, the editor needs to be "told" where to look so it can provide helpful suggestions.
+  </p>
+  
+  Steps:
+  <ul>
+    <li>Ctrl + Shift + P</li>
+    <li>Type C/C++: Edit Configurations (UI)</li>
+    <li>Scroll down to the Include path section</li>
+
+    <p>
+      <li>Common includes</li>
+      <pre><code>
+        /usr/include/eigen3/**
+        /usr/local/include/eigen3/**
+        /opt/ros/kilted/include/**
+      </code></pre>
+    </p>
+    
+    <li>Alternatively, click the "JSON" link or open .vscode/c_cpp_properties.json and update the includePath array</li>
+  </ul>
+  
+</section>
+
+<section id="1"><h1>Editor tweaks</h1>
+  <code>Alt+z</code> is used for fitting lines of code within view.
+</section>
+
+<section id="2"><h1>Python imports</h1>
+  To tell VS code's pylance where the workspace root is, open the folder in which the main python file is using Ctrl+k+o, and then continue working on code.
+</section>
+
+<section id="3"><h1>Useful extensions</h1>
+<pre><code>
+Latex workshop
+Plantuml
+C++ (from microsoft)
+Clang-Format
+Python
+</code></pre>    
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Log domain interior point method", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Log domain interior point method</h1>
+<section id="0"><h1>Overview</h1>
+  Consider the general case.
+  $$\begin{align*}
+    \min_x \quad & f(x) \\
+    s.t. \quad & c(x) \geq 0
+  \end{align*}$$
+
+  Simplify by introducing a <i>slack variable</i> (just a new variable that does not change the problem), $s$. The aim is not to have $c(x) \geq 0$ within a barrier. 
+
+  <p>
+    Optimising over $x$ and $s$:
+    $$\begin{align*}
+      \min_{x,s} \quad & f(x) \\
+      s.t. \quad & c(x) - s = 0 \\
+      & s \geq 0
+    \end{align*}$$
+  </p>
+
+  $s$ is going to be inside the log barrier and via the equality constraint, $c$ is enforced that it is positive. This is just a mathematical trick that makes it nicer to work with.
+
+  <p>
+    This is converted into an equality constrained problem.
+    $$\begin{align*}
+      \min_{x,s} \quad & f(x) - \rho \; log(s) \\
+      s.t. \quad & c(x) - s = 0 \\
+    \end{align*}$$
+  </p>
+
+  Computing the Lagrangian:
+  $$
+    L(x, s, \lambda) = f(x) - \rho \; log(s) - \lambda^\top \left(c(x) - s\right)
+  $$
+</section>
+
+<section id="1"><h1>FON conditions</h1>
+  Setting the gradients to 0.
+  $$\begin{align*}
+    \nabla_x L &= \nabla f - \left(\frac{\partial c}{\partial x}\right)^\top \lambda = 0 \\
+    \nabla_s L &= -\frac{\rho}{s} + \lambda = 0 \\
+    \nabla_\lambda L &= c(x) - s = 0
+  \end{align*}$$
+
+  The gradient w.r.t. $\lambda$ just returns the constraints.
+
+  <p>
+    The gradient w.r.t. $s$ can be rewritten as the relaxed complementarity condition:
+    $$
+      s \odot \lambda = \rho
+    $$
+  </p>
+
+  To ensure $s \geq 0$ and $\lambda \geq 0$ (historically done using backtracking line search), introduce the following change of variables that takes advantage of the complimentarity slackness:
+  $$
+    s = \sqrt{\rho} \; e^\sigma
+  $$
+  
+  Because of the above definition and the relaxed complementarity condition, $\lambda$ has to be:
+  $$
+    \lambda = \sqrt{\rho} \; e^{-\sigma}
+  $$
+
+  The complementarity condition in terms of $\sigma$ and the change of variables is satisfied by construction always. $s$ and $\lambda$ are also always guaranteed to be positive.
+
+  <p>
+    Simplifying the FON conditions by plugging the above into them yields the following equality-constrained problem which is a well-behaved, smooth function in $x$ and $\sigma$:
+  </p>
+  $$\begin{align*}
+    \nabla f - \left(\frac{\partial c}{\partial x}\right)^\top \sqrt{\rho} \; e^{-\sigma} &= 0 \\
+    c(x) - \sqrt{\rho} \; e^\sigma &= 0
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Root finding</h1>
+  Consider the above objective function (a grouping of the 2). Applying a first order taylor series expansion:
+  $$\begin{equation}
+    f(x + \Delta x, \sigma + \Delta\sigma) \approx 
+    f(x, \sigma) + J(x, \sigma) \; 
+    \begin{bmatrix} \Delta x \\ \Delta\sigma \end{bmatrix}
+  \end{equation}$$
+
+  $f(x, \sigma)$ is a reformulation of $\Delta L(x, s, \lambda)$. To satisfy the FON conditions, $\Delta L$ needs to be 0. Hence, the above equation becomes: 
+  $$\begin{align}
+    f(x, \sigma) + J(x, \sigma) \; 
+    \begin{bmatrix} \Delta x \\ \Delta\sigma \end{bmatrix} &= 0 \nonumber \\
+    J(x, \sigma) \; 
+      \begin{bmatrix} \Delta x \\ \Delta\sigma \end{bmatrix} &= -f(x, \sigma) \nonumber \\ 
+      Jd &= -r \label{eq:2}
+  \end{align}$$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      -r &:& \text{Negative residual. Error. Any value that is not 0 is an error.} \\ 
+      && \text{It is the value of the function at the current guess.} \\
+      && \text{The negative sign indicates movement in the direction that cancels out the error.} \\
+      d &:& \text{Step. This is the vector of updates that is being solved for.} \\
+      J &:& \text{A matrix of slopes describing how every equation in the system changes w.r.t. every variable.}
+    \end{array}$$
+  </div>
+
+  <subsection id="2.0"><h1>Jacobian</h1>
+    $$J = \begin{bmatrix}
+      \frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial \sigma} \\
+      \frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial \sigma}
+    \end{bmatrix}$$
+
+    <subsubsection><h1>$\frac{\partial f_1}{\partial x}$</h1>
+      The derivative of the gradient $\nabla f$ is the Hessian $H$. Gauss-Newton ignores the second-order derivatives of the constraints, so this simplifies to $H$.
+    </subsubsection>
+
+    <subsubsection><h1>$\frac{\partial f_1}{\partial \sigma}$</h1>
+      The derivative of $e^{-\sigma}$ is $-e^{-\sigma}$.
+    </subsubsection>
+
+    <subsubsection><h1>$\frac{\partial f_2}{\partial x}$</h1>
+      The derivative of $c(x)$ is simply the Jacobian of the constraints, denoted here as $c$.$\sqrt{\rho} e^\sigma$ is constant with respect to $x$.
+    </subsubsection>
+  </subsection>
+
+  <subsection id="2.1"><h1>KKT system</h1>
+    \ref{eq:2} becomes
+    $$
+      \begin{bmatrix}
+        H & \sqrt\rho c^\top e^{-\sigma} \\
+        c & -\sqrt\rho e^\sigma
+      \end{bmatrix}
+      \begin{bmatrix}
+        \Delta x \\
+        \Delta \sigma
+      \end{bmatrix} =
+      -
+      \begin{bmatrix}
+        \nabla f - c^\top \sqrt\rho e^{-\sigma} \\
+        c(x) - \sqrt\rho e^\sigma
+      \end{bmatrix}
+    $$
+  </subsection>
+</section>
+
+<section id="3"><h1>Example</h1>
+  A quadratic program is one with a quadratic objective as below where in order for it to be convex, Q has to be positive definite.
+  $$\begin{align*}
+    \min_x \quad & \frac{1}{2} x^\top Q x + q^\top x \qquad Q &gt 0 \\
+    s.t. \quad & Ax \geq b \\
+                  & Cx = d
+  \end{align*}$$
+
+  There are linear equality as well as inequality constraints.
+</section>
+</chapter>
+
+</body>
+</html>

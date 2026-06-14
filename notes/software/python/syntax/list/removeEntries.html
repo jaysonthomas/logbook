@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("List: Remove entries", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>List: Remove entries</h1>
+<section id="0"><h1>Overview</h1>
+  Given:
+  <ul>
+    <li>List <code>fieldList</code> of string entries</li>
+    <li><code>toRemoveFieldList</code> containing partial string entries that if present in any of the fields, the particular fields are to be removed from the original list</li>
+  </ul>
+
+  Example: "timeInSeconds" should be removed from the original list if "time" is on the removal list. 
+</section>
+
+<section id="1"><h1>Long code version</h1>
+<pre><code class="python">
+def removeFields(fieldList, toRemoveFieldList):
+  output = []
+  for field in fieldList:
+    isBadFieldPresent = False
+    for badField in toRemoveFieldList:
+      if (badField in field):
+        isBadFieldPresent = True
+        break
+
+    if (not isBadFieldPresent):
+      output.append(field)
+
+  return output
+</code></pre>  
+</section>
+
+<section id="2"><h1>Condensed version</h1>
+<pre><code class="python">
+def removeFields(fieldList, toRemoveFieldList):
+  return [
+    field for field in fieldList
+    if not any(badField in field for badField in toRemoveFieldList)
+  ]
+</code></pre>  
+</section>
+
+</chapter>
+
+</body>
+</html>

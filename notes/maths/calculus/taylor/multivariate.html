@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Multivariate", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Multivariate</h1>
+  For any vector-valued function $G(x, \lambda)$, the approximation for a small step $(\Delta x, \Delta \lambda)$ is:
+  $$
+    G(x + \Delta x, \lambda + \Delta \lambda) \approx 
+      G(x, \lambda) + 
+      \frac{\partial G}{\partial x} \Delta x + 
+      \frac{\partial G}{\partial \lambda} \Delta \lambda
+  $$
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Measurement update", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Measurement update</h1>
+  $$\begin{align*}
+    \hat x_k &= \tilde x + L \; z \\
+    \Sigma_k &= (I - L\; C) \; \tilde\Sigma \; (I - L\; C)^\top + L \; V \; L^\top \\
+  \end{align*}$$
+
+  In the initial step, $k=0$, the state and covariance are bootstrapped from their initial values stored in $\tilde x$ and $\tilde\Sigma$. See <a href="../prediction.html">prediction step</a>.
+</chapter>
+
+</body>
+</html>

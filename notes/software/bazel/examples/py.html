@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Bazel: Python example", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Bazel: Python example</h1>
+
+<section id="0"><h1>Overview</h1>
+  <subsection id="0.0"><h1>Directory structure for a single file</h1>
+    <ul>
+      <li>main.py</li>
+
+      <p>
+        <li>BUILD</li>
+<pre><code class="python">
+py_binary (
+  name = "main",
+  srcs = ["main.py"],
+)  
+</code></pre>        
+      </p>
+
+      <li>WORKSPACE</li>
+    </ul>    
+  </subsection>
+
+  <subsection id="0.1"><h1>Directory structure for a library</h1>
+    We have our usual files (BUILD, WORKSPACE, main.py)
+    and a new directory called mylib that has the following files in it:
+    <ul>
+      <li>test.py</li>
+<pre><code class="python">
+import unittest
+from mylib.x import getX
+
+class TestGetX(unittest.TestCase):
+  def testValue(self) -> None:
+    self.assertEqual(getX(), 'String to test the output against')
+
+if __name__ == '__main__':
+  unittest.main()
+</code></pre>   
+        We invoke the unit test in the last line.
+
+      <p>
+        <li>x.py</li>
+        It can be any python file. For this example, we've
+        created x.py and referenced it in BUILD.
+      </p>
+
+      <li>BUILD</li>
+<pre><code class="python">
+py_library (
+  name = "x",
+  srcs = ["x.py"],
+  visibility = ["//:__pkg__"]
+)
+</code></pre>      
+      We need to specify that the specific files are <code>visible</code>
+      to the package at the root of the project.
+<pre><code class="python">
+py_test (
+  name = "test",
+  srcs = "test.py",
+  deps = [":x"],
+)  
+</code></pre>      
+    </ul>
+
+    We modify the main BUILD file as follows:
+<pre><code class="python">
+py_binary (
+  name = "main",
+  srcs = ["main.py"],
+  deps = ["//mylib:x"]
+)
+</code></pre>
+    Now, we can directly use the library in main:
+    <code>from mylib.x import getX</code> 
+    (let's assume getX is a function in x.py)
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

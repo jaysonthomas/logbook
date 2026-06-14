@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Approximate Cell Decomposition", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Approximate Cell Decomposition</h1>
+<section id="0"><h1>Overview</h1>
+  Approximate cell decomposition divides a configuration space into discrete cells of simple, regular shapes - such as rectangles and squares (or their multidimensional equivalents). 
+  
+  <subsubsection><h1>Advantages</h1>
+    <ul>
+      <li>Simplifies the computation of the cells</li>
+      <li>Supports hierarchical decomposition of space</li>
+    </ul>
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Simple Decomposition</h1>
+  A 2-dimensional configuration space can be decomposed into a grid of rectangular cells - instead of measuring every part of a space, a grid is overlaid and each cell is marked as either full (obstacle) or empty (free to pass through). A search algorithm can then look for a sequence of free cells to connect the start node to the goal node.
+
+  <p>
+    Such a method is more efficient than exact cell decomposition, but it loses its <i>completeness</i>. It is possible that a particular configuration space contains a feasible <n>path</n>, but the resolution of the cells results in some of the cells encompassing the <n>path</n> to be marked full due to the presence of obstacles. A cell will be marked full whether 99% of the space is occupied by an obstacle or a mere 1%. Evidently, this is not practical.
+  </p>
+</section>
+
+
+<section id="2"><h1>Iterative Decomposition</h1>
+  Instead of immediately decomposing a space into small cells of equal size, this method recursively decomposes a space into 4 quadrants. Each quadrant is marked full, empty, or a new label called mixed - used to represent cells that are somewhat occupied by an obstacle, but also contain some free space. If a sequence of free cells cannot be found from start to goal, then the mixed cells will be further decomposed into 4 new quadrants. Through this process, more free cells will emerge, eventually revealing a path if one exists.
+
+  <subsection id="2.0"><h1>Quadtree decomposition</h1>
+    The 2-dimensional implementation of iterative decomposition is called quadtree decomposition seen in the graph below.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:160px; width:auto"
+        src="../../../../../figures/planning/discretisation/1_quadTree.png"/>
+      </figure>
+    </div>
+
+    The pseudocode for the algorithm:
+    <ul>
+      <li>Decompose the configuration space into four cells, label cells free, mixed, or full.</li>
+      <li>Search for a sequence of free cells that connect the start node to the goal node.</li>
+      <li>If such a sequence exists, return path. Else, further decompose the mixed cells</li>
+    </ul>
+
+    <div class="img-container">
+      <figure>
+        <img style="height:160px; width:auto"
+        src="../../../../../figures/planning/discretisation/2_quadTree.png"/>
+      </figure>
+    </div>
+  </subsection>
+
+  <subsection id="2.1"><h1>Octtree decomposition</h1>
+    The three dimensional equivalent of quadtrees are octrees, depicted in the image below. The method of discretizing a space with any number of dimensions follows the same procedure as the algorithm described above, but expanded to accommodate the additional dimensions.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:160px; width:auto"
+        src="../../../../../figures/planning/discretisation/3_octTree.png"/>
+      </figure>
+    </div>
+
+    With enough computation, ACD approaches completeness. However, it is not optimal - the resultant path depends on how cells are decomposed. ACD finds the obvious solution quickly. It is possible that the optimal path squeezes through a minuscule opening between obstacles, but the resultant path takes a much longer route through wide open spaces - one that the recursively-decomposing algorithms would find first.
+
+    <p>
+      ACD is functional, but like all discrete/combinatorial path planning methods - it starts to be computationally intractable for use with high-dimensional environments.
+    </p>
+  </subsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

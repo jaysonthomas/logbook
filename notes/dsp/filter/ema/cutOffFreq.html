@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("EMA: Cut-off frequency", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>EMA: Cut-off frequency</h1>
+<section id="0"><h1>Overview</h1>
+  $$\begin{align*}
+    f_c &= \frac{\alpha}{2\pi t_s (1-\alpha)} \\
+    \frac{1}{2t_{ss}} &= \frac{\alpha}{2\pi t_s (1-\alpha)} \\
+    1 - \alpha &= \frac{t_{ss}}{\pi t_s}  \,\alpha \\
+    1 &= \frac{t_{ss}}{\pi t_s} \,\alpha + \alpha \\
+    1 &= (\frac{1}{\pi \frac{t_s}{t_{ss}}} + 1) \,\alpha \\
+    1 &= (\frac{1 + \pi \frac{t_s}{t_{ss}}}{\pi \frac{t_s}{t_{ss}}}) \,\alpha \\
+    \alpha &= \frac{\pi \frac{t_s}{t_{ss}}}{1 + \pi \frac{t_s}{t_{ss}}} \\
+    \alpha &= \frac{\pi}{\frac{t_{ss}}{t_s}  + \pi}
+  \end{align*}$$
+
+</section>
+</chapter>
+
+</body>
+</html>

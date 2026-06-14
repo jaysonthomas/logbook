@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Setup</h1>
+<section id="0"><h1>Virtual environment</h1>
+  <pre><code class="shell">
+    cd software/
+    python3 -m venv meshcat_venv
+    source meshcat_venv/bin/activate
+    pip3 install meshcat
+  </code></pre>
+</section>
+
+<section id="1"><h1>Launch server</h1>
+  <pre><code class="shell">
+    clear; python3 ~/repos/ros2/src/double_integrator/di_lqr_inf/scripts/bokeh_plotter.py
+  </code></pre>
+</section>
+
+<section id="2"><h1>Launch client</h1>
+  <pre><code class="shell">
+    colcon build --packages-select di_lqr_inf
+    source install/setup.bash
+    ros2 run di_lqr_inf di_lqr_inf_node
+  </code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Normalisation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Normalisation</h1>
+<section id="0"><h1>Overview</h1>
+  Normalisation strips away the magnitude (strength of the force) leaving only the direction of the acceleration.
+
+  <p>
+    To normalise an accelerometer reading, each axis component ($x, y, z$) is divided by the total magnitude (the Euclidean norm) $G$ of the vector.
+  </p>
+
+  $$\begin{align*}
+    G = \sqrt{x^2 + y^2 + z^2} \\
+    \hat{x} = \frac{x}{G}, \hat{y} = \frac{y}{G}, \hat{z} = \frac{z}{G}
+  \end{align*}$$
+
+  The resulting vector $(\hat{x}, \hat{y}, \hat{z})$ will always have a length of exactly 1.
+</section>
+
+<section id="1"><h1>Use</h1>
+  <ul>
+    <li>Unit sphere perspective</li>
+    Imagine an accelerometer is at the centre of a sphere with a radius of 1. The normalised vector is a vector pointing from the centre to a dot on the surface of that sphere. Tilt angles (pitch and roll) can be calculated using simple trigonometry from the dot's location.
+
+    <p>
+      <li>Noise and Motion Filtering</li>
+      By forcing a vector onto a unit sphere, it becomes much easier to compare accelerometer data with gyroscope data to filter out jitter or temporary movement spikes.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

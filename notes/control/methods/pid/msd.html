@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("PID: Mass spring damper", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>PID: Mass spring damper</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    \ddot{e} + K_d\dot{e} + K_pe = 0
+  $$
+
+  This is the differential equation for a mass on a spring with some damping term. The resulting motion is a <i>damped oscillation</i>. This means, the motion of a PD controller's equation is characterised by sinusoidal oscillations whose amplitude is modified by a decaying exponential.
+</section>
+
+<section id="1"><h1>Components</h1>
+  <subsubsection><h1>Sinusoidal function</h1>
+    $$
+      f = cos(\omega t)  \quad \{t>0\}
+    $$
+    As $\omega$ increases, the rate of oscillations increases.
+  </subsubsection>
+
+  <subsubsection><h1>Exponential decay</h1>
+    $$
+      g = e^{-\delta \omega t}  \quad \{t>0\}
+    $$
+    As $\delta$ increases, the rate of decay increases.
+  </subsubsection>
+
+  <subsubsection><h1>Combination</h1>
+    [<a href="https://t.ly/3eciD">Ref</a>] <p></p>
+    The actual error as a function of time, like the position of a mass on a spring, displays both of these behaviours simultaneously - an oscillation which is modulated by decay. This is not bad as the error is decreasing. But, it would be better for the error to converge to zero much faster with the least amount of oscillations.
+
+    <div class="img-container">
+      <figure>
+        <img style="height:120px; width:auto"
+        src="../../../../figures/drone/44_msdPD.png"/>
+        <figcaption>
+          By tweaking parameters $\delta, \omega$, the behaviour of the error over time can be tweaked.
+        </figcaption>
+      </figure>
+    </div>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>PD reparameterisation</h1>
+  Solving the MSD equation leads to the following solution:
+  $$\begin{align*}
+    K_p &= \omega^2_n = \frac{1}{T^2} \\
+    K_d &= 2\delta \omega_n = \frac{2\delta}{T}
+  \end{align*}$$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \omega_n &:& \text{Natural frequency of the error signal} \\
+      \delta &:& \text{Damping ratio}
+    \end{array}$$
+  </div>
+  
+  $$
+    \ddot{e} + 2\delta \omega_n \dot{e} + \omega^2_n e = 0
+  $$
+  
+  In practice, when tuning a controller, it is helpful to think of these coefficients instead of $K_p, K_d$
+
+  <subsection id="2.0"><h1>Summary of the behaviour of the parameters</h1>
+    <ul>
+      <li>
+        A big value (close to 1) of damping ratio yields a faster decay. A smaller value (close to 0) constitutes, instead, a slower decay.
+      </li>
+
+      <p>
+        <li>
+          A big value of natural frequency (omega) causes high frequency oscillations. 
+        </li>
+      </p>
+    </ul>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

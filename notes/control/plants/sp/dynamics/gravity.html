@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Simple pendulum: Force due to gravity", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Simple pendulum: Force due to gravity</h1>
+<section id="0"><h1>Overview</h1>
+  Force due to gravity acting on a pendulum is divided into 2:
+  <ul>
+    <li>Component acting along the string $(F^{\scriptsize{G}}_g)\,\hat{d}$</li>
+    <li>
+      Component acting tangential and opposite to the direction of motion of the mass $(F^{\scriptsize{G}}_g)\,\hat{q}$ [<a href="https://t.ly/884vC">Ref</a>]
+    </li>        
+  </ul>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../figures/dynamics/simplePendulum/2_gravity.png"/>
+    </figure>
+  </div>
+
+  The figure shows a clockwise rotation which is the result of positive torque. But, gravity acts against the direction of motion causing an anti-clockwise negative rotation. Therefore, moment due to gravity about <code>A</code> along $\hat{k}$:
+  $$
+    \newcommand{\wrt}[4]{^{\scriptsize{#1}\hspace{-#2em}}{#3}^{\scriptsize{#4}}}
+    |M^{\scriptsize{A}}_g| = -m_{\scriptsize{p}} g \,sin\theta \cdot l
+  $$
+</section>
+
+<section id="1"><h1>Comparison to a unit circle</h1>
+  <div class="container">
+    <p>
+      Consider a unit circle. Each ($x,y$) coordinate is given as ($cos\theta, sin\theta$). The radius vector rotates and keeps changing its direction but the body $d,q$ reference frame remains fixed. <br><br>A sine function is defined in such a way that $sin(60^0) = sin(120^0)$.
+    </p>
+
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../figures/dynamics/simplePendulum/3_unitCircle.png"/>
+    </figure>
+  </div>
+
+  <div class="container">
+    <p>
+      In the pendulum case, the body reference frame rotates but the direction of the radius (gravity) vector remains fixed. <br><br>Each ($x,y$) coordinate on the unit circle is given as $(sin\theta, cos\theta)$. The definition of $x=sin\theta$ matches the physical behaviour of the $\hat{d}$ component of the gravity vector at various points. The redefnition of $\theta$ as well aligns with the physical behaviour. 
+    </p>
+
+    <figure>
+      <img style="height:170px; width:auto"
+      src="../../../../../figures/dynamics/simplePendulum/4_rotatingCoordSys.png"/>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Check magazine", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Check magazine</h1>
+<section id="0"><h1>First attempt</h1>
+  [<a href="https://t.ly/1DLEN">Ref</a>] <p></p>
+<pre><code class="C++">
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+void checkMagazine(vector<string> magazine, vector<string> note) {
+    unordered_map<string, int> wordCount;
+
+    // Count each word in the magazine
+    for (const string& word : magazine) {
+        ++wordCount[word];
+    }
+
+    // Try to build the note
+    for (const string& word : note) {
+        if (wordCount[word] > 0) {
+            --wordCount[word];
+        } else {
+            cout &lt&lt "No" &lt&lt endl;
+            return;
+        }
+    }
+
+    cout &lt&lt "Yes" &lt&lt endl;
+}
+</code></pre>
+</section>
+
+<section id="1"><h1>Time complexity analysis</h1>
+  O(n + m). 
+
+  <p>
+    In the first for loop, for a word length of m (magazine), each map operation is O(1) on average using <code>unordered_map</code>. Since the loop runs m times, it is O(m). For the 2nd for loop, for a word length of n (note), each lookup and decrement in the hash map is O(1) on average. Since the loop runs n times, it is O(n).
+  </p>
+
+  For a nested loop, it is O(n * m).
+</section>
+
+<section id="2"><h1>Space complexity analysis</h1>
+  In the worst case, if all words in magazine are unique, the complexity is O(m). 
+</section>
+</chapter>
+
+</body>
+</html>

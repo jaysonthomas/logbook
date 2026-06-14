@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Kalman gain", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Kalman gain</h1>
+<section id="0"><h1>Aim</h1>
+  Kalman gain $K$ helps decide how much a new measurement is trusted compared to the belief after the prediction step.
+</section>
+
+<section id="1"><h1>Inputs</h1>
+  $K$ is computed:
+  <ul>
+    <li>Using the Jacobian of the measurement model and</li>
+    <li>indirectly, the Jacobian of the state transition function which helps compute the estimate of the state covariance matrix.</li>
+  </ul>
+
+  $$\begin{align*}
+    H_t &= h'_t(\bar{\mu}_t) \\
+    K_t &= \bar{\Sigma}_t \; H^T_t \; (H_t \bar{\Sigma}_t H^T_t + R_t)^{-1}
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Steps</h1>
+  The Kalman gain calculation involves the following 3 steps:
+  <ul>
+    <li>
+      Inside the bracket, the estimated covariance is transformed into the measurement space using $H$.
+    </li>
+
+    <p>
+      <li><i>Measurement noise</i> $R$ is added to it.</li>
+      There is uncertainty associated with sensor measurements due to sensor inaccuracy, which is captured by the covariance matrix $R$.
+    </p>
+
+    <li>
+      (Outside the bracket) <m>The result is then transformed back into the state space to get the Kalman gain</m>.
+    </li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Side-by-side", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Side-by-side</h1>
+<section id="0"><h1>Overview</h1>
+<pre><code class="latex">
+$$\begin{array}{ccc}
+  \begin{aligned}
+    
+    % Equations written in the same way using align*
+    % No need to write \begin{align*} etc.
+    % Just the equations are written with & and \\
+  
+  \end{aligned}
+
+  &&
+
+  \begin{aligned}
+  \end{aligned}
+\end{array}$$
+</code></pre>    
+
+  <subsubsection><h1>Output</h1>
+    $$\begin{array}{ccc}
+      \begin{aligned}
+        \frac{d^3}{dx^3}\cos(x)\bigg|_{x=0} &= \sin(0) \\ 
+                                          &= 0 \\
+        \frac{d^3}{dx^3}P(x)\bigg|_{x=0} &= 6c_3 \\
+                              &= 0 \\
+                          c_3  &= 0
+      \end{aligned}
+      &&
+      \begin{aligned}
+        \frac{d^4}{dx^4}\cos(x)\bigg|_{x=0} &= \cos(0) \\ 
+                                            &= 1 \\
+        \frac{d^4}{dx^4}P(x) \bigg|_{x=0} &= 24c_4 \\
+                              &= 1 \\
+                          c_4  &= \frac{1}{24} 
+      \end{aligned}
+    \end{array}$$
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

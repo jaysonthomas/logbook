@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Vectors", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Vectors</h1>
+
+<section id="0"><h1>Dimension of a vector space</h1>
+  [<a href="https://t.ly/E2P_l">Ref</a>]<br>
+  The dimension of a vector space is the number of linearly independent vectors that form a <n>basis</n> for the vector space, i.e. the minimum number of vectors that can be used to express any vector in the space.
+
+  For example, the standard basis for the three-dimensional Euclidean space consists of three linearly independent vectors: (1, 0, 0), (0, 1, 0), and (0, 0, 1). Therefore, the dimension of this vector space is 3. Similarly, the dimension of a two-dimensional vector space such as the xy-plane is 2, because any vector in this space can be expressed as a linear combination of two linearly independent vectors, such as (1, 0) and (0, 1).
+</section>
+
+<section id="1"><h1>Determinant</h1>
+  [<a href="https://t.ly/Ug0a">Ref</a>] The <i>determinant</i> gives an idea of how much an area (in 2D and volume in 3D) is being squished, scaled or flipped.
+</section>
+
+<section id="2"><h1>Linear Transformation</h1>
+  A linear transformation described by a matrix $A$ can be thought of as the landing spots it moves the basis vectors to.
+
+  <div class="container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../figures/maths/5_3_LinearTransformation.png"/>
+    </figure>
+    <figure>
+      <img style="height:50px; width:auto"
+      src="../../../figures/maths/4_linearTransformation.png"/>
+    </figure>
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/maths/1_linearTransformation.png"/>
+      <figcaption>
+        Example of $A$ applied on basis vectors
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="3"><h1>Basis vectors</h1>
+  The red and green arrows in the following image are the basis vectors of the coordinate system (the grid in the background).
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/maths/5_1_basisVectors.png"/>
+    </figure>
+  </div>
+
+  The basis vectors are fixed to the coordinate system. If the latter is stretched or rotated (transformed), the basis vectors also end up being transformed. From here on, the coordinate system will not be drawn. Any transformation of the basis vectors implies a transformation to its corresponding coordinate system.
+</section>
+
+<section id="4"><h1>Span</h1>
+  The span of a vector is a line passing through the origin of a coordinate system and the end or tip of the vector. The pink line in the above image is the span of the yellow vector.
+
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../figures/maths/5_2_spanOfVector.png"/>
+      <figcaption>
+        The yellow vector gets knocked off its original span (pink line) after a linear transformation of the coordinate system.
+      </figcaption>
+    </figure>
+  </div>
+
+  Normally, vectors get knocked off (rotated by some amount from) their original span under the influence of a linear transformation as shown above.
+</section>
+</chapter>
+
+</body>
+</html>

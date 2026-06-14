@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("SQL", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>SQL</h1>
+<section id="0"><h1>Aggregate</h1>
+  Aggregate functions like <code>COUNT(), SUM(), AVG(), MAX()</code> etc. instructs SQL to reduce multiple rows into a single summary value (or one per group). But SQL needs clear instructions - if rows are being summarised based on 1 column, what should it do with the other columns? 
+  
+  <subsection id="0.0"><h1>Rule</h1>
+    Every column in the <code>SELECT</code> clause must either be:
+    <ul>
+      <li>An aggregate function or</li>
+      <li>Listed in the <code>GROUP BY</code> clause</li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="1"><h1>Join</h1>
+  [<a href="https://t.ly/PSEbR">Ref</a>]<p></p>
+
+  <i>(INNER) JOIN</i> enforces a strict match between the rows of the tables mentioned in the <code>FROM</code> clause. Else, the rows are discarded. 
+  
+  <p>
+    <i>LEFT JOIN</i>, retains the left side no matter what. If there is no RHS, then the RHS part of the row is left blank.
+  </p>
+</section>
+
+<section id="2"><h1>Lead</h1>
+<pre><code class="sql">
+LEAD(timestamp, 1) OVER (PARTITION BY id ORDER BY timestamp ASC) AS nextTs
+</code></pre>
+
+  The above query partitions the huge table by id. Each partition is then sorted by the <code>timestamp</code> column in an ascending order. A new column is then added to the table called <code>nextTs</code> where each entry in it is the next entry of the <code>timestamp</code> column.
+
+  <p>
+    This is mainly used in the <code>SELECT</code> clause of a query.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

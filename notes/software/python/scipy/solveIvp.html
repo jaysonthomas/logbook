@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Scipy: Solve IVP", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Scipy: Solve IVP</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/ojFI7">Open source github</a>]<p></p>
+  <i>Solve initial value problem</i> is a function in Python's SciPy library that helps solve differential equations.
+</section>
+
+<section id="1"><h1>RK45</h1>
+  The <code>RK45</code> method uses an adaptive version of RK4 but with step-size control.
+
+<pre><code class="python">
+def pendulum_ODE(t, y): 
+  return (y[1], -g*np.sin(y[0])/l)
+
+sol = solve_ivp(pendulum_ODE, [0, t_final], (theta0, theta_dot0), t_eval=np.linspace(0,t_final,t_final*fps+1))
+</code></pre>
+
+  Required arguments:
+  <ul>
+    <li>fun: Function that defines the system of ODEs: $\frac{dy}{dt} = f(t, y)$</li>
+    <li>t_span: Tuple specifying the time interval (t_start, t_end)</li>
+    <li>y0	Initial values of y (can be a list for multiple equations)</li>
+  </ul>
+
+  Optional arguments:
+  <ul>
+    <li>method</li>
+    <li>t_eval	Specific time points where results are computed</li>
+    <li>args	Extra arguments passed to fun</li>
+    <li>rtol	Relative tolerance (error control)</li>
+    <li>atol	Absolute tolerance</li>
+    <li>dense_output	If True, returns a function to evaluate solution at any t</li>
+    <li>events	Functions that stop integration when conditions are met</li>
+    <li>max_step	Maximum step size</li>
+  </ul>
+
+  Output of the solver:
+  <ul>
+    <li><code>sol.t</code>: Time points</li>
+    <li><code>sol.y</code>: Solution values</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

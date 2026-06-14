@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Controller", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Controller</h1>
+<section id="0"><h1>Overview</h1>
+  <pre><code class="nohighlight">
+    └── controller
+      └── include
+        ├── r6bot_controller.hpp
+      ├── r6bot_controller.cpp
+  </code></pre>
+</section>
+
+<section id="1"><h1>Code dive</h1>
+  Creates <code>RobotController</code> class that extends <code>ControllerInterface</code>.
+
+  <p>
+    Mandatory functions for an extension to <code>ControllerInterface</code>
+    <pre><code class="C++">
+      command_interface_configuration()
+      state_interface_configuration()
+      update()
+    </code></pre>
+  </p>
+
+  Optional life cycle methods - they are called automatically by ros_control at some point in the controller's life cycle:
+  <pre><code class="C++">
+    on_init()
+    on_configure()
+    on_activate()
+    on_deactivate()
+  </code></pre>
+
+  <code>on_init</code> reads the joint names, command and state interface types from the config file.
+</section>
+</chapter>
+
+</body>
+</html>

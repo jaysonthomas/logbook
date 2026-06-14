@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("ADC", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>ADC</h1>
+<section id="0"><h1>Sample time</h1>
+  To measure an external voltage, an ADC closes a switch to connect its internal capacitor (called a <i>sample and hold capacitor</i>) to the outside pin. <i>Sample time</i> is the amount of time the capacitor needs to charge up to match the voltage on the pin.
+
+  <p>
+    The sample time can be set to 480 ADC clock cycles for example by setting the required configuration in a register.
+  </p>
+
+  The sample time is chosen based on the impedance (resistance) of the analog source.
+  <ul>
+    <li>For a <i>low impedance</i> (strong signal) source, a short sample time is fine (eg: 3 cycles, this is fast!)</li>
+    <li>A <i>high impedance</i> (weak sensor, a potentiometer) source cannot "push" a lot of current. The ADC's internal capacitor needs more time to charge up to the correct voltage. Using a long sample time like 480 cycles ensures an accurate measurement, even though it makes the conversion slower.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Successive Approximation</h1>
+  Once the capacitor is charged, the switch disconnects from the outside pin. The ADC then looks at the trapped charge and calculates the digital number.
+
+  <p>
+    If this step takes 12 cycles, then the ADC has a resolution of 12 bits.
+  </p>
+
+  A SAR ADC uses a binary search algorithm. It takes 1 clock cycle to resolve 1 bit.
+
+  <ul>
+    <li>Cycle 1: Is the voltage above 50%? (Determines the Most Significant Bit).</li>
+    <li>Cycle 2: Is it above 75% (or 25%)? (Determines the 2nd bit).</li>
+    <li>And so on for 12 cycles.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Sampling delay</h1>
+  This is hardware overhead or "dead time." After the conversion is finished, the internal hardware needs a moment to reset logic, move the result into the data register, and trigger the "End of Conversion" interrupt or DMA request. It also prepares the multiplexer to switch to the next channel if you are scanning multiple pins.
+</section>
+</chapter>
+
+</body>
+</html>

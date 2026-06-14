@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Bazel run from inside drake", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Bazel run from inside drake</h1>
+<section id="0"><h1>Steps</h1>
+  [<a href="https://t.ly/jRAN">Ref</a>]<p></p>
+  
+  Clone drake's git repository. Bazel is used as drake's build system.
+<pre><code class="bash">
+cd drake
+bazel build //examples/acrobot:run_swing_up
+# or
+bazel build //... --jobs 12   # For building everything in Drake.
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

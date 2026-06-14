@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Eigenvectors and Eigenvalues", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Eigenvectors and Eigenvalues</h1>
+<section id="0"><h1>Eigenvectors and Eigenvalues</h1>
+  [<a href="https://t.ly/Ap73k">Ref1</a>, 
+  <a href="https://t.ly/Lel4R">Ref2</a>] <p></p>
+  <i>Eigenvectors</i> are special vectors that don't get knocked off or rotated from their <a href="defs/span.html">span</a> during a linear transformation - they simply get <i>scaled</i> (squished or stretched) along their spans by a constant amount called their corresponding <i>eigenvalue</i>.
+  
+  A better way to find what a linear transformation does, that is less dependent on the chosen coordinate system, is to find the eigen vectors and values.
+
+  $$
+    A\vec{v} = \lambda\vec{v}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      A &:& \text{Matrix representing some transformation} \\ 
+      \vec{v} &:& \text{Eigenvector} \\
+      \lambda &:& \text{Scalar value; the corresponding eigenvalue} 
+    \end{array}$$
+  </div>
+
+<p>
+  This expression says that the matrix-vector product (LHS) gives the same result as just scaling the eigenvector (RHS). So finding the Eigenvectors and their eigenvalues <n>of a matrix $A$</n> comes down to finding the values of $\vec{v}$ and $\lambda$ that make this expression true.
+</p>
+
+  Rewriting RHS as a matrix-vector multiplication to match the LHS (instead of being a scalar-vector multiplication). The equation can only be manipulated if both sides are of the same kind. 
+
+  $$\begin{align*}
+    A\vec{v} &= \lambda\vec{v} \\
+      &= \begin{bmatrix}
+            \lambda & 0 & 0 \\
+            0 & \lambda & 0 \\
+            0 & 0 & \lambda
+          \end{bmatrix}\vec{v} \\
+      &= \lambda \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+          \end{bmatrix} \vec{v} \\
+    A\vec{v} &= (\lambda I)\vec{v} \\
+    (A - \lambda I)\vec{v} &= 0 \\
+  \end{align*}$$
+
+  The columns of the $\lambda$ matrix represents what happens to each basis vector, and each basis vector is simply times $\lambda$. Hence, the matrix has the number $\lambda$ down the diagonal with $0$'s everywhere else. 
+
+  <p>
+    This expression will always be true if $\vec{v}$ itself is the zero vector, but the desire is for a non-zero eigenvector.
+  </p>
+
+  <p>
+    We can treat $(A - \lambda I)$ as a transformation matrix. The only way for the product of a matrix with a non-zero vector to be $0$ is if the transformation associated with that matrix squishes space into a lower dimension. And this squishification corresponds to a zero determinant for the matrix. Using the linear transformation matrix as above as an example:
+
+    $$\begin{align*}
+      det(A - \lambda I) &= 0 \\
+      det \left( \begin{bmatrix}
+        3-\lambda & 1 \\
+        0 & 2-\lambda
+      \end{bmatrix} \right) &= 0
+    \end{align*}$$
+
+    An <a href="https://t.ly/c7PJ">example</a>. As $k$ goes to 3 or 2, the 2D planar area gets squished to a 1D line of a certain length.
+  </p>
+
+
+
+To be concrete, let's say your matrix a has columns (2, 1) and (2, 3),
+
+  Application - to find the axis of rotation. Determinant = 1.
+  Does a vector remain on its span or get knocked off.
+  Think of stretching or squishing the whole space.
+
+  In linear algebra, a right eigenvector of a square matrix A is a non-zero vector v that satisfies the equation:
+
+Av = λv
+
+where λ is a scalar known as the eigenvalue corresponding to the eigenvector v.
+
+Geometrically, a right eigenvector of a matrix A is a vector that, when multiplied by A, is simply scaled by a factor λ, with the direction of the vector remaining unchanged.
+
+The term "right" refers to the fact that the eigenvector is multiplied on the right-hand side of the matrix A, as opposed to a left eigenvector, which would be multiplied on the left-hand side of A.
+
+Right Eigenvectors are important in many areas of mathematics and physics, as they play a fundamental role in the diagonalization of matrices, which is a powerful technique for studying the behavior of linear transformations and systems of linear equations. Additionally, right Eigenvectors can be used to decompose a matrix into simpler components, such as a diagonal matrix and a set of Eigenvectors.
+</section>
+
+<section id="1"><h1>Solving ODEs using eigenvalues</h1>
+  [<a href="https://t.ly/8Grvx">Ref</a>]
+</section>
+
+<section id="2"><h1>Eigen decomposition</h1>
+  $$
+    A = PDP^{-1}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      P &:& \text{Matrix of eigen vectors} \\ 
+      D &:& \text{Diagonal matrix with eigen values on the diagonal}
+    \end{array}$$
+  </div>
+
+  $P$ is an orthogonal matrix. <i>Orthogonal matrices</i> have norm 1, because they only rotate and don't stretch. 
+</section>
+</chapter>
+
+</body>
+</html>

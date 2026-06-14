@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Stability analysis via linearisation", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Stability analysis via linearisation</h1>
+<section id="0"><h1>Steps</h1>
+  To analyse the stability of a nonlinear system at an equilibrium point $x^*$, the following steps are taken:
+  <ul>
+    <li>Solve $f(x) = 0$ to find the equilibrium points $x^*$.</li>
+
+    <p>
+      <li>Calculate the general Jacobian i.e. the matrix of partial derivatives, i.e. the first derivative of the dynamics w.r.t. x, $\frac{\partial{f}}{\partial{x}}$.</li>
+    </p>
+
+    <li>Evaluate the jacboian at the equilibrium point of interest by plugging the equilibrium point $x^*$ into the Jacobian to get a matrix of constant numbers, $J(x^*)$.</li>
+
+    <p>
+      <li>Calculate and check the eigenvalues ($\lambda$) of $J(x^*)$.</li>
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Philosophy", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Philosophy</h1>
+<section id="0"><h1>Overview</h1>
+  At the lowest level, ROS offers a message passing interface that provides inter-process communication. The ROS middleware provides:
+
+  <ul>
+    <li>Remote Procedure Calls</li>
+    <ul>
+      <li>Request/response</li>
+      Asynchronous/synchronous request/response interactions between processes. A Service is defined by a pair of messages: one for the request and one for the response.
+
+      <p>
+        <li>Preemptable</li>
+        If a low-priority RPC is running on the server and a high-priority RPC arrives, the system can interrupt (pause or kill) the low-priority one to free up resources immediately.
+      </p>
+    </ul>
+
+    <p>
+      <li>Publish/subscribe message passing</li>
+      Topics are named buses over which nodes exchange messages.      
+    </p>
+
+    <li>Recording and playback of messages</li>
+  </ul>
+</section>
+
+
+</chapter>
+
+</body>
+</html>

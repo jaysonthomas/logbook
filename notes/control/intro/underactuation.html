@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Underactuation", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Underactuation</h1>
+<section id="0"><h1>Definition</h1>
+  A quadrotor constrained to move in 2D has 3 DOF: $y,z,\phi$. However, it has only 2 control variables $u_1, u_2$ [<a href="../plants/drone/2d/forces.html">Ref1</a>, <a href="../plants/drone/2d/moments.html">Ref2</a>]. This means it is not possible to control all 3 DOFs simultaneously. 
+  
+  <p>
+    At any given time, a trajectory is defined to control for 2 DOFs, whilst sacrificing control of the 3rd. Such a system is called <i>underactuated</i>.
+  </p>
+</section>
+
+<section id="1"><h1>Coupling</h1>
+  $$\begin{align*}
+    \ddot{z} &= g - \frac{u_1 \cdot cos\phi}{m} \\
+    \ddot{y} &= \frac{u_1 \cdot sin\phi}{m} \\
+    \ddot{\phi} &= \frac{u_2 \cdot Lcos\theta}{I_{xx}}
+  \end{align*}$$
+
+  The $y,z$ behaviours are inherently coupled with roll. <m>Any thrust will be shared between the 3 DOFs</m>. If an attempt was made to simultaneously control $y, z, \phi$:
+  <ul>
+    <li>Assume $\phi$ is controlled first</li>
+    It will require spending one control variable, in this case, $u_2$.
+    
+    <p>
+      <li>Next, controlling $y$ behaviour</li>
+      Since $\phi$ is fixed, the other control variable is used to fix $y$, in this case, $u_1$. 
+    </p>
+
+    <li>Next, controlling $z$ behaviour</li>
+    It is not possible to control for $z$, since all the control knobs available to influence the system has been used.
+  </ul> 
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Discussion on modern robotics lecture", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Discussion on modern robotics lecture</h1>
+<section id="0"><h1>Use case</h1>
+  <ul>
+    <li>Metal grinding</li>
+    In metal grinding for a good surface finish, a force-torque sensor at the end of an arm would be good. But, a good model can also be built using just motor current.
+
+    <p>
+      <li>Erasing/writing on a board</li>
+      Exact positions are not know to set target points, but the force to be applied on the board is known.
+    </p>
+
+    <li>Screwing a bulb</li>
+    The angular rotation is not known to tighten the bulb, but the screwing should stop when the required amount of torque limit is reached.
+
+    <p>
+      <li>Non rigid body handling</li>
+      <li>Peg in the hole</li>
+      The usual approach would be to use a vision system to detect the location of the hole. But, there is a high chance of collision and damaging a surface's finish.
+    </p>
+  </ul>
+
+  All these tasks could be done with conventional position or velocity based controllers, but they would need to be augmented with additional sensors like vision systems etc.
+
+  <p>
+    There are 2 main kinds of control methodologies: velocity and force control.
+  </p>
+</section>
+
+<section id="1"><h1>Velocity control</h1>
+  $$
+    \dot\theta(t) = \dot\theta_d(t) + K_p \theta_e(t) + K_i \int^t_0 \theta_e(t) dt
+  $$
+  
+  For each joint, an error in the position can be computed from the desired and the current positions. Proportional and integral gains can be used on the error to command a velocity input to each joint which would get any particular joint to go from the current to the target position.
+
+  <p>
+    This works for stepper motors where changing the frequency of the input pulse changes the rotor velocity. Position encoders can provide feedback to close the control loop.
+  </p>
+
+  The above equation can also be written in terms of body twist to translate it into the task space.
+  $$
+    V_b(t) = [Ad_{X^{-1} X_d}] \, V_d(t) + K_p X_e(t) + K_i \int^t_0 X_e(t) dt
+  $$
+
+  The desired twist can be computed from the end effector's current and target positions.
+
+  <p>
+    Usually, all this is handled by a low level controller. This controller can be written at a higher level, but it would require for the lower level controller to accept joint velocity rather than joint position set points.
+  </p>
+</section>
+
+<section id="2"><h1>Force control</h1>
+  Lectures 11.5 and 11.6 for modern robotics. 
+
+  <p>
+    The first lecture considers a simplified case where an end effector cannot move but can apply force/torque. In the 2nd lecture, the ee can also move (hand holding a duster cleaning a board).
+  </p>
+</section>
+
+<section id="3"><h1>Impedance control</h1>
+  In motion-force control, the aim is to avoid arbitrary motions, but have arbitrary forces at the end effector. Impedance control avoid arbitrary motions due to arbitrary disturbing forces/perturbations.
+
+  <p>
+    <a href="https://t.ly/mb34Y">Example demo</a>.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

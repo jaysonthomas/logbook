@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("std::vector", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>std::vector</h1>
+<section id="0"><h1>Passing values to function</h1>
+<pre><code class="cpp">
+void test(std::vector&ltuint&gt input)
+{
+  for (int i=0; i&ltinput.size(); i++)
+  cout << input[i];
+}
+
+void main()
+{
+  test({10, 10, 10});
+}
+</code></pre>
+
+</section>
+
+</chapter>
+
+</body>
+</html>

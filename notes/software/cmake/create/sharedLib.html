@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Shared library creation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Shared library creation</h1>
+
+<section id="0"><h1>Overview</h1>
+  The SHARED keyword tells the compiler to create a Shared Library (also known as a Dynamic Library). Instead of producing an executable or a static archive, it creates a file with a .so extension
+</section>
+
+<section id="1"><h1>Characteristics of a shared library</h1>
+  <ul>
+    <li>Dynamic Linking: The library code is not copied into the final executable. Instead, the executable contains a reference to the library, and the operating system loads the library into memory only when the program starts or runs.</li>
+
+    <p>
+      <li>Memory Efficiency: If multiple programs (or multiple ROS 2 nodes) use the same shared library, they can all point to the same copy in memory rather than each having their own duplicate copy.</li>
+    </p>
+
+    <li>Modularity: You can update the code inside r6bot_hardware.cpp or r6bot_controller.cpp, recompile the library, and the main application will use the new version without needing to be recompiled itself.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Usecase</h1>
+  ros2_control uses a tool called pluginlib. It looks for libraries at runtime to "plug in" hardware interfaces and controllers. By making a library shared, the ros2_control controller manager can find its hardware interface and load it into the control loop while the system is already running.
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Embedded systems: 32-bit controller", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Embedded systems: 32-bit controller</h1>
+<section id="0"><h1>Key features</h1>
+  <subsubsection><h1>Data processing</h1>
+    Processes data in 32-bit chunks, meaning it can handle 32 bits of data in a single instruction.
+
+    <p>
+      A 64-bit controller can handle double the amount of data in a single instruction thereby increasing the processing speed. It can handle doube precision 
+    </p>
+  </subsubsection>
+  
+  <subsubsection><h1>Memory addressing</h1>
+    Can address up to $2^{32}$ memory locations, equivalent to 4 gigabytes (GB) of addressable memory space.
+
+    <p>
+      A 64-bit controller can handle larger memory requirements, which is essential for applications that need significant RAM (e.g., high-performance computing, modern operating systems).
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Energy consumption</h1>
+    Consumes less energy making it suitable for embedded systems.
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Single vs double precision floating point</h1>
+  <subsubsection><h1>Range & precision</h1>
+    Double precision can handle much larger and smaller values than single precision since it uses 64 bits to represent a floating point number. It is typically accurate to about 15-16 significant decimal digits, compared to an accuracy of 7 decimal digits with single precision.
+
+    <p>
+      Double precision is better for calculations requiring high accuracy, like scientific simulations and financial applications.
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Performance</h1>
+    More computationally intensive and slower on hardware optimized for 32-bit but necessary for precision-critical tasks.
+
+    <p>
+      Single precision is often used in graphics, games, and real-time systems, while double precision is used in scientific computing, machine learning (training large models), and precise engineering tasks.
+    </p>
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

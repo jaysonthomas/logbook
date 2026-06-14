@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Control affine systems", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Control affine systems</h1>
+  It is a non-linear system, that is non-linear in the state, but linear-affine in the control input.
+  $$ 
+    \dot{x} = f_0(x) + B(x)\, u
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      f_0(x) &:& \text{Drift} \\ 
+      B(x) &:& \text{Input jacobian matrix} 
+    \end{array}$$
+  </div>
+
+  $f_0$ and $B$ are non-linear functions of $x$. If $x$ is fixed, then thinking of the equation as a function in $u$, $f_0$ and $B$ become constants and the equation becomes affine in the control input.
+
+  <p>
+    $f_0$ and $B$ are generally non-zero. If $B$ is <i>full rank</i> (i.e. a system is fully actuated), the equation can be inverted and can be solved for $u$ for any arbitrary $\dot{x}$. <m>Feedback linearisation is commonly used in this case to control classical manipulator arms</m>.
+  </p>
+
+  <a href="../../sp/dynamics/main.html">Simple pendulum example</a>.
+</chapter>
+
+</body>
+</html>

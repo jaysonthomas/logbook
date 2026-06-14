@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Laplace Transform: Comparison to Fourier", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Laplace Transform: Comparison to Fourier</h1>
+
+<section id="0"><h1>Definition</h1>
+  Fourier transform maps time to frequency. It decomposes a signal or function into sinusoids.
+  $$
+    F(\omega) = \int^{\infty}_{-\infty} f(t) e^{-j\omega t} dt
+  $$
+
+  Laplace transform maps time to $s$. It decomposes a signal or function into both sinusoids and exponentials.
+  $$
+    F(s) = \int^{\infty}_{-\infty} f(t) e^{-st} dt
+  $$
+
+  The difference between the two is that, the real component $\sigma$ is added to the equation:
+  $$\begin{align*}
+    F(s) &= \int^{\infty}_{-\infty} f(t) e^{-st} dt \\
+      &= \int^{\infty}_{-\infty} f(t) e^{-(\sigma + j\omega)t} dt \\
+      &= \int^{\infty}_{-\infty} \left[
+            f(t) e^{-\sigma t}
+          \right]
+        e^{-j\omega t} dt \\
+  \end{align*}$$
+
+  The laplace transform:
+  <ul>
+    <li>
+      Multiplies the original time domain function $f(t)$ by an exponential term $e^{-\sigma t}$
+    </li>
+    <li>
+      Takes the fourier transform of the product $f(t) \cdot e^{-\sigma t}$
+    </li>
+  </ul>  
+</section>
+
+<section id="1"><h1>Equality</h1>
+  On the imaginary axis, where $\sigma = 0$, the laplace transform for values of $s$ along this line is exactly equal to the fourier transform:
+  $$\begin{align*}
+    F(s) &= \int^{\infty}_{-\infty} \left[
+              f(t) e^{-\sigma t}
+            \right]
+          e^{-j\omega t} dt \\
+        &= \int^{\infty}_{-\infty} \left[
+              f(t) e^{-0 t}
+            \right]
+          e^{-j\omega t} dt \\
+        &= \int^{\infty}_{-\infty} f(t) e^{-j\omega t} dt
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Graphically</h1>
+  The results of the Fourier transform are a set of 2D numbers that represent magnitude and phase for a given frequency. The results of the Laplace transform are still the same 2D numbers, with an additional real component, plotted on a 3D s-plane.
+
+  <div class="container">
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/control/23a_ftGraphicalExample.png"/>
+      <figcaption>
+        Fourier transform of $u(t) \cdot e^{-t}$
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:80px; width:auto"
+      src="../../../../figures/control/23b_ltGraphicalExample.png"/>
+      <figcaption>
+        Laplace transform of $u(t) \cdot e^{-t}$ for $\sigma = 0$
+      </figcaption>
+    </figure>
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

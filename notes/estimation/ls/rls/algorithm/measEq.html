@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Measurement equation description", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Measurement equation description</h1>
+<section id="0"><h1>Overview</h1>
+  As part of the measurement equation, models of the <a href="measModel.html">measurement</a> and <a href="noiseModel.html">noise</a> need to be defined. In linear least squares, the measurement equation is assumed to be linear.
+  $$
+    y_k = H_kx + v_k
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      y &:& \text{Observations or measurements} & n \times 1 \\ 
+      H &:& \text{Jacobian or measurement model} & n \times m \\
+      x &:& \text{State vector} & m \times 1 \\
+      v &:& \text{Noise model} & n \times 1 \\
+      k &:& \text{Time step}
+    \end{array}$$
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

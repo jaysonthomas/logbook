@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Build system: Colcon", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Build system: Colcon</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/O_anz">Ref</a>]<p></p>
+
+  <pre><code class="nohighlight">
+    └── ros_ws 
+      └── src
+      └── <span class="highlight-word">build</span>
+      └── <span class="highlight-word">install</span>
+      └── <span class="highlight-word">log</span>
+  </code></pre>
+
+  The highlighted directories are created by colcon.
+</section>
+
+<section id="1"><h1>Steps</h1>
+  <subsection id="1.0"><h1>Source an underlay</h1>
+    <code>underlay</code> refers to an existing ROS2 installation that will provide a workspace with the necessary build dependencies for its packages.
+
+    <p>
+      A workspace will be an overlay on top of the existing ROS 2 installation.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Build the workspace</h1>
+    <pre><code class="bash">
+      colcon build --symlink-install
+    </code></pre>
+  </subsection>
+
+  <subsection id="1.2"><h1>Source the environment</h1>
+    When colcon has completed building successfully, the output will be in the install directory. colcon will have generated bash/bat files in the install directory to help set up the environment. These files will:
+    
+    <ul>
+      <li>Add all of the installed executables or libraries to the path and library paths.</li>
+      <li>Provide any bash or shell commands exported by the built packages.</li>
+    </ul>
+
+    <pre><code class="bash">
+      source install/setup.bash
+    </code></pre>
+  </subsection>
+</section>
+
+<section id="2"><h1>--symlink-install</h1>
+  colcon normally copies files into the install folder. If a source file changes, nothing in install changes until a rebuild. With <code>--symlink-install</code>, instead of copying files, colcon creates symbolic links (shortcuts) that point back to the original source files.
+
+  <p>
+    It only helps with non-compiled files (Python scripts, YAML configs, launch files, etc.). C++ still needs a full rebuild because the compiler has to actually process the source.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Covariance", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Covariance</h1>
+<section id="0"><h1>Use</h1>
+    A <i>covariance matrix</i> summarises the <n>pairwise correlations</n> between variables in a dataset. It quantifies the spread, uncertainty, or variability of a dataset.
+</section>
+
+<section id="1"><h1>Features</h1>
+  A covariance matrix is
+  <ul>
+    <li>A square matrix.</li>
+    <li><i>Symmetric</i> when the covariance between variables $i$ and $j$ (2D example) is the same as that between variables $j$ and $i$.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Linear transformation</h1>
+  The covariance matrix of a random vector $x$ is defined as the expected value of the outer product of its deviations from the mean:
+  $$
+    \Sigma_x = E[(x - \mu)(x - \mu)^\top]
+  $$
+  
+  If a linear transformation is applied to $x$ such that $y = Cx$, the covariance of the new variable $y$ becomes:
+  $$
+    \Sigma_y = E[(Cx - C\mu)(Cx - C\mu)^\top]
+  $$
+  
+  By using the property of transposes $(AB)^\top = B^\top A^\top$, $C$ matrices can be factored out:
+  $$\begin{align*}
+    \Sigma_y &= E[C(x - \mu)(x - \mu)^\top C^\top] \\
+      &= C E[(x - \mu)(x - \mu)^\top] C^\top \\ 
+      &= C \Sigma_x C^\top
+  \end{align*}$$
+
+  The sandwich structure ($C \dots C^T$) ensures that the covariance is always $\geq 0$, symmetric and positive semi-definite, which physically means the output cannot have negative uncertainty.
+</section>
+</chapter>
+
+</body>
+</html>

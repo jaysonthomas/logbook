@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Residual functions", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Residual functions</h1>
+<section id="0"><h1>Log domain interior point method</h1>
+  From the log domain interior point method <a href="../sol/logDomainIp.html#3.2">KKT system</a>, the residual is:
+  $$
+    \begin{bmatrix}
+      \nabla f - c^\top \sqrt\rho e^{-\sigma} \\
+      c(x) - \sqrt\rho e^\sigma
+    \end{bmatrix}
+  $$
+</section>
+
+<section id="1"><h1>True KKT residual</h1>
+  $$r(z) = \begin{bmatrix}
+    \nabla f(x) - \nabla c(x)^\top \lambda \\
+    \min(\lambda, 0) \\
+    \min(c(x), 0) \\
+    \lambda c(x)
+  \end{bmatrix}$$
+
+  Where $\lambda = \sqrt{\rho} \; e^{-\sigma}$
+
+  <ul>
+    <li>Stationarity: The first term checks if the gradients are parallel.</li>
+    <p>
+      <li>Complementary Slackness: $\lambda c(x)$ ensures that either the constraint is active ($c(x) = 0$) or the multiplier is zero ($\lambda = 0$).</li>
+    </p>
+  </ul>
+
+  Redundant checks:
+  <ul>
+    <p>
+      <li>
+        Dual Feasibility: $\min(\lambda, 0)$ checks if the multiplier has violated the non-negativity constraint $\lambda \geq 0$. (Note: Because $\lambda = e^{-\sigma}$, this term is mathematically guaranteed to be $0$ unless there is numerical underflow).
+      </li>
+    </p>
+
+    <li>
+      Primal Feasibility: $\min(c(x), 0)$ checks if the inequality constraint $c(x) \geq 0$ is satisfied.
+    </li>
+  </ul>
+  
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Python", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Python</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="matplotlib/main.html">Matplotlib</a></li>
+    <li><a href="pandas/main.html">Pandas</a></li>
+    <li><a href="scipy/main.html">Scipy</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Numpy</h1>
+  <ul>
+    <li><a href="numpy/randomGaussNoise.html">Generating random gaussian noise</a></li>
+    <li><a href="numpy/mgrid.html">Mesh grid</a></li>
+    <li><a href="numpy/sort.html">Sort</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Syntax</h1>
+  <ul>
+    <li><a href="syntax/class.html">Class</a></li>
+    <li><a href="syntax/function.html">Function</a></li>
+    <li><a href="syntax/imports.html">Imports</a></li>
+    <li><a href="syntax/iteration.html">Iteration</a></li>
+    <li><a href="syntax/list/main.html">List</a></li>
+    <li><a href="syntax/regex.html">Regex</a></li>
+    <li><a href="syntax/string.html">String</a></li>
+  </ul>
+</section>
+
+<section id="3"><h1>Pip</h1>
+<pre><code class="python">
+pip3 show drake
+pip3 install drake==1.10.0  
+pip3 install test.whl --force-reinstall
+pip3 --version
+python3.10 -m pip install ###
+python3 --version
+python -m pip install --upgrade pip
+python -m pip install --upgrade black==23.12.1
+</code></pre>
+</section>
+
+<section id="4"><h1>Type hinting</h1>
+<pre><code class="python">
+def greet(name: str) -> str:
+  temp : str | None = "Hello"
+  return temp + ", " + name
+</code></pre>
+
+  Here, <code>name</code> is of type string. The return type indicated by <code>-&gt</code> is of the same type. The variable <code>temp</code> can either be of type string or None; it is assigned the value "Hello". The output is: "Hello, " followed by the name.
+
+  <subsection id="4.0"><h1>Stub files</h1>
+    In Python, stub files with a .pyi extension are used for type hinting without providing the actual implementation code. These stub files contain type information for functions, classes, and modules, allowing static type checkers and IDEs to analyze code for potential type-related issues without the need for the full implementation.
+
+    <p>
+      For example, a module called example.py, you might have a corresponding stub file named example.pyi.
+    </p>
+
+<pre><code class="python">
+# example.py
+def add(x: int, y: int) -> int:
+  return x + y
+
+# example.pyi
+def add(x: int, y: int) -> int: ...
+</code></pre>  
+
+    The ellipsis <code>...</code> is used to indicate that this is a stub and doesn't include the actual function implementation.
+  </subsection>
+</section>
+
+<section id="5"><h1>Python configuration</h1>
+  [<a href="https://t.ly/dMtsd">Ref</a>] <br>
+  To see the options:
+<pre><code class="bash">
+sudo update-alternatives --config python
+</code></pre>
+
+  If there are no errors:
+<pre><code class="bash">
+update-alternatives: error: no alternatives for python3  
+</code></pre>
+    
+  To install alternatives:
+<pre><code class="bash">
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.4 1
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2  
+</code></pre>
+  
+  To set an alternative (can also use the config option):
+<pre><code class="bash">
+sudo update-alternatives  --set python /usr/bin/python3.6  
+</code></pre>
+</section>
+
+<section id="6"><h1>Operators</h1>
+  <ul>
+    <li><code>Set Union</code></li>
+<pre><code class="python">
+s1 = {'a', 'b'}
+s2 = {'c', 'b'}
+s = s1 | s2
+print(s)  
+</code></pre>    
+
+    The operator <code>|</code> returns a new set that consists of distinct elements from both set1 and set2. Output: {'b', 'c', 'a'}
+  </ul>
+</section>
+
+<section id="7"><h1>Python learning from Drake python api</h1>
+  <ul>
+    <li>Random number generator</li>
+    <a href="https://t.ly/di5q">Here's</a> a stackoverflow post to encourage looking
+    into <code>RandomState</code> a bit more.
+<pre><code class="python">
+random_state = np.random.RandomState(seed)
+# Constructs a random number generator. And then we make the following call to actually
+# generate the random numbers <a href="https://t.ly/kbB4">ref</a>:
+random_state.rand(nrows, ncols)
+# Or generate a single number.
+random_state.rand()
+</code></pre>
+
+    <li>Array with evenly spaced elements</li>
+<pre><code class="python">
+np.arange(start, end, interval_between_each_element)
+</code></pre>
+
+    <li>Stack arrays vertically</li>
+<pre><code class="python">
+outputArray = np.vstack(array1, array2)
+</code></pre>
+  </ul>
+</section>
+
+<section id="8"><h1>General</h1>
+  <ul>
+    <li>For loop to iterate through list with indices</li>
+    <a href="https://t.ly/SLyk">Ref</a>.
+<pre><code class="python">
+  for i, f in enumerate(freq):
+
+  # i will contain the indices from 0 to len(freq)-1
+</code></pre>
+
+    <li>Another way of writing a for loop</li>
+    The normal way:
+<pre><code class="python">
+  filteredFreq = np.empty(len(freq))
+
+  for i, f in enumerate(freq):
+    if (fpass-50 < i < fpass+50):
+      if (f > 1):
+        filteredFreq[i] = f
+      else:
+        filteredFreq[i] = 0
+    else:
+      filteredFreq[i] = 0
+</code></pre>
+
+    The condensed form:
+<pre><code class="python">
+  filteredFreq = np.array([f if (fpass-50 < i < fpass+50 and f>1) else 0 for i, f in enumerate(freq)])
+</code></pre>
+  </ul>
+</section>
+
+<section id="9"><h1>Lambda</h1>
+  <ul>
+    <li>Sorting</li>
+<pre><code class="python">
+  sorted(input, key=lambda item: item[1]) 
+</code></pre>    
+    
+    <code>input</code> is a list of tuples. <code>Tuples</code> are used to 
+    store multiple items in a single variable.
+    An example:
+<pre><code class="python">
+  Example for input:
+  [
+    ('test1', 1),
+    ('test2', 2)
+  ]
+</code></pre>   
+    More info on <code>sorted</code>, how it uses a key to decide the sorting
+    order - <a href="https://t.ly/E1z-">Ref</a>. Nice to see how a function can 
+    also be a key which leads well into a discussion on lambdas.
+
+    <p>
+      <code>Lambda</code> signifies an anonymous function. Here, it takes as input 
+      (<code>item</code>) each tuple from the list of tuples and returns the 
+      2nd element of each tuple. Some info on lambdas is
+      <a href="https://t.ly/xnN7">here</a>. Here, <code>sorted()</code>
+      breaks the list of tuples down into individual tuples and passes each one
+      to the lambda function to retrieve the key for sorting.
+    </p>
+  </ul>
+</section>
+
+<section id="10"><h1>Dictionary</h1>
+  <ul>
+    <li>Creation</li>
+    Create a dictionary from empty lists with particular column names.
+<pre><code class="python">
+  dict = {key: [] for key in ['lu', 'm', 'r', 'a', 'tau_f', 'tau_lower']}
+</code></pre>    
+
+    Data can now be appended to individual lists via their correspoding dictionary keys, example: <code>dict['lu'].append(3)</code>. A pandas dataframe can then be created from the dictionary using <code>df = pd.DataFrame(dict)</code>.
+
+    <p></p>
+    <li>.items()</li>
+<pre><code class="python">
+  a = {'t1':0, 't2':1, 't3':2}
+  print(a.items())
+  for i in a.items():
+    print(i)
+
+  Output:
+  dict_items([('t1', 0), ('t2', 1), ('t3', 2)])
+  ('t1', 0)
+  ('t2', 1)
+  ('t3', 2)
+</code></pre>    
+    <code>.items()</code> splits a dictionary into a list of (key,value) tuples that
+    we can iterate over.
+    <p></p>
+
+    <li>groupby and groups</li>
+<pre><code class="python">
+  df.groupby('columnName').groups
+</code></pre>    
+    This returns each unique row entry in the specific column as a dictionary with 
+    the 'row field name' as the key and the 'indices of occurrences' as the value.
+
+<pre><code class="python">
+  df.groupby('columnName').groups.items()
+</code></pre>    
+    This returns a list of tuples where each tuple is a pair containing 
+    (unique field name, list of indices of occurrences). We can now iterate
+    over this.
+
+<pre><code class="python">
+  pd.DataFrame([[ev, index.values] for ev, index in df.groupby('eventType').groups.items()],\
+                columns=['eventType', 'indices'])
+</code></pre>
+    'index' is a list of indices of occurrences of the particular row-event. But 
+    it is of type <code>'pandas.core.indexes.numeric.Int64Index'</code> which is 
+    converted to <code>numpy.ndarray</code> so we can use it as a list of ints.
+  </ul>
+</section>
+
+<section id="11"><h1>Timing python code</h1>
+<pre><code class="python">
+python -mtimeit "import numpy as np; a = np.empty((100,100));" "a.fill(np.nan)"
+</code></pre>  
+</section>
+
+<section id="12"><h1>Relationships</h1>
+  <subsection id="12.0"><h1>Extension (Inheritance)</h1>
+    Inheritance is a mechanism by which a class inherits properties and behaviors (attributes and methods) from another class. It is used to model an "is-a" relationship, where a derived class is a specialized version of the base class.
+
+<pre><code class="python">
+class Animal:
+  def speak(self):
+      pass
+
+class Dog(Animal):
+  def speak(self):
+      return "Woof!"
+</code></pre>    
+  </subsection>
+
+  <subsection id="12.1"><h1>Composition</h1>
+    Composition is a design principle where a class contains objects of other classes as part of its attributes, to achieve some functionality, and the relationship is referred to as a "has-a" relationship.
+<pre><code class="python">
+class Engine:
+  def start(self):
+      pass
+
+class Car:
+  def __init__(self):
+      self.engine = Engine()
+
+  def start_engine(self):
+      self.engine.start()
+</code></pre>    
+      
+  </subsection>
+
+  <subsection id="12.2"><h1>Aggregation</h1>
+    Aggregation is similar to composition but with a key difference - the contained objects have an independent lifecycle, can exist outside the container and can be shared among multiple containers. It represents a "has-a" relationship without strong ownership.
+
+<pre><code class="python">
+class Department:
+  def __init__(self, name):
+      self.name = name
+
+class University:
+  def __init__(self):
+      self.departments = []
+
+  def add_department(self, department):
+      self.departments.append(department)
+</code></pre>    
+      
+  </subsection>
+</section>
+
+<section id="13"><h1>Set</h1>
+  A set is an unordered collection of unique elements defined using <code>{}</code> or the <code>set()</code> constructor. Sets do not allow duplicate elements, and the order of elements is not guaranteed, i.e. they don't support indexing and hence indices cannot be used to access elements in a set. The presence of an element within a set can be checked using the <code>in</code> keyword.
+
+<pre><code class="python">
+my_set = {1, 2, 3, 4, 5}
+element_to_check = 3
+if element_to_check in my_set:
+  print('True')
+</code></pre>
+</section>
+
+<section id="14"><h1>Musings</h1>
+  <ul>
+    <li>What does <code>enumerate</code> in a for loop do?</li>
+    <a href="https://t.ly/txYV">Ref</a>.
+    <br><br>
+
+    <li>','.join(list), list.extend(['a','b']), list.copy()</li>
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

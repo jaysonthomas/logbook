@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Advance State", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Advance State</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    X_{n+1} = X + (\dot{X} \cdot dt) 
+  $$
+  $$\begin{align*}
+    X = \begin{bmatrix} 
+          x & y & z & 
+          \phi & \theta & \psi& 
+          \dot{x} & \dot{y} & \dot{z} & 
+          p & q & r
+        \end{bmatrix}^T
+  \end{align*}$$
+
+  $$\begin{align*}
+    X = \begin{bmatrix} 
+          \dot{x} & \dot{y} & \dot{z} & 
+          \dot\phi & \dot\theta & \dot\psi& 
+          \ddot{x} & \ddot{y} & \ddot{z} & 
+          \dot{p} & \dot{q} & \dot{r}
+        \end{bmatrix}^T
+  \end{align*}$$
+
+  $\dot{x},\dot{y},\dot{z}$ - This is already present in the state.
+  <p>
+    $\dot\phi, \dot\theta, \dot\psi$ - <a href="angVelInWorldFrame.html">Angular velocities in world frame</a>
+  </p>
+
+  $\ddot{x}, \ddot{y}, \ddot{z}$ - <a href="linAccel.html">Linear accelerations</a>
+    
+  <p>
+    $\dot{p}, \dot{q}, \dot{r}$ - <a href="angAccelInBodyFrame.html">Angular accelerations in body frame</a>
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

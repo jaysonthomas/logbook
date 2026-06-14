@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("2D Control: Non-linear control", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>2D Control: Non-linear control</h1>
+<section id="0"><h1>Overview</h1>
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../../figures/drone/46b_nonLinearControl2d.png"/>
+    </figure>
+  </div>
+
+  Equations:
+  <div style="text-align:center;">
+    $$\begin{array}{c|c} 
+      \text{Linearised} & \text{Non-linear} \\ 
+      \hline
+      \ddot{y}=g\phi & \ddot{y} = \frac{u_1}{m} sin\phi \\
+      \ddot{z}=g-\frac{u_1}{m} & \ddot{z}=g-\frac{u_1}{m}cos\phi \\
+      \ddot{\phi} = \frac{u_2}{I_{xx}} & \ddot{\phi} = \frac{u_2}{I_{xx}}
+    \end{array}$$
+  </div>
+
+  Solving for $u_1, \phi_c, u_2$:
+  $$\begin{align*}
+    u_1 &= \frac{m(g - \ddot{z})}{cos\phi} \\
+    \phi_c &= sin^{-1} \left( \frac{m\ddot{y}_t}{u_1} \right) \\
+    u_2 &= I_{xx} \ddot{\phi}
+  \end{align*}$$
+
+  In the non-linear case, the thrust needs to be increased when the drone is tilted.
+</section>
+
+<section id="1"><h1>Control loops</h1>
+  To make use of the non-linear dynamics in the controller, the linearised cascade controller does not need to change much. The aim is still to have 3 double integrator equations that can be controlled.  But to get those, this time some non-linear transformations will be required resulting in 2 big changes to the overall data flow. 
+
+  <subsection id="1.0"><h1>Changes to the linearised cascade controller</h1>
+    <ul>
+      <li>The $z$ and $y$ motions are re-coupled by passing the commanded thrust to the $y$ position controller as well as to the drone. </li>
+
+      <p>
+        The effect that thrust will have on the y motion is not considered, even if it will end up impacting both the z and y motions.
+      </p>
+      
+      <li>The commanded thrust is computed based solely on the desired and measured $z$ motion and the current measured angle $\phi$</li>
+    </ul>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

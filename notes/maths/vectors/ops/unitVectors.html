@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Operations related to unit vectors", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Operations related to unit vectors</h1>
+<section id="0"><h1>Derivatives</h1>
+  <div class="img-container">
+    <figure2>
+      <img style="height:100px; width:auto"
+      src="../../../../figures/maths/vectors/1_unitVectors.png"/>
+    </figure2>
+  </div>
+  $$\begin{align*}
+    \hat{d} &= -\hat{j}\,cos\theta + \hat{i}\,sin\theta \\
+    \hat{q} &= \hat{j}\,sin\theta + \hat{i}\,cos\theta \\\\
+    
+    \dot{\hat{q}} &= \hat{j}\,\dot\theta cos\theta - \hat{i}\,\dot\theta sin\theta \\
+                  &= -\dot\theta \, \hat{d} \\
+    \dot{\hat{d}} &= \hat{j}\,\dot\theta sin\theta + \hat{i}\,\dot\theta cos\theta \\
+                  &= \dot\theta \, \hat{q} \\\\
+
+    \ddot{\hat{q}} &= -\ddot\theta \, \hat{d} - \dot\theta^2\,\hat{q} \\
+    \ddot{\hat{d}} &= \ddot\theta \, \hat{q} - \dot\theta^2 \, \hat{d} 
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

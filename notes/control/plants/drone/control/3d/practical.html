@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("3D control: Practical considerations", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>3D control: Practical considerations</h1>
+<section id="0"><h1>Overview</h1>
+  In an initial version of the simulation, it is assumed that the rotors can generate infinite thrust both upward and downward, and instantaneously change thrust. 
+  
+  <p>
+    This means the controllers will work for a wide range of PID parameters - using aggressive proportional gains will always make the controller perform better. But, this is not practical. If rotors could really satisfy the above assumptions, then any time the quadrotor deviated from the target trajectory, the vehicle could instantly command whatever massive force or torque was required to immediately correct itself.
+  </p>
+ 
+  In reality, motors have a minimum and maximum thrust that they can produce. And the minimum thrust is a small positive number meaning that motors on a drone can only generate thrust in one direction. Additionally, they have a minimum and maximum rate at which they can change the thrust that they produce. 
+
+  <p>
+    Parameter tuning becomes much more important when these actuation constraints are taken into account. In the real world, gains that are too high can actually cause instability.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

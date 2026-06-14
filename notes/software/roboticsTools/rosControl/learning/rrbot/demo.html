@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Running ros_control demo", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Running ros_control demo</h1>
+<section id="0"><h1>Steps overview</h1>
+  <ul>
+    <li>Create ros workspace/src</li>
+    <li>Git clone the control repo</li>
+    <li>Install necessary ros dependencies.</li>
+    <li>Source the ROS setup, build and source the workspace setup.</li>
+    <li>Run demo simulation</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Steps</h1>
+  <pre><code class="bash">
+    cd ws1
+    rosdep install -r --from-paths . --ignore-src -y    
+    source /opt/ros/kilted/setup.bash
+    colcon build --symlink-install
+    source install/setup.bash
+    ros2 launch ros2_control_demo_example_1 rrbot.launch.py
+  </code></pre>
+</section>
+
+<section id="2"><h1>References</h1>
+  <ul>
+    <li><a href="https://t.ly/HlR2F">ROS2 control tutorial</a></li>
+    <li><a href="https://t.ly/g6rix">Mike youtube</a></li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Weak Pointers", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Weak Pointers</h1>
+<section id="0"><h1>Introduction</h1>
+  <code>std::weak_ptr</code> behaves similar to the shared pointer but does not increase the reference counter.
+
+  <p>
+    Similar to shared pointers, there can be multiple weak pointers to the same resource. The main difference though is that weak pointers do not increase the reference count. Weak pointers hold a non-owning reference to an object that is managed by another shared pointer.
+  </p>
+
+  The following rule applies to weak pointers: You can only create weak pointers out of shared pointers or out of another weak pointer. 
+</section>
+
+<section id="1"><h1>Example 1</h1>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/23a_weak_pointer.cpp">Example</a><br>
+  The code on the right shows a few examples of how to use and how not to use weak pointers. The output looks as follows:
+<pre><code>
+shared pointer count = 1
+shared pointer count = 1
+</code></pre>
+  
+  First, a shared pointer to an integer is created with a reference count of 1 after creation. Then, two weak pointers to the integer resource are created, the first directly from the shared pointer and the second indirectly from the first weak pointer. As can be seen from the output, neither of both weak pointers increased the reference count. At the end of main, the attempt to directly create a weak pointer to an integer resource would lead to a compile error.  
+</section>
+
+<section id="2"><h1>Example 2</h1>
+  <a href="../../../../../../jlib/cpp/examples/fundamentals/23b_weak_pointer.cpp">Example</a><br>
+
+  As we have seen with raw pointers, you can never be sure whether the memory resource to which the pointer refers is still valid. With a weak pointer, even though this type does not prevent an object from being deleted, the validity of its resource can be checked. The code on the right illustrates how to use the expired() function to do this.
+
+  <p>
+    Thus, with smart pointers, there will always be a managing instance which is responsible for the proper allocation and deallocation of a resource. In some cases it might be necessary to convert from one smart pointer type to another. Let us take a look at the set of possible conversions in the following.
+  </p>
+</section>
+  
+</chapter>
+
+</body>
+</html>

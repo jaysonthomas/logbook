@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Installation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Installation</h1>
+<section id="0"><h1>Steps</h1>
+  <pre><code class="bash">
+    sudo apt-get install ros-${ROS_DISTRO}-ros-gz -y
+  </code></pre>  
+
+  Test
+  <pre><code class="bash">
+    gz sim
+  </code></pre>  
+</section>
+
+</chapter>
+
+</body>
+</html>

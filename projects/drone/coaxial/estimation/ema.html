@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("EMA", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>EMA</h1>
+<section id="0"><h1>Overview</h1>
+  The sensor used by the quadrotor estimates the altitude with a weighted average defined as:
+  $$
+    \hat{x}_t = \alpha \hat{x}_{t-1} + (1-\alpha)y_t
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      x_t &:& \text{True state of the drone at time t}  \\ 
+      y_t &:& \text{Measurement (of altitude) made at time t} \\
+      \hat{x}_t &:& \text{Estimate of the true state at time t}
+    \end{array}$$
+  </div>
+
+  Since the trajectory points are generated at 100Hz, the sensor samples measurements at 100Hz. This doesn't meet the minimum Nyquist frequency criteria. With $\alpha=0.95$, the cut off frequency becomes ~15Hz using the following approximation:
+  $$
+    \alpha \approx \frac{2\pi f_c}{f_s}
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

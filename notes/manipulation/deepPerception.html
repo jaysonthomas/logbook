@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Deep Perception", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Deep Perception</h1>
+
+<section id="0"><h1>Limitation of using geometry alone for perception</h1>
+  <ul>
+    <li>No understanding of what an object is</li>
+    It was purely based on points in space (point cloud).
+    <ul>
+      <li>Double picks</li>
+      1 grab might have picked 2 objects. This might not
+      be good depending on the application.
+
+      <li>Might pick a heavy object from 1 corner</li>
+      If a hammer is picked up from the corner, it might slip 
+      out because of a huge wrench. From the geometry alone,
+      we have no understanding that there's a heavy object at 
+      the end and we should pick it up at the center of mass 
+      so we don't get a big moment.
+    </ul>
+    <p>
+      <li>Partial views</li>
+      If we don't have enough geometric info in the PC,
+      we won't be able to infer what's behind an object.
+    </p>
+
+    <li>Depth returns don't work for transparent objects</li>
+  </ul>
+</section>
+
+<section id="1"><h1>How does Deep Learning help?</h1>
+  To do more effective manipulation, we need to understand 
+  what objects are and the properties of objects. 
+
+  <p>
+    Deep learning, deep-perception 
+    follows a statistical approach. 
+    The reason we know to pick up a hammer in the middle 
+    is because we've picked up a bunch of things that look 
+    like hammers in the image and some of 
+    them fell out of the hand and some of them didn't.
+    The reason we know the mug should be on the 
+    table is because we saw a lot of pictures and the mugs 
+    were never up in the air; they were always on the table.
+  </p>
+
+  If we can correlate the current perception 
+  with enough of past data, then it can be a very 
+  strong prior that overcomes some of the limitations. 
+  It then does in some mystical magical way capture 
+  an understanding/reasoning of the object.
+
+  <p>
+    Sometimes, DL is overstated and it doesn't 
+    involve deep thinking. But, because perception 
+    has started to work so well, it has  
+    opened up many possibilities in manipulation. 
+    It's interesting to bring ideas from dynamics and 
+    control closer to common sense reasoning which then opens 
+    control to a much more diverse set of tasks.
+  </p>
+  
+  <subsection id="1.0"><h1>What will be covered</h1>
+    Will only focus on 
+    parts that are relevant to robotics and manipulation i.e.
+    <ul>
+      <li>How to generate training data for instance for
+        manipulating an object
+      </li>
+      <li>What kind of questions can we ask a deep network</li>
+    </ul>
+    We'll only discuss how the tools work but only 
+    enough to be able to use them. We won't discuss:
+    <ul>
+      <li>How to architect them differently - neural 
+        architectures (links in the notes)</li>
+      <li>Choose different number of layers</li>
+    </ul>
+  </subsection>
+</section>
+
+<section id="2"><h1>What questions can we ask of the NN?</h1>
+  The input to the NN is RGB images. We could feed in
+  the depth channel as well. Some people represent
+  the depth info differently and feed it in.
+  But, a surprisingly amount of successful work have 
+  been done on just RGB.
+
+  <p>
+    What are the questions we can ask the deep part of 
+    our perception system. We'll start with standard
+    computer vision questions and see the kind of loss
+    functions people have been successful with.
+    We are building up toward being able to train the NN
+    to be a pose estimation algorithm so that the NN will
+    output a pose.
+  </p>
+
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/26_questionsWeCanAskOfANN.png"/>
+      <figcaption>
+        Questions we can ask of a NN
+      </figcaption>
+    </figure>
+  </div> 
+
+  <ul>
+    <li>Image recognition</li>
+    If we ask the NN to recognise objects in the image,
+    it will output a set of numbers.
+    The NN can be treated as a big function 
+    that has a vector output (1 for horse, 1 for dog, 
+    cat, sheep etc) and a big vector input. The most 
+    basic question we can ask is, is there a sheep 
+    in the image - true or false? We can generate a lot of 
+    training data where someone tells the NN, yes there's 
+    a sheep.
+
+    <p>
+      For this particular task, for every image we put in,
+      the training data would say:
+      a [1,0,0,0] for the ones that have only a sheep and 
+      [0,1,0,0] for the ones that have a dog. 
+      The network will predict a probability for each
+      of its outputs. In practice, we take the largest 
+      detection or we'll apply some threshold.
+    </p>
+
+    <li>Object detection</li>
+    We now want to aim for 1 step higher than image
+    recognition.
+
+    <p>
+      Here, we're not just wanting to know if 
+      there's a sheep in the image or not, but we want to know
+      where the sheep is. A box is place around the objects
+      being detected. In 2d, a bounding box is placed,
+      in 3d, an oriented bounding box or an axis aligned 
+      bounding box is placed. We can now detect a dog and 
+      a sheep potentially.      
+    </p>
+
+    <li>Semantic segmentation</li>
+    We now want to the pixels in the image corresponding to
+    our object. We have an image in and an image out instead
+    of probabilities etc. Now, every pixel is labeled either
+    a dog or a sheep or don't know.
+    The training data for semantic segmentation would be
+    similar.
+
+    <p>
+      <li>Instance segmentation</li>
+      Different sheep are coloured differently 
+      so that we can now tell there are multiple sheep and
+      distinguish their boundaries.      
+    </p>
+    
+    These are the basic questions for which 
+    we have massive data sets to train with. 
+    For manipulation, we want to ask more questions.
+
+    <p>
+      Achieving instance segmentation would already 
+      power a lot of the manipulation pipelines. And hence
+      we'd already be in good shape to do more.      
+    </p>
+    For instance, if we want to pick the cheez-it box
+    from a cluttered bin, what we really want is an 
+    instance segmentation pipeline that gives us
+    the pixels associated with it. Then we can do
+    antipodal grasping by restrict our search to the points 
+    associated with just the cheez-it box.    
+  </ul>
+</section>
+
+<section id="3"><h1>Outcome of creating the COCO dataset</h1>
+  The COCO dataset was created by crowdsourcing it.
+  People clicked pixel-by-pixel and labeled
+  images. This powered instance segmentation labels 
+  but was extremely expensive to to generate to begin 
+  with. But once we had it a lot of things happened 
+  very quickly. But, they couldn't have created labels
+  for all the objects we care about.
+
+  <p>
+    The biggest results from all this deep learning for 
+    perception is that these networks transfer 
+    really well. We don't have to regenerate 
+    a data set that compares with the size or quality of 
+    labels of the coco data set. We can generate a very 
+    small data set, fine-tune a network that 
+    that was trained initially on the big labeled coco dataset
+    and transfer it to our system/apply it to our problems.
+  </p>
+
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/27_fineTuning.png"/>
+      <figcaption>
+        <a href="https://t.ly/A4Jr">Fine tuning</a>
+      </figcaption>
+    </figure>
+  </div> 
+
+  This is an important but simple pipeline to understand.
+  It's surprising that it works. We've got a big multi-layer 
+  network, that has got the original big imagenet or coco 
+  trained model that we download from the web because 
+  someone else spent a lot of GPU cloud resources to 
+  train it from scratch. We can now apply 
+  it to the objects we want to manipulate (not 
+  elephants but a mustard bottle detector for instance),
+  by choping off the head and using the remaining layers of the 
+  network. Replace the output layer with the
+  outputs we care about with some random initialization. 
+  We can then train on our smaller dataset, that may be
+  narrow and curated for our task. We don't have to retrain
+  on the original dataset. 
+  
+  <p>
+    Somehow magically the network 
+    that was trained on the imagenet and coco datasets
+    is able to capture enough understanding about 
+    objects in images such that a relatively small amount 
+    of training on a narrow data set seems to be all that
+    is required to transfer that learning. This is one of
+    the biggest success stories.
+  </p>
+
+  It took a dataset as big as imagenet to start 
+  seeing this quality of generalisation. 
+  
+  <p>
+    Question:
+    <br>
+    How do we know if at task is a good candidate for transfer 
+    learning? This is an active research question.
+    How far can you be from the original task in order 
+    to still be successful with transfer learning.
+    Nowadays people are trying to do
+    self-supervised learning and trying to get a broader 
+    initial network from just snarfing up the web. 
+    There's some intuition that people have of the    
+    distribution of the trained dataset and a metric
+    of how similar a new distribution (task) can be.
+    But, the differences can surprisingly be a lot,
+    and the network still works.
+  </p>
+</section>
+
+<section id="4"><h1>How to generate labels?</h1>
+  How to generate the smaller amount of training data?
+
+  <p>
+    We can use Iterative Closest Point (ICP).
+    Say we want to pick up a drill that is in a cluttered
+    environment. A drill wasn't in the COCO dataset.
+    People are now releasing coco sized datasets that have 
+    depth information. Even if we're just going to train 
+    an rgb based network (if we have the luxury of depth, 
+    great!), we can do a <i>dense reconstruction</i> -
+    we build an approximate CAD model or a 
+    fused point cloud of all our scans. We can then 
+    do ICP on the 3d view so we can find the drill 
+    in the generated point cloud. We can then go through all 
+    the images, pixel-by-pixel and automatically provide a
+    label to the pixels that are the projected version of the 
+    ICP fit.
+  </p>
+  
+  By having a point cloud from all different sides, 
+  we can make a nice point cloud which ICP can work on. 
+  We can now re-render the image effectively with just the 
+  green drill labeled in all the pixels. 
+  We now have a lot of training data that is labeled drill 
+  or not drill. A lot of companies do this. We called our
+  pipeline labelfusion.
+
+  <p>
+    This way, we can generate lots of data very fast 
+    but all of these images are very similar. They don't cover 
+    a lot of diverse backgrounds. In fact, we could probably 
+    down sample it dramatically and do just as well.
+  </p>  
+
+  People use this a lot. The hope when the project was started 
+  was that we could write strong enough global 
+  point cloud registration algorithms - the global versions 
+  of ICP so that we could have it completely automated. If
+  the robot could walk around, do its collection, it would 
+  would find the drill and build the model.
+  We would be generating data like crazy. 
+  But ICP is not very robust unfortunately. So in practice,
+  in order to make things work, we have a user interface 
+  where after we take the scans, we have a human say 
+  'look here for the drill' with 3 clicks to give a rough
+  pose. ICP then takes those very approximate rapid clicks 
+  (which permeates to all images because the gui that 
+  the human clicks on is able to do that), finds the ICP for
+  the whole dataset very fast and generates all the training
+  images.
+</section>
+
+<section id="5"><h1>Simulation vs real world data generation</h1>
+  ICP can converge close, but not quite.
+  Even though it's an effective pipeline and generates 
+  lots of data, even those imperfections of ICP are a 
+  nuisance for the training process.
+
+  <p>
+    Simulation data with its perfect labels
+    has started to contend well with natural data
+    that has imperfect human labeled errors.
+    One would think that natural data is
+    always better than simulated data, but it's not true. 
+    Because the pixel by pixel quality is better in sim, 
+    even if the scenes are less diverse, people have 
+    switched their pipelines 
+    slowly from a purely real world data to using 
+    purely simulated data to generate these training sets. 
+  </p>
+  
+  People have also started using mostly 
+  simulation data with a little bit of real-world data
+  sprinnkled in just for good measure. 
+</section>
+
+<section id="6"><h1>The simulation pipeline</h1>
+  Drake has an Rgbd sensor module that gives out depth,
+  rgb colour and labeled images.
+  It outputs an image that's the same size as what the camera
+  would produce. 
+  For the output of the labeled image, every pixel is assigned
+  an integer value (pixels belonging to the same object have
+  the same unique identifier) which is mapped with the hash to 
+  what type of object it is. Drake adds in the colours
+  based on the integer numbers for visualisation purpose.
+
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/28_instanceSegmentation.png"/>
+      <figcaption>
+        Drake's RGBD sensor
+      </figcaption>
+    </figure>
+  </div> 
+
+  Drake knows about certain objects. For instance, 
+  due to the presence of mustard.sdf, it can generate
+  labeled images containing mustard bottles. Do we want to 
+  use this known object pipeline on the deep network side?!
+
+  <p>
+    In the beginning, we tried hard to use the best
+    renderers and the best ray tracers (to get shadows right).
+    If you just want to pick some stuff, using tranfer
+    learning, even opengl works fine. Only when building
+    really high-end systems, do those details matter.
+    We can very far even with poor quality graphics.    
+  </p>
+</section>
+
+<section id="7"><h1>How to go from image recognition to object detection</h1>
+  We won't discuss architecture, just why we can ask
+  questions like how many objects are in the scene. 
+  
+  <p>
+    Object detection in its simplest 
+    form is image recognition where we move a 
+    sliding window across the image and ask the image 
+    recognition question for each box. We then have a 
+    threshold and only keep the boxes that have a high 
+    recognition score.  
+  </p>
+  
+  In <i>RCNN</i>, we have a lot of different 
+  images of different sizes and different shapes. 
+  We run each one of them through a convolutional network 
+  and ask the basic yes, no questions. 
+  This is how the first the object detectors were created.
+  
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/29_rcnn.png"/>
+      <figcaption>
+        RCNN
+      </figcaption>
+    </figure>
+  </div> 
+  
+  Nowadays people do more advanced versions, but 
+  actually not crazy more advanced. Previously, it was 
+  expensive to try every possible region. 
+  So we tried to come up with some computer vision based
+  criteria on what regions would be good regions to evaluate 
+  to make the RCNN faster. 
+
+  <p>
+    Then, <i>Faster RCNN</i> came about and said
+    let's use a NN to predict where the regions are. 
+    That's the <i>Region Proposal Network</i>. 
+    Then inside those regions, we'll do image recognition. 
+    This is how things normally go. We start off with
+    hand engineering something, then later replace it with
+    a NN. And at some point we've got a completely deep 
+    end-to-end thing. 
+  </p>  
+
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/30_fastserRCNN.png"/>
+      <figcaption>
+        Faster RCNN adds a region proposal network
+      </figcaption>
+    </figure>
+  </div> 
+
+  The Region proposal network gives out initial guesses
+  of where the regions are.  But, it not only asks if there
+  is an object in a box (which is also an image),
+  but also, if you were to do a small crop of that image 
+  then would it be able to predict within the tighter 
+  image (tighter bounding box) as well. So, the network 
+  would also output a crop value - the new bounding box 
+  regression.
+  
+  <p>
+    It used to be the case that we would have a fixed length
+    input and an output vector. For instance, the output
+    vector would be the probability of being a sheep or dog
+    [0.6, 0.2, 0.1..] etc.
+  </p>
+
+  If we have previously unknown number of objects in the 
+  scene, how do we architect the network? How do we have 
+  a variable number of outputs? We have multiple answers to 
+  that these days but the initial way that worked 
+  was using region proposal networks. Or just using any 
+  thresholded regions - i.e. evaluate the network many times
+  and then threshold. That led us to having a 
+  variable number of object recognitions or object detections 
+  in a single image.
+
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/31_maskRCNN.png"/>
+      <figcaption>
+        <a href="https://t.ly/RLJn">MaskRCNN</a>
+      </figcaption>
+    </figure>
+  </div> 
+
+  <i>MaskRCNN</i> involves the NN function where the input
+  is an image and the output is the pixel-by-pixel 
+  segmentation whether it's semantic or instance level. 
+  It is a combination of FCN and FasterRCNN.
+  It is a bit old, but still extremely good. MaskRCNN2
+  is out now. There's a <a href="https://t.ly/n1-D">
+  colab example</a> that does all of 
+  the data generation, the training and fine-tuning of 
+  the maskRCNN network for the clutter dataset.
+
+  <p>
+    When training deep models, 90% of the time is spent 
+    writing the data loader, to get it right - we've been given an image, 
+    but is it in the right format? Are the numbers from 
+    0-255 or 0-1 etc. If we get it wrong the network still 
+    learns something, but it doesn't learn the right thing. 
+    And it's really hard to realize that we made a mistake 
+    in the data loader. 
+  </p>
+
+  The mask that comes out of MRCNN in this example is just
+  the mustard bottle. It's an instance level detector.
+  If we change the indices, it will show the other mustard
+  bottle.
+
+  <p>
+    We generated a reasonably big data set for this example,
+    but a smaller dataset could have been used. The region
+    proposals are quite bad. There are some good ones when cropped down. We don't see the messiness of the region proposals if we only see the final output.
+  </p>
+
+  This pipeline would work for antipodal grasping.
+  Using this method, we could find the pixels corresponding to the mustard bottle, project them onto the point cloud to segment it, i.e. remove 
+  all points that aren't associated with those 
+  pixels. And then find the antipodal grasp on that.
+
+  <p>
+    There's a different notebook for generating the training data, one for training and one for testing. The training 
+    takes hours.
+  </p>    
+</section>
+
+<section id="8"><h1>Object representations</h1>
+  <ul>
+    <li>Mesh model + pose</li>
+    Here we feed the NN an input image and out comes the pose.
+    Implicitly in order to generate the training data we had a model generated using mustardmodel.sdf for instance. All we need is the pose and we can start manipulating that object. 
+  </ul>
+</section>
+
+<section id="9"><h1>Deep pose estimation</h1>
+  ICP doesn't work globally. It's hard to beat geometric perception for really fine estimation of the pose. 
+  But in terms of going from an image and having an initial guess, in the spirit of trying to find the needle in the haystack, deep learning pose estimation is a very nice approach. 
+  
+  <p>
+    In DP2, we're going to learn not to use pose estimation because once we have a deep network at work we can ask richer questions that are less specific to single object representations. There are more interesting object representations. But it's very helpful to to map the stuff we've already seen into the deep learning context. It's the
+    beginning of a marriage geometry and DL.
+  </p>
+
+  We're going to use our 1st method of object representation.
+  Which representation of pose should we use? x,y,z is good. And for orientation:
+  <ul>
+    <li>Roll, pitch, yaw</li>
+    Has singularities in its transform and a NN would have trouble
+    learning it. But it's a great starting point. 
+
+    <p>
+      <li>Quaternions</li>
+      The output is 4 real valued numbers (4 by 1) 
+      $\in\mathbb{R}^4$. We also need to normalize it to make it a unit quaternion by including a last layer to the network that does the normalization - it would just take the derivatives through that normalization function. This representation can 
+      have discontinuities but there are still better, more continuous representations.
+    </p>
+
+    <li>Axis angle</li>
+    Similar to unit quaternions but doesn't need to be normalised. Also has discontinuities.
+
+    <p>
+      <li>Rotation matrix</li>
+      We'll need to make sure to add in rotation matrix
+      constraints ($RR^T=I, det(R) = 1$). 
+      Rotation matrices basically parameterise the x,y,z
+      vectors.
+    </p>
+
+    <li>Keypoints - x,y,z corners of a cube</li>
+    <a href="https://bit.ly/3YZWGH5">Concept</a>.
+  </ul>
+  
+  Deep networks learn continuous functions. A function that is a continuous function, as we change pose angles for instance, the output changes continuously, is going to be better for the NN to learn. There's a series of papers about on the continuity of rotation representations for deep learning cited in the notes. 
+
+  <p>
+    The discontinuities in our representations are a little sneaky. Imagine, in 2d, we want to parameterize the total pose angle using $\theta\in[0,2\pi]$, i.e. the output of the network will be between 0 and $2\pi$.
+  </p>
+  There are 2 rotations, $\epsilon$ and $2\pi - \epsilon$. The 2 should be close, but the wrapping gives a discontinuity in this representation. So, it's easy to create a rotation matrix:
+  $
+    \begin{bmatrix}c\theta & -s\theta
+    \\s\theta & c\theta\end{bmatrix}
+  $
+  
+  But it's hard to unwrap and go the other way to get the orientation because the rotation matrix is still a smooth continuous function. But, we've limited our pose angle to 
+  a fixed range. So, unwrapping involves some decision making.
+  
+  <p>
+    The network needs us to be unambiguous in our choice of orientation. Similar to euler angles, even quaternions are ambiguous because because negative of the quaternion is the same rotation as the positive of the quaternion. 
+  </p>
+
+  There is an argument (need to find this source) that there is no transformation from rotation matrices to quaternions that don't have singularities.
+  
+
+  <p></p>
+  Ways to repair this problem:
+  <ul>
+    <li>Have more dimensions</li>
+    One way to repair this is to have 4 different rotation matrix to quaternion maps and combine all of their outputs to get a singularity free output. 
+
+    <p>
+      <li>SVD</li>
+      We can also parameterise the rotation matrix as
+      $\mathbb{R}^{3x3}$ and in the same way normalization was added as the last layer, we can add singular value decomposition so that we're projecting back to the closest rotation matrix.
+    </p>
+  </ul>
+
+  Does adding more dimensions cause the redundancy to go up?
+  That's not always true.
+
+  <p>
+    Imagine a simple rotation in $\theta$. We can represent every point using the 1st column of the rotation matrix i.e.$\begin{bmatrix}c\theta \\ s\theta\end{bmatrix}$ and ask the network to learn this. Even though it's more dimensions, we get a unique answer using the 2 numbers. It's the constraint $c^2\theta + s^2\theta = 1$ that saves us.
+  </p>
+  
+  Even in 4d, there's a unit quaternion constraint so we only really have 3 variables.
+  
+  <p>
+    These methods are able to resolve ambiguities in rotation only if the object is rotationally unique, i.e. it doesn't have any rotational symmetries. In practice there's all sorts of ambiguity in rotations - there are shapes that are perfectly symmetric around some rotations or there are things that are just ambiguous because of partial views.
+    For example, determining the pose of a mug without seeing its handle is ambiguous because it's symmetric until we see the handle. People have tried to learn an uncertainty representation (if we can't see the mug's handle, we have less confidence of its pose) along with orientations to give some confidence with labels (KOSNet paper). 
+  </p>
+
+  The way forward is to output a distribution over poses.
+
+  <p>
+    There are a lot of objects that are rotationally symmetric in one axis so the KOSNet paper focused its distribution representation on each axis independently. If we use euler angles for instance, it output a gaussian distribution (a mean and a covariance) for each euler angle. And that worked for mugs. When we see a mug with a handle, the uncertainty becomes narrow as opposed to being broader when no handle is seen. 
+  </p>
+
+  Generating labels for objects that are partially symmetric is tough. Using just CAD models, how do we say that the uncertainty distribution should be narrow or broad in certain regions. In mugs, we can hack it a bit (did it in the paper) by numerical differencing of images. But, it's a hard problem more generally. 
+  
+  <p>
+    We have to change the loss function to a maximum likelihood formulation. In getting the network to output a distribution over poses, if the maximum likelihood of the distribution it's producing has high probability in the true training set, then we should be happy; instead of matching the entire distribution to our training set because we can't produce that.
+  </p>
+
+  For each of the orientation representations, it is interesting to think what loss function would suit best. For instance, with quaternions we want to use geodesic distance as a loss function instead of L2 loss.
+
+  <p>
+    The overall summary/interesting idea here is that we can train a distribution over poses by only getting samples from the distribution instead of getting labels representing the entire distribution.
+  </p> 
+</section>
+
+<section id="10"><h1>Bingham distribution</h1>
+  What are the right ways to write distributions over orientations. Bingham distribution is a reasonable way to write distributions over unit quaternions.
+  
+  <div class="container">
+    <figure>
+      <img style="height:200px; width:auto"
+      src=
+      "../../../figures/manipulation/33_binghamDistribution.png"/>
+      <figcaption>
+        Bingham distribution
+      </figcaption>
+    </figure>
+  </div> 
+
+  Jared glover's picture representation in his thesis gives a very good mental picture. He did it in the context of a robot playing ping-pong. 
+  
+  <p>
+    How do we put a distribution over quaternions i.e. over the unit sphere in 4 dimensions that is also antipodal? Gaussians don't do very well out of the box. Something about the probability of picking q is the same as that of picking -q. Also, renormalising the gaussian over the unit circle and then applying some constraint + changing the covariance of the gaussian + what does it mean to have a 0 eigenvalue? Normalisation is a pain - something about integrating on the sphere. But one would be happier with Binghams if they were just happy with unnormalised probabilities. Jared was trying to estimate the spin of a ping pong ball using this method. There's also deep bingham network. The output of the network becomes the covariance matrix.
+  </p>
+  
+  So, instead of estimating a single pose, it is best to use the NN to make multiple pose hypotheses with associated uncertainties i.e. solutions in the form of full probability distributions. Choosing the right network output for the poses makes a big difference.
+</section>
+
+<section id="11"><h1>Does this really matter in practice</h1>
+  If a data set has a million samples and discontinuities only happen in a very small fraction, does it matter?
+  
+  <p>
+    We could say the same thing about euler angles and humanoid robots - it would work well, but if ever the robot was completely horizontal, then we'd be in trouble. Similarly, if we can guarantee our application isn't going to see objects that are near some singularity, then we can use a simpler representation. We've been using NNs effectively all this time without these tricks.
+  </p>
+</section>
+
+<section id="12"><h1>Closing remarks</h1>
+  There are different ways to generate data for training. One method is the fine tuning/transfer learning method where we pick the trained network that was trained closest to our dataset, chop the head off and train it for our task.
+
+  <p>
+    Can we train another task for which it is easier to generate training data and do transfer learning on that trained network? How far can we go with the retargeting?
+    These are the questions of self-supervised learning. Find a way (example, by mining the web) to provide labels without explicit supervision, then retarget the backbone of that network with its learned features to our task.
+  </p>
+
+  An example is training monocular cameras. We can use stereovision to predict depth. Can we then ask the question, hide the input from the 2nd camera, can we train to predict the depth just using the 1st camera? Training this task seems to learn a lot of geometric information about the world which could be useful to retarget.
+
+  <p>
+    We talked about:
+    <ul>
+      <li>Generating training data for manipulation</li>
+      <li>Recognition and segmentation pipeline</li>
+      There's a notebook to play with MaskRCNN
+      <li>Deep pose estimation</li>
+      Make sure to understand both geometry as well as deep network pose estimation methods.
+    </ul>
+  </p>
+</section>
+  
+</chapter>
+
+</body>
+</html>

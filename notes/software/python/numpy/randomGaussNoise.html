@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Generating random gaussian noise", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Generating random gaussian noise</h1>
+<section id="0"><h1>Overview</h1>
+  NumPy uses a pseudorandom number generator which is deterministic but appears random. It follows a specific algorithm that:
+
+  <ul>
+    <li>Starts with a seed — a starting value for reproducibility.</li>
+    <li>Generates uniform random numbers between 0 and 1.</li>
+    <li>Transforms those numbers into samples from a normal distribution (i.e. into normally-distributed values) using a mathematical method like Box-Muller or Ziggurat.</li>
+    <li>Scales and shifts the value using the mean and standard deviation provided.</li>
+  </ul>
+
+<pre><code class="python">
+x_t + np.random.normal(0.0, sigma)
+</code></pre>  
+</section>
+</chapter>
+
+</body>
+</html>

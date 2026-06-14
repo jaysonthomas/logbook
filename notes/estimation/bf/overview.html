@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Bayes Filters: Overview", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Bayes Filters: Overview</h1>
+<section id="0"><h1>Novelty</h1>
+  <ul>
+    <li>
+      Bayes Filter is a general <n>framework</n> for thinking about state estimation. It updates and maintains a belief of a state that is continuously changing.
+    </li>
+    
+    <p>
+      <li>
+        Bayes filter incorporates measurements as well as control into the state estimator in continuous space.
+      </li>
+      <p>
+        It is not possible to maintain a robust and responsive estimate of a state (eg. position of a moving vehicle) with noisy sensor data, unless the estimator is also made aware of the controls the system is commanded. 
+      </p>
+    </p>
+  </ul>
+</section>
+
+<section id="1"><h1>Key steps</h1>
+  Bayes filters alternate between 2 steps:
+  
+  <ul>
+    <li>Prediction step</li>
+    A future state can be predicted using the control actions commanded of the system and the system's dynamics; in other words, using the predicted effects of the control actions.
+
+    <p>
+      <li>Measurement update step</li>
+      <n>Observations can be used to correct the prediction</n>.
+    </p>
+  </ul>
+</section>
+
+<section id="2"><h1>Uncertainty in the estimate after each step</h1>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/drone/35_bayesNotAPoint.png"/>
+      <figcaption>
+        Not a point
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../figures/drone/35_bayesDistribution.png"/>
+      <figcaption>
+        But a distribution
+      </figcaption>
+    </figure>
+  </div>
+
+  The uncertainty in a state estimate is not a point estimate but a distrbution. 
+  
+  <ul>
+    <li>After the prediction step</li>
+    The current state is projected forward based on the control input. This prediction will be noisy because of <n>imperfections in the system model</n>, causing an increase in the uncertainty and hence the belief to spread out.
+
+    <p>
+      If a <i>transition model</i> is perfect with no noise, it would be possible to predict forever without the need to make any measurements. However, because there is noise, if the prediction step is carried out forever, the <i>transition noise</i> would keep increasing after each step.
+    </p>
+
+    <li>After the measurement step</li>
+    The uncertainty goes down even though the measured information from the external world is noisy.
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

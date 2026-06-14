@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Brent's method: Steps", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Brent's method: Steps</h1>
+<section id="0"><h1>Overview</h1>
+  Brent's method is essentially a careful orchestration of other root finding methods with the aim of guaranteeing that the best root will be found in the shortest amount of time.
+</section>
+
+<section id="1"><h1>Convergence check</h1>
+  If $|b-a| \leq \epsilon$ or $f(b)==0$, $b$ is the root.
+</section>
+
+<section id="2"><h1>Ensure $b$ corresponds to the best solution</h1>
+  If $|f(a)| &lt |f(b)|$
+  $$
+    a \leftarrow b, b \leftarrow a, c
+  $$
+</section>
+
+<section id="3"><h1>Compute new candidate abscissas</h1>
+  If $f(a), f(b), f(c)$ are distinct values, IQI is chosen. Else, secant method is chosen to find a candidate $s$.
+
+  <p>
+    $m$ is the midpoint of the range found using bisection method.
+  </p>
+</section>
+
+<section id="4"><h1>Compute new boundary</h1>
+  $$\begin{align*}
+    k &= \frac{3a + b}{4} \\
+      &= 0.75a + 0.25b
+  \end{align*}$$
+</section>
+
+<section id="5"><h1>Check secant or IQI point</h1>
+  If $s$ lies between $k, b$.
+  
+  <ul>
+    <li>$f(s)$ does not have the same sign as $f(a)</li>
+    $$
+      a, b \leftarrow s, c \leftarrow b
+    $$
+
+    <li>$f(s)$ has the same sign as $f(a)</li>
+    $$
+      a \leftarrow b, b \leftarrow s, c \leftarrow b
+    $$         
+  </ul>
+</section>
+
+<section id="6"><h1>Check midpoint</h1>
+  If $f(m)$ does not have the same sign as $f(a)$:
+  $$
+    a, b \leftarrow m, c \leftarrow b
+  $$
+  
+  Else
+  $$
+    a \leftarrow b, b \leftarrow m, c \leftarrow b
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

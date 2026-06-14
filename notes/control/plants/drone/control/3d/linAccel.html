@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Linear acceleration", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Linear acceleration</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    \begin{bmatrix}
+      \ddot{x} \\ \ddot{y} \\ \ddot{z}
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+      0 \\ 0 \\ g
+    \end{bmatrix}
+    + \frac{1}{m}R
+    \begin{bmatrix}
+      0 \\ 0 \\ -F_{thrust}
+    \end{bmatrix}
+  $$
+
+  $F_{thrust}$ is a total force generated collectively by all four propellers and is directed upward in the body frame. It is transformed into the inertial frame (world frame) by the rotation matrix and divided by the mass to get the acceleration vector. $g$ is directed along the z axis.
+</section>
+</chapter>
+
+</body>
+</html>

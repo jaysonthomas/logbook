@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Overview</h1>
+  The single task problem can be solved by computing a Jacobian pseudo inverse. But, this solution has issues when it encounters Singularities or joint limits. 
+
+  <p>
+    A quadratic program solution to the problem of diff IK for a single task will help cope much more easily with these problems. This is easy to implement if an IK solver or a controller that uses this is required - it involves plugging the QP equation into an off-the-shelf QP solver.
+  </p>
+</chapter>
+
+</body>
+</html>

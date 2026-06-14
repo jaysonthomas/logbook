@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Joint limits", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Joint limits</h1>
+<section id="0"><h1>Cause</h1>
+  The summary is that there is a whole sub field that looks into ways to play with the homogeneous solution equation to avoid joint limits. Limits could include limits in position, velocity, acceleration etc imposed on the joints.
+
+  <p>
+    Example velocity limits:
+    $$
+      \dot{q} \leq \dot{q}_{lim}
+    $$
+
+    Position limits can be converted to joint limits at every iteration of an online diff IK algorithm.
+  </p>
+</section>
+
+<section id="1"><h1>Solution: Quadratic program</h1>
+  There are lots of different solutions. But, the QP approach integrates well into the hierarchy of tasks. Subject the quadratic formulation to an inequality constraint. Send it to a quadratic program solver and the resultant solution will be satisfactory. It will address the problem of singularity through the damping term and the problem of joint limits by virtue of using a QP solution from a QP solver to this problem.
+
+  $$\begin{align*}
+    \min_{\dot{q}} \quad & \dot{q}^T (J^T J + \epsilon I) \dot{q} - 
+    2 \dot{q}^T J^T v \\
+    s.t. \quad & \dot{q} \leq \dot{q}_{lim}  
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

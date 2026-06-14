@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Brent's method: Convergence check", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Brent's method: Convergence check</h1>
+<section id="0"><h1>Setup</h1>
+  $$\begin{align*}
+    m &= \frac{a-b}{2} \\
+    tol &= 2\cdot \epsilon \cdot max(|b|, 1)
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      a-b &:& \text{Full step} \\
+      m &:& \text{Half step} \\  
+      \epsilon &:& 2^{-23} =1.192 \times 10^{-7}
+      \text{considering single (32 bit floating point) precision format}
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Exit check</h1>
+  $$
+    |m| \leq tol \quad || \quad f(b) == 0
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

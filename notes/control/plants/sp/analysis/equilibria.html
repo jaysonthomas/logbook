@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Equilibria", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Equilibria</h1>
+<section id="0"><h1>Overview</h1>
+  Considering the dynamics of an uncontrolled simple pendulum, i.e. no applied torque:
+  $$
+    \dot{x} =
+      \begin{bmatrix} 
+        \dot{\theta} \\ 
+        \frac{-g \,sin\theta}{l}
+      \end{bmatrix}
+  $$
+
+  The points at which the state vector is 0 are when:
+  <ul>
+    <li>The pendulum is down, $\theta = 0$ or the pendulum is up, $\theta = \pi$ and</li>
+    <li>$\dot\theta = 0$</li>
+  </ul>   
+</section>
+
+<section id="1"><h1>Example of moving the equilibrium point</h1>
+  To $\theta = \frac{\pi}{2}$. That is, at this angle, the aim would be to use control to force the pendulum to be at rest.
+
+  $$
+    \dot{x} =  
+      \begin{bmatrix} 
+      \dot{\theta} \\ 
+      \frac{u -m_p g \,sin\theta \cdot l}{m_pl^2} 
+    \end{bmatrix} 
+    =  \begin{bmatrix} 
+      0 \\ 0
+    \end{bmatrix}
+  $$
+
+  Solving for the root $u$ in the 2nd row leads to $u = m_p g l$. This, simply compensates for (cancels out) gravity and is widely used in manipulators.
+</section>
+</chapter>
+
+</body>
+</html>

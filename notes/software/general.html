@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("General software related notes", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>General software related notes</h1>
+
+<section id="0"><h1>Software downloads</h1>
+  <subsection id="0.0"><h1>Repositories</h1>
+    To be able to download different versions of python. I couldn't install python3.8 otherwise. 
+    There is a standard/default python version that is included in every version of 
+    ubuntu - I only have access to that otherwise.
+<pre><code class="bash">
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt-get install python3.8
+</code></pre>
+  </subsection>
+
+  <subsection id="0.1"><h1>Miscellaneous</h1>
+    <ul>
+      <li>Qt</li>
+      Good <a href="https://t.ly/e5-U">link</a>.
+    </ul>
+  </subsection>
+</section>
+
+<section id="1"><h1>Latex</h1>
+  <a href="https://t.ly/JKUa">Cheat sheet</a>.
+  
+  <subsection id="1.0"><h1>Good examples</h1>
+    Modern robotics library document. I've placed it in my 
+    <a href="t.ly/sbeF">github repo</a> for the coursera assignment I completed.
+  </subsection>
+</section>
+
+<section id="2"><h1>Json</h1>
+  <a href="https://t.ly/i-y4">This</a> shows the general format.
+  I used it as:
+<pre><code class="json">
+  [
+    {"id":"44", "name":"Test"},
+    {"id":"55", "name":"Test1"}
+  ]
+</code></pre>
+
+To convert this into a dataframe:
+<pre><code class="python">
+  with open(inputFile, "r") as reader:
+    df = pd.DataFrame(json.loads(reader))
+</code></pre>
+Use <code>json.load()</code> to read a json file.
+</section>
+
+<section id="3"><h1>Drawio</h1>
+  <ul>
+    <li>
+      To type mathematical equations, enable 
+      <i>Extras - Mathematical typesetting</i>.
+    </li>
+    To type an equation use <code>``</code> or <code>$$ $$</code>
+
+    <li>Shortcuts</li>
+    <ul>
+      <li>Ctrl-Shift-P to make the sidebar disappear</li>
+      <li>Ctri-Shift-u to ungroup</li>  
+      <li>Ctrl-Shift-G to hide the grid</li>
+      <li>Ctrl-Shift-K to hide the left bar</li>
+    </ul>
+
+    <p>
+      <li>Trial settings</li>
+      Zoom - 175%, 10 point grid, 18px font size.
+    </p>
+  </ul>
+
+  The <a href="https://www.drawio.com/">website</a> with different templates and download link. Install the <code>.deb</code> file using - drawio gets upgraded automatically:
+
+<pre><code class="bash">
+sudo dpkg -i package_file.deb  
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

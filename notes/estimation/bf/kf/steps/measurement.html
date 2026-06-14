@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Measurement update", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Measurement update</h1>
+<section id="0"><h1>Overview</h1>
+  At time $t$, a measurement is taken after applying the previous torque $u_{t-1}$ for $\Delta{t}$.
+  
+  $$\begin{align*}
+    \mu_t &= \bar{\mu}_t + K_t(z_t - h_t (\bar{\mu}_t)) \\
+    \Sigma_t &= (I - K_tH_t)\bar{\Sigma}_t
+  \end{align*}$$
+
+  The new mean (state estimate) is the current mean estimate, plus the Kalman gain, multiplied by the difference between the actual measurement, and the expected measurement based on the measurement model. The estimate gets moved in the direction of the new measurement by an amount that's dictated by the Kalman gain. 
+  
+  <p>
+    The new covariance is computed by some math that takes into account the Kalman gain.
+  </p>
+</section>
+
+</chapter>
+
+</body>
+</html>

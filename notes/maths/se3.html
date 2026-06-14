@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../utils/setup.js"></script>
+  <script>
+    initializePage("Special Euclidean Group", "../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Special Euclidean Group</h1>
+<section id="0"><h1>Big se(3)</h1>
+  Make notes w.r.t. <a href="https://t.ly/RJM_8">page 17</a>. 
+  $$\begin{align*}
+    T &= \begin{bmatrix}
+          R & p \\
+          0 & 1
+        \end{bmatrix} \\
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Little se(3)</h1>
+  Make notes w.r.t. <a href="https://t.ly/RJM_8">page 21</a>. 
+  $$\begin{align*}
+    \left[ V_b\right] &= T^{-1}\dot{T} &= 
+      \begin{bmatrix}
+        \left[\omega_b\right] & v_b \\
+        0 & 0 
+      \end{bmatrix} \in se(3) \\
+
+    \left[ V_s\right] &= \dot{T}T^{-1} &= 
+      \begin{bmatrix}
+        \left[\omega_s\right] & v_s \\
+        0 & 0 
+      \end{bmatrix} \in se(3) \\
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Mapping between big and little se(3)</h1>
+  Explain <code>MatrixLog6(T)</code> which converts SE(3) to se(3). The very end of <a href="https://chat.openai.com/share/724d3275-1cb9-4239-b9f7-ab203a8d9ecc">this chat</a> seems to suggest a conversion from position to linear velocity. Also, look into <code>MatrixLog3</code> to fully understand how to get the angular velocity from a rotation matrix.
+</section>
+
+</chapter>
+
+</body>
+</html>

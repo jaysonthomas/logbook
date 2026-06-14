@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Linux", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Linux</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="installs.html">Installs</a></li>
+    <li><a href="deb.html">Install a debian package</a></li>
+    <li><a href="snap.html">Snap</a></li>
+    <li><a href="uninstall.html">Uninstall</a></li>
+    <li><a href="setup">Setup of a workstation</a></li>
+    <li><a href="ubuntuQuirks.html">Ubuntu quirks</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Apt</h1>
+  <ul>
+    <li><a href="apt/repoSetup.html">Setting up a new repository</a></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Find</h1>
+  <ul>
+    <li>Find files</li>
+<pre><code class="bash">
+find . -name '*station*.ipynb'
+</code></pre>
+
+    <li>Find software version</li>
+<pre><code>bazel --version
+</code></pre>
+
+    <li>Find keywords</li>
+    <a href="https://bit.ly/3QU5KIU">Good link</a>.
+<pre><code class="bash">
+grep -r "file_name" /folder/path
+grep -r --include=*.{h,cpp} "file_name" /folder/path
+grep -n --exclude-dir={tests} --exclude={*Technosoft*,*.puml} -r "file_name" .
+</code></pre>
+
+  </ul>
+</section>
+
+<section id="3"><h1>Software installation, update, removal</h1>
+  <ul>
+    <li>
+      When the server from which ubuntu pulls updates didn't work, 
+      I found <a href="t.ly/xyaj">this</a> useful.
+      Just find the best server and go for whatever is suggested.
+    </li>
+
+    <p>
+      <li>Ensure package manager is up-to-date</li>
+<pre><code class="bash">
+sudo apt-get update && sudo apt-get upgrade
+</code></pre>
+    </p>
+
+    <li>Removing a package</li>
+    Explanation of the below is given
+    <a href="https://t.ly/wFHk">here</a>.
+<pre><code class="bash">
+sudo apt-get purge <package_name>
+sudo apt-get autoremove
+</code></pre>
+    The autoremove option removes packages that were automatically installed 
+    because some other package required them but, with those other packages removed, 
+    they are no longer needed. Sometimes, an upgrade will suggest that you run this 
+    command.
+  </ul>
+</section>
+
+<section id="4"><h1>Useful tools</h1>
+  <ul>
+
+    <li>Tar</li>
+<pre><code>
+tar -xf filename.tar.xz
+</code></pre>
+
+    <li>Find ubuntu version</li>
+<pre><code>      
+lsb_release -a
+</code></pre>
+
+    <li>Setting an environment variable</li>
+<pre><code class="bash">
+export DRAKE_INSTALL_DIR=/home/jayson/P/external/drake
+
+# Confirming the variable's value
+echo $DRAKE_INSTALL_DIR
+</code></pre>
+
+    <li>Checking the last modification time of a file</li>
+<pre><code class="bash">
+stat -c '%y' /home/random.file
+</code></pre>    
+  </ul>
+</section>
+
+<section id="5"><h1>Images</h1>
+<pre><code class="bash">
+convert {1.jpg,2.jpg} -compress jpeg -quality 50 output.pdf
+convert 1.jpg -quality 100 output.pdf
+</code></pre>
+</section>
+
+<section id="6"><h1>Creating symbolic links</h1>
+  Create a symbolic link in <code>/usr/include/</code> for a numpy library for example.
+<pre><code class="bash">
+sudo ln -s /home/jayson/.local/lib/python3.10/site-packages/numpy/core/include/numpy/ /usr/include/numpy
+</code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

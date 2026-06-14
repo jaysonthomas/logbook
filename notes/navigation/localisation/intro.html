@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Introduction</h1>
+<section id="0"><h1>Overview</h1>
+  Localisation is the challenge of determining a robot's pose in a mapped environment. This is achieved by implementing a probabilistic algorithm to filter noisy sensor measurements and track the robot's position and orientation. Since a probabilistic model is used, the robot might have a few guesses as to where it is located. However, over time, it should hopefully narrow down on a precise location. B
+
+  Popular Localisation algorithms:
+  <ul>
+    <li>EKF localisation</li>
+    most common Gaussian filter that helps in estimating the state of non-linear models
+
+    <p>
+      <li>Markov Localisation</li>
+      Bayes filter Localisation algorithm. Markov maintains a probability distribution over the set of all possible positions and orientations the robot might be located at.
+    </p>
+
+    <li>Grid Localisation</li>
+    Also referred to as a histogram filter since it's capable of estimating the robot's pose using grids
+
+    <p>
+      <li>Monte Carlo Localisation</li>
+      Also known as a particle filter because it estimates the robot's pose using particles.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

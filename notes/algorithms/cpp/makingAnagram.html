@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Making anagrams", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Making anagrams</h1>
+<section id="0"><h1>First attempt</h1>
+  [<a href="https://bit.ly/3eNO0PC">Ref</a>] <p></p>
+<pre><code class="C++">
+#include <unordered_set>
+#include <string>
+using namespace std;
+
+string twoStrings(string s1, string s2)
+{
+    unordered_set<char> chars_in_s1(s1.begin(), s1.end());
+
+    for (char c : s2)
+    {
+        if (chars_in_s1.count(c))
+            return "YES";
+    }
+
+    return "NO";
+}
+</code></pre>
+  All characters of <code>s1</code> is placed in a hash set. Then, for each character in s2, it checks if that character is in the set.
+</section>
+</chapter>
+
+</body>
+</html>

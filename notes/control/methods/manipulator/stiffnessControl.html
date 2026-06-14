@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Stiffness control", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Stiffness control</h1>
+<section id="0"><h1>Overview</h1>
+  The philosophy is for a robot to have a programed response to torque perturbations (if it was pushed or if it ran into something), instead of a rigid position control. A robot can be made to respond gracefully as if it were a different mechanical system, say a mass-spring-damper system:
+
+  $$\begin{equation}
+    m\ddot{x} + b\dot{x} + kx = f
+  \end{equation}$$
+
+  This control technique is also referred to as <i>simple impedance control</i>. <i>Impedance control</i> is the more general term for the whole set of concepts.
+</section>
+
+<section id="1"><h1>Overview</h1>
+  A big complicated robot can be made to act like a point robot at the end using a <i>stiffness controller</i>, wherein the end-effector's interactions to external forces are programed to be that of a mass-spring-damper. 
+
+  <p>
+    A stiffness controller can also be created to replace the effect of gravity (i.e. <i>gravity compensation</i>).
+  </p>
+</section>
+
+<section id="2"><h1>Benefit of having gravity compensation</h1>
+  In practice, the difference in having a controller with just PD control and no gravity compensation is huge. 
+  
+  <p>
+    If reasonable performance is desired without gravity compensation all over a system's state space with just a PD controller, $K_p$ would have to be very large. A large $K_d$ would also be needed to damp the effect of having a large $K_p$. If gravity is subtracted i.e. GC is used in the controller, then $K_p, K_d$ can be chosen to be much lower and the system can be much more responsive. 
+  </p>
+  
+  In practice, when a robot not running GC gets bumped into, it may trigger a fault and power down. Using GC, would make the robot react soft enough to get out of the way.
+</section>
+
+</chapter>
+
+</body>
+</html>

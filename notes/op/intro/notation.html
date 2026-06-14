@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Notation", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Notation</h1>
+<section id="0"><h1>State</h1>
+  $$
+    x \in \mathbb{R}^{n \times 1}
+  $$
+</section>
+
+<section id="1"><h1>Convenient derivative notations</h1>
+  [<a href="../../maths/jacobian/notation.html">Jacobian notation</a>] <p></p>
+  $$
+    \nabla{f(x)} = \left(\frac{\partial{f}}{\partial{x}}\right)^\top \in \mathbb{R}^{n \times 1} \quad \text{Column vector}
+  $$
+
+  Hessians have to be symmetric matrices.
+  $$\begin{align*}
+    \nabla^2{f(x)} &= \frac{\partial}{\partial{x}}
+      \left(\nabla{f(x)}\right) \\
+      &= \frac{\partial^2f}{\partial{x}^2} \in \mathbb{R}^{n \times n}
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Taylor expansion</h1>
+  Taking the 2nd order Taylor expansion of $f$ (as long as it's a scalar valued function of a vector) to see where the Hessian matrix comes in:
+  $$
+    f(x + \Delta{x}) \approx f(x) + 
+      \frac{\partial{f}}{\partial{x}} \, \Delta{x} +
+      \frac{1}{2} \Delta{x}^\top \frac{\partial^2f}{\partial{x}^2} \Delta{x}
+  $$
+
+  All this is dimensionally correct.
+</section>
+</chapter>
+
+</body>
+</html>

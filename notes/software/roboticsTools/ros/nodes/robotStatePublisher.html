@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("robot_state_publisher", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>robot_state_publisher</h1>
+<section id="0"><h1>Overview</h1>
+  <pre><code class="python">
+    robot_state_publisher_node = Node(
+      package="robot_state_publisher",
+      executable="robot_state_publisher",
+      parameters=[
+        {"robot_description": get_robot_description(package_name, urdf_rel_path)}
+      ],
+    )
+  </code></pre>
+
+  <code>robot_description</code> holds the instructions to generate the entire XML content of a robot model. The instructions are obtained by running the <code>xacro</code> command on the urdf.xacro file path.
+</section>
+
+<section id="1"><h1>Debug</h1>
+  In a new terminal, query the running ros2 system:
+  <pre><code class="bash">
+    ros2 param get /robot_state_publisher robot_description
+  </code></pre>
+</section>
+
+<section id="2"><h1>Use</h1>
+  The robot_state_publisher calculates and broadcasts the 3D poses of all the links of a robot. It takes two inputs:
+
+  <ul>
+    <li>The URDF: This tells the node the "static" relationship (e.g., "The hand is 0.5 meters from the elbow").</li>
+    <li>Joint States: It listens to a topic (usually /joint_states) that provides the "dynamic" angles (e.g., "The elbow is currently bent at 45 degrees").</li>
+  </ul>
+  
+  By combining these two, it calculates the position of every single part of the robot relative to the base and broadcasts them as TF transforms. It doesn't know about gravity, friction, mass, or torque. It is purely kinematic.
+</section>
+</chapter>
+
+</body>
+</html>
