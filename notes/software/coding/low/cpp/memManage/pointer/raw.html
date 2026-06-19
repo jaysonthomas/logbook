@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Raw pointers", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Raw pointers</h1> 
+<section id="0"><h1>Function argument pointers</h1>
+<pre><code class="C">
+int const * const ptr
+</code></pre>
+    
+  1st const - can't point the pointer to a new value
+  <br>
+  2nd const - can't point the pointer to a new address
+  
+  <p>
+    Reading from right to left: 
+    <br>
+    <code>const ptr</code> - It's a variable of constant value, but oh there's a star just before the const. So, it's a constant pointer variable i.e. the address is fixed. There's <code>int const</code> just before the <code>*</code>, so it's a constant pointer pointing to a constant int value.
+  </p>
+</section>
+
+<section id="1"><h1>Call-by-value vs Call-by-reference</h1>
+  <table class="table1 center">
+    <tr>
+      <th>Expression</th>
+      <th style="text-align: center">Can be read as</th>
+    </tr>
+    <tr>
+      <td><code>*x</code></td>
+      <td>Pointed to by x</td>
+    </tr>
+    <tr>
+      <td><code>&x</code></td>
+      <td>Address of x</td>
+    </tr>
+    <tr>
+      <td><code>x</code></td>
+      <td>Value at the address of x (in the case of a function pointer, <code>x</code> would contain the address of the value being pointed to)</td>
+    </tr>
+    <tr>
+      <td><code>x.y</code></td>
+      <td>Member y of object x</td>
+    </tr>
+    <tr>
+      <td><code>x->y</code></td>
+      <td>Member y of object pointed to by x</td>
+    </tr>
+
+    <tr>
+      <td><code>(*x).y</code></td>
+      <td>Member y of object pointed to by x</td>
+    </tr>    
+    <tr>
+      <td><code>x[0]</code></td>
+      <td>First object pointed to by x</td>
+    </tr>
+    <tr>
+      <td><code>x[1]</code></td>
+      <td>Second object pointed to by x</td>
+    </tr>
+    <tr>
+      <td><code>x[n]</code></td>
+      <td>(n+1)th object pointed to by x</td>
+    </tr>           
+  </table>
+</section>
+
+<section id="2"><h1>Different kinds of pointers</h1>
+  This <a href="https://t.ly/4kPR">link</a> seems useful.
+</section>
+
+<section id="3"><h1>Pointer variables</h1>
+<pre><code class="C++">
+int x = 42;
+int *ptr = &x; // 'ptr' is a pointer that stores the address of 'x'   
+</code></pre>  
+
+  Changing <code>ptr</code> changes <code>x</code>.
+</section>
+
+<section id="4"><h1>Mishandling of pointers</h1>
+  <a href="https://t.ly/uBJNS">Ref</a>
+
+  <subsection id="4.0"><h1>Dangling pointer</h1>
+    A dangling pointer situation occurs when a pointer refers to a memory that is no longer allocated.
+  </subsection>
+
+  <subsection id="4.1"><h1>Memory leak</h1>
+    Memory leaks happen when we lose the pointer that is pointing to a memory block, making it impossible to free that block anymore.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

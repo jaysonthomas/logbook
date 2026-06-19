@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Pose", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Pose</h1>
+  The <i>pose</i> of a frame contains both position and orientation of that frame relative to another. $^BX^A$ represents the position and orientation of frame $A$ relative to that of frame $B$. In Drake, <n>pose is the noun and transform is the verb</n>. For the things done in robotics, an expressed-in frame for a transform $^BX^A$ is not required. It is however used for the derivative of a pose i.e. <i>spatial velocity</i> $V_{6 \times 1}$.
+
+  $$\begin{align*}
+    ^GP^A &= ^GX^F \cdot {^FP^A} \\
+          &= (^GP^F \cdot {^GR^F}) \cdot {^FP^A} \\
+          &= (^GP^F_G \cdot {^GR^F_G}) \cdot {^FP^A} \\
+  \end{align*}$$
+
+  The multiplication operator along with the rotation that is encoded in $X$ transforms the position of $A$ in the following way:
+  <ul>
+    <li>W.r.t. $F$ to another frame, w.r.t. $G$</li>
+    <li>The expressed-in frame, from $F$ to $G$</li>
+    <n>The basic operation of a rotation matrix is to take a position and change its expressed-in frame</n>.
+  </ul>
+  
+  A pose also has a multiplicative inverse:  $[^GX^F]^{-1} = {^FX^G}$. A pose can be represented in different ways. This is only a notation indicating we are taking an inverse. But actually it's not just a direct matrix inverse - <m>it will be some simple function of the elements of the matrix representation</m>. A lot of times a pose is represented as a 3x4 matrix for instance.
+
+  <p>
+      Pose can also be called a <i>rigid transform</i> because it only allows changing between frames in the kinematics, i.e. only positions and rotations; no scaling or shearing. <i>Homogeneous transforms</i> also allow shearing and scaling. Poses multiply with other poses. A set of rules are given in Chapter 3.
+  </p>
+
+  In code, $^BX^A_C \equiv$ <code>X_BA_C</code>. ${^WX^A_W} = X^A \equiv$ <code>X_A</code>
+</chapter>
+
+</body>
+</html>

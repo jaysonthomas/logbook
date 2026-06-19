@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Cost function", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Cost function</h1>
+<section id="0"><h1>Math</h1>
+  $$\begin{align*}
+    \min_{\substack{x_{1:N} \\ u_{1:N-1}}} \quad & J = 
+      \sum_{k=1}^{N-1} 
+      \underbrace{\frac{1}{2} x_k^\top Q_k x_k +
+      \frac{1}{2} u_k^\top R_k u_k}_{l(x_k, u_k)} +
+      \underbrace{\frac{1}{2} x_N^\top Q_N x_N}_{l_f(x_N)} \\
+    s.t. \quad & x_{k+1} = A_k x_k + B_k u_k \\
+    & Q \geq 0, \quad R &gt 0
+  \end{align*}$$
+  There's a terminal cost on the final state.
+</section>
+
+<section id="1"><h1>Properties</h1>
+  Cost functions/weights on both states and controls: 
+  <ul>
+    <li>Are quadratic</li>
+    <li>Can vary with time</li>
+  </ul>
+
+  <subsubsection><h1>Conditions for a well posed solution</h1>
+    For a QP to be convex, the Hessian has to be positive definite. Similarly, for an LQR problem to have a well posed solution:
+    <ul>
+      <li>The state cost matrix $Q$ needs to be positive semi-definite</li>
+      <li>The control cost matrix $R$ needs to be strictly positive definite</li>
+    </ul>
+
+    <p>
+      If $Q=0$, it would mean certain states are ignored/not important.
+    </p>
+
+    If there is a cost to getting to a goal and there is no cost on the controls $R=0$, the solution could simply slam the controls to infinity and get there instantly which would be an ill-posed, infinite solution. It would be an unbounded control solution, i.e. the controls blow up to infinity.
+
+    <p>
+      Only the relative values of Q and R matter. If R is high, any control action will be penalised.
+    </p>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Constraints</h1>
+  The dynamics varies with time, hence $A,B$ matrices have $k$ subscripts. The problem is time invariant if $A_k=A, B_k=B, Q_k=Q, R_k=R \; \forall k$.
+</section>
+</chapter>
+
+</body>
+</html>

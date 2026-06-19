@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Forces", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Forces</h1>
+
+<section id="0"><h1>Decomposition</h1>
+  <subsection id="0.0"><h1>Thrust</h1>
+    When the rotor spins, it pushes air downwards. By Newton's third law, the air pushes the rotor (and the vehicle) upwards with an equal and opposite force called <i>thrust</i>. The force that actually acts on the drone points upwards.
+  </subsection>
+
+  <subsection id="0.1"><h1>Gravity</h1>
+    A <i>normal force</i> refers to a contact force exerted by a solid surface perpendicular to the object resting on it. Because a monorotor is airborne and hovering freely, there is no solid surface beneath it, so there is no normal force acting on it. Gravity acts downwards.
+  </subsection>
+
+  <subsection id="0.2"><h1>Drag</h1>
+    A quadrotor as a whole and the individual propellers experience drag.
+
+    <p>
+      In practice, <n>drag is treated as a disturbance</n> when designing quadrotor controllers. It isn't modeled explicitly since:
+      <ul>
+        <li>Its effects are relatively small at lower vehicle and wind speeds</li>
+        <li>It is difficult to identify the correct drag model</li>
+      </ul>
+    </p>
+  </subsection>
+
+  <subsection id="0.3"><h1>Net upward force</h1>
+    A monorotor has only one rotor and therefore only one thrust vector pointing upwards in the positive $z$ direction. This will cause an acceleration in the z direction.
+
+    $$
+      F_z = m|g| - |F_t|
+    $$
+
+    $F_z$ is the net force on the vehicle. To hover ($F_z=0$), the thrust force upwards would need to be equal to the force that gravity exerts downwards. z is positive downwards.
+  </subsection>
+</section>
+
+<section id="1"><h1>Linear translational acceleration</h1>
+  $$
+    \ddot{z} = g - \frac{F_t}{m}
+  $$
+</section>
+
+<section id="2"><h1>Translational equilibrium</h1>
+  When a monorotor is hovering, it is in translational equilibrium. 
+
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../../figures/drone/31_ex1_monorotor.png"/>
+      <figcaption>
+        Consider a monorotor that is hovering with $F_t = 100N$. From the balance of forces, the mass would be: $m = \frac{100}{9.8} = ~10.2kg$ which is a big monorotor.
+      </figcaption>
+    </figure>
+  </div> 
+</section>
+</chapter>
+
+</body>
+</html>

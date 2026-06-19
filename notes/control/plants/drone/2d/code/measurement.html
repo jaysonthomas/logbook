@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Sensor measurement", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Sensor measurement</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="../../../notes/software/python/numpy/randomGaussNoise.html">Numpy implementation</a>] <p></p>
+  For simulation purposes, random gaussian noise is added to the true state, to get the measured state.
+  $$
+    \hat{x}_t = x_t + \epsilon_t
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      x_t &:& \text{True state of the drone at time t}  \\ 
+      \hat{x}_t &:& \text{Measurement (or measured state, mainly the altitude, here) at time t} \\
+      \epsilon_t &:& \text{Random variable drawn from a Gaussian (Normal) distribution }\mathcal{N}\\
+      && \text{with a mean of 0 and a variance of } \sigma^2
+    \end{array}$$
+  </div>
+
+  $$
+    \epsilon_t \sim \mathcal{N}(0, \sigma^2)
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

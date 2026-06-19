@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Code", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Code</h1>
+  To simplify things, assume direct control over acceleration. $u$ is used to represent a thrust or torque control input to the drone.
+
+  For a 1-D monorotor, the equation of motion is:
+  $$
+    \ddot{z} = g - \frac{u}{m}
+  $$ 
+
+  $u$ is the upward thrust that can be controlled. To show it has a direct influence on the body-acceleration, the dynamics equation can be written in a simpler form:
+  $$
+    \ddot{z} = \bar{u}
+  $$
+
+  This simpler form is a reminder that the quantity being controlled is the body-acceleration. Velocity and position is then the integral of acceleration and velocity respectively.
+</chapter>
+
+</body>
+</html>

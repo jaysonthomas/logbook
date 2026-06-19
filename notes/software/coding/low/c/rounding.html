@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("C: Rounding", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>C: Rounding</h1>
+<section id="0"><h1>lroundf</h1>
+  [<a href="https://t.ly/_QIyv">Ref</a>] <br>
+
+  Rounds halfway cases away from 0. Examples given in the reference. <code>signbit</code> returns true for negative values and the first part of the ternary operation gets executed.
+
+  <ul>
+    <li>$0.2 = 0.0$</li>
+    <li>$0.4 = 0.0$</li>
+    <li>$0.5 = 1.0$</li>
+    <li>$0.7 = 1.0$</li>
+    <li>$-0.2 = 0.0$</li>
+    <li>$-0.5 = 1.0$</li>
+    <li>$-0.7 = 1.0$</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

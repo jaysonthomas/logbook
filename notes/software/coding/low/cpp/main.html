@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("C++", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>C++</h1>
+
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li><a href="copyMove.html">Copy/Move</a></li>
+    <li><a href="defs/main.html">Definitions</a></li>
+    <li>Memory (resource)</li>
+    <ul>
+      <li><a href="members.html">Memory/Member types and initialisation</a></li>
+    </ul>
+    
+    <li><a href="memManage/main.html">Memory management</a></li>
+    <li><a href="oop/main.html">OOP principles</a></li>
+    <li><a href="lambda.html">Lambda functions</a></li>
+    <li>Standard library</li>
+    <ul>
+      <li><a href="vector.html">Vector</a></li>
+    </ul>
+
+    <li><a href="solid/main.html">SOLID design principles</a></li>
+    <li><a href="refs.html">References</a></li>
+  </ul>
+</section>
+
+<section id="1"><h1>Constructor</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
+  <br>
+  Constructors are member functions of a class or struct that initialise/construct/build an object. All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. 
+  
+  <p>
+    Typically a constructor:
+    <ul>
+      <li>Initialises data members</li>
+      <li>Establishes an invariant</li>
+      <li>Acquires resources needed for an object to be used</li>
+      (which are then typically released by a destructor)
+    </ul>
+  </p>
+</section>
+
+<section id="2"><h1>Scope resolution</h1>
+  C++ allows <i>identifiers</i> (a function name or a variable name) to have the same name, as long as they have different scope. 
+
+  <p>
+    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class to search, in order to resolve an identifier.
+  </p>
+
+  <subsection id="2.0"><h1>Class</h1>
+    Each class provides its own scope. The scope resolution operator becomes useful if a class definition needs to be separated from its declaration. The need to separate the 2 arises when:
+       
+    <ul>
+      <li>Only the interface needs to be shown to users and not the actual implementation</li>
+      <li>The declaration and the definition needs to be split into separate files</li>
+    </ul>
+  </subsection>
+
+  <subsection id="2.1"><h1>Namespace</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
+    <br>
+    Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. <code>std</code> is the namespace used by the C++ Standard Library. Classes like <code>std::vector</code> and functions like <code>std::sort</code> are defined within the std namespace.
+  </subsection>
+</section>
+
+<section id="3"><h1>Inheritance</h1>
+  The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
+  
+  <p>
+    Example: An apple class can be made the child of a fruit class. Apples have their own varieties, but they also inherit members from the parent fruit class like seeds. Going further, the fruit class might be a child of the plant class and might inherit some members from the plant class like mass. The plant class has a mass, so its child, the fruit class inherits this mass member, and therefore, the apple class which is the child of the fruit class also inherits the mass member from the plant class, through the fruit class, to the apple class.   
+  </p>
+
+</section>
+
+<section id="4"><h1>Friends</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/12_friend_1.cpp">Ref</a>]
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../figures/software/2_friendClass.png"/>
+      <figcaption>
+        Friend class
+      </figcaption>
+    </figure>
+  </div>    
+</section>
+
+<section id="5"><h1>Miscellaneous</h1>
+  <ul>
+    <li>Default function arguments</li>
+    [<a href="../../jlib/cppExamples/fundamentals/19_defaultFuncArgs.cpp">Example</a>]
+
+    <p>
+      <li><code>const</code> in a function declaration</li>
+      [<a href="../../jlib/cppExamples/fundamentals/13_virtualFunction.cpp">Ref</a>] <br>
+      It is a way to indicate that calling the function won't alter the internal data members of the object. It is a promise made by the function that it won't modify any non-static data members of the class it belongs to. A const member function can only call other const member functions and read data members of the object. It cannot modify the object's state in any way.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

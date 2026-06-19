@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Error twist", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Error twist</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    [V_{err}]=log(X^{-1}X_{d})
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      X = T_{se} &:& \text{current configuration of {e} w.r.t. {s}.} \\ 
+      X_{d} = T_{sd} &:& \text{desired/reference configuration of {e} w.r.t. {s}.}
+    \end{array}$$
+  </div>
+
+  $$
+    X^{-1}X_d = (T_{se})^{-1} T_{sd} = T_{es} T_{sd} = T_{ed}
+  $$
+  $T_{ed}$ is the homogeneous transformation matrix that represents the desired frame {d} relative to the current end-effector frame {e}.
+  <ul>
+    <li>If the EE is perfectly on track, {e} and {d} are identical, meaning $T_{ed} = I$.</li>
+    <li>If there is a tracking error, $T_{ed}$ tells how much the EE needs to translate and rotate from the current position to reach the target.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

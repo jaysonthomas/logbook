@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Position", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 3"><h1>Position</h1>
+  The simplest concept is just a point in some three-dimensional space. 
+  <ul>
+    <li>$A$ is the frame or point of interest</li>
+    <li>$P^A$ - Position of $A$</li>
+    
+    <p>
+    <li><n>$^BP^A$</n> - Position of $A$ relative to $B$</li>
+    $P$ is a vector going from point $B$ to $A$ - Imagine an arrow drawn from $B$ to $A$. Positions have to be defined w.r.t. something always.
+    </p>
+    
+    <li>$\in\mathbb{R}^3$</li>
+    3D vectors (3x1) contain 3 real numbers.
+    
+    <p>
+    <li>$^BP^A_C$ - $C$ is the expressed in frame</li>
+    Distance between 2 people is given by $P$. But if I turn my back, the vector between the 2 points is still the same, but now it will be expressed using different numbers w.r.t. me looking the other way.
+    </p>
+  </ul>
+
+  Inverse flips the sign: $-^BP^A_C = ^AP^B_C$
+
+  <p>
+    $P^A$ is the same as ${^W}P^A_W$. In drake visualisations, an RGB axis at the origin defines the world axis. If the expressed-in frame is not specified, it should be assumed that:
+    $$^GP^A \equiv {^G}P^A_G$$ 
+  </p>
+</chapter>
+
+</body>
+</html>

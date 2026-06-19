@@ -10,13 +10,17 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Sufficient condition</h1>
+<chapter style="counter-reset: chapter 3"><h1>Sufficient condition</h1>
 <section id="0"><h1>Overview</h1>
-  The interest is in the min case alone. At a minimum, second order sufficient conditions (a condition on the Hessian of the objective function) dictate that the curve needs to be both flat and curved up around it.
+  The Hessian $\frac{\partial}{\partial{x}} \left(\nabla{f(x)}\right)\bigg|_{x^*}$ can be 0 at a max, min or a saddle point. 
+
+  <p>
+    The interest is in the min case alone. At a minimum, the <n>second order sufficient condition</n> (a condition on the Hessian of the objective function) dictates that the curve needs to be both flat and curved up around it.
+  </p>
 </section>
 
 <section id="1"><h1>Scalar case</h1>
-  Considering a Newton step, in the scalar case, the division will only consist of scalars, i.e. the Jacobian and Hessian are scalars.
+  Considering the scalar case of a Newton step - the division will only consist of scalars, i.e. the Jacobian and Hessian are scalars.
 
   $$
     \Delta{x} = - \left(\nabla^2 f(x)\right)^{-1} \nabla{f(x)}
@@ -24,7 +28,7 @@
 
   <div style="width:0; text-align:left;">
     $$\begin{array}{ccl} 
-      - &:& \text{The negative sign implies negative descent along the objective function.} \\ 
+      - &:& \text{Negative sign implies negative descent along the objective function.} \\ 
       \nabla{f(x)} &:& \text{The objective function. Gradient.} \\
       \nabla^2 f(x) &:& \text{The Hessian.} 
     \end{array}$$
@@ -39,7 +43,7 @@
 </section>
 
 <section id="2"><h1>Higher dimensional vector case</h1>
-  For minimisation, the Hessian needs to be strictly positive definite, $\nabla^2 f &gt 0$ (All eigenvalues are positive). Another way of writing it:
+  For minimisation, the Hessian needs to be strictly positive definite, $\nabla^2 f &gt 0$ (<m>all eigenvalues are positive</m>). Another way of writing it:
   $$
     \nabla^2 f \in S^n_{++}
   $$
@@ -54,21 +58,27 @@
   If it were a single $+$, it would mean semi-positive definite meaning $\nabla^2 f \geq 0$.
 
   <p>
-    In $\mathbb{R}^n$, by choosing the right coordinates (<m>related to eigenvectors/values</m>?), the Hessian matrix can be diagonalised, which decouples the objective function into $n$ scalar systems. 
+    In $\mathbb{R}^n$, by choosing the right coordinates (<m>related to eigenvectors/values</m>?), <m>the Hessian matrix can be diagonalised</m>, which decouples the objective function into $n$ scalar systems. 
   </p>
 </section>
 
 <section id="3"><h1>Convergence guarantees</h1>
-  If the Hessian of an objective function is globally positive definite, everywhere in $\mathbb{R}^n$, the function is said to be strongly convex. It's a big bowl. In which case, Newton's method is guaranteed to converge to the global optimum. 
-  $$
-    \nabla^2 f &gt 0 \, \rightarrow \, f(x)\text{ is strongly convex} \\
-  $$
-  
-  In the strictly positive definite case, it's the global Optimum. In the semi-definite case, it's a global Optimum. In the latter, it is possible to have a flat bottom like a valley where all the points are equivalent. Weakly convex $\nabla^2 f \geq 0$ means that there are flat spots in the bowl.
+  <subsubsection><h1>Strictly positive definite hessian</h1>
+    If the Hessian of an objective function is globally positive definite, everywhere in $\mathbb{R}^n$, the function is said to be <i>strongly convex</i>. It's a big bowl. In which case, Newton's method is guaranteed to converge to the global optimum. 
+    $$
+      \nabla^2 f &gt 0 \, \rightarrow \, f(x)\text{ is strongly convex} \\
+    $$
+    
+    In the strictly positive definite case, it's the global optimum. 
 
-  <p>
-    When the objective function is strongly convex, guarantees can be provided of the runtime of Newton's method - predictions can be made of its runtime, how much sample rate is possible, all of which is important for real time control.
-   </p>
+    <p>
+      When the objective function is strongly convex, guarantees can be provided of the runtime of Newton's method - predictions can be made of its runtime, how much sample rate is possible, all of which is important for real time control.
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Positive sem-definite hessian</h1>
+    Weakly convex $\nabla^2 f \geq 0$ means that there are flat spots in the bowl. In the semi-definite case, it is possible to have a flat bottom like a valley where all the points are equivalent. The optimal solution found could be one of many global optimum. 
+  </subsubsection>
 </section>
 
 </chapter>

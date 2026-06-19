@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Installation test", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 1"><h1>Installation test</h1>
+<section id="0"><h1>Hello world</h1>
+  Run the talker-listener example which is a 'Hello World' example of ROS2 programming. 
+
+  <p>
+    First source the ROS2 environment and then run the talker node
+<pre><code class="bash">
+ros2 run demo_nodes_cpp talker
+</code></pre>
+  </p>
+
+  Open another terminal and run the listener node.
+<pre><code class="bash">
+ros2 run demo_nodes_cpp listener
+# Or in python
+ros2 run demo_nodes_py listener
+</code></pre>
+</section>
+
+<section id="1"><h1>To find info about a topic</h1>
+  Open another terminal whilst the communication is going on.
+<pre><code class="bash">
+ros2 topic info /chatter
+ros2 topic info /parameter_events
+ros2 topic info /rosout
+</code></pre>
+
+  Messages are of the type <code>std_msgs/msg/String</code> which is a ROS2 data type that is equivalent to the string data type in Python and C++.
+</section>
+
+<section id="2"><h1>Visualising the graph</h1>
+<pre><code class="bash">
+rqt_graph
+</code></pre>
+  This command will bring up a graph describing the topic-node structure of the ROS2 system. 
+</section>
+</chapter>
+
+</body>
+</html>

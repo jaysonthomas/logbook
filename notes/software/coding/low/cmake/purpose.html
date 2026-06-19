@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Purpose", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Purpose</h1>
+<section id="0"><h1>Overview</h1>
+  Run the following in the same folder as the <code>CMakeLists.txt</code>.
+  
+  <pre><code class="bash">
+    mkdir build; cd build
+
+    # Generate the build system files
+    cmake ..
+
+    # Compile the project
+    make
+  </code></pre>
+
+  <code>cmake</code> generates the necessary <n>build instructions</n> from <code>CMakeLists.txt</code> that a specific <i>build system</i> like <i>Make</i> or <i>Ninja</i> understands to compile a project. The actual linking and compilation takes place in the <code>make</code> step.
+</section>
+
+<section id="1"><h1>Makefile</h1>
+  In the case of a <i>Make</i> build system, <code>cmake</code> generates a <i>Makefile</i> with instructions on how to:
+  <ul>
+    <li>Compile source files into object files.</li>
+    <li>Link those object files into an executable or library.</li>
+    <li>Handle dependencies between files, like ensuring that changes to header files trigger recompilation of dependent source files.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

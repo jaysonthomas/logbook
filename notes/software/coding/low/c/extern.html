@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Extern", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Extern</h1>
+<section id="0"><h1>Declaration</h1>
+<pre><code class="C">
+extern int a;
+</code></pre>
+
+  When declared in a header file, this tells the compiler, "There is an integer named <code>a</code> defined somewhere else (in another file). Don't allocate memory for it now; just trust that the linker will find it later."
+
+  <p>
+    This allows a global variable to be shared among multiple source (.c) files.
+  </p>
+
+  Delcaring in a header file allows for a centralised announcement. Any .c file that includes that header gets the announcement and can use the particular variable.
+</section>
+
+<section id="1"><h1>Definition</h1>
+<pre><code class="C">
+int a;
+</code></pre>
+
+  This tells the compiler to allocate memory for an integer named <code>a</code>. This should happen in exactly one .c file.
+</section>
+
+<section id="2"><h1>Linker errors</h1>
+  <ul>
+    <li>Multiple Definitions</li>
+    If you write int a; (without extern) in the header file, and include that header in two different .c files, the linker will fail. It will complain that a is defined twice (multiple definition of a).
+
+    <p>
+      <li>Undefined Reference</li>
+      If you declare extern int a; in the header but forget to define int a; in exactly one .c file, the linker will fail because it can't find the memory address for a.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

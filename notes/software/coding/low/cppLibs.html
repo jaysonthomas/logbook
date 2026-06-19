@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("C++ Libraries", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>C++ Libraries</h1>
+
+<section id="0"><h1>Eigen</h1>
+  <ul>
+    <li>
+      Download zip file from <a href="https://t.ly/KSeXZ">here</a>. Downloaded <code>eigen-3.4.0</code>.
+    </li>
+
+    <p>
+      <li>
+        <code>INSTALL</code> has instructions to:
+<pre><code class="bash">
+mkdir build; cd build
+cmake ../     
+
+# The above command will print options to the terminal that 
+# can be given to cmake.
+sudo make install
+</code></pre>
+
+<button class="accordion">Install location of Eigen headers</button>
+<div class="panel">
+  <p></p>
+  The <code>cmake</code> step will set the install location of the Eigen headers as <br>
+  <code>CMAKE_INSTALL_PREFIX/INCLUDE_INSTALL_DIR</code> where
+  <ul>
+    <li><code>CMAKE_INSTALL_PREFIX</code> is <code>/usr/local</code></li>
+    <li><code>INCLUDE_INSTALL_DIR</code> is <code>include/eigen3</code></li>
+  </ul>
+  <p></p>
+  Change the install location using:
+<pre><code class="bash">
+cmake . -DCMAKE_INSTALL_PREFIX=yourprefix
+# Or
+cmake . -DINCLUDE_INSTALL_DIR=yourdir
+</code></pre>
+</div>
+        
+      </li>
+    </p>
+
+    <li>Including an Eigen header in code</li>
+<pre><code class="cpp">
+#include &lteigen3/Eigen/Dense&gt
+
+// If compiling using g++ test.cpp -I/usr/include/eigen3/ -o output
+#include &ltEigen/Dense&gt
+</code></pre>
+  </ul>
+</section>
+
+<section id="1"><h1>Using python headers in code</h1>
+  Usage:
+<pre><code class="cpp">
+#include &ltPython.h&gt
+#include &ltnumpy/arrayobject.h&gt
+</code></pre>
+
+  These libraries are found in <code>/usr/include/python3.10/</code>. To be able to link them:
+<pre><code class="bash">
+sudo apt-get install python3.10-dev
+g++ test.cpp -I/usr/include/python3.10/ -lpython3.10 -o output
+</code></pre>
+
+</section>
+</chapter>
+
+</body>
+</html>

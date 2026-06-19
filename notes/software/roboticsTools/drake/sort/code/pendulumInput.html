@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Drake: Pendulum_input.h", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Drake: Pendulum_input.h</h1>
+<section id="0"><h1>Namespace</h1>
+   The following defines a nested namespace structure. It indicates that the following code is part of the drake simulation framework and specifically an example for a pendulum system.
+<pre><code class="c++">
+namespace drake {
+namespace examples {
+namespace pendulum {    
+</code></pre>
+</section>
+
+<section id="1"><h1>Uniform initialisation</h1>
+  Also called <i>list</i> or <i>brace initialisation</i>.
+<pre><code class="c++">
+PendulumInput<double>{}.with_tau(0.0);
+// is equivalent to
+
+PendulumInput<double> temp;
+temp.with_tau(0.0);        
+</code></pre>
+
+  Steps:
+  <ul>
+    <li>A temporary object of <code>PendulumInput<double></code> is created.</li>
+    <li><code>.with_tau(0.0)</code> is immediately called on this temporary object.</li>
+    <li>The temporary object is discarded if the return value is not used.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

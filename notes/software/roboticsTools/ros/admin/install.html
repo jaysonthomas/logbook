@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("ROS: Installation", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>ROS: Installation</h1>
+<section id="0"><h1>Verify other ROS distributions are not sourced</h1>
+  Make sure no other version of ROS2 or ROS1 are automatically sourced when a terminal is started. <i>Sourced</i> means that a setup file of a ROS2 distribution is automatically called when you open a terminal.
+<pre><code class="bash">
+printenv ROS_DISTRO
+</code></pre>
+
+  Inspect <code>.bashrc</code> which is a setup file that is automatically executed when a terminal is opened.
+<pre><code class="bash">
+sudo apt-get install gedit
+cd ~
+gedit .bashrc
+</code></pre>  
+
+  The following line shouldn't be seen: the source command is used for a <code>setup.bash</code> file of a ROS distribution; in this case the Iron ROS2 distribution.
+<pre><code class="bash">
+source /opt/ros/iron/setup.bash
+</code></pre>
+</section>
+
+<section id="1"><h1>Configure ubuntu repositories</h1>
+  Install ubuntu universe repository.
+<pre><code class="bash">
+sudo add-apt-repository universe
+sudo apt install software-properties-common
+</code></pre>
+
+  To verify:
+<pre><code class="bash">
+grep ^deb /etc/apt/sources.list
+</code></pre>
+
+</section>
+
+<section id="2"><h1>Set locale</h1>
+  That supports UTF-8.
+<pre><code class="bash">
+sudo apt update && sudo apt install locales
+sudo locale-gen en_GB en_GB.UTF-8
+sudo update-locale LC_ALL=en_GB.UTF-8 LANG=en_GB.UTF-8
+export LANG=en_GB.UTF-8
+
+locale 
+</code></pre>
+</section>
+
+<section id="3"><h1>Set up ROS repository sources</h1>
+  Add the ROS 2 GPG key.
+<pre><code class="bash">
+sudo apt update && sudo apt install curl -y
+
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+</code></pre>
+
+  Add the repository to the source list.
+<pre><code class="bash">
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+</code></pre>
+
+  <ul>
+    <li>deb: Tells the system this is a binary software repository.</li>
+    <li>arch=$(dpkg --print-architecture): Automatically detects if your system is amd64 (typical PC) or arm64 (like a Raspberry Pi).</li>
+    <li>signed-by=...: This is a security feature. It tells Ubuntu to only trust packages from this source if they are signed with the specific ROS digital key.</li>
+
+    <p>
+      <li>http://packages.ros.org/...: The actual web address where the ROS 2 files live.</li>
+      <li><code>$(. /etc/os-release && echo $UBUNTU_CODENAME)</code> is a shortcut that checks the version of Ubuntu (like "Jammy" or "Noble") and inserts that name to get the software built specifically for the OS version.</li>
+    </p>
+
+    <li>The pipe (|) takes that long string and hands it to the next command:</li>
+    <li>tee takes the input and writes it into a new file named ros2.list.</li>
+    <li>> /dev/null: This just keeps things tidy. It prevents the command from printing the entire string back out to your terminal window.</li>
+  </ul>
+</section>
+
+<section id="4"><h1>Install ROS2 packages</h1>
+  Update the caches and the system
+<pre><code class="bash">
+sudo apt update
+sudo apt upgrade
+</code></pre>
+
+  Install ROS2
+<pre><code class="bash">
+sudo apt install ros-kilted-desktop
+sudo apt install ros-dev-tools
+</code></pre>
+</section>
+
+<section id="5"><h1>Environment variables setup</h1>
+  Inform what ROS2 environment variables/paths to use in a bash session (terminal):
+
+  <pre><code class="bash">
+    # Source the ROS setup and the workspace setup.
+    echo "source /opt/ros/kilted/setup.bash" >> ~/.bashrc
+    echo "source ~/ros2/install/setup.bash" >> ~/.bashrc
+
+    # For the changes to take effect
+    source ~/.bashrc    
+
+    # Check the line is added
+    gedit ~/.bashrc
+  </code></pre>
+
+  <code>.bashrc</code> is located in the home folder.
+</section>
+
+<section id="6"><h1>Confirm ROS2 version</h1>
+<pre><code class="bash">
+env | grep ROS
+</code></pre>
+
+</section>
+
+<section id="7"><h1>ROS package dependencies</h1>
+<pre><code class="bash">
+sudo rosdep init
+rosdep update
+</code></pre>
+
+</section>
+</chapter>
+
+</body>
+</html>

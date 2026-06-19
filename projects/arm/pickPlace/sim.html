@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Simulation", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Simulation</h1>
+<section id="0"><h1>Overview</h1>
+  The aim is to generate the state of a bot in the next time step.
+</section>
+
+<section id="1"><h1>Input</h1>
+  <ul>
+    <li>Current configuration of the robot</li>
+      12-vector representing position and orientation of:
+      <ul>
+        <li>chassis (3, $x,y,\theta$)</li>
+        <li>arm joints (5)</li>
+        <li>wheels (4)</li>
+      </ul>
+    
+    
+    <li>Controls</li>
+        9-vector representing speeds of joints (5, $\dot{\theta}$) and wheels (4, $u$).
+    <li>Timestep $\Delta{t}$</li> 
+    <li>Max angular speed of joints and wheels</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Output</h1>
+  12-vector representing the robot's configuration after $\Delta{t}$.
+</section>
+
+<section id="3"><h1>Method</h1>
+  <ul>
+    <li>A first order euler step is used for both wheels and joints.</li>
+    $newAngle = oldAngle + (speed * \Delta{t})$
+    <li>Chassis configuration is obtained via odometry.</li>
+  </ul>
+</section>
+
+<section id="4"><h1>Tests</h1>
+  <ul>
+    <li>Set the all the wheels to constant speed for $10*\Delta{t}$</li>
+    The bot should just move forward in whatever direction it's facing.
+    <li>
+      Set max speed and repeat step 1 with a larger than max speed.
+    </li>
+    <li>
+      <m>Uncontrolled state: What happens when no control is provided, does the arm just fall under the influence of gravity?</m>
+    </li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

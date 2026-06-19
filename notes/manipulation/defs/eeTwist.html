@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("End effector twist", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>End effector twist</h1>
+<section id="0"><h1>Overview</h1>
+  An end-effector twist represents the velocity of the end-effector itself.
+
+  <p>
+    A twist, also known as a <i>spatial velocity</i>, combines both the linear velocity and the angular velocity of a rigid body (in this case, the end-effector) into a single 6-dimensional vector.
+  </p>
+</section>
+
+<section id="1"><h1>Math</h1>
+  $$
+    \mathcal{V} = \begin{bmatrix} \omega \\ v \end{bmatrix}
+  $$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \omega \in \mathbb{R}^3 &:& \text{The angular velocity vector (how fast and around what axes the end-effector is rotating).} \\ 
+      v \in \mathbb{R}^3 &:& \text{The linear velocity vector (how fast the end-effector's origin is moving).} 
+    \end{array}$$
+  </div>
+</section>
+
+<section id="2"><h1>Relation to joints</h1>
+  Ee twist is directly caused by the velocities of the joints. They are mapped together using the Geometric Jacobian matrix ($J$):
+
+  $$\mathcal{V} = J(q)\dot{q}$$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \dot{q} &:& \text{Joint velocity (how fast the joints are moving).} \\
+      J(q) &:& \text{Jacobian, which changes depending on the current configuration of the joints.} \\
+    \end{array}$$
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>
