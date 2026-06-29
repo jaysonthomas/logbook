@@ -19,6 +19,22 @@
   <p>
     In addition to causing a thrust force, a rotating propeller also introduces a reaction moment. A rotor that's spinning clockwise will produce a moment that causes the body to spin counter-clockwise.
   </p>
+
+  The torque/moment produced by a spinning rotor is proportional to $\omega^2$ [refer <a href="liftConstants.html">lift constants</a>]:
+
+  $$\begin{align*}
+    M &\propto \omega^2 \\
+    &= k_m \,\omega^2
+  \end{align*}$$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      k_m &:& \text{Angular torque coefficient} & [Nm\frac{s^2}{rad^2}] \\ 
+      \omega &:& \text{Rotation rate of a rotor} & [\frac{rad}{s}]
+    \end{array}$$
+  </div>
+
+  When $\omega = 2\pi$, the rotor does one rotation per second. 
 </section>
 
 <section id="1"><h1>Rotational acceleration</h1>

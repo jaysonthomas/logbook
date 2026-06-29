@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Introduction</h1>
+<section id="0"><h1>URDF</h1>
+  <i>Unified Robot Description Format</i> is an XML file that contains a complete physical description of a robot:
+  <ul>
+    <li>Geometry</li>
+    <li>Kinematics</li>
+    <li>Dynamics</li>
+    <li>Visual aspects</li>
+  </ul>
+
+  In URDF, a joint's origin is always defined relative to its parent link's coordinate frame, not the world frame.
+</section>
+
+<section id="1"><h1>Mesh</h1>
+  Mesh files are what make a robot look realistic in simulation and visualisation programs. Mesh files visually represent the 3D shape of the robot parts. These files are typically in formats such as STL (Stereo Lithography (.stl) or COLLADA (.dae)).
+</section>
+
+<section id="2"><h1>XACRO format</h1>
+  XACRO files are like blueprints for URDF files, using macros and variables to simplify complex robot descriptions. They need to be processed into URDF files. 
+</section>
+</chapter>
+
+</body>
+</html>

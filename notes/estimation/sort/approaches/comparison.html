@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Comparison", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Comparison</h1>
+<section id="0"><h1>Overview</h1>
+  The different approaches are just different ways of answering the same question: "Based on the data, what is the best guess for the underlying state?"
+
+  <p>
+    If the data follows a normal distribution, the math for MLE and LS becomes exactly the same, i.e., minimising the distance is the same as maximising the probability.
+  </p>
+</section>  
+
+<section id="1"><h1>Least squares</h1>
+  <subsubsection><h1>Goal</h1>
+    Minimise the distance between the measured and predicted data points, referred to as errors or <i>residuals</i>.
+  </subsubsection>
+
+  <subsubsection><h1>Logic</h1>
+    If the distance between each measured/predicted point is squared, and then the sum of those squares is minimised, then the most optimal solution can be found that sits in the middle of the 2 sets of points.
+  </subsubsection>
+
+  <subsubsection><h1>Intuition</h1>
+    It is a geometric approach; it purely cares about spatial fit. There is no need to know why the data is messy; the aim is to just be as close to all the points as possible.
+  </subsubsection>
+</section>
+
+<section id="2"><h1>MLE</h1>
+  <subsubsection><h1>Goal</h1>
+    Maximise the likelihood function.
+  </subsubsection>
+
+  <subsubsection><h1>Logic</h1>
+    A specific distribution (like a Bell Curve) is assumed. The parameters of that curve (the mean and spread) is then tweaked until the "peak" of the curve aligns best with the measured data.
+  </subsubsection>
+
+  <subsubsection><h1>Intuition</h1>
+    MLE is more like a detective. Instead of looking at distances, it takes a probabilistic approach. It asks: "Out of all the possible versions of the world, which one matches the measured data the most?"
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

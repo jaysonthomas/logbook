@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Robot", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Robot</h1>
+The body of a robot consists of two components
+  <ul>
+    <li>Links: The rigid pieces</li>
+    <li>Joints: The pieces that move, enabling motion between connected links</li>
+  </ul>
+
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/software/ros/urdf/1_mobileBot.png"/>
+      <figcaption>
+        Links and joints of a mobile bot with lidar
+      </figcaption>
+    </figure>
+  </div>
+
+  <subsubsection id="0.0"><h1>Joints</h1>
+    A wheel joint is a revolute joint, connecting a wheel link to a base link. A revolute joint enables rotational motion. Fixed joints have no motion. It could be a simple screw that connects a LIDAR to a robot's base. Prismatic joints cause linear motion between links.
+  </subsubsection>  
+</chapter>
+
+</body>
+</html>

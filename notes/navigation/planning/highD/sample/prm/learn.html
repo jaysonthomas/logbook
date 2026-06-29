@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Learning phase", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Learning phase</h1>
+<section id="0"><h1>Overview</h1>
+  The <i>learning phase</i> involves building up a graph. 
+  
+  <subsubsection><h1>Steps</h1>
+    <ul>
+      <li>Generates/samples a new random configuration represented by a node in the graph.</li>
+      <li>Checks if it is in collision.</li>
+      <li>If not in collision, then PRM tries to connect the node to its neighbours.</li>
+    </ul>
+  </subsubsection>
+  
+  <subsubsection><h1>Neighbours selection</h1>
+    PRM can look for any number of neighbours within a certain radius of a node, or it could look for a node's K nearest neighbours.  
+  </subsubsection>
+
+  <subsubsection><h1>Neighbours connection</h1>
+    Once the neighbours have been selected, PRM will see if they can successfully create an edge to each of its neighbours, avoiding collisions. The local planner must find a path between two nodes or return that such a path does not exist.
+
+    <p>
+      One easy way to accomplish this is to draw a straight line between two nodes, and then check if any part of it collides with an obstacle. 
+    </p>
+  </subsubsection>
+
+  <subsubsection><h1>Collision check</h1>
+    Place a number of evenly spaced samples on the line joining 2 nodes and see whether any one of them is in a collision. 
+    
+    <p>
+      One can work incrementally starting on one side of an edge and moving towards the other, or one can take a binary approach, checking the sample at the midpoint first. If it is not in collision, one could continue breaking the edge up into segments, checking each midpoint sample for a collision. If all of the samples have no collision found, then the edge can be added to the graph.
+    </p>
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Algorithm</h1>
+  <equation>
+    Initialize an empty graph
+    For n iterations:
+
+      Generate a random configuration.
+      If the configuration is collision free: 
+
+          Add the configuration to the graph.
+          Find the k-nearest neighbours of the configuration.
+          For each of the k neighbours:
+
+            Try to find a collision-free path between 
+                the neighbour and original configuration. 
+                If edge is collision-free: 
+                    Add it to the graph. 
+  </equation>
+</section>
+</chapter>
+
+</body>
+</html>

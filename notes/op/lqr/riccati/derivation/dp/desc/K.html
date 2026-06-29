@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Feedback policy", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Feedback policy</h1>
+<section id="0"><h1>Overview</h1>
+  $K_k$ is the mathematical sweet spot that balances two opposing forces:
+  <ul>
+    <li>State Error</li>
+    The desire to aggressively drive the state to zero because $P_{k+1}$ says the future is expensive.
+
+    <p>
+      <li>Control Effort</li>
+      The desire to act lazily and conserve energy because moving the actuators costs money/effort.
+    </p>
+  </ul>
+
+  If $K_k$ has a high value for a specific state variable, it means the controller is highly sensitive to errors in that variable and will apply aggressive control inputs to fix it immediately.
+</section>
+
+<section id="1"><h1>$K$ is a Map, Not a Path</h1>
+  The backward pass doesn't calculate a specific trajectory; it calculates a policy (a strategy).
+  
+  <p>
+    Given the bowl shaped quadratic cost and cost-to-go, $K_k$ defines the slope of the bowl. If you drop a marble into the bowl at a completely different starting position $x_0$, it will still naturally roll down toward the origin ($x=0$) using the exact same slopes ($K$).
+  </p>
+
+  Because the feedback law is $u_k = -K_k x_k$, the actual control input $u_k$ automatically adapts because it scales with the current state $x_k$. If you start twice as far away, $x_0$ is twice as large, so $u_0$ will automatically be twice as aggressive—without changing $K_0$.
+</section>
+
+<section id="2"><h1>What actually determines $K$?</h1>
+  From the Riccati math, $K_k$ is computed entirely from:
+  <ul>
+    <li>System Dynamics ($A, B$): How the physics of the world works.</li>
+    <li>Cost Weights ($Q, R$): What you care about (performance vs. effort).</li>
+    <li>Future Cost-to-Go ($P_{k+1}$): Which itself only depends on $A, B, Q, R,$ and the terminal cost $Q_f$.</li>
+  </ul>
+  Notice that the state vector $x$ never appears in the equations used to calculate $P_k$ or $K_k$. The optimal strategy depends entirely on the rules of the game, not where you happen to stand on the board.
+</section>
+
+<section id="3"><h1>When would you need to recompute the backward pass?</h1>
+  You only need to dust off the backward pass if you change the underlying problem itself:
+  <ul>
+    <li>Changing the Goal: If your target state moves (though for tracking a moving reference, you typically shift to an error-state LQR formulation rather than re-running the standard Riccati loop).</li>
+
+    <p>
+      <li>Changing the Physics: If your system parameters change (e.g., your robot picks up a heavy payload, altering the $A$ and $B$ matrices).</li>
+    </p>
+
+    <li>Changing Your Mind: If you decide to penalize energy consumption more heavily (increasing $R$) or want tighter tracking (increasing $Q$).</li>
+
+    <p>
+      <li>Changing the Horizon: If the time duration of the task ($N$) changes.</li>
+    </p>
+  </ul>
+  
+  As long as the physics and your performance goals stay the same, you run the backward pass exactly once offline, save the sequence of $K$ matrices, and just multiply them by your live state measurements online.
+</section>
+</chapter>
+
+</body>
+</html>

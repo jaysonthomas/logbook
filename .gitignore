@@ -108,3 +108,5 @@ timeWithGod/
 *.log
 *.synctex.gz
 *.aux
+
+commit.txt

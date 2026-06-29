@@ -10,8 +10,7 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Coaxial Helicopter dynamics</h1>
-
+<chapter style="counter-reset: chapter 0"><h1>Coaxial Helicopter dynamics</h1>
 <section id="0"><h1>Overview</h1>
   A co-axial helicopter is a body with two rotors on top of each other which produce upward thrusts by spinning in opposite directions. Let rotor 1 spin CW with $\omega_1$ and rotor 2 spin CCW with $\omega_2$.
 
@@ -21,7 +20,8 @@
       src="../../../../../../figures/dynamics/drone/coaxial.png"/>
     </figure>
   </div>
-</section>
+
+  Since the second rotor rotates CCW, $\omega_2 = -|\omega_2|$. 
 </section>
 
 <section id="1"><h1>Linear acceleration</h1>
@@ -39,7 +39,7 @@
       &= \frac{k_m}{I_z}(\omega_1^2 - \omega_2^2)
   \end{align*}$$
 
-  The body of the vehicle experiences angular acceleration in the CCW direction if rotor 2 spins faster than rotor 1. The body and the propeller spin in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_2^2$ is given a negative sign because only the reaction torque is considered since that's the torque that produces motion.
+  The body of the vehicle experiences angular acceleration in the CCW direction if rotor 1 spins faster than rotor 2. The body and the propeller spin in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_2^2$ is given a negative sign because only the reaction torque is considered since that's the torque that produces motion.
 </section>
 
 <section id="3"><h1>Computing angular velocity</h1>
@@ -48,8 +48,6 @@
     \omega_1^2 - \omega_2^2 &= \frac{I_z}{k_m} \cdot \ddot{\psi} \\   
     |\omega_1| &= \sqrt{\frac{\frac{I_z}{k_m} \cdot \ddot{\psi} + \frac{m}{k_f} \cdot (g - \ddot{z})}{2}}
   \end{align*}$$
-
-  Since the second rotor rotates CCW, $\omega_2 = -|\omega_2|$. 
 </section>
 </chapter>
 

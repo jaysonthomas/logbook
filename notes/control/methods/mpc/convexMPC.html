@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Convex MPC", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Convex MPC</h1>
+<section id="0"><h1>Overview</h1>
+  From <a href="../../../op/lqr/riccati/derivation/dp/steps.html">DP</a>, if the cost-to-go function $V(x)$ is found, $u$ can be found by solving a one-step problem:
+
+  $$\begin{align*}
+    u_k &= arg \min_u \; l(x_k, u_k) + V_{k+1} \bigl(f(x_k, u_k)\bigr) \\
+      &= \frac{1}{2}u_k^T R_k u_k + 
+        \frac{1}{2}(Ax_k + Bu_k)^T P_{k+1} (Ax_k + Bu_k)
+  \end{align*}$$
+
+  To this one step problem, constraints can be added on $u$, but this will perform poorly since $V(x)$ was computed without constraints.
+</section>
+
+<section id="1"><h1>Solution</h1>
+  More time steps can be added to the one step problem in front of the $V$. It doesn't change the problem. If the exact $V$ is known, there's no reason to do the extra work. But, here where $V$ is treated as some approximate cost-to-go, adding more time steps might be useful.
+  
+  $$
+    \min_{\substack{x_{1:H} \\ u_{1:H-1}}} 
+    \sum_{n=1}^{H-1} 
+    \left( \frac{1}{2} x_n^T Q x_n + 
+          \frac{1}{2} u_n^T R u_n \right) + 
+    \underbrace{x_H^T P_H x_H}_{\text{LQR cost-to-go}}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      H &:& \text{Horizon. } H << N
+    \end{array}$$
+  </div>
+  
+</section>
+</chapter>
+
+</body>
+</html>

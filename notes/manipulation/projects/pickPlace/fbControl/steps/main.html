@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Steps", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Steps</h1>
+  Compute
+  <ul>      
+    <li><a href="errorTwist.html">Error twist</a></li>
+   
+    <p>
+      <li>Feedforward reference twist</li>
+      $[V_{d}] = \frac{1}{\Delta{t}}log(X^{-1}_{d} X_{d,next})$
+
+      <p>
+        A logarithm typically represents an instantaneous change to go between 2 configurations $X_{d}$ to $X_{d,next}$; a change that is so small that it can be considered to occur over an infinitely small period of time. This is called an <i>infinitesimal motion</i>. In order to map the instantaneous motion to a motion that occurs over a finite period of time $\Delta{t}$, the output of the logarithm is divided/scaled by $\Delta{t}$. The resulting velocity is kept constant for the time interval: $v\Delta{t} = \Delta{X}$
+      </p>
+    </p>
+
+    <p>
+      <li>Commanded ee twist</li>
+      $V_{ee} = FF + P + I$
+      <br>
+      $V(t)=[Ad_{X^{-1}X_{d}}]V_{d}(t)+K_{p}X_{err}(t)+K_{i}\int_{0} ^{t}X_{err}dt$
+      <br>
+      $FF$ consists of the reference twist after mapping it
+      to the current frame of the ee.
+      <br>
+      The error twist is used in the P and I terms.
+
+      <p>
+        <m>What if the twist to go from $X$ to $X_d$ wasn't considered in the FF term; i.e. leave the PI terms to take care of the error?</m>
+      </p>
+    </p>
+    
+    <li>Commanded wheel and joint speeds</li>
+    $V_{ee}$ needs to be expressed in the wheel and joint space
+    using the pseudoinverse of the mobile manipulator jacobian.
+    <br>
+    $\begin{bmatrix}u\\\dot{\theta}\end{bmatrix} = J^{\dagger}_{e}(\theta)V$
+  </ul>
+</chapter>
+
+</body>
+</html>

@@ -15,7 +15,7 @@
   Also called <i>running cost</i> or <i>one-step cost</i>. It is a scalar function that quantifies the immediate penalty or performance cost incurred during a single discrete time step of a control loop or trajectory optimisation.
 
   <p>
-    It evaluates how bad the current state $x$ and the chosen control input $u$ are at this exact moment, completely ignoring the future or past.
+    It evaluates how bad the current state $x$ and the chosen control input $u$ are at a particular time instant, ignoring the future or past.
   </p>
 </section>
 
@@ -35,7 +35,7 @@
   </subsection>
 
   <subsection id="1.1"><h1>Control Penalty (Actuator Effort)</h1>
-    This penalises aggressive control inputs to prevent the system from demanding infinite or damaging actuator forces, or to optimise for energy efficiency.
+    This penalises aggressive control inputs to prevent a system from demanding infinite or damaging actuator forces, or to optimise for energy efficiency.
 
     <p>
       Example: If pushing a lot of torque $u$ burns battery power and can cause mechanical wear, a term like $R u^2$ can be added, where $R$ is a weighting factor penalising high control effort.
@@ -52,7 +52,7 @@
 
     <p>
       <li>Non-negativity</li>
-      It is usually designed to be positive semi-definite ($l(x, u) \ge 0$), meaning penalties are accumulated. 0 represents a flawless state of operation.
+      It is designed to be positive semi-definite ($l(x, u) \ge 0$), meaning penalties are accumulated. <n>0 represents a flawless state of operation</n>.
     </p>
 
     <li>Convexity</li>

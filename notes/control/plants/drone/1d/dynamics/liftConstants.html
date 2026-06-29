@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Lift constants", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Lift constants</h1>
+  Constants $k_f, k_m$ depend on the:
+  <ul>
+    <li>Size and shape of the plates</li>
+    <li>Specific motors used</li>
+    <li>Density of the surrounding air they operate in</li>
+  </ul> 
+  
+  In practice, these values are obtained empirically. With the motor and propeller mounted on a load cell, force and moment can be measured for different motor speeds. The graph below shows a simulation of the data to be expected from such an experiment.
+
+  <div class="img-container">
+    <figure>
+      <img style="height:150px; width:auto"
+      src="../../../../../../figures/drone/33_liftConstants.png"/>
+      <figcaption>
+        Lift constants empirical data
+      </figcaption>
+    </figure>
+  </div>
+</chapter>
+
+</body>
+</html>

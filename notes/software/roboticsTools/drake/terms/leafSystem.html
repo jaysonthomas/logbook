@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("LeafSystem", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>LeafSystem</h1>
+  <i>LeafSystem</i> is the smallest building block in Drake used for processing inputs, maintaining state, and producing outputs. A leaf system could represent a single:
+
+  <ul>
+    <li>Physical component - spring, damper, sensor or a RigidBodyPlant</li> 
+    <li>Mathematical component - functions such as Adder, Multiplier, and TrigExp</li>
+  </ul>
+
+  Leaf systems in Drake have well-defined inputs and outputs, which can be either:
+  <ul>
+    <li>Continuous signals: position or velocity</li>
+    <li>Discrete events: button presses or sensor readings</li>
+  </ul>
+
+  <p>
+    They are often implemented as C++ classes that inherit from the LeafSystem base class.
+  </p>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Net force", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Net force</h1>
+<section id="0"><h1>Overview</h1>
+  A monorotor has only one rotor and therefore only one thrust vector pointing upwards in the positive $z$ direction. This will cause an acceleration in the z direction.
+
+  $$
+    F_z = m|g| - |F_t|
+  $$
+
+  $F_z$ is the net force on the vehicle.
+</section>
+
+<section id="1"><h1>Linear translational acceleration</h1>
+  $$
+    \ddot{z} = g - \frac{F_t}{m}
+  $$
+</section>
+
+<section id="2"><h1>Translational equilibrium</h1>
+  When a monorotor is hovering, it is in translational equilibrium. 
+
+  <p>
+    To hover ($F_z=0$), the thrust force upwards would need to be equal to the force that gravity exerts downwards. $$\ddot{z} = 0$$
+  </p>
+
+  <div class="container">
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../../../../figures/drone/31_ex1_monorotor.png"/>
+      <figcaption>
+        Consider a monorotor that is hovering with $F_t = 100N$. From the balance of forces, the mass would be: $m = \frac{100}{9.8} = ~10.2kg$ which is a big monorotor.
+      </figcaption>
+    </figure>
+  </div> 
+</section>
+</chapter>
+
+</body>
+</html>

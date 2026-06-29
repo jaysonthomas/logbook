@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Cost-to-go", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Cost-to-go</h1>
+<section id="0"><h1>Overview</h1>
+  $P_k$ represents the minimum remaining cost that will be accumulated from time step $k$ until the very end of the horizon, assuming the controller acts optimally.
+
+  <p>
+    It is not possible to know how expensive it is to be at step $k$ until the cost of handling the aftermath at step $k+1$ is known. Hence why $P$ must be calculated backward from the terminal penalty $P_N = Q_f$.
+  </p>
+
+  If a state has a high cost-to-go, the controller has to work hard to get out of there.
+
+  <p>
+    Strictly speaking:
+    <ul>
+      <li>$V(x)$ is the cost-to-go (a scalar value).</li>
+      <li>$P$ is the cost-to-go matrix (or the Riccati matrix).</li>
+    </ul>
+    Control engineers often use lazy shorthand and say "$P$ is the cost-to-go," but what they actually mean is that $P$ is the matrix that parameterizes the quadratic cost-to-go function. 
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

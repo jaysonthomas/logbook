@@ -11,12 +11,14 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Code</h1>
-  To simplify things, assume direct control over acceleration. $u$ is used to represent a thrust or torque control input to the drone.
+  To simplify things, assume direct control over acceleration. $u$ represents a thrust or torque control input to the drone.
 
-  For a 1-D monorotor, the equation of motion is:
-  $$
-    \ddot{z} = g - \frac{u}{m}
-  $$ 
+  <p>
+    For a 1-D monorotor, the equation of motion becomes:
+    $$
+      \ddot{z} = g - \frac{u}{m}
+    $$ 
+  </p>
 
   $u$ is the upward thrust that can be controlled. To show it has a direct influence on the body-acceleration, the dynamics equation can be written in a simpler form:
   $$

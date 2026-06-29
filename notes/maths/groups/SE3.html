@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("SE(3)", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>SE(3)</h1>
+<section id="0"><h1>Overview</h1>
+  This is the group which represents continuous geometric spaces of 3D rigid-body transformations. It combines both rotation and translation to describe a full 6 DoF pose in space.
+  
+  <subsubsection><h1>Elements</h1>
+    $4 \times 4$ homogeneous transformation matrices, $T$.
+  </subsubsection>
+
+  <subsubsection><h1>Structure</h1>
+    It has a block structure containing a rotation matrix $R \in SO(3)$ and a translation vector $p \in \mathbb{R}^3$
+    $$
+      T = \begin{bmatrix} R & p \\ 0 & 1 \end{bmatrix}
+    $$
+  </subsubsection>
+  
+  <subsubsection><h1>Degrees of Freedom (DoF)</h1>
+    6 (3 for rotation, 3 for translation).
+  </subsubsection>
+</section>
+
+</chapter>
+
+</body>
+</html>

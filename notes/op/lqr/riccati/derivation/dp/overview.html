@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Overview</h1>
+  Computation for the discrete-time LQR solved via dynamic programming (the Riccati recursion) starts with a backward pass, from the final time step $N$ and works backwards to time step 0.At each step $k$, this recursion spits out two matrices (or vectors, depending on the state dimension): $P_k$ and $K_k$.
+
+  <subsubsection><h1>Intuition</h1>
+    The backward pass can be thought of as a scouting mission traveling backward from the finish line to the starting line:
+    <ul>
+      <li>At step $k+1$</li>
+      The scout looks ahead at the remaining track and says, "If we land here, the optimal cost to finish the race from this point onward is characterized by $P_{k+1}$."
+
+      <p>
+        <li>At step $k$</li>
+        The scout looks at the physics of a system ($A$ and $B$), the immediate penalties ($Q$ and $R$), and the future danger ($P_{k+1}$) and writes down a recipe: "If you find yourself at state $x_k$, apply action $u_k = -K_k x_k$. Doing this will minimize your immediate effort and land you in the safest possible position for the next step, yielding a total expected remaining cost of $x_k^T P_k x_k$."
+      </p>
+
+      <li>The Update</li>
+      The scout saves $P_k$ as the new benchmark, steps backward to $k-1$, and repeats the process. By the time the computation reaches $k=0$, the backward pass would have mapped out the entire terrain ($P$) and created a playbook ($K$) for exactly how aggressive or gentle the control inputs need to be at every single moment in time.
+    </ul>
+
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

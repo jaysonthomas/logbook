@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Workflow", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Robot description</h1>
+<section id="0"><h1>Directory structure</h1>
+  <pre><code class="nohighlight">
+    ├── launch 
+    ├── rviz
+    ├── urdf
+    ├── CMakeLists.txt
+    └── package.xml
+  </code></pre>
+
+  Inside <code>CMakeLists.txt</code>, specify the directories to include in the build and the destination.
+  <pre><code class="make">
+    install(
+      DIRECTORY urdf launch rviz
+      DESTINATION share/${PROJECT_NAME}/
+    )
+  </code></pre>
+
+  Write the urdf files in .xacro formats configuring the various links and joints with details such as:
+  <ul>
+    <li>Display colour in RViz</li>
+    <li>Connections</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

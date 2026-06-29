@@ -10,13 +10,24 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Miscellaneous definitions</h1>
+<chapter style="counter-reset: chapter 3"><h1>Miscellaneous definitions</h1>
 <section id="0"><h1>Limit</h1>
   A <i>limit</i> is a value toward which an expression converges as one or more variables approach certain values.
 </section>
 
 <section id="1"><h1>Argmin</h1>
-  $argmin_x f(x)$ is the value of $x$ (referred by the subscript) for which $f(x)$ attains its minimum.
+  $$arg \min_x f(x)$$ 
+  Gives the corresponding value of $x$ for which $f(x)$ attains its minimum. It returns the argument that achieved the minimum.
+
+  <subsubsection><h1>Comparison to minimisation</h1>
+    $$\min_u f(x,u)$$ 
+
+    It means finding the specific value of $u$ that makes the output of the function $f(x,u)$ as small as possible. It returns the minimum value of the function itself. 
+
+    <p>
+      In a control context, when a solver evaluates $\min_u f(x,u)$, it isn't looking to just apply the minimum physical voltage or the smallest steering angle. It is searching the entire space of allowable control inputs to find the specific action that results in the lowest overall cost.
+    </p>
+  </subsubsection>
 </section>
 </chapter>
 

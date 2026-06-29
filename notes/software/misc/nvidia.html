@@ -10,22 +10,58 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Nvidia</h1>
+<chapter style="counter-reset: chapter 0"><h1>Nvidia</h1>
 <section id="0"><h1>Install</h1>
   <pre><code class="bash">
     sudo ubuntu-drivers autoinstall
   </code></pre>
 
-Check the driver installed
-<pre><code class="bash">
-                        nvidia-smi
-</code></pre>
+  Check the driver installed
+  <pre><code class="bash">
+    nvidia-smi
+  </code></pre>
 
-Check all nvidia tools installed
-<pre><code class="bash">
-dpkg -l | grep nvidia
-</code></pre>
+  Check all nvidia tools installed
+  <pre><code class="bash">
+    dpkg -l | grep nvidia
+  </code></pre>
+</section>
 
+<section id="1"><h1>Nvidia installed driver check</h1>
+  Check the recommended driver:
+  <pre><code class="bash">
+    ubuntu-drivers devices
+  </code></pre>
+
+  If the output is the following, it means 580 is currently installed, but 595 is recommended:
+   <pre><code class="bash">
+    driver   : nvidia-driver-595-server - distro non-free
+    driver   : nvidia-driver-580-open - distro non-free
+    driver   : nvidia-driver-580-server - distro non-free
+    driver   : nvidia-driver-580 - distro non-free
+    driver   : nvidia-driver-580-server-open - distro non-free
+    driver   : nvidia-driver-595-server-open - distro non-free
+    driver   : nvidia-driver-595-open - distro non-free recommended
+    driver   : nvidia-driver-595 - distro non-free
+    driver   : xserver-xorg-video-nouveau - distro free builtin
+  </code></pre>
+
+  Confirm this using:
+  <pre><code class="bash">
+    dpkg -l | grep nvidia-driver-
+  </code></pre>
+  
+  Install the recommended driver using:
+  <pre><code class="bash">
+    sudo apt install nvidia-driver-595-open
+  </code></pre>
+
+  Confirm installation using:
+  <pre><code class="bash">
+    dkms status
+    sudo modprobe nvidia      # should return nothing
+    nvidia-smi
+  </code></pre>  
 </section>
 
 </chapter>

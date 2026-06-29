@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("SceneGraph", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>SceneGraph</h1>
+<section id="0"><h1>Overview</h1>
+  <code>class 'pydrake.geometry.SceneGraph'</code>.
+
+  <p>
+    The <i>scenegraph</i> defines relationships between 3D objects and each of their spatial properties.
+  </p>
+</section>
+
+<section id="1"><h1>Implementation details</h1>
+  It is a data structure that represents a hierarchical organisation of objects in a 3D world using nodes and edges.
+
+  <ul>
+    <li><i>Nodes</i> represent objects in the scene, such as a robot or a table</li>
+    <li><i>Edges</i> represent the spatial relationships between the objects, such as parent-child relationships or constraints</li>
+    <p>
+      <li><i>Node properties</i></li>
+      Each node can have a set of properties associated with it, such as its geometry (position, orientation, and scale), material properties, and physical properties. These properties can be used to simulate the dynamics of the objects in the scene, such as their collisions and interactions with each other.
+    </p>
+  </ul>
+</section>
+
+  <p>
+    The scene graph interacts with other components of a simulation, such as the 
+    <ul>
+      <li>Physics engine for collision detection</li>
+      <li>Rendering engine for visualisation.</li>
+    </ul>
+  </p>
+
+<section id="2"><h1>Relationship between Plant and Scenegraph</h1>
+  <figure2>
+    <img style="height:350px; width:auto"
+    src="../../../../../figures/manipulation/37_basicDrakeDiagram.png"/>
+    <figcaption>
+      A basic drake diagram
+    </figcaption>
+  </figure2>
+
+  In Drake, the SceneGraph manages the geometric representation of a system, while the Plant manages its physical dynamics.
+
+  <p>
+    The SceneGraph system contains information about the geometry of a system, such as the location, size, and shape of objects. It also provides methods for querying the geometric properties of objects in the scene, such as their positions, orientations, and velocities. These queries are performed using the <code>geometry_query</code> object.
+  </p>
+  
+  The Plant system, on the other hand, is responsible for modeling the dynamics of a system. It contains information about the physical properties of objects, such as their masses, moments of inertia, and contact models.
+
+  <p>
+    To connect these two systems, the Plant system receives geometric information from the SceneGraph through the geometry_query object. The Plant system uses this information to compute the physical properties/dynamics of objects, such as their positions, velocities, and forces.
+  </p>
+  
+  For example, suppose we have a rigid body in the Plant system that is connected to a visual geometry in the SceneGraph. To compute the forces acting on the rigid body, the Plant system might first request information about the position and orientation of the visual geometry using the geometry_query object. It can then use this information to compute the forces acting on the rigid body due to interactions with other objects in the scene.
+</section>
+</chapter>
+
+</body>
+</html>

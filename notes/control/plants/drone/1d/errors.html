@@ -11,25 +11,38 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Errors</h1>
-<section id="0"><h1>Effect of a small model error</h1>
-  Assuming, the aim is for the monorotor to hover: 
+<section id="0"><h1>Setup</h1>
+  Consider that the aim is for a monorotor to hover: 
   $$\ddot{z} = 0$$
+  
+  The target position is a constant altitude (since the aim is to hover). 
 
-  Assume the drone's mass has been overestimated by a small amount $\epsilon$, i.e. the drone is lighter than the controller thinks. The target position is a constant altitude (since the aim is to hover). The position over time can be found as follows:
+  <p>
+    Initial state: $z(0) = \dot{z}(0) = 0$
+  </p>
+</section>
+
+<section id="1"><h1>Effect of a small model error</h1>
+  Assume the drone's mass has been overestimated by a small amount, i.e. the drone is lighter than the controller thinks. This means that the controller would apply more torque to the rotors and hence more thrust to the drone than is necessary. 
+  
+  <p>
+    Consider the drone in the hovering state. Due to the mass mismatch, there would be a small constant error $\epsilon$ in the drone's linear acceleration. The position over time can be found as follows:
+  </p>
+
   <ul>
     <li>Integrating $\ddot{z}$ to get velocity</li>
     $$
-      \dot{z}(t) = \int^t_0{\epsilon dT} = \epsilon t + \dot{z}(0)
+      \dot{z}(t) = \int^t_0{\epsilon dT} = \epsilon t + \dot{z}(0) = \epsilon t
     $$
 
     <li>Integrating $\dot{z}$ to get position</li>
     $$\begin{align*}
-      z(t)  &= \int^t_0{\epsilon T dT}\\
+      z(t) &= \int^t_0{\epsilon t dT}\\
       z(t) - z(0) &= \frac{1}{2} \epsilon t^2
     \end{align*}$$
   </ul>
 
-  With $z(0) = \dot{z}(0) = 0$, the altitude is supposed to be $z(0)$ forever. But, with the small error in mass, the position grows quadratically with time. 
+  With a small error in mass, the position error grows quadratically with time. 
 
   <div class="img-container">
     <figure>
@@ -40,21 +53,20 @@
       </figcaption>
     </figure>
   </div>
-  The smallest deviation of the model (used by the controller to make its thrust decisions) from the real world can lead to quadratic errors in double integrator systems as seen above. A double integrator system is an <i>unstable system</i>. A <i>stable system</i> would have some self-correcting ability and the mismatch would not grow infinitely. 
+  The smallest deviation of a model (used by the controller to make its thrust decisions) from the real world can lead to quadratic errors in double integrator systems as seen above. A double integrator system is an <i>unstable system</i>. A <i>stable system</i> would have some self-correcting ability and the mismatch would not grow infinitely. 
 </section>
 
-<section id="1"><h1>Error sources</h1>
+<section id="2"><h1>Error sources</h1>
   <ul>
     <li>Model error</li>
-    An error in the model of the vehicle itself. Eg: neglected aerodynamic effects, model parameter uncertainties like the estimate of the rotational inertia of the vehicle may be slightly off.
+    An error in the model of a vehicle. Eg: neglected aerodynamic effects, model parameter uncertainties like rotational inertia.
 
     <p>
       <li>Disturbances</li>
-      They are errors caused by something external or internal to the vehicle that wasn't anticipated. For example, a strong cross-breeze would be a disturbance that could introduce error, or a part coming loose. 
+      Errors caused by something external or internal to a vehicle that wasn't anticipated. For example, a strong cross-breeze or a part coming loose. 
     </p>
 
     <li>Measurement error</li>
-    They are unpredictable errors introduced when a measurement of the vehicle or the environment it is in, is taken.
   </ul>
 </section>
 </chapter>

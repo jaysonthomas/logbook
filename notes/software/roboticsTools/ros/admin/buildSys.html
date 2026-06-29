@@ -62,6 +62,13 @@
     It only helps with non-compiled files (Python scripts, YAML configs, launch files, etc.). C++ still needs a full rebuild because the compiler has to actually process the source.
   </p>
 </section>
+
+<section id="3"><h1>Examples</h1>
+  Build specific package within a specific folder.
+  <pre><code class="bash">
+    colcon build --base-paths src/diff_drive/ --packages-select my_robot_description
+  </code></pre>
+</section>
 </chapter>
 
 </body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Xacro example", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Xacro example</h1>
+<section id="0"><h1>Gripper joint physical limitations</h1>
+  How much force the joints can exert (effort), how fast they can move (velocity), and their friction/damping characteristics. 
+
+  <pre><code class="xml">
+    &lt;xacro:property name="joint_effort" value="56.0"/&gt;
+    &lt;xacro:property name="joint_velocity" value="2.792527"/&gt;
+    &lt;xacro:property name="joint_damping" value="0.0"/&gt;
+    &lt;xacro:property name="joint_friction" value="0.0"/&gt;
+  </code></pre>  
+</section>
+
+<section id="1"><h1>Mass and inertial properties</h1>
+  Inertia describes how the mass of the gripper components is distributed. 
+  
+  <pre><code class="xml">
+    &lt;xacro:property name="gripper_link_mass" value="0.007"/&gt;
+    &lt;xacro:property name="gripper_link_ixx" value="1e-6"/&gt;
+    &lt;xacro:property name="gripper_link_iyy" value="1e-6"/&gt;
+    &lt;xacro:property name="gripper_link_izz" value="1e-6"/&gt;
+  </code></pre>  
+</section>
+
+ros2 launch urdf_tutorial display.launch.py model:=~/test/ros/src/cobot/cobot_description/urdf/robots/cobot_280.urdf.xacro
+</chapter>
+
+</body>
+</html>

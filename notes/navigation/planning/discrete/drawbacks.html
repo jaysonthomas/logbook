@@ -11,7 +11,7 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 3"><h1>Drawbacks</h1>
-  Performing a complete discretisation of a large space such as those found in higher dimensional problems and applying a graph search algorithm to the space may be too costly. The complexity of the path planning problem increases exponentially with the number of dimensions in the C-space.
+  Performing a complete discretisation of a large space such as those found in higher dimensional problems and applying a graph search algorithm to the space may be too costly. The complexity of a path planning problem increases exponentially with the number of dimensions in the C-space.
 
   <subsubsection><h1>Increased Dimensionality</h1>
     For a 2-dimensional 8-connected space, every node has 8 successors (it is possible to move from every cell laterally or diagonally). A 3-dimensional 8-connected space has 26 successors from every node. As the dimension of the C-space grows, the number of successors that every cell has increases substantially. For an n-dimensional space, it is equal to $3^n - 1$.
