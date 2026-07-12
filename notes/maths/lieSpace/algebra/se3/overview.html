@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Overview</h1>
+  The Lie algebra of rigid transformations is the space of spatial twists (combined linear and angular velocities).
+  <subsubsection><h1>Elements</h1>
+    $4 \times 4$ matrices, $[\mathcal{V}]$.
+  </subsubsection>
+
+  <subsubsection><h1>Structure</h1>
+    Unrolled from a 6-element twist vector $\mathcal{V} = (\omega, v)$, where $\omega \in \mathbb{R}^3$ is angular velocity and $v \in \mathbb{R}^3$ is linear velocity:
+    $$
+      [\mathcal{V}] = \begin{bmatrix} [\omega] & v \\ 
+        0 & 0 
+      \end{bmatrix}$$
+  </subsubsection>
+  
+  <subsubsection><h1>Physical Meaning</h1>
+    The instantaneous screw motion (twist) of a rigid body. This representation is used to represent a $6 \times 1$ twist matrix as a $4 \times 4$ matrix.
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

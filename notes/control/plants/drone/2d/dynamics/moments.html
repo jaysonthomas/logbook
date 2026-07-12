@@ -11,16 +11,18 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Moments</h1>
-<section id="0"><h1>Decomposition</h1>
-  The rolling torque comes from a force that acts perpendicular (here along $Z_W$) to the axis of rotation $X_W$ at some distance from the center of the vehicle, i.e. rotor at a perpendicular distance from an axis will produce a moment about the axis. 
+<section id="0"><h1>Roll</h1>
+  Consider a 2D drone with its axis of rotation (into the screen, $X$) at its center. 
 
-  Conditions to consider when calculating the magnitude of the rolling torque:
+  <p>
+    A force acting perpendicular to the axis of rotation at some distance from it, produces a moment about the rotation axis causing the vehicle to rotate. 
+  </p>
 
-  <ul>
-    <li>
-      When the body frame is perfectly aligned with the drone:        
-    </li>
+  Here, each rotor applies a vertical force along $Z_W$ producing a moment about $X_W$.
+</section>
 
+<section id="1"><h1>Magnitude of rolling torque</h1>
+  <subsection id="1.0"><h1>When the body frame is aligned with the drone</h1>
     <div class="container">
       <figure>
         <img style="height:150px; width:auto"
@@ -35,39 +37,38 @@
       M_x = F \cdot L
     $$
 
-    <li>
-      When ${B}$ is not perfectly aligned with the drone, i.e. the body-frame coordinate system is rotated w.r.t. the drone's arms.
-    </li>
-    <div>
-      <figure>
-        <img style="height:130px; width:auto"
-        src="../../../../../../figures/drone/40b_rollBodyFrameMisAlignedWithDroneArms.png"/>
-        <figcaption>
-          Left: From a top view, a drone's body frame X-axis goes from the centre of the vehicle out between the 2 forward propellers; it is permanently at angle $\theta$ with its arms in $XY$.<br>
-          Right: As the body frame rotates with the drone, from the side view, the force $F$ acts at a shorter distance $d$ from $X_B$.
-        </figcaption>
-      </figure>
-    </div>
-    $$
-      M_x = F \cdot Lcos\theta
-    $$
-
-    $\theta$ represents the angle between $Y_B$ and the drone's arm in the positive $XY_B$ plane, and not the yaw angle $\psi$ caused by a reaction torque. 
-  </ul>
-
-  The coordinate system that is used most often for a quadrotor body frame has the x and y axes pointing half-way between the rotor arms, i.e. at $45^0$; which is the reason why $\sqrt{2}$ is often seen in quadrotor math, since $cos45 = \frac{1}{\sqrt{2}}$.
-
-  <p>
     $F$, only for the context of calculating $M_x$ is given as:
     $$
       F = F_1 - F_2
     $$
 
     The convention might be to deliberately subtract $F_2$, because if $F_2 > F_1$, then the drone rolls in the anti-clockwise direction which means a negative torque ($M_x &lt 0$) should have caused this; the combination of $F_1, F_2$ gives the negative torque value.
-  </p>
+  </subsection>
+  
+  <subsection id="1.1"><h1>When the body frame is not aligned with the drone</h1>
+    The drone's arms would be rotated by $\theta$ w.r.t. the body-frame coordinate system $B$.
+
+    <div>
+      <figure>
+        <img style="height:130px; width:auto"
+        src="../../../../../../figures/drone/40b_rollBodyFrameMisAlignedWithDroneArms.png"/>
+        <figcaption>
+          Left: Top view. Right: Side view.
+        </figcaption>
+      </figure>
+    </div>
+
+    Since a drone's body frame rotates with the drone, from the side view, the force $F$ acts at a shorter perpendicular distance $d$ from the <n>rotation axis</n> $X_B$.
+
+    $$
+      M_x = F \cdot Lcos\theta
+    $$
+
+    $\theta$ represents the angle between $Y_B$ and the drone's arm in the positive $XY_B$ plane. It is not the yaw angle $\psi$ caused by a reaction torque.     
+  </subsection>
 </section>
 
-<section id="1"><h1>Angular/rotational acceleration</h1>
+<section id="2"><h1>Angular/rotational acceleration</h1>
   $$\begin{align*}
     \ddot{\phi} &= \frac{M_x}{I_x} \\
                 &= \frac{(F_1 - F_2)\cdot Lcos\theta}{I_x} \\
@@ -75,6 +76,10 @@
   \end{align*}$$
 
   The rotational moment, $M_x = u_2 = F_1 - F_2$
+</section>
+
+<section id="3"><h1>Notes</h1>
+  The coordinate system that is used most often for a quadrotor body frame has the x and y axes of the body frame pointing half-way between the rotor arms, i.e. at $45^0$. This is the reason why $\sqrt{2}$ is often seen in quadrotor math, since $cos45 = \frac{1}{\sqrt{2}}$.  
 </section>
 </chapter>
 

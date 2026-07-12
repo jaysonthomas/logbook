@@ -16,15 +16,16 @@
 
   $$\begin{align*}
     u_k &= arg \min_u \; l(x_k, u_k) + V_{k+1} \bigl(f(x_k, u_k)\bigr) \\
-      &= \frac{1}{2}u_k^T R_k u_k + 
-        \frac{1}{2}(Ax_k + Bu_k)^T P_{k+1} (Ax_k + Bu_k)
+      &= arg \min_u \;
+        \frac{1}{2}u_k^T R_k u_k + 
+        (Ax_k + Bu_k)^T P_{k+1} (Ax_k + Bu_k)
   \end{align*}$$
 
   To this one step problem, constraints can be added on $u$, but this will perform poorly since $V(x)$ was computed without constraints.
 </section>
 
 <section id="1"><h1>Solution</h1>
-  More time steps can be added to the one step problem in front of the $V$. It doesn't change the problem. If the exact $V$ is known, there's no reason to do the extra work. But, here where $V$ is treated as some approximate cost-to-go, adding more time steps might be useful.
+  More time steps can be added to the one step problem since it doesn't change the problem. If the exact $V$ is known, there's no reason to do the extra work. But, here where $V$ is treated as some approximate cost-to-go, adding more time steps might be useful.
   
   $$
     \min_{\substack{x_{1:H} \\ u_{1:H-1}}} 
@@ -36,10 +37,23 @@
 
   <div style="width:0; text-align:left;">
     $$\begin{array}{ccl} 
-      H &:& \text{Horizon. } H << N
+      H &:& \text{Horizon. } H &lt&lt N
     \end{array}$$
   </div>
   
+  With no additional constraints, MPC ('receeding horizon') exactly matches LQR for any $H$.
+
+  <subsubsection><h1>Intuition</h1>
+    Explicit constrained optimisation over first $H$ steps gets the state close enough to the reference that constraints are no longer active and LQR cost-to-go is valid farther into the future.
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Tuning</h1>
+  A good approximation of $V(x)$ is important for good performance.
+  <ul>
+    <li>Better $V(x)$ $\implies$ shorter horizon.</li>
+    <li>Longer $H$ $\implies$ less reliance on $V(x)$.</li>
+  </ul>
 </section>
 </chapter>
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="../../../maths/calculus/taylor/linearApprox.html">First order taylor expansion</a>] <p></p>
+  
+  <i>Linearisation</i> is a useful mathematical tool that's used to tame the math when it becomes hard to work with. It is a process of creating a linear model from a non-linear equation. 
+
+  <p>
+    The fundamental idea is to approximate a non-linear equation <n>locally</n> by a linear one using the equation:
+  </p>
+
+  $$
+    f_{lin}(x) = f(x_{op}) + f'(x)\Bigr|_{x=x_{op}} \Delta{x}
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      x &=& x_{op} + \Delta x  \\ 
+      \Delta{x} &=& x - x_{\text{op}}
+    \end{array}$$
+  </div>
+
+  This says that the equation of the best linear approximation of a function around an operating point is the <a href="atOpPoint.html">value of the original function</a> plus its slope <n>around the operating point</n>, times the deviation from the operating point. 
+</section>
+
+<section id="1"><h1>Geometric intuition</h1>
+  Linearisation is the process of approximating a curved function with a straight tangent line (or a flat hyperplane in higher dimensions) at a specific <n>anchor</n> point - the operating point $x_{\text{op}}$.
+  
+  <ul>
+    <li>Away from $x_{\text{op}}$: The tangent line and the true curve diverge, meaning $f_{\text{lin}}(x) \approx f(x)$ is only an approximation.</li>
+    <li>At $x_{\text{op}}$: The tangent line physically touches the curve. Because they intersect at this exact coordinate, their values are identical.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

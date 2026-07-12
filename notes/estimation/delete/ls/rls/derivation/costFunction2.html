@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Cost function", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Cost function</h1>
+<section id="0"><h1>Standard form</h1>
+  Instead of minimising the error directly, LS uses a <n>probabilistic formulation to minimise the expected value</n> of the squared measurement residual i.e. the variance of the unknowns, at every time step. The lower the variance, the more certain the estimate becomes.
+
+  <p>
+    For RLS (since it's not batched), the cost function at time $k$:
+    <ul>
+      <li>For a single scalar parameter, is the variance</li>
+      $$\begin{align*}
+        \mathcal L_{RLS} &= \mathbb{E}[(x - \hat{x}_k)^2] \\
+        &= \sigma^2_k
+      \end{align*}$$
+
+      <li>For <n>multiple $n$ unknown parameters</n>, is the trace of the covariance matrix</li>
+      $$\begin{align*}
+        \mathcal L_{RLS} &= \mathbb{E}[(x_1 - \hat{x}_{1k})^2
+        + \cdots + (x_n - \hat{x}_{nk})^2] \\
+        &= Trace(\underbrace{P_k}_{\text Estimator \atop \text covariance})
+      \end{align*}$$
+    </ul>
+  </p>
+</section>
+
+<section id="1"><h1>Alternate form</h1>
+  To find the <a href="../../definitions/misc.html">likelihood</a> $\hat{x}$ of a set of measurements, the PDF corresponding to the measurments needs to be maximised. 
+</section>
+</chapter>
+
+</body>
+</html>

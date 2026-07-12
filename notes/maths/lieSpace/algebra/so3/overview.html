@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Overview</h1>
+  This is the space of angular velocities.
+
+  <subsubsection><h1>Elements</h1>
+    $3 \times 3$ skew-symmetric matrices, $[\omega]$.
+    $$[x] = -[x]^\top$$
+  </subsubsection>
+
+  <subsubsection><h1>Structure</h1>
+    Unrolled from a 3-element angular velocity vector $\omega = [\omega_x, \omega_y, \omega_z]^\top$:
+    $$
+      [\omega] = 
+      \begin{bmatrix} 
+        0 & -\omega_z & \omega_y \\ 
+        \omega_z & 0 & -\omega_x \\ 
+        -\omega_y & \omega_x & 0 
+      \end{bmatrix}$$
+  </subsubsection>
+  
+  <subsubsection><h1>Physical Meaning</h1>
+    Instantaneous rotational velocity.
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

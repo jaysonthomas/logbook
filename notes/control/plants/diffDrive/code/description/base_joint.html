@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Base joint", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Base joint</h1>
+  A joint's origin determines where the child link's coordinate frame will be placed relative to the parent link's frame. Shifting the joint origin, shifts the coordinate system of the child link (and everything attached to it).
+
+  <p>
+    Physically, the base_joint is a virtual or mathematical joint used for tracking where the robot is relative to the floor.
+  </p>
+
+  The base_joint is simply the mathematical rule that ensures the physical body of the robot (base_link) always hovers directly above its floor projection (base_footprint).
+</chapter>
+
+</body>
+</html>

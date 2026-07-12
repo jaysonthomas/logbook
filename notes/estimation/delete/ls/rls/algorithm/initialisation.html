@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Estimator initialisation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Estimator initialisation</h1>
+  Initialise the estimate and the covariance matrix. The initial estimate could come from the first measurement $y_0$ and the covariance could come from technical specifications.
+
+  $$\begin{align*}
+    \hat{x}_0 &= \mathbb{E}[x] \\
+    P_0 &= \mathbb{E}[(x-\hat{x}_0)(x-\hat{x}_0)^T]
+  \end{align*}$$
+</chapter>
+
+</body>
+</html>

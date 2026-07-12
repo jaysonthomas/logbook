@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Estimation usecase: Non-probabilistic method of estimation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Estimation usecase: Non-probabilistic method of estimation</h1>
+
+<section id="0"><h1>Measurement model</h1>
+  $$
+    y = x+v
+  $$
+  $x$ is the constant parameter value to be estimated.
+</section>
+
+<section id="1"><h1>Noise model</h1>
+  Assume 4 measurements are collected:
+
+  $$\begin{align*}
+    y_1 &= x + v_1 \\
+    y_2 &= x + v_2 \\
+    y_3 &= x + v_3 \\
+    y_4 &= x + v_4 \\
+  \end{align*}$$
+  
+  Treating the noise as equivalent to a general error, i.e. <n>not interpreting the noise from a probabilistic perspective</n>, for each of the four measurements, $v_i$ would be a scalar noise term that is independent of the other noise terms. In other words, the noise is considered to be <code>independent and identically distributed</code> or <code>IID</code>. 
+</section>  
+
+<section id="2"><h1>Cost function</h1>
+  The error between each measurement and the unknown value to be estimated can be defined as:
+  $$
+    e_i = y_i - H_ix
+  $$
+
+  The method of least squares states that the best estimate of $x$ is one which minimizes the <i>squared error criterion</i>, also called the <i>squared error cost function</i> or <i>loss function</i>; i.e. the sum of squared errors.
+
+  $$
+    \hat{x} = argmin_x(e^2_1 + e^2_2 + e^2_3 + e^2_4)
+  $$
+
+  <subsection id="2.0"><h1>Cost function in matrix notation</h1>
+    Expressing the errors in matrix notation is helpful when having to deal with thousands of measurements.
+
+    $$\begin{gather*}
+      \begin{bmatrix}e_1 \\ e_2 \\ e_3 \\ e_4\end{bmatrix}
+      = \begin{bmatrix}y_1 \\ y_2 \\ y_3 \\ y_4\end{bmatrix} -
+      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}x
+    \end{gather*}$$
+    
+    $H$, the <i>Jacobian matrix</i>, has the dimensions $k\times m$, where $k$ is the number of measurements and $m$ is the number of unknowns to be estimated.  
+    
+    <p>
+      $x$ can be a vector comprising multiple unknowns.
+    </p>
+    
+    The squared error criterion can be expressed in vector notation as follows:
+    
+    $$\begin{align*}
+      \mathcal{L}_{LS}(x) = e^2_1 + e^2_2 + e^2_3 + e^2_4 &= e^Te \\
+      &= (y - Hx)^T(y - Hx) \\
+      &= y^Ty - x^TH^Ty - y^THx + x^TH^THx
+    \end{align*}$$
+
+    $e^Te$, i.e. <n>matrix transpose times the normal form is same as the sum of the squares of the elements of the matrix.</n>
+  </subsection>
+</section>
+
+<section id="3"><h1>Minimising the cost function to find the estimate</h1>
+  <a href="https://t.ly/WUKV">Ref</a> - Why the derivative of $f(x)$ is set to 0 to solve for an unknown $x$. <p></p>
+
+  The aim is to minimise the squared error with respect to the unknown $x$. From calculus, an extremum (here, a minimum) can be solved for by setting the partial derivative of the function (here, squared error) w.r.t. 
+  the unknown $x$ to $0$. 
+  
+  $$\begin{align*}
+    \frac{\partial L}{\partial x}\Bigr|_{x=\hat{x}} = 
+    -y^TH - y^TH + 2\hat{x}^TH^TH = 0 \\
+    -2y^TH + 2\hat{x}^TH^TH = 0
+  \end{align*}$$
+
+  Re-arranging: 
+    
+  $$
+    \hat{x} = (H^TH)^{-1}H^Ty
+  $$
+
+  This is called the <i>normal equations</i>. This is solved to find the estimate which minimises the squared error criterion. 
+</section>
+
+<section id="4"><h1>Limitation</h1>
+  The LS equation has a <i>unique solution</i>, i.e. $\hat{x}$ can only be solved for, if and only if $(H^TH)^{-1}$ is <n>not singular</n> i.e. if the matrix $(H^TH)$ has an <i>inverse</i>, i.e. if it is <i>invertible</i>. 
+  
+  If there are $k$ measurements and $m$ unknown parameters, then
+  $$
+    H \in \mathbb{R}^{k\times m} \quad\quad H^TH \in \mathbb{R}^{m\times m}
+  $$
+  
+  <m>The Jacobian matrix only exists if there are at least as many measurements as there are unknowns</m>, which is usually not a problem. Often, there are too many measurements. 
+</section>
+
+<section id="5"><h1>Numerical example</h1>
+  <subsection id="5.0"><h1>Setup</h1>
+    The aim is to measure the value in ohms of a simple resistor within the drive system of an autonomous vehicle. 4 separate measurements are collected sequentially using a multimeter. Assume the true resistor value is $1k\Omega$. But, this value could be wrong or the multimeter could be inaccurate or there could be some human error in taking the measurements. 
+
+    <p>
+      Let $x$ be the actual resistance. Assume it is a constant, but unknown.
+      Measurements, $y$, of the resistance are collected:
+    </p>
+    
+    $$
+      y = \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
+      \quad
+      H = \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
+    $$
+  </subsection>
+
+  <subsection id="5.1"><h1>Estimation</h1>
+    $$
+      \hat{x}_{LS} = (H^TH)^{-1}H^Ty
+    $$
+    
+    $$
+      \begin{bmatrix}
+      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
+      \begin{bmatrix}1 \\ 1 \\ 1 \\ 1 \end{bmatrix}
+      \end{bmatrix}^{-1}
+      \begin{bmatrix}1 & 1 & 1 & 1 \end{bmatrix}
+      \begin{bmatrix}1068 \\ 988 \\ 1002 \\ 996 \end{bmatrix}
+      = \frac{1}{4}(1068 + 988 + 1002 + 996) = 1013.5 \Omega
+    $$
+
+    The expression simplifies to the arithmetic mean of the 4 measurements; i.e. minimising the simple least squares criterion leads to computing the arithmetic mean in this case. 
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

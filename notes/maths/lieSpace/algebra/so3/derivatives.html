@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Simplification of rotation derivatives", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Simplification of rotation derivatives</h1>
+  Imagine a robot's end-effector frame rotating in space. This frame is represented by a rotation matrix $R$, where its columns are the unit vectors of its axes: $R = \begin{bmatrix} x & y & z \end{bmatrix}$.
+  
+  <p>
+    As the frame spins with an angular velocity $\omega$, those axes change over time. The time derivative of the rotation matrix ($\dot{R}$) gives an idea of how fast $x$, $y$, and $z$ axes are moving at the instant?
+  </p>
+
+  From basic physics, the velocity of the tip of each axis vector is given by the cross product:
+  $$\begin{align*}
+    \dot{x} &= \omega \times x = [\omega]x \\
+    \dot{y} &= \omega \times y = [\omega]y \\
+    \dot{z} &= \omega \times z = [\omega]z
+  $$
+  
+  Putting these columns back into a single matrix equation:
+  $$
+    \dot{R} = \begin{bmatrix} 
+        \dot{x} & \dot{y} & \dot{z} 
+      \end{bmatrix} = 
+      \begin{bmatrix} 
+        [\omega]x & [\omega]y & [\omega]z 
+      \end{bmatrix}
+  $$
+  
+  Factoring out $[\omega]$ gives the fundamental differential equation of rotational kinematics:
+  
+  $$\dot{R} = [\omega]R$$
+  
+  The matrix $[\omega]$ acts as a velocity operator. $R$ tells where the frame's axes are currently pointing. $[\omega]$ acts on $R$ to tell how fast and in what direction those axes are currently pivoting. Without unrolling $\omega$ into the matrix $[\omega]$, it wouldn't be possible to write the elegant differential relationship $\dot{R} = [\omega]R$, which is the foundation for tracking orientations in flight dynamics, computer graphics, and robotics control loop state estimation.
+</chapter>
+
+</body>
+</html>

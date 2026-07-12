@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("State covariance", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>State covariance</h1>
+
+<section id="0"><h1>Purpose</h1>
+  The estimation covariance matrix represents the uncertainty in the estimated state variables. It quantifies how much the estimated state variables are expected to vary from their true values due to uncertainties in the system model and the measurements.
+
+  <p>
+    It helps in determining how much weight should be given to new measurements versus the current state estimate. A larger $P$ means higher uncertainty in the current state estimate, which results in giving more weight to new measurements.
+  </p>  
+</section>
+
+<section id="1"><h1>Computation</h1>
+  In Kalman filter, the estimation covariance is updated recursively based on the process model (model prediction) and the measurement update, to give an overall uncertainty of the state estimate.
+</section>
+</chapter>
+
+</body>
+</html>

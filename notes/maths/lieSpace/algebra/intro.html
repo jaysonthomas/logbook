@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Introduction</h1>
+<section id="0"><h1>Overview</h1>
+  These are the Lie algebras associated with the lie groups. 
+  
+  <p>
+    Mathematically, they represent the vector space tangent to the group at the identity matrix. Because they are tangent spaces, their elements are always vectors unrolled into a matrix form via the bracket $[\cdot]$ notation.
+  </p>
+
+  In robotics, they describe velocities (or directional derivatives).
+</section>
+
+<section id="1"><h1>Geometric intuition</h1>
+  Consider a round globe. The Lie Group ($SO(3)$) is the surface of the globe - every single point on this surface represents a valid orientation. 
+  
+  <p>
+    Because the globe is curved, it is not possible to draw a straight line from one country to another while staying flat on the surface. A curved path must be followed. This curvature represents the non-linear constraints of rotations (like $R^T R = I$).
+  </p>
+
+  The Identity Matrix ($I$) is a reference point. It represents the identity — the state of no rotation or no displacement. On the globe, the north pole would be an example
+  
+  <p>
+    Consider a flat, stiff sheet of paper is balanced on the globe such that it touches the globe only at the North Pole. The flat sheet of paper is the tangent space at the identity. It represents the Lie Algebra ($\mathfrak{so}(3)$).
+  </p>
+
+  <subsubsection><h1>Relevance of the flat sheet</h1>
+    On the curved globe, vector addition fails (adding two rotation matrices doesn't give a rotation). But on the flat sheet of paper, regular linear algebra can be used — 2 vectors can be added, scaled or projected easily. 
+    
+    <p>
+      It represents velocity. If an infinitesimally small step is taken in any direction from the north pole, the instantaneous velocity vector points along the flat paper, i.e.  moving along the flat paper is identical to moving along the curved globe.
+    </p>
+  </subsubsection>
+
+  <subsection id="1.0"><h1>The identity</h1>
+    It is possible to find a tangent space at any arbitrary pose matrix $X$. However, in physics and robotics, the preference is to use the tangent space at the Identity ($I$), since it gives an absolute, standard coordinate system. By mapping everything back to the Identity, the Lie Algebra gains a strict algebraic structure where the origin $(0,0,0)$ always cleanly represents "zero velocity/no change," and every element can be expressed uniformly as a local velocity.
+
+    <subsubsection><h1>Example</h1>
+      When you computed your error twist earlier using $\log(X^{-1}X_d)$, the matrix multiplication $X^{-1}X_d$ was explicitly shifting the target frame so that your current position became the identity. This allowed you to drop right into that flat tangent space at the origin to compute a clean, linear velocity vector.
+    </subsubsection>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

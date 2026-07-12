@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Comparison", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Comparison</h1>
+  <subsubsection><h1>Kalman filter</h1>
+    Kalman filter is a specific implementation of the bayes filter where the beliefs are represented as gaussians. State and observation models are linear where the output is proportional to the input.
+  </subsubsection>
+
+  <subsubsection><h1>Extended Kalman Filter (EKF)</h1>
+    Here, the beliefs are gaussian but the state or observation models are non-linear. 
+    
+    <p>
+      The Jacobian matrix (given by the models) is linearised around the current estimated state to make things gaussian again. Everything then works out just like a Kalman Filter. Linear approximations have to be made at every time step. 
+    </p>
+
+    EKF is hard to implement because even the smallest amount of error throws the estimator.
+  </subsubsection>
+    </p>
+
+    <li><a href="ukf.html">Unscented Kalman Filter (UKF)</a></li>
+    Here, a non-linear state is estimated using special particles which can be <m>passed through a non-linear system</m> instead of linearising the system as in the case of EKF. It is simpler to implement. They are applicable in highly non-linear systems where EKF may fail to converge.
+
+    <p>
+      <li>
+        In Particle Filter, particles or samples are used to estimate a non-linear distribution which is not gaussian. 
+      </li>
+    </p>
+  </ul>
+</section>
+
+<section id="0"><h1>Sort</h1>
+  A more fundamental question. In KF, the current mean and covariance is linearly transformed (using the linear dynamics of the system) to get the estimated mean and covariance of the next state. What would a non-linear transformation do? It must be bad, since we linearise the system in an EKF. Even if we did do a non-linear transformation, I'm guessing we get a gaussian, but the new mean and covariance is widely off from the original distribution? How does UKF help in this scenario?
+
+  <p>
+    You have hit on the exact mathematical bottleneck that frustrated engineers for decades before the UKF was invented.
+
+To answer your first question directly: **No, if you pass a Gaussian distribution through a truly nonlinear transformation, the output is actually *no longer a Gaussian*.** It warps into a bizarre, non-Gaussian shape.
+
+Here is the intuition of what happens, why it breaks the standard Kalman filter, and how the UKF ingeniously solves it.
+
+---
+
+## 1. What a Nonlinear Transformation Actually Does
+
+The standard Kalman filter is a "Gaussian purist"—it only knows how to track a mean vector and a covariance matrix. It assumes that if you start with a Gaussian, you must end with a Gaussian.
+
+When you push a perfect circle or ellipse of uncertainty (a Gaussian) through a highly nonlinear function—like an S-shaped curve, a sine wave, or polar-to-Cartesian coordinate switching—the distribution gets stretched, squashed, and bent.
+
+Because it is bent, the true resulting distribution might look like a banana, a crescent, or a multi-modal blob. A distribution like that cannot be perfectly described by just a mean and a covariance anymore.
+
+---
+
+## 2. Why the EKF's Fix is "Bad"
+
+Because the standard Kalman filter cannot handle banana-shaped distributions, the Extended Kalman Filter (EKF) forces the world to be linear.
+
+* 
+**The EKF Approach:** It calculates a tangent line (a Jacobian) exactly at the center mean point. It pretends the entire curved function is just that flat, straight line.
+
+
+* 
+**The Flaw:** If your system is highly nonlinear or your uncertainty is wide, the edges of your distribution will hit the actual curves that the EKF ignored. The EKF forces a clean Gaussian onto the output, but because it used a fake straight line to calculate it, **the new mean is often wildly off-center, and the new covariance is dangerously overconfident**.
+
+
+
+---
+
+## 3. How the UKF Saves the Day
+
+The Unscented Kalman Filter (UKF) realizes that trying to approximate a wild, unpredictable nonlinear function with a straight line is a losing battle. Instead, it asks: *What if we approximate the Gaussian distribution itself instead of the function?* 
+
+The UKF still outputs a Gaussian at the end, but it calculates the parameters of that Gaussian with incredible accuracy using **Sigma Points**.
+
+```
+[Original Gaussian] 
+       │
+       ▼ (Pick 2n+1 Sigma Points)
+  ▪   · ● ·   ▪   
+       │
+       ▼ (Pass points directly through raw nonlinear function)
+    \  ·  ●  · /  
+     \        /   (The points warp naturally to the true physics)
+      ▼      ▼
+[Compute Weighted Mean & Covariance] ──► [Highly Accurate New Gaussian]
+
+```
+
+### The UKF Step-by-Step Intuition:
+
+1. 
+**The Scouts:** Instead of looking only at the center, the UKF chooses a small, strategic "jury" of points (usually $2n+1$ points). One sits at the mean, and the others sit symmetrically at the outer boundaries of the uncertainty ellipse.
+
+
+2. 
+**The Real Journey:** The UKF passes these individual points directly through the raw, unaltered, nasty nonlinear function. *No Jacobians, no linearizing*. If the function bends, the outer points naturally get thrown wide or squashed close.
+
+
+3. 
+**The Recombination:** Once the points exit the function, the UKF looks at where they actually landed. It takes a weighted average of these transformed points to calculate a new mean and covariance.
+
+
+
+Because it allowed a few smart sample points to experience the *true* curves of the system, the resulting mean and covariance capture the physical reality far better than the EKF ever could. Mathematically, while the EKF is only accurate to the 1st order of a Taylor series expansion, the UKF is automatically accurate to the 2nd (and often higher) order—all without doing a single line of calculus.
+
+---
+
+Does seeing how the UKF captures the true "warping" of the distribution clarify why it bypasses the EKF's linearization errors?
+  </p>
+
+  You are asking the exact question that gets to the mathematical heart of estimation theory.
+
+Your intuition is highly logical: *If I have a function, I can always take the output values, calculate their mean, calculate their variance, and draw a Gaussian curve over them.* You can absolutely do that.
+
+The catch is that **the math doesn't care what curve we draw over it; it cares about the actual reality of where the data points landed.** Here is the fundamental breakdown of how a nonlinear transformation breaks the Gaussian assumption and how we prove it mathematically, using just those two parameters.
+
+---
+
+## 1. The Core Misunderstanding: "Output Mean" $\neq$ "Transformed Mean"
+
+Let’s use a simple scalar example to see exactly where the math breaks down.
+
+Suppose you have a symmetric Gaussian distribution representing a car’s position, centered perfectly at a mean of $\mu = 0$ with a variance of $\sigma^2 = 2$.
+
+Now, let's pass this state through a simple nonlinear dynamics function:
+
+
+$$g(x) = x^2$$
+
+If you want to know the **true new mean** of this transformed system, your intuition says to just pass the original mean through the function:
+
+
+$$g(\mu) = 0^2 = 0$$
+
+But let's look at what the actual physics of the distribution tells us. Because the function is $x^2$, any point on the left side of the original distribution (e.g., $x = -2$) gets squared and becomes **positive** ($+4$). Any point on the right side (e.g., $x = 2$) also becomes **positive** ($+4$).
+
+Every single piece of uncertainty gets thrown into the positive domain. If you mathematically calculate the *true expected value* (the actual average of where all the probability went), the true new mean is actually $\mu_{\text{new}} = 2$.
+
+If you just plugged the old mean into the nonlinear function ($g(\mu) = 0$), **your estimated mean is completely wrong.** It is sitting at 0, while the actual center of mass of the system has moved to 2.
+
+---
+
+## 2. How Do We Mathematically Know It Changed? (The Taylor Series)
+
+To see how a transformation distorts a distribution, mathematicians use a **Taylor Series expansion** to break a nonlinear function $g(x)$ into pieces around the mean $\mu$:
+
+$$g(x) = g(\mu) + g'(\mu)(x - \mu) + \frac{1}{2}g''(\mu)(x - \mu)^2 + \frac{1}{6}g'''(\mu)(x - \mu)^3 + \dots$$
+
+When we calculate the **True Mean** (the Expected Value $E[g(x)]$) of this transformation, a fascinating thing happens:
+
+$$E[g(x)] = g(\mu) + \frac{1}{2}g''(\mu)\sigma^2 + \dots$$
+
+* **In Linear Dynamics:** The second derivative $g''(\mu)$ is exactly **zero** (because a straight line has no acceleration or curvature). Therefore, $E[g(x)] = g(\mu)$. Passing the mean through the function works perfectly! 
+
+
+* 
+**In Nonlinear Dynamics:** The second derivative $g''(\mu)$ is **not zero**. This means **the true new mean is physically dependent on your old variance ($\sigma^2$)**. The curvature of the function interacts with the spread of your uncertainty to physically shift the center of mass.
+
+
+
+---
+
+## 3. The "Banana" Effect: Why Forcing a Gaussian Fails
+
+You can certainly take the new mean and variance and force a Gaussian curve onto them. But if you look at the true distribution underneath, the shape has warped.
+
+Imagine tracking a vehicle using polar coordinates (range and bearing) and converting it to Cartesian coordinates $(x, y)$, which is a highly nonlinear transformation.
+
+* 
+**The True Reality:** The uncertainty stretches along an arc, looking like a **banana**.
+
+
+* 
+**The EKF Flaw:** The EKF calculates a straight tangent line at the mean. It forces a perfect, symmetrical Gaussian ellipse over the data. Because it ignores the curvature (the higher-order Taylor terms), it places the center of the ellipse in empty space inside the curve of the banana. Your filter now confidently believes the vehicle is in a spot where it physically cannot be.
+
+
+
+---
+
+## 4. How the UKF Bypasses This
+
+The Extended Kalman Filter (EKF) gets the mean wrong because it drops everything in the Taylor series after the first derivative ($g'(\mu)$).
+
+The Unscented Kalman Filter (UKF) doesn't do calculus. By picking **Sigma Points** at the mean and out at the boundaries ($\mu \pm \sigma$), it forces those points to travel through the actual nonlinear bends of the function.
+
+When the boundary points get squared or bent, they naturally shift. When the UKF recombines them, **the resulting mean and variance automatically capture that $\frac{1}{2}g''(\mu)\sigma^2$ shift**.
+
+You still draw a Gaussian at the end of the UKF, but because you used Sigma Points, your Gaussian is centered precisely where the true banana-shaped distribution's center of mass actually lies.
+</section>
+</chapter>
+
+</body>
+</html>

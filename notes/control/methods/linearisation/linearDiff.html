@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Linearisation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Linearisation</h1>
+<section id="0"><h1>Overview</h1>
+  A second order <i>linear differential equation</i> is of the form:
+
+  $$
+    \ddot{y} = c_1u_1 + c_2\phi + \cdots
+  $$
+
+  $c_1, c_2, \cdots$ are constants. There is no sine, cosine or multiplication of input and state (eg: $u\, \phi$). A plot of LHS as a function of $u_1$ or $\phi$ or any of the other variables, would be a straight line. 
+</section>
+
+<section id="1"><h1>Benefits of linear equations</h1>
+  <ul>
+    <li>The tool set of linear control techniques is large</li>
+    <li><m>Stability can be proven in a straightforward way</m></li>
+  </ul>
+</section>
+
+<section id="2"><h1>Benefits of non-linear equations</h1>
+  <ul>
+    <li>
+      They capture the true physics of a system because of which they can make accurate predictions about how systems will change in time.
+    </li>
+    <li>
+      These equations work at any angle for any control input. They don't break down when numbers get too big or too small.
+    </li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

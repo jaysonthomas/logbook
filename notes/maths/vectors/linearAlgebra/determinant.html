@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Determinant", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Determinant</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/Ug0a">Ref</a>] The <i>determinant</i> gives an idea of how much an area (in 2D and volume in 3D) is being squished, scaled or flipped.
+</section>
+
+<section id="1"><h1>Determinant of 1</h1>
+  $$\lvert{R}\rvert = 1$$
+
+  Because the absolute value is $1$, the transformation does not grow, shrink, or squish space. If the sign is negative, the transformation has turned space inside out. A right hand has been transformed into a left hand. This only happens if a reflection (a mirror flip) has occurred.
+
+  <p>
+    For a matrix to represent a pure rotation, it must satisfy two conditions:
+    <ul>
+      <li>It can't stretch things out (distances between points must stay the same).</li>
+      <li>It can't turn things inside out (an object in 3D space cannot be rotated and suddenly become its own mirror image).</li>
+    </ul>
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

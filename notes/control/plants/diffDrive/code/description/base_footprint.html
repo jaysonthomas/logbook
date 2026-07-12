@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Base footprint", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Base footprint</h1>
+<section id="0"><h1>Overview</h1>
+  This is the world origin frame. It is an empty, mass-less, visual-less dummy link that slides flat along the ground where $Z=0$.
+</section>
+
+<section id="1"><h1>Bot movement</h1>
+  A URDF file is only meant to describe the rigid, internal structure of a robot (how the parts sit relative to one another). It is not responsible for modeling a robot's movement through the world. 
+
+  <p>
+    Instead, a separate software node - a robot's odometry/localisation system (a differential drive controller or a wheel encoder node) - constantly calculates how far the wheels have spun. It then broadcasts a dynamic, changing transform through the TF (transform) tree from a fixed map point (`odom`) to the robot's floor point (`base_footprint`). 
+  </p>
+
+  So, when a robot drives across a room:
+  <ol>
+    <li>The software moves `base_footprint` across the virtual world map.</li>
+    <li>The URDF's `base_joint` ensures that `base_link` (and the entire 3D physical model) tags along precisely above it.</li>
+  </ol>
+</section>
+</chapter>
+
+</body>
+</html>

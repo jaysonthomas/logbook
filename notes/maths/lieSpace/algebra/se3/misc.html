@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Cross products", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Cross products</h1>
+  <subsubsection id="2"><h1>Cross product of $\mathbb{R}^6$ vectors</h1>
+    The <i>Lie bracket</i> of $V_1$ and $V_2$:
+    $$\begin{align*}
+      V_1 \times V_2 & = [ad_{V_1}]V_2 \in R^6 \\
+
+      [ad_V] &= \begin{bmatrix}
+                  [\omega] & 0 \\
+                  [v] & [\omega]
+                \end{bmatrix} \in \mathbb{R}^{6 \times 6}
+    \end{align*}$$
+  </subsubsection>
+
+  <subsubsection id="3"><h1>Matrix bracket notation of cross product of $\mathbb{R}^{4 \times 4}$ matrices</h1>
+    Matrix form of lie bracket:
+
+    $$
+      [V_1 \times V_2] = [V_1][V_2] - [V_2][V_1] \in se(3)
+    $$
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

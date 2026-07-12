@@ -5,12 +5,12 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <script src= "../../../../../../utils/setup.js"></script>
   <script>
-    initializePage("2D Drone dynamics: Forces", "../../../../../../");
+    initializePage("Forces", "../../../../../../");
   </script>
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>2D Drone dynamics: Forces</h1>
+<chapter style="counter-reset: chapter 0"><h1>Forces</h1>
 <section id="0"><h1>Decomposition</h1>
   <div class="container">
     <figure>
@@ -39,7 +39,7 @@
 <section id="1"><h1>Translational acceleration</h1>
   Vertical:
   $$\begin{align*}
-    \ddot{z} &= g - \frac{F_z \cdot cos\phi}{m} \\
+    \ddot{z} &= g - \frac{F_t \cdot cos\phi}{m} \\
               &= g - \frac{(F_1 + F_2) \cdot cos\phi}{m} \\
               &= g - \frac{u_1 \cdot cos\phi}{m}
   \end{align*}$$

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Estimation: Usecase - 2D Drone", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Estimation: Usecase - 2D Drone</h1>
+<section id="0"><h1>State to be estimated</h1>
+  For a 2D quadrator moving in the vertical plane, the state would be $y$, $z$, the roll angle $\phi$, and their corresponding derivatives.
+
+  $$
+    x = \begin{bmatrix}y \\ z \\ \phi \\ \dot{y} \\ \dot{z} \\ \dot{\phi}\end{bmatrix}
+  $$
+</section>
+
+<section id="1"><h1>Measurement model</h1>
+  The drone is at some vertical position $z$ with a laser range finder pointing downwards. If it were a perfect sensor, it would measure a distance to the ground that's equal to $\frac{z}{cos\phi}$. 
+
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/drone/25_estimation2dDroneUsecase.png"/>
+    </figure>
+  </div>
+
+  In this case the measurement space is one dimensional. Because of the $cosine$, the measurement model is non-linear.
+  
+  $$\begin{align*}
+    y &= Hx + v \\
+    y &= \begin{bmatrix} 0 & \frac{1}{cos\phi} & 0 & 0 & 0 & 0\end{bmatrix}
+         \begin{bmatrix}y \\ z \\ \phi \\ \dot{y} \\ \dot{z} \\ \dot{\phi}\end{bmatrix} + v
+  \end{align*}$$
+</section>
+
+</chapter>
+
+</body>
+</html>
