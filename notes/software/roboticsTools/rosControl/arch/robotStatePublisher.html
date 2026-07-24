@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Robot state publisher", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Robot state publisher</h1>
+  The robot_state_publisher calculates and broadcasts 3D poses of all the links of a robot. It takes two inputs:
+
+  <ul>
+    <li>URDF via <code>robot_description</code>: This tells the node the static relationship (e.g., "The hand is 0.5 meters from the elbow").</li>
+    <li>Joint States: It listens to <code>/joint_states</code> that provides the dynamic angles (e.g., "The elbow is currently bent at 45 degrees").</li>
+  </ul>
+  
+  By combining these two, it calculates the position of every single part of the robot relative to the base and broadcasts them as TF transforms to <code>/tf, /tf_static</code>. It doesn't know about gravity, friction, mass, or torque. It is purely kinematic.
+</chapter>
+
+</body>
+</html>

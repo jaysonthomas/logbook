@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Theory", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Theory</h1>
+<section id="0"><h1>Taylor expansion</h1>
+  Considering the mean as the operating point and computing the function at the mean.
+  
+  $$
+    g(x) = g(\mu) + g'(\mu)(x - \mu) + 
+      \frac{1}{2}g''(\mu)(x - \mu)^2 + \frac{1}{6}g'''(\mu)(x - \mu)^3 + \dots
+  $$
+
+  <subsection id="0.0"><h1>Expected value of individual terms</h1>
+    <subsubsection><h1>Zero order</h1>
+      Expectation of a constant is just the constant itself:
+      $$E[g(\mu)] = g(\mu) = \mu^2$$
+    </subsubsection>
+
+    <subsubsection><h1>First order</h1>
+      Pulling out the constants and using the linearity of expectation:
+      $$\begin{align*}
+        E[g'(\mu)(x - \mu)] &= g'(\mu) E[x - \mu] \\
+          &= g'(\mu) (E[x] - E[\mu]) \\
+          &= g'(\mu) \cdot 0 \\
+          &= 0
+      \end{align*}$$
+
+      $E[x] = \mu$ and $E[\mu] = \mu$. 
+
+      <p>
+        Physically, this represents the average deviation of any data point from its own mean, which is always strictly zero.
+      </p>
+    </subsubsection>
+
+    <subsubsection><h1>Second order</h1>
+      $$\begin{align*}
+        E\left[\frac{1}{2}g''(\mu)(x - \mu)^2\right] 
+          &= \frac{1}{2}g''(\mu) E\left[(x - \mu)^2\right] \\
+          &= \frac{1}{2}g''(\mu)\sigma^2 \\
+          &= 1 \cdot \sigma^2 \\
+      \end{align*}$$
+    </subsubsection>
+  </subsection>
+</section>
+
+<section id="1"><h1>Expected value</h1>
+  $$E[g(x)] = \mu^2 + \sigma^2 + \dots$$
+
+  In linear dynamics, the second derivative $g''(\mu)$ is zero because a straight line has no acceleration or curvature. Therefore, $E[g(x)] = \mu^2$. Passing the mean through the function works perfectly.
+  
+  <p>
+    In nonlinear dynamics, the second derivative is not zero. This means the true new mean is physically dependent on the old variance. The curvature of the function interacts with the spread of the uncertainty to physically shift the center of mass.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

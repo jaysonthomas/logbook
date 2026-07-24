@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Linearisation tricks", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Linearisation tricks</h1>
+  First, pick the operating point. Choose some state of the non-linear system to linearise around. It is helpful to linearise around an equilibrium state. 
+  
+  <subsubsection id="0.1"><h1>Linearise sines and cosines</h1>
+    <div class="container">
+      <figure>
+        <img style="height:80px; width:auto"
+        src="../../../../figures/control/30_linearisation.png"/>
+        <figcaption>
+          Zooming in, the graphs of $y=sin\phi$ (left) and $y=cos\phi$ (right) look almost identical to $y=\phi$ and $y=1$ respectively at $\phi \approx 0$.
+        </figcaption>
+      </figure>
+    </div>
+    
+    Linearisation finds the tangent line at an operating point. The tangent when $\phi$ is small, here 0, for $sin\phi$ is $y=\phi$ and for $cos\phi$ is $y = 1$.
+  </subsubsection>
+  
+  <subsubsection id="0.2"><h1>Linearise products of variables</h1>
+    An example would be the multiplication of an input and a state. The key insight is that product of a very small number times a very small number, is a tiny number whose value is so small that it can be safely ignored; which leads to cancellation of terms.
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

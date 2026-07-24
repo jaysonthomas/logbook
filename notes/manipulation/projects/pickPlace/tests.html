@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Pick and place", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Tests</h1>
+<section id="3"><h1>Feedforward</h1>
+  Choose the initial configuration of the robot that puts the end-effector exactly at the first reference configuration. Set $K_{p}=K_{i}=0$. With zero disturbance, the bot should follow the trajectory perfectly. There might be small numerical errors in the euler integration step which will be fixed using the feedback controller.
+
+  <p>
+    Add a small error to the initial configuration.
+  </p>
+</section>
+
+<section><h1>Feedback</h1>
+  With a small error in the initial configuration, add a positive-definite diagonal proportional gain matrix $K_{p}$ while keeping the integral gains zero.
+
+  <p>
+    The convergence exhibited by the controller does not necessarily have to be fast. It is more interesting if the convergence is not too fast, so the transient response is clearly visible. The motion should be smooth, with no overshoot, and very little error.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

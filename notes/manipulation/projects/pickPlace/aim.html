@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Aim", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Aim</h1>
+  The overall aim is for a gripper to pick up and drop off a brick at a desired location.
+
+  <p>
+    There is a gripper frame and an object frame attached to the gripper and the object respectively. To grasp, the gripper frame needs to be in the right orientation and position w.r.t. the object frame.
+  </p>
+
+  A smooth reference trajectory in end effector coordinates needs to be converted to a smooth trajectory in joint space, avoiding kinematic sigularities.  
+</chapter>
+
+</body>
+</html>

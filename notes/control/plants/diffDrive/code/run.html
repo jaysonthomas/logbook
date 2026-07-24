@@ -11,10 +11,11 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Execution</h1>
+  The following is run from outside the <code>src</code> folder.
   <pre><code class="bash">
-    colcon build --base-paths src/diff_drive/ --packages-select my_robot_description
+    colcon build --packages-select diff_drive
     source ~/repos/ros2/install/setup.bash
-    ros2 launch my_robot_description display.launch.xml
+    ros2 launch diff_drive display.launch.xml
   </code></pre>
 </chapter>
 

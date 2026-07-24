@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Operating point", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Operating point</h1>
+<section id="0"><h1>At equilibrium</h1>
+  A drone is at equilibrium when its velocities and accelerations in the $y, z, \phi$ dimensions are all $0$. This happens during a hover. <a href="zeroAccels.html">What zero accelerations mean</a>.
+
+  <subsubsection><h1>Considerations</h1>
+    Conditions that linearisation around hover must satisfy:
+    <ul>
+      <li>When hovering, roll must be zero; if it weren't then $\ddot{y}$ would be non-zero.</li>
+      <li>$y, z$ can be anything - a drone can hover at any $y, z$ coordinates.</li>
+      <li>The upwards thrust $u_1$ must be $mg$ to support the weight.</li>
+      <li>$u_2$ must be zero to ensure zero rotational acceleration.</li>
+    </ul>
+
+    $$\begin{align*}
+      \phi &= 0 \\
+      y &= y_0 \\
+      z &= z_0 \\
+      |u_1| &= mg \\
+      u_2 &= 0
+    \end{align*}$$
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Around equilibrium</h1>
+  Linearisation doesn't just solve the control problem for the one equilibrium configuration, in this case, the hover state; but it finds an approximation for other configurations that are nearby in the state space.
+
+  <subsubsection><h1>Considerations</h1>
+    <div style="text-align:center;">
+      $$\begin{align*}
+        \phi &= \Delta\phi \\
+        y &= y_0 + \Delta{y} \\
+        z &= z_0 + \Delta{z} \\
+        |u_1| &= mg + \Delta{u_1} \\
+        u_2 &= \Delta{u_2} 
+      \end{align*}$$
+    </div>
+
+    Near hover, $u_1$ is equal to $mg$ plus some small deviation which can be positive or negative. Similary, near hover, $\phi$ will be close to its value at hover, i.e. it will be 0 plus some small deviation.
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Proof of pure transformation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Proof of pure transformation</h1>
+<section id="0"><h1>Background</h1>
+  Body twist/velocity $[V]$ relationship:
+  $$\begin{align*}
+    [V] &= T^{-1} \dot{T} \\
+    \dot{T} &= T [V]
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      T &:& \text{Current pose} \\ 
+      \dot{T} &:& \text{Time derivative of the current pose}
+    \end{array}$$
+  </div> 
+  
+  $$\begin{align*}
+    T_d &= T_{d_k}^{-1} T_{d_{k+1}} \\
+
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Proof</h1>
+  Desired twist relationship:
+  $$\begin{equation}
+    \dot{T}_d = T_d [V_d]   \label{eq:1}
+  \end{equation}$$
+  
+  Tracking error is the relative displacement between the current pose $T$ and the desired pose $T_d$:
+  $$\begin{equation}
+    T_{err} = T^{-1} T_{d_k} \implies T_{d_k} = T T_{err} \label{eq:2}
+  \end{equation}$$
+
+  Applying the product rule, taking the time derivative of $T_d$:
+  $$
+    \dot{T}_d = \dot{T} T_{err} + T \dot{T}_{err}
+  $$
+  
+  Substitute $\dot{T} = T [V]$ and \ref{eq:1}:
+  $$
+    T_d [V_d] = (T [V]) T_{err} + T \dot{T}_{err}
+  $$
+  
+  Substitute \ref{eq:2} and left-multiply by $T^{-1}$:
+  $$\begin{align*}
+    (T T_{err}) [V_d] &= T [V] T_{err} + T \dot{T}_{err} \\
+    T_{err} [V_d] &= [V] T_{err} + \dot{T}_{err}
+  \end{align*}$$
+  
+  Finally, we want to isolate the actual commanded velocity $[V]$ that our system needs to execute. Let's solve for $[V]$ by right-multiplying by $T_{err}^{-1}$:$$[V] = T_{err} [V_d] T_{err}^{-1} - \dot{T}_{err} T_{err}^{-1}$$By definition on Lie groups, the adjoint operator acting on a Lie algebra element (the twist) is defined exactly as $Ad_{M}([V]) = M [V] M^{-1}$ (or in matrix form, $Ad_M [V]$).Substituting $T_{err} = T^{-1} T_d$ into that first term:$$[V] = Ad_{T^{-1} T_d}([V_d]) - \dot{T}_{err} T_{err}^{-1}$$What does this equation tell us?The Kinematic Feedforward: The term $Ad_{T^{-1} T_d}([V_d])$ is the velocity your robot must execute just to keep the error constant ($\dot{T}_{err} = 0$). It is purely the desired twist $[V_d]$ mapped into the current frame.The Feedback's Job: The second term, $-\dot{T}_{err} T_{err}^{-1}$, is the local velocity vector representing how the error is changing. When you design your PI controller, you set this term to your feedback law ($K_p T_{err} + K_i \int T_{err} dt$) to actively force the error to decay to zero.So, $Ad_{T^{-1}T_d}$ is not doing any control or stabilization itself. It is simply performing the coordinate transformation on the desired velocity vector so that your feedforward term matches the physical geometry of your misaligned robot.
+</section>
+
+</chapter>
+
+</body>
+</html>

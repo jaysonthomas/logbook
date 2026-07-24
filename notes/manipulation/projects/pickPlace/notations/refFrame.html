@@ -10,24 +10,30 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Reference frame</h1>
-<section id="0"><h1>Definition</h1>
-  A <i>reference frame</i> has a point at its centre. Its orientation can be represented in many ways but it is visually represented with the xyz axes. XYZ => RGB. The <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system) is used. 
+<chapter style="counter-reset: chapter 3"><h1>Reference frame</h1>
+  A frame is represented with the xyz axes. XYZ => RGB => FMT. The <a href="https://bit.ly/3FdV8Sl">right-hand rule</a> (vehicle coordinate system) is used. 
 
-  <p>
-    The aim is to get different reference frames to match; because once they do, the algebra becomes trivial. E.g., once reference frames match, positions can be added.
+  <div class="img-container">
+    <figure>
+      <img style="height:60px; width:auto"
+      src="../../../../../figures/manipulation/34_vectorAddition.png"/>
+      <figcaption>
+        $^BP^E_C = ^BP^A_C + ^AP^E_C$
+      </figcaption>
+    </figure>
+  </div>
 
-    <div class="img-container">
-      <figure>
-        <img style="height:60px; width:auto"
-        src="../../../../../figures/manipulation/34_vectorAddition.png"/>
-        <figcaption>
-          $^BP^E_C = ^BP^A_C + ^AP^E_C$
-        </figcaption>
-      </figure>
-    </div>
-  </p>
-</section>
+  The aim is to get different reference frames to match; because once they do, the algebra becomes trivial. E.g., once reference frames match, positions can be added.
+
+  <subsubsection><h1>Digital representation</h1>
+    The numerical representation for a frame, say $O_{initial}$ (an object's initial frame), on disk is its pose - $^WX^{O_{initial}}$. 
+    
+    <p>
+      <n>A frame cannot be represented - only a representation that is relative (pose) can be represented on disk</n>.
+    </p>
+
+    A <i>frame</i> defines the semantics of how to connect 2 poses. A <i>pose</i> is the manifestation that holds the position and orientation of a frame relative to some other frame.
+  </subsubsection>
 </chapter>
 
 </body>

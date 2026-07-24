@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Aim", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Aim</h1>
+  The aim is to decouple the following non-linear equations by linearising them.
+  $$\begin{align*}
+    \ddot{\phi} &= \frac{u_2}{I_{xx}} \\
+    \ddot{y} &= \frac{u_1}{m}sin\phi \\
+    \ddot{z} &= g - \frac{u_1}{m}cos\phi
+  \end{align*}$$
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      u_2 = M_x = (F_1 - F_2)\cdot Lcos\theta &:& \text{Rotational moment about x} \\ 
+      u_1 = F_t = F_1 + F_2 &:& \text{Thrust in the } -z_b \text{ direction, upwards.} \\
+      \phi &:& \text{Roll about x, making the angle w.r.t. } z_w \\
+      \theta &:& \text{Fixed angle between the drone's arms and the body frame.}
+    \end{array}$$
+  </div>
+  
+  $u_1, u_2$ are the parameters that can be controlled. 
+</chapter>
+
+</body>
+</html>

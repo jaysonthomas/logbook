@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Jacobian", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Jacobian</h1>
+<section id="0"><h1>Setup</h1>
+  Consider the linearised discrete time dynamics with the origin shifted to the equilibrium point [<a href="../../../methods/linearisation/atEq.html">ref</a>]:
+  $$
+    x_{k+1} \approx A_d \, x_k
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{cclc} 
+      A_d &:& \text{Jacobian matrix. Constant.} \\ 
+      x_{k+1} &:& \text{Dependent variable} \\
+      x_k &:& \text{Independent variable for the specific step} \\
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Differentiating a single step</h1>
+  Derivative of $x_{k+1}$ with respect to $x_k$:
+  $$\begin{align*}
+    \frac{\partial x_{k+1}}{\partial x_k} &= 
+      \frac{\partial}{\partial x_k} [A_d x_k] \\
+      &= A_d
+  \end{align*}$$
+
+  For any step in the linearised system, the sensitivity of the next state to the current state is simply the Jacobian matrix $A_d$.
+</section>
+
+<section id="2"><h1>Unrolling the chain rule</h1>
+  Applying the chain rule to find the derivative of the $N$-th step w.r.t. the initial state $x_0$ (assumed to be at the equilibrium point):
+  $$\begin{align*}
+    \frac{\partial x_N}{\partial x_0} &= 
+      \frac{\partial x_N}{\partial x_{N-1}} \cdot \frac{\partial x_{N-1}}{\partial x_{N-2}} \cdot \dots \cdot \frac{\partial x_1}{\partial x_0} \\
+      &= A_d \cdot A_d \cdot \dots \cdot A_d \\
+      &= A_d^N
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

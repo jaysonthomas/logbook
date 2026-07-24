@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Result", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Result</h1>
+<section id="0"><h1>Linearised non-linear equations</h1>
+  Linearised equations around the hover state:
+  $$\begin{align*}
+    \ddot{y} &= g\phi \\
+    \ddot{z} &= g - \frac{u_1}{m} \\
+    \ddot{\phi} &= \frac{u_2}{I_{xx}}
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>What is being controlled?</h1>
+  <subsection id="1.0"><h1>Controlling $z$</h1>
+    By setting $u_1$, the drone's vertical acceleration can be controlled directly. As time passes, this influences the drone's vertical velocity which then influences its vertical position. A PID controller can be used to control such second-order double-integrator systems.
+    
+    $$
+      u_1 \xrightarrow{\text{sets}} \ddot{z} \xrightarrow{\int} \dot{z}
+      \xrightarrow{\int} z
+    $$
+  </subsection>
+
+  <subsection id="1.1"><h1>Controlling $y$</h1>
+    The aim is to control it as a second-order double-integrator system as above. The ideal solution would be:
+    $$
+      ?? \xrightarrow{\text{sets}} \ddot{y} \xrightarrow{\int} \dot{y}
+      \xrightarrow{\int} y
+    $$
+
+    From equation 1, $\phi$ needs to be changed to set $\ddot{y}$. But, $\phi$ can only be controlled via its second derivative which can only be controlled via $u_2$:
+    $$
+      u_2 \xrightarrow{\text{sets}} \ddot{\phi} \xrightarrow{\int} \dot{\phi}
+      \xrightarrow{\int} \phi 
+      \xrightarrow{\text{sets}} \ddot{y} \xrightarrow{\int} \dot{y}
+      \xrightarrow{\int} y
+    $$
+
+    A small error in $\ddot\phi$ grows quartically with time when computing $y$.
+    $$
+      e_y(t) \propto t^4
+    $$
+
+    Refer <a href="../../simple/main.html">effect of errors in double integrators</a>.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

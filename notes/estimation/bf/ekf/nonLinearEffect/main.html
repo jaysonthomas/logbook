@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Non-linear transformation of a gaussian", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Non-linear transformation of a gaussian</h1>
+  It is possible to pass the mean and variance of a prior distribution through a non linear transformation to get a new mean and variance. It is possible to assume a gaussian distribution around the new mean and variance. However, the shape of the true distribution underneath would be warped.
+
+  <p>
+    When a perfect circle or ellipse of uncertainty (a Gaussian) is passed through a highly nonlinear function - like an S-shaped curve, a sine wave, or polar-to-Cartesian coordinate switching - the distribution gets stretched, squashed, and bent. The true resulting distribution might look like a banana, a crescent, or a multi-modal blob. Such a distribution cannot be perfectly described by just a mean and a covariance anymore.
+  </p> 
+
+  <subsubsection><h1>Example</h1>
+    <ul>
+      <li><a href="example/workThrough.html">Work through</a></li>
+      <li><a href="example/theory.html">Theory</a></li>
+    </ul>
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

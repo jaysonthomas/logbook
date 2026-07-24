@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Overview</h1>
+  A gaussian distribution gets warped when passed through a non-linear system. Because the standard Kalman filter cannot handle non-gaussian shaped distributions, EKF forces a system to be linear.
+
+  <p>
+    Here, the beliefs are gaussian but the state or observation models are non-linear. 
+  </p>
+
+  EKF calculates a tangent line (a Jacobian) at the centre mean point (the current estimated state). It then pretends the non-linear system/curved function is just that flat, straight line. Gaussian distributions get passed through this linearised system to output gaussians again. Everything then behaves just like a KF.
+  
+  <p>
+    Linear approximations have to be made at every time step. EKF is hard to implement because even the smallest amount of error throws the estimator.
+  </p>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Reasons for log", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Reasons for log</h1>
+<section id="0"><h1>Curved manifold</h1>
+  Because <i>$SE(3)$</i> is a curved manifold, it is not possible to simply subtract two transformation matrices ($X_d - X$) to find the error. It wouldn't yield a valid transformation matrix, nor a meaningful velocity vector. Refer <a href="../../../../../../maths/lieSpace/main.html">lie space</a>.
+
+  $$
+    [\mathcal{V}_{ed}] = \log(T_{ed}) = 
+      \begin{bmatrix} [\omega_{ed}] & v_{ed} \\ 0 & 0 \end{bmatrix}
+  $$
+</section>
+
+<section id="1"><h1>No time scaling</h1>
+  The error twist represents an instantaneous pose error displacement. It gives the direction and distance (displacement) required to warp the current frame $X$ onto the desired frame $X_d$.
+  
+  <p>
+    In a standard kinematic task-space controller, it is used in the following way:
+    $$V_{\text{command}} = V_{ff} + K_p V_{ed}$$
+  </p>
+  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      V_{ff} &:& \text{Feedforward velocity already scaled by } \frac{1}{\Delta t} \\ 
+      K_p &:& \text{Proportional feedback gain matrix. Inherently carries the units of frequency } \frac{1}{\text{s}}
+    \end{array}$$
+  </div>
+  
+  $K_p$ handles the time-scaling component, turning the error displacement into a corrective velocity command. The feedforward term divides by $\Delta t$ because it needs to convert a scheduled finite displacement into an immediate velocity.
+
+  <subsubsection><h1>Nature of $K_p$</h1>
+    The error term could be scaled by $1/\Delta t$. However, doing so changes the physical meaning of $K_p$ and impacts how the system handles tuning and stability. The second term would become:
+    $$K'_p \frac{V_{ed}}{\Delta t}$$
+    
+    Instead of $K_p$ acting as a frequency-based multiplier ($1/\text{s}$) that determines how quickly the system aggressively eliminates an error, the new gain ($K'_p$) becomes a dimensionless scaling factor.
+  </subsubsection>
+
+  <subsubsection><h1>Deadbeat Control</h1>
+    Setting $K'_p = 1$, would mean that the controller would calculate the exact velocity needed to completely eliminate any tracking error in exactly one control cycle ($\Delta t$). In control theory, this is known as deadbeat control.
+    
+    This introduces a few issues in physical systems:
+    <ul>
+      <li>Extreme Actuator Saturation</li>
+      Physical robots have real limits on torque, current, and velocity. If the robot experiences a sudden disturbance (e.g., you push it, or it encounters an obstacle), $V_{ed}$ instantly becomes large. Dividing a large error by a tiny control period (like $\Delta t = 0.001\text{ s}$ for a $1\text{ kHz}$ loop) results in a massive, spike-like command that will instantly saturate your motors or cause the system to fault.
+
+      <p>
+        <li>Sensitivity to Noise and Jitter</li>
+        Real-world sensor data is noisy. If your loop rate varies slightly (hardware jitter) or your state estimation has high-frequency noise, dividing that noise by a microscopic $\Delta t$ dramatically amplifies it, leading to shaky, high-frequency vibrations in the joints.
+      </p>
+
+      <li>Coupling Gain to Loop Frequency</li>
+      Keeping $\Delta t$ inside the gain means that if you decide to upgrade your controller hardware to run at a faster loop rate (say, moving from $500\text{ Hz}$ to $1\text{ kHz}$), your controller's physical responsiveness won't radically distort overnight. The feedback loop remains governed by a time-constant independent of how fast the computer can spin its while-loop.
+    </ul>
+    
+    SummaryThe feedforward term must use $\Delta t$ because it tracks a pre-planned, deterministic trajectory over a known time slice. The feedback term drops $\Delta t$ to act as a smooth, programmable "spring" ($K_p$) that coaxes the robot back on track without causing explosive velocity commands
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -12,17 +12,23 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>IO</h1>
 <section id="0"><h1>Input</h1>
-  <ul>
-    <li>Current actual ee configuration</li>
-    <li>Current reference ee configuration</li>
-    <li>Ee reference configuration in the next timestep</li>
-    <li>PI gain matrices</li>
-    <li>Timestep $\Delta{t}$ between reference configurations</li>
-  </ul>
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      X^{G_k} &:& \text{Current actual EE configuration} \\ 
+      X^{G_{d_k}} &:& \text{Current reference EE configuration} \\
+      X^{G_{d_{k+1}}} &:& \text{EE reference configuration in the next timestep} \\
+      K_p, K_i &:& \text{PI gain matrices} \\
+      \Delta{t} &:& \text{Timestep between reference configurations}
+    \end{array}$$
+  </div>  
 </section>
 
 <section id="1"><h1>Output</h1>
-  The commanded ee twist $V$ expressed in ${e}$.
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      V^{G_k} &:& \text{Commanded EE twist} \\ 
+    \end{array}$$
+  </div>    
 </section>
 </chapter>
 

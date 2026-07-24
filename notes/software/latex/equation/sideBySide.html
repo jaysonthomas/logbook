@@ -10,24 +10,24 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 1"><h1>Side-by-side</h1>
-<section id="0"><h1>Overview</h1>
-<pre><code class="latex">
-$$\begin{array}{ccc}
-  \begin{aligned}
-    
-    % Equations written in the same way using align*
-    % No need to write \begin{align*} etc.
-    % Just the equations are written with & and \\
-  
-  \end{aligned}
+<chapter style="counter-reset: chapter 1"><h1>Side-by-side</h1>
+<section id="0"><h1>No table</h1>
+  <pre><code class="latex">
+    $$\begin{array}{ccc}
+      \begin{aligned}
+        
+        % Equations written in the same way using align*
+        % No need to write \begin{align*} etc.
+        % Just the equations are written with & and \\
+      
+      \end{aligned}
 
-  &&
+      &&
 
-  \begin{aligned}
-  \end{aligned}
-\end{array}$$
-</code></pre>    
+      \begin{aligned}
+      \end{aligned}
+    \end{array}$$
+  </code></pre>    
 
   <subsubsection><h1>Output</h1>
     $$\begin{array}{ccc}
@@ -47,6 +47,36 @@ $$\begin{array}{ccc}
                           c_4  &= \frac{1}{24} 
       \end{aligned}
     \end{array}$$
+  </subsubsection>
+</section>
+
+<section id="1"><h1>With table</h1>
+  <pre><code class="latex">
+    <div style="text-align:center;">
+      $$\begin{array}{c|c} 
+        \text{At hover} & \text{Around hover} \\ 
+        \hline
+        \phi = 0 & \phi = \Delta\phi \\
+        y = y_0 & y = y_0 + \Delta{y} \\
+        z = z_0 & z = z_0 + \Delta{z} \\
+        u_1 = mg & u_1 = mg + \Delta{u_1} \\
+        u_2 = 0 & u_2 = \Delta{u_2} 
+      \end{array}$$
+    </div>
+  </code></pre> 
+  
+  <subsubsection><h1>Output</h1>
+    <div style="text-align:center;">
+      $$\begin{array}{c|c} 
+        \text{At hover} & \text{Around hover} \\ 
+        \hline
+        \phi = 0 & \phi = \Delta\phi \\
+        y = y_0 & y = y_0 + \Delta{y} \\
+        z = z_0 & z = z_0 + \Delta{z} \\
+        u_1 = mg & u_1 = mg + \Delta{u_1} \\
+        u_2 = 0 & u_2 = \Delta{u_2} 
+      \end{array}$$
+    </div>
   </subsubsection>
 </section>
 </chapter>

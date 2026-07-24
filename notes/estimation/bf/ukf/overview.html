@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Overview</h1>
+<section id="0"><h1>Description</h1>
+  EKF approximates a wild, unpredictable nonlinear function with a straight line. UKF, instead, approximates the distribution. UKF still outputs a gaussian, but it calculates the parameters of that gaussian with incredible accuracy using sigma points that can be passed through a non-linear system.
+
+  <p>
+    It is simpler to implement. They are applicable in highly non-linear systems where EKF may fail to converge.  
+  </p>
+</section>
+
+<section id="1"><h1>Steps</h1>
+  <ul>
+    <li>Pick $2n+1$ sigma points on the original gaussian. </li>
+    <p>
+      Instead of considering just the mean, UKF chooses a small, strategic set of points - one sits at the mean, and the others sit symmetrically at the outer boundaries of the uncertainty ellipse.
+    </p>
+
+    <li>Pass the points through the nonlinear system/function.</li>
+
+    <p>
+      The points warp naturally to the true physics.
+    </p>
+
+    <li>Compute weighted mean & covariance from the transformed points to get a highly accurate new gaussian.</li>
+  </ul>
+
+  Because UKF allows a few smart sample points to experience the true curves of a system, the resulting mean and covariance capture the physical reality far better than EKF. Mathematically, while EKF is only accurate to the 1st order of a Taylor series expansion, UKF is accurate to the 2nd (and often higher) order.
+
+  <p>
+    By picking sigma points at the boundaries ($\mu \pm \sigma$), it forces those points to travel through the actual nonlinear bends of the underlying function. When the boundary points get squared or bent, they naturally shift. When UKF recombines them, the resulting mean and variance automatically capture that $\frac{1}{2}g''(\mu)\sigma^2$ shift.
+  </p>
+
+  The resulting gaussian is centered precisely where the true banana-shaped distribution's center of mass actually lies.
+</section>
+</chapter>
+
+</body>
+</html>

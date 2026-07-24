@@ -11,7 +11,7 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Convex MPC</h1>
-<section id="0"><h1>Overview</h1>
+<section id="0"><h1>Problem</h1>
   From <a href="../../../op/lqr/riccati/derivation/dp/steps.html">DP</a>, if the cost-to-go function $V(x)$ is found, $u$ can be found by solving a one-step problem:
 
   $$\begin{align*}
@@ -21,7 +21,7 @@
         (Ax_k + Bu_k)^T P_{k+1} (Ax_k + Bu_k)
   \end{align*}$$
 
-  To this one step problem, constraints can be added on $u$, but this will perform poorly since $V(x)$ was computed without constraints.
+  To this one step problem, constraints can be added on $u$, but this will perform poorly since $V(x)$ is computed without constraints.
 </section>
 
 <section id="1"><h1>Solution</h1>
@@ -41,10 +41,10 @@
     \end{array}$$
   </div>
   
-  With no additional constraints, MPC ('receeding horizon') exactly matches LQR for any $H$.
+  With no additional constraints, MPC exactly matches LQR for any $H$.
 
   <subsubsection><h1>Intuition</h1>
-    Explicit constrained optimisation over first $H$ steps gets the state close enough to the reference that constraints are no longer active and LQR cost-to-go is valid farther into the future.
+    Explicit constrained optimisation over the first $H$ steps gets the state close enough to the reference such that the constraints are no longer active. LQR cost-to-go is then valid from there on into the future.
   </subsubsection>
 </section>
 

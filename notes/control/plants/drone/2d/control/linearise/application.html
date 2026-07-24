@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Application", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Application</h1>
+<section id="0"><h1>Linearise sines and cosines</h1>
+  Applying $sin\phi \approx \phi$ and $cos\phi \approx 1$:
+  $$\begin{align*}
+    \ddot{\phi} &= \frac{u_2}{I_{xx}} \\
+    \ddot{y} &= \frac{u_1}{m}\phi \\
+    \ddot{z} &= g - \frac{u_1}{m}
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Linearise products of variables</h1>
+  Applying $u_1 = mg + \Delta{u_1}$ and $\phi = \Delta\phi$:
+  $$\begin{align*}
+    \ddot{y} &= \frac{1}{m}(mg + \Delta{u_1})\Delta\phi \\
+      &= \overbrace{g\Delta\phi}^{\scriptsize\text{Small number}} + 
+      \frac{\overbrace{\Delta{u_1}\Delta\phi}^{\scriptsize\text{Tiny number} \;\sim\; 0}}{m} \\
+  \end{align*}$$
+
+  $\Delta{u_1}, \Delta\phi$ are very small numbers; their product yields an even small number and hence can be ignored. This results in:
+  $$
+    \ddot{y} = g\Delta\phi
+  $$
+
+  Since, near hover $\Delta\phi \approx \phi$, the linearised decoupled dynamics equation for $\ddot{y}$ reduces to:
+  $$
+    \ddot{y} = g\phi
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Example", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Example</h1>
+  <div>
+    <figure>
+      <img style="height:100px; width:auto"
+      src="../../../../figures/drone/41_linearisation.png"/>
+      <figcaption>
+        The curve is approximately: $f(x) = x^2$
+      </figcaption>
+    </figure>
+  </div>
+
+  The result of linearisation of a quadratic function around an <i>operating</i> point, say $x = 1$, is a straight line that best approximates the function at the point. The line has to pass through the point and have the same slope as the function at the point. 
+
+  <p>
+    The solution is the tangent line at the operating point. The slope of the parabola at the operating point can be found using calculus and will match that of the tangent line. Zooming into the operating point, visually, the tangent and the parabola are very close to each other. This confirms the tangent is a good linear approximation of the parabola in the region. 
+  </p>
+
+  The linear equation that gives a good approximation of $f(x) = x^2$ when $x$ is close to 1 ends up being:
+  $$\begin{align*}
+    f_{lin}(x) &= 2x -1 \\
+                &= 1 + 2(x-1)
+  \end{align*}$$
+
+  Break down of the solution equation:
+  <ul>
+    <li>$x-1$</li>
+    This is $\Delta{x}$. It tells how far $x$ is from the operating point. When $x=0 \rightarrow -1$, when $x=1 \rightarrow 0$. 
+
+    <li>$1$</li>
+    It's the value of the original function at the operating point of $x = 1$.
+
+    <li>$2$</li>
+    It is the slope/derivative of the original function at the operating point.
+  </ul>
+</chapter>
+
+</body>
+</html>

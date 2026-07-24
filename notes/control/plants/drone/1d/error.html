@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Error", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Error</h1>
+  Consider that the aim is for a monorotor to hover: 
+  $$\ddot{z} = 0$$
+  
+  The target position is a constant altitude since the aim is to hover. 
+
+  <p>
+    Initial state: $z(0) = \dot{z}(0) = 0$
+  </p>
+
+  Assume the drone's mass has been overestimated by a small amount, i.e. the drone is lighter than the controller thinks. The controller will apply more torque to the rotors and hence more thrust to the drone than is necessary. 
+  
+  <p>
+    Consider the drone in the hovering state. Due to the mass mismatch, there would be a small constant error in the drone's linear acceleration. With a small error in mass, the position error will grow quadratically with time.
+  </p>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/drone/IntroToControl4.png"/>
+      <figcaption>
+        Small error in mass causing a quadratic increase in position error  
+      </figcaption>
+    </figure>
+  </div>
+
+  Refer <a href="../../simple/main.html">effect of errors in double integrators</a>.
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Adjoint as a change of basis", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Adjoint as a change of basis</h1>
+<section id="0"><h1>Problem</h1>
+  The desired twist $V_{d_k}$ is expressed in the coordinate frame of the desired trajectory ($T_{d_{k-1}}$, $T_{d_k}$ etc.). However, a controller outputs velocity commands executed by physical actuators in a robot's body frame ($T$). In $SE(3)$, it is not possible to add or subtract velocity vectors that live in different tangent spaces (coordinate frames).
+
+  <subsubsection><h1>No mapping</h1>
+    If a velocity of $V_{f_k} = V_{d_k}$ is commanded without the mapping, the robot will execute the correct magnitude of velocity, but it will point in the wrong physical direction whenever the robot is misaligned with the path ($T \neq T_{d_{k-1}}$). The feedforward action will end up fighting the feedback loop rather than cooperating with it.
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Adjoint mapping</h1>
+  By passing $V_{d_k}$ through the adjoint transformation ($\text{Ad}_M$) mapped by the relative displacement between the frames ($T^{-1}T_{d_{k-1}}$), it translates the desired trajectory velocity into the robot's current frame. 
+
+  $$
+    V_{f_k} = [Ad_{T^{-1}T_{d_{k-1}}}]V_{d_k}
+  $$
+
+  It does not perform any control or stabilisation; it simply scales and rotates (geometric change-of-basis) the velocity vector so that it physically matches the geometry of the misaligned robot.
+</section>
+
+<section id="2"><h1>Intuition</h1>
+  When the adjoint operator processes $V_{d_k}$ based on the relative pose matrix, it performs two distinct geometric adjustments simultaneously. 
+  
+  <subsection id="2.0"><h1>Projected Speed Scaling (The Rotation Matrix $R$)</h1>
+    If the target is moving forward along its local x-axis, but your robot is currently rotated $45^\circ$ relative to it:To match that forward flow, your robot needs to command components along both its own local x-axis and y-axis.The Adjoint uses the relative rotation to mathematically "scale" how much of that speed is distributed to your local x-velocity vs. your local y-velocity.
+  </subsection>
+
+  <subsection id="2.1"><h1>Lever-Arm Scaling (The Pivot Effect via $[p]R$)</h1>
+    Imagine you are holding a long selfie stick where the camera at the end is the desired pose ($T_{d_{k-1}}$) and your hand is the actual robot ($T$).If the camera executes a pure rotation in place (spins around its center), your hand cannot just spin in place to keep up.Because of the physical distance ($p$) between your hand and the camera, your hand must physically translate along an arc to keep the camera on its path.The linear velocity your hand must execute is scaled directly by the distance (the lever arm) to the camera:
+  
+    $$v = \omega_d \times p$$The Adjoint matrix natively calculates this exact geometric scaling. If you are far away from a rotating target, it outputs a massive, scaled-up linear velocity command at your current pose to prevent you from being left behind.
+  </subsection>
+</section>
+
+<section id="3"><h1>Summary</h1>
+  The feedforward term $\text{Ad}_{T^{-1}T_{d_{k-1}}}(V_{d_k})$ answers a purely geometric question: "Assuming my robot is currently misaligned by a displacement of $T^{-1}T_{d_{k-1}}$, what velocity must I command right now just to perfectly match the pace of the target's trajectory flow?".By handling the "staying up to speed" part through the Adjoint, your PI feedback terms are freed up to focus entirely on their actual job: closing the spatial tracking gap.
+</section>
+</chapter>
+
+</body>
+</html>

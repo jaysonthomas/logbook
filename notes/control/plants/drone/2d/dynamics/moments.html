@@ -42,7 +42,7 @@
       F = F_1 - F_2
     $$
 
-    The convention might be to deliberately subtract $F_2$, because if $F_2 > F_1$, then the drone rolls in the anti-clockwise direction which means a negative torque ($M_x &lt 0$) should have caused this; the combination of $F_1, F_2$ gives the negative torque value.
+    The convention is to subtract $F_2$, because if $F_2 > F_1$, then the drone rolls in the anti-clockwise direction which means a negative torque ($M_x &lt 0$) should have caused this; the combination of $F_1, F_2$ gives the negative torque value.
   </subsection>
   
   <subsection id="1.1"><h1>When the body frame is not aligned with the drone</h1>
@@ -71,11 +71,8 @@
 <section id="2"><h1>Angular/rotational acceleration</h1>
   $$\begin{align*}
     \ddot{\phi} &= \frac{M_x}{I_x} \\
-                &= \frac{(F_1 - F_2)\cdot Lcos\theta}{I_x} \\
-                &= \frac{u_2 \cdot Lcos\theta}{I_x}
+                &= \frac{(F_1 - F_2)\cdot Lcos\theta}{I_{xx}}
   \end{align*}$$
-
-  The rotational moment, $M_x = u_2 = F_1 - F_2$
 </section>
 
 <section id="3"><h1>Notes</h1>

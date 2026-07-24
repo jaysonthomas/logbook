@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Kalman gain", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Kalman gain</h1>
+<section id="0"><h1>Overview</h1>
+  If $L$ is selected based on traditional methods like pole placement, then it is called a <i>Luenberger observer</i>. It would be similar to having a linear feedback that is not optimal, i.e. not LQR. If it's optimised, it's called the <i>Kalman Gain</i>.
+
+  <p>
+    KF can be seen as a weighted average between two uncertain sources of information: 
+    <ul>
+      <li>Prediction (where physics/math thinks the system is)</li>
+      <li>Sensor measurement</li>
+    </ul>
+    Kalman Gain is the weight factor that decides how much a new measurement is trusted compared to the belief after the prediction step, when updating an estimate.
+  </p>
+</section>
+
+<section id="1"><h1>Derivation</h1>
+  Kalman gain is derived from the estimated state covariance (actual vs estimated after considering the measurement update).
+
+  $$
+    E[(x_k - \hat{x}_{k|k})^T(\dots)] == \text{tr}(\Sigma_{k|k})
+  $$
+  
+  A state covariance is the same as its trace [<a href="../../../../maths/probability/definitions/expValue.html">ref</a>].
+
+  <p>
+    MMSE's idea of minimising the state covariance is used in KF to find the optimal gain. Using the <a href="measurement.html#3">covariance equation</a>, minimise the state covariance by setting its derviative to 0 and solve for $L_k$.
+  </p>
+
+  $$\begin{align*}
+    arg \min_{L_k} \quad & \text{tr}(\Sigma_{k|k}) \\
+    \frac{\partial \, \text{tr}(\Sigma_{k|k})}{\partial L_k} &= 0 \\
+    L_k &= \Sigma_{k|k-1} C^\top S_k^{-1}
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \Sigma_{k|k-1} &:& \text{Predicted state covariance - actual vs predicted state.} \\ 
+      C &:& \text{Measurement model.} \\
+      S_k &:& \text{Innovation covariance - measurement vs predicted measurement.}
+    \end{array}$$
+  </div>
+
+  Refer <a href="gain/intuition.html">intuition</a>.
+</section>
+
+<section id="2"><h1>Inputs</h1>
+  $K$ is computed:
+  <ul>
+    <li>Using the Jacobian of the measurement model and</li>
+    <li>indirectly, the Jacobian of the state transition function which helps compute the estimate of the state covariance matrix.</li>
+  </ul>
+
+  $$\begin{align*}
+    H_t &= h'_t(\bar{\mu}_t) \\
+    K_t &= \bar{\Sigma}_t \; H^T_t \; (H_t \bar{\Sigma}_t H^T_t + R_t)^{-1}
+  \end{align*}$$
+</section>
+
+<section id="3"><h1>Steps</h1>
+  The Kalman gain calculation involves the following 3 steps:
+  <ul>
+    <li>
+      Inside the bracket, the estimated covariance is transformed into the measurement space using $H$.
+    </li>
+
+    <p>
+      <li><i>Measurement noise</i> $R$ is added to it.</li>
+      There is uncertainty associated with sensor measurements due to sensor inaccuracy, which is captured by the covariance matrix $R$.
+    </p>
+
+    <li>
+      (Outside the bracket) <m>The result is then transformed back into the state space to get the Kalman gain</m>.
+    </li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

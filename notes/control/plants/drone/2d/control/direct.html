@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Direct control", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Direct control</h1>
+<section id="0"><h1></h1>
+Here is how motor torques actually relate to thrust forces, and why simplifying them as direct force inputs is standard practice in quadrotor modeling.1. Physical Relationship: Torque vs. ThrustEach rotor/propeller generates two main outputs when spun by a motor:Thrust Force ($u_i$ or $F_i$): Aerodynamic lift directed perpendicular to the rotor plane.Aerodynamic Drag Torque ($\tau_{d,i}$): Resistance torque from the air acting against the spinning blades.Because both thrust and aerodynamic drag torque originate from the aerodynamic properties of the rotating propeller, both scale directly with the square of the motor's rotational speed ($\omega_i$):$$u_i = k_f \omega_i^2$$$$\tau_{d,i} = k_m \omega_i^2$$Where:$k_f$ is the thrust coefficient.$k_m$ is the torque coefficient.Since both depend on $\omega_i^2$, aerodynamic torque and thrust force are directly proportional to each other:$$\tau_{d,i} = \left(\frac{k_m}{k_f}\right) u_i$$2. Why We Direct-Control $u_1$ and $u_2$ in 2D SystemsWhen modeling a 2D (planar) quadrotor, we typically ignore the aerodynamic counter-torque $\tau_d$ along the z-axis because:No Yaw Axis in 2D: The drone only moves laterally ($x$), vertically ($y$), and pitches ($\theta$). Pure rotational motion in 2D is caused entirely by the thrust differential between the two rotors creating a moment arm:$$\tau_{\text{pitch}} = \frac{l}{2}(u_2 - u_1)$$Instantaneous Motor Response: On the low-level electrical side, an Electronic Speed Controller (ESC) adjusts motor torque ($\tau_m$) to rapidly spin the prop up or down to a target velocity $\omega_i$. Because motor torque dynamics are extremely fast relative to the movement of the drone body, control designers safely treat thrust $u_i$ as the immediate control input.3. Standard Control Mapping (Control Allocation)In practice, high-level controllers (like LQR or PID) calculate a total required thrust input ($U_1$) and rotational torque input ($U_2$):$$\begin{bmatrix} U_1 \\ U_2 \end{bmatrix} = \begin{bmatrix} 1 & 1 \\ -\frac{l}{2} & \frac{l}{2} \end{bmatrix} \begin{bmatrix} u_1 \\ u_2 \end{bmatrix}$$Where:$U_1 = u_1 + u_2$ controls vertical acceleration ($\ddot{y}$).$U_2 = \frac{l}{2}(u_2 - u_1)$ controls angular acceleration ($\ddot{\theta}$).Once the controller outputs $U_1$ and $U_2$, a simple linear matrix invert solves for individual rotor thrusts $u_1$ and $u_2$, which are then converted directly into target motor speeds ($\omega_1, \omega_2$).Summary: You do not treat motor torque as equal to thrust force, but you can assume thrust $u_i$ is directly commanded by the motor speed, omitting internal motor electrical dynamics from the mechanical model.  
+</section>
+</chapter>
+
+</body>
+</html>

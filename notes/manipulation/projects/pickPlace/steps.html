@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Steps", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Steps</h1>
+<section id="0"><h1>Trajectory generation</h1>
+  Gripper poses are designed as a function of time using a trajectory generator. Interpolate in between. Bring in the rest of the arm later.
+
+  <p>
+    Plot frames for the open loop trajectory of poses the hand needs to go through in space at different timestamps. 
+  </p>
+</section>
+
+<section id="1"><h1>Joint space mapping</h1>
+  The aim is to obtain corresponding joint positions/commands as a function of time which are fed as input to the controller. 
+
+  $$
+    X^G(t) \rightarrow q(t)
+  $$
+
+  Decide a $q(0)$. Then integrate forward using instantaneous joint velocities $\dot{q}$ to get $q(t)$. Joint velocities are obtained by taking the inverse jacobian of the spatial velocity:
+
+  $$
+    \dot{q}(t) = [J^G(q)]^{-1}V^G(t)
+  $$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      V^G(t) &:& \text{Spatial velocity of the gripper from the reference trajectory.}
+    \end{array}$$
+  </div>
+
+  To avoid singularities, the Jacobian needs to be invertible. Else, it needs to be addressed with more sophisticated methods. Intuitively, to get the smoothness in joint position transitions from one time instant to the next, the derivative of the kinematics (jacobian is approximately the derivative of FK) is used to design controllers.
+</section>
+</chapter>
+
+</body>
+</html>

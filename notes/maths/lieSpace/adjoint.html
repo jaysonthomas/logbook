@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Adjoint representation", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Adjoint representation</h1>
+
+  Since a twist is a 6-element vector and a transformation matrix is a $4 \times 4$, in order to transform a twist from 1 frame of reference to another, a $6 \times 6$ representation of a transformation matrix is required which is the <i>adjoint representation</i>.
+
+  $$\begin{align*}
+    T &= \begin{bmatrix}
+          R & p \\
+          0 & 1
+        \end{bmatrix} \\
+    
+    [Ad_T] &= \begin{bmatrix}
+                R & 0 \\
+                [p]R & R
+              \end{bmatrix} \in \mathbb{R}^{6 \times 6} \\
+
+    V_a &= [Ad_{T_{ab}}] V_b            
+
+  \end{align*}$$
+</chapter>
+
+</body>
+</html>

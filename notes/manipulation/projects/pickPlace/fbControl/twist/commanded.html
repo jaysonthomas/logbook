@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Commanded twist", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Commanded twist</h1>
+<section id="0"><h1>Error twist</h1>
+  Refer <a href="reasonsForLog.html">Reasons for log</a>
+
+  $$\begin{align*}
+    ^{G_k}X^{G_{d_k}} &= X^{{G_k}^{-1}}X^{G_{d_k}} \\
+    [^{G_k}V^{G_{d_k}}] &= log(X^{{G_k}^{-1}}X^{G_{d_k}}) \\
+    [^{G_k}V^{G_{d_k}}] &\rightarrow ^{G_k}V^{G_{d_k}}
+  \end{align*}$$
+
+  If the gripper is perfectly on track, the actual and desired poses become identical, meaning $^{G_k}X^{G_{d_k}} = I$.  
+</section>
+
+<section id="1"><h1>Feedforward reference twist</h1>
+  The aim is to calculate the velocity required to move from the current desired to the next desired trajectory pose in the span of one control loop cycle ($\Delta t$).
+
+  $$\begin{align*}
+    ^{G_{d_k}}X^{G_{d_{k+1}}} &= X^{{G_{d_k}}^{-1}}X^{G_{d_{k+1}}} \\
+    [^{G_{d_k}}V^{G_{d_{k+1}}}] &= \frac{1}{\Delta{t}}log(^{G_{d_k}}X^{G_{d_{k+1}}}) \\
+    [^{G_{d_k}}V^{G_{d_{k+1}}}] &\rightarrow ^{G_{d_k}\hspace{-0.6em}}V^{G_{d_{k+1}}}
+  \end{align*}$$
+
+  $\rightarrow$ denotes conversion from se(3) to a $6 \times 1$ vector.
+  
+  <subsubsection><h1>Breakdown of steps</h1>
+    The matrix logarithm calculates the rigid-body displacement required to bridge the gap between $X^{G_{d_k}}$ and $X^{G_{d_{k+1}}}$. The displacement can also be viewed as an instantaneous change/velocity to go between the 2 configurations. The change is so small that it can be considered to occur over an infinitely small period of time. This is called an <i>infinitesimal motion</i>. 
+    
+    <p>
+      In order to map the instantaneous motion to a motion that occurs over a finite period of time $\Delta{t}$, the output of the logarithm is divided/scaled by $\Delta{t}$. The resulting velocity is kept constant for the time interval.
+    </p>
+  </subsubsection>
+
+  <subsubsection id="1"><h1>Change of expressed-in frame</h1>
+    The matrix adjoint term expresses the desired twist vector w.r.t. the current pose.
+
+    $$\begin{align*}
+      M &= ^{{G_k}\hspace{-0.6em}}X^{G_{d_k}} = X^{{G_k}^{-1}}X^{G_{d_k}} \\
+      ^{G_{d_k}}V^{G_{d_{k+1}}}_{G_k} &= [Ad_{\scriptsize{M}}]\,^{G_{d_k}\hspace{-0.2em}}V^{G_{d_{k+1}}} \\
+    \end{align*}$$
+
+    [<a href="transformationProof.html">Proof of pure transformation</a> Sort or delete, <a href="adjoint.html">Adjoint as a change of basis</a>]
+  </subsubsection>  
+</section>
+
+<section id="2"><h1>Commanded twist</h1>
+  $$
+    V^{G_{c_k}} = ^{G_{d_k}}\hspace{-0.3em}V^{G_{d_{k+1}}}_{G_k} + 
+      K_p \, ^{G_k}V^{G_{d_k}} + 
+      K_i \, \int_0^t \hspace{-0.5em} {^{G_k}V^{G_{d_k}}} dt
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

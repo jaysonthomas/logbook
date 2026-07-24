@@ -61,13 +61,11 @@
 </section>
 
 <section id="3"><h1>Contrast with Total Cost</h1>
-  The stage cost is the fundamental building block of the global optimisation objective. The total cost of an entire trajectory over a time horizon $N$ is simply the summation of all individual stage costs, plus a final terminal penalty:
+  The stage cost is the fundamental building block of the global optimisation objective. The total cost of an entire trajectory over a time horizon $N$ is the summation of all individual stage costs, plus a final terminal penalty:
 
   $$
     \text{Total Cost} = \sum_{k=0}^{N-1} l(x_k, u_k) + \underbrace{l_N(x_N)}_{\text{Terminal Cost}}
   $$
-
-  While the total cost looks at the big picture, the stage cost is purely a snapshot of a single instant in time.
 </section>
 </chapter>
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Disadvantages", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Disadvantages</h1>
+  If a system is highly nonlinear or the uncertainty is wide, the edges of the distribution will hit the actual curves that EKF ignores. 
+  
+  <p>
+    EKF forces a perfect, symmetrical Gaussian ellipse over the data by linearising a nonlinear system. It does this by approximating a nonlinear curved system using a straight tangent line at the mean (current state estimate). 
+  </p>
+
+  Assume the true distribution is a banana shaped curve. Because EKF ignores the curvature (the higher-order Taylor terms) of the system, it places the center of the ellipse/distribution in the empty space inside the curve of the banana. The filter now confidently believes the system is in a state where it physically cannot be, i.e. the new mean can be wildly off-center, and the new covariance can be dangerously overconfident.
+</chapter>
+
+</body>
+</html>

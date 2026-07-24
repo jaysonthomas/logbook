@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Controller manager (CM)", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Controller manager (CM)</h1>
+<section id="0"><h1>Description</h1>
+  CM is the primary ROS <n>node</n> that handles the lifecycle (e.g. loads, activates, deactivates, unloads) of controllers and coordinates with the HAL (sensors or actuators). 
+
+  <p>
+    When ros2_control is launched, a URDF's content is passed to CM as a string parameter called <code>robot_description</code>.
+  </p>
+
+  CM starts different controllers and binds specified hardware interfaces to them.
+
+  <subsection id="0.0"><h1>Component Parser</h1>
+    Inside CM (specifically in its on_configure or initialization phase), it passes <code>robot_description</code> to a class called ComponentParser (found in the hardware_interface package). The parser hunts for ros2_control XML tags. It iterates through every hardware block and extracts the plugin name and the component type.
+  </subsection>
+
+  <subsection id="0.1"><h1>Resource Manager</h1>
+    The parser passes the plugin names to another class within CM called the ResourceManager. 
+    
+    <p>
+      <i>Resource manager</i> is responsible for dynamically loading and initialising hardware resource plugins and managing the lifecycle of hardware interfaces to components defined in a URDF file. It uses pluginlib to find the compiled .so libraries corresponding to the names and gets back corresponding class instances.
+    </p>
+
+    In other words, hardware components are loaded as plugins (using pluginlib). They are not independent processes or nodes; they are shared libraries linked into CM at runtime.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

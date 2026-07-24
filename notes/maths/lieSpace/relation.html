@@ -15,19 +15,25 @@
   <ul>
     <li>$\exp([\mathcal{V}]) \to T$: Integrating a velocity twist over a unit time gives the pose change in $SE(3)$.</li>
 
-    <p>
-      <li>$\log(T) \to [\mathcal{V}]$: Matrix log of a relative pose gives the error twist in $\mathfrak{se}(3)$ required to get there.</li>
-    </p>
+    $$
+      se(3) \xrightarrow[]{\exp} SE(3)
+    $$
+
+    <li>$\log(T) \to [\mathcal{V}]$: Matrix log of a relative pose gives the error twist in $\mathfrak{se}(3)$ required to get there.</li>
+
+    $$
+      SE(3) \xrightarrow[]{\log} se(3)
+    $$
   </ul>  
 
 <section id="0"><h1>Intuition</h1>
   Considering the globe and flat paper analogy.
 
   <p>
-    Lie Algebra is useful because it acts as a local "map" of the Lie Group. If one chooses a velocity vector on that flat sheet of paper and starts walking in that direction at a steady speed, one is charting a path. If that flat sheet is wrapped cleanly around the globe, one is performing the Exponential Map ($\exp$). It takes a straight velocity vector from the flat tangent space and rolls it onto a curved, valid path on the group's surface.
+    Lie algebra is useful because it acts as a local map of the lie group. If one chooses a velocity vector on that flat sheet of paper and starts walking in that direction at a steady speed, one is charting a path. If that flat sheet is wrapped around the globe, one is performing the exponential map ($\exp$). It takes a straight velocity vector from the flat tangent space and rolls it onto a curved, valid path on the group's surface.
   </p>
 
-  Conversely, taking the Logarithm ($\log$) is like taking a point on the curved globe and projecting it straight up onto the flat sheet of paper to see what vector velocity would have driven one there from the North Pole.
+  Conversely, the logarithm projects a point on the curved globe onto the flat sheet of paper to see what vector velocity would have driven one there from the North Pole.
 </section>
 </chapter>
 

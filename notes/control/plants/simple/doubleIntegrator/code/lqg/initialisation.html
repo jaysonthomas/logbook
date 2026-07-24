@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Initialisations", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Initialisations</h1>
+<section id="0"><h1>Output matrix</h1>
+  $$
+    C = \begin{bmatrix} 1 & 0 \end{bmatrix}
+  $$
+</section>
+
+<section id="1"><h1>Filter state</h1>
+  $$\begin{align*}
+    \Sigma_0 &= \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \\
+    \hat x_0 &= \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Noise covariances</h1>
+  [<a href="../../../../../estimation/opEst/kf/defs/processNoise.html">Process noise ref</a>]
+  
+  $$\begin{align*}
+    W &= B \; 0.1 \; B^\top + 10^{-5} I \\
+    V &= 0.1
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      W &:& \text{Corresponds to white noise force input to the dynamics} \\ 
+      V &:& \text{Noise on position measurements}
+    \end{array}$$
+  </div>
+</section>
+</chapter>
+
+</body>
+</html>

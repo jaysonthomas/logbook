@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Work flow", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Work flow</h1>
+<section id="0"><h1>Directory structure</h1>
+  <pre><code class="nohighlight">
+    └── description
+      ├── launch 
+        └── display.launch.xml
+      ├── rviz
+      └── urdf
+        └── main.urdf.xacro
+
+    └── bringup
+      └── config
+
+    ├── CMakeLists.txt
+    └── package.xml
+  </code></pre>
+
+  Inside <code>CMakeLists.txt</code>, specify the directories to include in the build using <code>install</code>. Refer <a href="../../../../software/roboticsTools/ros/admin/build/cmakeLists.html">Colcon's interaction with CMakeLists</a>.
+</section>
+
+<section id="1"><h1>Robot description</h1>
+  Write the urdf files in .xacro formats configuring the various links and joints with details such as:
+  <ul>
+    <li>Display colour in RViz</li>
+    <li>Connections</li>
+  </ul>
+
+  In the main .xacro file:
+  <ul>
+    <li>Include the necessary .xacro files.</li>
+    <li>Call functions/macros with the necessary parameters to build the bot.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Rviz configuration</h1>
+
+<section id="3"><h1>Display launch</h1>
+  This launch file just displays the URDF. It's a .xml file.
+  <ul>
+    <li>Set urdf and rviz config paths.</li>
+    <li>Start the first node (robot_state_publisher). Provide the urdf to it.</li>
+    <li>Start the joint_state_publisher_gui node to visualise the sliders.</li>
+    <li>Start rviz.</li>
+  </ul>
+</section>
+
+<section id="4"><h1>Configure ros2_control URDF</h1>
+  Within a new .xacro file, specify the:
+  <ul>
+    <li>Type and name of the ros2_control module.</li>
+    <li>Joints to be controlled. The types of:
+      <ul>
+        <li>Inputs to be commanded/controlled</li>
+        <li>Outputs to be monitored</li>
+      </ul> 
+    <li><m>Hardware interface</m> via the <code>hardware</code> tag.</li>    
+  </ul>
+
+  <m>The joints would have to be linked to the hardware interface and each of them to the chosen controllers</m>? 
+</section>
+
+<section id="5"><h1>Configure controller</h1>
+  <ul>
+    <li>Create a package called bringup.</li>
+    <li>Inside a yaml file, configure the controller manager node:</li>
+      <ul>
+        <li>Update rate</li>
+        <li>Choose controllers</li>
+      </ul>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

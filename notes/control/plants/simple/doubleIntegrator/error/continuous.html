@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Continuous time", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Continuous time</h1>
+  Consider there is a small error in the acceleration due to more force being applied based on a model error. Assume the initial velocity and position is 0 for simplicity. Focusing on the error alone. Integrating acceleration and then the velocity gives:
+
+  $$\begin{align*}
+    \dot{q}(t) &= \int^t_0{\epsilon dT} = \epsilon t + \dot{q}(0) = \epsilon t   \\
+    q(t) &= \int^t_0{\epsilon t dT}\\
+    q(t) - q(0) &= \frac{1}{2} \epsilon t^2
+  \end{align*}$$
+
+  The smallest deviation of a model (used by the controller to make its control decisions) from the real world can lead to position errors that grow quadratically with time in a double integrator system. 
+
+  <p>
+    A double integrator system is an <i>unstable system</i>. A <i>stable system</i> would have some self-correcting ability and the mismatch would not grow infinitely. 
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

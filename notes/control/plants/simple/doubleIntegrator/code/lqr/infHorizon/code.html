@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Code details", "../../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Code details</h1>
+<section id="0"><h1>Directory structure</h1>
+  <pre><code >
+    └── include 
+      └── controllers
+        └── controller.hpp        -- Controller interface
+      ├── double_integrator.hpp   -- Model
+      ├── sim.hpp
+      └── sim_manager_node.hpp
+    └── src
+      └── controllers
+        └── dlqr.cpp
+      ├── double_integrator.cpp
+      ├── main.cpp
+      ├── sim.cpp
+      └── sim_manager_node.cpp
+  </code></pre>
+</section>
+
+<section id="1"><h1>Simulation manager node</h1>
+  <subsubsection><h1>Main function</h1>
+    It sets up a timer to trigger a callback at regular intervals which both:
+    <ul>
+      <li>Steps the simulation and</li>
+      <li>Publishes the output</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection><h1>Construction</h1>
+    It is responsible for construction of:
+    <ul>
+      <li>Simulation</li>
+      Choice of controller and control frequency.
+
+      <p>
+        <li>Publisher</li>
+        Choice of message type, queue size and topic name.
+      </p>
+    </ul>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Simulation</h1>
+  <ul>
+    <li>It initialises the plant.</li>
+
+    <p>
+      <li>It services the following requests from the simulation manager:</li>
+      <ul>
+        <li>Controller initialisation</li>
+        <p>
+          <li>Simulation step</li>
+          It steps the controller and the plant's state. It also keeps track of the simulation time.
+        </p>
+      </ul>
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

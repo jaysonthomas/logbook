@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Examples", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Examples</h1>
+<section id="0"><h1>Notation understanding check</h1>
+  <div class="container">
+    <figure>
+      <img style="height:120px; width:auto"
+      src="../../../../../figures/manipulation/38_poseQuestion.png"/>
+      <figcaption>
+        What is $^GP^O$ and $^GP^O_W$?
+      </figcaption>
+    </figure>
+  </div>
+
+  For the question above, the possible answers are: (a) [.2,0,-.2], (b) [0,.3,.1], (c) [0,-.3,.1]
+
+  <subsubsection><h1>Case 1</h1>
+    $$
+      ^GP^O = {^GR^W} \cdot {{^W}P^O}
+    $$
+
+    $^WP^O$ will undergo 2 rotations to align $W$ with $G$: <code>Rotz(-90), Rotx(-45)</code>. Once it's aligned, there is an offset in the Y and Z directions. Hence the answer must be (b).
+  </subsubsection>
+
+  <subsubsection><h1>Case 2</h1>
+    The object frame is expressed in the gripper frame (i.e. it's aligned w.r.t. to it) following on from problem 1. Rotate the object frame to align with the world frame. Focusing on the gripper's position. In the world frame, there is an offset in the gripper's position from the world frame in the Z and X directions. Hence the answer must be (a).
+
+    $$
+      ^GP^O_W = {^WR^G} \cdot {^GP^O}
+    $$
+
+    This is the same as ${^W}P^O$. 
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Practical</h1>
+  Consider a scenario where a depth camera is mounted around a kuka in order to help it find where things are in a scene. The measurements given out by each of those cameras are going to be in the associated camera's frame. 
+  
+  <p>
+    In order to combine (and use) measurements from the different cameras, they need to be converted to a common representation. Frames can only be combined if they match. A common coordinate frame would typically be the world frame or the gripper frame. Change of representation is done by multiplying each camera's output by some pose $X$.
+  </p>
+</section>
+
+</chapter>
+
+</body>
+</html>

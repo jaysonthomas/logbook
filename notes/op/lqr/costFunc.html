@@ -32,27 +32,24 @@
     <li>Can vary with time</li>
   </ul>
 
-  <subsubsection><h1>Conditions for a well posed solution</h1>
-    For a QP to be convex, the Hessian has to be positive definite. Similarly, for an LQR problem to have a well posed solution:
-    <ul>
-      <li>The state cost matrix $Q$ needs to be positive semi-definite</li>
-      <li>The control cost matrix $R$ needs to be strictly positive definite</li>
-    </ul>
+  The dynamics varies with time, hence $A,B$ matrices have $k$ subscripts. The problem is time invariant if $A_k=A, B_k=B, Q_k=Q, R_k=R \; \forall k$.
+</section>
 
+<section id="2"><h1>Conditions for a well posed solution</h1>
+  For an LQR problem to have a well posed solution:
+  <ul>
+    <li>The state cost matrix $Q$ needs to be positive semi-definite</li>
     <p>
       If $Q=0$, it would mean certain states are ignored/not important.
     </p>
 
-    If there is a cost to getting to a goal and there is no cost on the controls $R=0$, the solution could simply slam the controls to infinity and get there instantly which would be an ill-posed, infinite solution. It would be an unbounded control solution, i.e. the controls blow up to infinity.
-
+    <li>The control cost matrix $R$ needs to be strictly positive definite</li>
     <p>
-      Only the relative values of Q and R matter. If R is high, any control action will be penalised.
-    </p>
-  </subsubsection>
-</section>
+      If there is a cost to getting to a goal and there is no cost on the controls $R=0$, the solution could simply slam the controls to infinity and get there instantly which would be an ill-posed, infinite solution. It would be an unbounded control solution, i.e. the controls blow up to infinity.      
+    </p>    
+  </ul>
 
-<section id="2"><h1>Constraints</h1>
-  The dynamics varies with time, hence $A,B$ matrices have $k$ subscripts. The problem is time invariant if $A_k=A, B_k=B, Q_k=Q, R_k=R \; \forall k$.
+  Only the relative values of Q and R matter. If R is high, any control action will be penalised.
 </section>
 </chapter>
 

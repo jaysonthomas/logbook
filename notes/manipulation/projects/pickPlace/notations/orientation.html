@@ -10,32 +10,42 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Orientation</h1>
-  There are different ways to numerically represent a relative orientation. There are functions that assist in going back and forth between them.  There's no one representation to rule them all. Different parts of a stack use different representations: 
-  <ul>
-    <li>Rotation matrix</li>
-    <li>Euler angles of which there are many but the familiar ones are roll, pitch, yaw</li>
-    <li>Quaternions</li>
-  </ul>
+<chapter style="counter-reset: chapter 3"><h1>Orientation</h1>
+  <subsubsection><h1>Numerical representation</h1>
+    There are different ways to numerically represent a relative orientation. There are functions that assist in going back and forth between them.  There's no one representation to rule them all. Different parts of a stack use different representations: 
+    <ul>
+      <li>Rotation matrix</li>
+      <li>Euler angles of which there are many but the familiar ones are roll, pitch, yaw</li>
+      <li>Quaternions</li>
+    </ul>
+  </subsubsection>
   
-  No matter what the numerical representation, in spatial algebra an orientation is symbolically represented as $R$. Orientation of $A$ relative to $B$:  
-  $$^BR^A$$ 
+  <subsubsection><h1>Symbolic representation</h1>
+    No matter what the numerical representation, in spatial algebra an orientation is symbolically represented as $R$. Orientation of $A$ relative to $B$:  
+    $$^BR^A$$ 
+
+    <n>Orientations do not need an expressed-in frame</n>. I can turn my head however I want or change the expressed-in frame, but the rotation of $A$ relative to $B$ will still be the same. 
+  </subsubsection>
   
-  For orientations, the multiplication operator is used instead of the addition operator: 
-  $$
-    ^BR^A \cdot {^A}R^C = {^B}R^C
-  $$
+  <subsubsection><h1>Combining rotations</h1>
+    For orientations, the multiplication operator is used instead of the addition operator: 
+    $$
+      ^BR^A \cdot {^A}R^C = {^B}R^C
+    $$
+  </subsubsection>
+  
+  <subsubsection><h1>Inverse</h1>
+    There is a multiplicative inverse for rotations/orientations similar to an additive inverse for addition:
+    $$
+      [^BR^A]^{-1} = {^A}R^B
+    $$ 
 
-  Orientations don't need an expressed-in frame. I can turn my head however I want or change the expressed-in frame, but the rotation of $A$ relative to $B$ will still be the same. There is a multiplicative inverse for rotations/orientations similar to an additive inverse for addition:
-  $$
-    [^BR^A]^{-1} = {^A}R^B
-  $$ 
-
-  If $R$ is a $3 \times 3$ rotation matrix, then:
-  <ul>
-    <li>The inverse is just the matrix inverse</li>
-    <li>Because rotation matrices are orthonormal, the transpose is the same as the inverse</li>
-  </ul>
+    If $R$ is a $3 \times 3$ rotation matrix, then:
+    <ul>
+      <li>The inverse is just the matrix inverse</li>
+      <li>Because rotation matrices are orthonormal, the transpose is the same as the inverse</li>
+    </ul>
+  </subsubsection>
 </chapter>
 
 </body>

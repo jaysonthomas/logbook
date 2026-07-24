@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Recursive definition", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Recursive definition</h1>
+  Consider the linearised discrete time dynamics with the origin shifted to the equilibrium point:
+  $$
+    x_{k+1} \approx A_d \, x_k
+  $$
+  
+  Consider the current state is $x_1$. Then the next state is given as:
+  $$\begin{align*}
+    x_2 &= A_d \, x_1 \\
+      &= A_d (A_d \, x_0) \\
+      &= A_d^2 \, x_0
+  \end{align*}$$
+
+  This can be generalised as:
+  $$
+    x_{k+1} = A_d^k \, x_0
+  $$
+</chapter>
+
+</body>
+</html>

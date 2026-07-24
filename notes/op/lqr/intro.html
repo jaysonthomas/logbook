@@ -12,33 +12,33 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
 <section id="0"><h1>Quadratic</h1>
-  Quadratic refers explicitly to the cost function, i.e. the performance index penalises the states and control inputs quadratically (e.g., $x^T Q x + u^T R u$).  
+  Quadratic refers explicitly to the cost function, i.e. the performance index penalises state deviations and control inputs quadratically (e.g., $x^T Q x + u^T R u$).  
 </section>
 
 <section id="1"><h1>Linear</h1>
-  <i>Linear</i> refers explicitly to the system dynamics. The state-space equations governing the system must be linear (e.g., $\dot{x} = Ax + Bu$). If the system is inherently non-linear, it must first be linearized around an operating point (yielding a Local LQR or iLQR approach) for the standard LQR framework to hold.
+  <i>Linear</i> refers to the system dynamics. The state-space equations governing the system must be <a href="../../control/plants/intro/types/linear.html">linear</a>. If the system is inherently non-linear, it must first be linearised around an operating point (yielding a local LQR or iLQR approach) for the standard LQR framework to hold.
 </section>
 
 <section id="2"><h1>Linear + Quadratic</h1>
-  The reason LQR is strictly tied to linear systems comes down to how the optimal control problem is solved. When a linear differential equation is combined with a quadratic cost function, the math works out beautifully. It guarantees that the value function (the minimum cost-to-go) is also quadratic. Because it is quadratic, differentiating it to find the optimal control input yields a linear feedback control law:
+  Combining a linear differential equation with a quadratic cost function, guarantees a quadratic <i>value function</i> (the minimum cost-to-go). Because the whole cost function (one step + cost-to-go) is quadratic, differentiating it to find the optimal control input yields a linear feedback control law:
   
   $$u = -Kx$$
   
-  Where $K$ is a constant gain matrix computed by solving the Continuous-time Algebraic Riccati Equation (CARE).
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      K &:& \text{Constant gain matrix computed by solving the} \\
+        && \text{Continuous-time Algebraic Riccati Equation (CARE).}
+
+    \end{array}$$
+  </div>
   
-  <p>
-    If the system dynamics were non-linear, the sweet spot of this mathematical harmony breaks down. The optimal control law would no longer be a simple linear gain $K$, and the global optimality guarantees and computational efficiency that make LQR so powerful would be lost.
-  </p>
+  If the system dynamics were non-linear, the optimal control law would no longer be a simple linear gain $K$, and the global optimality guarantees and computational efficiency that make LQR so powerful would be lost.
 
   <a href="https://gemini.google.com/share/919a982e443b">Gemini</a>.
 </section>
 
 <section id="3"><h1>Notes</h1>
-  LQR is applied to trajectory optimisation problems AKA deterministic optimal control problems.
-
-  <p>
-    The only constraints allowed for an LQR problem are those for the dynamics. <a href="../../control/plants/intro/types/linear.html">Linear dynamics</a> is assumed. 
-  </p>
+  <m>LQR is applied to trajectory optimisation problems AKA deterministic optimal control problems</m>.
 </section>
 </chapter>
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("What zero accelerations mean", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>What zero accelerations mean</h1>
+  At the equilibrium point (hover), the second derivatives are all 0, yielding:
+  $$\begin{align*}
+    \frac{u_2}{I_{xx}} &= 0 \\
+    \frac{u_1}{m}sin\phi &= 0 \\
+    g - \frac{u_1}{m}cos\phi &= 0
+  \end{align*}$$
+
+  From the 1st equation:
+  $$
+    u_2 = 0
+  $$
+
+  Squaring and adding equations 2 and 3:
+  $$\begin{align*}
+    \frac{u_1^2}{m^2} (sin^2\phi + cos^2\phi) &= g^2 \\
+    u_1 &= mg
+  \end{align*}$$
+
+  Thus, substituting in equation 3:
+  $$\begin{align*}
+    \frac{mg}{m}cos\phi &= g \\
+    cos\phi &= 1 \\
+    \phi &= 0
+  \end{align*}$$
+
+  To achieve zero accelerations, the moment and roll needs to be 0 and the thrust needs to match the drone's weight.
+</chapter>
+
+</body>
+</html>

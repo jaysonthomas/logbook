@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Joint state publisher gui", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Joint state publisher gui</h1>
+<section id="0"><h1>Overview</h1>
+  <code>robot_description</code> holds the instructions to generate the entire XML content of a robot model. The instructions are obtained by running the <code>xacro</code> command on the urdf.xacro file path.
+</section>
+
+<section id="1"><h1>Debug</h1>
+  In a new terminal, query the running ros2 system:
+  <pre><code class="bash">
+    ros2 param get /robot_state_publisher robot_description
+  </code></pre>
+</section>
+</chapter>
+
+</body>
+</html>

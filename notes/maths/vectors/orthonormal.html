@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Orthonormality", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Orthonormality</h1>
+<section id="0"><h1>Overview</h1>
+  A <i>unit</i> or <i>normalised</i> vector is a vector of length 1. <i>Orthogonal</i> vectors are perpendicular to each other. 
+  
+  <p>
+    A set of vectors form an orthonormal set if all vectors in the set are mutually orthogonal and all of unit length. An orthonormal set which forms a basis is called an <i>orthonormal basis</i>.
+  </p>
+</section>
+
+<section id="1"><h1>Example</h1>
+  Consider a rotation matrix representing a 90° rotation around the $z$-axis:
+
+  $$
+    A = \begin{bmatrix} 
+      0 & -1 & 0 \\ 
+      1 & 0 & 0 \\ 
+      0 & 0 & 1 
+      \end{bmatrix}
+  $$
+
+  Orthonormality checks:
+  <ul>
+    <li>Dot Product of Columns (Orthogonality)</li>
+    Dot product of any two distinct columns is 0. For example, Column 1 $\cdot$ Column 2:
+    $$(0 \times -1) + (1 \times 0) + (0 \times 0) = 0$$
+
+    <p>
+      <li>Magnitude of Columns (Normalisation)</li>
+      The length (Euclidean norm) of every column is 1. For Column 1:
+      $$\sqrt{0^2 + 1^2 + 0^2} = 1$$
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

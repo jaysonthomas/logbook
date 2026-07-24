@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Innovation", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Innovation</h1>
+<section id="0"><h1>Definition</h1>
+  It is the error in the prediction - difference between the actual and the predicted measurement (computed based on the predicted state). <m>Innovation is the error signal that is linearly fedback into an estimator</m>.
+
+  $$\begin{align*}
+    z_k &= y_k - h_k \\
+        &= y_k - C\hat{x}_{k|k-1} \\
+      &= Cx_k + v_k - C\hat{x}_{k|k-1}
+  \end{align*}$$
+
+  $h_k = h(\hat{x}_{k|k-1})$ is the <i>measurement model</i> that takes a state as input and <n>returns the measurement expected to be seen from a perfect sensor for that state</n>. 
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      y &:& \text{Actual measurement} \\ 
+      C &:& \text{Measurement/Output matrix} \\ 
+      v &:& \text{Measurement noise} \\
+      y_k = Cx_k + v_k &:& \text{Measurement equation}
+    \end{array}$$
+  </div>
+
+  A Gaussian stays Gaussian under linear affine transformations (e.g. linear dynamics or linear measurement model) which is what makes the KF derivation work. 
+
+  <p>
+    $A,B,C$ are assumed to be LTI. But, the same applies for the time-varying case.
+  </p>
+</section>
+
+<section id="1"><h1>Innovation Covariance</h1>
+  $$\begin{aligned}
+    S_k &= E[z_k z_k^\top] \\
+    &= E[(Cx_k + v_k - C\hat{x}_{k|k-1})(\cdots)^\top] \\
+    &= C \underbrace{E \left[ (x_k - \hat{x}_{k|k-1})(\dots)^T \right]}_{\Sigma_{k|k-1}} C^T + 
+      \underbrace{E \left[ v_k v_k^T \right]}_{V} \\
+    &= C \Sigma_{k|k-1} C^T + V
+  \end{aligned}$$
+
+  The state $x_k$ and the sensor noise $v_k$ are assumed to be uncorrelated. They can be correlated; for example, IMU readings vary with extreme temperature and can affect state estimation.
+</section>
+
+<section id="2"><h1>Jacobian of the measurement model</h1>
+  For a linear measurement model, the Jacobian is just $C$.
+  $$
+    H_k = h'(\hat{x}_{k|k-1}) = C_k
+  $$
+</section>
+
+</chapter>
+
+</body>
+</html>

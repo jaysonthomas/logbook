@@ -10,7 +10,7 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 1"><h1>Labeling</h1>
+<chapter style="counter-reset: chapter 1"><h1>Labeling</h1>
 <section id="0"><h1>Overview</h1>
   <ul>
     <li>Underbrace</li>
@@ -31,6 +31,16 @@
     Add <code>scripsize</code> to make the text font smaller:
     $$\underbrace{M}_{\scriptsize\substack{\text{t1}\\\text{t2}\\\text{t3}}}$$
   </ul>
+</section>
+
+<section id="1"><h1>Text above arrow</h1>
+  <pre><code class="latex">
+    $$\xrightarrow[\text{world}]{\text{hello}}$$
+  </code></pre>
+
+  <subsubsection><h1>Output</h1>
+    $$\xrightarrow[\text{world}]{\text{hello}}$$  
+  </subsubsection>
 </section>
 </chapter>
 

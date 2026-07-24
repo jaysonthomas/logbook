@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Discrete time", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Discrete time</h1>
+<section id="0"><h1>Setup</h1>
+  Consider a double integrator where acceleration $u$ is being controlled. The continuous system is:
+  $$
+    \ddot{x}(t) = u(t) + w(t)
+  $$
+
+  $w(t)$ is a constant model error. For example, an unmodeled constant bias in acceleration, like gravity or calibration offset.
+</section>
+
+<section id="1"><h1>Discretising</h1>
+  Discretising the system with a control period $\Delta t$, the state-update equations for velocity $v_k$ and position $x_k$ at step $k$ are:
+  
+  $$\begin{align*}
+    v_{k+1} &= v_k + (u_k + w)\Delta t \\
+    x_{k+1} &= x_k + v_k\Delta t + \frac{1}{2}(u_k + w)(\Delta t)^2
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Error accumulation</h1>
+  Assuming zero initial error. Focusing only on the cumulative effect of the constant model error $w$ over $n$ steps. 
+  
+  <p>
+    At each step, a velocity error of $w \Delta t$ is added. After $i$ steps, the velocity error is the linear sum:
+    $$e_{v, i} = i \cdot w \Delta t$$
+  </p>
+
+  Position error at step $n$ is the sum of all past velocity errors, plus the direct acceleration error from the current step. Substituting the above velocity error equation:
+  $$\begin{align*}
+    e_{x, n} &= \sum_{i=1}^{n} e_{v, i-1} \Delta t + n \cdot \frac{1}{2} w (\Delta t)^2 \\
+      &= w(\Delta t)^2 \left[ \sum_{i=1}^{n} (i-1) + \frac{n}{2} \right] \\
+      &= \frac{1}{2} w \cdot n^2 (\Delta t)^2
+  \end{align*}$$
+  
+  $\sum_{i=1}^{n-1} i = \frac{n(n-1)}{2}$
+  
+  <p>
+    If the total elapsed time is $T = n \Delta t$, the accumulated position error becomes:
+    $$
+      e_{x, n} = \frac{1}{2} w T^2
+    $$
+  </p>
+    
+  Because of the $n^2$ dependency, the error at a specific physical time $T$ remains $\frac{1}{2} w T^2$, regardless of how fine the control period is. In an open-loop system, that quadratic growth will quickly run away. This is why double integrators require active feedback control to continuously drain this compounding error before it blows up.
+</section>
+</chapter>
+
+</body>
+</html>

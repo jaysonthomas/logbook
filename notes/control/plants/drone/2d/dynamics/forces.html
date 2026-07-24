@@ -40,17 +40,17 @@
   Vertical:
   $$\begin{align*}
     \ddot{z} &= g - \frac{F_t \cdot cos\phi}{m} \\
-              &= g - \frac{(F_1 + F_2) \cdot cos\phi}{m} \\
-              &= g - \frac{u_1 \cdot cos\phi}{m}
+             &= g - \frac{(F_1 + F_2) \cdot cos\phi}{m}
   \end{align*}$$
 
   Lateral:
-  $$\begin{align*}
-    \ddot{y} &= \frac{(F_1 + F_2) \cdot sin\phi}{m} \\
-              &= \frac{u_1 \cdot sin\phi}{m}
-  \end{align*}$$
+  $$
+    \ddot{y} = \frac{(F_1 + F_2) \cdot sin\phi}{m}
+  $$
+</section>
 
-  $F_t = u_1 = F_1 + F_2$. This is the force that can be controlled. 
+<section id="2"><h1>Note</h1>
+  Forces are vectors. When two forces point in the exact same direction, they add together. If each rotor pushes air downward with 10N of force, the drone experiences a total upward reaction force of 20N. If the total thrust were the average, two rotors producing 10N each would only generate 10N of lift. This would mean adding a second motor gives zero extra lifting power, which isn't the case.
 </section>
 </chapter>
 

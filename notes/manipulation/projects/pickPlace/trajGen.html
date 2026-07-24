@@ -10,32 +10,31 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 0"><h1>Reference trajectory Generation</h1>
+<chapter style="counter-reset: chapter 0"><h1>Reference trajectory Generation</h1>
 <section id="0"><h1>Timing</h1>
-  <ul>
-    <li>Controller feedback loop</li>
-    <p>
-      Total time to complete the task, $t_{total}=$ <i>30s</i>.
+  <subsection><h1>Controller feedback loop</h1>
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        T = 30s &:& \text{Time to complete the task} \\ 
+        t_{controller} = 1ms &:& \text{Decay time} \\
+        T_{s} &:& \text{Sampling period}
+      \end{array}$$
+    </div>
+    <ul>
+      <li>Total , $t_{total}=$ <i>30s</i>.</li>
+    </ul>
+    
       <br>
-      The controller will run at a higher frequency of <i>1kHz</i> ($t_{controller}=$<i>0.001s</i>).
+      The controller will run at a higher frequency of <i>1kHz</i> ($=$<i>0.001s</i>).
       <br>
       Total number of sequential reference trajectory configurations generated: $N=\frac{t_{total}}{t_{controller}}=$ <i>30,000</i>
     </p>
+  </subsection>
 
     The final animation will output a snapshot every $t_{anim}=$<i>0.01s</i> (<i>10ms</i>, <i>100Hz</i>).
     <br>
     The number of segments $k$ per $t_{anim}$ is $\frac{t_{anim}}{t_{controller}}$. This is also the number of motor feedback cycles between snapshots.
     
-    <p>
-      <li>Trajectory segment</li>
-      Ideally, the duration will be:
-      <ul>
-        <li>An integer multiple of $t_{anim}$</li>
-        <li>
-          Not so short as to require unreasonable joint and wheel speeds
-        </li>
-      </ul>
-    </p>
   </ul>
 </section>
 
