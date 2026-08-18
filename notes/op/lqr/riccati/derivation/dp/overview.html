@@ -11,10 +11,10 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Overview</h1>
-  Computation for the discrete-time LQR solved via dynamic programming (the Riccati recursion) starts with a backward pass, from the final time step $N$ and works backwards to time step 0.At each step $k$, this recursion spits out two matrices (or vectors, depending on the state dimension): $P_k$ and $K_k$.
+  Computation for discrete-time LQR solved via DP (the Riccati recursion) starts with a backward pass from the final time step $N$ to time step 0. At each step $k$, this <n>recursion</n> outputs two matrices (or vectors, depending on the state dimension): $P_k$ and $K_k$.
 
   <subsubsection><h1>Intuition</h1>
-    The backward pass can be thought of as a scouting mission traveling backward from the finish line to the starting line:
+    The backward pass can be thought of as a scouting mission traveling backward from the finish to the starting line:
     <ul>
       <li>At step $k+1$</li>
       The scout looks ahead at the remaining track and says, "If we land here, the optimal cost to finish the race from this point onward is characterized by $P_{k+1}$."

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Yaml", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Yaml</h1>
+<section id="0"><h1>Scenario</h1>
+  [Ref: drake/examples/hardware_sim/example_scenarios.yaml] <p></p>
+
+  The top-level key is just a name — a scenario file can define multiple named scenarios. One is picked at load time. Everything under it maps onto a C++ struct called Scenario.
+</section>
+
+<section id="1"><h1>scene_graph_config</h1>
+  Configures Drake's <a href="sceneGraph.html">SceneGraph</a>.
+  
+  <p>
+    <code>default_proximity_properties.compliance_type: "compliant"</code> tells the contact/collision engine to treat contacts as compliant (soft, spring-like) rather than rigid by default — this affects how Drake's hydroelastic contact model behaves.
+  </p>
+</section>
+
+<section id="2"><h1>Directives</h1>
+  This is Drake's <i>model directives</i> — a declarative list of instructions for assembling a MultibodyPlant scene, instead of writing C++ calls to AddModelFromFile etc. Each list item is one instruction.
+
+  <ul>
+    <li>add_model</li>
+    <p>
+      Loads a model file (URDF or SDF) and gives it an instance name. default_joint_positions sets the initial joint angles for that model.
+
+      <p>
+        <code>default_free_body_pose</code> sets the initial pose for a model that's not welded (the bell pepper, free to move/fall). The odd key <code>flush_bottom_center__z_up</code> names a specific anchor/reference frame convention on the pepper body (bottom-center, z-up) rather than its geometric origin.
+      </p>
+    </p>
+
+    <li>add_weld</li>
+    <p>
+      Rigidly fixes a child frame/body to a parent frame/body.
+    </p>
+
+    <li>add_frame</li>
+    <p>
+      Defines a new named coordinate frame. 
+
+      <p>
+        <code>!Rpy { deg: [...] }</code>: A <i>YAML tag</i> (the !Name syntax) tells Drake's parser to deserialize this into a specific drake C++ type, here RollPitchYaw. 
+      </p>
+    </p>
+  </ul>
+</section>
+
+<section id="3"><h1>Model drivers</h1>
+  It decides how a given model instance is actually controlled/driven in the simulation.
+  
+  <p>
+    E.g., !IiwaDriver attaches Drake's simulated Kuka iiwa control interface (position control, LCM command/status channels matching the real robot's API) to the iiwa model. !SchunkWsgDriver does the same for the gripper. This is what lets the same scenario file be used to drive either simulation or real hardware with matching interfaces.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

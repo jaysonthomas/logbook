@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Make gripper frames", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Make gripper frames</h1>
+<section id="0"><h1>Aim</h1>
+  Given $X^{O_{\scriptsize{initial}}}$, $X^{O_{\scriptsize{goal}}}$ and $X^{G_{\scriptsize{initial}}}$, calculates intermediate trajectory keyframes and corresponding timestamps needed to execute the pick-and-place task. 
+  
+  <p>
+    It returns a pair of 2 maps linking a keyframe's name with the corresponding:
+    <ul>
+      <li>Pose</li>
+      <li>Timestamp when the gripper should reach the frame</li>
+    </ul>
+  </p>
+</section>
+
+<section id="1"><h1>Initial & final pick/place poses</h1>
+  $$\begin{align*}
+    \newcommand{\pose}[4]{^{\scriptsize{#2}}\hspace{-#4em}#1^{\scriptsize{#3}}}
+    \pose{X}{}{G_{pick}}{0} &= \pose{X}{}{O_{initial}}{0} \cdot \pose{X}{O}{G_{grasp}}{0.35} \\
+    \pose{X}{}{G_{prepick}}{0} &= \pose{X}{}{G_{pick}}{0} \cdot \pose{X}{G_{grasp}}{G_{pregrasp}}{0.4} \\
+    \pose{X}{}{G_{place}}{0} &= \pose{X}{}{O_{goal}}{0} \cdot \pose{X}{O}{G_{grasp}}{0.35} \\
+    \pose{X}{}{G_{preplace}}{0} &= \pose{X}{}{G_{place}}{0} \cdot \pose{X}{G_{grasp}}{G_{pregrasp}}{0.4} \\
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Clearance pose</h1>
+  $\pose{X}{G_{prepick}}{G_{clearance}}{0}$ is formed based on the angle and axis of rotation obtained from $\pose{X}{G_{prepick}}{G_{preplace}}{0}$. Refer <a href="../../../maths/vectors/rotation/euler.html">Euler's rotation theorem</a>. Half of the angle and translation distance is used. The clearance frame is placed 3 cms higher in the Y direction w.r.t. the prepick frame. 
+
+  $$\begin{align*}
+    \pose{X}{G_{prepick}}{G_{preplace}}{0} &= (\pose{X}{}{G_{prepick}}{0})^{-1} \cdot \; \pose{X}{}{G_{preplace}}{0.4} \\
+    \pose{X}{}{G_{clearance}}{0} &= \pose{X}{}{G_{prepick}}{0} \cdot \pose{X}{G_{prepick}}{G_{clearance}}{0.4}
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

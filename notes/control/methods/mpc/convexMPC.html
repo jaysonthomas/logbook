@@ -12,7 +12,7 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Convex MPC</h1>
 <section id="0"><h1>Problem</h1>
-  From <a href="../../../op/lqr/riccati/derivation/dp/steps.html">DP</a>, if the cost-to-go function $V(x)$ is found, $u$ can be found by solving a one-step problem:
+  From <a href="../../../op/lqr/riccati/derivation/dp/steps.html">DP</a>, if the <a href="../../../op/intro/defs/costToGo.html">cost-to-go</a> function $V(x)$ is found, $u$ can be found by solving a one-step problem:
 
   $$\begin{align*}
     u_k &= arg \min_u \; l(x_k, u_k) + V_{k+1} \bigl(f(x_k, u_k)\bigr) \\
@@ -21,7 +21,7 @@
         (Ax_k + Bu_k)^T P_{k+1} (Ax_k + Bu_k)
   \end{align*}$$
 
-  To this one step problem, constraints can be added on $u$, but this will perform poorly since $V(x)$ is computed without constraints.
+  To this one step problem, constraints can be added on $u$. But this will perform poorly since $V(x)$ is computed without constraints.
 </section>
 
 <section id="1"><h1>Solution</h1>
@@ -49,11 +49,19 @@
 </section>
 
 <section id="2"><h1>Tuning</h1>
-  A good approximation of $V(x)$ is important for good performance.
-  <ul>
-    <li>Better $V(x)$ $\implies$ shorter horizon.</li>
-    <li>Longer $H$ $\implies$ less reliance on $V(x)$.</li>
-  </ul>
+  <subsubsection><h1>Better $V(x)$ implies shorter horizon</h1>
+    In the limit, if the cost-to-go is accurate, then only a one-step problem needs to be solved. A good approximation of V would allow a shorter horizon which would allow faster computation (good performance) to find the solution. 
+    
+    <p>
+      Often, it is hard to get a good value function. Different learning methods can be used to learn one offline and then plugging it into MPC. 
+    </p>
+
+    In MPC, $V$ is at the tail of a horizon. It tries to give some information about the rest of the problem that is not already included in the horizon. 
+  </subsubsection>
+
+  <subsubsection><h1>Longer $H$ implies less reliance on $V(x)$</h1>
+    In the limit, if the horizon is long, it is possible to solve the whole problem without needing any cost to go. The cost-to-go can afford to be a very approximate value in this case.
+  </subsubsection>
 </section>
 </chapter>
 

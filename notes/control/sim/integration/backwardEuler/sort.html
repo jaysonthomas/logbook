@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Sort", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+  <chapter style="counter-reset: chapter 0"><h1>Sort</h1>
+<section id="0"><h1>Sort</h1>
+  To overcome the numerical instability problem within the Forward Euler approach, it is preferable to discretise a state sequence using the Backward Euler method as follows:
+
+  $$
+    \dot{x} \approx \frac{x_{k} - x_{k-1}}{h}
+  $$
+
+  The state model that helps propagate the state forward from the initial condition $x_0$ using some control sequence becomes:
+  $$
+    x_k = \underbrace{(I - hA)^{-1}}_{A_b}x_{k-1} +
+    \underbrace{h(I - hA)^{-1}B}_{B_b}u_k
+  $$
+</section>
+</chapter>
+
+</body>
+</html>

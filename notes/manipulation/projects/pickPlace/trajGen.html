@@ -12,39 +12,32 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Reference trajectory Generation</h1>
 <section id="0"><h1>Timing</h1>
-  <subsection><h1>Controller feedback loop</h1>
+  <subsection id="0.0"><h1>Controller feedback loop</h1>
     <div style="width:0; text-align:left;">
       $$\begin{array}{ccl} 
-        T = 30s &:& \text{Time to complete the task} \\ 
-        t_{controller} = 1ms &:& \text{Decay time} \\
-        T_{s} &:& \text{Sampling period}
+        T &:& \text{Time to complete the task, 30s.} \\ 
+        \Delta{t} &:& \text{Control period runs at a higher frequency of 1kHz, 1ms.} \\
+        N=\frac{T}{\Delta{t}} &:& \text{Number of sequential reference trajectory configurations generated, 30000.}
       \end{array}$$
     </div>
-    <ul>
-      <li>Total , $t_{total}=$ <i>30s</i>.</li>
-    </ul>
-    
-      <br>
-      The controller will run at a higher frequency of <i>1kHz</i> ($=$<i>0.001s</i>).
-      <br>
-      Total number of sequential reference trajectory configurations generated: $N=\frac{t_{total}}{t_{controller}}=$ <i>30,000</i>
-    </p>
   </subsection>
 
-    The final animation will output a snapshot every $t_{anim}=$<i>0.01s</i> (<i>10ms</i>, <i>100Hz</i>).
-    <br>
-    The number of segments $k$ per $t_{anim}$ is $\frac{t_{anim}}{t_{controller}}$. This is also the number of motor feedback cycles between snapshots.
-    
-  </ul>
+  <subsection id="0.1"><h1>Animation</h1>
+    <div style="width:0; text-align:left;">
+      $$\begin{array}{ccl} 
+        \Delta{t_a} &:& \text{Animation snapshot capture period, 100Hz, 10ms.} \\
+        N_a=\frac{\Delta{t_a}}{\Delta{t}} &:& \text{Number of feedback cycles/trajectory segments between snapshots.}
+      \end{array}$$
+    </div>
+  </subsection>
 </section>
 
 <section id="1"><h1>Input</h1>
   <ul>
-    <li>Cube's desired initial and final configurations</li>
-    <li>Ee's desired initial configuration</li>
-    <li>Ee grasp configuration relative to the cube</li>
-    <li>Ee standoff configuration relative to the cube</li>
-    <li>Number of reference configurations per $t_{anim}$, $k$</li>
+    <li>Object's desired <m>initial</m> and final configurations</li>
+    <li>Gripper's <m>desired</m> initial configuration</li>
+    <li>Gripper's grasp and standoff configurations relative to the cube</li>
+    <li>$N_a$</li>
   </ul>
 </section>
 
@@ -56,7 +49,7 @@
   </ul>
 </section>
 
-<section id="3"><h1>Notes</h1>
+<section id="3"><h1>Considerations</h1>
   The reference configurations involving opening/closing the gripper should keep {e} stationary for the duration that the gripper takes to open or close, which is <i>0.625s</i>.
 
   <p>
@@ -65,16 +58,6 @@
     start > initial standoff > initial grasp > grasp
     > initial standoff > final standoff > final grasp > grasp
   </p>
-
-  The feedback controller would be working in the ee or <i>task space</i>.
-</section>
-
-<section id="4"><h1>Generating configurations between waypoints</h1>
-  <i>ScrewTrajectory</i> or <i>CartesianTrajectory</i> method is used to generate configurations between waypoints.
-</section>
-
-<section id="5"><h1>Tests</h1>
-  Use scene 8 to test the function - reads in the csv file and animates it.
 </section>
 </chapter>
 

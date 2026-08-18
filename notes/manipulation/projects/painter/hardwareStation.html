@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Make hardware station", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Make hardware station</h1>
+<section id="0"><h1>Overview</h1>
+  It creates a simulation station with physics, sensors, controllers and visualisation.
+</section>
+
+<section id="1"><h1>Function signature</h1>
+  <subsubsection><h1>Return</h1>
+    RobotDiagram is Drake's wrapper around a Diagram containing a MultibodyPlant, SceneGraph, controllers, sensors, etc.
+  </subsubsection>
+
+  <subsubsection><h1>Arguments</h1>
+    <ul>
+      <li>Scenario</li>
+      <p>
+        Scenario contains all configuration information such as: robot models, controllers, cameras, visualization, LCM buses, plant configuration.
+      </p>
+
+      <li>Meshcat server</li>
+      <li>List of package.xml files.</li>
+      
+      <p>
+        Used so Drake's parser can resolve <code>package://my_robot/...</code> URIs.
+      </p>
+
+      <li>parser_preload_callback</li>
+      
+      <p>
+        Optional callback executed before models are loaded. Useful for adding package paths, registering custom parsers, adding package maps.
+      </p>
+
+      <li>parser_prefinalize_callback</li>
+
+      <p>
+        Called after loading models and before the plant is finalised. Useful for adding joints or modifying the plant.
+      </p>
+
+      <li>prebuild_callback</li>
+
+      <p>
+        Callback executed just before building the diagram. Useful for adding custom systems.
+      </p>
+    </ul>
+  </subsubsection>
+</section>
+
+<section id="2"><h1>Plant</h1>
+  <ul>
+    <li><code>RobotDiagramBuilder</code> internally creates DiagramBuilder, MultibodyPlant and SceneGraph with the specified time step.</li>
+    <li>Configures the plant. Applies options like time step, contact solver, gravity, friction, penetration allowance</li>
+  </ul>  
+</section>
+
+<section id="3"><h1>Load models</h1>
+  <ul>
+    <li>Create parser.</li>
+    <li>Load packages to be able to discover models.</li>
+    <li>Configure parser with the package map.</li>
+    <li>Preload callback. Read directives to figure out what to load. Run the pre finalise callback to allow for further mods.</li>
+  </ul>
+</section>
+
+<section id="4"><h1>Plant finalisation</h1>
+  <ul>
+    <li>Apply driver configs. Some controllers need access before finalising such as joint stiffness control.</li>
+    <li>Add bodies, joints, actuators before finalise. Then lock the topology.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Iiwa painter", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Iiwa painter</h1>
+<section id="0"><h1>Multibody plant</h1>
+  <ul>
+    <li>Initialise diagram builder. Initialise a scene graph and multibody plant and connect them. Add these to the diagram. Set the simulation step to 1ms.</li>
+    <li>Load the IIWA arm model from Drake's package system. Many collision geometries have been removed from the particular model.</li>
+    <li>Remove joint limits on the wrist joint. Useful for painting because the wrist should spin continuously.</li>
+    <li>Finalise the plant.</li>
+  </ul>
+</section>
+
+<section id="1"><h1>Controller plant</h1>
+  <ul>
+    <li>Set it to be continuous.</li>
+    <li>Why a second plant? DiffIK only needs robot kinematics. It does not need collisions, tables, clutter, visualization etc. Using a separate plant is cheaper.</li>
+    <li>Create another parser. Load the Iiwa model again. Now there are two robot models: simulation robot, controller robot</li>
+    <li>Finalise.</li>
+    <li>Add the plant to the diagram.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Meshcat visualiser</h1>
+  <ul>
+    <li>Creates a visualizer. It listens to SceneGraph and sends geometry updates to Meshcat. Whenever the plant moves, Meshcat updates automatically.</li>
+  </ul>
+</section>
+
+<section id="3"><h1>Diff IK</h1>
+  <subsubsection><h1>Parameters</h1>
+    Holds velocity and joint limits, gains for DiffIK. Number of joints/velocities is 7.
+  </subsubsection>
+
+  <subsubsection><h1>Use</h1>
+    <code>DifferentialInverseKinematicsIntegrator</code> creates the controller. It continuously solves:
+    $$
+      J(q) \dot{q} = V_d
+    $$
+    It integrates $\dot{q}$ to produce joint positions $q$.
+  </subsubsection>
+
+  <subsubsection><h1>IO</h1>
+    Inputs: robot model (controller plant), Ee frame, controller timestep and params.
+
+    <p>
+      Expose the controller's joint-position output as the diagram's "iiwa.position" interface. Expose the plant's full state so other systems can access it.
+    </p>
+
+    Connect the plant's state output port to the controller's 'robot state' input port. DiffIK needs the current robot state.
+</section>
+
+<section id="4"><h1>Pose trajectory source</h1>
+  <ul>
+    <li>Generates end-effector pose as a function of time.</li>
+    <li>Connect the output port of Traj generator to the 'desired pose' input port of diff IK.</li>
+    <li>If no trajectory is provided, all joint positions are set to 0.</li>
+  </ul>
+</section>
+
+<section id="5"><h1>Gripper</h1>
+  <ul>
+    <li>Using a constant vector source, set the grippers position to or open the gripper by 10cm.</li>
+    <li>Expose the gripper's position output port.</li>
+  </ul>
+</section>
+
+<section id="6"><h1>Diagram build</h1>
+  <ul>
+    <li>Build the complete system.</li>
+    <li>Name the diagram, which is useful for debugging.</li>
+    <li>Get pointers to the gripper (body) frame and the world frame. Useful for pose computations.</li>
+    <li>Create the default context, i.e. the initial simulation state. It stores joint positions, velocities, time, parameters.</li>
+    <li>Publish the current geometry to Meshcat.</li>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

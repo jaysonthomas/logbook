@@ -12,10 +12,14 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>SceneGraph</h1>
 <section id="0"><h1>Overview</h1>
-  <code>class 'pydrake.geometry.SceneGraph'</code>.
+  The <i>scenegraph</i> defines relationships between 3D objects and each of their spatial properties.
 
   <p>
-    The <i>scenegraph</i> defines relationships between 3D objects and each of their spatial properties.
+    It tracks geometry, collision, and proximity queries. It interacts with the:
+    <ul>
+      <li>Physics engine for collision detection</li>
+      <li>Rendering engine for visualisation</li>
+    </ul>
   </p>
 </section>
 
@@ -31,14 +35,6 @@
     </p>
   </ul>
 </section>
-
-  <p>
-    The scene graph interacts with other components of a simulation, such as the 
-    <ul>
-      <li>Physics engine for collision detection</li>
-      <li>Rendering engine for visualisation.</li>
-    </ul>
-  </p>
 
 <section id="2"><h1>Relationship between Plant and Scenegraph</h1>
   <figure2>

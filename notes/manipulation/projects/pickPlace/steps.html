@@ -40,6 +40,45 @@
 
   To avoid singularities, the Jacobian needs to be invertible. Else, it needs to be addressed with more sophisticated methods. Intuitively, to get the smoothness in joint position transitions from one time instant to the next, the derivative of the kinematics (jacobian is approximately the derivative of FK) is used to design controllers.
 </section>
+
+<section id="2"><h1>Overall steps</h1>
+  <div class="container">
+    <figure>
+      <img style="height:160px; width:auto"
+      src="../../../../figures/projects/3_pickPlace.png"/>
+      <figcaption>
+        Current state of the project. The physics engine in Coppelia is used just to simulate the motion for visualisation for $\Delta{t}$s between configurations read from the csv file. There is no feedback from Coppelia into the controller.
+      </figcaption>
+    </figure>
+  </div>
+
+  Generate a reference trajectory. The program then loops through the $N$ reference configurations, $N-1$ times. For the $i^{th}$ iteration, the controller uses $X_{d,i}$ and $X_{d,i+1}$ to calculate the feedforward twist $V_{d}$.
+
+  <p>
+    Each time through the loop:
+    <ul>
+      <li>Using feedback control, find the wheel and joint speeds (controls)</li>
+      <li>
+        Find the next configuration by passing the controls, current
+        configuration and the timestep to the simulation.
+      </li>
+      <li>Store every $k^{th}$ configuration for later animation.</li>
+      <li>Store every $k^{th}$ $X_{err}$ to plot the evolution of the error over time.</li>
+    </ul>
+  </p>
+  <p>
+    After the loop, write the $\frac{N}{k}$ configurations to a csv file.
+  </p>
+
+  <p>
+    The initial and final configurations of the cube is given. Initial reference configuration of the ee is also
+    given. Choose an initial configuration of the youBot so that the end-effector has at 
+    least 30 degrees of orientation error and 0.2 m of position error. The controller will need to be designed
+    in such a way so as to drive all initial error to zero by the end of the first trajectory segment; otherwise, 
+    your grasp operation may fail.
+  </p>
+</section>
+
 </chapter>
 
 </body>

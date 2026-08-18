@@ -12,7 +12,7 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
 <section id="0"><h1>Quadratic</h1>
-  Quadratic refers explicitly to the cost function, i.e. the performance index penalises state deviations and control inputs quadratically (e.g., $x^T Q x + u^T R u$).  
+  Quadratic refers to the cost function, i.e. the performance index penalises state deviations and control inputs quadratically (e.g., $x^T Q x + u^T R u$).  
 </section>
 
 <section id="1"><h1>Linear</h1>
@@ -20,7 +20,7 @@
 </section>
 
 <section id="2"><h1>Linear + Quadratic</h1>
-  Combining a linear differential equation with a quadratic cost function, guarantees a quadratic <i>value function</i> (the minimum cost-to-go). Because the whole cost function (one step + cost-to-go) is quadratic, differentiating it to find the optimal control input yields a linear feedback control law:
+  Combining a linear differential equation with a quadratic cost function, guarantees a quadratic <i><a href="../intro/defs/costToGo.html">value function</a></i>. Because the whole cost function (one step + cost-to-go) is quadratic, differentiating it to find the optimal control input yields a linear feedback control law:
   
   $$u = -Kx$$
   

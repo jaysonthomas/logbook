@@ -11,14 +11,24 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 1"><h1>Robot state publisher</h1>
-  The robot_state_publisher calculates and broadcasts 3D poses of all the links of a robot. It takes two inputs:
-
+<section id="0"><h1>Inputs</h1>
   <ul>
-    <li>URDF via <code>robot_description</code>: This tells the node the static relationship (e.g., "The hand is 0.5 meters from the elbow").</li>
-    <li>Joint States: It listens to <code>/joint_states</code> that provides the dynamic angles (e.g., "The elbow is currently bent at 45 degrees").</li>
+    <li>It <n>reads</n> the robot's kinematics from the <code>robot_description</code> parameter (URDF).</li>
+
+    <p>
+      The kinematics informs about the static relationship of links. E.g., the hand is 0.5 meters from the elbow.
+    </p>
+
+    <li>It <n>listens</n> to <code>/joint_states</code> that provides the dynamic angles.</li>
+    <p>
+      E.g., the elbow is currently bent at 45 degrees.
+    </p>
   </ul>
-  
-  By combining these two, it calculates the position of every single part of the robot relative to the base and broadcasts them as TF transforms to <code>/tf, /tf_static</code>. It doesn't know about gravity, friction, mass, or torque. It is purely kinematic.
+</section>
+
+<section id="1"><h1>Use</h1>
+  It runs the FK equations using the inputs to calculate the pose of each link relative to the base. It then broadcasts them as frame transformations to <code>/tf, /tf_static</code> topics. It doesn't know about gravity, friction, mass, or torque. It is purely kinematic.
+</section>
 </chapter>
 
 </body>

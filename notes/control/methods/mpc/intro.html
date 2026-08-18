@@ -12,13 +12,13 @@
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
 <section id="0"><h1>Overview</h1>
-  LQR is not able to reason about constraints on a system such as actuator limits or safety constraints [<a href="../../../op/lqr/riccati/drawbacks.html">Ref</a>]. 
+  LQR is not able to reason about constraints on a system such as actuator limits or safety constraints [<a href="../../../op/lqr/riccati/drawbacks.html">Ref</a>]. However, it is still possible to solve the QP (with linear inequalities for e.g.) that LQR is built on even if it is then no longer an LQR problem.
 
   <p>
-     However, it is still possible to solve the QP (with linear inequalities for e.g.) that LQR is built on even if it then no longer is an LQR problem. Convex MPC uses the LQR framework whilst also handling constraints.
+    Convex MPC uses the LQR framework whilst also handling constraints. It can be thought of as constrained LQR.
   </p>
 
-  Also called <i>Receeding horizon control</i>. MPC can be thought of as constrained LQR.
+  Also called <i>Receeding horizon control</i>.
 </section>
 </chapter>
 

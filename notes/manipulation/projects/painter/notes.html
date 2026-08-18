@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Notes", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Notes</h1>
+<subsubsection><h1>Loading a model twice</h1>
+  the controller's MultibodyPlant and the simulation's MultibodyPlant are completely independent systems. 
+
+  <p>
+    The controller's plant maintains its own context, updating it from the measured robot state every control cycle. It should not depend on the simulator's internal context.
+  </p>
+</subsubsection>
+</chapter>
+
+</body>
+</html>
