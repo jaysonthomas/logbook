@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Actions", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Actions</h1>
+<section id="0"><h1>Overview</h1>
+  A phone call for a task that takes a while. For long-running, preemptible tasks with feedback.
+
+  <p>
+    Mental model: ordering food delivery. You place one order (goal), you get progress pings (feedback) while it's cooking, and eventually one final result. You can also cancel it mid-way.
+  </p>
+</section>
+
+<section id="1"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 run ros2_fundamentals_cpp fibonacci_action_server_node
+    
+    # in another terminal — watch the feedback stream in live
+    ros2 action send_goal /fibonacci ros2_fundamentals_cpp/action/Fibonacci "{order: 8}" --feedback
+  </code></pre>
+
+  Typing Ctrl+C halfway through cancels the goal. 'Goal canceled' will be logged in the server's log. That cancel behavior is the thing services can't do.
+</section>
+
+<section id="2"><h1>Fundamentals</h1>
+  implementing action servers/clients, handling goal acceptance/rejection, cancellation, and feedback streaming — common in navigation (Nav2) and MoveIt-based manipulation.
+</section>
+</chapter>
+
+</body>
+</html>

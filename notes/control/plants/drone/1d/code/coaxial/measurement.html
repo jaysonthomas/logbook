@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Measurement update", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Measurement update</h1>
+<section id="0"><h1>Measurement</h1>
+  Random gaussian noise is added to the true state, to get the measured state. Only the altitude is measured.
+  $$\begin{align*}
+    y_{z_k} &= x_{z_k} + v_k \\
+    v_k &\sim \mathcal{N}(0, \sigma^2) \\
+    \sigma &= 0.01
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Measurement model</h1>
+  $$\begin{align*}
+    h_k &= C_k\hat{x}_{k|k-1} \\
+      &= \begin{bmatrix} 0 & 1\end{bmatrix} 
+        \begin{bmatrix} \dot{z} \\ z\end{bmatrix}_{k|k-1} \\
+    H_k &= h' = C_k
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Updates</h1>
+  Innovation
+  $$\begin{align*}
+    z_k &= y_k - h_k \\
+    S_k &= H_k \Sigma_{k|k-1} H_k^T + V    
+  \end{align*}$$  
+
+  Kalman gain
+  $$
+    L_k = \Sigma_{k|k-1} H^\top S_k^{-1}
+  $$
+
+  State
+  $$\begin{align*}
+    \hat{x}_{k|k} &= \hat{x}_{k|k-1} + L_k \, z_k \\
+    \Sigma_{k|k} &= (I - L_kH_k) \Sigma_{k|k-1} (I - L_kC)^\top + L_k V L_k^\top
+  \end{align*}$$   
+</section>
+</chapter>
+
+</body>
+</html>

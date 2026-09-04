@@ -47,7 +47,7 @@
 <section id="2"><h1>Rviz configuration</h1>
 
 <section id="3"><h1>Display launch</h1>
-  This launch file just displays the URDF. It's a .xml file.
+  The launch file displays the URDF. <code>description/launch/display.launch.xml</code>.
   <ul>
     <li>Set urdf and rviz config paths.</li>
     <li>Start the first node (robot_state_publisher). Provide the urdf to it.</li>
@@ -57,7 +57,7 @@
 </section>
 
 <section id="4"><h1>Configure ros2_control URDF</h1>
-  Within a new .xacro file, specify the:
+  Within a new .xacro file <code>description/urdf/ros2_control.xacro</code>, specify the:
   <ul>
     <li>Type and name of the ros2_control module.</li>
     <li>Joints to be controlled. The types of:
@@ -72,12 +72,13 @@
 </section>
 
 <section id="5"><h1>Configure controller</h1>
+  <code>bringup/config/controllers.yaml</code>
   <ul>
     <li>Create a package called bringup.</li>
     <li>Inside a yaml file, configure the controller manager node:</li>
       <ul>
         <li>Update rate</li>
-        <li>Choose controllers</li>
+        <li>Choice of controllers</li>
       </ul>
   </ul>
 </section>

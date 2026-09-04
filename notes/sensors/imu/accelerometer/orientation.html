@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Orientation inference", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Orientation inference</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/uuvIt">AN3461.pdf</a>] <p></p>
+
+  <ul>
+    <li>Choosing the sequence roll, then pitch, then yaw Eqs 6 to 8</li>
+    <li>Normalising each accelerometer reading so that the direction of the resultant unit vector (within a unit sphere) can be found more easily.</li>
+  </ul>
+
+  <div class="img-container">
+    <figure>
+      <img style="height:140px; width:auto"
+      src="../../../../figures/sensor/1_imuBodyFrame.png"/>
+    </figure>
+  </div>
+
+  Equations:
+  $$\begin{align*}
+    tan \,\phi_{xyz} &= \frac{a_y}{a_z} \\
+    tan \,\theta_{xyz} &= \frac{-a_x}{a_y \, sin\,\phi + a_z \, cos\,\phi} \\
+                     &= \frac{-a_x}{\sqrt{a_y^2 + a_z^2}} \\
+  \end{align*}$$
+</section>
+</chapter>
+
+</body>
+</html>

@@ -11,15 +11,24 @@
 
 <body onload="loadChapter('');">
 <chapter style="counter-reset: chapter 0"><h1>Plant</h1>
-  Finalize locks the model. After this, 
+<section id="0"><h1>Overview</h1>
+  MultibodyPlant contains the entire multibody world: every rigid/articulated body in the simulation, robots and objects alike, all living in one shared tree of bodies/joints/frames, with one shared SceneGraph for geometry.
 
-no more bodies
-no more joints
-no more actuators
+  <p>
+    Each model, added to a plant, gets its own ModelInstanceIndex, but they all share:
+    <ul>
+      <li>one continuous/discrete state vector for the whole plant</li>
+      <li>one SceneGraph for collision/visual geometry</li>
+      <li>one coordinate/frame tree, with cross-body relationships (e.g. contact between the iiwa's gripper and the brick) handled natively</li>
+    </ul>
+  </p>
 
-can be added.
+  Finalize locks the model. After this, no more bodies or joints or actuators can be added.Finalization computes internal data structures.
 
-Finalization computes internal data structures.
+  <p>
+    Use <code>plant.GetModelInstanceByName("iiwa")</code> for example, to get the ModelInstanceIndex.
+  </p>
+</section>
 </chapter>
 
 </body>

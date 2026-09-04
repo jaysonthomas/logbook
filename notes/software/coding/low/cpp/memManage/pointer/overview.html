@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Overview</h1>
+  Smart pointers are <n>classes wrapped around raw pointers</n>. When a smart pointer goes out of scope, the memory to which it points is automatically deallocated. By overloading the <code>-></code> and <code>*</code> operators, it is possible to use smart pointers with the same syntax as raw pointers. The technique of wrapping a management class around a resource that smart pointers build on is called <i>RAII</i>. 
+
+  <p>
+    With smart pointers, resource acquisition occurs at the same time that the object is initialised. In modern C++, raw pointers managed with new and delete should only be used in small blocks of code with limited scope, where performance is critical (such as with placement new) and ownership rights of the memory resource are clear.
+  </p>
+
+  A smart pointer is a class template that is declared on the stack. During its initialisation, the raw pointer within it, gets allocated the necessary heap memory. This memory gets deleted as soon as the smart pointer goes out of scope. Smart pointers need to be declared on the stack, else the scoping mechanism would not work.
+
+  <p>
+    The destructor of a smart pointer contains a call to <code>delete</code>, and because a smart pointer is declared on the stack, its destructor is invoked as soon as it goes out of scope, even if an <n>exception is thrown</n>.
+  </p>
+</chapter>
+
+</body>
+</html>

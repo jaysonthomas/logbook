@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Talker", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Talker</h1>
+<section id="0"><h1>Constructor</h1>
+  <pre><code class="c++">
+    Talker::Talker(const rclcpp::NodeOptions &options) : Node("talker", options)
+  </code></pre>
+  The constructor takes NodeOptions (settings like remapping rules, whether to use intra-process comms, parameter overrides, etc.) and immediately passes them up to the base class rclcpp::Node, naming this node "talker". Every ROS2 node class inherits from Node.
+</section>
+
+<section id="1"><h1>Publisher creation</h1>
+  <pre><code class="c++">
+    publisher_ = this->create_publisher<std_msgs::msg::String>("chatter", 10);
+  </code></pre>
+  Creates a publisher that will send std_msgs::msg::String messages on the topic "chatter". The 10 is the QoS queue depth — how many outgoing messages to buffer if the subscriber(s) can't keep up. The publisher object is stored in the publisher_ member variable so on_timer() can use it later.
+
+  <subsection id="1.0"><h1>Publisher rate</h1>
+    <pre><code class="c++">
+      double rate_hz = this->declare_parameter<double>("publish_rate_hz", 1.0);
+    </code></pre>
+    This declares a ROS2 parameter called publish_rate_hz, with a default value of 1.0. "Declaring" a parameter is what makes it visible to ros2 param list, settable via a YAML config file, a --ros-args -p publish_rate_hz:=5.0 CLI flag, or a live ros2 param set call. The returned value (either the default or whatever override was supplied) gets stored in the local variable rate_hz.
+  </subsection>
+</section>
+
+<section id="2"><h1>Component registration</h1>
+  <pre><code class="c++">
+    RCLCPP_COMPONENTS_REGISTER_NODE(ros2_fundamentals_cpp::Talker)
+  </code></pre>
+
+  The namespace closes, then this macro registers Talker as a loadable ROS2 component. This means the node doesn't strictly need its own standalone main()/executable — it can instead be dynamically loaded at runtime into a "component container" process alongside other nodes (useful for intra-process communication and reducing per-node overhead). 
+</section>
+</chapter>
+
+</body>
+</html>

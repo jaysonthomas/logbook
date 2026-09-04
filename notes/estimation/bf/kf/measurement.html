@@ -42,14 +42,14 @@
 
   <div style="width:0; text-align:left;">
     $$\begin{array}{ccl} 
-      V = E\left[v_k v_k^T \right] &:& \text{Measurement noise}
+      V = E\left[v_k v_k^T \right] &:& \text{Measurement noise covariance}
     \end{array}$$
   </div>
 
   This form of covariance update is called the <i>Joseph form</i>. The updated covariance</a> $\Sigma_{k|k}$ is a function of $L$ and is a convex quadratic equation.
 
   <subsection id="1.0"><h1>Numerical precision</h1>
-    The Joseph form is good in terms of numerical precision w.r.t. floating point numbers on a computer because it's symmetric. This form is guaranteed to give a symmetric positive semidefinite matrix by construction.
+    The Joseph form is good in terms of numerical precision w.r.t. floating point numbers on a computer because it is guaranteed to give a symmetric positive semidefinite matrix by construction.
     
     <p>
       Covariances have to be at least positive semidefinite. 

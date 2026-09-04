@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Constructor", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Constructor</h1>
+  [<a href="../../jlib/cppExamples/fundamentals/6_constructors.cpp">Ref</a>]
+  <br>
+  Constructors are member functions of a class or struct that initialise/construct/build an object. All classes come with a default constructor which takes no arguments. But we can also define our own constructors so that there might be multiple different ways to instantiate an object of the class. 
+  
+  <p>
+    Typically a constructor:
+    <ul>
+      <li>Initialises data members</li>
+      <li>Establishes an invariant</li>
+      <li>Acquires resources needed for an object to be used</li>
+      (which are then typically released by a destructor)
+    </ul>
+  </p>
+</chapter>
+
+</body>
+</html>

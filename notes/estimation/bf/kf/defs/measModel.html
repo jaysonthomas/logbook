@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Measurement model", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Measurement model</h1>
+<section id="0"><h1>Definition</h1>
+  A <i>measurement model</i> takes a state as input and <n>returns the measurement expected to be seen from a perfect sensor for that state</n>.
+
+  $$\begin{align*}
+    h_k &= h(\hat{x}_{k|k-1}) \\
+        &= C\hat{x}_{k|k-1}
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      C &:& \text{Measurement/Output matrix} \\ 
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Jacobian of the measurement model</h1>
+  It aims to answer the question, how sensitive is the measurement prediction to errors in the current-state prediction $\hat{x}_{k|k-1}$.
+
+  $$
+    H_k = h'(\hat{x}_{k|k-1}) = C_k
+  $$
+  For a linear measurement model, the Jacobian is just $C$.
+</section>
+</chapter>
+
+</body>
+</html>

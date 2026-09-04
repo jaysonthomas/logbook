@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Topics", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Topics</h1>
+<section id="0"><h1>Overview</h1>
+  One-way broadcasting like a radio station. A node broadcasts on a specific topic (frequency); anyone tuned in hears it. No handshake, no reply expected.This is used for streaming data. Defined by a message type (.msg).
+</section>
+
+<section id="1"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 topic echo /chatter  # Snoop messages
+    ros2 topic list
+    ros2 topic hz /chatter    # Check frequency
+  </code></pre>
+</section>
+
+<section id="2"><h1>Fundamentals</h1>
+  Choosing appropriate QoS (Quality of Service) profiles (reliability, durability, history depth) — this is one of the most common real-world pain points, especially matching publisher/subscriber QoS or bridging sensor data (best-effort) with control commands (reliable).
+</section>
+</chapter>
+
+</body>
+</html>

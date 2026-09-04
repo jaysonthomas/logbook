@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Controller", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Controller</h1>
+<section id="0"><h1>Overview</h1>
+  $z$ is used to denote the innovation. But, here it represents the altitude. <p></p>
+  Error terms:
+  $$\begin{align*}
+    e &= z_d - \hat{z} \\
+    \dot{e} &= \dot{z}_d - \dot{z} \\
+    e_i &= e_i + (e \cdot \Delta{t})
+  \end{align*}$$
+
+  PID terms:
+  $$\begin{align*}
+    P &= k_p \cdot e \\
+    D &= k_d \cdot \dot{e} \\
+    I &= k_i \cdot e_i
+  \end{align*}$$
+
+  New torque demand:
+  $$
+    u = P + I + D + \ddot{z}_d
+  $$
+</section>
+
+</chapter>
+
+</body>
+</html>

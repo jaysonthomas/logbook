@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Inheritance", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Inheritance</h1>
+  The basic idea is to build on top of something else in a hierarchical structure preventing from having to re-define all of the common member variables.
+  
+  <p>
+    Example: An apple class can be made the child of a fruit class. Apples have their own varieties, but they also inherit members from the parent fruit class like seeds. Going further, the fruit class might be a child of the plant class and might inherit some members from the plant class like mass. The plant class has a mass, so its child, the fruit class inherits this mass member, and therefore, the apple class which is the child of the fruit class also inherits the mass member from the plant class, through the fruit class, to the apple class.   
+  </p>
+</chapter>
+
+</body>
+</html>

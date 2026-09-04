@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Setup</h1>
+<section id="0"><h1>Aim</h1>
+  The aim is to control a drone in 2D which is constrained in the vertical direction, thus $z=const$. It can only move in the horizontal direction by changing the roll angle. 
+</section>
+
+<section id="1"><h1>State</h1>
+  $$
+    x = \begin{bmatrix}\phi \\ \dot{y} \\ y \end{bmatrix}
+  $$
+</section>
+
+<section id="2"><h1>Control input</h1>
+  The control input for the drone is simplified to be the roll angle $\phi$. 
+</section>
+</chapter>
+
+</body>
+</html>

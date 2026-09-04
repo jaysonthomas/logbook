@@ -16,12 +16,10 @@
 
   <div class="img-container">
     <figure>
-      <img style="height:130px; width:auto"
+      <img style="height:80px; width:auto"
       src="../../../../../../figures/dynamics/drone/coaxial.png"/>
     </figure>
   </div>
-
-  Since the second rotor rotates CCW, $\omega_2 = -|\omega_2|$. 
 </section>
 
 <section id="1"><h1>Linear acceleration</h1>
@@ -36,17 +34,17 @@
 <section id="2"><h1>Angular acceleration</h1>
   $$\begin{align*}
     \ddot{\psi} &= \frac{M_{z}}{I_z} \\
-      &= \frac{k_m}{I_z}(\omega_1^2 - \omega_2^2)
+      &= \frac{k_m}{I_z}(\omega_2^2 - \omega_1^2)
   \end{align*}$$
 
-  The body of the vehicle experiences angular acceleration in the CCW direction if rotor 1 spins faster than rotor 2. The body and the propeller spin in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_2^2$ is given a negative sign because only the reaction torque is considered since that's the torque that produces motion.
+  The body of the vehicle experiences angular acceleration in the CCW direction if rotor 1 spins faster than rotor 2. The body and the propeller spin in opposite directions to each other. Both $\ddot{z}$ and $\ddot\psi$ are along the z axis. $\omega_1^2$ is given a negative sign because only the reaction torque is considered since that's the torque that produces motion.
 </section>
 
 <section id="3"><h1>Computing angular velocity</h1>
   $$\begin{align*}
     \omega_1^2 + \omega_2^2 &= \frac{m}{k_f} \cdot (g - \ddot{z}) \\\\
-    \omega_1^2 - \omega_2^2 &= \frac{I_z}{k_m} \cdot \ddot{\psi} \\   
-    |\omega_1| &= \sqrt{\frac{\frac{I_z}{k_m} \cdot \ddot{\psi} + \frac{m}{k_f} \cdot (g - \ddot{z})}{2}}
+    -\omega_1^2 + \omega_2^2 &= \frac{I_z}{k_m} \cdot \ddot{\psi} \\   
+    |\omega_2| &= \sqrt{\frac{\frac{I_z}{k_m} \cdot \ddot{\psi} + \frac{m}{k_f} \cdot (g - \ddot{z})}{2}}
   \end{align*}$$
 </section>
 </chapter>

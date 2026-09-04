@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Transferring ownership", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Transferring ownership</h1>
+<section id="0"><h1>Overview</h1>
+  When and when not to use smart pointers and how to properly pass them between functions. The following list contains all the variations (omitting const) of passing an object to a function.
+</section>
+
+<section id="1"><h1>The preferred way</h1>
+  <pre><code class="c++">
+    void f( object* );              // a
+    void f( object& );              // b
+  </code></pre>
+  The preferred way to pass object parameters is by using a or b. In doing so, we do not have to worry about the lifetime policy a caller might have implemented. Using a specific smart pointer in a case where we only want to observe an object or manipulate a member might be overly restrictive.
+
+  <p>
+    With the non-owning raw pointer * or the reference & we can observe an object from which we can assume that its lifetime will exceed the lifetime of the function parameter. <n>In concurrency however, this might not be the case</n>, but for linear code we can safely assume this.
+  </p>
+  To decide wether a * or & is more appropriate, you should think about wether you need to express that there is no object. This can only be done with pointers by passing e.g. nullptr. In most other cases, you should use a reference instead.    
+</section>
+
+<section id="2"><h1>The object sink</h1>
+  <pre><code class="c++">
+    void f( unique_ptr&ltobject&gt );   // c
+  </code></pre>
+  The preferred way of passing an object to a function so that the function takes ownership of the object (or consumes it) is by using method c.
+
+  <p>
+    A unique pointer is being passed by value from caller to function, which then takes ownership of the the pointer and the underlying object. This is only possible using move semantics as there can only be a single reference to an object managed by a unique pointer.
+  </p>
+
+  After the object has been passed in this way, the caller will have an invalid unique pointer. The function to which the object now belongs may <n>destroy it</n> or move it somewhere else. Using const with this particular call does not make sense as it models an ownership transfer so the source will be definitely modified.
+</section>
+
+<section id="3"><h1>Modifying a unique pointer</h1>
+  <pre><code class="c++">
+    void f( unique_ptr&ltobject&gt& );  // d
+  </code></pre>
+  
+  This allows a function to modify a unique pointer (not necessarily the underlying object) and re-use it in the context of the caller. 
+
+  <p>
+    Using this call structure, the function states that it might modify the smart pointer, e.g. by redirecting it to another object. <m>It is not recommended to use it for accepting an object only because we should avoid restricting ourselves unnecessarily to a particular object lifetime strategy on the caller side</m>.
+  </p>
+
+  Using const with this call structure is not recommended as we would not be able to modify the unique_ptr in this case. 
+</section>
+
+<section id="4"><h1>Sharing object ownership</h1>
+  <pre><code class="c++">
+    void f( shared_ptr&ltobject&gt );   // e
+  </code></pre>
+  
+  This allows storing and sharing ownership of an object on the heap.
+
+  <p>
+    <n>A copy is made of the shared pointer passed to the function</n>. In doing so, the internal reference counter within all shared pointers referring to the same heap object is incremented by one. This strategy can be recommended for cases where the function needs to retain a copy of the shared_ptr and thus share ownership of the object. This is of interest when we need access to smart pointer functions such as the reference count or we must make sure that the object to which the shared pointer refers is not prematurely deallocated (<n>which might happen in concurrent programming</n>).
+  </p>
+
+  <m>If the local scope of the function is not the final destination, a shared pointer can also be moved, which does not increase the reference count and is thus more effective</m>.
+
+  <p>
+    A disadvantage of using a shared_ptr as a function argument is that the function will be limited to using only objects that are managed by shared pointers - which limits flexibility and reusability of the code.
+  </p>
+</section>
+
+<section id="5"><h1>Modifying a shared pointer</h1>
+  <pre><code class="c++">
+    void f( shared_ptr&ltobject&gt& );  // f
+  </code></pre>
+  
+  As with unique pointers, the need to modify shared pointers and re-use them in the context of the caller might arise. 
+
+  <p>
+    This particular way of passing a shared pointer expresses that the function will modify the pointer itself. As with method e, we will be limiting the usability of the function to cases where the object is managed by a shared_ptr and nothing else.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

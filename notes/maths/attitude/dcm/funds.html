@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Fundamentals", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Fundamentals</h1>
+<section id="0"><h1>Rotation</h1>
+  $$\begin{align*}
+    \begin{bmatrix} x_{W,1}^B \\ x_{W,2}^B \\ x_{W,3}^B \end{bmatrix} &= 
+    \begin{bmatrix} w_{B,1}^{W^\top}  \\ w_{B,2}^{W^\top} \\ w_{B,3}^{W^\top} \end{bmatrix}
+    \begin{bmatrix} x_{B,1}^B \\ x_{B,2}^B \\ x_{B,3}^B \end{bmatrix} \\
+
+    &= \begin{bmatrix} b_{W,1}^B  & b_{W,2}^B & b_{W,3}^B \end{bmatrix}
+    \begin{bmatrix} x_{B,1}^B \\ x_{B,2}^B \\ x_{B,3}^B \end{bmatrix}
+
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      w^W_B &:& \text{Basis vectors of the world frame expressed in the body frame} \\ 
+      b^B_W &:& \text{Basis vectors of the body frame expressed in the world frame}
+    \end{array}$$
+  </div>
+
+  The rows of the matrix in between ($Q$) represents the basis vectors of the output frame expressed in the coordinates of the input frame to facilitate the mapping from the input to the output frame. The columns of the matrix in between represents the basis vectors of the input frame expressed in the coordinates of the output frame.
+</section>
+
+<section id="1"><h1>Properties of $Q$</h1>
+  [<a href="../../lieSpace/groups/SO3.html">SO(3)</a>]
+  $$
+    Q \in SO(3)
+  $$
+  <subsection id="1.0"><h1>Orthogonal</h1>
+    A matrix is orthogonal if its column vectors are orthogonal to each other. It would satisfy the following condition.
+    $$
+      Q^\top Q = I
+    $$
+    
+    The basis vectors are unit norm. The diagonal elements of the above dot product consists of the basis vectors dotted into themseleves. Hence, the diagonal terms are 1.
+
+    <p>
+      The basis vectors are also orthogonal to each other. So, non-diagonal terms consist of the basis vectors dotting with each other leading to 0s.
+    </p>
+
+    The definition of the inverse of a matrix is:
+    $$
+      Q^{-1} Q = I
+    $$
+
+    If the transpose property above is true, then:
+    $$
+      Q^{-1} = Q^\top
+    $$
+    This is another way of defining an orhtogonal matrix.
+  </subsection>
+
+  <subsection id="1.1"><h1>Determinant</h1>
+    [<a href="../../vectors/linearAlgebra/determinant.html">Determinant</a>]
+    $$
+      \lvert Q \rvert = 1
+    $$
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

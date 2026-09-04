@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Setup</h1>
+<section id="0"><h1>Aim</h1>
+  The aim is to control a <a href="../../../1d/dynamics/coaxial.html">coaxial drone</a> using measurements obtained by an altitude sensor. 
+
+  <p>
+    The drone's position and velocity are $z = 0$ and $\dot{z} = 1$ initially. It is commanded to change its position by 1 meter in the negative (up) direction, i.e. its desired altitude is $z=-1$. 
+  </p>
+</section>
+
+<section id="1"><h1>State</h1>
+  If yaw is ignored, the state variables are:
+  $$
+    x = \begin{bmatrix}\dot{z} \\ z \end{bmatrix}
+  $$
+
+  <subsection id="1.0"><h1>Initialisation</h1>
+    $$\begin{align*}
+      \hat{x}_{0|0} &= \begin{bmatrix}1 \\ 0\end{bmatrix} \\
+      \Sigma_{0|0} &= \begin{bmatrix}\sigma_{\dot{z}}^2 & 0 \\
+        0 & \sigma_{z}^2 \end{bmatrix} \\
+        &= \begin{bmatrix}0.1^2 & 0 \\ 0 & 0.1^2 \end{bmatrix} \\
+    \end{align*}$$
+  </subsection>
+</section>
+
+<section id="2"><h1>Estimation initialisation</h1>
+  $$\begin{align*}
+    W &= \begin{bmatrix}\sigma_{\dot{z}}^2 & 0 \\
+        0 & \sigma_{z}^2 \end{bmatrix} \\
+        &= \begin{bmatrix}0.1^2 & 0 \\ 0 & 0.1^2 \end{bmatrix} \\\\
+    V &= \sigma_{v}^2 = 0.1^2 \\\\
+    \Delta t &= 1
+  \end{align*}$$  
+</section>
+
+<section id="3"><h1>Control input</h1>
+  A 1D drone's acceleration, its only control variable, influences its vertical velocity and its height, $z$.
+  $$u = [\ddot{z}]$$
+
+  <subsection id="3.0"><h1>Initialisation</h1>
+    $$
+      u = 0
+    $$
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

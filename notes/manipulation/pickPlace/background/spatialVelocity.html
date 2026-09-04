@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Spatial Velocity", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Spatial Velocity</h1>
+<section id="0"><h1>Overview</h1>
+  Also called <i>end effector twist</i>. It is the derivative of a pose.
+  $$V^G = \begin{bmatrix}
+    \omega \\ v
+  \end{bmatrix}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      V^G &:& \text{Spatial velocity of a gripper} \in \mathbb{R}^{6 \times 1} \\
+      \omega &:& \text{Angular velocities} \in \mathbb{R}^{3 \times 1} \\ 
+      v &:& \text{Translational velocities} \in \mathbb{R}^{3 \times 1}
+    \end{array}$$
+  </div>
+
+  The angular velocity vector represents the angular rate (magnitude) and around what (instantaneous) axis the end-effector is rotating. The linear velocity vector represents how fast the end-effector's origin is moving.
+
+  <p>
+    There is no standard/canonical choice of representation for a pose. Based on a chosen representation, an orientation (which is part of a pose), can have various problems hence the need for constantly moving between representations. However there is a canonical choice for angular velocity, consisting of 3 numbers representing the rotation rates around the major axis.
+  </p>
+
+  For orientation, problems arise because angles wrap around. Whereas, angular velocities do not; a higher value means higher speed.
+
+  <p>
+    Unit quaternions live on the surface of a 3D sphere. Angular velocities live on a tangent plane to a particular point on the sphere.
+  </p>
+</section>
+
+<section id="1"><h1>Relationship to joint velocities</h1>
+  $$
+    V^G = J^G(q) \, v
+  $$  
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      q &:& \text{Joint positions} \\
+      v &:& \text{Joint velocities} \\
+      J(q) &:& \text{Geometric Jacobian; changes based on current configuration of joints.} \\
+    \end{array}$$
+  </div>
+
+  It's a non-trivial relationship to joint positions. But, once the instantaneous joint positions are known, the derivative/jacobian provides a simple linear mapping from joint velocities to spatial velocity where in small changes in joint velocities cause equivalent changes in the gripper velocity.
+</section>
+</chapter>
+
+</body>
+</html>

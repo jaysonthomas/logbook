@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Steps", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Steps</h1>
+<section id="0"><h1>Control flow</h1>
+    <div class="img-container">
+    <figure>
+      <img style="height:400px; width:auto"
+      src="../../../../../../../figures/dynamics/drone/1_coaxialControlFlow.png"/>
+    </figure>
+  </div>
+</section>
+
+<section id="1"><h1>Debugging the estimation process</h1>
+  <ul>
+    <li>Initialisation</li>    
+    <li>Prediction</li>
+    <p>
+      Plot (ovals) the new $\hat{x}_{1|0}$ and $\Sigma_{1|0}$ and the previous estimates: $\hat{x}_{0|0}$ and $\Sigma_{0|0}$.
+    </p>
+
+    <li>Measurement update</li>
+    Provide a new measurement close to the actual value. Then plot the updated estimate along with the prediction and the previous estimate. The new estimate should be better than the prediction and previous estimate.
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

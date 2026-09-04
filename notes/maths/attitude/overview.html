@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Overview</h1>
+<section id="0"><h1>Definition</h1>
+  It is the rotation of a body frame to an inertially fixed frame, usually the world frame. It rotates a vector defined in the body frame into the world frame.
+
+  <p>
+    It has 3DOFs. But, there is no globally non-singular way of representing it with just 3 numbers. Locally, it is possible for small rotations.
+  </p>
+</section>
+
+<section id="1"><h1>Representation</h1>
+  <p>
+    A Jacobian mapping euler angles into anything else can get singular. E.g. inverse kinematics.
+  </p>
+
+  Quaternions and rotation matrices are singularity free - they don't have places where the jacobians blow up. E.g. doing weird things at 90 degrees.
+
+  <p>
+    But they have some quirks namely they are not a minimal coordinate representation. Rotations involve 3 DOFs. But quaternions have 4 numbers and rotation matrices have nine numbers. They are overparameterised. This means that, quaternions have 1 constraint and rotation matrices have 6 constraints.
+  </p>
+
+  These constraints can be baked into an optimisation problem. But, there are better ways.
+</section>
+</chapter>
+
+</body>
+</html>

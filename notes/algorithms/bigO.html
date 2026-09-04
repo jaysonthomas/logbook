@@ -10,7 +10,7 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Big O Notation</h1>
+<chapter style="counter-reset: chapter 3"><h1>Big O Notation</h1>
 <section id="0"><h1>Overview</h1>
   Big O time complexity is a way of analysing the amount of time it takes for an algorithm to execute as the input size grows. The worst case is always considered.
 
@@ -40,12 +40,12 @@
 
     <ul>
       <li>Binary search.</li>
-      <li>Push/pop on a heap.</li>
+      <li><m>Push/pop on a heap</m>.</li>
     </ul>
   </p>
 
   <subsection id="2.0"><h1>Binary search</h1>
-    Consider an array of size $N$. How many times can the array be divided by 2 to get just 1 element. In other words, how many times can 1 be multiplied by 2 to get $N$. In other words, 2 to the power of what gives $N$, which is the definition of log.
+    Consider an array of size $N$. How many times can the array be divided by 2 to get just 1 element. In other words, how many times can 1 be multiplied by 2 to get $N$. In other words, 2 to the power of what gives $N$, which is the definition of <i>log</i>.
 
     $$\begin{align*}
       2^x &= N \\
@@ -57,7 +57,7 @@
 </section>
 
 <section id="3"><h1>O($N$)</h1>
-  In this case, as the input size grows, the execution time grows proportionately. 
+  As the input size grows, the execution time grows proportionally. 
 
   <p>
     Example use: 
@@ -76,7 +76,7 @@
     Example use: 
 
     <ul>
-      <li>Quick/Merge sort.</li>
+      <li><m>Quick/Merge sort</m>.</li>
     </ul>
   </p>
 </section>
@@ -87,13 +87,13 @@
   <p>
     Example use: 
     <ul>
-      <li>2D rectangular matrix.</li>
+      <li><m>2D rectangular matrix</m>.</li>
     </ul>
   </p>
 </section>
 
 <section id="6"><h1>O($N^2$)</h1>
-  In this case, as the input size grows, the performance is proportional to the square of the size of the data set.
+  As the input size grows, the performance is proportional to the square of the size of the data set.
 
   <p>
     Example use: 
@@ -107,10 +107,10 @@
 
 <section id="7"><h1>References</h1>
   <ul>
-    <li>Document <a href="https://t.ly/aUFuZ">this</a> cheat sheet. Execution time plots can be found <a href="https://t.ly/bQmP-">here</a>. I like the following 2 videos: <a href="https://t.ly/uNtI1">Ref 1</a>, <a href="https://t.ly/qFIyx">Ref 2</a>.</li>
+    <li>Document <a href="https://t.ly/aUFuZ">this</a> cheat sheet. I like the following 2 videos: <a href="https://t.ly/uNtI1">Ref 1</a>, <a href="https://t.ly/qFIyx">Ref 2</a>.</li>
 
     <p>
-      <li>Based on <a href="https://www.bigocheatsheet.com/">this cheat sheet</a>, merge sort has a worst time complexity of <n>$O(n log(n))$</n>. I don't mind <a href="https://t.ly/r4vVt">this cheat sheet</a> as well.</li>
+      <li>Based on <a href="https://www.bigocheatsheet.com/">this cheat sheet</a>, merge sort has a worst time complexity of <n>$O(n log(n))$</n>.
     </p>
   </ul>
 </section>

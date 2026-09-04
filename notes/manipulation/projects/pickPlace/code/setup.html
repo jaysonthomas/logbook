@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Setup</h1>
+<section id="0"><h1>Diagram build</h1>
+  <ul>
+    <li>Create scenario data structure based on directives [<a href="../../../../software/roboticsTools/drake/terms/yaml.html">Ref</a>].</li>
+
+    <p>
+      If a time step is not specified for the plant, the default value of 1ms is used.
+    </p>
+
+    <li>Initialise RobotDiagramBuilder based on the plant_config's time step.</li>
+    
+    <p>
+      RobotDiagramBuilder is just a wrapper structure that holds together the plant, scene graph and diagram builder. This initialises the diagram builder, scene graph and multibody plant.
+    </p>
+
+    <li>Configure the multibody plant based on plant_config.</li>
+    <li>Using a parser, process model directives and apply to the plant.</li>
+  </ul>
+  
+
+  
+
+  
+
+  
+
+  Finalise the plant.
+
+  Add meshcat to the diagram builder. 
+
+  Set the initial pose of the object.
+
+  Build the diagram. Give it a name. Return the diagram.
+</section>
+
+<section id="1"><h1>Scenario data</h1>
+  Specify path where to find stuff.
+
+  Give an overview of what's in the models.
+
+  What is 'base_link'?
+</section>
+</chapter>
+
+</body>
+</html>

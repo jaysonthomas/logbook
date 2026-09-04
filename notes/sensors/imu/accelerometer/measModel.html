@@ -10,28 +10,53 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Measurement model</h1>
+<chapter style="counter-reset: chapter 3"><h1>Measurement model</h1>
 <section id="0"><h1>Overview</h1>
-  [<a href="https://t.ly/uuvIt">AN3461.pdf</a>] <p></p>
+  $$
+    \underbrace{\tilde{x}}_{\text{Measured} \atop \text{sensor value}} 
+    = \underbrace{b}_{\text{Bias}} +
+    (\underbrace{I}_{\text{Identity} \atop \text{matrix}} +
+    \underbrace{M}_{\scriptsize\substack{\text{Scaling and}\\\text{cross-coupling}\\\text{matrix}}})
+    \underbrace{x}_{\text{True} \atop \text{value}} +
+    \underbrace{\eta}_{\text{Random} \atop \text{noise}}
 
-  <ul>
-    <li>Choosing the sequence roll, then pitch, then yaw Eqs 6 to 8</li>
-    <li>Normalising each accelerometer reading so that the direction of the resultant unit vector (within a unit sphere) can be found more easily.</li>
-  </ul>
+  $$
 
-  <div class="img-container">
+  The bias $b$, an offset in a measurement value, is modeled as a random walk: 
+
+  $$
+    b_t = b_{t-1} + \underbrace{\eta_{b,t}}_{\text{Random} \atop \text{noise}}
+  $$
+  
+  From the image, typical biases don't have any upwards or downwards pattern, but they do generally tend to move away from zero.
+
+  <div class="container">
     <figure>
-      <img style="height:140px; width:auto"
-      src="../../../../figures/sensor/1_imuBodyFrame.png"/>
+      <img style="height:120px; width:auto"
+      src="../../../../figures/physics/8_bias.png"/>
+      <figcaption>
+        Example of some typical biases plotted over time
+      </figcaption>
     </figure>
   </div>
 
-  Equations:
-  $$\begin{align*}
-    tan \,\phi_{xyz} &= \frac{a_y}{a_z} \\
-    tan \,\theta_{xyz} &= \frac{-a_x}{a_y \, sin\,\phi + a_z \, cos\,\phi} \\
-                     &= \frac{-a_x}{\sqrt{a_y^2 + a_z^2}} \\
-  \end{align*}$$
+  If the scaling and cross-coupling matrix is $0$, then there is only bias and random noise. If it is non-zero, then:
+  <ul>
+    <li>The diagonal terms indicate that there's a slope error</li>
+    Example: instead of measuring 1, we measure 1.1, and instead of measuring 2, we measure 2.2.
+
+    <li>The off-diagonal terms indicates some coupling</li>
+    Example: If this were a 3-axis accelerometer, this could indicate
+    <ul>
+      <li>The X accelerometer is influencing the Y accelerometer or</li>
+      <li>There is some misalignment between the sensor and the vehicle body coordinate frames</li>
+    </ul>
+  </ul>
+
+  The random noise $\eta$ has no correlation between past and future noise/measurement values. Usually, this is assumed to be a zero mean Gaussian with some covariance:
+  $$
+    \eta \sim N(0, \Sigma)
+  $$
 </section>
 
 <section id="1"><h1>Drift</h1>

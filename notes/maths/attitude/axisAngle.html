@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Axis angle", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Axis angle</h1>
+<section id="0"><h1>Overview</h1>
+  $$
+    \phi = a \, \theta
+  $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      a &:& \text{Axis of rotation, a unit vector.} \\ 
+      \theta &:& \text{Angle of rotation, a scalar in radians.}
+    \end{array}$$
+  </div>
+
+  $\phi$, called <i>axis angle</i>, is a vector $\in \mathbb{R}^3$. 
+</section>
+
+<section id="1"><h1>Properties</h1>
+  $$\begin{align*}
+    \|\phi\| &= \theta \\
+    \frac{\phi}{\|\phi\|} &= a
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      \|\phi\| &:& \text{Norm of the axis angle} \\ 
+      \frac{\phi}{\|\phi\|} &:& \text{Normalisation of the vector}
+    \end{array}$$
+  </div>
+
+  The magnitude of an axis angle is the angle of rotation. The direction is the axis of rotation.
+</section>
+
+<section id="2"><h1>Gyro usecase</h1>
+  For a constant $\omega$ from a gyro, with short sample periods $h$ (say at 100Hz), the integral of $\omega$ gives $\phi$:
+  $$
+    \phi \approx \int^h_0 w(t)\, dt
+  $$
+
+  This is only true for short time scales and small angles.
+</section>
+</chapter>
+
+</body>
+</html>

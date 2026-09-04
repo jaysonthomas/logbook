@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Joint angle representation", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Joint angle representation</h1>
+  In robot description files, robots are specified using relative poses of each link - 6 numbers: x, y, z, roll, pitch, yaw. 
+
+  <p>
+    In code, $3\times 3$ rotation matrix representation is used for each joint angle, when a series of frame transformations through all the joints is performed to get the full kinematics. In vector form, each joint is represented by 7 numbers - 3 for translation, 4 for the quaternion joint angle representation.
+  </p>
+</chapter>
+
+</body>
+</html>

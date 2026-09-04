@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Composition", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Composition</h1>
+<section id="0"><h1>Overview</h1>
+  Running multiple nodes as components within a single process (rather than separate processes) to reduce overhead — especially important for intraprocess communication to avoid serialization costs on things like image/pointcloud data.
+
+  <p>
+    Mental model: A node can be written as its own separate program (own process, own PID). Composition loads several node classes into a single process instead — like merging five employees into one shared office instead of five separate buildings connecting by mail. Less overhead, faster communication between them.
+  </p>
+</section>
+
+<section id="1"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 launch ros2_fundamentals_cpp composition_launch.py
+    ps aux | grep component_container   # only ONE process, not five
+    ros2 component list                 # but ROS 2 still sees talker/listener/add_two_ints_server as separate nodes inside it
+    ros2 topic echo /chatter            # still works exactly the same from the outside
+  </code></pre>
+  That last point is the whole lesson of composition: the interface (topics/services/actions) looks identical whether a node runs standalone or composed — composition is a deployment/performance choice, not something that changes how you use the node.
+
+  <p>
+    A good sanity check once you've done all seven: run fundamentals_launch.py, then in a fresh terminal run rqt_graph (if installed) to see the topic/service/action connections you just built, rather than just reading logs.
+  </p>
+</section>
+
+<section id="2"><h1>Fundamentals</h1>
+  writing composable nodes (rclcpp_components), loading them via a component container (statically at launch or dynamically at runtime), and using this for performance-critical pipelines (e.g., camera driver → image processing in the same process).
+</section>
+</chapter>
+
+</body>
+</html>

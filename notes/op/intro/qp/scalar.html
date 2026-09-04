@@ -14,6 +14,11 @@
 <section id="0"><h1>Without constraints</h1>
   The aim is to find the <n>best solution</n> for $x$ such that LHS is approximately equal to RHS in the following linear algebra equation: $$ax\approx b$$
 
+  The optimisation problem becomes:
+  $$
+    \min_x \quad \|ax-b\|^2
+  $$
+
   <div class="img-container">
     <figure>
       <img style="height:80px; width:auto"
@@ -43,7 +48,7 @@
     
     <ul>
       <li>When the curve touches 0, $ax=b$. The 2 values diverge as the curve moves farther from 0.</li>
-      <li>If slope $a$ starts getting small, the solutions start getting worse - to achieve the same $b$, $x$ would need to be bigger.</li>
+      <li>If slope $a$ starts getting small, the solutions start getting worse - to achieve the same $b$, $x$ would need to be bigger. <n>This is exactly what happens when the Jacobian approaches $0$</n>.</li>
     </ul>
   </subsubsection>
 </section>
@@ -57,7 +62,7 @@
       s.t. \quad & x\leq 2
     \end{align*}$$
 
-    This equation says minimise over $x$ subject to $x \leq 2$ (the <i>boundary of the search</i>, the <i>stop condition</i>). 
+    This equation minimises over $x$ subject to $x \leq 2$ (the <i>boundary of the search</i>, the <i>stop condition</i>). 
   </subsubsection>
 
   <subsubsection><h1>Solution</h1>

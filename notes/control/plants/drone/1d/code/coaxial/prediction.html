@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("State prediction", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>State prediction</h1>
+<section id="0"><h1>State transition function</h1>
+  $$\begin{align*}
+    g(\hat{x}_{k-1|k-1}, u_{k-1}, \Delta{t}) 
+    &=
+      \begin{bmatrix}
+        \dot{z}_{k-1|k-1} + u_{k-1} \, \Delta{t} \\
+        z_{k-1|k-1} + \dot{z}_{k-1|k-1} \, \Delta{t} + \frac{1}{2}u_{k-1} \,\Delta{t}^2
+      \end{bmatrix} \\
+
+    &= \begin{bmatrix} 
+          1 & 0 \\
+          \Delta{t} & 1
+        \end{bmatrix}
+        \begin{bmatrix} \dot{z}_{k-1|k-1} \\ z_{k-1|k-1} \end{bmatrix}
+        + \begin{bmatrix} \Delta{t} \\ \frac{1}{2} \,\Delta{t}^2 \end{bmatrix}
+        [u_{k-1}] \\
+
+    &= A_{k-1}\,x_{k-1|k-1} + B_{k-1}\,u_{k-1}
+  \end{align*}$$
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      A &:& \text{System matrix}  \\ 
+      B &:& \text{Input matrix} \\
+      u_{k-1} &:& \text{Control input to the system in the previous time step} \\
+    \end{array}$$
+  </div>
+</section>
+
+<section id="1"><h1>Jacobian of the State transition function</h1>
+  $$\begin{align*}
+    G_t &= g'(x_{k-1|k-1}, u_{k-1}, \Delta{t})\\
+        &= A_{k-1} \\
+        &= \begin{bmatrix} 
+              1 & 0 \\
+              \Delta{t} & 1
+            \end{bmatrix}
+  \end{align*}$$
+</section>
+
+<section id="2"><h1>Prediction step</h1>
+  $$\begin{aligned}
+    \hat{x}_{k|k-1} &= g(\hat{x}_{k-1|k-1}, u_{k-1}, \Delta{t}) \\
+    \Sigma_{k|k-1} &= G \Sigma_{k-1|k-1} G^T + W 
+  \end{aligned}$$
+</section>
+</chapter>
+
+</body>
+</html>

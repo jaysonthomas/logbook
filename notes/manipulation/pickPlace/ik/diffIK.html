@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Differential IK", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Differential IK</h1>
+<section id="0"><h1>Workflow</h1>
+  $$
+    X^G(t) \rightarrow V^G(t) \rightarrow \text{Diff IK} \rightarrow v \rightarrow \int \rightarrow q
+  $$
+</section>
+
+<section id="1"><h1>Overview</h1>
+  <i>Differential IK</i> helps in computing the necessary incremental change in $q$ to achieve a desired (known) small/incremental change in pose in a desired direction. 
+
+  $$\begin{align*}
+    dX^B &= \frac{\partial{f_{kin}^B}(q)}{\partial{q}} dq \\
+    V^B &= J^B(q) \; \dot{q} \\\\
+    \dot{q} &= [J^B(q)]^{-1} V^B
+  \end{align*}$$ 
+
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      dq &:& \text{Incremental change in joint angle} \\ 
+      dX^B &:& \text{Incremental change in pose} \\
+      B &:& \text{Body} \\
+      J^B(q) &:& \text{Kinematic jacobian} \\
+      V^B &:& \text{Spatial velocity} \\
+    \end{array}$$
+  </div>
+</section>
+
+<section id="2"><h1>Problems</h1>
+  Differential IK solution isn't defined perfectly everywhere. Even though partial derivatives exist everywhere, the inverse Jacobian is not defined everywhere. 
+  $$
+    \dot{q}_{\scriptscriptstyle{7 \times 1}} = 
+    [J^B_{\scriptscriptstyle{6\times{7}}}(q)]^{-1} 
+    V^B_{\scriptscriptstyle{6\times{1}}}
+  $$
+  The matrix dimensions are written for iiwa where there are 7 joints and hence 7 $\dot{q}$s. The problem with simply taking the inverse of a jacobian is that in most cases, a jacobian is not a square matrix and <n>it is not possible to take the inverse of a non-square matrix</n>. Hence, this equation is only a conceptual representation.
+</section>
+</chapter>
+
+</body>
+</html>

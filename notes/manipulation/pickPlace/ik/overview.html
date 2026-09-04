@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Overview</h1>
+<section id="0"><h1>Definition</h1>
+  <i>Inverse kinematics</i> is a nonlinear complicated function that maps a gripper pose in the world to joint positions. 
+  $$
+    q = (f^G_{kin})^{-1} \, ^WX^G
+  $$
+</section>
+
+<section id="1"><h1>Discontinuity</h1>
+  IK is harder than FK since the mapping in IK is <n>not always unique</n>:
+  <ul>
+    <li>There can be multiple joint angle solutions for the same ee pose in the world which can lead to discontinuity.</li>
+    <li>There can also be no solutions.</li>
+  </ul>
+  
+  Both cases would involve arm movements that jump around to different solutions in very short time spans, for e.g. every 0.0001 seconds which wouldn't be good. IK is normally <n>used with additional requirements</n> to maintain continuity/smoothness/centering etc.
+
+  <p>
+    All the complexities are due to 3D rotations.
+  </p>
+</section>
+ 
+<section id="2"><h1>Solutions</h1>
+  Even though $f^G_{kin}$ consists of a simple series of transforms, it has a lot of nonlinear/non-trivial equations in $q$ which makes it hard to invert and analyse. On top of that, the mapping function may also be rectangular and hence non-invertible.
+
+  <p>
+    Diff IK can be used instead which solves the IK problem by considering the differential kinematics (first order). The mapping matrix, the Jacobian, is linear which simplifies things. However, a Jacobian is not always a square matrix. Hence, taking the inverse is still a problem.
+  </p>
+
+  In order to use rectangular matrices, pseudo-inverse is used along with diff IK. It tries to solve an <n>optimisation problem</n> wherein the aim is to find the minimum joint velocities that can achieve the desired spatial velocity, as close as possible. 
+</chapter>
+
+</body>
+</html>

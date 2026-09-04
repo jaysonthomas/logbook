@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Jacobian", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Jacobian</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/1SjD9">Ref1</a>, <a href="https://t.ly/M7pDR">Ref2</a>] <br>
+  A Jacobian in the context of an arm, defines the relationship between operational space (end-effector) and joint space (joint angle) spatial velocities. It is computed through an <n>iterative method</n> which calculates velocities from the base to the end-effector. <n>Each column of the Jacobian specifies the contribution of the corresponding joint velocity to the end-effector's velocities</n>. It is a <n>position dependent matrix</n>, hence a function of the joint angles $q$ at any given time.
+</section>
+
+<section id="1"><h1>Geometric Jacobian</h1>
+  A <i>geometric jacobian</i> has the extra step of mapping joint velocities to spatial velocity vectors. It is $\frac{\partial{f^B}(q)}{\partial q}$ plus any change of coordinates into the spatial vectors. Geometric Jacobian gives the angular velocities in the base frame.
+
+  $$
+    V^E = \begin{bmatrix} v_E \\ \omega_E \end{bmatrix}
+        = J(q) \dot{q} 
+  $$
+
+  <p>
+    Since there are different ways of representing $q$ and $X$, there are different possible Jacobians to determine how to go from joint angles to some spatial velocity. Because of say the quaternion representation, a joint position vector $q$ is often bigger than a joint velocity vector. A spatial joint or end-effector velocity only needs 6 numbers; hence, joint velocities won't always directly equal $\frac{dq}{dt}$ because of the choice of representation. It is possible to map between them though. 
+  </p>
+</section>
+
+<section id="2"><h1>Analytical Jacobian</h1>
+  Given the forward kinematics equation $x(q) = FK(q)$, the analytical Jacobian maps the operational space and joint space velocities by computing the time derivative of the $FK$ function:
+
+  $$
+    \dot{x}(q) = J_a \dot{q}
+  $$
+
+  Analytical Jacobian gives the time derivatives of Euler angles and is the true partial derivative. It is not recommended as much. 
+</section>
+</chapter>
+
+</body>
+</html>

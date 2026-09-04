@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Static vs non static members", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Static vs non static members</h1>
+  <pre><code class="c++">
+    #include <iostream>
+    #include <string>
+
+    class Player {
+    public:
+        std::string name; // Non-static: Each player gets their own name
+
+        // Static data member: Shared by ALL Player objects
+        static int totalPlayers;
+
+        Player(std::string p_name) : name(p_name) {
+            totalPlayers++; // Increment the shared count whenever a player is created
+        }
+
+        ~Player() {
+            totalPlayers--; // Decrement when a player is destroyed
+        }
+
+        // Static member function: Belongs to the class, not an object
+        static void printTotalPlayers() {
+            // Can access static members directly, but CANNOT access 'name' 
+            // because there is no 'this' pointer.
+            std::cout &lt&lt "Total active players: " &lt&lt totalPlayers &lt&lt "\n";
+        }
+    };
+
+    // Static data members must be defined outside the class in C++
+    int Player::totalPlayers = 0;
+
+    int main() {
+        Player::printTotalPlayers(); // Called via Class Name (0 active)
+
+        Player player1("Alice");
+        Player player2("Bob");
+
+        // Both instances see the exact same static variable value
+        std::cout &lt&lt "Player count from player1: " &lt&lt player1.totalPlayers &lt&lt "\n"; // 2
+        std::cout &lt&lt "Player count from player2: " &lt&lt player2.totalPlayers &lt&lt "\n"; // 2
+
+        // Preferred way to call static functions (using scope resolution operator ::)
+        Player::printTotalPlayers(); // 2 active
+
+        return 0;
+    }
+  </code></pre>
+</chapter>
+
+</body>
+</html>

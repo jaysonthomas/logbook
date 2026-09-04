@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Path generation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Path generation</h1>
+<section id="0"><h1>Time</h1>
+  <code>np.linspace(0.0, T, N)</code> produces N points evenly spaced over $[0,T]$, inclusive of both endpoints. As an equation, the i-th element is:
+  $$
+    t_i = i \cdot \frac{T}{N-1}, \qquad i = 0, 1, 2, \dots, N-1
+  $$
+
+  The usage for the simulation
+  <pre><code class="python">
+    t=np.linspace(0.0,T,int(T/dt)+1)
+  </code></pre>
+
+  $$\begin{align*}
+    T &= 10 \\
+    \Delta{t} &= 0.01
+  \end{align*}$$
+</section>
+
+<section id="1"><h1>Trajectory</h1>
+  If a constant height is desired, the z position is set to the constant. Velocity and acceleration are set to 0s. Arrays of size equal to that of the number of time steps is created.
+
+  <p>
+    If a periodic trajectory is desired, the following equations are used.
+    $$\begin{align*}
+      z_d &= \frac{1}{2}cos(2t) - \frac{1}{2} \\
+      \dot{z}_d &= -sin(2t) \\
+      \ddot{z}_d &= -2cos(2t) \\
+    \end{align*}$$
+  </p>
+
+  The desired position is a cosine wave of amplitude 0.5, angular frequency $\omega = 2$ rad/s, shifted down by 0.5. At $t=0$, $z=0$. It oscillates between $z=0$ and $z=-1$. E.g., a drone bobbing up and down between the ground and 1 meter.
+
+  <p>
+    The velocity and acceleration profiles are derivatives of the chosen position trajectory.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

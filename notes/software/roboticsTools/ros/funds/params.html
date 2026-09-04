@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Parameters", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Parameters</h1>
+<section id="0"><h1>Overview</h1>
+  Runtime-configurable values for nodes. A node's settings knobs. Can be set via YAML files, command line, or dynamically at runtime.
+
+  <p>
+    Mental model: dials on the front of the machine. You can read them, and turn them, without restarting the machine.
+  </p>
+</section>
+
+<section id="1"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 run ros2_fundamentals_cpp talker_node
+    # in another terminal
+    ros2 param list
+    ros2 param get /talker publish_rate_hz
+    ros2 param set /talker publish_rate_hz 5.0   # watch the talker's terminal speed up live
+  </code></pre>
+</section>
+
+<section id="2"><h1>Fundamentals</h1>
+  Using parameter callbacks to react to changes live, structuring YAML parameter files per-node, and using ros2 param CLI tools for debugging.
+</section>
+</chapter>
+
+</body>
+</html>

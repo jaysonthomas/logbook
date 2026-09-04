@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Services", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Services</h1>
+<section id="0"><h1>Overview</h1>
+  Synchronous request/response communication for one-off operations (e.g., trigger calibration, get current map). Defined by a service type (.srv).
+
+  <p>
+    It is like a phone call, not a broadcast. You call, you wait, you get one answer, then you hang up. Nobody else hears the call. This blocks until a response is received. A topic never returns anything.
+  </p>
+</section>
+
+<section id="1"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 run ros2_fundamentals_cpp add_two_ints_server_node
+    # in another terminal
+    ros2 service list
+    ros2 service call /add_two_ints ros2_fundamentals_cpp/srv/AddTwoInts "{a: 2, b: 5}"
+  </code></pre>
+</section>
+
+<section id="2"><h1>Fundamentals</h1>
+  writing service servers/clients, understanding that calls are blocking (or async with callbacks/futures), and knowing when a service is the wrong tool (e.g., long-running tasks — that's what actions are for).
+</section>
+</chapter>
+
+</body>
+</html>

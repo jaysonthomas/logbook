@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Forward kinematics", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Forward kinematics</h1>
+<section id="0"><h1>Overview</h1>
+  <i>Forward kinematics</i> maps joint angles to a gripper pose.
+  $$
+    ^WX^G = f^G_{kin}(q)
+  $$
+
+  Given the joint angles:
+  <ul>
+    <li>Compute the pose of the gripper relative to the wrist</li>
+    <li>Chain it backwards all the way to the world frame</li>
+  </ul>
+
+  The math is simple because each individual joint simply describes a small rotation operation from right before the robot's joint until right after the robot's joint. <i>Joints</i> are operations that make a transformation from a pre-joint frame to a post-joint frame. 
+  
+  <p>
+    This is how robots are specified in robot description files as relative poses of each link - 6 numbers: x, y, z, roll, pitch, yaw. 
+  </p>
+</section>
+
+<section id="1"><h1>Drake implementation</h1>
+  The <a href="../../../software/roboticsTools/drake/terms/context.html">context</a> is taken as the argument instead of $q$ because the kinematics can be parameterised. If the link lengths need to be changed for instance, then the kinematics need to reflect that.
+</section>
+</chapter>
+
+</body>
+</html>

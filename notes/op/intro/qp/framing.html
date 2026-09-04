@@ -13,9 +13,22 @@
 <chapter style="counter-reset: chapter 3"><h1>Optimisation problem</h1>
   An optimization problem is usually written as 
 
-  $$\begin{aligned} \min_x \quad & f(x) \\ \textrm{s.t.} \quad & g(x)\leq 0,\\ \quad &  h(x)=0 \end{aligned}$$
+  $$\begin{aligned} 
+    \min_x \quad & f(x) \\ 
+    \textrm{s.t.} \quad & g(x)\leq 0 \\ 
+      \quad &  h(x)=0 
+  \end{aligned}$$
 
-  We call $x$ the **decision variable**, $f(x)$ the **cost function**, $g(x)\leq 0$ an **inequality constraint**, and $h(x)=0$ an **equality constraint**. We usually denote the optimal solution by $x^*$. Most of the times, the constraints are hard-constraints, meaning that they must be fulfilled by the optimal solution. 
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      x &:& \text{Decision variable} \\ 
+      f(x) &:& \text{Cost function} \\
+      g(x)\leq 0 &:& \text{Inequality constraint} \\
+      h(x)=0 &:& \text{Equality constraint}
+    \end{array}$$
+  </div>
+  
+  Most of the times, the constraints are hard-constraints, meaning that they must be fulfilled by the optimal solution. 
 </chapter>
 
 </body>

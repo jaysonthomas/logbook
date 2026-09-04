@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Common config parameters", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Common config parameters</h1>
+<section id="0"><h1>Output data rate</h1>
+  This is the speed at which the sensor samples acceleration and updates the data registers.
+</section>
+
+<section id="1"><h1>Bandwidth</h1>
+  Accelerometers are sensitive to high frequency vibrations. An internal low pass filter cuts off frequencies that are too fast for the ODR to capture accurately. ODR/4 means the bandwidth is set to 25% of the ODR. 
+  
+  <p>
+    Calculation: 50 Hz / 4 = 12.5 Hz. The sensor will filter out vibrations faster than 12.5 Hz.
+  </p>
+</section>
+
+<section id="2"><h1>Group delay</h1>
+  In some cases, an accelerometer doesn't just output raw electricity; it processes the data first. It runs the signal through a Digital Low-Pass Filter to smooth out vibrations and noise. The filter needs to collect a few samples of data to "average" them out or perform mathematical smoothing.
+
+  <p>
+    Gathering and processing these samples takes time. That waiting period is the Group Delay.
+  </p>
+
+  When the cut-off frequency of the sensor is lower (say ODR/4, narrow bandwidth), it takes more time to process the signal to make it smooth (23.6 ms vs 11.8ms for ODR/2). 
+</section>
+</chapter>
+
+</body>
+</html>

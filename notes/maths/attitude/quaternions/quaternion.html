@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Quaternion", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Quaternion</h1>
+<section id="0"><h1>Overview</h1>
+  It is based on the generalisation of complex numbers in 4D. They've got algrebraic properties that make them useful.
+  $$\begin{align*}
+    q &= \begin{bmatrix}
+      w & x & y & z
+    \end{bmatrix} \\
+    1 &= w^2 + x^2 + y^2 + z^2
+  \end{align*}$$
+
+  $$
+    q = \begin{bmatrix}
+      cos(\frac{\theta}{2}) \\ a\,sin(\frac{\theta}{2})
+    \end{bmatrix}
+  $$
+
+  <subsubsection><h1>Initialisation</h1>
+    Set w=1 and the axis to the axis of interest. Or, use euler angles and convert to quaternion.
+  </subsubsection>
+</section>
+
+<section id="1"><h1>Quirks</h1>
+  <m>Flipping the sign of a unit quaternion gives the same angle</m>.
+</section>
+</chapter>
+
+</body>
+</html>

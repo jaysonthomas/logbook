@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Launch", "../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Launch</h1>
+<section id="0"><h1>Overview</h1>
+  Python-based launch files (.launch.py) used to start and configure multiple nodes together.
+
+  <p>
+    Mental model: instead of opening five terminals and typing five ros2 run commands, you write the list of commands once and hit play.
+  </p>
+</section>
+
+<section id="1"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 launch ros2_fundamentals_cpp fundamentals_launch.py
+  </code></pre>
+  This single command starts the talker, listener, service server, action server, and param node together, all logging into one terminal. Open a second terminal and run ros2 node list — you'll see all five, even though you only typed one command.
+</section>
+
+<section id="2"><h1>Fundamentals</h1>
+  Composing complex systems (robot bringup — drivers, controllers, planners, visualization) into a single launch, using launch arguments, conditionals (IfCondition), event handlers, and including other launch files for modularity.
+</section>
+</chapter>
+
+</body>
+</html>

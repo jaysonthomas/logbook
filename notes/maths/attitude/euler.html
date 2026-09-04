@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../utils/setup.js"></script>
+  <script>
+    initializePage("Euler", "../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Euler</h1>
+<section id="0"><h1>Euler's equation</h1>
+  [<a href="https://bit.ly/38bvSLg">Ref</a>]<p></p>
+  General form of Euler's equation in a rotating frame:
+  $$
+    M = I\dot\omega + \omega \times (I\omega)
+  $$
+</section>
+
+<section id="1"><h1>Euler's rotation theorem</h1>
+  It states that any 3D rotation or sequence of rotations can be described as a single rotation by an angle $\theta$ around a single 3D unit vector axis $\mathbf{u} = (x, y, z)$.
+</section>
+
+<section id="2"><h1>Disadvantages of euler angles</h1>
+  <ul>
+    <li>Numerical Singularities</li>
+    <p>
+      Euler angles suffer from Gimbal Lock and <m>other singularities</m> where the mathematical representation breaks down, causing Jacobians to become singular.
+    </p>
+
+    <li>Numerical Instability</li>
+    <p>
+      <m>They are prone to poor numerical behavior, often requiring messy, "hacky" workarounds that can lead to failures in control systems</m>.
+    </p>
+
+    <li>Mathematical Complexity</li>
+    <p>
+      They involve <m>excessive trigonometric functions</m>, which makes them less efficient and harder to work with than alternatives like rotation matrices or quaternions.
+    </p>
+  </ul>
+</section>
+
+<section id="3"><h1>Gimbal lock</h1>
+  [<a href="https://t.ly/8zT9r">Ref</a>: GuerillaCG youtube] <p></p>
+  Rotation axes are chained together where rotation about 1 axis can change the orientation of another rotation axis. It is useful to think about euler rotations in terms of the hierarchy of rotation axes. 
+
+  <p>
+    Gimbal lock occurs when 2 rotation axes align. When a gimbal lock occurs, an object loses a degree of freedom - it will not be possible to rotate the object in a certain direction (either roll pitch or yaw) since 2 of the 3 rotation axes align with each other. 
+  </p>
+
+  In order to get out of the lock and achieve the desired rotation about the missing DOF/rotation axis, all 3 axes would need to be rotated. This would cause the object to rotate in an unexpected arc (as compared to a straight arc if there was no gimbal lock) in between key frames. 
+</section>
+</chapter>
+
+</body>
+</html>

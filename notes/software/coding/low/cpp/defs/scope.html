@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Scope resolution", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Scope resolution</h1>
+  C++ allows <i>identifiers</i> (a function name or a variable name) to have the same name, as long as they have different scope. 
+
+  <p>
+    In some cases, scopes can overlap, in which case the compiler may need assistance in determining which identifier the programmer means to use. The process of determining which identifier to use is called <i>scope resolution</i>. <code>::</code> is the <i>scope resolution operator</i>. It is used to specify which namespace or class to search, in order to resolve an identifier.
+  </p>
+
+  <subsubsection id="2.0"><h1>Class</h1>
+    Each class provides its own scope. The scope resolution operator becomes useful if a class definition needs to be separated from its declaration. The need to separate the 2 arises when:
+       
+    <ul>
+      <li>Only the interface needs to be shown to users and not the actual implementation</li>
+      <li>The declaration and the definition needs to be split into separate files</li>
+    </ul>
+  </subsubsection>
+
+  <subsubsection id="2.1"><h1>Namespace</h1>
+    [<a href="../../jlib/cppExamples/fundamentals/7_namespace.cpp">Ref</a>]
+    <br>
+    Namespaces allow programmers to group logically related variables and functions together. Namespaces also help to avoid conflicts between variables that have the same name in different parts of a program. <code>std</code> is the namespace used by the C++ Standard Library. Classes like <code>std::vector</code> and functions like <code>std::sort</code> are defined within the std namespace.
+  </subsubsection>
+</chapter>
+
+</body>
+</html>

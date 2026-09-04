@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Conversion between pointers", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Conversion between pointers</h1>
+  <a href="../../../../../../../jlib/cpp/examples/fundamentals/24_pointer_conversion.cpp">Example</a><br>
+  
+  In (1), a conversion from unique pointer to shared pointer is performed using std::move, which calls the move assignment operator. It steals the resource from uniquePtr while at the same time invalidating its <m>resource handle</m> on the heap-allocated integer.
+
+  <p>
+    In (2), you can see how to convert from weak to shared pointer. Imagine that you have been passed a weak pointer to a memory object which you want to work on. To avoid invalid memory access, you want to make sure that the object will not be deallocated before your work on it has been finished. To do this, you can convert a weak pointer to a shared pointer by calling the lock() function on the weak pointer.
+  </p>
+
+  In (3), a raw pointer is extracted from a shared pointer. However, <n>this operation does not decrease the reference count within sharedPtr2</n>. This means that calling delete on rawPtr in the last line before main returns will generate a runtime error as a resource is trying to be deleted which is managed by sharedPtr2 and has already been removed. The output of the program when compiled with g++ thus is: malloc: *** error for object 0x1003001f0: pointer being freed was not allocated.
+
+  <p>
+    Note that there are no options for converting away from a shared pointer. Once you have created a shared pointer, you must stick to it (or a copy of it) for the remainder of your program.
+  </p>
+</chapter>
+
+</body>
+</html>

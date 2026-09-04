@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Setup", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Setup</h1>
+  First time run:
+  <pre><code class="bash">
+    rosdep install --from-paths src --ignore-src -r -y
+    colcon build --symlink-install
+    source install/setup.bash
+  </code></pre>
+
+  <pre><code class="bash">
+    ros2 run ros2_fundamentals_cpp talker_node
+
+    # In another terminal
+    ros2 node list          # /talker should show up
+    ros2 node info /talker  # see what it publishes, subscribes to, etc.
+  </code></pre>  
+</chapter>
+
+</body>
+</html>

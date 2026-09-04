@@ -10,14 +10,20 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 3"><h1>Working principle</h1>
+<chapter style="counter-reset: chapter 3"><h1>Working principle</h1>
 <section id="0"><h1>Overview</h1>
-  Accelerometers don't measure acceleration. According to Newton's 2nd law:
+  According to Newton's 2nd law:
   $$
     a = \frac{1}{m}F
   $$
+  <div style="width:0; text-align:left;">
+    $$\begin{array}{ccl} 
+      F &:& \text{Sum of all forces acting on an object} \\
+      a &:& \text{Total acceleration}
+    \end{array}$$
+  </div>
 
-  The total acceleration on a vehicle is the sum of all forces $F$ acting on the vehicle. Accelerometers don't measure total acceleration, but <i>specific acceleration</i> which is the acceleration caused by all the forces acting on a vehicle except for gravity. 
+  Accelerometers don't measure total acceleration, but <i>specific acceleration</i> which is the acceleration caused by all the forces acting on a object except for gravity. 
   
   <p>
     The output of an accelerometer is actually:
@@ -27,7 +33,7 @@
     $$
   </p>
   
-  A full 3-axis accelerometer would need three of these in orthogonal directions.
+  A full 3-axis accelerometer will have 3 of these in orthogonal directions.
 </section>
 
 <section id="1"><h1>Hardware setup</h1>
@@ -49,11 +55,11 @@
 
 <section id="2"><h1>Example measurements</h1>
   <subsection id="2.0"><h1>Resting on an object</h1>
-    When an accelerometer is sitting on a table, the housing and the proof mass have $0$ acceleration. To keep the proof mass in the centre, the net force from the springs on the accelerometer is upwards and equal to $mg$ - the accelerometer would measure a net acceleration upwards that's equal to $g$.
+    When an accelerometer is sitting on a table, the housing and the proof mass have $0$ acceleration. To keep the proof mass in the centre, the net force from the springs is upwards and equal to $mg$. The accelerometer would measure a net acceleration upwards that's equal to $g$.
   </subsection>
 
   <subsection id="2.1"><h1>Free fall</h1>
-    If the sensor were in free fall, the housing and the proof mass would accelerate downwards at $9.8 m/s^2$. To keep the proof mass centered in the housing, the two springs would be pulling equally so the net force from the springs would be $0$ and the accelerometer would measure $0$ acceleration.
+    If the sensor were in free fall, the housing and the proof mass would accelerate downwards at $9.8 m/s^2$. To keep the proof mass centered in the housing, the two springs would be pulling equally. The net force from the springs would be $0$. The accelerometer would measure $0$ acceleration.
   </subsection>
 </section>
 </chapter>
