@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Scaling", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Scaling</h1>
+<section id="0"><h1>Node awareness</h1>
+  Because ROS 2 uses a fully decentralized discovery protocol (PDP/RTPS), there is no central server keeping a secret directory. Every node announces its existence over UDP Multicast, so every running node listens to these announcements and builds an internal list of all other active nodes and their capabilities.
+
+  <p>
+    Within the Same Domain: Every node tracks the IP address, port, topics, and QoS profiles of every other node on the same `ROS_DOMAIN_ID`.
+  </p>
+
+  If Node A is set to `ROS_DOMAIN_ID=0` and Node B is set to `ROS_DOMAIN_ID=1`, they use different multicast ports and are completely blind to each other.
+</section>
+
+<section id="1"><h1>Problem</h1>
+  While total awareness works great for small setups (e.g., a single robot with 15 nodes), having every node talk to every other node scales poorly in massive systems (e.g., a factory floor with 50 robots) because:
+
+  <ul>
+    <li>Multicast Traffic Noise: Constant discovery pings saturate Wi-Fi networks.</li>
+    <li>Memory Footprint: Every node must allocate RAM to store the metadata of every other node in the network.</li>
+  </ul>
+</section>
+
+<section id="2"><h1>Solution</h1>
+  To prevent total awareness in large deployments, Discovery Servers (available in Fast DDS and Cyclone DDS). Instead of shouting pings to every node over multicast, nodes report only to a centralized Discovery Server, isolating nodes so they only know about the specific peers they actually need to talk to.
+
+  <subsection id="2.0"><h1>Comparison to ROS1</h1>
+    In ROS 1, a central coordinator (`roscore`) was mandatory for the entire network to function. With a ROS 2 discovery server, a client-server architecture is used for discovery, but it differs from ROS 1 in how data transport and reliability are handled.
+
+    <subsubsection><h1>Similarities to ROS 1</h1>
+      <ul>
+        <li>Central Point of Contact</li>
+        <p>
+          Nodes no longer use UDP multicast to broadcast their existence to the whole network. Instead, every node connects to a known IP/port of a designated Discovery Server to register its publishers and subscribers.
+        </p>
+
+        <li>Selective Network Awareness</li>
+        <p>
+          Just like in ROS 1, nodes only learn about the specific peers they actually need to talk to, drastically reducing multicast noise and saving RAM on edge devices.
+        </p>
+      </ul>
+    </subsubsection>
+
+    <subsubsection><h1>Differences from ROS 1</h1>
+      ROS1 relies on roscore:
+      <ul>
+        <li>Protocol: Uses XML-RPC over TCP for control and negotiation.</li>
+        <li>Data Transport: ROS Master helps set up custom `TCPROS` or `UDPROS` sockets.</li>
+        <li>Redundancy & Fault Tolerance: Single point of failure. If `roscore` dies, no new connections can be formed.</li>
+        <li>Active Connections: If `roscore` crashes, existing connections survive, but state recovery is minimal.</li>
+      </ul>
+
+      ROS2 uses discovery server:
+      <ul>
+        <li>Protocol: Uses standard DDS RTPS protocol over UDP/TCP.</li>
+        <li>Data Transport: Uses DDS peer-to-peer data transport (including Shared Memory, UDP, or TCP).</li>
+        <li>Redundancy & Fault Tolerance: Highly redundant. You can run multiple backup Discovery Servers in parallel; nodes automatically sync with secondary servers if one goes down.</li>
+        <li>Active Connections: Fully integrated into DDS; nodes dynamically reconnect to backup servers without losing active data pipelines.</li>
+      </ul>
+      
+      ROS 2 Discovery Server gives the network efficiency of ROS 1's central directory without inheriting the fragility or proprietary protocols of ROS 1.
+    </subsubsection>
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

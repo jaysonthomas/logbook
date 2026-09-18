@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Components", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Components</h1>
+<section id="0"><h1>Component registration</h1>
+  <pre><code class="c++">
+    RCLCPP_COMPONENTS_REGISTER_NODE(ros2_fundamentals_cpp::Talker)
+  </code></pre>
+
+  The namespace closes, then this macro registers Talker as a loadable ROS2 component. This means the node doesn't strictly need its own standalone main()/executable — it can instead be dynamically loaded at runtime into a "component container" process alongside other nodes (useful for intra-process communication and reducing per-node overhead). 
+</section>
+</chapter>
+
+</body>
+</html>

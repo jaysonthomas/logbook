@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Overview", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Overview</h1>
+  PID controllers require minimal knowledge of system dynamics and can be applied to a wide range of single-input-single-output (SISO) systems. The equation below shows the most often used <i>parallel form</i> of a PID:
+
+  $$
+    u(t) = K_p \, e(t) + K_i \int^t_0 e(\tau) d\tau + K_d \frac{d}{dt} \biggl(e(t)\biggr)
+  $$
+
+  Applying PID control to a system effectively requires tuning, where the different gains of the PID controller are determined based on the system's response to a reference demand. The terms $K_p, K_i, K_d$ are the PID gains and can control how fast, accurate, and damped the response is. Tuning these manually or using an algorithm such as the Ziegler-Nichols method results in a controller that is often near optimal for a specific application. But what happens when the system changes over time or more complex external perturbations need to be addressed? This is where PID control, on its own, isn't enough.
+
+  <p>
+    Some of the most common ways of extending PID control's capabilities:
+    <ul>
+      <li>Utilise multiple instances of PID controllers called <i>cascaded PID control</i></li>
+      <li>Maintain multiple different states in a single controller called <i>gain-scheduling</i></li>
+      Gain scheduling changes the gain parameters based on system state to improve performance, but this requires individual tuning of each set of gains.
+    </ul>
+  </p>
+
+
+  Systems often change or have perturbations that can't be replicated when tuning PID gains. A control system's properties can be changed slowly over time by wear or tear, or changed instantly, for example, a conveyor belt used with different masses than commissioned with. 
+</chapter>
+
+</body>
+</html>

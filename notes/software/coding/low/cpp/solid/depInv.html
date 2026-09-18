@@ -10,9 +10,17 @@
 </head>
 
 <body onload="loadChapter('');">
-  <chapter style="counter-reset: chapter 1"><h1>Dependency inversion</h1>
-<section id="0"><h1>Overview</h1>
-  High-level modules should not depend directly on low-level modules. Both should depend on abstractions.
+<chapter style="counter-reset: chapter 1"><h1>Dependency inversion</h1>
+<section id="5"><h1>Overview</h1>
+  <ul>
+    <li>
+      High-level modules should not depend on low-level modules. Both should depend on abstractions.
+    </li>
+    <li>
+      Abstractions should not depend on details. Details should depend on abstractions.
+    </li>
+  </ul>
+  High-level modules orchestrate low-level modules in an application. Whilst low-level modules are more specific to components that are then used by the high-level modules.
 </section>
 
 <section id="1"><h1>Example: Bad practice</h1>

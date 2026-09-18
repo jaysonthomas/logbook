@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Callback group", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Callback group</h1>
+<section id="0"><h1>Background</h1>
+  A <i>callback group</i> is an execution control mechanism that tells the executor which callback functions can run concurrently and which ones must wait their turn.
+
+  <p>
+    Without callback groups, an executor treats a node as a single unit of execution. If one callback takes a long time to complete, it can block all other tasks in that same node like timers, subscription messages, or service calls—from running.
+  </p>
+</section>
+
+<section id="1"><h1>Types</h1>
+  When a callback (for a topic subscription, timer, service, etc.) is created, it is assigned to one of two group types.
+
+  <subsection id="1.0"><h1>Mutually exclusive</h1>
+    Only one callback in this group can run at a time.
+
+    <subsubsection><h1>Usecase</h1>
+      Protects shared data or hardware resources. For example, if you have a callback that writes directly to a motor driver, you never want two instances of it running simultaneously, or they might write conflicting motor commands.
+    </subsubsection>
+  </subsection> 
+
+  <subsection id="1.1"><h1>Reentrant</h1>
+    Multiple callbacks in this group can run simultaneously in parallel, <n>provided the executor has multiple threads to run them</n>.
+
+    <subsubsection><h1>Usecase</h1>
+      Independent or read-only tasks. If you have a service that calculates mathematical transforms or processes images without modifying shared global variables, it can safely run in parallel.
+    </subsubsection>
+  </subsection>
+</section>
+
+<section id="2"><h1>Why Callback Groups Matter</h1>
+  Even MultiThreadedExecutor is used, ROS 2 defaults every callback to a mutually exclusive group <n>scoped to the specific node</n>.
+
+  <p>
+    This means that simply using a MultiThreadedExecutor will not allow two timer callbacks or two message callbacks <n>on the same node</n> to run at the same time unless the callbacks are explicitly assigned to a reentrant callback group or split across different MutuallyExclusive groups.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

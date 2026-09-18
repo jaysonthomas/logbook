@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Atomic", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Atomic</h1>
+<section id="0"><h1>Overview</h1>
+  Best suited if the shared resource is a simple scalar type (e.g., boolean flags, counters, status indicators) without requiring heavy locks.
+</section>
+
+<section id="1"><h1>Code</h1>
+  <a href="2_atomic_dataRace.cpp">Deadlock</a>, <a href="2a_solution.cpp">solution</a>. <p></p>
+
+  In the code, multiple threads increment a shared counter, once with a plain int (race condition) and once with std::atomic&ltint&gt (safe). Each run will give a different (too-low) counter value. That's because counter++ is actually three steps — read, add, write — and threads can interleave and overwrite each other's updates.
+
+  <p>
+    The thread safe version reliably prints the correct total every time, because std::atomic&lt int&gt::operator++ guarantees the read-modify-write happens as one indivisible operation — no other thread can see or interleave a partial update.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

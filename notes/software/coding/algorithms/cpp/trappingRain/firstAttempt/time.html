@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Time", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Time</h1>
+<section id="0"><h1>Summary</h1>
+  [<a href="first.cpp">code</a>]
+  <ul>
+    <li>Best/average (peaks trend upward, early returns): $O(n)$</li>
+    <li>Worst (peaks strictly decreasing, zig-zag): $O(n^2)$</li>
+  </ul>
+</section>
+
+<section id="1"><h1>getTowerPeakIndices</h1>
+  One pass over the array: O(n). 
+  
+  <p>
+    Since peaks cannot be adjacent, it produces <code>tpIndex</code> of size $P \leq \frac{n}{2}$ where $n$ is the number of towers.
+  </p>
+</section>
+
+<section id="2"><h1>getTrappedWaterBetweenPeaks</h1>
+  It sums heights between two given peak indices. Across all calls in <code>trappedWater</code>, the ranges it scans are contiguous and non-overlapping. Summed over the whole run this is only O(n) total.
+</section>
+
+<section id="3"><h1>getPIndexOfNextHighestPeak</h1>
+  This is the expensive part. It scans forward through <code>tpIndex</code> until it finds a peak at least as high as the current one, tracking the highest seen so far as a fallback. In the best case it returns on the first comparison (O(1)) if peaks are increasing. 
+  
+  <p>
+    Consider a zig-zag input with strictly decreasing peak heights, e.g.:
+    $$
+      100, 1, 99, 1, 98, 1, 97, 1, ...
+    $$
+
+    $P \approx \frac{n}{2}$ peaks exist. The outer loop in <code>TrappedWater</code> advances by only 1 peak per iteration, which leads to:
+
+    $$
+      O(P) + O(P-1) + O(P-2) + ... + O(1)
+    $$
+    This is the sum of $P$ positive integers in the reverse order:
+    $$
+      P + (P-1) + (P-2) + \cdot + 1 = \sum^P_{k=1} k = \frac{P(P+1)}{2} = \frac{P^2 + P}{2}
+    $$
+    Since the dominant term is $P^2$, the worst-case scan pattern degrades the algorithm to quadratic time $O(P^2)$.
+  </p>
+
+  Since $P = \Theta (n)$, the worst case time is $O(n^2)$.
+
+  <subsubsection id="0.3"><h1>Big theta</h1>
+    The big theta notation denotes a tight bound (both upper and lower bound). It means $P$ grows at exactly the rate of $n$, not just at most or at least that rate.
+  </subsubsection>
+</section>
+</chapter>
+
+</body>
+</html>

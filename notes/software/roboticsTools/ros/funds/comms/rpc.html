@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("RPC", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>RPC</h1>
+  <i>RPC</i> is a design paradigm for request/response interaction between processes. The main point of RPC is to abstract away the underlying communication mechanism; allowing code in Process A to invoke a function in Process B as if it were a local function call, regardless of whether Process B is running on the same processor or across the globe.
+
+  <p>
+    On the same machine, RPC can bypass traditional network layers entirely and use fast local IPC mechanisms like shared memory, OS message queues, or UNIX domain sockets to handle the request and response. It is often referred to as <i>Local Procedure Calls</i> or <i>Inter-Process Communication</i>.
+  </p>
+
+  On different machines, RPC packages the request data into network packets (using TCP or UDP) to transmit it across physical hardware.
+</chapter>
+
+</body>
+</html>

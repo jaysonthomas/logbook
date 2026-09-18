@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Space", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Space</h1>
+<section id="0"><h1>Summary</h1>
+  Since `tpIndex` is the only structure that scales with input size, and everything else is a fixed, small number of variables, the total auxiliary space (not counting the input array itself, which we don't count when discussing space complexity of an algorithm) is:
+
+  $$O(n) + O(1) = O(n)$$
+</section>
+
+<section id="1"><h1>Breakdown</h1>
+  The vector <code>tpIndex</code>, built by <code>getTowerPeakIndices</code>, stores the index of every peak found in <code>towerHeights</code>. In the worst case (a zig-zag array like $1,0,1,0,1,0,...$), roughly every other element is a peak, so <code>tpIndex</code> can hold up to $~\frac{n}{2}$ entries. Since constant factors drop out in Big-O, that's O(n) space — proportional to the input size.
+
+  <p>
+    Everything else:
+    <ul>
+      <li><code>getPIndexOfNextHighestPeak</code> only allocates a couple of local variables (`nextHighestPeak`, `nextHighestPIndex`) — fixed-size regardless of input.</li>
+      <p>
+        <li><code>getTrappedWaterBetweenPeaks</code>similarly just uses a few local scalars (`currentTPIndex`, `nextHighestTPIndex`, `minPeak`, `trappedWater`).</li>
+      </p>
+      <li><code>TrappedWater</code> itself just tracks `nextHighestPIndex` and `runningSum` — again constant space.</li>
+    </ul>
+  </p>
+  None of these allocate any data structure that grows with n; they just do arithmetic on values already sitting in `tpIndex` or `towerHeights`.
+</section>
+</chapter>
+
+</body>
+</html>

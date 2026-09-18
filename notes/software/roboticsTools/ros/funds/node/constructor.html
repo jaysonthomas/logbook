@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Constructor", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Constructor</h1>
+  <pre><code class="c++">
+    Talker::Talker(const rclcpp::NodeOptions &options) : Node("talker", options)
+  </code></pre>
+  
+  The constructor takes NodeOptions (settings like remapping rules, whether to use intra-process comms, parameter overrides, etc.) and immediately passes them up to the base class rclcpp::Node, naming this node "talker". Every ROS2 node class inherits from Node.
+
+  <p>
+    Options are dynamically set when ROS 2 component managers load the node dynamically at runtime.
+  </p>
+</chapter>
+
+</body>
+</html>

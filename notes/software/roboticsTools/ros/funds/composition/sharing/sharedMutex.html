@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Shared mutex", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Shared mutex</h1>
+<section id="0"><h1>Overview</h1>
+  std::shared_mutex / std::shared_lock: Allows multiple nodes to read from the resource concurrently, while granting exclusive access to a single node for writing.
+</section>
+
+<section id="1"><h1>Code</h1>
+  <a href="3_sharedMutex_blocking.cpp">Deadlock</a>, <a href="3a_solution.cpp">solution</a>. <p></p>
+
+  Every access — even a read — blocks every other thread, including other readers. With 10 readers each taking ~50ms, and no overlap allowed, this takes roughly 500ms — the reads are serialized even though none of them modify anything.
+
+  <p>
+    Readers can run concurrently with each other; only writers need exclusive access.
+  </p>
+
+  Here, all 10 reads overlap, so the total time is roughly ~50ms instead of ~500ms — a 10x difference in this contrived example, because the readers no longer wait on each other.
+
+  Key points
+  std::shared_lock&ltstd::shared_mutex&gt acquires a shared (read) lock. Multiple threads can hold this simultaneously.
+  std::unique_lock&ltstd::shared_mutex&gt (or std::lock_guard) acquires an exclusive (write) lock. Only one thread can hold this, and no readers can hold a shared lock at the same time.
+  Use shared_mutex when reads vastly outnumber writes and read operations are non-trivial (fast reads may not benefit, since the overhead of a shared_mutex is a bit higher than a plain mutex).
+  If writes are frequent, or reads are extremely cheap (like an atomic load), plain std::mutex or std::atomic may actually perform better — shared_mutex isn't a universal win, it's a tool for read-heavy workloads.
+
+  <p>
+    threads is a std::vector<std::thread>. A std::thread is constructed by giving it a callable (something invokable, like a lambda, function pointer, or functor) plus optional arguments to pass to it. emplace_back constructs the std::thread object in place, directly inside the vector's storage, by forwarding its arguments to std::thread's constructor.
+
+So this line is equivalent to:
+
+std::thread t([&store] { int v = store.read(); (void)v; });
+threads.push_back(std::move(t));
+
+...but emplace_back skips the intermediate std::thread object and the move — it constructs the thread directly in the vector, starting the new thread of execution immediately as part of that construction.
+  </p>
+
+  join() does not start anything — it blocks the calling thread until the already-running thread finishes.
+</section>
+</chapter>
+
+</body>
+</html>

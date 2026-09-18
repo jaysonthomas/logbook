@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Mutex", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Mutex</h1>
+<section id="0"><h1>Overview</h1>
+  std::mutex and std::scoped_lock / std::unique_lock is the most common approach. Nodes lock a shared std::mutex before accessing the resource and release it upon exiting the scope. Using RAII locks prevents deadlocks if exceptions occur.
+</section>
+
+<section id="1"><h1>Code</h1>
+  <a href="1_mutex_deadlock.cpp">Deadlock</a>, <a href="1a_solution.cpp">solution</a>. <p></p>
+
+  task1 locks mtx1 then mtx2. task2 locks mtx2 then mtx1. If they interleave just right, task1 holds mtx1 waiting for mtx2, while task2 holds mtx2 waiting for mtx1. Neither can proceed — deadlock. The program hangs forever and never prints "Done".
+
+  <p>
+    Here, std::scoped_lock takes both mutexes in a single call and uses a deadlock-avoidance algorithm internally, regardless of the order you pass them in. This version reliably prints both "acquired" messages and "Done", every time.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

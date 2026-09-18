@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Two pointer solution", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 3"><h1>Two pointer solution</h1>
+  [<a href="code.cpp">Code</a>] <p></p>
+  Instead of finding peaks first and then figuring out water between each pair, this walks two pointers inward from both ends simultaneously, tracking the max height seen so far from each side (leftMaxHeight / rightMaxHeight).
+
+  <p>
+    Whichever side currently has the smaller boundary height is the one that determines how much water sits at that pointer's position because the wall on the smaller side is the binding constraint (the far side has something at least that tall). So each column's water contribution can be resolved in O(1) and the pointer can be moved along, without ever needing a second array of peak indices or nested scans.
+  </p>
+
+  Each pointer moves at most n times total, and each step does O(1) work — so the whole thing is a single O(n) pass, O(1) extra space (no tpIndex vector needed at all).
+</chapter>
+
+</body>
+</html>

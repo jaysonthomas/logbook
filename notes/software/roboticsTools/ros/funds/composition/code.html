@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Composition", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Composition</h1>
+<section id="0"><h1>Background</h1>
+  One process can run multiple nodes. Likewise, one process can spawn multiple CPU <a href="../../../coding/low/cpp/concurrency/thread.html">threads</a>.
+
+  <p>
+    What determines how many threads run inside a component process is the Executor, not the component container itself.
+  </p>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  <i>Composition</i> is the process of running multiple nodes as <i>components</i> within a single process (rather than separate processes) to reduce overhead. This is especially important for intraprocess communication to avoid <m>serialisation costs</m> on things like image/pointcloud data.
+
+  <p>
+    A <i>component</i> is a dynamically loadable node. It is a C++ class inheriting from rclcpp::Node compiled as a shared library (.so or .dll).
+  </p>
+
+  Mental model: A node can be written as its own separate program (own process, own PID). Composition loads several node classes into a single process instead — like merging five employees into one shared office instead of five separate buildings. Less overhead, faster communication between them.
+</section>
+
+<section id="2"><h1>Diagonostics</h1>
+  <pre><code class="bash">
+    ros2 launch ros2_fundamentals_cpp composition_launch.py
+    ps aux | grep component_container   # only ONE process, not five
+    ros2 component list                 # but ROS 2 still sees talker/listener/add_two_ints_server as separate nodes inside it
+    ros2 topic echo /chatter            # still works exactly the same from the outside
+  </code></pre>
+  The interface (topics/services/actions) looks identical whether a node runs standalone or composed. Composition is a deployment/performance choice, not something that changes the way a node is used.
+
+  <p>
+    A good sanity check once you've done all seven: run fundamentals_launch.py, then in a fresh terminal run rqt_graph (if installed) to see the topic/service/action connections you just built, rather than just reading logs.
+  </p>
+</section>
+
+<section id="3"><h1>Fundamentals</h1>
+  writing composable nodes (rclcpp_components), loading them via a component container (statically at launch or dynamically at runtime), and using this for performance-critical pipelines (e.g., camera driver → image processing in the same process).
+</section>
+</chapter>
+
+</body>
+</html>

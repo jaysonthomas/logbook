@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Sharing resources", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Sharing resources</h1>
+<section id="0"><h1>Topics</h1>
+  <ul>
+    <li>Standard C++ Synchronization Primitives</li>
+    <ul>
+      <li><a href="mutex.html">Mutex</a></li>
+      <li><a href="sharedMutex.html">Shared mutex</a></li>
+      <li><a href="atomic.html">Atomic</a></li>
+      <li><a href="semaphore.html">Semaphore</a></li>
+    </ul>
+
+    <li>ROS 2 Architectural Mechanisms</li>
+    <ul>
+      <li><a href="">MutuallyExclusive Callback Groups</a></li>
+      If the shared resource is accessed exclusively through specific callbacks (e.g., a timer callback or topic callback), those callbacks can be assigned to a MutuallyExclusive callback group. The MultiThreadedExecutor will guarantee that only one thread executes callbacks within that group at any given time, preventing simultaneous access without manually handling mutex locks.
+      <li><a href="managerNode.html">Dedicated Manager / Owner node</a></li>
+    </ul>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>

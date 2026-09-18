@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Semaphore", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Semaphore</h1>
+<section id="0"><h1>Overview</h1>
+  std::counting_semaphore or std::binary_semaphore (C++20): Useful for controlling access when a fixed number of concurrent resource allocations are allowed or for signaling across callback threads.
+</section>
+
+<section id="1"><h1>Code</h1>
+  <a href="4_without_semaphore.cpp">Deadlock</a>, <a href="4a_solution.cpp">solution</a>. <p></p>
+
+  Here's a clear before/after that shows why std::counting_semaphore exists: it lets you cap how many threads can access a limited resource concurrently — something a plain mutex or atomic counter can't enforce on its own (they can track concurrency, but nothing stops more threads from proceeding at once).
+
+Both examples spin up 10 threads competing for a "resource pool" that should only allow 3 concurrent users at a time.
+
+  <p>
+    without_semaphore.cpp — all 10 threads rush in immediately. The final line prints something like Max concurrent 'connections' used: 10, even though the "pool" was only meant to allow 3. Nothing in the code actually stops threads from proceeding; the atomic counter just measures the overcrowding, it doesn't prevent it.
+with_semaphore.cpp — resourcePool.acquire() blocks a thread until a slot frees up, and release() hands that slot to the next waiter. The output ends with Max concurrent 'connections' used: 3, guaranteed, no matter how many threads you throw at it.
+
+That's the core value of std::counting_semaphore<N>: it's a lightweight, purpose-built primitive for "let up to N things happen at once" — bounding resource pools, connection limits, producer/consumer buffers, etc.
+  </p>
+</section>
+</chapter>
+
+</body>
+</html>

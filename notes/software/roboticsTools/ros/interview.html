@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("ROS2", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Interview Qs</h1>
+  <ul>
+    <li>Write a client node that asks for an action to be done by a server. No feedback involved.</li>
+    <li>Asynchronous rather than forever blocking. </li>
+    <li>I think there was something about a callback as well. Where if the callback for the node wasn't placed in a reentrant callback group, it would also block the node from processing the server's response.</li>
+    <li>class A, class B. B is a node. In its constructor, class B has a shared pointer to A, but also passes to A a shared pointer to itself. All this happends on the same line, i.e. an object of A is created as a shared pointer but at the same time a shared pointer to B is passed to it. What happens when node B is ended.</li>
+    <li>new is used within class B in its constructor. What happens to that memory when B is ended?</li>
+  </ul>
+</chapter>
+
+</body>
+</html>

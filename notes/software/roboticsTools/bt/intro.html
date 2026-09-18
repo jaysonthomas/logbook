@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Introduction", "../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 0"><h1>Introduction</h1>
+<section id="0"><h1>Overview</h1>
+  [<a href="https://t.ly/yLpUt">Ref</a>] <p></p>
+  Behavior Trees (BTs) are a way to structure decision-making logic as a tree of nodes that gets "ticked" (evaluated) repeatedly, instead of hand-coding a state machine.
+</section>
+
+<section id="1"><h1>Types of nodes</h1>
+  <ul>
+    <li>Condition node</li>
+    checks something and returns SUCCESS/FAILURE, never does work (IsBatteryOK)
+    <p>
+      <li>Action node</li>
+      actually does something (MoveForward, Recharge)
+    </p>
+    <li>Control node</li>
+    Sequence (do children in order, stop on first failure) and Fallback (try children in order, stop on first success)
+  </ul>
+</section>
+
+</chapter>
+
+</body>
+</html>

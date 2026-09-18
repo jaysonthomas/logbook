@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Discovery", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Discovery</h1>
+<section id="0"><h1>Analogy</h1>
+  Imagine you enter a busy party where you don't know anyone, but you are looking for people who want to talk about **robots**.
+
+  <p>
+    Instead of going up to a front desk manager (there is no central ROS 1 Master here), you stand near the entrance and shout to the whole room: "Hi everyone! I just arrived. I'm Node A. You can reach me directly at Phone Number 555-1234."
+  </p>
+</section>
+
+<section id="1"><h1>The Multicast shout (Participant Discovery)</h1>
+  When a node is launched, the underlying middleware instantly broadcasts a tiny ping packet over UDP Multicast.
+
+  <p>
+    <i>Multicast</i> acts like a megaphone broadcast across the entire room (the local network). Every other ROS 2 node running on that network is tuned into the exact same frequency.
+  </p>
+
+  A <i>ping</i> simply says: "I exist! My name is Node A, and here is my exact IP address and port number."
+</section>
+
+<section id="2"><h1>The Direct handshake</h1>
+  Every existing node on the network hears the multicast ping.
+
+  <p>
+    If Node B hears Node A shout, Node B saves Node A's phone number (IP address/port). Node B then sends a direct <i>unicast message</i> (a private text message) back to Node A: "Hey Node A, I heard you! I'm Node B, and here is my direct IP and port so you can talk to me directly."
+  </p>
+
+  At this point, both nodes know each other exist.
+</section>
+
+<section id="3"><h1>Trading Lists (Endpoint Discovery)</h1>
+  Now that Node A and Node B can send private messages directly to one another, they trade their interest lists (their Publishers and Subscribers):
+
+  <ul>
+    <li>Node A says: "I am subscribing to a topic named `/test`".</li>
+    <li>Node B says: "I am publishing to a topic named `/test`".</li>
+  </ul>
+</section>
+
+<section id="4"><h1>The Match & Direct Connection</h1>
+  Node A's middleware compares its wishlist against Node B's offers:
+
+  <ul>
+    <li>Do the topic names match? Yes.</li>
+    <li>Do the data types match (`std_msgs/msg/String`)? Yes.</li>
+    <li>Are the Quality of Service (QoS) rules compatible (e.g., reliability settings)? Yes.</li>
+  </ul>
+
+  Because everything matches, they shake hands. Node B starts sending topic messages directly to Node A over shared memory or point-to-point UDP, completely bypassing the multicast megaphone.
+</section>
+</chapter>
+
+</body>
+</html>

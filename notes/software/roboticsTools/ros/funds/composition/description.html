@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Composition", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Composition</h1>
+<section id="0"><h1>Background</h1>
+  One process can run multiple nodes. Likewise, one process can spawn multiple CPU <a href="../../../coding/low/cpp/concurrency/thread.html">threads</a>.
+
+  <p>
+    What determines how many threads run inside a component process is the Executor, not the component container itself.
+  </p>
+</section>
+
+<section id="1"><h1>Overview</h1>
+  <i>Composition</i> is the process of running multiple nodes as <i>components</i> within a single process (rather than separate processes) to reduce overhead. This is especially important for intraprocess communication to avoid <m>serialisation costs</m> on things like image/pointcloud data.
+
+  <p>
+    A <i>component</i> is a dynamically loadable node. It is a C++ class inheriting from rclcpp::Node compiled as a shared library (.so or .dll).
+  </p>
+
+  Mental model: A node can be written as its own separate program (own process, own PID). Composition loads several node classes into a single process instead — like merging five employees into one shared office instead of five separate buildings. Less overhead, faster communication between them.
+</section>
+
+<section id="2"><h1>Traditional Nodes vs. Components</h1>
+  <subsection id="2.0"><h1></h1>
+    1 Node = 1 Process.
+
+    <p>
+      If 5 separate standalone node executables are launched, the OS creates 5 separate processes. Because each process has an isolated memory space, communicating between them requires shared memory allocations (/dev/shm) or local loopback networking.
+    </p>
+  </subsection>
+
+  <subsection id="2.1"><h1>Component Composition</h1>
+    Multiple Nodes = 1 Process.
+
+    <p>
+      When using components, 1 single OS process (called a component_container) is launched. Multiple <a href="../../../../coding/low/cmake/create/sharedLib.html">shared library</a> components (Node A, Node B, Node C) are then loaded into that single process.
+    </p>
+  </subsection>
+</section>
+
+<section id="3"><h1>Relation to threads</h1>
+  How components relate to threads depends entirely on which Executor spins the container process.
+
+  <subsection id="3.0"><h1>SingleThreadedExecutor</h1>
+    If a component container uses a SingleThreadedExecutor, 1 single OS thread handles Node A, Node B, and Node C. <n>The single thread loops through callbacks sequentially regardless of which component owns the callback</n>.
+  </subsection>
+
+  <subsection id="3.1"><h1>MultiThreadedExecutor</h1>
+    If a container uses a MultiThreadedExecutor, the executor creates a pool of OS threads (e.g., 4 threads).
+
+    <p>
+      Threads are not assigned 1-to-1 to components. Instead, any free worker thread in the pool can pick up and execute an incoming callback from Node A, Node B, or Node C as data arrives.
+    </p>
+
+    A single component could have multiple callbacks executing across different threads simultaneously if its callback groups allow it.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

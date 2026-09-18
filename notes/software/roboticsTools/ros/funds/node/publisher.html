@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Publisher creation", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Publisher creation</h1>
+<section id="0"><h1>Overview</h1>
+  <pre><code class="c++">
+    publisher_ = this->create_publisher<std_msgs::msg::String>("chatter", 10);
+  </code></pre>
+  Creates a publisher that will send string messages on the topic "chatter". The 10 is the QoS queue depth — how many outgoing messages to buffer if the subscriber(s) can't keep up. 
+  
+  <p>
+    publisher_ is a shared pointer to the publisher object. It is used in on_timer().
+  </p>
+
+  <subsection id="0.0"><h1>Publisher rate</h1>
+    <pre><code class="c++">
+      double rate_hz = this->declare_parameter<double>("publish_rate_hz", 1.0);
+    </code></pre>
+    This declares a ROS2 parameter called publish_rate_hz, with a default value of 1.0. "Declaring" a parameter is what makes it visible to ros2 param list, settable via a YAML config file, a --ros-args -p publish_rate_hz:=5.0 CLI flag, or a live ros2 param set call. The returned value (either the default or whatever override was supplied) gets stored in the local variable rate_hz.
+  </subsection>
+</section>
+
+<section id="1"><h1>Reasons for a shared pointer</h1>
+  <subsection id="1.0"><h1>The ROS 2 Executor Needs Ownership</h1>
+    When this->create_publisher(...) is called, the underlying C++ framework (rclcpp) creates the publisher object, hands ownership of a pointer to the class member, but also keeps internal references to that exact same publisher inside the Node and RMW (ROS Middleware) layers.
+
+    <p>
+      The ROS 2 Executor continuously needs to inspect the state of publishers and track active publishers during node teardown and graph monitoring. If publisher_ were managed via unique ownership, the ROS 2 internal execution layer would not be able to safely retain references to monitor its lifecycle without risking dangling pointers.
+    </p>
+  </subsection>
+
+  <subsection id="1.1"><h1>Intra-Process / Zero-Copy Communication Needs Shared Lifetime</h1>
+    ROS 2 uses shared pointers internally for zero-copy message passing when nodes run in the same process.
+
+    <p>
+      When a call to publisher_->publish(msg) is made, the publisher object interacts with shared memory and event queues.
+    </p>
+
+    If another thread in your node is actively publishing a message at the exact moment your node decides to destroy its publisher object, taking a local copy of std::shared_ptr guarantees that the underlying C++ publisher resource remains alive in memory until that active publish operation finishes.
+  </subsection>
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("SOLID design principles", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Liskov substitution</h1>
+<section id="0"><h1>Overview</h1>
+  Subtypes must be substitutable for their base types without altering the correctness of the program. This states that a parent class (say when passed as an argument to a function) should be substitutable by any of its derived classes. This principle ensures that inheritance is used correctly.
+</section>
+
+<section><h1>Example</h1>
+  [<a href="l.cpp">code</a>]<p></p>
+  testArea() is written against the Rectangle interface and relies on a reasonable assumption: setting width and height independently gives you width * height. That's an implicit contract of Rectangle.
+
+Square compiles fine, inherits fine, and "is-a" Rectangle in a mathematical sense — but it silently breaks that contract, because setting one dimension secretly changes the other. The function has no way to know this, and the bug only shows up at runtime with wrong output, not a compile error.
+
+That's precisely what LSP says: subtypes must be substitutable for their base type without altering the correctness of the program. If a subclass changes behavior in a way that violates assumptions callers reasonably make about the base class, it violates LSP — even if it satisfies "is-a" intuition and the type system.
+
+The fix is usually to stop modeling this with inheritance at all (e.g., have both Rectangle and Square implement a common Shape interface with just getArea(), without one inheriting from the other).
+</section>
+</chapter>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Dedicated Manager / Owner node", "../../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Dedicated Manager / Owner node</h1>
+<section id="0"><h1>Topics</h1>
+  If the Dedicated Manager / Owner Node architecture is used, **it depends on how external components interact with the owner node**:
+
+### 1. Inter-Component Communication via ROS 2 Topics / Services / Actions
+
+If external components interact with the manager node solely by sending ROS 2 messages or calling service requests, **no C++ locking mechanisms (`std::mutex`) are needed**.
+
+* **How synchronization is handled:** The manager component receives requests into its own internal callbacks. The manager’s callbacks can be assigned to a `MutuallyExclusive` callback group. The ROS 2 Executor will process incoming requests sequentially, naturally serializing access to the shared resource.
+
+
+
+---
+
+### 2. Direct Shared Memory / Pointer Access
+
+If external components hold a direct pointer (e.g., `std::shared_ptr`) or a shared memory address pointing directly to the managed resource, **yes, a lock mechanism is strictly required**.
+
+* **Why locks are needed:** Because all components run inside a `MultiThreadedExecutor`, worker threads across different components can execute simultaneously. If Component A calls a method on the raw resource while Component B (or the Manager thread) is updating or clearing it, you will get a data race or undefined behavior.
+
+
+* **How to lock safely:** The Owner Node can expose a synchronized API (e.g., wrapping resource access behind a `std::mutex` and `std::scoped_lock`), or hand out thread-safe handles/leases.
+
+```cpp
+// Example: Owner Component encapsulating the resource with a lock
+class ResourceManagerNode : public rclcpp::Node {
+private:
+  SharedHardwareResource raw_resource_;
+  std::mutex resource_mutex_;
+
+public:
+  // Components call this method to safely use the resource
+  void execute_safe_operation() {
+    std::scoped_lock lock(resource_mutex_); 
+    raw_resource_.perform_action();
+  } // Lock automatically releases here
+};
+
+```
+
+---
+</section>
+</chapter>
+
+</body>
+</html>

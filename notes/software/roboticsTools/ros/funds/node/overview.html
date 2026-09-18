@@ -5,34 +5,26 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <script src= "../../../../../../utils/setup.js"></script>
   <script>
-    initializePage("Node", "../../../../../../");
+    initializePage("Overview", "../../../../../../");
   </script>
 </head>
 
 <body onload="loadChapter('');">
-<chapter style="counter-reset: chapter 1"><h1>Node</h1>
-<section id="0"><h1>Overview</h1>
-  A node is one running program/process that talks to the rest of ROS 2 over the network. A ROS node is capable of:
-  <ul>
-    <li>Subscribing and publishing to topics</li>
-    <li>Using timers</li>
-    <li>Logging</li>
-  </ul>
-</section>
+<chapter style="counter-reset: chapter 1"><h1>Overview</h1>
+  <subsubsection><h1>Timer callback</h1>
+    Publish message.
+  </subsubsection>
 
-<section id="1"><h1>Spin</h1>
-  Keeps a node alive and processing callbacks forever. Without this, a program would exit immediately.
-</section>
-
-<section id="2"><h1>Fundamentals</h1>
-  <ul>
-    <li>Creation of nodes</li>
-    <li>Management of their lifecycle (includes states like unconfigured → inactive → active → finalized)</li>
-    <li>Structure multi-node systems</li>
-    <li>Executors (single-threaded vs multi-threaded)</li>
-    <li>Callback groups for concurrency control</li>
-  </ul>
-</section>
+  <subsubsection><h1>Constructor</h1>
+    <ul>
+      <li>Initialise node.</li>
+      <li>Create shared pointer to publisher object.</li>
+      <ul>
+        <li>Activate timer.</li>
+        <li>Bind callback.</li>
+      </ul>
+    </ul>
+  </subsubsection>
 </chapter>
 
 </body>

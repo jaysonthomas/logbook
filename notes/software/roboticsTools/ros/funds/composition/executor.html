@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src= "../../../../../../utils/setup.js"></script>
+  <script>
+    initializePage("Executor", "../../../../../../");
+  </script>
+</head>
+
+<body onload="loadChapter('');">
+<chapter style="counter-reset: chapter 1"><h1>Executor</h1>
+<section id="0"><h1>Overview</h1>
+  An <i>executor</i> in ROS 2 is the underlying engine responsible for coordinating and executing work (callbacks).
+
+  <p>
+    A node itself is just a passive holder of code. It cannot execute anything on its own. The Executor provides the actual CPU thread(s) to run that code. Whether composition is used or not, the default execution engine that ROS2 provides is the single threaded executor.
+  </p>
+</section>
+
+<section id="1"><h1>Functions of an executor</h1>
+  <ul>
+    <li>Monitors Events</li>
+    It <n>continuously</n> checks the lower-level middleware (DDS) via a mechanism called a <m>wait set</m> to see if new topic messages have <n>arrived</n>, service requests have been made, or timers have expired.
+
+    <p>
+      <li>Dispatches Callbacks</li>
+      When an event occurs, the executor retrieves the event data and invokes the appropriate C++ callback function. E.g., timer or topic-subscription callback.
+    </p>
+
+    <li>Enforces Execution Rules</li>
+    It respects callback groups (such as `MutuallyExclusive` or `Reentrant`) to determine whether callbacks can run simultaneously in parallel or must wait their turn.
+  </ul>
+</section>
+
+<section id="2"><h1>Types of Executors</h1>
+  <ul>
+    <li>SingleThreadedExecutor</li>
+    Uses one single CPU thread to handle all registered nodes and callbacks sequentially. If one callback takes a long time, all other callbacks across all nodes assigned to this executor must wait.
+
+    <p>
+      <li>MultiThreadedExecutor</li>
+      Spawns a pool of worker threads. Free threads can pick up and execute callbacks in parallel across different nodes or within the same node, depending on its callback group settings.
+    </p>
+  </ul>
+</section>
+</chapter>
+
+</body>
+</html>
